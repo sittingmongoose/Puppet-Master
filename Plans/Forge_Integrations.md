@@ -668,6 +668,5687 @@ forge.api.compatibility_changed
 
 These names remain semantic-owner candidates only. This command-contract pass does not admit any candidate into the central Event Authority registry and does not bind any command to a persisted event. The event envelope and persistence remain central-owner responsibilities. The common command receipt carries provider, repository binding, requested/effective authority, immutable review revision, expected binding generation, credential/grant ref, idempotency, outcome, `ObservableWork`, event refs, and recovery actions; `event_refs` may remain empty until an admitted event or explicit no-persist disposition exists.
 
+
+
+### W3A separate Forge family definitions (phase 1, without admission)
+
+### FGI-1200 - forge.api.compatibility_changed prepared contract
+
+```yaml
+plan_unit_id: FGI-1200
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.api.compatibility_changed@1.0.0 under deck-2 9.a A (DL-450),
+  preserving DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration,
+  runtime_enabled=false. This contract neither changes expected_event_types=[] on existing event-silent commands
+  nor enables any handler. A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.api.compatibility_changed,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-007 and Plans/forge_integration_contracts.schema.json#/$defs/api_compatibility
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: An actual compatibility probe replaces a previously committed compatibility assessment
+  and changes at least one endpoint/version/release-state, schema pin, mutation-safety, scope, feature or rate/currentness
+  fact. Unchanged re-observation saves no change. Unknown or failed compatibility remains mutation-closed; a changed
+  assessment does not itself enable mutation. Endpoint pins are per endpoint; a preview-only or absent route degrades
+  only its dependent capability. A synthesized global API version is not evidence. Before/after source snapshots
+  are immutable owner records; event publication never selects a new behavior or resolves a conflicting owner. Result
+  refs must resolve their exact original closed owner shape, not a caller assertion or a current display copy.
+
+
+  Producer and order: ForgeCompatibilityProbe.commit_result@1.0.0 accepts only the actual native owner result/observation,
+  not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject and admitted
+  provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability controls
+  for new work. Commit forge_api_compatibility_changed_source source identity and domain fact before calling forge.api.compatibility_changed.publish@1.0.0.
+  Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt custody by name, with SP-336/347 group commit/sync and
+  actual fresh-operation/restore admission. Only a verified synced first receipt permits source_committed -> history_committed
+  and terminal history disclosure. Domain effect success is established only by its own original result. Crash or
+  effect_unknown reconciles that result, never repeats the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_api_compatibility_changed.schema.json# selects pm.event_payload.forge_api_compatibility_changed.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  compatibility_snapshot_ref, previous_compatibility_snapshot_ref and no others. Each domain ref resolves the original
+  api_compatibility or the exact owner result/receipt described above under current access. fact_ref, subject_ref,
+  provider and every domain ref must match the actual captured source field by field; a valid hash or handle alone
+  proves no native provenance. Retain only refs and bounded metadata, never review text, diff/path bodies, raw webhooks
+  or credential content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1200; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.api.compatibility_changed, is this
+  separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or
+  another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year
+  is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?
+  WAVE3 permits this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains
+  materially_incomplete under Case L-3. G01/G05/G26 were checked against the actual answered populations and do
+  not name this Forge family. Source identity/receipt refs and derived checkpoints keep the independently justified
+  SP-1200 policies without retaining linked content.
+
+
+  Custody/redaction: forge_api_compatibility_changed_source is canonical non-rebuildable identity/source-lineage,
+  coherently backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained
+  event/payload-pack membership under one Storage restore boundary. It contains no body copy; referenced content
+  retains its own policy. The native source owner holds original provider evidence; only that owner can attest the
+  fact. Storage holds first receipt and full-value commitment. Reads recheck current actor/account permissions,
+  deletion/tombstones, holds and reference availability. Deleted or expired detail becomes unavailable and is never
+  reconstructed from history; no new user-visible history surface is authorized. Missing canonical custody fences
+  and discloses recovery_required; never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Forge Settings connection health reader as consumer.forge.api.compatibility_changed.history@1.0.0,
+  fed by projector.forge.api.compatibility_changed.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable read
+  token explicitly; SP-1200 owns forge_api_compatibility_changed_checkpoint, exact schema, key, complete global
+  scan, inclusive cursor, CAS, source/receipt joins, derived quarantine/rebuild and compaction/withdrawal fences.
+  The named reader serves the existing owner history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including An actual compatibility probe replaces
+  a previously committed compatibility assessment and changes at least one endpoint/version/release-state, schema
+  pin, mutation-safety, scope, feature or rate/currentness fact. Oracle code, shared-number adoption and shared
+  guard-isolation proof are phase 2; native execution NOT_RUN. No test PASS or readiness is claimed. Pending capture
+  also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete
+  original producer-owned EventRecord semantic intent (the EventRecord owner preimage, including its exact closed
+  payload and original actor/account/time/causality fields), encoded by the existing owner physical codec. Before
+  source_committed, verify that pack, its exact actual source-derived fields and recomputed owning producer_semantic_digest,
+  and commit the source identity plus pack membership together. This is the restart input for the SAME publication,
+  not a new accepted operation. A lost/damaged pending pack fences and requires coherent backup; current provider
+  state cannot replace it. At history_committed CAS, resolve the original full-value first receipt, verify every
+  intent-to-retained-event semantic join, and clear pending_intent_ref in that same transaction. Pending reference
+  protection ends only on that real settlement; no hidden permanent body copy or new expiry policy is created. If
+  a needed original domain proof is unavailable before capture, do not accept capture.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-007
+- CV-1200
+- SP-1200
+unblocks: []
+acceptance_criteria:
+- forge.api.compatibility_changed is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_api_compatibility_changed.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_api_compatibility_changed_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_api_compatibility_changed.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-007
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.api.compatibility_changed
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1201 - forge.connection.capabilities_changed prepared contract
+
+```yaml
+plan_unit_id: FGI-1201
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.connection.capabilities_changed@1.0.0 under deck-2 9.a
+  A (DL-450), preserving DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration,
+  runtime_enabled=false. This contract neither changes expected_event_types=[] on existing event-silent commands
+  nor enables any handler. A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.connection.capabilities_changed,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-003 and Plans/forge_integration_contracts.schema.json#/$defs/capability_envelope
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: A committed capability assessment for the exact connection differs from its previous
+  committed assessment. Preserve requested/effective capability, catalog and adapter generation, tier/license/version/currentness
+  and exact disabled reason. Repeating an unchanged probe is not a change. A review-scoped capability can narrow
+  the binding ceiling only. API, transport and Actions support stay independent; unknown mutation safety never authorizes
+  a write. Before/after source snapshots are immutable owner records; event publication never selects a new behavior
+  or resolves a conflicting owner. Result refs must resolve their exact original closed owner shape, not a caller
+  assertion or a current display copy.
+
+
+  Producer and order: ForgeCapabilityResolver.commit_assessment@1.0.0 accepts only the actual native owner result/observation,
+  not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject and admitted
+  provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability controls
+  for new work. Commit forge_connection_capabilities_changed_source source identity and domain fact before calling
+  forge.connection.capabilities_changed.publish@1.0.0. Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt
+  custody by name, with SP-336/347 group commit/sync and actual fresh-operation/restore admission. Only a verified
+  synced first receipt permits source_committed -> history_committed and terminal history disclosure. Domain effect
+  success is established only by its own original result. Crash or effect_unknown reconciles that result, never
+  repeats the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_connection_capabilities_changed.schema.json# selects pm.event_payload.forge_connection_capabilities_changed.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  capability_snapshot_ref, previous_capability_snapshot_ref and no others. Each domain ref resolves the original
+  capability_envelope or the exact owner result/receipt described above under current access. fact_ref, subject_ref,
+  provider and every domain ref must match the actual captured source field by field; a valid hash or handle alone
+  proves no native provenance. Retain only refs and bounded metadata, never review text, diff/path bodies, raw webhooks
+  or credential content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1201; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.connection.capabilities_changed, is
+  this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry,
+  or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run
+  year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?
+  WAVE3 permits this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains
+  materially_incomplete under Case L-3. G01/G05/G26 were checked against the actual answered populations and do
+  not name this Forge family. Source identity/receipt refs and derived checkpoints keep the independently justified
+  SP-1201 policies without retaining linked content.
+
+
+  Custody/redaction: forge_connection_capabilities_changed_source is canonical non-rebuildable identity/source-lineage,
+  coherently backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained
+  event/payload-pack membership under one Storage restore boundary. It contains no body copy; referenced content
+  retains its own policy. The native source owner holds original provider evidence; only that owner can attest the
+  fact. Storage holds first receipt and full-value commitment. Reads recheck current actor/account permissions,
+  deletion/tombstones, holds and reference availability. Deleted or expired detail becomes unavailable and is never
+  reconstructed from history; no new user-visible history surface is authorized. Missing canonical custody fences
+  and discloses recovery_required; never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Forge capability routing history reader as consumer.forge.connection.capabilities_changed.history@1.0.0,
+  fed by projector.forge.connection.capabilities_changed.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable
+  read token explicitly; SP-1201 owns forge_connection_capabilities_changed_checkpoint, exact schema, key, complete
+  global scan, inclusive cursor, CAS, source/receipt joins, derived quarantine/rebuild and compaction/withdrawal
+  fences. The named reader serves the existing owner history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including A committed capability assessment
+  for the exact connection differs from its previous committed assessment. Oracle code, shared-number adoption and
+  shared guard-isolation proof are phase 2; native execution NOT_RUN. No test PASS or readiness is claimed. Pending
+  capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the
+  complete original producer-owned EventRecord semantic intent (the EventRecord owner preimage, including its exact
+  closed payload and original actor/account/time/causality fields), encoded by the existing owner physical codec.
+  Before source_committed, verify that pack, its exact actual source-derived fields and recomputed owning producer_semantic_digest,
+  and commit the source identity plus pack membership together. This is the restart input for the SAME publication,
+  not a new accepted operation. A lost/damaged pending pack fences and requires coherent backup; current provider
+  state cannot replace it. At history_committed CAS, resolve the original full-value first receipt, verify every
+  intent-to-retained-event semantic join, and clear pending_intent_ref in that same transaction. Pending reference
+  protection ends only on that real settlement; no hidden permanent body copy or new expiry policy is created. If
+  a needed original domain proof is unavailable before capture, do not accept capture.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-003
+- CV-1201
+- SP-1201
+unblocks: []
+acceptance_criteria:
+- forge.connection.capabilities_changed is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_connection_capabilities_changed.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_connection_capabilities_changed_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_connection_capabilities_changed.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-003
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.connection.capabilities_changed
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1202 - forge.connection.reauthorized prepared contract
+
+```yaml
+plan_unit_id: FGI-1202
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.connection.reauthorized@1.0.0 under deck-2 9.a A (DL-450),
+  preserving DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration,
+  runtime_enabled=false. This contract neither changes expected_event_types=[] on existing event-silent commands
+  nor enables any handler. A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.connection.reauthorized,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-006 and Plans/forge_integration_contracts.schema.json#/$defs/app_installation
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: The credential owner has completed a successful reauthorization for the same provider/instance/account
+  connection and returned a new verified non-secret grant/lease result. Opening protected sign-in, waiting, cancellation,
+  a failed auth result or merely selecting an account cannot satisfy this predicate. Broker custody and protected-browser
+  restrictions remain external owners. Capture grant identity and scoped outcome only, with no token, code, credential
+  path or protected-browser content. Before/after source snapshots are immutable owner records; event publication
+  never selects a new behavior or resolves a conflicting owner. Result refs must resolve their exact original closed
+  owner shape, not a caller assertion or a current display copy.
+
+
+  Producer and order: ForgeConnectionLifecycle.commit_reauthorization@1.0.0 accepts only the actual native owner
+  result/observation, not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject
+  and admitted provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability
+  controls for new work. Commit forge_connection_reauthorized_source source identity and domain fact before calling
+  forge.connection.reauthorized.publish@1.0.0. Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt custody
+  by name, with SP-336/347 group commit/sync and actual fresh-operation/restore admission. Only a verified synced
+  first receipt permits source_committed -> history_committed and terminal history disclosure. Domain effect success
+  is established only by its own original result. Crash or effect_unknown reconciles that result, never repeats
+  the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_connection_reauthorized.schema.json# selects pm.event_payload.forge_connection_reauthorized.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  grant_ref, previous_grant_ref, auth_result_ref and no others. Each domain ref resolves the original app_installation
+  or the exact owner result/receipt described above under current access. fact_ref, subject_ref, provider and every
+  domain ref must match the actual captured source field by field; a valid hash or handle alone proves no native
+  provenance. Retain only refs and bounded metadata, never review text, diff/path bodies, raw webhooks or credential
+  content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1202; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.connection.reauthorized, is this separate
+  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
+  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
+  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
+  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
+  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
+  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1202 policies without
+  retaining linked content.
+
+
+  Custody/redaction: forge_connection_reauthorized_source is canonical non-rebuildable identity/source-lineage,
+  coherently backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained
+  event/payload-pack membership under one Storage restore boundary. It contains no body copy; referenced content
+  retains its own policy. The native source owner holds original provider evidence; only that owner can attest the
+  fact. Storage holds first receipt and full-value commitment. Reads recheck current actor/account permissions,
+  deletion/tombstones, holds and reference availability. Deleted or expired detail becomes unavailable and is never
+  reconstructed from history; no new user-visible history surface is authorized. Missing canonical custody fences
+  and discloses recovery_required; never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Hosting Services grant-history reader as consumer.forge.connection.reauthorized.history@1.0.0,
+  fed by projector.forge.connection.reauthorized.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable read
+  token explicitly; SP-1202 owns forge_connection_reauthorized_checkpoint, exact schema, key, complete global scan,
+  inclusive cursor, CAS, source/receipt joins, derived quarantine/rebuild and compaction/withdrawal fences. The
+  named reader serves the existing owner history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including The credential owner has completed
+  a successful reauthorization for the same provider/instance/account connection and returned a new verified non-secret
+  grant/lease result. Oracle code, shared-number adoption and shared guard-isolation proof are phase 2; native execution
+  NOT_RUN. No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337
+  BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent
+  (the EventRecord owner preimage, including its exact closed payload and original actor/account/time/causality
+  fields), encoded by the existing owner physical codec. Before source_committed, verify that pack, its exact actual
+  source-derived fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack
+  membership together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged
+  pending pack fences and requires coherent backup; current provider state cannot replace it. At history_committed
+  CAS, resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
+  pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
+  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable before
+  capture, do not accept capture.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-006
+- CV-1202
+- SP-1202
+unblocks: []
+acceptance_criteria:
+- forge.connection.reauthorized is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_connection_reauthorized.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_connection_reauthorized_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_connection_reauthorized.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-006
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.connection.reauthorized
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1203 - forge.connection.validated prepared contract
+
+```yaml
+plan_unit_id: FGI-1203
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.connection.validated@1.0.0 under deck-2 9.a A (DL-450),
+  preserving DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration,
+  runtime_enabled=false. This contract neither changes expected_event_types=[] on existing event-silent commands
+  nor enables any handler. A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.connection.validated,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-003 and Plans/forge_integration_contracts.schema.json#/$defs/capability_envelope
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: The exact connection test has a settled typed validation result. Record its actual
+  succeeded, degraded, blocked or failed result, including the capability/currentness proof. Dispatch, cached labels,
+  an unfinished probe and a different account test do not count as completed validation. Validation does not create
+  an account or repository and sign-in is not repository-write proof. A failed validation must not be rendered successful.
+  Before/after source snapshots are immutable owner records; event publication never selects a new behavior or resolves
+  a conflicting owner. Result refs must resolve their exact original closed owner shape, not a caller assertion
+  or a current display copy.
+
+
+  Producer and order: ForgeConnectionLifecycle.commit_connection_test@1.0.0 accepts only the actual native owner
+  result/observation, not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject
+  and admitted provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability
+  controls for new work. Commit forge_connection_validated_source source identity and domain fact before calling
+  forge.connection.validated.publish@1.0.0. Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt custody by
+  name, with SP-336/347 group commit/sync and actual fresh-operation/restore admission. Only a verified synced first
+  receipt permits source_committed -> history_committed and terminal history disclosure. Domain effect success is
+  established only by its own original result. Crash or effect_unknown reconciles that result, never repeats the
+  remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_connection_validated.schema.json# selects pm.event_payload.forge_connection_validated.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  validation_result_ref, capability_snapshot_ref and no others. Each domain ref resolves the original capability_envelope
+  or the exact owner result/receipt described above under current access. fact_ref, subject_ref, provider and every
+  domain ref must match the actual captured source field by field; a valid hash or handle alone proves no native
+  provenance. Retain only refs and bounded metadata, never review text, diff/path bodies, raw webhooks or credential
+  content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1203; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.connection.validated, is this separate
+  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
+  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
+  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
+  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
+  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
+  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1203 policies without
+  retaining linked content.
+
+
+  Custody/redaction: forge_connection_validated_source is canonical non-rebuildable identity/source-lineage, coherently
+  backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained event/payload-pack
+  membership under one Storage restore boundary. It contains no body copy; referenced content retains its own policy.
+  The native source owner holds original provider evidence; only that owner can attest the fact. Storage holds first
+  receipt and full-value commitment. Reads recheck current actor/account permissions, deletion/tombstones, holds
+  and reference availability. Deleted or expired detail becomes unavailable and is never reconstructed from history;
+  no new user-visible history surface is authorized. Missing canonical custody fences and discloses recovery_required;
+  never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Hosting Services connection-test history reader as consumer.forge.connection.validated.history@1.0.0,
+  fed by projector.forge.connection.validated.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable read token
+  explicitly; SP-1203 owns forge_connection_validated_checkpoint, exact schema, key, complete global scan, inclusive
+  cursor, CAS, source/receipt joins, derived quarantine/rebuild and compaction/withdrawal fences. The named reader
+  serves the existing owner history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including The exact connection test has a
+  settled typed validation result. Oracle code, shared-number adoption and shared guard-isolation proof are phase
+  2; native execution NOT_RUN. No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref:
+  a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord
+  semantic intent (the EventRecord owner preimage, including its exact closed payload and original actor/account/time/causality
+  fields), encoded by the existing owner physical codec. Before source_committed, verify that pack, its exact actual
+  source-derived fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack
+  membership together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged
+  pending pack fences and requires coherent backup; current provider state cannot replace it. At history_committed
+  CAS, resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
+  pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
+  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable before
+  capture, do not accept capture.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-003
+- CV-1203
+- SP-1203
+unblocks: []
+acceptance_criteria:
+- forge.connection.validated is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_connection_validated.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_connection_validated_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_connection_validated.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-003
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.connection.validated
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1204 - forge.mirror.connected prepared contract
+
+```yaml
+plan_unit_id: FGI-1204
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.mirror.connected@1.0.0 under deck-2 9.a A (DL-450), preserving
+  DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration, runtime_enabled=false.
+  This contract neither changes expected_event_types=[] on existing event-silent commands nor enables any handler.
+  A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.mirror.connected,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-002 and Plans/forge_integration_contracts.schema.json#/$defs/mirror_topology
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: An admitted connect/reconnect operation commits a topology with the exact distinct
+  source/destination bindings, authoritative binding, requested/effective mode and revision fence. Preserve the
+  prior detached/unconnected state and successful transition receipt. Starting an attempted connection is not connected.
+  Human disclosure and Permissions/FileSafe, capability and current-revision fences precede effects. Retired Origin
+  or a generic transport route cannot regain mirror authority. Before/after source snapshots are immutable owner
+  records; event publication never selects a new behavior or resolves a conflicting owner. Result refs must resolve
+  their exact original closed owner shape, not a caller assertion or a current display copy.
+
+
+  Producer and order: ForgeMirrorCoordinator.commit_connect@1.0.0 accepts only the actual native owner result/observation,
+  not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject and admitted
+  provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability controls
+  for new work. Commit forge_mirror_connected_source source identity and domain fact before calling forge.mirror.connected.publish@1.0.0.
+  Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt custody by name, with SP-336/347 group commit/sync and
+  actual fresh-operation/restore admission. Only a verified synced first receipt permits source_committed -> history_committed
+  and terminal history disclosure. Domain effect success is established only by its own original result. Crash or
+  effect_unknown reconciles that result, never repeats the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_mirror_connected.schema.json# selects pm.event_payload.forge_mirror_connected.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  mirror_topology_ref, previous_topology_ref, transition_receipt_ref and no others. Each domain ref resolves the
+  original mirror_topology or the exact owner result/receipt described above under current access. fact_ref, subject_ref,
+  provider and every domain ref must match the actual captured source field by field; a valid hash or handle alone
+  proves no native provenance. Retain only refs and bounded metadata, never review text, diff/path bodies, raw webhooks
+  or credential content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1204; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.mirror.connected, is this separate
+  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
+  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
+  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
+  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
+  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
+  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1204 policies without
+  retaining linked content.
+
+
+  Custody/redaction: forge_mirror_connected_source is canonical non-rebuildable identity/source-lineage, coherently
+  backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained event/payload-pack
+  membership under one Storage restore boundary. It contains no body copy; referenced content retains its own policy.
+  The native source owner holds original provider evidence; only that owner can attest the fact. Storage holds first
+  receipt and full-value commitment. Reads recheck current actor/account permissions, deletion/tombstones, holds
+  and reference availability. Deleted or expired detail becomes unavailable and is never reconstructed from history;
+  no new user-visible history surface is authorized. Missing canonical custody fences and discloses recovery_required;
+  never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Source Control Mirror Health history reader as consumer.forge.mirror.connected.history@1.0.0,
+  fed by projector.forge.mirror.connected.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable read token explicitly;
+  SP-1204 owns forge_mirror_connected_checkpoint, exact schema, key, complete global scan, inclusive cursor, CAS,
+  source/receipt joins, derived quarantine/rebuild and compaction/withdrawal fences. The named reader serves the
+  existing owner history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including An admitted connect/reconnect operation
+  commits a topology with the exact distinct source/destination bindings, authoritative binding, requested/effective
+  mode and revision fence. Oracle code, shared-number adoption and shared guard-isolation proof are phase 2; native
+  execution NOT_RUN. No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory
+  SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic
+  intent (the EventRecord owner preimage, including its exact closed payload and original actor/account/time/causality
+  fields), encoded by the existing owner physical codec. Before source_committed, verify that pack, its exact actual
+  source-derived fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack
+  membership together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged
+  pending pack fences and requires coherent backup; current provider state cannot replace it. At history_committed
+  CAS, resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
+  pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
+  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable before
+  capture, do not accept capture.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-002
+- CV-1204
+- SP-1204
+unblocks: []
+acceptance_criteria:
+- forge.mirror.connected is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_mirror_connected.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_mirror_connected_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_mirror_connected.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-002
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.mirror.connected
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1205 - forge.mirror.degraded prepared contract
+
+```yaml
+plan_unit_id: FGI-1205
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.mirror.degraded@1.0.0 under deck-2 9.a A (DL-450), preserving
+  DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration, runtime_enabled=false.
+  This contract neither changes expected_event_types=[] on existing event-silent commands nor enables any handler.
+  A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.mirror.degraded,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-002 and Plans/forge_integration_contracts.schema.json#/$defs/mirror_topology
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: The committed topology first enters degraded service relative to its prior committed
+  state, with exact lag/divergence/health evidence. Repeated observation of the same degradation does not emit another
+  transition. No automatic detach, authority transfer or recovery is implied. Direction and lag do not select authority.
+  Preserve both binding identities and the actual revision fence even when service is degraded. Before/after source
+  snapshots are immutable owner records; event publication never selects a new behavior or resolves a conflicting
+  owner. Result refs must resolve their exact original closed owner shape, not a caller assertion or a current display
+  copy.
+
+
+  Producer and order: ForgeMirrorCoordinator.commit_degradation@1.0.0 accepts only the actual native owner result/observation,
+  not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject and admitted
+  provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability controls
+  for new work. Commit forge_mirror_degraded_source source identity and domain fact before calling forge.mirror.degraded.publish@1.0.0.
+  Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt custody by name, with SP-336/347 group commit/sync and
+  actual fresh-operation/restore admission. Only a verified synced first receipt permits source_committed -> history_committed
+  and terminal history disclosure. Domain effect success is established only by its own original result. Crash or
+  effect_unknown reconciles that result, never repeats the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_mirror_degraded.schema.json# selects pm.event_payload.forge_mirror_degraded.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  mirror_topology_ref, previous_topology_ref, degradation_evidence_ref and no others. Each domain ref resolves the
+  original mirror_topology or the exact owner result/receipt described above under current access. fact_ref, subject_ref,
+  provider and every domain ref must match the actual captured source field by field; a valid hash or handle alone
+  proves no native provenance. Retain only refs and bounded metadata, never review text, diff/path bodies, raw webhooks
+  or credential content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1205; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.mirror.degraded, is this separate
+  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
+  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
+  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
+  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
+  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
+  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1205 policies without
+  retaining linked content.
+
+
+  Custody/redaction: forge_mirror_degraded_source is canonical non-rebuildable identity/source-lineage, coherently
+  backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained event/payload-pack
+  membership under one Storage restore boundary. It contains no body copy; referenced content retains its own policy.
+  The native source owner holds original provider evidence; only that owner can attest the fact. Storage holds first
+  receipt and full-value commitment. Reads recheck current actor/account permissions, deletion/tombstones, holds
+  and reference availability. Deleted or expired detail becomes unavailable and is never reconstructed from history;
+  no new user-visible history surface is authorized. Missing canonical custody fences and discloses recovery_required;
+  never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Source Control Mirror Health degradation reader as consumer.forge.mirror.degraded.history@1.0.0,
+  fed by projector.forge.mirror.degraded.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable read token explicitly;
+  SP-1205 owns forge_mirror_degraded_checkpoint, exact schema, key, complete global scan, inclusive cursor, CAS,
+  source/receipt joins, derived quarantine/rebuild and compaction/withdrawal fences. The named reader serves the
+  existing owner history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including The committed topology first enters
+  degraded service relative to its prior committed state, with exact lag/divergence/health evidence. Oracle code,
+  shared-number adoption and shared guard-isolation proof are phase 2; native execution NOT_RUN. No test PASS or
+  readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack
+  pack of the complete original producer-owned EventRecord semantic intent (the EventRecord owner preimage, including
+  its exact closed payload and original actor/account/time/causality fields), encoded by the existing owner physical
+  codec. Before source_committed, verify that pack, its exact actual source-derived fields and recomputed owning
+  producer_semantic_digest, and commit the source identity plus pack membership together. This is the restart input
+  for the SAME publication, not a new accepted operation. A lost/damaged pending pack fences and requires coherent
+  backup; current provider state cannot replace it. At history_committed CAS, resolve the original full-value first
+  receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref in that same transaction.
+  Pending reference protection ends only on that real settlement; no hidden permanent body copy or new expiry policy
+  is created. If a needed original domain proof is unavailable before capture, do not accept capture.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-002
+- CV-1205
+- SP-1205
+unblocks: []
+acceptance_criteria:
+- forge.mirror.degraded is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_mirror_degraded.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_mirror_degraded_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_mirror_degraded.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-002
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.mirror.degraded
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1206 - forge.mirror.detached prepared contract
+
+```yaml
+plan_unit_id: FGI-1206
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.mirror.detached@1.0.0 under deck-2 9.a A (DL-450), preserving
+  DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration, runtime_enabled=false.
+  This contract neither changes expected_event_types=[] on existing event-silent commands nor enables any handler.
+  A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.mirror.detached,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-002 and Plans/forge_integration_contracts.schema.json#/$defs/mirror_topology
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: A permitted, disclosed detach completes and commits effective mode detached, preserving
+  the preceding topology and the successful transition receipt. An attempted or uncertain detach remains its truthful
+  owner result and cannot be presented as detached. Detach preserves the recovery/dedupe and capability re-resolution
+  obligations. It never deletes repositories or silently transfers authority. Before/after source snapshots are
+  immutable owner records; event publication never selects a new behavior or resolves a conflicting owner. Result
+  refs must resolve their exact original closed owner shape, not a caller assertion or a current display copy.
+
+
+  Producer and order: ForgeMirrorCoordinator.commit_detach@1.0.0 accepts only the actual native owner result/observation,
+  not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject and admitted
+  provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability controls
+  for new work. Commit forge_mirror_detached_source source identity and domain fact before calling forge.mirror.detached.publish@1.0.0.
+  Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt custody by name, with SP-336/347 group commit/sync and
+  actual fresh-operation/restore admission. Only a verified synced first receipt permits source_committed -> history_committed
+  and terminal history disclosure. Domain effect success is established only by its own original result. Crash or
+  effect_unknown reconciles that result, never repeats the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_mirror_detached.schema.json# selects pm.event_payload.forge_mirror_detached.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  mirror_topology_ref, previous_topology_ref, transition_receipt_ref and no others. Each domain ref resolves the
+  original mirror_topology or the exact owner result/receipt described above under current access. fact_ref, subject_ref,
+  provider and every domain ref must match the actual captured source field by field; a valid hash or handle alone
+  proves no native provenance. Retain only refs and bounded metadata, never review text, diff/path bodies, raw webhooks
+  or credential content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1206; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.mirror.detached, is this separate
+  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
+  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
+  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
+  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
+  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
+  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1206 policies without
+  retaining linked content.
+
+
+  Custody/redaction: forge_mirror_detached_source is canonical non-rebuildable identity/source-lineage, coherently
+  backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained event/payload-pack
+  membership under one Storage restore boundary. It contains no body copy; referenced content retains its own policy.
+  The native source owner holds original provider evidence; only that owner can attest the fact. Storage holds first
+  receipt and full-value commitment. Reads recheck current actor/account permissions, deletion/tombstones, holds
+  and reference availability. Deleted or expired detail becomes unavailable and is never reconstructed from history;
+  no new user-visible history surface is authorized. Missing canonical custody fences and discloses recovery_required;
+  never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Source Control Mirror Health detach-history reader as consumer.forge.mirror.detached.history@1.0.0,
+  fed by projector.forge.mirror.detached.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable read token explicitly;
+  SP-1206 owns forge_mirror_detached_checkpoint, exact schema, key, complete global scan, inclusive cursor, CAS,
+  source/receipt joins, derived quarantine/rebuild and compaction/withdrawal fences. The named reader serves the
+  existing owner history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including A permitted, disclosed detach completes
+  and commits effective mode detached, preserving the preceding topology and the successful transition receipt.
+  Oracle code, shared-number adoption and shared guard-isolation proof are phase 2; native execution NOT_RUN. No
+  test PASS or readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed
+  application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent (the EventRecord
+  owner preimage, including its exact closed payload and original actor/account/time/causality fields), encoded
+  by the existing owner physical codec. Before source_committed, verify that pack, its exact actual source-derived
+  fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack membership together.
+  This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending pack
+  fences and requires coherent backup; current provider state cannot replace it. At history_committed CAS, resolve
+  the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref
+  in that same transaction. Pending reference protection ends only on that real settlement; no hidden permanent
+  body copy or new expiry policy is created. If a needed original domain proof is unavailable before capture, do
+  not accept capture.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-002
+- CV-1206
+- SP-1206
+unblocks: []
+acceptance_criteria:
+- forge.mirror.detached is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_mirror_detached.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_mirror_detached_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_mirror_detached.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-002
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.mirror.detached
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1207 - forge.mirror.status_changed prepared contract
+
+```yaml
+plan_unit_id: FGI-1207
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.mirror.status_changed@1.0.0 under deck-2 9.a A (DL-450),
+  preserving DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration,
+  runtime_enabled=false. This contract neither changes expected_event_types=[] on existing event-silent commands
+  nor enables any handler. A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.mirror.status_changed,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-002 and Plans/forge_integration_contracts.schema.json#/$defs/mirror_topology
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: A committed mirror status changes mode, lag state or health from a particular prior
+  topology snapshot. Store both exact snapshots; unchanged polling is not a transition. This status fact remains
+  distinct from a connect/detach operation receipt and from a particular sync operation outcome. Do not infer authority
+  from direction, claim behind as current, or erase divergence. Any linked operation fact remains separately identified
+  rather than reminted from this status. Before/after source snapshots are immutable owner records; event publication
+  never selects a new behavior or resolves a conflicting owner. Result refs must resolve their exact original closed
+  owner shape, not a caller assertion or a current display copy.
+
+
+  Producer and order: ForgeMirrorCoordinator.commit_status@1.0.0 accepts only the actual native owner result/observation,
+  not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject and admitted
+  provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability controls
+  for new work. Commit forge_mirror_status_changed_source source identity and domain fact before calling forge.mirror.status_changed.publish@1.0.0.
+  Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt custody by name, with SP-336/347 group commit/sync and
+  actual fresh-operation/restore admission. Only a verified synced first receipt permits source_committed -> history_committed
+  and terminal history disclosure. Domain effect success is established only by its own original result. Crash or
+  effect_unknown reconciles that result, never repeats the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_mirror_status_changed.schema.json# selects pm.event_payload.forge_mirror_status_changed.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  mirror_topology_ref, previous_topology_ref, status_evidence_ref and no others. Each domain ref resolves the original
+  mirror_topology or the exact owner result/receipt described above under current access. fact_ref, subject_ref,
+  provider and every domain ref must match the actual captured source field by field; a valid hash or handle alone
+  proves no native provenance. Retain only refs and bounded metadata, never review text, diff/path bodies, raw webhooks
+  or credential content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1207; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.mirror.status_changed, is this separate
+  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
+  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
+  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
+  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
+  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
+  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1207 policies without
+  retaining linked content.
+
+
+  Custody/redaction: forge_mirror_status_changed_source is canonical non-rebuildable identity/source-lineage, coherently
+  backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained event/payload-pack
+  membership under one Storage restore boundary. It contains no body copy; referenced content retains its own policy.
+  The native source owner holds original provider evidence; only that owner can attest the fact. Storage holds first
+  receipt and full-value commitment. Reads recheck current actor/account permissions, deletion/tombstones, holds
+  and reference availability. Deleted or expired detail becomes unavailable and is never reconstructed from history;
+  no new user-visible history surface is authorized. Missing canonical custody fences and discloses recovery_required;
+  never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Source Control Mirror Health status reader as consumer.forge.mirror.status_changed.history@1.0.0,
+  fed by projector.forge.mirror.status_changed.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable read token
+  explicitly; SP-1207 owns forge_mirror_status_changed_checkpoint, exact schema, key, complete global scan, inclusive
+  cursor, CAS, source/receipt joins, derived quarantine/rebuild and compaction/withdrawal fences. The named reader
+  serves the existing owner history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including A committed mirror status changes
+  mode, lag state or health from a particular prior topology snapshot. Oracle code, shared-number adoption and shared
+  guard-isolation proof are phase 2; native execution NOT_RUN. No test PASS or readiness is claimed. Pending capture
+  also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete
+  original producer-owned EventRecord semantic intent (the EventRecord owner preimage, including its exact closed
+  payload and original actor/account/time/causality fields), encoded by the existing owner physical codec. Before
+  source_committed, verify that pack, its exact actual source-derived fields and recomputed owning producer_semantic_digest,
+  and commit the source identity plus pack membership together. This is the restart input for the SAME publication,
+  not a new accepted operation. A lost/damaged pending pack fences and requires coherent backup; current provider
+  state cannot replace it. At history_committed CAS, resolve the original full-value first receipt, verify every
+  intent-to-retained-event semantic join, and clear pending_intent_ref in that same transaction. Pending reference
+  protection ends only on that real settlement; no hidden permanent body copy or new expiry policy is created. If
+  a needed original domain proof is unavailable before capture, do not accept capture.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-002
+- CV-1207
+- SP-1207
+unblocks: []
+acceptance_criteria:
+- forge.mirror.status_changed is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_mirror_status_changed.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_mirror_status_changed_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_mirror_status_changed.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-002
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.mirror.status_changed
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1208 - forge.mirror.sync_completed prepared contract
+
+```yaml
+plan_unit_id: FGI-1208
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.mirror.sync_completed@1.0.0 under deck-2 9.a A (DL-450),
+  preserving DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration,
+  runtime_enabled=false. This contract neither changes expected_event_types=[] on existing event-silent commands
+  nor enables any handler. A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.mirror.sync_completed,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-002 and Plans/forge_integration_contracts.schema.json#/$defs/mirror_topology
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: The exact previously started sync operation settles with a truthful terminal result
+  and source/destination revisions. Completion records the actual succeeded, failed or cancelled outcome; it never
+  implies every sync succeeded. An effect-unknown result requires reconciliation and is not a completed fact. Join
+  the original start, authoritative binding, dedupe identity and revision fence. An error result cannot carry a
+  success indicator or successful exit status. Before/after source snapshots are immutable owner records; event
+  publication never selects a new behavior or resolves a conflicting owner. Result refs must resolve their exact
+  original closed owner shape, not a caller assertion or a current display copy.
+
+
+  Producer and order: ForgeMirrorCoordinator.commit_sync_result@1.0.0 accepts only the actual native owner result/observation,
+  not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject and admitted
+  provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability controls
+  for new work. Commit forge_mirror_sync_completed_source source identity and domain fact before calling forge.mirror.sync_completed.publish@1.0.0.
+  Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt custody by name, with SP-336/347 group commit/sync and
+  actual fresh-operation/restore admission. Only a verified synced first receipt permits source_committed -> history_committed
+  and terminal history disclosure. Domain effect success is established only by its own original result. Crash or
+  effect_unknown reconciles that result, never repeats the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_mirror_sync_completed.schema.json# selects pm.event_payload.forge_mirror_sync_completed.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  mirror_topology_ref, sync_started_fact_ref, sync_result_ref and no others. Each domain ref resolves the original
+  mirror_topology or the exact owner result/receipt described above under current access. fact_ref, subject_ref,
+  provider and every domain ref must match the actual captured source field by field; a valid hash or handle alone
+  proves no native provenance. Retain only refs and bounded metadata, never review text, diff/path bodies, raw webhooks
+  or credential content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1208; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.mirror.sync_completed, is this separate
+  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
+  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
+  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
+  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
+  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
+  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1208 policies without
+  retaining linked content.
+
+
+  Custody/redaction: forge_mirror_sync_completed_source is canonical non-rebuildable identity/source-lineage, coherently
+  backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained event/payload-pack
+  membership under one Storage restore boundary. It contains no body copy; referenced content retains its own policy.
+  The native source owner holds original provider evidence; only that owner can attest the fact. Storage holds first
+  receipt and full-value commitment. Reads recheck current actor/account permissions, deletion/tombstones, holds
+  and reference availability. Deleted or expired detail becomes unavailable and is never reconstructed from history;
+  no new user-visible history surface is authorized. Missing canonical custody fences and discloses recovery_required;
+  never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Source Control mirror sync-result reader as consumer.forge.mirror.sync_completed.history@1.0.0,
+  fed by projector.forge.mirror.sync_completed.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable read token
+  explicitly; SP-1208 owns forge_mirror_sync_completed_checkpoint, exact schema, key, complete global scan, inclusive
+  cursor, CAS, source/receipt joins, derived quarantine/rebuild and compaction/withdrawal fences. The named reader
+  serves the existing owner history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including The exact previously started sync
+  operation settles with a truthful terminal result and source/destination revisions. Oracle code, shared-number
+  adoption and shared guard-isolation proof are phase 2; native execution NOT_RUN. No test PASS or readiness is
+  claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack
+  pack of the complete original producer-owned EventRecord semantic intent (the EventRecord owner preimage, including
+  its exact closed payload and original actor/account/time/causality fields), encoded by the existing owner physical
+  codec. Before source_committed, verify that pack, its exact actual source-derived fields and recomputed owning
+  producer_semantic_digest, and commit the source identity plus pack membership together. This is the restart input
+  for the SAME publication, not a new accepted operation. A lost/damaged pending pack fences and requires coherent
+  backup; current provider state cannot replace it. At history_committed CAS, resolve the original full-value first
+  receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref in that same transaction.
+  Pending reference protection ends only on that real settlement; no hidden permanent body copy or new expiry policy
+  is created. If a needed original domain proof is unavailable before capture, do not accept capture.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-002
+- CV-1208
+- SP-1208
+unblocks: []
+acceptance_criteria:
+- forge.mirror.sync_completed is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_mirror_sync_completed.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_mirror_sync_completed_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_mirror_sync_completed.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-002
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.mirror.sync_completed
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1209 - forge.mirror.sync_started prepared contract
+
+```yaml
+plan_unit_id: FGI-1209
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.mirror.sync_started@1.0.0 under deck-2 9.a A (DL-450),
+  preserving DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration,
+  runtime_enabled=false. This contract neither changes expected_event_types=[] on existing event-silent commands
+  nor enables any handler. A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.mirror.sync_started,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-002 and Plans/forge_integration_contracts.schema.json#/$defs/mirror_topology
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: The mirror owner actually admits and starts the specific sync operation after current
+  authority/revision/permission checks, preserving its accepted intent and ObservableWork. A button press, queued
+  request or elapsed timer does not prove execution started. No secondary provider mutation without current authority.
+  Subsequent recovery resolves this same start identity; retrying delivery of its history never repeats the sync.
+  Before/after source snapshots are immutable owner records; event publication never selects a new behavior or resolves
+  a conflicting owner. Result refs must resolve their exact original closed owner shape, not a caller assertion
+  or a current display copy.
+
+
+  Producer and order: ForgeMirrorCoordinator.commit_sync_start@1.0.0 accepts only the actual native owner result/observation,
+  not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject and admitted
+  provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability controls
+  for new work. Commit forge_mirror_sync_started_source source identity and domain fact before calling forge.mirror.sync_started.publish@1.0.0.
+  Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt custody by name, with SP-336/347 group commit/sync and
+  actual fresh-operation/restore admission. Only a verified synced first receipt permits source_committed -> history_committed
+  and terminal history disclosure. Domain effect success is established only by its own original result. Crash or
+  effect_unknown reconciles that result, never repeats the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_mirror_sync_started.schema.json# selects pm.event_payload.forge_mirror_sync_started.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  mirror_topology_ref, sync_intent_ref, observable_work_ref and no others. Each domain ref resolves the original
+  mirror_topology or the exact owner result/receipt described above under current access. fact_ref, subject_ref,
+  provider and every domain ref must match the actual captured source field by field; a valid hash or handle alone
+  proves no native provenance. Retain only refs and bounded metadata, never review text, diff/path bodies, raw webhooks
+  or credential content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1209; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.mirror.sync_started, is this separate
+  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
+  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
+  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
+  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
+  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
+  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1209 policies without
+  retaining linked content.
+
+
+  Custody/redaction: forge_mirror_sync_started_source is canonical non-rebuildable identity/source-lineage, coherently
+  backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained event/payload-pack
+  membership under one Storage restore boundary. It contains no body copy; referenced content retains its own policy.
+  The native source owner holds original provider evidence; only that owner can attest the fact. Storage holds first
+  receipt and full-value commitment. Reads recheck current actor/account permissions, deletion/tombstones, holds
+  and reference availability. Deleted or expired detail becomes unavailable and is never reconstructed from history;
+  no new user-visible history surface is authorized. Missing canonical custody fences and discloses recovery_required;
+  never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Source Control mirror sync-progress history reader as consumer.forge.mirror.sync_started.history@1.0.0,
+  fed by projector.forge.mirror.sync_started.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable read token
+  explicitly; SP-1209 owns forge_mirror_sync_started_checkpoint, exact schema, key, complete global scan, inclusive
+  cursor, CAS, source/receipt joins, derived quarantine/rebuild and compaction/withdrawal fences. The named reader
+  serves the existing owner history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including The mirror owner actually admits
+  and starts the specific sync operation after current authority/revision/permission checks, preserving its accepted
+  intent and ObservableWork. Oracle code, shared-number adoption and shared guard-isolation proof are phase 2; native
+  execution NOT_RUN. No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory
+  SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic
+  intent (the EventRecord owner preimage, including its exact closed payload and original actor/account/time/causality
+  fields), encoded by the existing owner physical codec. Before source_committed, verify that pack, its exact actual
+  source-derived fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack
+  membership together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged
+  pending pack fences and requires coherent backup; current provider state cannot replace it. At history_committed
+  CAS, resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
+  pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
+  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable before
+  capture, do not accept capture.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-002
+- CV-1209
+- SP-1209
+unblocks: []
+acceptance_criteria:
+- forge.mirror.sync_started is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_mirror_sync_started.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_mirror_sync_started_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_mirror_sync_started.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-002
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.mirror.sync_started
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1210 - forge.pipeline.cancelled prepared contract
+
+```yaml
+plan_unit_id: FGI-1210
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.pipeline.cancelled@1.0.0 under deck-2 9.a A (DL-450), preserving
+  DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration, runtime_enabled=false.
+  This contract neither changes expected_event_types=[] on existing event-silent commands nor enables any handler.
+  A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.pipeline.cancelled,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-005 and Plans/forge_integration_contracts.schema.json#/$defs/pipeline_projection
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: The exact provider pipeline attempt is observed terminal cancelled. The terminal result
+  joins its original start and independent AutomationBinding. Sending a cancel request, accepted cancellation work,
+  timeout or a merely stale cancelled projection is not evidence of terminal cancellation. A provider run is not
+  a Puppet Master run_id. Never manufacture a PM run or infer automation provider/account/generation from repository
+  hosting. Before/after source snapshots are immutable owner records; event publication never selects a new behavior
+  or resolves a conflicting owner. Result refs must resolve their exact original closed owner shape, not a caller
+  assertion or a current display copy.
+
+
+  Producer and order: ForgePipelineObserver.commit_cancelled@1.0.0 accepts only the actual native owner result/observation,
+  not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject and admitted
+  provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability controls
+  for new work. Commit forge_pipeline_cancelled_source source identity and domain fact before calling forge.pipeline.cancelled.publish@1.0.0.
+  Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt custody by name, with SP-336/347 group commit/sync and
+  actual fresh-operation/restore admission. Only a verified synced first receipt permits source_committed -> history_committed
+  and terminal history disclosure. Domain effect success is established only by its own original result. Crash or
+  effect_unknown reconciles that result, never repeats the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_pipeline_cancelled.schema.json# selects pm.event_payload.forge_pipeline_cancelled.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  automation_binding_ref, pipeline_snapshot_ref, start_fact_ref, provider_terminal_result_ref and no others. Each
+  domain ref resolves the original pipeline_projection or the exact owner result/receipt described above under current
+  access. fact_ref, subject_ref, provider and every domain ref must match the actual captured source field by field;
+  a valid hash or handle alone proves no native provenance. Retain only refs and bounded metadata, never review
+  text, diff/path bodies, raw webhooks or credential content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1210; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.pipeline.cancelled, is this separate
+  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
+  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
+  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
+  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
+  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
+  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1210 policies without
+  retaining linked content.
+
+
+  Custody/redaction: forge_pipeline_cancelled_source is canonical non-rebuildable identity/source-lineage, coherently
+  backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained event/payload-pack
+  membership under one Storage restore boundary. It contains no body copy; referenced content retains its own policy.
+  The native source owner holds original provider evidence; only that owner can attest the fact. Storage holds first
+  receipt and full-value commitment. Reads recheck current actor/account permissions, deletion/tombstones, holds
+  and reference availability. Deleted or expired detail becomes unavailable and is never reconstructed from history;
+  no new user-visible history surface is authorized. Missing canonical custody fences and discloses recovery_required;
+  never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Actions & Pipelines cancellation-history reader as consumer.forge.pipeline.cancelled.history@1.0.0,
+  fed by projector.forge.pipeline.cancelled.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable read token
+  explicitly; SP-1210 owns forge_pipeline_cancelled_checkpoint, exact schema, key, complete global scan, inclusive
+  cursor, CAS, source/receipt joins, derived quarantine/rebuild and compaction/withdrawal fences. The named reader
+  serves the existing owner history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including The exact provider pipeline attempt
+  is observed terminal cancelled. Oracle code, shared-number adoption and shared guard-isolation proof are phase
+  2; native execution NOT_RUN. No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref:
+  a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord
+  semantic intent (the EventRecord owner preimage, including its exact closed payload and original actor/account/time/causality
+  fields), encoded by the existing owner physical codec. Before source_committed, verify that pack, its exact actual
+  source-derived fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack
+  membership together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged
+  pending pack fences and requires coherent backup; current provider state cannot replace it. At history_committed
+  CAS, resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
+  pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
+  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable before
+  capture, do not accept capture.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-005
+- CV-1210
+- SP-1210
+unblocks: []
+acceptance_criteria:
+- forge.pipeline.cancelled is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_pipeline_cancelled.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_pipeline_cancelled_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_pipeline_cancelled.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-005
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.pipeline.cancelled
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1211 - forge.pipeline.completed prepared contract
+
+```yaml
+plan_unit_id: FGI-1211
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.pipeline.completed@1.0.0 under deck-2 9.a A (DL-450), preserving
+  DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration, runtime_enabled=false.
+  This contract neither changes expected_event_types=[] on existing event-silent commands nor enables any handler.
+  A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.pipeline.completed,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-005 and Plans/forge_integration_contracts.schema.json#/$defs/pipeline_projection
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: The provider supplies a terminal succeeded, failed or skipped outcome for the exact
+  started attempt. Preserve its jobs/checks completeness and currentness. Cancelled has its own cancelled fact;
+  queued, running, waiting, unknown and effect-unknown are not completed outcomes. The run state is not an individual
+  gate status. Truncated checks retain their cursor and cannot certify the complete required-gate set. Before/after
+  source snapshots are immutable owner records; event publication never selects a new behavior or resolves a conflicting
+  owner. Result refs must resolve their exact original closed owner shape, not a caller assertion or a current display
+  copy.
+
+
+  Producer and order: ForgePipelineObserver.commit_completed@1.0.0 accepts only the actual native owner result/observation,
+  not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject and admitted
+  provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability controls
+  for new work. Commit forge_pipeline_completed_source source identity and domain fact before calling forge.pipeline.completed.publish@1.0.0.
+  Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt custody by name, with SP-336/347 group commit/sync and
+  actual fresh-operation/restore admission. Only a verified synced first receipt permits source_committed -> history_committed
+  and terminal history disclosure. Domain effect success is established only by its own original result. Crash or
+  effect_unknown reconciles that result, never repeats the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_pipeline_completed.schema.json# selects pm.event_payload.forge_pipeline_completed.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  automation_binding_ref, pipeline_snapshot_ref, start_fact_ref, provider_terminal_result_ref and no others. Each
+  domain ref resolves the original pipeline_projection or the exact owner result/receipt described above under current
+  access. fact_ref, subject_ref, provider and every domain ref must match the actual captured source field by field;
+  a valid hash or handle alone proves no native provenance. Retain only refs and bounded metadata, never review
+  text, diff/path bodies, raw webhooks or credential content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1211; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.pipeline.completed, is this separate
+  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
+  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
+  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
+  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
+  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
+  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1211 policies without
+  retaining linked content.
+
+
+  Custody/redaction: forge_pipeline_completed_source is canonical non-rebuildable identity/source-lineage, coherently
+  backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained event/payload-pack
+  membership under one Storage restore boundary. It contains no body copy; referenced content retains its own policy.
+  The native source owner holds original provider evidence; only that owner can attest the fact. Storage holds first
+  receipt and full-value commitment. Reads recheck current actor/account permissions, deletion/tombstones, holds
+  and reference availability. Deleted or expired detail becomes unavailable and is never reconstructed from history;
+  no new user-visible history surface is authorized. Missing canonical custody fences and discloses recovery_required;
+  never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Actions & Pipelines terminal-history reader as consumer.forge.pipeline.completed.history@1.0.0,
+  fed by projector.forge.pipeline.completed.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable read token
+  explicitly; SP-1211 owns forge_pipeline_completed_checkpoint, exact schema, key, complete global scan, inclusive
+  cursor, CAS, source/receipt joins, derived quarantine/rebuild and compaction/withdrawal fences. The named reader
+  serves the existing owner history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including The provider supplies a terminal
+  succeeded, failed or skipped outcome for the exact started attempt. Oracle code, shared-number adoption and shared
+  guard-isolation proof are phase 2; native execution NOT_RUN. No test PASS or readiness is claimed. Pending capture
+  also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete
+  original producer-owned EventRecord semantic intent (the EventRecord owner preimage, including its exact closed
+  payload and original actor/account/time/causality fields), encoded by the existing owner physical codec. Before
+  source_committed, verify that pack, its exact actual source-derived fields and recomputed owning producer_semantic_digest,
+  and commit the source identity plus pack membership together. This is the restart input for the SAME publication,
+  not a new accepted operation. A lost/damaged pending pack fences and requires coherent backup; current provider
+  state cannot replace it. At history_committed CAS, resolve the original full-value first receipt, verify every
+  intent-to-retained-event semantic join, and clear pending_intent_ref in that same transaction. Pending reference
+  protection ends only on that real settlement; no hidden permanent body copy or new expiry policy is created. If
+  a needed original domain proof is unavailable before capture, do not accept capture.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-005
+- CV-1211
+- SP-1211
+unblocks: []
+acceptance_criteria:
+- forge.pipeline.completed is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_pipeline_completed.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_pipeline_completed_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_pipeline_completed.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-005
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.pipeline.completed
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1212 - forge.pipeline.retried prepared contract
+
+```yaml
+plan_unit_id: FGI-1212
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.pipeline.retried@1.0.0 under deck-2 9.a A (DL-450), preserving
+  DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration, runtime_enabled=false.
+  This contract neither changes expected_event_types=[] on existing event-silent commands nor enables any handler.
+  A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.pipeline.retried,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-005 and Plans/forge_integration_contracts.schema.json#/$defs/pipeline_projection
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: An authorized retry has actually created or started the provider attempt identified
+  in its retry result, linked to the exact earlier attempt. A retry request or uncertain result does not prove a
+  new attempt. Same retry operation returns the original attempt and never triggers a second retry. Direct revalidation
+  of the exact automation generation, provider capability, revision, permission and currentness precedes retry.
+  A stale or partial projection alone cannot authorize it. Before/after source snapshots are immutable owner records;
+  event publication never selects a new behavior or resolves a conflicting owner. Result refs must resolve their
+  exact original closed owner shape, not a caller assertion or a current display copy.
+
+
+  Producer and order: ForgePipelineObserver.commit_retry_started@1.0.0 accepts only the actual native owner result/observation,
+  not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject and admitted
+  provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability controls
+  for new work. Commit forge_pipeline_retried_source source identity and domain fact before calling forge.pipeline.retried.publish@1.0.0.
+  Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt custody by name, with SP-336/347 group commit/sync and
+  actual fresh-operation/restore admission. Only a verified synced first receipt permits source_committed -> history_committed
+  and terminal history disclosure. Domain effect success is established only by its own original result. Crash or
+  effect_unknown reconciles that result, never repeats the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_pipeline_retried.schema.json# selects pm.event_payload.forge_pipeline_retried.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  automation_binding_ref, previous_attempt_ref, pipeline_snapshot_ref, retry_result_ref, observable_work_ref and
+  no others. Each domain ref resolves the original pipeline_projection or the exact owner result/receipt described
+  above under current access. fact_ref, subject_ref, provider and every domain ref must match the actual captured
+  source field by field; a valid hash or handle alone proves no native provenance. Retain only refs and bounded
+  metadata, never review text, diff/path bodies, raw webhooks or credential content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1212; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.pipeline.retried, is this separate
+  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
+  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
+  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
+  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
+  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
+  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1212 policies without
+  retaining linked content.
+
+
+  Custody/redaction: forge_pipeline_retried_source is canonical non-rebuildable identity/source-lineage, coherently
+  backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained event/payload-pack
+  membership under one Storage restore boundary. It contains no body copy; referenced content retains its own policy.
+  The native source owner holds original provider evidence; only that owner can attest the fact. Storage holds first
+  receipt and full-value commitment. Reads recheck current actor/account permissions, deletion/tombstones, holds
+  and reference availability. Deleted or expired detail becomes unavailable and is never reconstructed from history;
+  no new user-visible history surface is authorized. Missing canonical custody fences and discloses recovery_required;
+  never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Actions & Pipelines retry-history reader as consumer.forge.pipeline.retried.history@1.0.0,
+  fed by projector.forge.pipeline.retried.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable read token explicitly;
+  SP-1212 owns forge_pipeline_retried_checkpoint, exact schema, key, complete global scan, inclusive cursor, CAS,
+  source/receipt joins, derived quarantine/rebuild and compaction/withdrawal fences. The named reader serves the
+  existing owner history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including An authorized retry has actually
+  created or started the provider attempt identified in its retry result, linked to the exact earlier attempt. Oracle
+  code, shared-number adoption and shared guard-isolation proof are phase 2; native execution NOT_RUN. No test PASS
+  or readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack
+  pack of the complete original producer-owned EventRecord semantic intent (the EventRecord owner preimage, including
+  its exact closed payload and original actor/account/time/causality fields), encoded by the existing owner physical
+  codec. Before source_committed, verify that pack, its exact actual source-derived fields and recomputed owning
+  producer_semantic_digest, and commit the source identity plus pack membership together. This is the restart input
+  for the SAME publication, not a new accepted operation. A lost/damaged pending pack fences and requires coherent
+  backup; current provider state cannot replace it. At history_committed CAS, resolve the original full-value first
+  receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref in that same transaction.
+  Pending reference protection ends only on that real settlement; no hidden permanent body copy or new expiry policy
+  is created. If a needed original domain proof is unavailable before capture, do not accept capture.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-005
+- CV-1212
+- SP-1212
+unblocks: []
+acceptance_criteria:
+- forge.pipeline.retried is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_pipeline_retried.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_pipeline_retried_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_pipeline_retried.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-005
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.pipeline.retried
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1213 - forge.pipeline.started prepared contract
+
+```yaml
+plan_unit_id: FGI-1213
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.pipeline.started@1.0.0 under deck-2 9.a A (DL-450), preserving
+  DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration, runtime_enabled=false.
+  This contract neither changes expected_event_types=[] on existing event-silent commands nor enables any handler.
+  A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.pipeline.started,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-005 and Plans/forge_integration_contracts.schema.json#/$defs/pipeline_projection
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: The provider has actually started the exact automation attempt, as shown by its provider
+  result/current projection; admission or queued ObservableWork alone does not prove a started run. Preserve the
+  immutable attempt identity and selected revision, including an absent review relationship where genuine. Only
+  the actual AutomationBinding selects service/provider/instance/account. Historical/external observations do not
+  manufacture a PM command or ObservableWork. Before/after source snapshots are immutable owner records; event publication
+  never selects a new behavior or resolves a conflicting owner. Result refs must resolve their exact original closed
+  owner shape, not a caller assertion or a current display copy.
+
+
+  Producer and order: ForgePipelineObserver.commit_started@1.0.0 accepts only the actual native owner result/observation,
+  not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject and admitted
+  provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability controls
+  for new work. Commit forge_pipeline_started_source source identity and domain fact before calling forge.pipeline.started.publish@1.0.0.
+  Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt custody by name, with SP-336/347 group commit/sync and
+  actual fresh-operation/restore admission. Only a verified synced first receipt permits source_committed -> history_committed
+  and terminal history disclosure. Domain effect success is established only by its own original result. Crash or
+  effect_unknown reconciles that result, never repeats the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_pipeline_started.schema.json# selects pm.event_payload.forge_pipeline_started.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  automation_binding_ref, pipeline_snapshot_ref, provider_start_result_ref and no others. Each domain ref resolves
+  the original pipeline_projection or the exact owner result/receipt described above under current access. fact_ref,
+  subject_ref, provider and every domain ref must match the actual captured source field by field; a valid hash
+  or handle alone proves no native provenance. Retain only refs and bounded metadata, never review text, diff/path
+  bodies, raw webhooks or credential content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1213; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.pipeline.started, is this separate
+  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
+  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
+  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
+  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
+  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
+  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1213 policies without
+  retaining linked content.
+
+
+  Custody/redaction: forge_pipeline_started_source is canonical non-rebuildable identity/source-lineage, coherently
+  backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained event/payload-pack
+  membership under one Storage restore boundary. It contains no body copy; referenced content retains its own policy.
+  The native source owner holds original provider evidence; only that owner can attest the fact. Storage holds first
+  receipt and full-value commitment. Reads recheck current actor/account permissions, deletion/tombstones, holds
+  and reference availability. Deleted or expired detail becomes unavailable and is never reconstructed from history;
+  no new user-visible history surface is authorized. Missing canonical custody fences and discloses recovery_required;
+  never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Actions & Pipelines start-history reader as consumer.forge.pipeline.started.history@1.0.0,
+  fed by projector.forge.pipeline.started.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable read token explicitly;
+  SP-1213 owns forge_pipeline_started_checkpoint, exact schema, key, complete global scan, inclusive cursor, CAS,
+  source/receipt joins, derived quarantine/rebuild and compaction/withdrawal fences. The named reader serves the
+  existing owner history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including The provider has actually started
+  the exact automation attempt, as shown by its provider result/current projection; admission or queued ObservableWork
+  alone does not prove a started run. Oracle code, shared-number adoption and shared guard-isolation proof are phase
+  2; native execution NOT_RUN. No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref:
+  a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord
+  semantic intent (the EventRecord owner preimage, including its exact closed payload and original actor/account/time/causality
+  fields), encoded by the existing owner physical codec. Before source_committed, verify that pack, its exact actual
+  source-derived fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack
+  membership together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged
+  pending pack fences and requires coherent backup; current provider state cannot replace it. At history_committed
+  CAS, resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
+  pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
+  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable before
+  capture, do not accept capture.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-005
+- CV-1213
+- SP-1213
+unblocks: []
+acceptance_criteria:
+- forge.pipeline.started is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_pipeline_started.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_pipeline_started_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_pipeline_started.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-005
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.pipeline.started
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1214 - forge.repository.authority_changed prepared contract
+
+```yaml
+plan_unit_id: FGI-1214
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.repository.authority_changed@1.0.0 under deck-2 9.a A (DL-450),
+  preserving DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration,
+  runtime_enabled=false. This contract neither changes expected_event_types=[] on existing event-silent commands
+  nor enables any handler. A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.repository.authority_changed,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-002 and Plans/forge_integration_contracts.schema.json#/$defs/repository_binding
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: A disclosed authorized transfer commits the requested/effective repository-function
+  authority change between the exact prior and next bindings. The transfer receipt and revision fences prove the
+  same storage/review/checks/issues/transport/mirror role. Actor-permission or account changes are different facts.
+  Legacy repository automation role is compatibility projection only; a transfer cannot select AutomationBinding,
+  silently mutate a secondary, or infer a role from origin/upstream. Before/after source snapshots are immutable
+  owner records; event publication never selects a new behavior or resolves a conflicting owner. Result refs must
+  resolve their exact original closed owner shape, not a caller assertion or a current display copy.
+
+
+  Producer and order: ForgeAuthorityCoordinator.commit_transfer@1.0.0 accepts only the actual native owner result/observation,
+  not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject and admitted
+  provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability controls
+  for new work. Commit forge_repository_authority_changed_source source identity and domain fact before calling
+  forge.repository.authority_changed.publish@1.0.0. Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt custody
+  by name, with SP-336/347 group commit/sync and actual fresh-operation/restore admission. Only a verified synced
+  first receipt permits source_committed -> history_committed and terminal history disclosure. Domain effect success
+  is established only by its own original result. Crash or effect_unknown reconciles that result, never repeats
+  the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_repository_authority_changed.schema.json# selects pm.event_payload.forge_repository_authority_changed.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  previous_binding_ref, repository_binding_ref, transfer_receipt_ref and no others. Each domain ref resolves the
+  original repository_binding or the exact owner result/receipt described above under current access. fact_ref,
+  subject_ref, provider and every domain ref must match the actual captured source field by field; a valid hash
+  or handle alone proves no native provenance. Retain only refs and bounded metadata, never review text, diff/path
+  bodies, raw webhooks or credential content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1214; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.repository.authority_changed, is this
+  separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or
+  another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year
+  is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?
+  WAVE3 permits this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains
+  materially_incomplete under Case L-3. G01/G05/G26 were checked against the actual answered populations and do
+  not name this Forge family. Source identity/receipt refs and derived checkpoints keep the independently justified
+  SP-1214 policies without retaining linked content.
+
+
+  Custody/redaction: forge_repository_authority_changed_source is canonical non-rebuildable identity/source-lineage,
+  coherently backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained
+  event/payload-pack membership under one Storage restore boundary. It contains no body copy; referenced content
+  retains its own policy. The native source owner holds original provider evidence; only that owner can attest the
+  fact. Storage holds first receipt and full-value commitment. Reads recheck current actor/account permissions,
+  deletion/tombstones, holds and reference availability. Deleted or expired detail becomes unavailable and is never
+  reconstructed from history; no new user-visible history surface is authorized. Missing canonical custody fences
+  and discloses recovery_required; never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Source Control Source of Truth history reader as consumer.forge.repository.authority_changed.history@1.0.0,
+  fed by projector.forge.repository.authority_changed.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable
+  read token explicitly; SP-1214 owns forge_repository_authority_changed_checkpoint, exact schema, key, complete
+  global scan, inclusive cursor, CAS, source/receipt joins, derived quarantine/rebuild and compaction/withdrawal
+  fences. The named reader serves the existing owner history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including A disclosed authorized transfer
+  commits the requested/effective repository-function authority change between the exact prior and next bindings.
+  Oracle code, shared-number adoption and shared guard-isolation proof are phase 2; native execution NOT_RUN. No
+  test PASS or readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed
+  application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent (the EventRecord
+  owner preimage, including its exact closed payload and original actor/account/time/causality fields), encoded
+  by the existing owner physical codec. Before source_committed, verify that pack, its exact actual source-derived
+  fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack membership together.
+  This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending pack
+  fences and requires coherent backup; current provider state cannot replace it. At history_committed CAS, resolve
+  the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref
+  in that same transaction. Pending reference protection ends only on that real settlement; no hidden permanent
+  body copy or new expiry policy is created. If a needed original domain proof is unavailable before capture, do
+  not accept capture.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-002
+- CV-1214
+- SP-1214
+unblocks: []
+acceptance_criteria:
+- forge.repository.authority_changed is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_repository_authority_changed.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_repository_authority_changed_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_repository_authority_changed.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-002
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.repository.authority_changed
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1215 - forge.repository.created prepared contract
+
+```yaml
+plan_unit_id: FGI-1215
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.repository.created@1.0.0 under deck-2 9.a A (DL-450), preserving
+  DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration, runtime_enabled=false.
+  This contract neither changes expected_event_types=[] on existing event-silent commands nor enables any handler.
+  A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.repository.created,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-023 and Plans/forge_integration_contracts.schema.json#/$defs/repository_binding
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: The create owner has verified the remote repository identity after a successful actual
+  create for the exact reviewed provider/variant/instance/account/container/options. Accepted, effect-unknown, a
+  reused existing repository or a URL without verified create proof does not mean created. PJCT-007/010 original
+  result, idempotency and reconciliation remain authoritative. A history retry cannot create another repository
+  or automatically delete one; no paid signup or site publication is implied. Before/after source snapshots are
+  immutable owner records; event publication never selects a new behavior or resolves a conflicting owner. Result
+  refs must resolve their exact original closed owner shape, not a caller assertion or a current display copy.
+
+
+  Producer and order: ForgeRepositoryCreate.commit_verified_result@1.0.0 accepts only the actual native owner result/observation,
+  not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject and admitted
+  provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability controls
+  for new work. Commit forge_repository_created_source source identity and domain fact before calling forge.repository.created.publish@1.0.0.
+  Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt custody by name, with SP-336/347 group commit/sync and
+  actual fresh-operation/restore admission. Only a verified synced first receipt permits source_committed -> history_committed
+  and terminal history disclosure. Domain effect success is established only by its own original result. Crash or
+  effect_unknown reconciles that result, never repeats the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_repository_created.schema.json# selects pm.event_payload.forge_repository_created.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  repository_binding_ref, verified_create_result_ref, create_receipt_ref and no others. Each domain ref resolves
+  the original repository_binding or the exact owner result/receipt described above under current access. fact_ref,
+  subject_ref, provider and every domain ref must match the actual captured source field by field; a valid hash
+  or handle alone proves no native provenance. Retain only refs and bounded metadata, never review text, diff/path
+  bodies, raw webhooks or credential content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1215; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.repository.created, is this separate
+  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
+  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
+  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
+  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
+  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
+  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1215 policies without
+  retaining linked content.
+
+
+  Custody/redaction: forge_repository_created_source is canonical non-rebuildable identity/source-lineage, coherently
+  backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained event/payload-pack
+  membership under one Storage restore boundary. It contains no body copy; referenced content retains its own policy.
+  The native source owner holds original provider evidence; only that owner can attest the fact. Storage holds first
+  receipt and full-value commitment. Reads recheck current actor/account permissions, deletion/tombstones, holds
+  and reference availability. Deleted or expired detail becomes unavailable and is never reconstructed from history;
+  no new user-visible history surface is authorized. Missing canonical custody fences and discloses recovery_required;
+  never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Project online-repository origin reader as consumer.forge.repository.created.history@1.0.0,
+  fed by projector.forge.repository.created.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable read token
+  explicitly; SP-1215 owns forge_repository_created_checkpoint, exact schema, key, complete global scan, inclusive
+  cursor, CAS, source/receipt joins, derived quarantine/rebuild and compaction/withdrawal fences. The named reader
+  serves the existing owner history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including The create owner has verified the
+  remote repository identity after a successful actual create for the exact reviewed provider/variant/instance/account/container/options.
+  Oracle code, shared-number adoption and shared guard-isolation proof are phase 2; native execution NOT_RUN. No
+  test PASS or readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed
+  application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent (the EventRecord
+  owner preimage, including its exact closed payload and original actor/account/time/causality fields), encoded
+  by the existing owner physical codec. Before source_committed, verify that pack, its exact actual source-derived
+  fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack membership together.
+  This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending pack
+  fences and requires coherent backup; current provider state cannot replace it. At history_committed CAS, resolve
+  the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref
+  in that same transaction. Pending reference protection ends only on that real settlement; no hidden permanent
+  body copy or new expiry policy is created. If a needed original domain proof is unavailable before capture, do
+  not accept capture.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-023
+- CV-1215
+- SP-1215
+unblocks: []
+acceptance_criteria:
+- forge.repository.created is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_repository_created.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_repository_created_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_repository_created.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-023
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.repository.created
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1216 - forge.repository.discovered prepared contract
+
+```yaml
+plan_unit_id: FGI-1216
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.repository.discovered@1.0.0 under deck-2 9.a A (DL-450),
+  preserving DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration,
+  runtime_enabled=false. This contract neither changes expected_event_types=[] on existing event-silent commands
+  nor enables any handler. A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.repository.discovered,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-023 and Plans/forge_integration_contracts.schema.json#/$defs/repository_binding
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: Verified discovery resolves one stable repository identity in the exact admitted account/instance/owner
+  discovery scope and result page. It records that observation, not a repository creation or Project binding. A
+  pasted locator, inaccessible item or unverified URL cannot stand for discovery. The list may occur before a Project/repository
+  binding exists. Preserve explicit scope and pagination/coverage; incomplete discovery cannot assert absence and
+  no account/write authority follows. Before/after source snapshots are immutable owner records; event publication
+  never selects a new behavior or resolves a conflicting owner. Result refs must resolve their exact original closed
+  owner shape, not a caller assertion or a current display copy.
+
+
+  Producer and order: ForgeRepositoryDiscovery.commit_verified_item@1.0.0 accepts only the actual native owner result/observation,
+  not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject and admitted
+  provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability controls
+  for new work. Commit forge_repository_discovered_source source identity and domain fact before calling forge.repository.discovered.publish@1.0.0.
+  Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt custody by name, with SP-336/347 group commit/sync and
+  actual fresh-operation/restore admission. Only a verified synced first receipt permits source_committed -> history_committed
+  and terminal history disclosure. Domain effect success is established only by its own original result. Crash or
+  effect_unknown reconciles that result, never repeats the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_repository_discovered.schema.json# selects pm.event_payload.forge_repository_discovered.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  discovery_scope_ref, repository_identity_ref, discovery_result_ref and no others. Each domain ref resolves the
+  original repository_binding or the exact owner result/receipt described above under current access. fact_ref,
+  subject_ref, provider and every domain ref must match the actual captured source field by field; a valid hash
+  or handle alone proves no native provenance. Retain only refs and bounded metadata, never review text, diff/path
+  bodies, raw webhooks or credential content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1216; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.repository.discovered, is this separate
+  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
+  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
+  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
+  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
+  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
+  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1216 policies without
+  retaining linked content.
+
+
+  Custody/redaction: forge_repository_discovered_source is canonical non-rebuildable identity/source-lineage, coherently
+  backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained event/payload-pack
+  membership under one Storage restore boundary. It contains no body copy; referenced content retains its own policy.
+  The native source owner holds original provider evidence; only that owner can attest the fact. Storage holds first
+  receipt and full-value commitment. Reads recheck current actor/account permissions, deletion/tombstones, holds
+  and reference availability. Deleted or expired detail becomes unavailable and is never reconstructed from history;
+  no new user-visible history surface is authorized. Missing canonical custody fences and discloses recovery_required;
+  never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Hosting Services repository-discovery history reader as consumer.forge.repository.discovered.history@1.0.0,
+  fed by projector.forge.repository.discovered.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable read token
+  explicitly; SP-1216 owns forge_repository_discovered_checkpoint, exact schema, key, complete global scan, inclusive
+  cursor, CAS, source/receipt joins, derived quarantine/rebuild and compaction/withdrawal fences. The named reader
+  serves the existing owner history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including Verified discovery resolves one
+  stable repository identity in the exact admitted account/instance/owner discovery scope and result page. Oracle
+  code, shared-number adoption and shared guard-isolation proof are phase 2; native execution NOT_RUN. No test PASS
+  or readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack
+  pack of the complete original producer-owned EventRecord semantic intent (the EventRecord owner preimage, including
+  its exact closed payload and original actor/account/time/causality fields), encoded by the existing owner physical
+  codec. Before source_committed, verify that pack, its exact actual source-derived fields and recomputed owning
+  producer_semantic_digest, and commit the source identity plus pack membership together. This is the restart input
+  for the SAME publication, not a new accepted operation. A lost/damaged pending pack fences and requires coherent
+  backup; current provider state cannot replace it. At history_committed CAS, resolve the original full-value first
+  receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref in that same transaction.
+  Pending reference protection ends only on that real settlement; no hidden permanent body copy or new expiry policy
+  is created. If a needed original domain proof is unavailable before capture, do not accept capture.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-023
+- CV-1216
+- SP-1216
+unblocks: []
+acceptance_criteria:
+- forge.repository.discovered is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_repository_discovered.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_repository_discovered_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_repository_discovered.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-023
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.repository.discovered
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1217 - forge.repository.eligibility_changed prepared contract
+
+```yaml
+plan_unit_id: FGI-1217
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.repository.eligibility_changed@1.0.0 under deck-2 9.a A
+  (DL-450), preserving DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration,
+  runtime_enabled=false. This contract neither changes expected_event_types=[] on existing event-silent commands
+  nor enables any handler. A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.repository.eligibility_changed,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-003 and Plans/forge_integration_contracts.schema.json#/$defs/capability_envelope
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: A settled repository eligibility assessment for one requested operation changes from
+  its prior assessment under the actual provider admission, access, capability and currentness evidence. Repeated
+  assessment with the same outcome is not a change. Eligibility is specific to an operation and current binding,
+  not a global permission bit. Retired providers, transport-only routes and deferred restricted-token support remain
+  refused. Before/after source snapshots are immutable owner records; event publication never selects a new behavior
+  or resolves a conflicting owner. Result refs must resolve their exact original closed owner shape, not a caller
+  assertion or a current display copy.
+
+
+  Producer and order: ForgeRepositoryEligibility.commit_assessment@1.0.0 accepts only the actual native owner result/observation,
+  not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject and admitted
+  provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability controls
+  for new work. Commit forge_repository_eligibility_changed_source source identity and domain fact before calling
+  forge.repository.eligibility_changed.publish@1.0.0. Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt
+  custody by name, with SP-336/347 group commit/sync and actual fresh-operation/restore admission. Only a verified
+  synced first receipt permits source_committed -> history_committed and terminal history disclosure. Domain effect
+  success is established only by its own original result. Crash or effect_unknown reconciles that result, never
+  repeats the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_repository_eligibility_changed.schema.json# selects pm.event_payload.forge_repository_eligibility_changed.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  repository_identity_ref, eligibility_snapshot_ref, previous_eligibility_snapshot_ref and no others. Each domain
+  ref resolves the original capability_envelope or the exact owner result/receipt described above under current
+  access. fact_ref, subject_ref, provider and every domain ref must match the actual captured source field by field;
+  a valid hash or handle alone proves no native provenance. Retain only refs and bounded metadata, never review
+  text, diff/path bodies, raw webhooks or credential content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1217; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.repository.eligibility_changed, is
+  this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry,
+  or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run
+  year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?
+  WAVE3 permits this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains
+  materially_incomplete under Case L-3. G01/G05/G26 were checked against the actual answered populations and do
+  not name this Forge family. Source identity/receipt refs and derived checkpoints keep the independently justified
+  SP-1217 policies without retaining linked content.
+
+
+  Custody/redaction: forge_repository_eligibility_changed_source is canonical non-rebuildable identity/source-lineage,
+  coherently backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained
+  event/payload-pack membership under one Storage restore boundary. It contains no body copy; referenced content
+  retains its own policy. The native source owner holds original provider evidence; only that owner can attest the
+  fact. Storage holds first receipt and full-value commitment. Reads recheck current actor/account permissions,
+  deletion/tombstones, holds and reference availability. Deleted or expired detail becomes unavailable and is never
+  reconstructed from history; no new user-visible history surface is authorized. Missing canonical custody fences
+  and discloses recovery_required; never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Source Control repository eligibility-history reader as consumer.forge.repository.eligibility_changed.history@1.0.0,
+  fed by projector.forge.repository.eligibility_changed.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable
+  read token explicitly; SP-1217 owns forge_repository_eligibility_changed_checkpoint, exact schema, key, complete
+  global scan, inclusive cursor, CAS, source/receipt joins, derived quarantine/rebuild and compaction/withdrawal
+  fences. The named reader serves the existing owner history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including A settled repository eligibility
+  assessment for one requested operation changes from its prior assessment under the actual provider admission,
+  access, capability and currentness evidence. Oracle code, shared-number adoption and shared guard-isolation proof
+  are phase 2; native execution NOT_RUN. No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref:
+  a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord
+  semantic intent (the EventRecord owner preimage, including its exact closed payload and original actor/account/time/causality
+  fields), encoded by the existing owner physical codec. Before source_committed, verify that pack, its exact actual
+  source-derived fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack
+  membership together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged
+  pending pack fences and requires coherent backup; current provider state cannot replace it. At history_committed
+  CAS, resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
+  pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
+  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable before
+  capture, do not accept capture.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-003
+- CV-1217
+- SP-1217
+unblocks: []
+acceptance_criteria:
+- forge.repository.eligibility_changed is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_repository_eligibility_changed.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_repository_eligibility_changed_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_repository_eligibility_changed.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-003
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.repository.eligibility_changed
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1218 - forge.review.approved prepared contract
+
+```yaml
+plan_unit_id: FGI-1218
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.review.approved@1.0.0 under deck-2 9.a A (DL-450), preserving
+  DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration, runtime_enabled=false.
+  This contract neither changes expected_event_types=[] on existing event-silent commands nor enables any handler.
+  A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.review.approved,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-020 and Plans/forge_integration_contracts.schema.json#/$defs/review_revision
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: One provider-native approval vote is saved for the exact reviewer and immutable review
+  revision, using provider-asserted revision binding or the explicitly recorded Puppet Master observation binding.
+  A missing binding cannot be shown as current approval. Preserve the required-reviewer fact and native vote identity.
+  A vote recorded against an earlier revision stays historical after any base/head/merge-base change. It never becomes
+  an Orchestrator approval.granted record or authorizes merge by itself. Before/after source snapshots are immutable
+  owner records; event publication never selects a new behavior or resolves a conflicting owner. Result refs must
+  resolve their exact original closed owner shape, not a caller assertion or a current display copy.
+
+
+  Producer and order: ForgeReviewVoteObserver.commit_approval@1.0.0 accepts only the actual native owner result/observation,
+  not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject and admitted
+  provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability controls
+  for new work. Commit forge_review_approved_source source identity and domain fact before calling forge.review.approved.publish@1.0.0.
+  Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt custody by name, with SP-336/347 group commit/sync and
+  actual fresh-operation/restore admission. Only a verified synced first receipt permits source_committed -> history_committed
+  and terminal history disclosure. Domain effect success is established only by its own original result. Crash or
+  effect_unknown reconciles that result, never repeats the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_review_approved.schema.json# selects pm.event_payload.forge_review_approved.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  review_revision_ref, reviewer_ref, vote_record_ref and no others. Each domain ref resolves the original review_revision
+  or the exact owner result/receipt described above under current access. fact_ref, subject_ref, provider and every
+  domain ref must match the actual captured source field by field; a valid hash or handle alone proves no native
+  provenance. Retain only refs and bounded metadata, never review text, diff/path bodies, raw webhooks or credential
+  content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1218; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0. The current review approval is the exact
+  Approval class in Storage Case L-3, read with FGI-004/020; this does not retain review bodies, grant merge authority
+  or import G01/G05 by analogy. Source/ref and checkpoint policies are independently bound by SP-1218.
+
+
+  Custody/redaction: forge_review_approved_source is canonical non-rebuildable identity/source-lineage, coherently
+  backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained event/payload-pack
+  membership under one Storage restore boundary. It contains no body copy; referenced content retains its own policy.
+  The native source owner holds original provider evidence; only that owner can attest the fact. Storage holds first
+  receipt and full-value commitment. Reads recheck current actor/account permissions, deletion/tombstones, holds
+  and reference availability. Deleted or expired detail becomes unavailable and is never reconstructed from history;
+  no new user-visible history surface is authorized. Missing canonical custody fences and discloses recovery_required;
+  never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Source Control review-approval history reader as consumer.forge.review.approved.history@1.0.0,
+  fed by projector.forge.review.approved.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable read token explicitly;
+  SP-1218 owns forge_review_approved_checkpoint, exact schema, key, complete global scan, inclusive cursor, CAS,
+  source/receipt joins, derived quarantine/rebuild and compaction/withdrawal fences. The named reader serves the
+  existing owner history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including One provider-native approval vote
+  is saved for the exact reviewer and immutable review revision, using provider-asserted revision binding or the
+  explicitly recorded Puppet Master observation binding. Oracle code, shared-number adoption and shared guard-isolation
+  proof are phase 2; native execution NOT_RUN. No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref:
+  a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord
+  semantic intent (the EventRecord owner preimage, including its exact closed payload and original actor/account/time/causality
+  fields), encoded by the existing owner physical codec. Before source_committed, verify that pack, its exact actual
+  source-derived fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack
+  membership together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged
+  pending pack fences and requires coherent backup; current provider state cannot replace it. At history_committed
+  CAS, resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
+  pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
+  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable before
+  capture, do not accept capture. Newly authored exact vote-source closure for this family: its canonical source
+  row also stores the closed vote_evidence object in Plans/forge_event_storage_contracts.schema.json, with provider,
+  reviewer_ref, review_revision_ref, native_vote_ref, vote_value=approved, required_reviewer (exact boolean), revision_binding_kind
+  (provider-asserted or observed_by_puppet_master) and binding_evidence_ref. These original non-content decision
+  scalars are the explicit exception to the source row refs/commitments-only description, not a review text/body
+  copy. All vote and revision fields must join the authenticated original provider result; an observed binding resolves
+  the actual original observation against the full review triple, and a provider-asserted binding resolves the provider-supplied
+  revision. Required-reviewer status is the original source fact, not a present-day policy substitution. Same original
+  native vote identity returns this same source row and never remints history. This is a new per-family source grammar
+  within the approved missing technical definitions, not a claim that FGI-020 already had a materialized generic
+  carrier or a new generic vote family. Source lineage retains these bounded decision facts under Case L-3; it grants
+  no access to referenced content and chooses no separate event lifetime.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-020
+- CV-1218
+- SP-1218
+unblocks: []
+acceptance_criteria:
+- forge.review.approved is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_review_approved.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_review_approved_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_review_approved.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-020
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.review.approved
+- SP-286
+- CV-339
+- SP-278
+- RP-AUTHORITY-INDEFINITE
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1219 - forge.review.changes_requested prepared contract
+
+```yaml
+plan_unit_id: FGI-1219
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.review.changes_requested@1.0.0 under deck-2 9.a A (DL-450),
+  preserving DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration,
+  runtime_enabled=false. This contract neither changes expected_event_types=[] on existing event-silent commands
+  nor enables any handler. A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.review.changes_requested,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-020 and Plans/forge_integration_contracts.schema.json#/$defs/review_revision
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: One provider-native changes-requested vote is saved with exact reviewer, immutable
+  revision, required-reviewer fact and provider-asserted or observed revision binding. Requesting a review, posting
+  an ordinary comment or an unbound vote is not this fact. Do not translate another provider vote value to changes_requested
+  without its owner mapping. A later revision preserves this vote as historical and never silently carries its authority
+  forward. Before/after source snapshots are immutable owner records; event publication never selects a new behavior
+  or resolves a conflicting owner. Result refs must resolve their exact original closed owner shape, not a caller
+  assertion or a current display copy.
+
+
+  Producer and order: ForgeReviewVoteObserver.commit_changes_requested@1.0.0 accepts only the actual native owner
+  result/observation, not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject
+  and admitted provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability
+  controls for new work. Commit forge_review_changes_requested_source source identity and domain fact before calling
+  forge.review.changes_requested.publish@1.0.0. Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt custody
+  by name, with SP-336/347 group commit/sync and actual fresh-operation/restore admission. Only a verified synced
+  first receipt permits source_committed -> history_committed and terminal history disclosure. Domain effect success
+  is established only by its own original result. Crash or effect_unknown reconciles that result, never repeats
+  the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_review_changes_requested.schema.json# selects pm.event_payload.forge_review_changes_requested.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  review_revision_ref, reviewer_ref, vote_record_ref and no others. Each domain ref resolves the original review_revision
+  or the exact owner result/receipt described above under current access. fact_ref, subject_ref, provider and every
+  domain ref must match the actual captured source field by field; a valid hash or handle alone proves no native
+  provenance. Retain only refs and bounded metadata, never review text, diff/path bodies, raw webhooks or credential
+  content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1219; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.review.changes_requested, is this
+  separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or
+  another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year
+  is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?
+  WAVE3 permits this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains
+  materially_incomplete under Case L-3. G01/G05/G26 were checked against the actual answered populations and do
+  not name this Forge family. Source identity/receipt refs and derived checkpoints keep the independently justified
+  SP-1219 policies without retaining linked content.
+
+
+  Custody/redaction: forge_review_changes_requested_source is canonical non-rebuildable identity/source-lineage,
+  coherently backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained
+  event/payload-pack membership under one Storage restore boundary. It contains no body copy; referenced content
+  retains its own policy. The native source owner holds original provider evidence; only that owner can attest the
+  fact. Storage holds first receipt and full-value commitment. Reads recheck current actor/account permissions,
+  deletion/tombstones, holds and reference availability. Deleted or expired detail becomes unavailable and is never
+  reconstructed from history; no new user-visible history surface is authorized. Missing canonical custody fences
+  and discloses recovery_required; never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Source Control review changes-requested history reader as consumer.forge.review.changes_requested.history@1.0.0,
+  fed by projector.forge.review.changes_requested.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable read
+  token explicitly; SP-1219 owns forge_review_changes_requested_checkpoint, exact schema, key, complete global scan,
+  inclusive cursor, CAS, source/receipt joins, derived quarantine/rebuild and compaction/withdrawal fences. The
+  named reader serves the existing owner history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including One provider-native changes-requested
+  vote is saved with exact reviewer, immutable revision, required-reviewer fact and provider-asserted or observed
+  revision binding. Oracle code, shared-number adoption and shared guard-isolation proof are phase 2; native execution
+  NOT_RUN. No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337
+  BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent
+  (the EventRecord owner preimage, including its exact closed payload and original actor/account/time/causality
+  fields), encoded by the existing owner physical codec. Before source_committed, verify that pack, its exact actual
+  source-derived fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack
+  membership together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged
+  pending pack fences and requires coherent backup; current provider state cannot replace it. At history_committed
+  CAS, resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
+  pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
+  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable before
+  capture, do not accept capture. Newly authored exact vote-source closure for this family: its canonical source
+  row also stores the closed vote_evidence object in Plans/forge_event_storage_contracts.schema.json, with provider,
+  reviewer_ref, review_revision_ref, native_vote_ref, vote_value=changes_requested, required_reviewer (exact boolean),
+  revision_binding_kind (provider-asserted or observed_by_puppet_master) and binding_evidence_ref. These original
+  non-content decision scalars are the explicit exception to the source row refs/commitments-only description, not
+  a review text/body copy. All vote and revision fields must join the authenticated original provider result; an
+  observed binding resolves the actual original observation against the full review triple, and a provider-asserted
+  binding resolves the provider-supplied revision. Required-reviewer status is the original source fact, not a present-day
+  policy substitution. Same original native vote identity returns this same source row and never remints history.
+  This is a new per-family source grammar within the approved missing technical definitions, not a claim that FGI-020
+  already had a materialized generic carrier or a new generic vote family. Source lineage retains these bounded
+  decision facts under Case L-3; it grants no access to referenced content and chooses no separate event lifetime.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-020
+- CV-1219
+- SP-1219
+unblocks: []
+acceptance_criteria:
+- forge.review.changes_requested is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_review_changes_requested.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_review_changes_requested_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_review_changes_requested.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-020
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.review.changes_requested
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1220 - forge.review.closed prepared contract
+
+```yaml
+plan_unit_id: FGI-1220
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.review.closed@1.0.0 under deck-2 9.a A (DL-450), preserving
+  DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration, runtime_enabled=false.
+  This contract neither changes expected_event_types=[] on existing event-silent commands nor enables any handler.
+  A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.review.closed,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-004 and Plans/forge_integration_contracts.schema.json#/$defs/review_revision
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: The provider review has actually changed from open to closed without merge, preserving
+  its exact current immutable revision and successful close result/observation. A close request or merged review
+  is not this close-without-merge fact. Failure or uncertainty leaves the truthful earlier state. Replaying history
+  never sends close to the provider again or deletes review comments. Before/after source snapshots are immutable
+  owner records; event publication never selects a new behavior or resolves a conflicting owner. Result refs must
+  resolve their exact original closed owner shape, not a caller assertion or a current display copy.
+
+
+  Producer and order: ForgeReviewLifecycle.commit_closed@1.0.0 accepts only the actual native owner result/observation,
+  not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject and admitted
+  provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability controls
+  for new work. Commit forge_review_closed_source source identity and domain fact before calling forge.review.closed.publish@1.0.0.
+  Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt custody by name, with SP-336/347 group commit/sync and
+  actual fresh-operation/restore admission. Only a verified synced first receipt permits source_committed -> history_committed
+  and terminal history disclosure. Domain effect success is established only by its own original result. Crash or
+  effect_unknown reconciles that result, never repeats the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_review_closed.schema.json# selects pm.event_payload.forge_review_closed.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  review_revision_ref, previous_review_snapshot_ref, review_snapshot_ref, close_result_ref and no others. Each domain
+  ref resolves the original review_revision or the exact owner result/receipt described above under current access.
+  fact_ref, subject_ref, provider and every domain ref must match the actual captured source field by field; a valid
+  hash or handle alone proves no native provenance. Retain only refs and bounded metadata, never review text, diff/path
+  bodies, raw webhooks or credential content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1220; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.review.closed, is this separate Forge
+  history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact
+  policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
+  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
+  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
+  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
+  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1220 policies without
+  retaining linked content.
+
+
+  Custody/redaction: forge_review_closed_source is canonical non-rebuildable identity/source-lineage, coherently
+  backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained event/payload-pack
+  membership under one Storage restore boundary. It contains no body copy; referenced content retains its own policy.
+  The native source owner holds original provider evidence; only that owner can attest the fact. Storage holds first
+  receipt and full-value commitment. Reads recheck current actor/account permissions, deletion/tombstones, holds
+  and reference availability. Deleted or expired detail becomes unavailable and is never reconstructed from history;
+  no new user-visible history surface is authorized. Missing canonical custody fences and discloses recovery_required;
+  never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Source Control review closure-history reader as consumer.forge.review.closed.history@1.0.0,
+  fed by projector.forge.review.closed.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable read token explicitly;
+  SP-1220 owns forge_review_closed_checkpoint, exact schema, key, complete global scan, inclusive cursor, CAS, source/receipt
+  joins, derived quarantine/rebuild and compaction/withdrawal fences. The named reader serves the existing owner
+  history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including The provider review has actually
+  changed from open to closed without merge, preserving its exact current immutable revision and successful close
+  result/observation. Oracle code, shared-number adoption and shared guard-isolation proof are phase 2; native execution
+  NOT_RUN. No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337
+  BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent
+  (the EventRecord owner preimage, including its exact closed payload and original actor/account/time/causality
+  fields), encoded by the existing owner physical codec. Before source_committed, verify that pack, its exact actual
+  source-derived fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack
+  membership together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged
+  pending pack fences and requires coherent backup; current provider state cannot replace it. At history_committed
+  CAS, resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
+  pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
+  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable before
+  capture, do not accept capture.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-004
+- CV-1220
+- SP-1220
+unblocks: []
+acceptance_criteria:
+- forge.review.closed is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_review_closed.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_review_closed_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_review_closed.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-004
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.review.closed
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1221 - forge.review.created prepared contract
+
+```yaml
+plan_unit_id: FGI-1221
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.review.created@1.0.0 under deck-2 9.a A (DL-450), preserving
+  DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration, runtime_enabled=false.
+  This contract neither changes expected_event_types=[] on existing event-silent commands nor enables any handler.
+  A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.review.created,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-004 and Plans/forge_integration_contracts.schema.json#/$defs/review_revision
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: The provider confirms creation of the exact review, repository/head/base identities
+  and first immutable revision. Preserve the actual Draft state and effective policy: agent creation defaults Draft
+  unless that exact policy permits otherwise. A request, reused review or uncertain response is not creation. Cross-repository
+  review explicitly joins fork/head and original/base under FGI-024; a single repo ID or remote name cannot replace
+  that pair. No automatic Ready or merge follows. Before/after source snapshots are immutable owner records; event
+  publication never selects a new behavior or resolves a conflicting owner. Result refs must resolve their exact
+  original closed owner shape, not a caller assertion or a current display copy.
+
+
+  Producer and order: ForgeReviewLifecycle.commit_created@1.0.0 accepts only the actual native owner result/observation,
+  not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject and admitted
+  provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability controls
+  for new work. Commit forge_review_created_source source identity and domain fact before calling forge.review.created.publish@1.0.0.
+  Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt custody by name, with SP-336/347 group commit/sync and
+  actual fresh-operation/restore admission. Only a verified synced first receipt permits source_committed -> history_committed
+  and terminal history disclosure. Domain effect success is established only by its own original result. Crash or
+  effect_unknown reconciles that result, never repeats the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_review_created.schema.json# selects pm.event_payload.forge_review_created.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  review_revision_ref, review_snapshot_ref, create_result_ref and no others. Each domain ref resolves the original
+  review_revision or the exact owner result/receipt described above under current access. fact_ref, subject_ref,
+  provider and every domain ref must match the actual captured source field by field; a valid hash or handle alone
+  proves no native provenance. Retain only refs and bounded metadata, never review text, diff/path bodies, raw webhooks
+  or credential content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1221; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.review.created, is this separate Forge
+  history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact
+  policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
+  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
+  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
+  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
+  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1221 policies without
+  retaining linked content.
+
+
+  Custody/redaction: forge_review_created_source is canonical non-rebuildable identity/source-lineage, coherently
+  backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained event/payload-pack
+  membership under one Storage restore boundary. It contains no body copy; referenced content retains its own policy.
+  The native source owner holds original provider evidence; only that owner can attest the fact. Storage holds first
+  receipt and full-value commitment. Reads recheck current actor/account permissions, deletion/tombstones, holds
+  and reference availability. Deleted or expired detail becomes unavailable and is never reconstructed from history;
+  no new user-visible history surface is authorized. Missing canonical custody fences and discloses recovery_required;
+  never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Source Control review origin-history reader as consumer.forge.review.created.history@1.0.0,
+  fed by projector.forge.review.created.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable read token explicitly;
+  SP-1221 owns forge_review_created_checkpoint, exact schema, key, complete global scan, inclusive cursor, CAS,
+  source/receipt joins, derived quarantine/rebuild and compaction/withdrawal fences. The named reader serves the
+  existing owner history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including The provider confirms creation of
+  the exact review, repository/head/base identities and first immutable revision. Oracle code, shared-number adoption
+  and shared guard-isolation proof are phase 2; native execution NOT_RUN. No test PASS or readiness is claimed.
+  Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack
+  of the complete original producer-owned EventRecord semantic intent (the EventRecord owner preimage, including
+  its exact closed payload and original actor/account/time/causality fields), encoded by the existing owner physical
+  codec. Before source_committed, verify that pack, its exact actual source-derived fields and recomputed owning
+  producer_semantic_digest, and commit the source identity plus pack membership together. This is the restart input
+  for the SAME publication, not a new accepted operation. A lost/damaged pending pack fences and requires coherent
+  backup; current provider state cannot replace it. At history_committed CAS, resolve the original full-value first
+  receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref in that same transaction.
+  Pending reference protection ends only on that real settlement; no hidden permanent body copy or new expiry policy
+  is created. If a needed original domain proof is unavailable before capture, do not accept capture.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-004
+- CV-1221
+- SP-1221
+unblocks: []
+acceptance_criteria:
+- forge.review.created is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_review_created.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_review_created_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_review_created.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-004
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.review.created
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1222 - forge.review.marked_ready prepared contract
+
+```yaml
+plan_unit_id: FGI-1222
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.review.marked_ready@1.0.0 under deck-2 9.a A (DL-450),
+  preserving DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration,
+  runtime_enabled=false. This contract neither changes expected_event_types=[] on existing event-silent commands
+  nor enables any handler. A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.review.marked_ready,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-022 and Plans/forge_integration_contracts.schema.json#/$defs/review_revision
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: The separate authorized Mark Ready action has successfully changed this exact review
+  from Draft to non-Draft. Its request carries draft=false and its current provider result confirms the change;
+  a generic edit, draft=true, a request alone or already-Ready reobservation is insufficient. Preserve direct current
+  revision, effective authority, permission and idempotency checks. Mark Ready does not approve or merge the review.
+  Before/after source snapshots are immutable owner records; event publication never selects a new behavior or resolves
+  a conflicting owner. Result refs must resolve their exact original closed owner shape, not a caller assertion
+  or a current display copy.
+
+
+  Producer and order: ForgeReviewLifecycle.commit_mark_ready@1.0.0 accepts only the actual native owner result/observation,
+  not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject and admitted
+  provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability controls
+  for new work. Commit forge_review_marked_ready_source source identity and domain fact before calling forge.review.marked_ready.publish@1.0.0.
+  Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt custody by name, with SP-336/347 group commit/sync and
+  actual fresh-operation/restore admission. Only a verified synced first receipt permits source_committed -> history_committed
+  and terminal history disclosure. Domain effect success is established only by its own original result. Crash or
+  effect_unknown reconciles that result, never repeats the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_review_marked_ready.schema.json# selects pm.event_payload.forge_review_marked_ready.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  review_revision_ref, previous_review_snapshot_ref, review_snapshot_ref, mark_ready_receipt_ref and no others.
+  Each domain ref resolves the original review_revision or the exact owner result/receipt described above under
+  current access. fact_ref, subject_ref, provider and every domain ref must match the actual captured source field
+  by field; a valid hash or handle alone proves no native provenance. Retain only refs and bounded metadata, never
+  review text, diff/path bodies, raw webhooks or credential content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1222; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.review.marked_ready, is this separate
+  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
+  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
+  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
+  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
+  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
+  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1222 policies without
+  retaining linked content.
+
+
+  Custody/redaction: forge_review_marked_ready_source is canonical non-rebuildable identity/source-lineage, coherently
+  backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained event/payload-pack
+  membership under one Storage restore boundary. It contains no body copy; referenced content retains its own policy.
+  The native source owner holds original provider evidence; only that owner can attest the fact. Storage holds first
+  receipt and full-value commitment. Reads recheck current actor/account permissions, deletion/tombstones, holds
+  and reference availability. Deleted or expired detail becomes unavailable and is never reconstructed from history;
+  no new user-visible history surface is authorized. Missing canonical custody fences and discloses recovery_required;
+  never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Source Control review readiness-history reader as consumer.forge.review.marked_ready.history@1.0.0,
+  fed by projector.forge.review.marked_ready.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable read token
+  explicitly; SP-1222 owns forge_review_marked_ready_checkpoint, exact schema, key, complete global scan, inclusive
+  cursor, CAS, source/receipt joins, derived quarantine/rebuild and compaction/withdrawal fences. The named reader
+  serves the existing owner history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including The separate authorized Mark Ready
+  action has successfully changed this exact review from Draft to non-Draft. Oracle code, shared-number adoption
+  and shared guard-isolation proof are phase 2; native execution NOT_RUN. No test PASS or readiness is claimed.
+  Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack
+  of the complete original producer-owned EventRecord semantic intent (the EventRecord owner preimage, including
+  its exact closed payload and original actor/account/time/causality fields), encoded by the existing owner physical
+  codec. Before source_committed, verify that pack, its exact actual source-derived fields and recomputed owning
+  producer_semantic_digest, and commit the source identity plus pack membership together. This is the restart input
+  for the SAME publication, not a new accepted operation. A lost/damaged pending pack fences and requires coherent
+  backup; current provider state cannot replace it. At history_committed CAS, resolve the original full-value first
+  receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref in that same transaction.
+  Pending reference protection ends only on that real settlement; no hidden permanent body copy or new expiry policy
+  is created. If a needed original domain proof is unavailable before capture, do not accept capture.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-022
+- CV-1222
+- SP-1222
+unblocks: []
+acceptance_criteria:
+- forge.review.marked_ready is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_review_marked_ready.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_review_marked_ready_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_review_marked_ready.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-022
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.review.marked_ready
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1223 - forge.review.merged prepared contract
+
+```yaml
+plan_unit_id: FGI-1223
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.review.merged@1.0.0 under deck-2 9.a A (DL-450), preserving
+  DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration, runtime_enabled=false.
+  This contract neither changes expected_event_types=[] on existing event-silent commands nor enables any handler.
+  A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.review.merged,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-018 and Plans/forge_integration_contracts.schema.json#/$defs/review_revision
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: The provider confirms that this exact immutable review revision was merged with the
+  explicitly selected admitted merge strategy and required gate/permission evidence. A queued/accepted merge, effect-unknown,
+  approval or synthetic local merge cannot claim a merged review. Keep provider-supported merge/strategy/currentness
+  rules and cross-repository head/base joins. Replaying or retrying the history publication never merges again.
+  Before/after source snapshots are immutable owner records; event publication never selects a new behavior or resolves
+  a conflicting owner. Result refs must resolve their exact original closed owner shape, not a caller assertion
+  or a current display copy.
+
+
+  Producer and order: ForgeReviewLifecycle.commit_merged@1.0.0 accepts only the actual native owner result/observation,
+  not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject and admitted
+  provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability controls
+  for new work. Commit forge_review_merged_source source identity and domain fact before calling forge.review.merged.publish@1.0.0.
+  Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt custody by name, with SP-336/347 group commit/sync and
+  actual fresh-operation/restore admission. Only a verified synced first receipt permits source_committed -> history_committed
+  and terminal history disclosure. Domain effect success is established only by its own original result. Crash or
+  effect_unknown reconciles that result, never repeats the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_review_merged.schema.json# selects pm.event_payload.forge_review_merged.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  review_revision_ref, merge_receipt_ref, merge_result_ref and no others. Each domain ref resolves the original
+  review_revision or the exact owner result/receipt described above under current access. fact_ref, subject_ref,
+  provider and every domain ref must match the actual captured source field by field; a valid hash or handle alone
+  proves no native provenance. Retain only refs and bounded metadata, never review text, diff/path bodies, raw webhooks
+  or credential content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1223; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.review.merged, is this separate Forge
+  history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact
+  policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
+  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
+  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
+  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
+  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1223 policies without
+  retaining linked content.
+
+
+  Custody/redaction: forge_review_merged_source is canonical non-rebuildable identity/source-lineage, coherently
+  backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained event/payload-pack
+  membership under one Storage restore boundary. It contains no body copy; referenced content retains its own policy.
+  The native source owner holds original provider evidence; only that owner can attest the fact. Storage holds first
+  receipt and full-value commitment. Reads recheck current actor/account permissions, deletion/tombstones, holds
+  and reference availability. Deleted or expired detail becomes unavailable and is never reconstructed from history;
+  no new user-visible history surface is authorized. Missing canonical custody fences and discloses recovery_required;
+  never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Source Control review merge-history reader as consumer.forge.review.merged.history@1.0.0,
+  fed by projector.forge.review.merged.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable read token explicitly;
+  SP-1223 owns forge_review_merged_checkpoint, exact schema, key, complete global scan, inclusive cursor, CAS, source/receipt
+  joins, derived quarantine/rebuild and compaction/withdrawal fences. The named reader serves the existing owner
+  history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including The provider confirms that this
+  exact immutable review revision was merged with the explicitly selected admitted merge strategy and required gate/permission
+  evidence. Oracle code, shared-number adoption and shared guard-isolation proof are phase 2; native execution NOT_RUN.
+  No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed
+  application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent (the EventRecord
+  owner preimage, including its exact closed payload and original actor/account/time/causality fields), encoded
+  by the existing owner physical codec. Before source_committed, verify that pack, its exact actual source-derived
+  fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack membership together.
+  This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending pack
+  fences and requires coherent backup; current provider state cannot replace it. At history_committed CAS, resolve
+  the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref
+  in that same transaction. Pending reference protection ends only on that real settlement; no hidden permanent
+  body copy or new expiry policy is created. If a needed original domain proof is unavailable before capture, do
+  not accept capture.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-018
+- CV-1223
+- SP-1223
+unblocks: []
+acceptance_criteria:
+- forge.review.merged is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_review_merged.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_review_merged_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_review_merged.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-018
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.review.merged
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1224 - forge.review.reopened prepared contract
+
+```yaml
+plan_unit_id: FGI-1224
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.review.reopened@1.0.0 under deck-2 9.a A (DL-450), preserving
+  DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration, runtime_enabled=false.
+  This contract neither changes expected_event_types=[] on existing event-silent commands nor enables any handler.
+  A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.review.reopened,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-004 and Plans/forge_integration_contracts.schema.json#/$defs/review_revision
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: The provider confirms the same closed, unmerged review has actually reopened. Preserve
+  its prior closure and exact resulting immutable revision. A request or newly created different review is not a
+  reopening, and no unsupported reopen of a merged review is invented. Prior votes, tests and captures stay bound
+  to their original immutable revisions; reopening alone does not refresh them. Before/after source snapshots are
+  immutable owner records; event publication never selects a new behavior or resolves a conflicting owner. Result
+  refs must resolve their exact original closed owner shape, not a caller assertion or a current display copy.
+
+
+  Producer and order: ForgeReviewLifecycle.commit_reopened@1.0.0 accepts only the actual native owner result/observation,
+  not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject and admitted
+  provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability controls
+  for new work. Commit forge_review_reopened_source source identity and domain fact before calling forge.review.reopened.publish@1.0.0.
+  Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt custody by name, with SP-336/347 group commit/sync and
+  actual fresh-operation/restore admission. Only a verified synced first receipt permits source_committed -> history_committed
+  and terminal history disclosure. Domain effect success is established only by its own original result. Crash or
+  effect_unknown reconciles that result, never repeats the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_review_reopened.schema.json# selects pm.event_payload.forge_review_reopened.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  review_revision_ref, previous_review_snapshot_ref, review_snapshot_ref, reopen_result_ref and no others. Each
+  domain ref resolves the original review_revision or the exact owner result/receipt described above under current
+  access. fact_ref, subject_ref, provider and every domain ref must match the actual captured source field by field;
+  a valid hash or handle alone proves no native provenance. Retain only refs and bounded metadata, never review
+  text, diff/path bodies, raw webhooks or credential content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1224; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.review.reopened, is this separate
+  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
+  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
+  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
+  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
+  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
+  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1224 policies without
+  retaining linked content.
+
+
+  Custody/redaction: forge_review_reopened_source is canonical non-rebuildable identity/source-lineage, coherently
+  backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained event/payload-pack
+  membership under one Storage restore boundary. It contains no body copy; referenced content retains its own policy.
+  The native source owner holds original provider evidence; only that owner can attest the fact. Storage holds first
+  receipt and full-value commitment. Reads recheck current actor/account permissions, deletion/tombstones, holds
+  and reference availability. Deleted or expired detail becomes unavailable and is never reconstructed from history;
+  no new user-visible history surface is authorized. Missing canonical custody fences and discloses recovery_required;
+  never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Source Control review reopening-history reader as consumer.forge.review.reopened.history@1.0.0,
+  fed by projector.forge.review.reopened.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable read token explicitly;
+  SP-1224 owns forge_review_reopened_checkpoint, exact schema, key, complete global scan, inclusive cursor, CAS,
+  source/receipt joins, derived quarantine/rebuild and compaction/withdrawal fences. The named reader serves the
+  existing owner history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including The provider confirms the same closed,
+  unmerged review has actually reopened. Oracle code, shared-number adoption and shared guard-isolation proof are
+  phase 2; native execution NOT_RUN. No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref:
+  a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord
+  semantic intent (the EventRecord owner preimage, including its exact closed payload and original actor/account/time/causality
+  fields), encoded by the existing owner physical codec. Before source_committed, verify that pack, its exact actual
+  source-derived fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack
+  membership together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged
+  pending pack fences and requires coherent backup; current provider state cannot replace it. At history_committed
+  CAS, resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
+  pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
+  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable before
+  capture, do not accept capture.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-004
+- CV-1224
+- SP-1224
+unblocks: []
+acceptance_criteria:
+- forge.review.reopened is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_review_reopened.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_review_reopened_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_review_reopened.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-004
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.review.reopened
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1225 - forge.review.thread.reopened prepared contract
+
+```yaml
+plan_unit_id: FGI-1225
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.review.thread.reopened@1.0.0 under deck-2 9.a A (DL-450),
+  preserving DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration,
+  runtime_enabled=false. This contract neither changes expected_event_types=[] on existing event-silent commands
+  nor enables any handler. A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.review.thread.reopened,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-004 and Plans/forge_integration_contracts.schema.json#/$defs/review_thread
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: The exact resolved discussion actually becomes unresolved under its permitted thread
+  action, retaining provider thread identity, actor, full immutable revision window and tracking state. A different
+  discussion, comment addition or repeat read of unresolved state is not reopening. A thread anchor includes created-against,
+  left and right revision refs plus tracking state/identity; partial or substituted windows cannot persist. Before/after
+  source snapshots are immutable owner records; event publication never selects a new behavior or resolves a conflicting
+  owner. Result refs must resolve their exact original closed owner shape, not a caller assertion or a current display
+  copy.
+
+
+  Producer and order: ForgeReviewThreadLifecycle.commit_reopened@1.0.0 accepts only the actual native owner result/observation,
+  not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject and admitted
+  provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability controls
+  for new work. Commit forge_review_thread_reopened_source source identity and domain fact before calling forge.review.thread.reopened.publish@1.0.0.
+  Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt custody by name, with SP-336/347 group commit/sync and
+  actual fresh-operation/restore admission. Only a verified synced first receipt permits source_committed -> history_committed
+  and terminal history disclosure. Domain effect success is established only by its own original result. Crash or
+  effect_unknown reconciles that result, never repeats the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_review_thread_reopened.schema.json# selects pm.event_payload.forge_review_thread_reopened.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  review_revision_ref, previous_thread_ref, thread_snapshot_ref, reopen_result_ref and no others. Each domain ref
+  resolves the original review_thread or the exact owner result/receipt described above under current access. fact_ref,
+  subject_ref, provider and every domain ref must match the actual captured source field by field; a valid hash
+  or handle alone proves no native provenance. Retain only refs and bounded metadata, never review text, diff/path
+  bodies, raw webhooks or credential content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1225; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.review.thread.reopened, is this separate
+  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
+  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
+  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
+  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
+  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
+  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1225 policies without
+  retaining linked content.
+
+
+  Custody/redaction: forge_review_thread_reopened_source is canonical non-rebuildable identity/source-lineage, coherently
+  backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained event/payload-pack
+  membership under one Storage restore boundary. It contains no body copy; referenced content retains its own policy.
+  The native source owner holds original provider evidence; only that owner can attest the fact. Storage holds first
+  receipt and full-value commitment. Reads recheck current actor/account permissions, deletion/tombstones, holds
+  and reference availability. Deleted or expired detail becomes unavailable and is never reconstructed from history;
+  no new user-visible history surface is authorized. Missing canonical custody fences and discloses recovery_required;
+  never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Source Control review-thread reopening reader as consumer.forge.review.thread.reopened.history@1.0.0,
+  fed by projector.forge.review.thread.reopened.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable read token
+  explicitly; SP-1225 owns forge_review_thread_reopened_checkpoint, exact schema, key, complete global scan, inclusive
+  cursor, CAS, source/receipt joins, derived quarantine/rebuild and compaction/withdrawal fences. The named reader
+  serves the existing owner history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including The exact resolved discussion actually
+  becomes unresolved under its permitted thread action, retaining provider thread identity, actor, full immutable
+  revision window and tracking state. Oracle code, shared-number adoption and shared guard-isolation proof are phase
+  2; native execution NOT_RUN. No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref:
+  a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord
+  semantic intent (the EventRecord owner preimage, including its exact closed payload and original actor/account/time/causality
+  fields), encoded by the existing owner physical codec. Before source_committed, verify that pack, its exact actual
+  source-derived fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack
+  membership together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged
+  pending pack fences and requires coherent backup; current provider state cannot replace it. At history_committed
+  CAS, resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
+  pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
+  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable before
+  capture, do not accept capture.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-004
+- CV-1225
+- SP-1225
+unblocks: []
+acceptance_criteria:
+- forge.review.thread.reopened is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_review_thread_reopened.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_review_thread_reopened_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_review_thread_reopened.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-004
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.review.thread.reopened
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1226 - forge.review.thread.replied prepared contract
+
+```yaml
+plan_unit_id: FGI-1226
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.review.thread.replied@1.0.0 under deck-2 9.a A (DL-450),
+  preserving DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration,
+  runtime_enabled=false. This contract neither changes expected_event_types=[] on existing event-silent commands
+  nor enables any handler. A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.review.thread.replied,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-004 and Plans/forge_integration_contracts.schema.json#/$defs/review_thread
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: The provider confirms one new reply/comment identity in this exact discussion and immutable
+  revision window. Retain comment and actor refs, not reply text. A submitted draft, another thread comment or replay
+  of the same native reply does not create another reply fact. Comments, paths, ranges and participant detail remain
+  behind their owner refs and read permissions; this event must not preserve deleted reply content. Before/after
+  source snapshots are immutable owner records; event publication never selects a new behavior or resolves a conflicting
+  owner. Result refs must resolve their exact original closed owner shape, not a caller assertion or a current display
+  copy.
+
+
+  Producer and order: ForgeReviewThreadLifecycle.commit_reply@1.0.0 accepts only the actual native owner result/observation,
+  not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject and admitted
+  provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability controls
+  for new work. Commit forge_review_thread_replied_source source identity and domain fact before calling forge.review.thread.replied.publish@1.0.0.
+  Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt custody by name, with SP-336/347 group commit/sync and
+  actual fresh-operation/restore admission. Only a verified synced first receipt permits source_committed -> history_committed
+  and terminal history disclosure. Domain effect success is established only by its own original result. Crash or
+  effect_unknown reconciles that result, never repeats the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_review_thread_replied.schema.json# selects pm.event_payload.forge_review_thread_replied.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  review_revision_ref, thread_snapshot_ref, comment_ref, reply_result_ref and no others. Each domain ref resolves
+  the original review_thread or the exact owner result/receipt described above under current access. fact_ref, subject_ref,
+  provider and every domain ref must match the actual captured source field by field; a valid hash or handle alone
+  proves no native provenance. Retain only refs and bounded metadata, never review text, diff/path bodies, raw webhooks
+  or credential content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1226; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.review.thread.replied, is this separate
+  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
+  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
+  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
+  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
+  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
+  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1226 policies without
+  retaining linked content.
+
+
+  Custody/redaction: forge_review_thread_replied_source is canonical non-rebuildable identity/source-lineage, coherently
+  backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained event/payload-pack
+  membership under one Storage restore boundary. It contains no body copy; referenced content retains its own policy.
+  The native source owner holds original provider evidence; only that owner can attest the fact. Storage holds first
+  receipt and full-value commitment. Reads recheck current actor/account permissions, deletion/tombstones, holds
+  and reference availability. Deleted or expired detail becomes unavailable and is never reconstructed from history;
+  no new user-visible history surface is authorized. Missing canonical custody fences and discloses recovery_required;
+  never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Source Control review-thread reply-history reader as consumer.forge.review.thread.replied.history@1.0.0,
+  fed by projector.forge.review.thread.replied.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable read token
+  explicitly; SP-1226 owns forge_review_thread_replied_checkpoint, exact schema, key, complete global scan, inclusive
+  cursor, CAS, source/receipt joins, derived quarantine/rebuild and compaction/withdrawal fences. The named reader
+  serves the existing owner history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including The provider confirms one new reply/comment
+  identity in this exact discussion and immutable revision window. Oracle code, shared-number adoption and shared
+  guard-isolation proof are phase 2; native execution NOT_RUN. No test PASS or readiness is claimed. Pending capture
+  also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete
+  original producer-owned EventRecord semantic intent (the EventRecord owner preimage, including its exact closed
+  payload and original actor/account/time/causality fields), encoded by the existing owner physical codec. Before
+  source_committed, verify that pack, its exact actual source-derived fields and recomputed owning producer_semantic_digest,
+  and commit the source identity plus pack membership together. This is the restart input for the SAME publication,
+  not a new accepted operation. A lost/damaged pending pack fences and requires coherent backup; current provider
+  state cannot replace it. At history_committed CAS, resolve the original full-value first receipt, verify every
+  intent-to-retained-event semantic join, and clear pending_intent_ref in that same transaction. Pending reference
+  protection ends only on that real settlement; no hidden permanent body copy or new expiry policy is created. If
+  a needed original domain proof is unavailable before capture, do not accept capture.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-004
+- CV-1226
+- SP-1226
+unblocks: []
+acceptance_criteria:
+- forge.review.thread.replied is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_review_thread_replied.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_review_thread_replied_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_review_thread_replied.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-004
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.review.thread.replied
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1227 - forge.review.thread.resolved prepared contract
+
+```yaml
+plan_unit_id: FGI-1227
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.review.thread.resolved@1.0.0 under deck-2 9.a A (DL-450),
+  preserving DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration,
+  runtime_enabled=false. This contract neither changes expected_event_types=[] on existing event-silent commands
+  nor enables any handler. A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.review.thread.resolved,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-004 and Plans/forge_integration_contracts.schema.json#/$defs/review_thread
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: The exact unresolved discussion actually becomes resolved with its authorized resolution
+  actor, complete immutable revision window and successful result. A resolve request, comment alone or repeated
+  resolved observation is not a new resolution. Resolution never proves the review approved or merged. It changes
+  no blocking policy beyond the provider thread state already specified. Before/after source snapshots are immutable
+  owner records; event publication never selects a new behavior or resolves a conflicting owner. Result refs must
+  resolve their exact original closed owner shape, not a caller assertion or a current display copy.
+
+
+  Producer and order: ForgeReviewThreadLifecycle.commit_resolved@1.0.0 accepts only the actual native owner result/observation,
+  not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject and admitted
+  provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability controls
+  for new work. Commit forge_review_thread_resolved_source source identity and domain fact before calling forge.review.thread.resolved.publish@1.0.0.
+  Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt custody by name, with SP-336/347 group commit/sync and
+  actual fresh-operation/restore admission. Only a verified synced first receipt permits source_committed -> history_committed
+  and terminal history disclosure. Domain effect success is established only by its own original result. Crash or
+  effect_unknown reconciles that result, never repeats the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_review_thread_resolved.schema.json# selects pm.event_payload.forge_review_thread_resolved.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  review_revision_ref, previous_thread_ref, thread_snapshot_ref, resolve_result_ref and no others. Each domain ref
+  resolves the original review_thread or the exact owner result/receipt described above under current access. fact_ref,
+  subject_ref, provider and every domain ref must match the actual captured source field by field; a valid hash
+  or handle alone proves no native provenance. Retain only refs and bounded metadata, never review text, diff/path
+  bodies, raw webhooks or credential content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1227; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.review.thread.resolved, is this separate
+  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
+  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
+  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
+  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
+  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
+  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1227 policies without
+  retaining linked content.
+
+
+  Custody/redaction: forge_review_thread_resolved_source is canonical non-rebuildable identity/source-lineage, coherently
+  backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained event/payload-pack
+  membership under one Storage restore boundary. It contains no body copy; referenced content retains its own policy.
+  The native source owner holds original provider evidence; only that owner can attest the fact. Storage holds first
+  receipt and full-value commitment. Reads recheck current actor/account permissions, deletion/tombstones, holds
+  and reference availability. Deleted or expired detail becomes unavailable and is never reconstructed from history;
+  no new user-visible history surface is authorized. Missing canonical custody fences and discloses recovery_required;
+  never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Source Control review-thread resolution reader as consumer.forge.review.thread.resolved.history@1.0.0,
+  fed by projector.forge.review.thread.resolved.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable read token
+  explicitly; SP-1227 owns forge_review_thread_resolved_checkpoint, exact schema, key, complete global scan, inclusive
+  cursor, CAS, source/receipt joins, derived quarantine/rebuild and compaction/withdrawal fences. The named reader
+  serves the existing owner history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including The exact unresolved discussion
+  actually becomes resolved with its authorized resolution actor, complete immutable revision window and successful
+  result. Oracle code, shared-number adoption and shared guard-isolation proof are phase 2; native execution NOT_RUN.
+  No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed
+  application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent (the EventRecord
+  owner preimage, including its exact closed payload and original actor/account/time/causality fields), encoded
+  by the existing owner physical codec. Before source_committed, verify that pack, its exact actual source-derived
+  fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack membership together.
+  This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending pack
+  fences and requires coherent backup; current provider state cannot replace it. At history_committed CAS, resolve
+  the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref
+  in that same transaction. Pending reference protection ends only on that real settlement; no hidden permanent
+  body copy or new expiry policy is created. If a needed original domain proof is unavailable before capture, do
+  not accept capture.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-004
+- CV-1227
+- SP-1227
+unblocks: []
+acceptance_criteria:
+- forge.review.thread.resolved is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_review_thread_resolved.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_review_thread_resolved_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_review_thread_resolved.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-004
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.review.thread.resolved
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1228 - forge.review.updated prepared contract
+
+```yaml
+plan_unit_id: FGI-1228
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.review.updated@1.0.0 under deck-2 9.a A (DL-450), preserving
+  DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration, runtime_enabled=false.
+  This contract neither changes expected_event_types=[] on existing event-silent commands nor enables any handler.
+  A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.review.updated,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-022 and Plans/forge_integration_contracts.schema.json#/$defs/review_revision
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: A successful authorized typed nonempty review patch changes this review metadata at
+  the expected revision and returns the exact updated provider result. An empty/no-change patch, request acceptance
+  or effect-unknown response is not a committed update. Preserve direct revalidation, authority, permission, confirmation
+  and reconciliation. A change to any base/head/merge-base leg separately creates a new immutable version and stales
+  or revalidates evidence; this update does not reuse old evidence as current. Before/after source snapshots are
+  immutable owner records; event publication never selects a new behavior or resolves a conflicting owner. Result
+  refs must resolve their exact original closed owner shape, not a caller assertion or a current display copy.
+
+
+  Producer and order: ForgeReviewLifecycle.commit_updated@1.0.0 accepts only the actual native owner result/observation,
+  not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject and admitted
+  provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability controls
+  for new work. Commit forge_review_updated_source source identity and domain fact before calling forge.review.updated.publish@1.0.0.
+  Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt custody by name, with SP-336/347 group commit/sync and
+  actual fresh-operation/restore admission. Only a verified synced first receipt permits source_committed -> history_committed
+  and terminal history disclosure. Domain effect success is established only by its own original result. Crash or
+  effect_unknown reconciles that result, never repeats the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_review_updated.schema.json# selects pm.event_payload.forge_review_updated.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  review_revision_ref, previous_review_snapshot_ref, review_snapshot_ref, update_receipt_ref and no others. Each
+  domain ref resolves the original review_revision or the exact owner result/receipt described above under current
+  access. fact_ref, subject_ref, provider and every domain ref must match the actual captured source field by field;
+  a valid hash or handle alone proves no native provenance. Retain only refs and bounded metadata, never review
+  text, diff/path bodies, raw webhooks or credential content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1228; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.review.updated, is this separate Forge
+  history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact
+  policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
+  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
+  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
+  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
+  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1228 policies without
+  retaining linked content.
+
+
+  Custody/redaction: forge_review_updated_source is canonical non-rebuildable identity/source-lineage, coherently
+  backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained event/payload-pack
+  membership under one Storage restore boundary. It contains no body copy; referenced content retains its own policy.
+  The native source owner holds original provider evidence; only that owner can attest the fact. Storage holds first
+  receipt and full-value commitment. Reads recheck current actor/account permissions, deletion/tombstones, holds
+  and reference availability. Deleted or expired detail becomes unavailable and is never reconstructed from history;
+  no new user-visible history surface is authorized. Missing canonical custody fences and discloses recovery_required;
+  never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Source Control review edit-history reader as consumer.forge.review.updated.history@1.0.0,
+  fed by projector.forge.review.updated.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable read token explicitly;
+  SP-1228 owns forge_review_updated_checkpoint, exact schema, key, complete global scan, inclusive cursor, CAS,
+  source/receipt joins, derived quarantine/rebuild and compaction/withdrawal fences. The named reader serves the
+  existing owner history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including A successful authorized typed nonempty
+  review patch changes this review metadata at the expected revision and returns the exact updated provider result.
+  Oracle code, shared-number adoption and shared guard-isolation proof are phase 2; native execution NOT_RUN. No
+  test PASS or readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed
+  application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent (the EventRecord
+  owner preimage, including its exact closed payload and original actor/account/time/causality fields), encoded
+  by the existing owner physical codec. Before source_committed, verify that pack, its exact actual source-derived
+  fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack membership together.
+  This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending pack
+  fences and requires coherent backup; current provider state cannot replace it. At history_committed CAS, resolve
+  the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref
+  in that same transaction. Pending reference protection ends only on that real settlement; no hidden permanent
+  body copy or new expiry policy is created. If a needed original domain proof is unavailable before capture, do
+  not accept capture.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-022
+- CV-1228
+- SP-1228
+unblocks: []
+acceptance_criteria:
+- forge.review.updated is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_review_updated.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_review_updated_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_review_updated.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-022
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.review.updated
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1229 - forge.review.version_created prepared contract
+
+```yaml
+plan_unit_id: FGI-1229
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.review.version_created@1.0.0 under deck-2 9.a A (DL-450),
+  preserving DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration,
+  runtime_enabled=false. This contract neither changes expected_event_types=[] on existing event-silent commands
+  nor enables any handler. A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.review.version_created,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-004 and Plans/forge_integration_contracts.schema.json#/$defs/review_revision
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: A new immutable revision is committed because at least one exact base/head/merge-base
+  leg changed, preserving previous/new triples and actual evidence-state cause. Unchanged triples, newest-label
+  inference or a partially anchored revision do not create a version. Completeness and evidence staleness are separate.
+  A retarget or target-only move is not falsely called stale_head_changed, and old approvals/tests/captures remain
+  bound to old triples. Before/after source snapshots are immutable owner records; event publication never selects
+  a new behavior or resolves a conflicting owner. Result refs must resolve their exact original closed owner shape,
+  not a caller assertion or a current display copy.
+
+
+  Producer and order: ForgeReviewRevisionStore.commit_new_version@1.0.0 accepts only the actual native owner result/observation,
+  not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject and admitted
+  provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability controls
+  for new work. Commit forge_review_version_created_source source identity and domain fact before calling forge.review.version_created.publish@1.0.0.
+  Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt custody by name, with SP-336/347 group commit/sync and
+  actual fresh-operation/restore admission. Only a verified synced first receipt permits source_committed -> history_committed
+  and terminal history disclosure. Domain effect success is established only by its own original result. Crash or
+  effect_unknown reconciles that result, never repeats the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_review_version_created.schema.json# selects pm.event_payload.forge_review_version_created.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  previous_review_revision_ref, review_revision_ref, revision_evidence_ref and no others. Each domain ref resolves
+  the original review_revision or the exact owner result/receipt described above under current access. fact_ref,
+  subject_ref, provider and every domain ref must match the actual captured source field by field; a valid hash
+  or handle alone proves no native provenance. Retain only refs and bounded metadata, never review text, diff/path
+  bodies, raw webhooks or credential content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1229; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.review.version_created, is this separate
+  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
+  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
+  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
+  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
+  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
+  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1229 policies without
+  retaining linked content.
+
+
+  Custody/redaction: forge_review_version_created_source is canonical non-rebuildable identity/source-lineage, coherently
+  backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained event/payload-pack
+  membership under one Storage restore boundary. It contains no body copy; referenced content retains its own policy.
+  The native source owner holds original provider evidence; only that owner can attest the fact. Storage holds first
+  receipt and full-value commitment. Reads recheck current actor/account permissions, deletion/tombstones, holds
+  and reference availability. Deleted or expired detail becomes unavailable and is never reconstructed from history;
+  no new user-visible history surface is authorized. Missing canonical custody fences and discloses recovery_required;
+  never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Source Control immutable review-version history reader as consumer.forge.review.version_created.history@1.0.0,
+  fed by projector.forge.review.version_created.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable read token
+  explicitly; SP-1229 owns forge_review_version_created_checkpoint, exact schema, key, complete global scan, inclusive
+  cursor, CAS, source/receipt joins, derived quarantine/rebuild and compaction/withdrawal fences. The named reader
+  serves the existing owner history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including A new immutable revision is committed
+  because at least one exact base/head/merge-base leg changed, preserving previous/new triples and actual evidence-state
+  cause. Oracle code, shared-number adoption and shared guard-isolation proof are phase 2; native execution NOT_RUN.
+  No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed
+  application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent (the EventRecord
+  owner preimage, including its exact closed payload and original actor/account/time/causality fields), encoded
+  by the existing owner physical codec. Before source_committed, verify that pack, its exact actual source-derived
+  fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack membership together.
+  This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending pack
+  fences and requires coherent backup; current provider state cannot replace it. At history_committed CAS, resolve
+  the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref
+  in that same transaction. Pending reference protection ends only on that real settlement; no hidden permanent
+  body copy or new expiry policy is created. If a needed original domain proof is unavailable before capture, do
+  not accept capture.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-004
+- CV-1229
+- SP-1229
+unblocks: []
+acceptance_criteria:
+- forge.review.version_created is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_review_version_created.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_review_version_created_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_review_version_created.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-004
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.review.version_created
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1230 - forge.webhook.delivery_failed prepared contract
+
+```yaml
+plan_unit_id: FGI-1230
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.webhook.delivery_failed@1.0.0 under deck-2 9.a A (DL-450),
+  preserving DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration,
+  runtime_enabled=false. This contract neither changes expected_event_types=[] on existing event-silent commands
+  nor enables any handler. A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.webhook.delivery_failed,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-006 and Plans/forge_integration_contracts.schema.json#/$defs/signed_webhook_delivery
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: Processing the exact previously received verified delivery has failed with an actual
+  failure result and truthful retry/inspection/terminal recovery state. Failure is not signature rejection, unverified
+  parsing or a successful processing result. No success exit status can accompany failure. Original raw-body signature/time/context,
+  replay and dedupe gates were satisfied before parsed effects. Re-observing the same failed processing attempt
+  cannot repeat effects or remint a failure fact. Before/after source snapshots are immutable owner records; event
+  publication never selects a new behavior or resolves a conflicting owner. Result refs must resolve their exact
+  original closed owner shape, not a caller assertion or a current display copy.
+
+
+  Producer and order: ForgeWebhookProcessor.commit_failed@1.0.0 accepts only the actual native owner result/observation,
+  not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject and admitted
+  provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability controls
+  for new work. Commit forge_webhook_delivery_failed_source source identity and domain fact before calling forge.webhook.delivery_failed.publish@1.0.0.
+  Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt custody by name, with SP-336/347 group commit/sync and
+  actual fresh-operation/restore admission. Only a verified synced first receipt permits source_committed -> history_committed
+  and terminal history disclosure. Domain effect success is established only by its own original result. Crash or
+  effect_unknown reconciles that result, never repeats the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_webhook_delivery_failed.schema.json# selects pm.event_payload.forge_webhook_delivery_failed.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  delivery_snapshot_ref, previous_delivery_snapshot_ref, processing_result_ref and no others. Each domain ref resolves
+  the original signed_webhook_delivery or the exact owner result/receipt described above under current access. fact_ref,
+  subject_ref, provider and every domain ref must match the actual captured source field by field; a valid hash
+  or handle alone proves no native provenance. Retain only refs and bounded metadata, never review text, diff/path
+  bodies, raw webhooks or credential content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1230; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.webhook.delivery_failed, is this separate
+  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
+  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
+  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
+  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
+  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
+  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1230 policies without
+  retaining linked content.
+
+
+  Custody/redaction: forge_webhook_delivery_failed_source is canonical non-rebuildable identity/source-lineage,
+  coherently backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained
+  event/payload-pack membership under one Storage restore boundary. It contains no body copy; referenced content
+  retains its own policy. The native source owner holds original provider evidence; only that owner can attest the
+  fact. Storage holds first receipt and full-value commitment. Reads recheck current actor/account permissions,
+  deletion/tombstones, holds and reference availability. Deleted or expired detail becomes unavailable and is never
+  reconstructed from history; no new user-visible history surface is authorized. Missing canonical custody fences
+  and discloses recovery_required; never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Hosting Services webhook failure-history reader as consumer.forge.webhook.delivery_failed.history@1.0.0,
+  fed by projector.forge.webhook.delivery_failed.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable read
+  token explicitly; SP-1230 owns forge_webhook_delivery_failed_checkpoint, exact schema, key, complete global scan,
+  inclusive cursor, CAS, source/receipt joins, derived quarantine/rebuild and compaction/withdrawal fences. The
+  named reader serves the existing owner history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including Processing the exact previously
+  received verified delivery has failed with an actual failure result and truthful retry/inspection/terminal recovery
+  state. Oracle code, shared-number adoption and shared guard-isolation proof are phase 2; native execution NOT_RUN.
+  No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed
+  application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent (the EventRecord
+  owner preimage, including its exact closed payload and original actor/account/time/causality fields), encoded
+  by the existing owner physical codec. Before source_committed, verify that pack, its exact actual source-derived
+  fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack membership together.
+  This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending pack
+  fences and requires coherent backup; current provider state cannot replace it. At history_committed CAS, resolve
+  the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref
+  in that same transaction. Pending reference protection ends only on that real settlement; no hidden permanent
+  body copy or new expiry policy is created. If a needed original domain proof is unavailable before capture, do
+  not accept capture.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-006
+- CV-1230
+- SP-1230
+unblocks: []
+acceptance_criteria:
+- forge.webhook.delivery_failed is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_webhook_delivery_failed.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_webhook_delivery_failed_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_webhook_delivery_failed.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-006
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.webhook.delivery_failed
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1231 - forge.webhook.delivery_recovered prepared contract
+
+```yaml
+plan_unit_id: FGI-1231
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.webhook.delivery_recovered@1.0.0 under deck-2 9.a A (DL-450),
+  preserving DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration,
+  runtime_enabled=false. This contract neither changes expected_event_types=[] on existing event-silent commands
+  nor enables any handler. A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.webhook.delivery_recovered,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-006 and Plans/forge_integration_contracts.schema.json#/$defs/signed_webhook_delivery
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: Recovery of this exact failed delivery processing attempt is verified and recovery_state
+  becomes recovered, linked to its original failure and actual successful reconciliation/result. Queueing retry/redelivery
+  or receiving an acknowledgement is not recovery. Resolve the original verified delivery and dedupe/effect ledger
+  before recovery. Recovery cannot rerun a completed webhook effect or replace the original first receipt. Before/after
+  source snapshots are immutable owner records; event publication never selects a new behavior or resolves a conflicting
+  owner. Result refs must resolve their exact original closed owner shape, not a caller assertion or a current display
+  copy.
+
+
+  Producer and order: ForgeWebhookProcessor.commit_recovered@1.0.0 accepts only the actual native owner result/observation,
+  not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject and admitted
+  provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability controls
+  for new work. Commit forge_webhook_delivery_recovered_source source identity and domain fact before calling forge.webhook.delivery_recovered.publish@1.0.0.
+  Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt custody by name, with SP-336/347 group commit/sync and
+  actual fresh-operation/restore admission. Only a verified synced first receipt permits source_committed -> history_committed
+  and terminal history disclosure. Domain effect success is established only by its own original result. Crash or
+  effect_unknown reconciles that result, never repeats the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_webhook_delivery_recovered.schema.json# selects pm.event_payload.forge_webhook_delivery_recovered.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  delivery_snapshot_ref, failure_fact_ref, processing_result_ref and no others. Each domain ref resolves the original
+  signed_webhook_delivery or the exact owner result/receipt described above under current access. fact_ref, subject_ref,
+  provider and every domain ref must match the actual captured source field by field; a valid hash or handle alone
+  proves no native provenance. Retain only refs and bounded metadata, never review text, diff/path bodies, raw webhooks
+  or credential content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1231; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.webhook.delivery_recovered, is this
+  separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or
+  another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year
+  is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?
+  WAVE3 permits this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains
+  materially_incomplete under Case L-3. G01/G05/G26 were checked against the actual answered populations and do
+  not name this Forge family. Source identity/receipt refs and derived checkpoints keep the independently justified
+  SP-1231 policies without retaining linked content.
+
+
+  Custody/redaction: forge_webhook_delivery_recovered_source is canonical non-rebuildable identity/source-lineage,
+  coherently backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained
+  event/payload-pack membership under one Storage restore boundary. It contains no body copy; referenced content
+  retains its own policy. The native source owner holds original provider evidence; only that owner can attest the
+  fact. Storage holds first receipt and full-value commitment. Reads recheck current actor/account permissions,
+  deletion/tombstones, holds and reference availability. Deleted or expired detail becomes unavailable and is never
+  reconstructed from history; no new user-visible history surface is authorized. Missing canonical custody fences
+  and discloses recovery_required; never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Hosting Services webhook recovery-history reader as consumer.forge.webhook.delivery_recovered.history@1.0.0,
+  fed by projector.forge.webhook.delivery_recovered.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable read
+  token explicitly; SP-1231 owns forge_webhook_delivery_recovered_checkpoint, exact schema, key, complete global
+  scan, inclusive cursor, CAS, source/receipt joins, derived quarantine/rebuild and compaction/withdrawal fences.
+  The named reader serves the existing owner history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including Recovery of this exact failed delivery
+  processing attempt is verified and recovery_state becomes recovered, linked to its original failure and actual
+  successful reconciliation/result. Oracle code, shared-number adoption and shared guard-isolation proof are phase
+  2; native execution NOT_RUN. No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref:
+  a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord
+  semantic intent (the EventRecord owner preimage, including its exact closed payload and original actor/account/time/causality
+  fields), encoded by the existing owner physical codec. Before source_committed, verify that pack, its exact actual
+  source-derived fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack
+  membership together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged
+  pending pack fences and requires coherent backup; current provider state cannot replace it. At history_committed
+  CAS, resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
+  pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
+  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable before
+  capture, do not accept capture.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-006
+- CV-1231
+- SP-1231
+unblocks: []
+acceptance_criteria:
+- forge.webhook.delivery_recovered is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_webhook_delivery_recovered.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_webhook_delivery_recovered_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_webhook_delivery_recovered.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-006
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.webhook.delivery_recovered
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1232 - forge.webhook.received prepared contract
+
+```yaml
+plan_unit_id: FGI-1232
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.webhook.received@1.0.0 under deck-2 9.a A (DL-450), preserving
+  DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration, runtime_enabled=false.
+  This contract neither changes expected_event_types=[] on existing event-silent commands nor enables any handler.
+  A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.webhook.received,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-006 and Plans/forge_integration_contracts.schema.json#/$defs/signed_webhook_delivery
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: The configured ingress has received this exact signed delivery and verified its raw-body
+  signature before parsing, then time/context, fresh replay state and new dedupe state. This records verified receipt,
+  not successful downstream processing. Invalid delivery belongs to rejected instead; duplicate delivery resolves
+  its original fact. Fast provider transport acknowledgement is distinct from durable EventRecord first receipt
+  and processing completion. No raw body, signature secret or credential bytes enter history. Before/after source
+  snapshots are immutable owner records; event publication never selects a new behavior or resolves a conflicting
+  owner. Result refs must resolve their exact original closed owner shape, not a caller assertion or a current display
+  copy.
+
+
+  Producer and order: ForgeWebhookIngress.commit_verified_received@1.0.0 accepts only the actual native owner result/observation,
+  not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject and admitted
+  provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability controls
+  for new work. Commit forge_webhook_received_source source identity and domain fact before calling forge.webhook.received.publish@1.0.0.
+  Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt custody by name, with SP-336/347 group commit/sync and
+  actual fresh-operation/restore admission. Only a verified synced first receipt permits source_committed -> history_committed
+  and terminal history disclosure. Domain effect success is established only by its own original result. Crash or
+  effect_unknown reconciles that result, never repeats the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_webhook_received.schema.json# selects pm.event_payload.forge_webhook_received.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  delivery_snapshot_ref, ingress_evidence_ref and no others. Each domain ref resolves the original signed_webhook_delivery
+  or the exact owner result/receipt described above under current access. fact_ref, subject_ref, provider and every
+  domain ref must match the actual captured source field by field; a valid hash or handle alone proves no native
+  provenance. Retain only refs and bounded metadata, never review text, diff/path bodies, raw webhooks or credential
+  content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1232; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.webhook.received, is this separate
+  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
+  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
+  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
+  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
+  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
+  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1232 policies without
+  retaining linked content.
+
+
+  Custody/redaction: forge_webhook_received_source is canonical non-rebuildable identity/source-lineage, coherently
+  backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained event/payload-pack
+  membership under one Storage restore boundary. It contains no body copy; referenced content retains its own policy.
+  The native source owner holds original provider evidence; only that owner can attest the fact. Storage holds first
+  receipt and full-value commitment. Reads recheck current actor/account permissions, deletion/tombstones, holds
+  and reference availability. Deleted or expired detail becomes unavailable and is never reconstructed from history;
+  no new user-visible history surface is authorized. Missing canonical custody fences and discloses recovery_required;
+  never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Hosting Services webhook receipt-history reader as consumer.forge.webhook.received.history@1.0.0,
+  fed by projector.forge.webhook.received.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable read token explicitly;
+  SP-1232 owns forge_webhook_received_checkpoint, exact schema, key, complete global scan, inclusive cursor, CAS,
+  source/receipt joins, derived quarantine/rebuild and compaction/withdrawal fences. The named reader serves the
+  existing owner history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including The configured ingress has received
+  this exact signed delivery and verified its raw-body signature before parsing, then time/context, fresh replay
+  state and new dedupe state. Oracle code, shared-number adoption and shared guard-isolation proof are phase 2;
+  native execution NOT_RUN. No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref:
+  a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord
+  semantic intent (the EventRecord owner preimage, including its exact closed payload and original actor/account/time/causality
+  fields), encoded by the existing owner physical codec. Before source_committed, verify that pack, its exact actual
+  source-derived fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack
+  membership together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged
+  pending pack fences and requires coherent backup; current provider state cannot replace it. At history_committed
+  CAS, resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
+  pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
+  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable before
+  capture, do not accept capture.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-006
+- CV-1232
+- SP-1232
+unblocks: []
+acceptance_criteria:
+- forge.webhook.received is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_webhook_received.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_webhook_received_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_webhook_received.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-006
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.webhook.received
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1233 - forge.webhook.redelivery_queued prepared contract
+
+```yaml
+plan_unit_id: FGI-1233
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.webhook.redelivery_queued@1.0.0 under deck-2 9.a A (DL-450),
+  preserving DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration,
+  runtime_enabled=false. This contract neither changes expected_event_types=[] on existing event-silent commands
+  nor enables any handler. A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.webhook.redelivery_queued,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-006 and Plans/forge_integration_contracts.schema.json#/$defs/signed_webhook_delivery
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: The exact authorized redelivery has been durably queued by the webhook recovery owner
+  after current signature, time/context, replay, dedupe, delivery identity and redelivery-idempotency checks. A
+  GUI click, unsupported operation or uncertain queue result is not queued. Redelivery is linked to the original
+  delivery and actual request identity; it does not reset the original occurrence, expiry clock or existing processing-effect
+  identity. Before/after source snapshots are immutable owner records; event publication never selects a new behavior
+  or resolves a conflicting owner. Result refs must resolve their exact original closed owner shape, not a caller
+  assertion or a current display copy.
+
+
+  Producer and order: ForgeWebhookRecovery.commit_redelivery_queued@1.0.0 accepts only the actual native owner result/observation,
+  not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject and admitted
+  provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability controls
+  for new work. Commit forge_webhook_redelivery_queued_source source identity and domain fact before calling forge.webhook.redelivery_queued.publish@1.0.0.
+  Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt custody by name, with SP-336/347 group commit/sync and
+  actual fresh-operation/restore admission. Only a verified synced first receipt permits source_committed -> history_committed
+  and terminal history disclosure. Domain effect success is established only by its own original result. Crash or
+  effect_unknown reconciles that result, never repeats the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_webhook_redelivery_queued.schema.json# selects pm.event_payload.forge_webhook_redelivery_queued.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  delivery_snapshot_ref, redelivery_request_ref, redelivery_receipt_ref and no others. Each domain ref resolves
+  the original signed_webhook_delivery or the exact owner result/receipt described above under current access. fact_ref,
+  subject_ref, provider and every domain ref must match the actual captured source field by field; a valid hash
+  or handle alone proves no native provenance. Retain only refs and bounded metadata, never review text, diff/path
+  bodies, raw webhooks or credential content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1233; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.webhook.redelivery_queued, is this
+  separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or
+  another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year
+  is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?
+  WAVE3 permits this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains
+  materially_incomplete under Case L-3. G01/G05/G26 were checked against the actual answered populations and do
+  not name this Forge family. Source identity/receipt refs and derived checkpoints keep the independently justified
+  SP-1233 policies without retaining linked content.
+
+
+  Custody/redaction: forge_webhook_redelivery_queued_source is canonical non-rebuildable identity/source-lineage,
+  coherently backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained
+  event/payload-pack membership under one Storage restore boundary. It contains no body copy; referenced content
+  retains its own policy. The native source owner holds original provider evidence; only that owner can attest the
+  fact. Storage holds first receipt and full-value commitment. Reads recheck current actor/account permissions,
+  deletion/tombstones, holds and reference availability. Deleted or expired detail becomes unavailable and is never
+  reconstructed from history; no new user-visible history surface is authorized. Missing canonical custody fences
+  and discloses recovery_required; never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Hosting Services webhook redelivery-history reader as consumer.forge.webhook.redelivery_queued.history@1.0.0,
+  fed by projector.forge.webhook.redelivery_queued.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable read
+  token explicitly; SP-1233 owns forge_webhook_redelivery_queued_checkpoint, exact schema, key, complete global
+  scan, inclusive cursor, CAS, source/receipt joins, derived quarantine/rebuild and compaction/withdrawal fences.
+  The named reader serves the existing owner history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including The exact authorized redelivery
+  has been durably queued by the webhook recovery owner after current signature, time/context, replay, dedupe, delivery
+  identity and redelivery-idempotency checks. Oracle code, shared-number adoption and shared guard-isolation proof
+  are phase 2; native execution NOT_RUN. No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref:
+  a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord
+  semantic intent (the EventRecord owner preimage, including its exact closed payload and original actor/account/time/causality
+  fields), encoded by the existing owner physical codec. Before source_committed, verify that pack, its exact actual
+  source-derived fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack
+  membership together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged
+  pending pack fences and requires coherent backup; current provider state cannot replace it. At history_committed
+  CAS, resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
+  pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
+  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable before
+  capture, do not accept capture.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-006
+- CV-1233
+- SP-1233
+unblocks: []
+acceptance_criteria:
+- forge.webhook.redelivery_queued is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_webhook_redelivery_queued.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_webhook_redelivery_queued_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_webhook_redelivery_queued.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-006
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.webhook.redelivery_queued
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
+### FGI-1234 - forge.webhook.rejected prepared contract
+
+```yaml
+plan_unit_id: FGI-1234
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: 'Newly authored owner contract for forge.webhook.rejected@1.0.0 under deck-2 9.a A (DL-450), preserving
+  DL-045 limits. Prepared without admission: membership ABSENT, current append missing_event_registration, runtime_enabled=false.
+  This contract neither changes expected_event_types=[] on existing event-silent commands nor enables any handler.
+  A later reviewed family and command-specific adoption is required.
+
+
+  Search/reuse: on base f9c5de6561dff0a53a48e530f2a5c6804a7e941d, independent exact-name search across current non-pipeline
+  Plans, schemas, registries, fixtures, scripts and tests finds only the §3.2 candidate line for forge.webhook.rejected,
+  no registered row, payload, publisher, consumer or checkpoint. Reuse FGI-006 and Plans/forge_integration_contracts.schema.json#/$defs/signed_webhook_delivery
+  for the original domain facts; retain FGI-001/011/015 provider admission and FGI-023/024 target rules. Search
+  evidence and negative findings are pinned in reports/event-authority-20261105/W3A.md. All bindings named below
+  are new, not rediscovered definitions.
+
+
+  Semantics and transitions: The configured ingress rejects an incoming delivery for signature, timestamp, context,
+  unknown key, replay-window or conflicting-duplicate failure. Capture the trusted local ingress observation/decision
+  identity and reason without parsing rejected raw input or trusting a supplied delivery identity. An ordinary already-accepted
+  duplicate is a dedupe result, not a second rejection. No effect dispatch or downstream body parse precedes verification.
+  Rejection evidence is a bounded non-secret owner result; invalid bytes and protected material never become history
+  content. Before/after source snapshots are immutable owner records; event publication never selects a new behavior
+  or resolves a conflicting owner. Result refs must resolve their exact original closed owner shape, not a caller
+  assertion or a current display copy.
+
+
+  Producer and order: ForgeWebhookIngress.commit_rejection@1.0.0 accepts only the actual native owner result/observation,
+  not arbitrary supplied JSON. Resolve the original exact native operation, fact revision, subject and admitted
+  provider/variant/instance/account/binding generation; revalidate current permission/Stop/lease/capability controls
+  for new work. Commit forge_webhook_rejected_source source identity and domain fact before calling forge.webhook.rejected.publish@1.0.0.
+  Adopt SP-286 and CV-339 full-value v2 first-AppendReceipt custody by name, with SP-336/347 group commit/sync and
+  actual fresh-operation/restore admission. Only a verified synced first receipt permits source_committed -> history_committed
+  and terminal history disclosure. Domain effect success is established only by its own original result. Crash or
+  effect_unknown reconciles that result, never repeats the remote operation to recover history.
+
+
+  Closed payload: Plans/event_payloads/forge/forge_webhook_rejected.schema.json# selects pm.event_payload.forge_webhook_rejected.v1@1.0.0;
+  required fields are schema_id, schema_version, event_type, fact_ref, provider, subject_ref, source_record_ref,
+  ingress_evidence_ref, rejection_result_ref and no others. Each domain ref resolves the original signed_webhook_delivery
+  or the exact owner result/receipt described above under current access. fact_ref, subject_ref, provider and every
+  domain ref must match the actual captured source field by field; a valid hash or handle alone proves no native
+  provenance. Retain only refs and bounded metadata, never review text, diff/path bodies, raw webhooks or credential
+  content.
+
+
+  Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means
+  only the actual original owner WorkflowScopeV2, without adding application support to any source that lacks it.
+  All envelope joins equal that source; unused thread/run/node/attempt joins remain present null, and a provider
+  pipeline ID never fills run_id. Project partitions use Storage project~base64url; application uses app with project_id=null
+  and actual server_id. Unknown source scope refuses. Exact identity recipes are CV-1234; no focus/default Project
+  or timestamp reminting.
+
+
+  Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is
+  reader-only and normal append refuses it as replay_only_not_appendable. Adopt the owning producer_semantic_digest
+  preimage and RFC8785 recipe, excluding Storage sequence/observed/persisted metadata; use the shared number/date-time
+  owner rule when integrated, never a lane codec or blanket 2^53 cap. Same scoped identity and digest returns the
+  original SP-286 receipt and result; different digest is idempotency_conflict. Missing authoritative global/scoped
+  dedupe is dedupe_unavailable before append. Consumer replay performs no command, network, notification, provider
+  mutation, usage charge, canonical source write or other event append.
+
+
+  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.webhook.rejected, is this separate
+  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
+  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
+  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
+  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
+  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
+  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1234 policies without
+  retaining linked content.
+
+
+  Custody/redaction: forge_webhook_rejected_source is canonical non-rebuildable identity/source-lineage, coherently
+  backed up with the actual owner result, pending history identity, SP-286 v2 receipt/dedupe and retained event/payload-pack
+  membership under one Storage restore boundary. It contains no body copy; referenced content retains its own policy.
+  The native source owner holds original provider evidence; only that owner can attest the fact. Storage holds first
+  receipt and full-value commitment. Reads recheck current actor/account permissions, deletion/tombstones, holds
+  and reference availability. Deleted or expired detail becomes unavailable and is never reconstructed from history;
+  no new user-visible history surface is authorized. Missing canonical custody fences and discloses recovery_required;
+  never repair it from a projection.
+
+
+  Consumer/checkpoint: newly bind Hosting Services webhook rejection-history reader as consumer.forge.webhook.rejected.history@1.0.0,
+  fed by projector.forge.webhook.rejected.history@1.0.0. Adopt SP-278 and DL-076 nine-field durable read token explicitly;
+  SP-1234 owns forge_webhook_rejected_checkpoint, exact schema, key, complete global scan, inclusive cursor, CAS,
+  source/receipt joins, derived quarantine/rebuild and compaction/withdrawal fences. The named reader serves the
+  existing owner history/health projection only, not action authority.
+
+
+  Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained
+  EventRecord 1.0.0/2.0.0 and replay-only originals are read under the authenticated recipe/schema in force at original
+  issuance, even after live provider capability, grant or state changes. A caller cannot select a weaker recipe;
+  invalid/withdrawn/foreign records fail read. Unknown future versions stop before publication with unavailable,
+  never skip into a claimed current checkpoint. At a reviewed withdrawal cutoff fence new writer admission before
+  dedupe, durably mark this consumer withdrawn and invalidate its whole token; no hidden backfill/re-emission. A
+  separately adopted successor rebuilds from lawful retained source under SP-278, with no in-place old-byte rewrite
+  or command effect.
+
+
+  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
+  this family''s positives and single-defect negatives per predicate, including The configured ingress rejects an
+  incoming delivery for signature, timestamp, context, unknown key, replay-window or conflicting-duplicate failure.
+  Oracle code, shared-number adoption and shared guard-isolation proof are phase 2; native execution NOT_RUN. No
+  test PASS or readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed
+  application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent (the EventRecord
+  owner preimage, including its exact closed payload and original actor/account/time/causality fields), encoded
+  by the existing owner physical codec. Before source_committed, verify that pack, its exact actual source-derived
+  fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack membership together.
+  This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending pack
+  fences and requires coherent backup; current provider state cannot replace it. At history_committed CAS, resolve
+  the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref
+  in that same transaction. Pending reference protection ends only on that real settlement; no hidden permanent
+  body copy or new expiry policy is created. If a needed original domain proof is unavailable before capture, do
+  not accept capture.'
+gui_related: true
+gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
+  GUI owners.
+depends_on:
+- FGI-006
+- CV-1234
+- SP-1234
+unblocks: []
+acceptance_criteria:
+- forge.webhook.rejected is separately typed, source-bound, replay-safe and non-emitting before admission.
+- Exact owner source, custody and full-token joins are required; criterion 12 remains PARTIAL until phase 2.
+validation_surfaces:
+- Plans/event_payloads/forge/forge_webhook_rejected.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: forge_event_source_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: forge_webhook_rejected_phase1
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/event_payloads/forge/forge_webhook_rejected.schema.json
+- Plans/forge_event_storage_contracts.schema.json
+node_compile_hint:
+  mode: prepared_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- deck-2 9.a A, DL-450; ANSWERS_E-CARDS-2_20261105.md
+- Plans/Forge_Integrations.md#FGI-006
+- W3A current per-family search at f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+preserved_exact_tokens:
+- forge.webhook.rejected
+- SP-286
+- CV-339
+- SP-278
+- projector_replay_only
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not admit an event or enable existing event-silent commands.
+- Do not choose pending event retention or infer authority from another family.
+- Do not execute domain effects from history replay.
+```
+
 ### 3.3 Typed command admission and result boundary
 
 The primary command enum is exactly the 53 IDs in §3.1. Two (`cmd.forge.review.create` and `cmd.forge.review.merge`) retain their provider-owner routes, `cmd.forge.repository.create` retains the separate common route bound by FGI-009, and the remaining 50 use the common central Forge route set: the 43 bound by FGI-010 (the prior 34 plus nine 2026-09-01 admissions), the six 2026-09-26 admissions bound by FGI-021, and review edit bound by FGI-022. The nine 2026-09-01 commands, the six 2026-09-26 commands, and review edit start `handler_unavailable`, require `expected_event_types=[]`, and do not gain runtime credit from schema, fixture, catalog, handler-name, or static wiring presence. One provider-neutral request object carries exact provider and variant, normalized host, stable account, PM and provider repository binding, expected binding generation, optional independent automation binding and expected automation-binding generation where required, requested/effective authority, requested capability, catalog/API currentness, non-secret credential/grant ref, permission snapshot, target-bound preflight, optional confirmation, target identity, availability, FileSafe decision for local writes, and `ObservableWork` when admitted asynchronous work requires it.
