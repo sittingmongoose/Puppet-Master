@@ -26,6 +26,19 @@ def cases():
         except Exception:return True
         return True
     rows.append(('FORMAT:unknown_format_cannot_skip',unknown))
+    def failed_format_sweep_exits_nonzero():
+        import contextlib,io,json,sys,tempfile
+        from pathlib import Path
+        from unittest.mock import patch
+        import pm_event_authority_ds_round4 as round4
+        with tempfile.TemporaryDirectory(prefix='ds-format-cli-',dir='/mnt/Cursor/PuppetMaster-Evidence/scratch') as directory:
+            report=Path(directory)/'result.json'
+            with patch.object(round4,'format_sweep',return_value={'status':'fail','fault':'injected failed format report'}), \
+                 patch.object(sys,'argv',[round4.__file__,'--output',str(report)]),contextlib.redirect_stdout(io.StringIO()):
+                code=round4.main()
+            result=json.loads(report.read_text())
+            return int(code)!=1 or result['status']!='fail' or result['format_sweep']['status']!='fail'
+    rows.append(('FORMAT:failed_sweep_cli_exit',failed_format_sweep_exits_nonzero))
     return rows
 
 
