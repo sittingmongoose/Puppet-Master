@@ -564,15 +564,25 @@
     }
     // Pip's head where it hangs at rest from the hand's spot, on the floor it rests on: the box the props keep off (fit)
     pipHead() {
-      const ps = this.ps, Lay = this.L, s = Lay.s, r = ps && this.pipReach(ps.tiltT);
-      if (!r) return null;
-      let y = ps.Ct.y + Lay.rope;
-      if (y + 28 * s > Lay.ground - 2) y = Lay.ground - 2 - 28 * s;
-      if (y + r[3] > this.vis.y1) y = this.vis.y1 - r[3];
+      const ps = this.ps, Lay = this.L, s = Lay.s;
+      if (!ps || !this.pipReach(ps.tiltT)) return null;
+      const box = (cx, cy, ang) => {
+        const r = this.pipReach(ang);
+        let y = cy + Lay.rope;
+        if (y + 28 * s > Lay.ground - 2) y = Lay.ground - 2 - 28 * s;
+        if (y + r[3] > this.vis.y1) y = this.vis.y1 - r[3];
+        return [cx + r[0], y + r[1], cx + r[2], y + r[3]];
+      };
+      let b = box(ps.Ct.x, ps.Ct.y, ps.tiltT);
+      /* (and, while the hand travels to a new spot, as Pip wakes and rises from the floor, the head where it hangs now:
+         the box takes its whole way, so a sign beside where it rises to is not under it as it comes. Retro Dark Name 860
+         showed 40 px2 painted as Pip woke, sol-review-retro-1's awake guard. Not within the idle drift, so resting props
+         do not shift as Pip sways) */
+      if (Math.hypot(ps.C.x - ps.Ct.x, ps.C.y - ps.Ct.y) > 8) { const c = box(ps.C.x, ps.C.y, ps.tilt); b = [Math.min(b[0], c[0]), Math.min(b[1], c[1]), Math.max(b[2], c[2]), Math.max(b[3], c[3])]; }
       /* (and the room its idle drift takes, awake: a sign beside the resting head was under it as it swayed, Retro Dark 860) */
       const F = this.fam, still = this.reduced || !!O55.motion.lowResource || !H.part('sway-and-physics');
       const sw = still ? 0 : F.sway * (ps.asleep ? .2 : 1), bob = still || !F.bob ? 0 : F.bob * .6;
-      return [ps.Ct.x + r[0] - sw, y + r[1] - bob, ps.Ct.x + r[2] + sw, y + r[3] + bob];
+      return [b[0] - sw, b[1] - bob, b[2] + sw, b[3] + bob];
     }
     /* Creating's and Protect's stack of blocks stands on the lowest floor a person can see, and is drawn closer and
        smaller when it would rise past the pane's top or into a speech box that cannot move (Retro's tube crops the floor
