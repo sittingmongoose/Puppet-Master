@@ -115,6 +115,11 @@ def canonical(value):
             return 'true' if v else 'false'
         if isinstance(v, int):
             return str(v)
+        if isinstance(v, float) and v.is_integer():
+            # An integral binary64 is an exact integer value. Decimal(str(v))
+            # can instead choose a nearby shortest-round-trip decimal above
+            # 2**53; never replace the validator's actual integer with it.
+            return str(int(v))
         if isinstance(v, (float, Decimal)):
             d = Decimal(str(v))
             if not d.is_finite():
@@ -350,9 +355,9 @@ def transition(name, payload, before, outcome):
 
 def gate_score_join(payload, before, outcome):
     """Numeric gate results retain Executor's dispatch context, not a new score policy."""
-    if payload.get('score') != outcome['score'] or payload.get('score_threshold') != before['score_threshold']:
+    if canonical([payload.get('score'), payload.get('score_threshold')]) != canonical([outcome['score'], before['score_threshold']]):
         return False
-    if any(payload.get(k) != before[k] for k in ['dispatch_score_ref', 'dispatch_score_tuple']):
+    if any(canonical(payload.get(k)) != canonical(before[k]) for k in ['dispatch_score_ref', 'dispatch_score_tuple']):
         return False
     if 'score' in payload or 'score_threshold' in payload:
         context = payload.get('dispatch_score_tuple')
@@ -453,9 +458,9 @@ def source_valid(c, prepared, completed, event, schemas, resolved_payload=None, 
     if partition != completed['scope_partition'] or (c['scope_policy'] == 'project_only' and event['scope_kind'] != 'project'):
         return 'scope_refused'
     if event['payload_ref'] is not None:
-        if not payload_ref_verified or resolved_payload != p:
+        if not payload_ref_verified or canonical(resolved_payload) != canonical(p):
             return 'payload_unavailable'
-    elif event['payload'] != p:
+    elif canonical(event['payload']) != canonical(p):
         return 'join_refused'
     # Scope has its own guard above; keep this join independent of that rule.
     if any(event[k] != b[k] for k in b if k != 'scope_kind'):
@@ -784,6 +789,44 @@ def recovery_mutations(c, f):
             yield stage['case'] + '/first_receipt_boolean_generation', bad, stage['input']
 
 
+def payload_type_cases(f):
+    """Change one payload leaf's JSON type while preserving Python's == value."""
+    variants = [dict(prepared=f['prepared_source'], completed=f['completed_source'], event=f['event_record'])]
+    variants += [v for v in f['positive_variants'] if v['event']['scope_kind'] == 'application'][:1]
+    def leaves(value, path=()):
+        if isinstance(value, dict):
+            for key, child in value.items():
+                yield from leaves(child, path + (key,))
+        elif isinstance(value, list):
+            for index, child in enumerate(value):
+                yield from leaves(child, path + (index,))
+        elif type(value) is bool or type(value) in [int, float] and value in [0, 1]:
+            yield path, value
+    for variant in variants:
+        found = next(leaves(variant['event']['payload']), None)
+        if found is None:
+            continue
+        path, value = found
+        replacement = int(value) if type(value) is bool else bool(value)
+        base = copy.deepcopy([variant[k] for k in ['prepared', 'completed', 'event']])
+        bad = copy.deepcopy(base); set_path(bad[2]['payload'], path, replacement)
+        yield variant['event']['scope_kind'] + '/inline', base, bad, {}
+        packed = copy.deepcopy(base); packed[2]['payload'] = {}; packed[2]['payload_ref'] = 'payload:fixture-verified-pack-body'
+        body = copy.deepcopy(base[1]['payload']); set_path(body, path, replacement)
+        yield variant['event']['scope_kind'] + '/ref', base, packed, {'resolved_payload': body, 'payload_ref_verified': True}
+
+
+def decimal_gate(c, f):
+    variant = next(v for v in f['positive_variants'] if v['completed']['payload'].get('score') is not None)
+    def replace(value):
+        if isinstance(value, dict):
+            return {k: 0.1 if k == 'score' else (0.05 if c['event_type'] == 'gate.passed' else 0.2) if k == 'score_threshold' else replace(v) for k, v in value.items()}
+        if isinstance(value, list):
+            return [replace(v) for v in value]
+        return value
+    return recommit(c, replace([variant[k] for k in ['prepared', 'completed', 'event']]))
+
+
 def technical_checks(c, f, schemas, check):
     """Cycle-5 regressions run inside the complete checker, never an acceptance stub."""
     name = c['event_type']; slug = name.replace('.', '_')
@@ -812,6 +855,15 @@ def technical_checks(c, f, schemas, check):
             check(historical_read(c, a, b, e, schemas, ctx)['result'] == 'retained', name + ': historical policy ' + scope + '/' + policy)
     for label, bad, case in recovery_mutations(c, f):
         check(recovery(c, bad, case, schemas) == {'result': 'unavailable', 'external_effects': 0, 'append_count': 0, 'value': None}, name + ': recovery custody ' + label)
+    for label, base, bad, kwargs in payload_type_cases(f):
+        check(source_valid(c, *bad, schemas, **kwargs) == ('payload_unavailable' if label.endswith('/ref') else 'join_refused'), name + ': typed payload join ' + label)
+    if name.startswith('gate.'):
+        a, b, e = decimal_gate(c, f)
+        aa, bb = [decode_source(canonical(v)) for v in [a, b]]
+        check(source_valid(c, aa, bb, e, schemas) == 'accepted', name + ': decimal source with binary64 event body')
+        check(gate_score_join(bb['payload'], a['before'], b['owner_result']), name + ': decimal/binary64 score joins')
+        ctx = dict(f['historical_reader_oracle']['context'], live_before=None, authenticated_original={'prepared': a, 'completed': b, 'event': e})
+        check(historical_read(c, aa, bb, e, schemas, ctx)['result'] == 'retained', name + ': decimal source historical round trip')
     if name.startswith('approval.'):
         for integer in [1, 9007199254740993, 18446744073709551615]:
             values = copy.deepcopy([f[k] for k in ['prepared_source', 'completed_source', 'event_record']])
@@ -835,6 +887,14 @@ def technical_checks(c, f, schemas, check):
                       name + ': equal integer retry returns original')
                 check(source_valid(c, *[decode_source(canonical(v)) for v in [aa, bb, ee]], schemas) == 'accepted', name + ': float integer canonical round trip')
                 check(not Draft202012Validator(schemas[slug], format_checker=FormatChecker()).is_valid(replace_sequence(e['payload'], 1.25)), name + ': fractional identity refused')
+        for integer in [9007199254740992, 18446744073709549568]:
+            values = [f[k] for k in ['prepared_source', 'completed_source', 'event_record']]
+            integers = recommit(c, replace_sequence(values, integer))
+            floats = recommit(c, replace_sequence(values, float(integer)))
+            check(identity(c, integers[1]['payload']) == identity(c, floats[1]['payload']), name + ': large equal integer representation identity ' + str(integer))
+            check(source_valid(c, *floats, schemas) == 'accepted', name + ': large float integer source ' + str(integer))
+            check(source_valid(c, *[decode_source(canonical(v)) for v in floats], schemas) == 'accepted', name + ': large float integer persisted round trip ' + str(integer))
+            check([canonical(v) for v in floats] == [canonical(v) for v in integers], name + ': large equal integer canonical bytes ' + str(integer))
 
 
 def checker_exit_code(failures):

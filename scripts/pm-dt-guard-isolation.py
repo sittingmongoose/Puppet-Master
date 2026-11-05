@@ -186,6 +186,8 @@ def source_corpus(dt, c, f, schemas):
     ref = dict(e, payload={}, payload_ref='payload:fixture-verified-pack-body')
     add('payload_ref/unverified', [a, b, ref], resolved_payload=b['payload'], payload_ref_verified=False)
     add('payload_ref/changed', [a, b, ref], resolved_payload={}, payload_ref_verified=True)
+    for label, base, bad, kwargs in dt.payload_type_cases(f):
+        add('payload_type/' + label, bad, base, **kwargs)
     variants = [dict(prepared=a, completed=b, event=e)]
     variants += [v for v in f['positive_variants'] if v['event']['scope_kind'] == 'application'][:1]
     for variant in variants:
