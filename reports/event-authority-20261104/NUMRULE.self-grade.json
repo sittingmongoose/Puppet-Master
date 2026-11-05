@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-NUMRULE-SHARED-FIX3-20261105",
+  "assessment_id": "EA-NUMRULE-SHARED-FIX4-20261105",
   "assessment_kind": "author_shared_prerequisite_scope_assessment",
   "assessed_tree": {
     "branch": "plans/ea-numrule-20261105",
@@ -50,23 +50,28 @@
       "lane_and_native_profile_integration": "NOT_RUN",
       "integration_status": "PARTIAL",
       "reference_composition_oracles": "PASS",
-      "retained_envelope_composition_fixtures": "PASS"
+      "retained_envelope_composition_fixtures": "PASS",
+      "embedded_v2_envelope_oracles": "PASS",
+      "reviewed_embedded_schema_nodes": 13,
+      "pinned_schema_bytes": "PRESERVED"
     }
   ],
   "corpus": {
-    "cases": 1176,
-    "positives": 760,
-    "negatives": 416,
-    "labelled_negatives": 416,
-    "passed": 1176,
+    "cases": 2788,
+    "positives": 1748,
+    "negatives": 1040,
+    "labelled_negatives": 1040,
+    "passed": 2788,
     "owner_integration_checks": 69,
     "finite_case_oracles": "PASS",
     "guard_isolation": "SWEEP_PENDING",
     "result": "PARTIAL",
     "withdrawn_group_proof_claim": "The original 25 diagnostic-group removals are not per-predicate isolation proof.",
-    "labelled_cases": 1176,
+    "labelled_cases": 2788,
     "targeted_review_predicate_removals": 6,
-    "round2_reviewed_fixture_replay": 370
+    "round2_reviewed_fixture_replay": 370,
+    "round4_reviewed_case_records_preserved": 1176,
+    "round4_added_cases": 1612
   },
   "failed_premise_checks": [],
   "owner_questions": [],
@@ -83,8 +88,8 @@
     "Integration/governance work belongs to the lead, outside this drafting task",
     "Index validation before integration: PLS-025 from newer main plus 21 unchanged legacy ledger-shape errors; no affected file was edited in this fix round."
   ],
-  "reviewed_head": "3d1459f9e60abc8519a08bdfb1d4ca0919cd152b",
-  "review_round": 3,
+  "reviewed_head": "e85116fbe13600d3b90c6fe58118decb7c5cbe56",
+  "review_round": 4,
   "family_grades_before_after": "N/A: no event-family rows before or after. Native execution remains NOT_RUN.",
   "grade_changes": {
     "CV-1100.bounded_adapter_oracles": "author PASS -> review PARTIAL -> finite cases PASS, overall PARTIAL pending isolation",
@@ -92,9 +97,10 @@
     "SP-1101.bounded_selector_oracles": "Astra PARTIAL -> B2/B3 finite isolation/result oracles PASS; aggregate selector remains PARTIAL pending shared guard inventory/native adoption",
     "corpus": "author PASS -> review PARTIAL -> finite cases PASS, guard proof SWEEP_PENDING",
     "CV-1101.owner_specification": "cycle-2 review PARTIAL -> finite reference owner binding PASS; native/lane integration NOT_RUN",
-    "CV-1101.enforced_format_oracles": "Astra PARTIAL -> bounded direct/reference/nested/retained composition oracles PASS; complete lane/native integration NOT_RUN"
+    "CV-1101.enforced_format_oracles": "Astra PARTIAL -> bounded direct/reference/nested/retained composition oracles PASS; complete lane/native integration NOT_RUN",
+    "CV-1101.embedded_v2_envelope_oracles": "cycle-4 B1 BLOCKED -> finite cases/probes PASS; native/lane integration NOT_RUN"
   },
-  "implementation_commit": "0eb68afab44bc6a5198d4b0909b76a0433beafda",
+  "implementation_commit": "493e2974c885609d2b64e1ec8f863f234a6da38f",
   "round1_validation": {
     "index_status": "pass",
     "plan_units": 7426,
@@ -123,9 +129,10 @@
     "shards_status": "pass"
   },
   "implementation_commits": {
-    "B1": "20d66f034a94c78f26d991fe1323e1f5c04ab6f3",
+    "B1": "493e2974c885609d2b64e1ec8f863f234a6da38f",
     "B2": "67d459eda1c7d9d71a6de098c37af0ca501a224f",
-    "B3": "0eb68afab44bc6a5198d4b0909b76a0433beafda"
+    "B3": "0eb68afab44bc6a5198d4b0909b76a0433beafda",
+    "B1_round3": "20d66f034a94c78f26d991fe1323e1f5c04ab6f3"
   },
   "ids_minted_round3": [],
   "round3_validation": {
@@ -146,5 +153,34 @@
     "early_index_run": "Terminated after unintended overlap with shard check; final index check ran after shards completed.",
     "scope_audit_status": "pass",
     "reviewed_case_records_preserved": 451
+  },
+  "ids_minted_round4": [],
+  "round4_validation": {
+    "self_test_status": "pass",
+    "corpus_status": "pass",
+    "bounded_regression_assertions": 3845,
+    "targeted_predicate_removals": 6,
+    "embedded_schema_nodes": 13,
+    "embedded_schema_files": 10,
+    "inventory_complete_envelope_nodes": 55,
+    "remaining_invalid_storage_zone_acceptances": 0,
+    "one_field_new_negatives": 624,
+    "pre_fix_acceptances_reproduced": 624,
+    "reviewed_case_records_preserved": 1176,
+    "reviewed_history_byte_strings_preserved": 400,
+    "reviewed_frozen_resource_selections_preserved": 370,
+    "unchanged_scalar_profile_controls": 76,
+    "existing_unit_tests": 30,
+    "shards_status": "pass",
+    "index_status": "fail",
+    "index_failure_count": 22,
+    "index_failure_disposition": "Same exact failure records as round 3; 21 legacy ledger-shape errors and PLS-025 integration requirement.",
+    "owner_text_changed": false,
+    "derived_regeneration": "NOT_NEEDED",
+    "pinned_schema_resources_changed": false,
+    "failure_exit": 1,
+    "exception_outcome": "exception",
+    "scope_audit_status": "pass",
+    "initial_regression_run": "Final scope comparison used the source clone; corrected to the fix4 worktree and reran."
   }
 }

@@ -49,7 +49,7 @@ Admission evaluation returns acceptance/refusal/exception separately. Retained s
 
 ## Verification
 
-Latest round-3 commands, exit codes and artifact SHA-256 values are recorded in `NUMRULE.checks.json` and the external `fix3/*.run.json` files. Round-2 results remain in the external `fix2/` bundle. Round-1 results below are historical and remain in the external `fix1/` bundle. Shard regeneration/check and top-level index generation/validation passed (7426 PlanUnits, 29960 acceptance units, readiness blocked_runtime_certification_incomplete). The 370-case corpus, 65 targeted regressions and all 30 existing binding/runtime-storage unit tests passed. The deliberate failure returned exit 1 and retained an exception as its own outcome. Derived scope is confined to Contracts/Storage (157 shard files, their PlanUnit/acceptance rows and two document cards). Generators and checkers run one at a time with a memory preflight; under 6 GB pauses at two-minute rechecks, resumes at 7 GB, and stops only after 45 minutes continuously below 6 GB. Initial Nas1 disk: 462 GB available; memory: 11 GB available. An automatic pause before index validation observed 5 and 6 GB available; validation resumed at 8 GB. The 45-minute stop threshold was not reached.
+Latest round-4 commands, exit codes and artifact SHA-256 values are recorded in `NUMRULE.checks.json` and the external `fix4/*.run.json` files. Round-3 results remain in the external `fix3/` bundle. Round-2 results remain in the external `fix2/` bundle. Round-1 results below are historical and remain in the external `fix1/` bundle. Shard regeneration/check and top-level index generation/validation passed (7426 PlanUnits, 29960 acceptance units, readiness blocked_runtime_certification_incomplete). The 370-case corpus, 65 targeted regressions and all 30 existing binding/runtime-storage unit tests passed. The deliberate failure returned exit 1 and retained an exception as its own outcome. Derived scope is confined to Contracts/Storage (157 shard files, their PlanUnit/acceptance rows and two document cards). Generators and checkers run one at a time with a memory preflight; under 6 GB pauses at two-minute rechecks, resumes at 7 GB, and stops only after 45 minutes continuously below 6 GB. Initial Nas1 disk: 462 GB available; memory: 11 GB available. An automatic pause before index validation observed 5 and 6 GB available; validation resumed at 8 GB. The 45-minute stop threshold was not reached.
 
 The specified machine-memory files are absent at their exact paths and no relocated copies were found under local Claude/T3/Codex roots. The all-origin canonical Contracts owner-ID scan covers 548 refs and 45 unique blobs, including main; CV-1101 is absent in all of them. The ignored currentness edition was copied before index generation and all 15 files matched SHA-256 at copy time; its pinned copy and manifest are retained externally. No governance reseal is performed.
 
@@ -223,3 +223,77 @@ All artifacts below are under `/mnt/Cursor/PuppetMaster-Evidence/event-authority
 | `review-evidence.json` | `645697aa697baf70052403eb6cf19dd670187b2db806545580928482c6e38bd5` |
 | `currentness-copy.json` | `b72623c6887c9cb3b53eb0da0baf1e1b8c0b5d46fe116d4f25746361bbe73b8b` |
 | `scope-audit.stdout` | `72997da97f40d322588542fe03d1097f90f646a7a75365fe8f09e2f0b29eacfe` |
+
+
+## Review round 4: findings and responses
+
+Reviewed head: `e85116fbe13600d3b90c6fe58118decb7c5cbe56`. Review: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/NUMRULE-sol/REVIEW-cycle4.md`, with `cycle4/probes.py`, `embedded-followup.py` and their JSON inventories. Implementation commit: `493e2974c885609d2b64e1ec8f863f234a6da38f`. No finding is disputed and no new owner decision is needed.
+
+**B1 — fixed through the shared helper's field-path selection.** Where: `scripts/pm_event_datetime.py:111-128`. Why: envelope selection recognized the canonical v2 resource ID and the v1 compatibility discriminator, but omitted authentic embedded v2 definitions without that ID. How: accept the existing `schema_id.const = pm.event.v0` discriminator with either `schema_version.const = 1.0.0` or `2.0.0`, then apply the existing terminal-uppercase-Z predicate separately to `observed_at_utc` and `persisted_at_utc` during normal schema descent. The enforced broad format and all original schema predicates remain in force. `occurred_at_utc`, standalone owner/source/receipt timestamp boundaries and other CV-1101 profiles keep their existing behavior. No schema was edited or repinned. Authority: CV-1101 at `Plans/Contracts_V0.md:1155-1160` and CV-253 at `:16009-16025`.
+
+**Regression coverage.** `scripts/pm_event_numbers_corpus.py:146-156,173-190,273-285` selects each real resource/pointer in the shared corpus and in the sealed fixture resource map for retained dispatch. The adoption guide at `reports/event-authority-20261105/NUMRULE-ADOPTION.md:11` now names the embedded-v2 discriminator. All thirteen listed paths have valid baselines and separate one-field negatives for each Storage field: positive/negative nonzero offsets, `+00:00`, `-00:00`, lowercase `z`, and lowercase `t` with lowercase `z`. Each is exercised through a root reference, object/array nesting, and both corresponding frozen-original fixture selections. Positives retain uppercase-Z UTC, lowercase `t`, arbitrary fractional precision, legitimate UTC leap seconds and year 0000; source-field offsets/lowercase zones remain accepted. Compaction-specific paths use the review's schema-valid compaction baseline, rather than counting an unusable generic baseline as a pass.
+
+Added **1,612 cases: 988 positives and 624 labelled negatives**. Before the production fix, the full corpus reproduced exactly those **624 invalid acceptances** (exit 1); every other case and all 69 integration checks passed. After the fix, self-test and standalone corpus both exit 0 with **2,788/2,788 PASS: 1,748 positives, 1,040 negatives, all cases labelled**, plus **69/69 integration checks**. All **1,176** prior case records, **400** prior original byte strings and **370** prior frozen resource selections are unchanged. Admission exceptions still have their own outcome; a deliberate bad expectation returns CLI exit 1.
+
+### Round-4 bounded check-11 and review probes
+
+The review's probe was adapted to the isolated worktree and expanded corpus; it is retained externally, not installed as new lane proof machinery. It passes **3,845 assertions**, including the original **29** reference/composition routes, all **76** unchanged scalar-profile comparisons and the complete existing inventory of **69 schema files / 186 timestamp-bearing nodes / 55 complete envelopes**. Every complete envelope has a schema-valid baseline; none accepts an invalid Storage zone. All resource objects stay unchanged.
+
+| Predicate removed alone | Own negatives admitted | Other negatives keeping their exact refusal |
+|---|---:|---:|
+| Observed Storage terminal Z | 412 (100 prior + 312 new) | 628 |
+| Persisted Storage terminal Z | 412 (100 prior + 312 new) | 628 |
+| Original record-bytes exact type | 1 | 1,039 |
+| Original scope-kind equality | 1 | 1,039 |
+| Original project-ID equality | 1 | 1,039 |
+| Frozen verifier exact True, with falsity still enforced | 3 | 1,037 |
+
+Every positive retains its outcome and return postconditions under every cut. No cut introduces exceptions or changes a peer refusal. New retained negatives have a coherent seal/source commitment/resource selection and exactly one changed Storage field. These six bounded cuts preserve B2/B3 closure and qualify B1's new paths; the complete lane predicate inventory and duplicate-site proof remain **S1 / SWEEP_PENDING** for `scripts/pm_guard_isolation.py`.
+
+### Schemas listed for the cross-lane sweep
+
+These are **13 envelope paths in 10 unchanged files**, including frozen input/predecessor copies. B1 is fixed at the helper boundary for all of them. The native adoption sweep must install that boundary with each owner's authenticated current/original resource map; a stock JSON Schema validator alone still has the owner's broad timestamp schema. **No owner-schema edit or hash restamp is requested.** The exact file SHA-256 values are in `fix4/scope-audit.json`.
+
+| Corpus alias | Unchanged schema path | Envelope pointer |
+|---|---|---|
+| `embedded-01` | `Plans/executor_cancellation_contracts/schemas/workflow-start-custody.v2.schema.json` | `/$defs/EventRecord` |
+| `embedded-02` | `Plans/storage_compaction_native_contracts.schema.json` | `/$defs/existing_event` |
+| `embedded-03` | `Plans/storage_compaction_native_contracts.schema.json` | `/$defs/compaction_event` |
+| `embedded-04` | `Plans/workflow_standard_source_contracts/inputs/Plans/executor_cancellation_contracts/schemas/workflow-start-custody.v2.schema.json` | `/$defs/EventRecord` |
+| `embedded-05` | `Plans/workflow_standard_source_contracts/inputs/Plans/storage_compaction_native_contracts.schema.json` | `/$defs/existing_event` |
+| `embedded-06` | `Plans/workflow_standard_source_contracts/inputs/Plans/storage_compaction_native_contracts.schema.json` | `/$defs/compaction_event` |
+| `embedded-07` | `Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-start-custody.v6.schema.json` | `/$defs/EventRecord` |
+| `embedded-08` | `Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-start-custody.v2.schema.json` | `/$defs/EventRecord` |
+| `embedded-09` | `Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/storage_compaction_native_contracts.schema.json` | `/$defs/existing_event` |
+| `embedded-10` | `Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/storage_compaction_native_contracts.schema.json` | `/$defs/compaction_event` |
+| `embedded-11` | `Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/schemas/workflow-start-custody.v3.schema.json` | `/$defs/EventRecord` |
+| `embedded-12` | `Plans/workflow_standard_source_contracts/predecessor/v2/schemas/workflow-start-custody.v4.schema.json` | `/$defs/EventRecord` |
+| `embedded-13` | `Plans/workflow_standard_source_contracts/schemas/workflow-start-custody.v5.schema.json` | `/$defs/EventRecord` |
+
+### Round-4 scope, grades and verification
+
+CV-1101 embedded-v2 schema-boundary coverage: **cycle-4 B1 BLOCKED → finite cases/probes PASS**. CV-1100/SP-1100/SP-1101 bounded grades are unchanged; aggregate adapter/selector/profile installation stays **PARTIAL**, complete guard isolation **SWEEP_PENDING**, native authority **NOT_RUN**. Family grades before/after: **N/A**, membership **ABSENT**. Existing IDs used: CV-1100, CV-1101, SP-1100 and SP-1101; no new ID.
+
+The recurring defect checks replay existing forgery/custody/disclosure/replay, exact-number/type/physical-byte, size/digest and enforced-format controls. The new negatives mutate only Storage-owned timestamps, which remain outside the producer semantic projection; they trust no caller metadata as native Storage authority. Frozen fixture originals preserve broad source timestamps and exact bytes, while invalid Storage zones refuse. Both current and frozen selections use actual unchanged schemas and resolving references. Finite schema-boundary evidence does not certify native original authentication, identity/custody joins, every unvisited reference branch, or complete nineteen-lane installation; those remain S2. No current-writer gate enters retained dispatch.
+
+All **30 existing binding/runtime-storage unit tests** pass. Read-only shard verification passes. No owner prose changed, so shards and the plan index were not regenerated. Index validation exits **1**, top-level **fail**, with the **same 22 failure records as round 3**: 21 legacy ledger-shape errors and main-added PLS-025 missing from this branch. The named paths and index/validator are unchanged; `fix4/index-baseline-proof.json` records equality and hashes. These remain integration items and no index/governance PASS is claimed. All **8,966 other Plans paths**, including **3,774 Markdown paths** and **517 schema paths**, are unchanged from the reviewed head. `scripts/pm_event_numbers.py` is unchanged.
+
+Initial VM preflight: **128 GB available disk / 13 GB available RAM**. Every checker ran one at a time with an available-memory preflight of at least 6 GiB. The first adapted regression completed its product predicates but its final scope audit used the source clone instead of this worktree; that run's exit 1 is retained as `regressions-initial.*`. The corrected worktree run passes. The disposable environment pins msgpack 1.1.2; environment and literal-path worktree are removed after push. No registry, admission, Decision Log, owner schema, governance artifact or other lane changed. No main push, landing lock, pm-mail or subagent.
+
+### Round-4 retained evidence
+
+All artifacts below are under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/`. The report, self-grade and `NUMRULE.checks.json` are copied there; per-command `.run.json` files contain exact commands, clocks, exit codes, memory and output hashes. `pushed-head.json` records the final pushed head.
+
+| Artifact | SHA-256 |
+|---|---|
+| `self-test.stdout` | `d0a754a1a360550949dec9191ae0b9ea50035bd360efce14e3a2a4f9c382b622` |
+| `corpus.stdout` | `6885ac7e1621a2a2702d9dc458a1ea533346d64a1bbddbb214b89cef2adc7b3d` |
+| `pre-fix-corpus.stdout` | `72ffc91eed5ea14ef4942f75ee385f4b331b1f7f0b78865833a608123e037368` |
+| `regressions.py` | `b7cf08f11d79ae8a64c4597cf04af2e1cf081985413afce1c1689cdb05ebb77c` |
+| `regressions.json` | `fcd22a2166235674249df490ecea574395af0d3a007879e8981ebad5c1d69f43` |
+| `scope-audit.json` | `9af913dab6fc177129eb045e169a6d3872fb0106636e71fb4bc8bab63ad7be2a` |
+| `case-additions.json` | `14d48eca1b3d664fe5d9beb97b1b4e1186650377ab60855ae3d556ea80a31274` |
+| `failure-oracle.stdout` | `720ce07d4f7e1b345a1f4fbaeb328a1761b756ab4f25759f6ee4eb7850cd7bee` |
+| `shards-check.stdout` | `d697ac77c260ee1fbe5007467d179c832c4c197ffc685d08b78f338e04ff7fdc` |
+| `index-validate.stdout` | `552741a89f54734a525e17e7208585aa51081190a72d53e08d2259289cf87a53` |
+| `index-baseline-proof.json` | `61388540cfda783d720d652f8c80f6006fe89b0807d5d5a030fd0462e0a9b76f` |
