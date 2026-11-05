@@ -14,6 +14,7 @@ import json
 import subprocess
 import sys
 from pathlib import Path
+from jsonschema.exceptions import SchemaError
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('card5_existing_contracts', ROOT / 'scripts/pm-alert-event-contracts-check.py')
@@ -44,6 +45,69 @@ def schema_errors(value, schema):
         shared.check_schema(schema)
         _checked_schemas.append(schema)
     return list(shared.Draft202012Validator(schema).iter_errors(value))
+
+
+def storage_schema_errors(registry, family, schemas):
+    """Check the authoritative stored copies before using their validators."""
+    errors = []
+    for surface in ('operation', 'checkpoint'):
+        key = surface + '_schema'
+        if family[key] is None:
+            continue  # The generic historical family declares no operation.
+        fid = family['slug'] + '_' + surface
+        rows = [row for row in registry['families'] if row['family_id'] == fid]
+        if len(rows) != 1:
+            errors.append('storage_row_count:' + fid)
+            continue
+        row, companion = rows[0], schemas[key]
+        if row.get('value_schema_ref') != family[key]:
+            errors.append('storage_companion_ref:' + fid)
+            continue
+        if row.get('value_schema_id') != companion['$id']:
+            errors.append('storage_schema_id:' + fid)
+            continue
+        stored = row.get('value_schema')
+        try:
+            shared.Draft202012Validator.check_schema(stored)
+        except SchemaError:
+            errors.append('storage_schema_invalid:' + fid)
+            continue
+        if shared.schema_ref_errors(stored):
+            errors.append('storage_schema_reference:' + fid)
+            continue
+        if not exact(stored, companion):
+            errors.append('storage_schema_drift:' + fid)
+    return errors
+
+
+def storage_schema_cases(registry, family, schemas):
+    """One-defect registry controls, also exercised through the complete CLI."""
+    ids = {family['slug'] + '_' + surface for surface in ('operation', 'checkpoint')
+           if family[surface + '_schema'] is not None}
+    base = {'families': [row for row in registry['families'] if row['family_id'] in ids]}
+    assert not storage_schema_errors(base, family, schemas)
+    observations = [dict(name='registered_storage_schemas', stage='storage_schema', expected=[], actual=[])]
+    for fid in sorted(ids):
+        changes = (
+            ('missing_row', 'storage_row_count', lambda rows, row: rows.remove(row)),
+            ('duplicate_row', 'storage_row_count', lambda rows, row: rows.append(copy.deepcopy(row))),
+            ('companion_ref', 'storage_companion_ref', lambda rows, row: row.update(value_schema_ref='Plans/foreign.schema.json')),
+            ('schema_id', 'storage_schema_id', lambda rows, row: row.update(value_schema_id='pm.foreign.v1')),
+            ('invalid_schema', 'storage_schema_invalid', lambda rows, row: row['value_schema'].update(type=0)),
+            ('unvisited_ref', 'storage_schema_reference', lambda rows, row: row['value_schema'].setdefault('$defs', {}).update(
+                registry_unvisited={'$ref': '#/$defs/registry_missing'})),
+            ('open_schema', 'storage_schema_drift', lambda rows, row: row['value_schema'].update(additionalProperties=True)),
+            ('embedded_identity', 'storage_schema_drift', lambda rows, row: row['value_schema'].update(**{'$id': 'pm.foreign.v1'})),
+        )
+        for name, refusal, change in changes:
+            value = copy.deepcopy(base)
+            row = next(row for row in value['families'] if row['family_id'] == fid)
+            change(value['families'], row)
+            expected = [refusal + ':' + fid]
+            actual = storage_schema_errors(value, family, schemas)
+            assert actual == expected, (family['event_type'], fid, name, actual, expected)
+            observations.append(dict(name=fid + ':' + name, stage='storage_schema', expected=expected, actual=actual))
+    return observations
 
 
 def operation_guards(operation, family, schema):
@@ -321,7 +385,16 @@ def main():
         schemas['operation_schema'] = load(family['operation_schema'])
     for schema in schemas.values():
         shared.check_schema(schema)
-    observations = []
+    registry = load('Plans/storage_value_registry.json')
+    errors = storage_schema_errors(registry, family, schemas)
+    assert not errors, errors
+    observations = storage_schema_cases(registry, family, schemas)
+    # Run the value oracles on the registered schemas whose exact companion
+    # identity/content, metaschema and eager reference closure were just checked.
+    for surface in ('operation', 'checkpoint'):
+        if family[surface + '_schema'] is not None:
+            row = next(row for row in registry['families'] if row['family_id'] == family['slug'] + '_' + surface)
+            schemas[surface + '_schema'] = row['value_schema']
     for case in fixture['cases']:
         stage = case['stage']
         value = copy.deepcopy(fixture['bases'][case['base']])
