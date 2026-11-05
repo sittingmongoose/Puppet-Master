@@ -12,12 +12,12 @@
       "grade": "PARTIAL"
     },
     {
-      "basis": "Only explicit one-predicate allow-list entries get cuts. Chains, ternaries, dataflow, negative applicability, regex/format grammar and unevaluated/oneOf contexts remain unproved.",
+      "basis": "Only explicit per-predicate rules receive cuts. Structured comparisons, loops and unsupported nested/else controls now fail closed; symbolic scalar binding still requires review. No generic structured-value splitter.",
       "criterion": "predicate_cuts",
       "grade": "PARTIAL"
     },
     {
-      "basis": "Complete conservative call/write census plus bounded atomic cuts. Python audit: 12 supported constructions and 16 unclassified; class/native/opaque/dataflow work still requires seams.",
+      "basis": "Generated CPython 3.14.4 census: 82 classes x five positions, 47 conditional support cells and 363 fail closed. Live-class, missing-position and obsolete-name gates fail self-test. Structured operands and unsupported control ancestry cannot register; native/opaque/dataflow/loop work still needs seams.",
       "criterion": "code_sites",
       "grade": "PARTIAL"
     },
@@ -42,7 +42,7 @@
       "grade": "PASS"
     },
     {
-      "basis": "124/124 observations: old 86 plus 38 round-3 entries; reviewed base catches only 87/124, including the independent regex control.",
+      "basis": "141/141 observations: 124 existing plus 17 round-4 traps; all twelve reviewer sources have both held-out-peer and aggregate attempts and independent narrow witnesses. All unsupported registrations refuse.",
       "criterion": "corpus",
       "grade": "PASS"
     },
@@ -58,8 +58,8 @@
     }
   ],
   "evidence": {
-    "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix3/verification-manifest.json",
-    "sha256": "2c8149b96f36b983ada12c4d1761004cff818c1cd6792776c2322c4e36fe7f1f"
+    "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix4/verification-manifest.json",
+    "sha256": "3782fcc215df39d665ef241dd0dab69345805d9ba1345f2cbe7fe71cfd0beffd"
   },
   "families": [],
   "family_rubric": "not applicable: this lane prepares a repository tool, not event families",
@@ -68,8 +68,8 @@
     "Only allow-listed single-predicate cuts receive automatic credit. Unsupported grammar remains unclassified/unproved.",
     "No general chain normalizer or regex/format clause splitter. Pattern-bearing lanes cannot claim complete adoption from this tool alone.",
     "Callback invocation, root-to-input occurrences, dynamic subjects, helper/source closure, refusal translation and alias/duplicate declarations require independent reviewer judgment.",
-    "Real exercise is bounded retained history: 21 selected guards, all three suites FAIL. No family grade or admission.",
-    "22 unchanged plan-index findings remain; shards pass. No owner/derived/governance changes.",
+    "Round-3 real exercise was bounded retained history: 21 selected guards, all three suites FAIL. It was not rerun at round-4 head; no current family grade or admission.",
+    "29 inherited plan-index findings under current origin/main remain; all named inputs match the pinned base. Shards pass. No owner/derived/governance changes.",
     "Memory is sampled at fresh callback boundaries and resume, not hard allocation/child-process containment."
   ],
   "review_round_1": {
@@ -110,7 +110,7 @@
       "total": 86
     }
   },
-  "self_assessment": "PARTIAL overall. All 124 bounded observations and 21 selected real guards verified; unsupported grammar and incomplete lane adoption keep the three full real suites FAIL.",
+  "self_assessment": "PARTIAL overall. All 141 bounded traps pass; Sol completes all round-4 specimens without new false PASS after explicit scratch expectation updates. Unsupported grammar prevents complete adoption. Earlier DG6B observations were not rerun at this head.",
   "subject": "shared check-11 guard-isolation tool",
   "review_round_3": {
     "base_sha": "16bd9ccb0c52e557ef58b2b78b937308f1f28a03",
@@ -194,5 +194,39 @@
     "family_grade_changes": "not applicable; no admissions or family grade changes",
     "core_commit": "f62a23b9207b5be9e472c2070482007ce5f459e5",
     "closure_commit": "309359ebe9"
+  },
+  "review_round_4": {
+    "before": "PARTIAL",
+    "after": "PARTIAL",
+    "base": "68fd9b0b043831ef84b1b125d6f7d59b254dbb2d",
+    "core_fix_commit": "c34dddebc5b33465fa8b94c1ab5146137d51dc23",
+    "implementation_commit": "6998371fbe90d3f9ec32e98fdaccb7423966a615",
+    "C4-B1": "fixed; structured operands have no aggregate cut",
+    "C4-B2": "fixed; unsupported control ancestors block registration",
+    "traps": {
+      "old": 124,
+      "new": 17,
+      "caught": 141
+    },
+    "census": {
+      "classes": 82,
+      "positions": 5,
+      "supported": 47,
+      "fail_closed": 363,
+      "gate": "PASS; new-class injection FAIL exit 1"
+    },
+    "sol_cycle4": {
+      "fresh_constructs_completed": 29,
+      "counterexamples_completed": 10,
+      "false_pass_count": 0,
+      "assertions": 123
+    },
+    "dg6b_rerun": false,
+    "families": [],
+    "ids_used": [],
+    "evidence": {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix4/verification-manifest.json",
+      "sha256": "3782fcc215df39d665ef241dd0dab69345805d9ba1345f2cbe7fe71cfd0beffd"
+    }
   }
 }

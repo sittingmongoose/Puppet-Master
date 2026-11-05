@@ -289,3 +289,59 @@ The complete results stay **FAIL**. Each module exposes 730 undispositioned code
 **Scope:** no owner Markdown, registry, admission, Decision Log, Spec Lock, auto-decisions, generated shards/index/evidence or .gitignore edits. No ids minted, pm-mail, subagents or main push. Only tool scripts, trap data and compact reports changed. No general prover, automatic chain normalization, regex clause splitter, resource sandbox, full lane adoption or family grade is claimed.
 
 **Round-3 evidence:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix3/verification-manifest.json`, SHA-256 `2c8149b96f36b983ada12c4d1761004cff818c1cd6792776c2322c4e36fe7f1f`. The full trap reports, untouched Astra producer copies and rerun outputs, currentness receipt, pinned source fingerprints, serial command records, complete DG6B matrices and independent result audit are retained there. Report/guide/self-grade are copied to the requested drafts/GUARDTOOL folder. The temporary input tree and fix worktree are removed after the final push.
+
+## Review round 4: findings and responses
+
+**Base:** `68fd9b0b043831ef84b1b125d6f7d59b254dbb2d`. **Core fix:** `c34dddebc5b33465fa8b94c1ab5146137d51dc23`. **Refusal-value consistency follow-up:** `6998371fbe90d3f9ec32e98fdaccb7423966a615`. Capability remains **PARTIAL before and after**: unsupported grammar stays unclassified and cannot receive automatic isolation credit. No family, admission, owner contract or PlanUnit ID is added. No governance or generated plan artifact is edited.
+
+| Finding | Where / why / fix | Verify |
+|---|---|---|
+| **C4-B1 — fixed** (`c34dddebc5`) | `scripts/pm_guard_isolation.py:314`. The old value grammar admitted tuple/list elements recursively and cut the enclosing comparison as one predicate. Comparison operands now use the scalar-only positional policy. Tuple/list/set/dict displays, starred values, comprehensions, slices, conditional/arithmetic/opaque expressions fail closed. No structured equality receives an automatic whole-value cut. Symbolic scalar reads retain their explicit reviewer binding requirement. | `--self-test`: four `C4-tuple/list-return/raise` entries and `C4-tuple-comparison`. Every entry attempts both the single-x and truthful aggregate registration, with independent x-only/y-only witnesses. |
+| **C4-B2 — fixed** (`c34dddebc5`) | `scripts/pm_guard_isolation.py:1048, :1161`. Discovery retained only the last if condition, dropping while and other ancestors. It now checks actual ancestry against the controlling-context policy before registration. While, for, try/except, with, match, async, else and nested paths without a verified cut are unclassified. Refusal values inside those paths cannot be registered or credited independently of their controls. | `--self-test`: six `C4-while-return-*` spellings, `C4-while-early-return` and nine additional control-context specimens. Both direct and nearer-if-hidden while refusals are blocked. |
+| **Generated census and gate — fixed** (`c34dddebc5`) | `scripts/pm_guard_isolation.py:270, :1730`; generated `reports/event-authority-20261105/GUARDTOOL-PYTHON-CENSUS.json`. Rows come from the running interpreter's concrete classes under all seven requested ast bases, rather than from sample programs or the reviewed policy's keys. Every node × position cell names a reviewed cut rule or fails closed. The gate checks for missing classes/positions and obsolete names in both directions; AstGuards construction also refuses a failing gate. | Three census traps: inject a new live statement class, remove While's controlling-context classification, and name a nonexistent class. Each makes self-test FAIL before traps and refuses AstGuards construction. |
+| **Positional refusal-value constraints — fixed** (`6998371fbe`) | `scripts/pm_guard_isolation.py:1098`. Apply the census's fixed scalar payload constraint to assert messages, raise constructors and refusal/helper arguments. Compound or opaque payloads cannot evade the condition/operand policy. | `C4-scalar-boundaries`: 28 operand-side refusals, three accepted scalar grammar controls and six unsupported payload registrations; all caught. |
+
+### Generated Python construct census
+
+Generator: **CPython 3.14.4**, `3.14.4 (main, Aug 20 2026, 10:41:58) [GCC 15.2.0]`. The committed JSON contains the complete generated table, each rule, cut strategy and runtime constraint. The explicit policy classifies known classes; it is not the source of the discovered census. A newly discovered class is an error in all five positions until reviewed. A supported cell is conditional on its named grammar rule, not blanket support for that AST class. Wrapper/view/initialization rules retain their enclosing predicate cuts and add no independent rejection predicate.
+
+| Position | Supported with named rule/cut | Fail closed | Total |
+|---|---:|---:|---:|
+| Controlling context | 3 | 79 | 82 |
+| Condition | 21 | 61 | 82 |
+| Comparison operand | 8 | 74 | 82 |
+| Refusal value | 11 | 71 | 82 |
+| Accumulator write | 4 | 78 | 82 |
+| **Total: 82 classes × 5 positions** | **47** | **363** | **410** |
+
+Class bases: 28 statements, 29 expressions, two Boolean operators, ten comparison operators, four unary operators, one exception handler and eight patterns. Every row and every position is classified. To regenerate, import `pm_guard_isolation` with `scripts` on sys.path and JSON-encode `python_construct_census()`; the final verification checks equality with the committed table.
+
+**Gate demonstration:** `fix4/demonstrate-gate.py` copies the final engine and companion to a scratch directory, injects `ast.Round4UnclassifiedExpression`, and invokes the actual CLI `--self-test`. It exits **1**, reports **FAIL**, runs zero traps, and lists all five missing position classifications. The same engine without injection passes. The in-corpus gate tests also detect a single missing position and a classified-but-nonexistent class. Injection patch and raw output are retained; the temporary copied engine is removed.
+
+### Regressions and Sol's cycle-4 rerun
+
+**141/141 traps caught: 124 existing + 17 new.** The new rows are the ten exact counterexamples, both adversarial blocker entries, three census gates and two grammar-boundary audits. Each of the twelve source reproductions includes a single-negative/held-out-peer attempt and a truthful two-negative aggregate attempt. All **24 attempted proof reports FAIL/unproved** and all registrations are refused. Baselines still accept the control and reject each isolated defect. Independent narrow x-only and y-only sources yield `[true,true,false]` and `[true,false,true]`, against the original `[true,false,false]`. No unsupported cut is executed or credited. One older assigned-class-append test now locates its exact append candidate instead of assuming it is the first row; its refusal, enclosing identity, inventory and unproved assertions remain intact after class-context obligations were added.
+
+Sol's six producer/audit scripts were copied from `reviews/GUARDTOOL-sol/cycle4/` into `fix4/cycle4/`, with the three final checker-read inputs copied into its scratch tree. Original source scripts are unchanged. Primary/extra/boundary producers exit **0**. The original adversarial and counterexample drivers stop at the now-refused while and structured-comparison registrations; the audit's byte-equality assertion stops because positional reason metadata changed; the original result verifier stops at its old 36-entry expectation. These exit-1 results are retained and are not reported as completed subcase coverage.
+
+The scratch-only expectation patch preserves the source callbacks, controls, defects and independent narrow witnesses. It catches refused registration so every specimen runs, expects FAIL/unproved instead of false PASS, updates the supplemental count, compares unchanged Python outcomes/matrices while allowing new reason metadata, and records the narrowed for-loop boundary. Adapted rerun:
+
+| Check | Result |
+|---|---|
+| Expanded counterexamples | **10/10 complete; 20 single/aggregate reports FAIL; zero false PASS** |
+| Fresh adversarial specimens | **29/29 closed or independently proved**; both former blockers refuse registration |
+| Supplemental Astra/new traps, excluding two audits | **53/53 caught** |
+| Schema audit | **139 supported / 530 fail closed / 99 zero-predicate**, unchanged; all 99 zero cells still accept 99 samples and retain their contextual reasons |
+| Earlier behavioral Python audit | **12 supported / 16 fail closed**, unchanged outcomes and proof matrices; this bounded sample table is supplemented by the generated census |
+| Adapted Sol evidence verifier | **123 assertions PASS**, exit 0 |
+| Final fix evidence audit | **66 assertions PASS**, exit 0 |
+
+Correct controls remain as observed: DCH/DC/uncaught exceptions FAIL; genuine DFM duplicates PASS; unresolved dormant references fail eagerly. The intentionally dishonest callback, repeated-root and false-alias probes retain their disclosed trust boundary. For-loop code registration is now conservatively refused rather than receiving automatic dynamic-subject credit. No complete-lane or family grade is inferred. The DG6B campaign was **not rerun in round 4**; its round-3 observations remain pinned to that implementation, and affected adapters require fresh proof against this narrower grammar.
+
+### Verification, scope and evidence
+
+Syntax and the example adapter pass; shard verification exits **0**; whitespace check exits **0**. Plan-index validation's parsed top-level status is **fail**, exit **1**, with **29 inherited findings**: 21 ledger-record errors, seven PlanUnits absent relative to the newer fetched origin/main, and one stale readiness artifact. Every named failure input and the index validator is byte-identical to the pinned base (`fix4/scope-and-index-inheritance.json`). The earlier 22-finding observation used an older origin/main. No index regeneration or unrelated repair is made.
+
+Disk/RAM preflight: **98 GB root disk available / 15 GiB RAM available**. Checks run serially, with fresh >=6 GiB gates, the 1,536 MiB RSS setting and a 1 GiB outer address-space limit in Sol's producers. Low-memory messages from the resource regressions use injected samples. The copied repository inputs and injected engine are removed after verification; no browser/server, subagent, pm-mail, main push, owner Markdown, registry, Decision Log, Spec Lock, governance evidence or gitignore change is part of this task. The literal-path worktree removal follows the final branch push.
+
+**Evidence:** `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix4/verification-manifest.json`, SHA-256 `3782fcc215df39d665ef241dd0dab69345805d9ba1345f2cbe7fe71cfd0beffd`. It fingerprints the exact raw reports, original/adapted outputs, expectation patch, source manifest, commands/exits and gate demonstration. Report, self-grade, checks, compact traps, guide and generated census are copied to `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/` (overwrite). Families and IDs used: **none**.

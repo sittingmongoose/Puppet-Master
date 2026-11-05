@@ -1,11 +1,31 @@
 {
   "status": "PASS",
-  "caught": 124,
-  "trap_count": 124,
-  "old": 86,
-  "new": 38,
-  "implementation_commit": "9769ca85108aed8faf82fe9530fda5cd9cd43147",
+  "caught": 141,
+  "trap_count": 141,
+  "old": 124,
+  "new": 17,
+  "implementation_commit": "6998371fbe90d3f9ec32e98fdaccb7423966a615",
+  "core_fix_commit": "c34dddebc5b33465fa8b94c1ab5146137d51dc23",
   "meaning": "Caught means the exact expected observation, often intentional FAIL/unproved; no complete lane proof.",
+  "python_census": {
+    "cells": 410,
+    "errors": [],
+    "implementation": "cpython",
+    "node_classes": 82,
+    "positions": [
+      "controlling_context",
+      "condition",
+      "comparison_operand",
+      "refusal_value",
+      "accumulator_write"
+    ],
+    "python": "3.14.4 (main, Aug 20 2026, 10:41:58) [GCC 15.2.0]",
+    "status": "PASS",
+    "totals": {
+      "fail_closed": 363,
+      "supported": 47
+    }
+  },
   "traps": [
     {
       "id": "merged-predicates",
@@ -626,10 +646,95 @@
       "id": "round3-negated-domain-array",
       "expected": "negated typed assertion also requires its applicability domain; no aggregate cut is permitted",
       "caught": true
+    },
+    {
+      "id": "C4-tuple-raise",
+      "expected": "unclassified; refuse single and aggregate registration; held-out peer has no credited cut; independent narrow cuts preserve peers",
+      "caught": true
+    },
+    {
+      "id": "C4-list-raise",
+      "expected": "unclassified; refuse single and aggregate registration; held-out peer has no credited cut; independent narrow cuts preserve peers",
+      "caught": true
+    },
+    {
+      "id": "C4-tuple-return",
+      "expected": "unclassified; refuse single and aggregate registration; held-out peer has no credited cut; independent narrow cuts preserve peers",
+      "caught": true
+    },
+    {
+      "id": "C4-list-return",
+      "expected": "unclassified; refuse single and aggregate registration; held-out peer has no credited cut; independent narrow cuts preserve peers",
+      "caught": true
+    },
+    {
+      "id": "C4-while-return-False",
+      "expected": "unclassified; refuse single and aggregate registration; held-out peer has no credited cut; independent narrow cuts preserve peers",
+      "caught": true
+    },
+    {
+      "id": "C4-while-return-None",
+      "expected": "unclassified; refuse single and aggregate registration; held-out peer has no credited cut; independent narrow cuts preserve peers",
+      "caught": true
+    },
+    {
+      "id": "C4-while-return-bare",
+      "expected": "unclassified; refuse single and aggregate registration; held-out peer has no credited cut; independent narrow cuts preserve peers",
+      "caught": true
+    },
+    {
+      "id": "C4-while-return-zero",
+      "expected": "unclassified; refuse single and aggregate registration; held-out peer has no credited cut; independent narrow cuts preserve peers",
+      "caught": true
+    },
+    {
+      "id": "C4-while-return-float-zero",
+      "expected": "unclassified; refuse single and aggregate registration; held-out peer has no credited cut; independent narrow cuts preserve peers",
+      "caught": true
+    },
+    {
+      "id": "C4-while-return-empty-string",
+      "expected": "unclassified; refuse single and aggregate registration; held-out peer has no credited cut; independent narrow cuts preserve peers",
+      "caught": true
+    },
+    {
+      "id": "C4-while-early-return",
+      "expected": "unclassified; refuse single and aggregate registration; held-out peer has no credited cut; independent narrow cuts preserve peers",
+      "caught": true
+    },
+    {
+      "id": "C4-tuple-comparison",
+      "expected": "unclassified; refuse single and aggregate registration; held-out peer has no credited cut; independent narrow cuts preserve peers",
+      "caught": true
+    },
+    {
+      "id": "C4-census-new_node",
+      "expected": "self-test FAIL before traps and AstGuards refuses until every live node position is classified and no nonexistent class is named",
+      "caught": true
+    },
+    {
+      "id": "C4-census-missing_position",
+      "expected": "self-test FAIL before traps and AstGuards refuses until every live node position is classified and no nonexistent class is named",
+      "caught": true
+    },
+    {
+      "id": "C4-census-nonexistent_node",
+      "expected": "self-test FAIL before traps and AstGuards refuses until every live node position is classified and no nonexistent class is named",
+      "caught": true
+    },
+    {
+      "id": "C4-scalar-boundaries",
+      "expected": "unsupported grammar refuses registration; supported scalar comparison controls retain their per-predicate grammar",
+      "caught": true
+    },
+    {
+      "id": "C4-control-boundaries",
+      "expected": "unsupported grammar refuses registration; supported scalar comparison controls retain their per-predicate grammar",
+      "caught": true
     }
   ],
   "evidence": {
-    "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix3/self-test.json",
-    "sha256": "93f1b15e0a903b2f0f1c11190b9b30fbce3a4fb0343ae5a916be6ee4a7f1143e"
+    "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix4/self-test.json",
+    "sha256": "7a0990f3e2fbb4342c37297c3c99ee35695d8e7de7dcb228b02ffadc79e73a6d"
   }
 }
