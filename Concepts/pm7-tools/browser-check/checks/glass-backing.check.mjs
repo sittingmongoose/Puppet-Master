@@ -10,13 +10,15 @@
 // - the title bar's menus and panels (theme, project, notifications, search), the chat popped out and one of its sheets;
 // - Settings: a setup window (Source Control, Add account) and a dialog (Add a service).
 // What each click opens is found, not named: every floating box on screen after it that was not before is measured.
+import { mkdir, writeFile } from 'node:fs/promises';
+import path from 'node:path';
 import { decodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs';
 
 const LOOKS = ['glass-dark', 'glass-light'];
 const THRESHOLD = 12;       // a channel change above this is the page reading through, even dimmed; a blur's mottle stays under it
 const MAX_SHARE = 0.002;    // at most 0.2 % of the surface's pixels may change that much (anti-aliased edges, a caret)
 
-async function shot(t, r) { return decodePng(await t.page.screenshot({ clip: r })); }
+async function shot(t, r) { const png = await t.page.screenshot({ clip: r }); return { ...decodePng(png), png }; }
 function changed(a, b, mask) {
 	let n = 0, mx = 0;
 	for (let i = 0, p = 0; i < a.data.length; i += 4, p++) {
@@ -31,7 +33,7 @@ function grow(m, w, h, k) { const o = new Uint8Array(m.length); for (let y = 0; 
 function motionMask(a, b) { const m = new Uint8Array(a.data.length / 4); for (let i = 0, p = 0; i < a.data.length; i += 4, p++) if (Math.max(Math.abs(a.data[i] - b.data[i]), Math.abs(a.data[i + 1] - b.data[i + 1]), Math.abs(a.data[i + 2] - b.data[i + 2])) > THRESHOLD / 2) m[p] = 1; return m; }
 
 // how much of the page's content reads through the surface sel (null when it isn't on screen)
-export async function readThrough(t, f, sel, { loseOwnInk = false } = {}) {
+export async function readThrough(t, f, sel, { loseOwnInk = false, inputDir = null } = {}) {
 	const r = await f.evaluate((s) => {
 		const e = document.querySelector(s); if (!e) return null;
 		const b = e.getBoundingClientRect(), x = Math.max(0, b.left), y = Math.max(0, b.top);
@@ -81,6 +83,10 @@ export async function readThrough(t, f, sel, { loseOwnInk = false } = {}) {
 		await f.waitForTimeout(350);
 		const c = await shot(t, r);
 		if (t.args.only === 'agents') await t.mark('backing all ink captured');
+		if (inputDir) {
+			await mkdir(inputDir, { recursive: true });
+			for (const [name, im] of Object.entries({ a1, a2, reference, b, c })) await writeFile(path.join(inputDir, `${name}.png`), im.png);
+		}
 		const own = grow(motionMask(b, c), b.width, b.height, 2);
 		let expected = 0, covered = 0;
 		for (let i = 0; i < own.length; i++) if (expectedOwn[i] && !mask[i]) { expected++; if (own[i]) covered++; }
@@ -115,7 +121,9 @@ export default async function (t) {
 			await f.evaluate(() => { document.getElementById('tab-dashboard').click(); document.querySelector('#activityBar .icon[data-target="panel-agents"]').click(); });
 			await f.waitForTimeout(1200); await t.viewport(1920, 1080); await f.waitForTimeout(1200);
 			await t.check(`agents ${look} resize ${rep}: target painted`, await f.evaluate(() => { const e = document.getElementById('panel-agents'), b = e.getBoundingClientRect(); return b.width > 40 && b.height > 40 && getComputedStyle(e).visibility !== 'hidden'; }));
-			const m = await readThrough(t, f, '#sidePanelSlot'); t.log(JSON.stringify({ look, rep, ...m }));
+			const inputDir = t.args.inputs ? path.join(String(t.args.inputs), `${look}-${String(rep).padStart(3, '0')}`) : null;
+			const m = await readThrough(t, f, '#sidePanelSlot', { inputDir }); t.log(JSON.stringify({ look, rep, ...m }));
+			if (inputDir) await writeFile(path.join(inputDir, 'sample.json'), JSON.stringify({ look, rep, ...m }, null, 2));
 			await t.check(`agents ${look} resize ${rep}: valid sample`, !!m && !m.invalid, m?.reason);
 			if (m && !m.invalid) await t.check(`agents ${look} resize ${rep}: backing`, m.share <= MAX_SHARE, JSON.stringify(m));
 		}

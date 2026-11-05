@@ -105,6 +105,9 @@
     /* the concept demo pill folds into a slim tab beside a narrow window (12-components.css) */
     const demo = document.getElementById('o55-demo');
     if (demo && demo.hasAttribute('data-o55-narrow') !== (layout === 'narrow')) demo.toggleAttribute('data-o55-narrow', layout === 'narrow');
+    /* FO-69: the header's new layout and its chip commit together. Observer work requested during a
+       layout delivery may wait until the next frame; the generic resize sync also waits 140 ms. */
+    if (S.open && window.PM_LG && PM_LG.syncScope) PM_LG.syncScope(S.root.querySelector('.o55-rail'));
   }
 
   /* ---------------------------------------------------------------- theme */

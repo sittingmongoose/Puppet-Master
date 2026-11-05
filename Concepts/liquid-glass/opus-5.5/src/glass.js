@@ -1400,7 +1400,7 @@
     { sel: '#activityBar', items: '.icon[data-target]', vertical: true, kind: 'lensIcon', pick: railIcon,
       box: function (i) { return i.querySelector('.symbol') || i; }, label: function (i) { return i.querySelector('.symbol'); } },
     /* press: false - a progress rail, not a choice: its steps have no click, so the lens moves only when the step does */
-    { sel: '#pm-o55-onboarding .o55-raillist', items: '.o55-railitem', kind: 'lens', active: '[data-state="current"]', pad: 6, magRest: 1, magLift: 1, press: false,
+    { sel: '#pm-o55-onboarding .o55-raillist', items: '.o55-railitem', kind: 'lens', active: '[data-state="current"]', tag: 'onboarding-steps', pad: 6, magRest: 1, magLift: 1, press: false,
       box: function (i) { var u = unionRect([i.querySelector('.o55-railnode'), i.querySelector('.o55-raillabel')]); return u || i; },
       /* centred in the window's header between the brand and the header's controls: their widths and the header's place it */
       follow: function (strip) { var head = strip.closest('.o55-head'); return head ? [strip, head].concat(Array.prototype.slice.call(head.children)) : [strip]; } },
