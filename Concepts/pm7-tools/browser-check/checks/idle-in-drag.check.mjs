@@ -161,17 +161,22 @@ async function armCopies(session, probe, scriptId) {
 async function armWork(t, f, map) {
 	let session, scope = 'frame';
 	try { session = await t.page.context().newCDPSession(f); } catch (_) { session = await t.page.context().newCDPSession(t.page); scope = 'page'; }
-	const probe = { session, scope, paused: [], armed: [], copies: [], searched: 0, kinds: {} };
-	const scripts = new Map(), known = new Set(), page = new RegExp(map.urlRegex);
+	const probe = { session, scope, paused: [], armed: [], copies: [], searched: 0, kinds: {}, skipped: 0 };
+	const scripts = new Map(), known = new Set(), clean = new Set(), page = new RegExp(map.urlRegex);
 	// the page document's own inline scripts are armed by URL, line and column; a script with the page's URL that starts at
-	// 0:0 was put in later (an injected script element), so it is searched like an eval
-	session.on('Debugger.scriptParsed', (e) => scripts.set(e.scriptId, { url: e.url || '', doc: page.test(e.url || '') && (e.startLine > 0 || e.startColumn > 0) }));
+	// 0:0 was put in later (an injected script element), so it is searched like an eval. Scripts in another world than the
+	// page's (the kit's isolated world) can't run the page's code, and a text already searched and found clean (Playwright
+	// compiles the same drag helpers on every held mouse move) is not searched again: those go on at once.
+	session.on('Debugger.scriptParsed', (e) => scripts.set(e.scriptId, { url: e.url || '', hash: e.hash || '', doc: page.test(e.url || '') && (e.startLine > 0 || e.startColumn > 0), world: !(e.executionContextAuxData && e.executionContextAuxData.isDefault === false) }));
+	const needs = (s) => !!s && !s.doc && s.world && !OWN_SCRIPT.test(s.url) && !(s.hash && clean.has(s.hash));
 	const search = async (id) => {
-		const s = scripts.get(id) || { url: '', doc: false };
-		if (s.doc || OWN_SCRIPT.test(s.url)) return;
+		const s = scripts.get(id) || { url: '', hash: '', doc: false, world: true };
+		if (!needs(s)) { probe.skipped++; return; }
 		const kind = s.url ? (page.test(s.url) ? 'the page URL, put in later' : s.url.slice(0, 60)) : 'no URL (eval, Function)';
 		probe.kinds[kind] = (probe.kinds[kind] || 0) + 1; probe.searched++;
+		const before = probe.copies.length;
 		await armCopies(session, probe, id).catch(() => { probe.copies.push({ scriptId: id, armed: false }); });
+		if (probe.copies.length === before && s.hash) clean.add(s.hash);
 	};
 	// a condition never pauses. The one pause these probes ask for is before a new script runs (to search it); should
 	// anything else pause the page while they are on, it goes on at once and is reported
@@ -533,7 +538,7 @@ export const tests = {
 			const covers = effects.filter((e) => e.owner === 'theme' && !inside(e));
 			await t.check(`${look}: the effect witness sees the look covers' writes outside the drag`, covers.length > 0, covers.length ? `${covers.length}: ${[...new Set(covers.map((e) => e.effect))].join(', ')}` : '0');
 		}
-		t.log(`${look}: work probes: ${probe.armed.length} sites armed in the ${probe.scope} session; ${probe.searched} other scripts searched (${Object.entries(probe.kinds).map(([k, n]) => `${n} ${k}`).join(', ') || 'none'}); ${probe.copies.length} run-time copies of work sites found (${[...new Set(probe.copies.map((c) => c.key))].join(', ') || 'none'})`);
+		t.log(`${look}: work probes: ${probe.armed.length} sites armed in the ${probe.scope} session; ${probe.searched} other scripts searched (${Object.entries(probe.kinds).map(([k, n]) => `${n} ${k}`).join(', ') || 'none'}), ${probe.skipped} let through (the kit's world, or a text already searched); ${probe.copies.length} run-time copies of work sites found (${[...new Set(probe.copies.map((c) => c.key))].join(', ') || 'none'})`);
 		await t.check(`${look}: the work probes never paused the page`, probe.paused.length === 0, (probe.paused.join(', ') || '0') + `; ${probe.searched} other scripts searched, ${probe.copies.filter((c) => c.armed).length} run-time copies of work sites armed${probe.copies.some((c) => !c.armed) ? ', ' + probe.copies.filter((c) => !c.armed).length + ' NOT armed' : ''}`);
 		await t.check(`${look}: every run-time copy of a work site is armed`, probe.copies.every((c) => c.armed), probe.copies.filter((c) => !c.armed).map((c) => c.key || 'script ' + c.scriptId).join('; ') || String(probe.copies.length));
 		await probe.session.detach().catch(() => {});
