@@ -242,20 +242,40 @@ def post_august_validator_pin() -> str:
     Full DL-412 authority and receipt semantics are checked separately for steps.
     A missing, ambiguous or broken byte anchor exposes the live hash to DL-077.
     """
+    def strict_bridge_object(source):
+        def unique_pairs(items):
+            result = {}
+            for key, value in items:
+                if key in result:
+                    raise ValueError("duplicate bridge JSON key: " + key)
+                result[key] = value
+            return result
+
+        def reject_constant(token):
+            raise ValueError("non-JSON bridge constant: " + token)
+
+        value = json.loads(source.read_text("utf-8"), object_pairs_hook=unique_pairs,
+                           parse_constant=reject_constant)
+        if type(value) is not dict:
+            raise ValueError("bridge input must be an object")
+        return value
+
     live_hash = sha256_file(Path(__file__))
     try:
         path = REPO / MULTI_FAMILY_RECEIPT
-        receipt = load_json(path)
+        receipt = strict_bridge_object(path)
         dl077 = load_json(REPO / POST_AUGUST_RECEIPT)
-        lock = load_json(ROOT / "Spec_Lock.json")
-        ssot = lock.get("canonical_ssot_hashes") if isinstance(lock, dict) else None
-        files = ssot.get("files") if isinstance(ssot, dict) else None
+        lock = strict_bridge_object(ROOT / "Spec_Lock.json")
+        ssot = lock.get("canonical_ssot_hashes") if type(lock) is dict else None
+        files = ssot.get("files") if type(ssot) is dict else None
         anchors = [entry for entry in files
-                   if isinstance(entry, dict) and entry.get("path") == MULTI_FAMILY_RECEIPT
-                   ] if isinstance(files, list) else []
+                   if type(entry) is dict and entry.get("path") == MULTI_FAMILY_RECEIPT
+                   ] if type(files) is list else []
         if (isinstance(receipt, dict) and isinstance(dl077, dict)
                 and receipt.get("validator_after_sha256") == live_hash
                 and len(anchors) == 1
+                and type(anchors[0].get("sha256")) is str
+                and HEX64.fullmatch(anchors[0]["sha256"])
                 and anchors[0].get("sha256") == sha256_file(path)
                 and receipt.get("validator_before_sha256") == dl077.get("validator_after_sha256")):
             return "190a86f23e06362bdb98e27eb23268c9691db46cc41bc9f97e1fbb6bde1abc20"
