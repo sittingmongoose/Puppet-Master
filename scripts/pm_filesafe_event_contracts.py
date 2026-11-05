@@ -80,10 +80,11 @@ def semantic(payload, *, inline=True):
             return False
     return True
 
-def main():
+def main(families=None):
     fixture = json.loads((ROOT/'Plans/filesafe_event_contract_fixtures.json').read_text())
     failures, counts = [], {}
     for row in fixture['families']:
+        if families is not None and row['event_type'] not in families: continue
         f = row['event_type']
         schema = json.loads((ROOT/('Plans/event_payloads/'+f.replace('.','_')+'_v2.schema.json')).read_text())
         Draft202012Validator.check_schema(schema)
@@ -118,4 +119,8 @@ def main():
     print(json.dumps({'status':'fail' if failures else 'pass','families':counts,'failures':failures,'native_execution':'NOT_RUN','membership':'ABSENT'},indent=2))
     return bool(failures)
 if __name__ == '__main__':
-    raise SystemExit(main())
+    import argparse
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--family')
+    args=parser.parse_args()
+    raise SystemExit(main((args.family,) if args.family else None))
