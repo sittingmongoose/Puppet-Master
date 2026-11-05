@@ -1,0 +1,335 @@
+#!/usr/bin/env python3
+"""DL-451 isolated input/receipt regressions; fixture trees stay outside the repo."""
+import argparse
+import copy
+import hashlib
+import importlib.util
+import json
+import os
+from pathlib import Path
+import shutil
+import subprocess
+import tempfile
+
+REL = 'Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py'
+COUNT = 'c53e4199ae94ca853a197354f3f9e7f296cf1efc'
+PREVIOUS = '5764ca809c0dcc8a161d4fcd45770abf6355f746'
+
+
+def sha(raw): return hashlib.sha256(raw).hexdigest()
+def encoded(doc): return (json.dumps(doc, indent=2) + '\n').encode()
+
+
+def run(repo, output, source_map, apply_cut=None):
+    results = []
+    def record(name, action, rejects=False, message=None):
+        try:
+            value = action()
+            if rejects:
+                raise AssertionError('negative was accepted')
+            results.append({'name': name, 'pass': True})
+            return value
+        except (ValueError, OSError, TypeError, KeyError, UnicodeError, subprocess.SubprocessError) as exc:
+            if not rejects or (message is not None and message not in str(exc)):
+                results.append({'name': name, 'pass': False, 'error': str(exc)})
+            else:
+                results.append({'name': name, 'pass': True, 'refusal': str(exc)[:240]})
+        except AssertionError as exc:
+            results.append({'name': name, 'pass': False, 'error': str(exc)})
+
+    def git(spec):
+        return subprocess.check_output(['git', '-C', str(repo), 'show', spec])
+
+    base = Path.home() / 'PM-Experiments'
+    base.mkdir(exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix='CA-SEAL2-', dir=base) as directory:
+        root = Path(directory)
+        def put(path, raw):
+            target = root / path
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(raw)
+            return target
+        put(REL, (repo / REL).read_bytes())
+        spec = importlib.util.spec_from_file_location('dl451_fixture', root / REL)
+        v = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(v)
+        if apply_cut is not None:
+            apply_cut(v)
+        for path in [v.MULTI_FAMILY_RECEIPT, v.POST_AUGUST_RECEIPT, v.HOLDING_RECEIPT,
+                     str(v.DENOM.relative_to(root)),
+                     'Plans/.audits/event-authority-2026-08-12/closed-world-census/CURRENT_SOURCE_INVENTORY.json',
+                     'Plans/.audits/event-authority-2026-08-12/independent-validator/receipts/event_authority_validator_receipt.json']:
+            put(path, (repo / path).read_bytes())
+        put('Plans/Decision_Log.md', git('origin/plans/ea-cards2-answers-20261105:Plans/Decision_Log.md'))
+        frozen_receipt = git(COUNT + ':' + v.RECOUNT_RECEIPT)
+        frozen_list = git(COUNT + ':' + v.RECOUNT_LIST)
+        put(v.RECOUNT_RECEIPT, frozen_receipt)
+        put(v.RECOUNT_LIST, frozen_list)
+        change = json.loads((repo / v.RECOUNT_CHANGE).read_bytes())
+        change['lander_task'] = 'fixture:lander'
+        change['seal_applier_forbidden_tasks'] = sorted({v.RECOUNT_AUTHOR, 'fixture:lander'})
+        put(v.RECOUNT_CHANGE, encoded(change))
+        def anchors():
+            put('Plans/Spec_Lock.json', encoded({'canonical_ssot_hashes': {'files': [
+                {'path': p, 'sha256': sha((root / p).read_bytes())}
+                for p in [v.MULTI_FAMILY_RECEIPT, v.RECOUNT_CHANGE]]}}))
+        anchors()
+        original_env = {k: os.environ.get(k) for k in ['GIT_DIR', 'PM_EA_RECOUNT_SOURCE_MAP']}
+        try:
+            os.environ['GIT_DIR'] = str(Path(subprocess.check_output(
+                ['git', '-C', str(repo), 'rev-parse', '--absolute-git-dir']).decode().strip()))
+            os.environ['PM_EA_RECOUNT_SOURCE_MAP'] = str(source_map)
+            names, custody = record('positive_real_frozen_recount_597_sources', v.recount_frozen_inputs)
+            record('positive_fourth_receipt', v.recount_change_state)
+            record('positive_original_DL077_predicate_through_both_anchors', v.post_august_receipt_state)
+            def august_snapshot():
+                inventory = json.loads((v.CENSUS / 'CURRENT_SOURCE_INVENTORY.json').read_bytes())
+                denominator = json.loads(v.DENOM.read_bytes())
+                assert inventory['canonical_digest_sha256'] == denominator['freeze_digest_sha256']
+                assert sha((v.CENSUS / 'CURRENT_SOURCE_INVENTORY.json').read_bytes()) == sha((repo / str((v.CENSUS / 'CURRENT_SOURCE_INVENTORY.json').relative_to(root))).read_bytes())
+                pins = v.recount_snapshot_pins()
+                assert pins['august']['inventory_sha256'] != pins['recount']['expected_list_sha256']
+            record('positive_preserved_August_snapshot_own_digest', august_snapshot)
+
+            # Every following negative starts from an independently passing synthetic
+            # custody fixture. It uses the actual 249-name list and exact 597-source shape.
+            sources = {}
+            locations = {}
+            for i in range(597):
+                name = 'Plans/fixture_' + str(i) + '.json'
+                raw = str(i % 10).encode()
+                target = put('fixture-source-bytes/' + str(i), raw)
+                sources[name] = {'sha256': sha(raw), 'bytes': len(raw)}
+                locations[name] = str(target)
+            synthetic = json.loads(frozen_receipt)
+            synthetic['inputs'] = sources
+            map_path = put('source-map.json', encoded({'schema_id': 'pm.event_authority.recount_source_locations.v1', 'locations': locations}))
+            os.environ['PM_EA_RECOUNT_SOURCE_MAP'] = str(map_path)
+            def reset_inputs(doc=None):
+                raw = encoded(synthetic if doc is None else doc)
+                put(v.RECOUNT_RECEIPT, raw)
+                v.RECOUNT_RECEIPT_SHA = sha(raw)
+                put(v.RECOUNT_LIST, frozen_list)
+                coherent_locations = {k: locations[k] for k in (synthetic if doc is None else doc)['inputs']}
+                map_path.write_bytes(encoded({'schema_id': 'pm.event_authority.recount_source_locations.v1', 'locations': coherent_locations}))
+            reset_inputs()
+            record('positive_isolated_source_fixture', v.recount_frozen_inputs)
+            # Same-size JSON whitespace change: only the frozen receipt byte pin is stale.
+            mutated_receipt = bytearray((root / v.RECOUNT_RECEIPT).read_bytes())
+            mutated_receipt[mutated_receipt.index(32)] = 9
+            put(v.RECOUNT_RECEIPT, bytes(mutated_receipt))
+            record('negative_one_changed_receipt_byte', v.recount_frozen_inputs, True, 'receipt byte fingerprint')
+            reset_inputs()
+            mutated = bytearray(frozen_list)
+            mutated[mutated.index(32)] = 9  # One whitespace byte; JSON and byte count stay valid.
+            put(v.RECOUNT_LIST, bytes(mutated))
+            record('negative_one_changed_list_byte', v.recount_frozen_inputs, True, 'list byte fingerprint')
+            reset_inputs()
+            source = Path(locations['Plans/fixture_0.json'])
+            source.write_bytes(b'9')
+            record('negative_one_changed_source_byte', v.recount_frozen_inputs, True, 'source fingerprint mismatch')
+            source.write_bytes(b'0')
+            for label, mutate, message in [
+                ('wrong_source_byte_count', lambda d: d['inputs']['Plans/fixture_0.json'].__setitem__('bytes', 2), 'source fingerprint mismatch'),
+                ('missing_fingerprint', lambda d: d['inputs']['Plans/fixture_0.json'].pop('sha256'), 'missing or noncanonical'),
+                ('mismatched_fingerprint', lambda d: d['inputs']['Plans/fixture_0.json'].__setitem__('sha256', 'f' * 64), 'source fingerprint mismatch'),
+                ('mixed_August_source_revision', lambda d: d.__setitem__('main_sha', '0' * 40), 'snapshot identity'),
+                ('missing_source_member', lambda d: d['inputs'].pop('Plans/fixture_0.json'), 'fingerprint set incomplete'),
+                ('string_byte_count', lambda d: d['inputs']['Plans/fixture_0.json'].__setitem__('bytes', '1'), 'missing or noncanonical'),
+                ('boolean_byte_count', lambda d: d['inputs']['Plans/fixture_0.json'].__setitem__('bytes', True), 'missing or noncanonical'),
+                ('float_byte_count', lambda d: d['inputs']['Plans/fixture_0.json'].__setitem__('bytes', 1.0), 'missing or noncanonical'),
+                ('uppercase_source_sha', lambda d: d['inputs']['Plans/fixture_0.json'].__setitem__('sha256', d['inputs']['Plans/fixture_0.json']['sha256'].upper()), 'missing or noncanonical'),
+            ]:
+                doc = copy.deepcopy(synthetic)
+                mutate(doc)
+                reset_inputs(doc)  # Refresh only the fixture trust pin to isolate its inner predicate.
+                record('negative_' + label, v.recount_frozen_inputs, True, message)
+            reset_inputs()
+            doc = copy.deepcopy(synthetic)
+            doc['inputs']['Plans/fixture_0.json']['sha256'] = json.loads(
+                (v.CENSUS / 'CURRENT_SOURCE_INVENTORY.json').read_bytes())['canonical_digest_sha256']
+            reset_inputs(doc)
+            record('negative_August_fingerprint_with_recount_membership', v.recount_frozen_inputs, True, 'source fingerprint mismatch')
+            reset_inputs()
+
+            # Semantic receipt faults retain a matching byte anchor, so integrity
+            # rejection cannot mask the intended validator/authority predicate.
+            v.RECOUNT_RECEIPT_SHA = sha(frozen_receipt)
+            put(v.RECOUNT_RECEIPT, frozen_receipt)
+            for field, value in [
+                ('schema_id', 'wrong.schema'), ('authority_ref', 'Plans/Decision_Log.md#DL-450'),
+                ('validator_before_sha256', '0' * 64), ('validator_after_sha256', '0' * 64),
+                ('prior_receipt', {'path': v.MULTI_FAMILY_RECEIPT, 'sha256': '0' * 64}),
+                ('recount_receipt', {'path': v.RECOUNT_RECEIPT, 'sha256': '0' * 64}),
+                ('recount_list', {'path': v.RECOUNT_LIST, 'sha256': '0' * 64}),
+                ('definition_writing_authorized', True), ('app_recording_authorized', True),
+                ('contract_depth_complete', True),
+                ('validator_id', 'another.validator'), ('validator_path', 'Plans/wrong.py'),
+                ('authority_section_sha256', '0' * 64), ('author_task', 'another.author'),
+                ('lander_task', None), ('seal_authorized', True), ('admission_authorized', 'false'),
+                ('certification_scope', 'recount_only'),
+            ]:
+                doc = copy.deepcopy(change)
+                doc[field] = value
+                put(v.RECOUNT_CHANGE, encoded(doc))
+                anchors()
+                record('negative_change_' + field, v.recount_change_state, True, 'identity, authority')
+                record('legacy_predicate_preserved_under_' + field, v.post_august_receipt_state,
+                       field in {'validator_before_sha256', 'validator_after_sha256'})
+            put(v.RECOUNT_CHANGE, encoded(change))
+            anchors()
+            for label, raw, kind in [
+                ('duplicate_root', b'{"a":1,"a":2}', dict),
+                ('duplicate_nested', b'{"a":{"b":1,"b":2}}', dict),
+                ('NaN', b'{"a":NaN}', dict), ('Infinity', b'{"a":Infinity}', dict),
+                ('negative_Infinity', b'{"a":-Infinity}', dict), ('overflow', b'{"a":1e9999}', dict),
+                ('BOM', b'\xef\xbb\xbf{}', dict), ('trailing', b'{}x', dict),
+                ('wrong_root_array', b'[]', dict), ('wrong_root_bool', b'false', dict),
+                ('wrong_root_null', b'null', dict), ('wrong_root_string', b'"0"', dict),
+            ]:
+                record('negative_strict_' + label, lambda raw=raw, kind=kind: v.recount_json(raw, kind), True)
+            for raw in [b'{"a":1}', b'{} \n']:
+                record('positive_strict_JSON_' + str(len(raw)), lambda raw=raw: v.recount_json(raw, dict))
+
+            put('Plans/Spec_Lock.json', encoded({'canonical_ssot_hashes': {'files': [
+                {'path': v.MULTI_FAMILY_RECEIPT, 'sha256': sha((root / v.MULTI_FAMILY_RECEIPT).read_bytes())}]}}))
+            def broken_anchor():
+                # Product call only: an observer assertion cannot prove a refusal.
+                v.post_august_receipt_state()
+            record('negative_missing_fourth_anchor', broken_anchor, True)
+            anchors()
+            lock = json.loads((root / 'Plans/Spec_Lock.json').read_bytes())
+            lock['canonical_ssot_hashes']['files'].append(copy.deepcopy(lock['canonical_ssot_hashes']['files'][-1]))
+            put('Plans/Spec_Lock.json', encoded(lock))
+            record('negative_duplicate_fourth_anchor', broken_anchor, True)
+            anchors()
+
+            # Round 2: each control starts from the same valid complete receipt.
+            # The list and whole-receipt anchor are observations of the changed
+            # lander/receipt, so synchronize them rather than leave a second fault.
+            for label in ['wrong_fourth_anchor_digest', 'blank_lander',
+                          'missing_lander_from_seal_applier_list']:
+                put(v.RECOUNT_CHANGE, encoded(change))
+                anchors()
+                v.recount_change_state()  # Prove the parent case passes first.
+                doc = copy.deepcopy(change)
+                if label == 'blank_lander':
+                    doc['lander_task'] = ' '
+                    doc['seal_applier_forbidden_tasks'] = sorted({v.RECOUNT_AUTHOR, ' '})
+                elif label == 'missing_lander_from_seal_applier_list':
+                    doc['seal_applier_forbidden_tasks'] = [v.RECOUNT_AUTHOR]
+                put(v.RECOUNT_CHANGE, encoded(doc))
+                anchors()
+                if label == 'wrong_fourth_anchor_digest':
+                    lock = json.loads((root / 'Plans/Spec_Lock.json').read_bytes())
+                    fourth = next(entry for entry in lock['canonical_ssot_hashes']['files']
+                                  if entry['path'] == v.RECOUNT_CHANGE)
+                    fourth['sha256'] = '0' * 64  # Canonical, wrong; third anchor stays valid.
+                    put('Plans/Spec_Lock.json', encoded(lock))
+                record('negative_' + label, v.recount_change_state, True, 'identity, authority')
+            put(v.RECOUNT_CHANGE, encoded(change))
+            anchors()
+
+            # Outcome checks cannot supply admission: the accepted set is the
+            # output of unchanged admission checks in main, explicitly injected here.
+            outcome_doc = {'schema_id': 'pm.assurance.event_authority.recount_outcomes.v1',
+                           'recount_receipt_sha256': v.RECOUNT_RECEIPT_SHA,
+                           'recount_list_sha256': v.RECOUNT_LIST_SHA,
+                           'rows': [{'event_type': n, 'outcome': 'registered'} for n in names]}
+            def outcomes(doc, admitted=None):
+                put(str(v.RECOUNT_OUTCOMES.relative_to(root)), encoded(doc))
+                return v.recount_outcomes(names, set(names) if admitted is None else admitted)
+            record('positive_complete_outcome_reader_with_injected_admitted_set', lambda: outcomes(outcome_doc))
+            for label, mutate in [
+                ('missing_name', lambda d: d['rows'].pop()),
+                ('duplicate_name', lambda d: d['rows'].__setitem__(1, copy.deepcopy(d['rows'][0]))),
+                ('extra_name', lambda d: d['rows'].append({'event_type': 'foreign.name', 'outcome': 'registered'})),
+                ('mixed_snapshot', lambda d: d.__setitem__('recount_list_sha256', '0' * 64)),
+                ('unknown_outcome', lambda d: d['rows'][0].__setitem__('outcome', 'PASS')),
+            ]:
+                doc = copy.deepcopy(outcome_doc)
+                mutate(doc)
+                record('negative_outcome_' + label, lambda doc=doc: outcomes(doc), True)
+            put(str(v.RECOUNT_OUTCOMES.relative_to(root)), encoded(outcome_doc))
+            record('negative_missing_complete_admission_record', lambda: v.recount_outcomes(names, set(names[1:])), True)
+            card_raw = ('Decision required: ' + names[0]).encode()
+            card_path = 'reports/card.md'
+            put(card_path, card_raw)
+            doc = copy.deepcopy(outcome_doc)
+            doc['rows'][0] = {'event_type': names[0], 'outcome': 'decision_card', 'card': {'path': card_path, 'sha256': sha(card_raw)}}
+            record('negative_complete_card_still_unresolved', lambda: outcomes(doc), True, 'cards unresolved')
+            bad = copy.deepcopy(doc)
+            bad['rows'][0]['card']['sha256'] = '0' * 64
+            record('negative_card_fingerprint', lambda: outcomes(bad), True, 'card fingerprint')
+            # Existing exclusion vocabulary: own decision and exact hashed owner span.
+            own_section = ('### DL-998: Exclusion for ' + names[0] + '\n\n' + names[0] + ' is excluded.\n\n').encode()
+            decision_path = root / 'Plans/Decision_Log.md'
+            decision_path.write_bytes(decision_path.read_bytes() + own_section)
+            evidence_raw = (names[0] + ' has no live persisted writer.\n').encode()
+            put('Plans/fixture-owner.md', evidence_raw)
+            excluded = copy.deepcopy(outcome_doc)
+            excluded['rows'][0] = {
+                'event_type': names[0], 'outcome': 'excluded', 'disposition': 'RECLASSIFY_TO_EXCLUDED',
+                'decision_ref': 'Plans/Decision_Log.md#DL-998',
+                'decision_section_sha256': sha(own_section), 'rationale': 'Fixture own exclusion.',
+                'source_citations': [{'path': 'Plans/fixture-owner.md', 'sha256': sha(evidence_raw), 'line_start': 1, 'line_end': 1}]}
+            admitted_rest = set(names[1:])
+            record('positive_exclusion_own_decision_and_evidence', lambda: outcomes(excluded, admitted_rest))
+            for label, spelling in [('prefix', 'x' + names[0]), ('suffix', names[0] + '_other'),
+                                     ('dotted_sibling', names[0] + '.other')]:
+                raw = (spelling + ' has no live persisted writer.\n').encode()
+                put('Plans/fixture-owner.md', raw)
+                bad = copy.deepcopy(excluded)
+                bad['rows'][0]['source_citations'][0]['sha256'] = sha(raw)
+                record('negative_exclusion_' + label, lambda bad=bad: outcomes(bad, admitted_rest),
+                       True, 'evidence fingerprint/span mismatch')
+            put('Plans/fixture-owner.md', evidence_raw)
+            for label, mutate in [
+                ('decision_sha', lambda d: d['rows'][0].__setitem__('decision_section_sha256', '0' * 64)),
+                ('evidence_sha', lambda d: d['rows'][0]['source_citations'][0].__setitem__('sha256', '0' * 64)),
+                ('citation_boolean', lambda d: d['rows'][0]['source_citations'][0].__setitem__('line_start', True)),
+                ('citation_float', lambda d: d['rows'][0]['source_citations'][0].__setitem__('line_start', 1.0)),
+                ('citation_span', lambda d: d['rows'][0]['source_citations'][0].__setitem__('line_end', 2)),
+                ('missing_evidence', lambda d: d['rows'][0].__setitem__('source_citations', [])),
+                ('missing_rationale', lambda d: d['rows'][0].__setitem__('rationale', '')),
+            ]:
+                bad = copy.deepcopy(excluded)
+                mutate(bad)
+                record('negative_exclusion_' + label, lambda bad=bad: outcomes(bad, admitted_rest), True)
+            record('negative_registered_and_excluded_contradiction', lambda: outcomes(excluded), True, 'contradictory')
+            def single_snapshot():
+                for named in [{}, {'recount': {'complete': True}}, {'august_result_before_recount': {'pass': True}}]:
+                    assert v.build_receipt(True, True, [], {}, {}, named, True)['pass'] is False
+                named = {'recount': {'complete': True}, 'august_result_before_recount': {'pass': True}}
+                assert v.build_receipt(True, True, [], {}, {}, named, True)['pass'] is True
+                assert v.build_receipt(True, True, [{'error': 'anything'}], {}, {}, named, True)['pass'] is False
+                assert v.build_receipt(False, True, [], {}, {}, named, True)['pass'] is False
+            record('combined_result_boolean_and_single_snapshot_refusals', single_snapshot)
+            for label, path in [('parent', '../Plans/x'), ('absolute', '/etc/passwd'),
+                                ('empty_segment', 'Plans//x'), ('dot_segment', 'Plans/./x'),
+                                ('control', 'Plans/x\n/y'), ('backslash', 'Plans\\x'), ('colon', 'git:bad')]:
+                record('negative_unsafe_source_path_' + label, lambda path=path: v.recount_relative(path), True)
+        finally:
+            for key, value in original_env.items():
+                if value is None: os.environ.pop(key, None)
+                else: os.environ[key] = value
+    summary = {'status': 'pass' if all(r['pass'] for r in results) else 'fail', 'checks': len(results),
+               'passed': sum(r['pass'] for r in results), 'failed': sum(not r['pass'] for r in results),
+               'real_frozen_source_custody': custody, 'results': results,
+               'limits': ['No final approval, admission, live seal or all-green August main run is claimed.',
+                          'Outcome positives inject the existing admitted set; they do not create or waive admission records.',
+                          'Guard-removal inventory belongs to the shared-tool sweep; no lane-local proof engine is claimed.']}
+    output.write_text(json.dumps(summary, indent=2) + '\n')
+    print(json.dumps({k: summary[k] for k in ['status', 'checks', 'passed', 'failed']}))
+    for row in results:
+        if not row['pass']: print(json.dumps(row))
+    return 0 if summary['status'] == 'pass' else 1
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--repo', type=Path, default=Path(__file__).resolve().parents[2])
+    parser.add_argument('--source-map', type=Path, required=True)
+    parser.add_argument('--out', type=Path, required=True)
+    args = parser.parse_args()
+    raise SystemExit(run(args.repo.resolve(), args.out, args.source_map.resolve()))
