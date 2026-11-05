@@ -156,32 +156,41 @@ const top = (stack) => stack.split('\n').slice(1).map((l) => /^\s*at (?:(.+?) \(
 const brief = (jobs) => JSON.stringify(jobs.map((j) => ({ id: j.id, owner: j.owner, at: top(j.stack) })));
 
 async function holdDrag(t, f, sel, label, keys) {
-	const box = await f.evaluate((s) => {
+	// where the divider is now, and what a press there would land on
+	const measure = () => f.evaluate((s) => {
 		const vis = (e) => { if (!e) return false; const r = e.getBoundingClientRect(); return r.width > 0 && r.height > 0 && getComputedStyle(e).display !== 'none'; };
 		const e = s.split('|').map((q) => [...document.querySelectorAll(q)].find(vis)).find(Boolean);
 		if (!e) return null;
 		const r = e.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2, hit = document.elementFromPoint(x, y);
-		return { x, y, w: r.width, h: r.height, id: e.id || e.className, hit: hit === e ? 'itself' : hit ? (hit.id ? '#' + hit.id : hit.tagName.toLowerCase() + '.' + String(hit.className).split(' ').join('.')) : 'nothing' };
+		return { x, y, w: r.width, h: r.height, id: e.id || e.className, hit: hit && e.contains(hit) ? 'the divider' : hit ? (hit.id ? '#' + hit.id : hit.tagName.toLowerCase() + '.' + String(hit.className).split(' ').join('.')) : 'nothing' };
 	}, sel);
+	let box = await measure();
 	if (!(await t.check(`${label}: a divider to hold`, !!box, sel))) return null;
-	t.log(`${label}: holding ${box.id} at ${Math.round(box.x)},${Math.round(box.y)} (${Math.round(box.w)}x${Math.round(box.h)}); the element at that point before the move: ${box.hit}`);
+	// The witness is what is pending at the press itself: an owner may withdraw and re-ask its own job during setup, so
+	// wait (bounded) until every owner of this look has one queued, then press at once. The divider can move while the
+	// Usage board and chat column settle (a press at its first place once landed on chat text), so it is measured again
+	// and hovered where it is now, and the press waits for it to hold still there.
+	const full = (p) => keys.every((k) => p.some((j) => j.owner === k));
+	let queued = [];
+	for (let tries = 0; tries < 4; tries++) {
+		await t.page.mouse.move(box.x, box.y); await t.page.waitForTimeout(120);
+		queued = await f.evaluate(() => window.__pmIdleRec.pending());
+		const now = await measure();
+		const still = !!now && Math.abs(now.x - box.x) < 1 && Math.abs(now.y - box.y) < 1;
+		if (now && !still) t.log(`${label}: the divider moved from ${Math.round(box.x)},${Math.round(box.y)} to ${Math.round(now.x)},${Math.round(now.y)} before the press`);
+		if (now) box = now;
+		if (still && full(queued)) break;
+		if (!full(queued)) await f.waitForFunction((ks) => { const p = window.__pmIdleRec.pending(); return ks.every((k) => p.some((j) => j.owner === k)); }, keys, { timeout: 5000 }).catch(() => {});
+	}
+	t.log(`${label}: holding ${box.id} at ${Math.round(box.x)},${Math.round(box.y)} (${Math.round(box.w)}x${Math.round(box.h)})`);
+	if (!(await t.check(`${label}: the press lands on the divider`, box.hit === 'the divider', `under the pointer: ${box.hit}`))) return null;
 	const axisX = box.h >= box.w;   // a tall bar moves sideways
 	const at = (d) => (axisX ? [box.x + d, box.y] : [box.x, box.y + d]);
-	await t.page.mouse.move(...at(0)); await t.page.waitForTimeout(120);
-	// the witness is what is pending at the press itself: an owner may withdraw and re-ask its own job during setup,
-	// so wait (bounded) until every owner of this look has one queued, then press at once
-	const full = (p) => keys.every((k) => p.some((j) => j.owner === k));
-	let queued = await f.evaluate(() => window.__pmIdleRec.pending());
-	for (let tries = 0; tries < 3 && !full(queued); tries++) {
-		await f.waitForFunction((ks) => { const p = window.__pmIdleRec.pending(); return ks.every((k) => p.some((j) => j.owner === k)); }, keys, { timeout: 5000 }).catch(() => {});
-		queued = await f.evaluate(() => window.__pmIdleRec.pending());
-	}
-	const under = await f.evaluate(([x, y, id]) => { const h = document.elementFromPoint(x, y); return !h ? 'nothing' : (h.id === id || h.className === id) ? 'the divider' : (h.id ? '#' + h.id : h.tagName.toLowerCase() + '.' + String(h.className).split(' ').join('.')); }, [box.x, box.y, box.id]);
 	await t.page.mouse.down();
 	for (let i = 1; i <= 8; i++) { await t.page.mouse.move(...at(-i * 4)); await t.page.waitForTimeout(16); }
 	const began = await f.evaluate(() => performance.now());
 	const dragOn = await f.evaluate(() => !!(window.PM_BUSY && PM_BUSY.drag && PM_BUSY.drag()) || document.body.classList.contains('pm-resizing'));
-	await t.check(`${label}: the drag class is on while held`, dragOn, 'body classes ' + (await f.evaluate(() => document.body.className)) + '; under the pointer at the press: ' + under);
+	await t.check(`${label}: the drag class is on while held`, dragOn, 'body classes ' + (await f.evaluate(() => document.body.className)));
 	await f.evaluate(() => window.__pmIdleRec.release());
 	await t.mark(label + ' held');
 	// held: the hand rests on the bar, with the small moves a held hand makes
