@@ -8,6 +8,7 @@ from pathlib import Path
 import unittest
 
 from jsonschema import Draft202012Validator
+from referencing import Registry, Resource
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -22,12 +23,25 @@ class GuidedTourV3ContractTests(unittest.TestCase):
         cls.fixtures = json.loads(FIXTURES_PATH.read_text(encoding="utf-8"))
         cls.positives = {case["name"]: case for case in cls.fixtures["valid"]}
         cls.negatives = {case["name"]: case for case in cls.fixtures["invalid"]}
+        scope_schema = json.loads(
+            (ROOT / "Plans/shared_integration_runtime.schema.json").read_text(encoding="utf-8")
+        )
+        cls.registry = Registry().with_resource(
+            "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json",
+            Resource.from_contents(scope_schema),
+        )
 
     def validator(self, definition: str, schema: dict | None = None) -> Draft202012Validator:
         owner = schema or self.schema
-        return Draft202012Validator({**owner, "$ref": f"#/$defs/{definition}"})
+        # Select one definition without also enforcing the aggregate root oneOf.
+        return Draft202012Validator({
+            "$schema": owner["$schema"],
+            "$id": owner["$id"],
+            "$defs": owner["$defs"],
+            "$ref": f"#/$defs/{definition}",
+        }, registry=self.registry)
 
-    def errors(self, definition: str, instance: dict, schema: dict | None = None) -> list:
+    def errors(self, definition: str, instance: object, schema: dict | None = None) -> list:
         return list(self.validator(definition, schema).iter_errors(instance))
 
     @staticmethod
@@ -60,11 +74,16 @@ class GuidedTourV3ContractTests(unittest.TestCase):
         base = self.positives[case["base_valid"]]["value"]
         return case["definition"], self.materialize(base, case)
 
-    @staticmethod
-    def without_rule(schema: dict, definition: str, rule: str) -> dict:
+    def without_rule(self, schema: dict, definition: str, rule: str) -> dict:
         weakened = copy.deepcopy(schema)
         contract = weakened["$defs"][definition]
-        contract["allOf"] = [item for item in contract.get("allOf", []) if item.get("x-rule") != rule]
+        rules = contract["allOf"]
+        self.assertEqual(
+            sum(item.get("x-rule") == rule for item in rules), 1,
+            f"$defs/{definition}/allOf must contain exactly one {rule}",
+        )
+        # Application results reference Project rules by index; keep those pointers stable.
+        contract["allOf"] = [{} if item.get("x-rule") == rule else item for item in rules]
         return weakened
 
     def test_schema_and_fixture_pack_are_v3(self) -> None:
@@ -78,7 +97,8 @@ class GuidedTourV3ContractTests(unittest.TestCase):
         self.assertEqual(self.fixtures["owner_schema"], "Plans/guided_tour_contracts.schema.json")
 
     def test_all_positive_controls_validate_their_named_definitions(self) -> None:
-        self.assertEqual(len(self.fixtures["valid"]), 24)
+        # 2026-11-04: guided_tour_contract_fixtures.json has 24 existing + 4 application-v1 controls (9727c9a814).
+        self.assertEqual(len(self.fixtures["valid"]), 28)
         for case in self.fixtures["valid"]:
             self.assertFalse(
                 self.errors(case["definition"], case["value"]),
@@ -86,7 +106,8 @@ class GuidedTourV3ContractTests(unittest.TestCase):
             )
 
     def test_all_counterexamples_are_rejected_by_the_target_definition(self) -> None:
-        self.assertEqual(len(self.fixtures["invalid"]), 55)
+        # 2026-11-04: guided_tour_contract_fixtures.json has 59 mainline + 7 application-v1 negatives (9727c9a814).
+        self.assertEqual(len(self.fixtures["invalid"]), 66)
         for case in self.fixtures["invalid"]:
             base = self.positives[case["base_valid"]]["value"]
             instance = self.materialize(base, case)
@@ -120,11 +141,14 @@ class GuidedTourV3ContractTests(unittest.TestCase):
     def test_story_is_chat_workspace_planning_and_v2_is_only_predecessor(self) -> None:
         storyboard = self.positives["canonical_newbie_first_storyboard"]["value"]
         self.assertEqual(storyboard["order"], ["chat_teacher", "workspace", "planning_wizard"])
+        self.assertFalse(self.errors("story_order", storyboard["order"]))
         self.assertEqual(storyboard["ui_actions"][2], "ui.guided_tour.show_me")
         self.assertEqual(storyboard["predecessors"][1]["schema_id"], "pm.guided_tour.storyboard.v2")
         self.assertIn("superseded", storyboard["predecessors"][1]["disposition"])
         definition, predecessor = self.negative_instance("v2_storyboard_identity_is_rejected")
         self.assertTrue(self.errors(definition, predecessor))
+        _, old_order = self.negative_instance("usage_first_v2_order_is_rejected")
+        self.assertTrue(self.errors("story_order", old_order["order"]))
 
     def test_checkpoint_is_closed_bounded_and_ref_only(self) -> None:
         props = self.schema["$defs"]["guided_tour_checkpoint"]["properties"]
@@ -195,28 +219,48 @@ class GuidedTourV3ContractTests(unittest.TestCase):
 
     def test_planning_majority_thresholds_are_machine_checked(self) -> None:
         planning = self.positives["planning_majority_real_edit_and_boundary"]["value"]
-        self.assertGreaterEqual(planning["majority"]["planning_action_share_basis_points"], 5000)
-        self.assertGreaterEqual(planning["majority"]["planning_dwell_share_basis_points"], 5000)
-        for name in ("planning_action_share_must_be_at_least_half", "planning_dwell_share_must_be_at_least_half"):
-            definition, instance = self.negative_instance(name)
-            self.assertTrue(self.errors(definition, instance))
+        # 2026-11-04: DL-230/PWIZ-023/F3-521 say about half; the owner schema enforces a 4000-basis-point floor.
+        for field, name in (
+            ("planning_action_share_basis_points", "planning_action_share_must_be_about_half"),
+            ("planning_dwell_share_basis_points", "planning_dwell_share_must_be_about_half"),
+        ):
+            with self.subTest(field=field):
+                self.assertGreaterEqual(planning["majority"][field], 4000)
+                definition, instance = self.negative_instance(name)
+                self.assertEqual(instance["majority"][field], 3999)
+                errors = self.errors(definition, instance)
+                self.assertTrue(any(
+                    error.validator == "minimum"
+                    and error.validator_value == 4000
+                    and list(error.absolute_path) == ["majority", field]
+                    for error in errors
+                ), errors)
+                weakened = copy.deepcopy(self.schema)
+                share = weakened["$defs"][definition]["properties"]["majority"]["properties"][field]
+                self.assertEqual(share.pop("minimum"), 4000)
+                self.assertFalse(self.errors(definition, instance, weakened))
+                instance["majority"][field] = 4000
+                self.assertFalse(self.errors(definition, instance))
 
     def test_restoration_failure_rule_is_causal(self) -> None:
         definition, instance = self.negative_instance("restoration_failure_cannot_report_completed")
         self.assertTrue(self.errors(definition, instance))
-        weakened = self.without_rule(self.schema, definition, "restoration_failure_not_completed")
-        weakened["$defs"][definition]["allOf"] = [
-            rule
-            for rule in weakened["$defs"][definition]["allOf"]
-            if rule.get("x-rule") != "completed_restore_requires_applied_owner_restoration"
-        ]
+        # The public result is a union; these Project-v3 rules overlap on this fixture.
+        without_completed_restore = self.without_rule(
+            self.schema, "guided_tour_terminal_result_v3",
+            "completed_restore_requires_applied_owner_restoration",
+        )
+        self.assertTrue(self.errors(definition, instance, without_completed_restore))
+        weakened = self.without_rule(
+            without_completed_restore, "guided_tour_terminal_result_v3", "restoration_failure_not_completed"
+        )
         self.assertFalse(self.errors(definition, instance, weakened))
 
     def test_completed_restore_applied_owner_rule_is_causal(self) -> None:
         definition, instance = self.negative_instance("completed_restore_cannot_claim_not_required")
         self.assertTrue(self.errors(definition, instance))
         weakened = self.without_rule(
-            self.schema, definition, "completed_restore_requires_applied_owner_restoration"
+            self.schema, "guided_tour_terminal_result_v3", "completed_restore_requires_applied_owner_restoration"
         )
         self.assertFalse(self.errors(definition, instance, weakened))
 
@@ -260,7 +304,7 @@ class GuidedTourV3ContractTests(unittest.TestCase):
         definition, instance = self.negative_instance("finish_default_restore_must_restore_layout")
         self.assertTrue(self.errors(definition, instance))
         weakened = self.without_rule(
-            self.schema, definition, "applied_restore_uses_original_layout_and_chat_snapshots"
+            self.schema, "guided_tour_terminal_result_v3", "applied_restore_uses_original_layout_and_chat_snapshots"
         )
         self.assertFalse(self.errors(definition, instance, weakened))
 

@@ -36,7 +36,8 @@ class FinalGuiTourV3Tests(unittest.TestCase):
 
     def test_each_tour_negative_fails_at_its_changed_field(self):
         cases = [case for case in self.fixtures["negative_mutations"] if case["json_pointer"].startswith("/contracts/2/")]
-        self.assertEqual(len(cases), 49)
+        # 2026-11-04: final_gui_interaction_contract_fixtures.json has 49 original + 2 ELI5 negatives (e4bb7e6364).
+        self.assertEqual(len(cases), 51)
         self.assertEqual(len({case["case_id"] for case in cases}), len(cases))
         for case in cases:
             with self.subTest(case=case["case_id"]):

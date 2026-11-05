@@ -110,7 +110,7 @@ Canonical requirements:
 - Command identity is the whole normalized segment that would be dispatched after policy expansion and before spawn. For multi-line or chained invocations using newline, `&&`, `;`, `||`, or `|`, each dispatch segment is normalized and checked independently; the invocation is allowed only if every segment is independently allowed and none is blocked. An approval for `git status` does not approve `git status && rm -rf /`.
 - Prefix, substring, `starts_with`, shell-fragment, fuzzy, prompt-expanded, and concatenated-command approval are forbidden. Mismatches emit `filesafe.command_denied` with `denial_code = approved_command_identity_mismatch`.
 - Missing or empty command/path allowlists fail closed whenever the corresponding guard is enabled. `strict_mode=false` can soften non-authoritative advisory reporting only after a safe enforcement baseline is present; it cannot permit writes, reads, or commands when the authoritative allowlist, baseline, root, or guard input is absent.
-- PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 remains request-only. F2-207/F2-213 require authenticated operator realm/identity/reason/scope/expiry, real Project/run/worktree or explicit app thread/run/Computer/Host/Environment/recorded-root binding, and security event/receipt. Exact PS-146 Y1 and PS-147 grant-created-resource actions use structured authenticated exception evidence, never a bare environment variable or broad command allow.
+- PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 remains request-only. F2-207/F2-213 require authenticated operator realm/identity/reason/scope/expiry, real Project/run/worktree or explicit app thread/run/Computer/Host/Environment/recorded-root binding. Project overrides retain their historical security event/receipt contract and exact payloads; application overrides require a durable scope-bound owner receipt. App filesafe.* EventRecords have no registered edition and stay missing_event_registration/non-emitting pending separate Event Authority admission. Missing durable receipt custody fails closed. Exact PS-146 Y1 and PS-147 grant-created-resource actions use structured authenticated exception evidence, never a bare environment variable or broad command allow.
 - Prompt/free-text command or path extraction is never the sole enforcement boundary. Structured tool arguments, final command segments, and resolved path scopes remain mandatory checks.
 - Source-lineage snippets that preserve old fail-open, prefix-match, or disabled-fallback examples must be explicitly fenced as retired/noncanonical and must include a copy-prevention note saying they are not implementation guidance.
 
@@ -14862,8 +14862,10 @@ owner_doc: Plans/FileSafe.md
 canonical_text: The two preserved mitigation bullets reading Allow override via environment variable remain
   retired source-lineage under the P0 resolution. PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 is only a request signal.
   Operator overrides require auth realm/operator/reason/scope/expiry plus exact Project/run/worktree binding
-  or the explicit application thread/run/Computer/recorded-root union in F2-213, with a security event and
-  receipt. A verified PS-147 build-grant action uses its separate exact grant/ownership evidence, never an
+  or the explicit application thread/run/Computer/recorded-root union in F2-213, with the historical security event/receipt contract and exact payloads for Project overrides,
+  and a durable scope-bound owner receipt for application overrides. App filesafe.* EventRecords have no
+  registered edition and remain missing_event_registration/non-emitting until separate Event Authority
+  admission and complete owner adoption. Missing durable receipt custody fails closed. A verified PS-147 build-grant action uses its separate exact grant/ownership evidence, never an
   environment-variable override. Historical override payloads remain immutable.
 gui_related: false
 gui_classification_reason: This unit dispositions stale mitigation prose; it defines no visible behavior.
@@ -14878,8 +14880,8 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by
   this PlanUnit.
 validation_surfaces:
-- python3 scripts/pm-plan-index.py validate
-- python3 scripts/pm-plans-verify.py validate-filesafe-security-policy
+- scripts/pm-plan-index.py
+- scripts/pm-plans-verify.py
 risk_class: filesafe_fail_open_regression
 reasoning_tier: standard
 context_scope: filesafe_stale_override_disposition
@@ -15221,8 +15223,12 @@ canonical_text: 'One Settings resolver supplies the existing FileSafe switch and
   cwd, visible Project or guessed main root. Root, integrity, storage-writer and recovery holds remain independent
   of permission approval. The application DestructiveOverrideScope is a discriminated union requiring null
   project_id, thread/run, owning Computer/Host/Environment and exact recorded roots/paths; the original Project
-  variant still requires its real Project and applicable run/worktree. Both require authenticated operator/reason/expiry
-  and security event/receipt. PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 is only a request signal and is never sufficient
+  variant still requires its real Project and applicable run/worktree. Both require authenticated operator/reason/expiry.
+  The original Project variant retains its historical security event/receipt contract and exact payloads;
+  the application variant requires a durable scope-bound owner override receipt. No filesafe.* application
+  EventRecord edition is registered or selected by CV-366; app emission stays
+  missing_event_registration/non-emitting until separate Event Authority admission and complete owner
+  adoption. Missing durable receipt custody blocks the override before effect. PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 is only a request signal and is never sufficient
   authority.
 
 
@@ -15241,7 +15247,7 @@ canonical_text: 'One Settings resolver supplies the existing FileSafe switch and
   under its owner policy. No new FileSafe switch, event authority or restore engine is introduced.
 
 
-  B/C app root admission retains normalized identity, symlink/reparse and nearest-existing-parent checks before
+  ACD-508/510 app root admission retains normalized identity, symlink/reparse and nearest-existing-parent checks before
   reads, mutations or restoration; listed FileSafe-on home reads are never a write grant. Actual Project writes
   use their authorized chat/conversion or a separately admitted real FileSafe/attachment owner target, never
   an outside-chat raw write or an external-directory yes. Clean workspace requires one exact admitted directory
@@ -15272,9 +15278,8 @@ acceptance_criteria:
   Hosts.
 - Conversion/Undo never transplants overrides or clears root/integrity/recovery holds.
 validation_surfaces:
-- 'Phase 2: owner/companion semantic fixtures and exact positive/negative checks in D-requests.md.'
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F deliverable; not run in phase 1).'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate; static success is not native execution proof.'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: authority_scope_and_target_drift
 reasoning_tier: high
 context_scope: project_refresh_permissions_and_automation

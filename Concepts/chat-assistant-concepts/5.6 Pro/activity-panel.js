@@ -1322,11 +1322,11 @@
   }
   provideDock();
   if (!dockOn) document.addEventListener('DOMContentLoaded', provideDock, { once: true });
-  /* a dock line's Review / Show: Activity Detail at that item (a subagent found by its title: the chat's records) */
+  /* Review / Show keeps the work projection's stable identity through Activity Detail. */
   EXT.action('work-dock-review', function (ctx, btn) {
     var id = btn && btn.dataset.id, d = btn && btn.dataset.domain, W = window.PM_WORK, it = W && id ? W.item(id) : null;
     if (!it || !window.PM56_DEMO) return true;
-    window.PM56_DEMO.openActivity(d, d === 'subagents' ? { title: it.title } : it.id);
+    window.PM56_DEMO.openActivity(d, it.id);
     return true;
   });
 

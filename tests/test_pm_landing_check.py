@@ -811,7 +811,9 @@ class EndToEnd(unittest.TestCase):
         self.stub_checks([STALE_HASH], [self.SPAN], root_in_failure=True)
         self.record()
         self.touch("Touched.md")
-        other = Path(self.scratch.name).parent / (Path(self.scratch.name).name + "-second")
+        # A sibling name that does not start with the first checkout's path, so the assertNotIn below cannot
+        # match the second checkout's own paths (seen on macOS, where /var resolves to /private/var).
+        other = Path(self.scratch.name).parent / ("second-" + Path(self.scratch.name).name)
         shutil.copytree(self.repo, other)
         self.addCleanup(shutil.rmtree, other, True)
         code, out = self.run_main("--base", self.base, "--baseline", "baseline.json", "--root", str(other))
@@ -2284,7 +2286,7 @@ class ExportKeyedSubchecks(LandingRun):
         code, out = self.compare()
         self.assertEqual(code, 0, out)
         header = flat(out.split("\n\n", 1)[0])
-        self.assertIn("complete exports, read in scripts/pm-plans-verify.py: the report each of these 35 commands writes "
+        self.assertIn("complete exports, read in scripts/pm-plans-verify.py: the report each of these 37 commands writes "
                       "with --report holds every row it counts, so a subcheck that runs one and prints only a sample is "
                       "keyed from it when its total equals the printed total:", header)
         for command in sorted(M.EXPORT_COMMANDS):
@@ -2293,7 +2295,7 @@ class ExportKeyedSubchecks(LandingRun):
                       "first 200 of pm-audit-closure.py's errors", header)
         self.assertEqual(self.export_calls, [])
         report = json.loads(self.compare("--json")[1])
-        self.assertEqual((len(report["exports"]["complete_export_commands"]), report["exports"]["subchecks"]), (35, []))
+        self.assertEqual((len(report["exports"]["complete_export_commands"]), report["exports"]["subchecks"]), (37, []))
         self.assertEqual(sorted(report["exports"]["no_complete_export"]), ["validate-audit-closure"])
 
     def test_kept_check_reports_keep_each_export(self):

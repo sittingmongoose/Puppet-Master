@@ -1725,7 +1725,7 @@ acceptance_criteria:
   A conversion into existing JJ history selects the admitted change/bookmark and chosen folder, blocks unsaved/history-graft conflicts and never substitutes direct Git or main.
 validation_surfaces:
 - Plans/jujutsu_integration_contracts.schema.json
-- F companion positive/negative semantic fixtures; not_run in phase 1
+- scripts/pm-projects-refresh-contracts.py
 risk_class: identity_authority_or_false_completion
 reasoning_tier: high
 context_scope: projects_refresh_jji_023

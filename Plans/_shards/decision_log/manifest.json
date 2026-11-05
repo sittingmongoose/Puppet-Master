@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-11-04T01:51:00Z",
+  "generated_at_utc": "2026-11-05T13:12:55Z",
   "index_path": "Plans/_shards/decision_log/00-index.md",
-  "index_sha256": "9aa2303e45a542122433bff36e128bd4a937d28f1887d28e0ffdbd82a21fd6a0",
+  "index_sha256": "321f576503c423cbf26f52cfc195f18be870bd30207e92e1f35b56954ceb2617",
   "manifest_path": "Plans/_shards/decision_log/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/decision_log/001-preamble.md",
-      "sha256": "894188ef09253f61bb981cc571d606e498a27bbd3c4ad1aab6c1bec0b7e92103",
+      "sha256": "096ad7c97aeccf303cd630f3f834173feb45b37ac299d2e0f633b761ceb6735f",
       "shard_id": "001",
       "source_line_end": 4,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Purpose",
       "path": "Plans/_shards/decision_log/002-purpose.md",
-      "sha256": "2203ac7903f8eb07114de73edbd3e008b1d021099d7921959db02499aab6ce63",
+      "sha256": "3db7760e31b2339a26ac145db00451150c4462b91bb3c291425ba28236d168e3",
       "shard_id": "002",
       "source_line_end": 11,
       "source_line_start": 6,
@@ -26,88 +26,88 @@
     {
       "heading": "Entries",
       "path": "Plans/_shards/decision_log/003-entries.md",
-      "sha256": "7291846cacf8f935e65849013ccce8990cbe4643788f1fdf56d1d5c70aa879b6",
+      "sha256": "f3182aa259c7b59caa93d97d358f51cc0a3201b67905e842d8188e83847f22f7",
       "shard_id": "003",
-      "source_line_end": 4330,
+      "source_line_end": 5887,
       "source_line_start": 13,
       "split_rule": "heading-##"
     },
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/decision_log/004-owner-consumer-map.md",
-      "sha256": "f7e0fa367f173755a932f170baa9123f923e44077746c195fb011f66bdf155f1",
+      "sha256": "81fb775f6d11d956736c53c37417ae9d6fcea947665cbcb08b6f52dc08b48417",
       "shard_id": "004",
-      "source_line_end": 4336,
-      "source_line_start": 4332,
+      "source_line_end": 5893,
+      "source_line_start": 5889,
       "split_rule": "heading-##"
     },
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/decision_log/005-planunits.md",
-      "sha256": "526d249eb44a2b6c7e9a6c40f4ba6d5f02f3abac4eadacf43df8132d3992fd58",
+      "sha256": "3d85768454e183136bbde326f0cac1cc9729a39cea70eb6b66707efd1f964c8a",
       "shard_id": "005",
-      "source_line_end": 14567,
-      "source_line_start": 4338,
+      "source_line_end": 21722,
+      "source_line_start": 5895,
       "split_rule": "heading-##"
     },
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/decision_log/006-migration-coverage.md",
-      "sha256": "f863a3c28d61c654ac838d28828b8d3ec5b1afc3eb64efeaa7922f65266bc317",
+      "sha256": "6ac9892857f5c14e4124b8c12c4e5a3116b557c6498e1c2cfd4fb92ec75dd744",
       "shard_id": "006",
-      "source_line_end": 14579,
-      "source_line_start": 14569,
+      "source_line_end": 21734,
+      "source_line_start": 21724,
       "split_rule": "heading-##"
     },
     {
       "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
       "path": "Plans/_shards/decision_log/007-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "d538cf48158681020c362e02513af33b5c365583e999225bfc37bcc2f17c1a88",
+      "sha256": "0d95078a07cb91bec732908598024e162925e02fddd5086676120fee2a2f4d33",
       "shard_id": "007",
-      "source_line_end": 14588,
-      "source_line_start": 14581,
+      "source_line_end": 21743,
+      "source_line_start": 21736,
       "split_rule": "heading-##"
     },
     {
       "heading": "FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)",
       "path": "Plans/_shards/decision_log/008-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md",
-      "sha256": "48450fbd9b47e24d7e057a27ea6dff7c3dde7d3a157a44ab6a89b2e57518249e",
+      "sha256": "03b439b95708716db3ff85c6a8bfcd132affcfc40e934eb2c3e854d9e66b3a36",
       "shard_id": "008",
-      "source_line_end": 18673,
-      "source_line_start": 14589,
+      "source_line_end": 25828,
+      "source_line_start": 21744,
       "split_rule": "heading-##"
     },
     {
       "heading": "QA round 2 \u2014 NieR is the fifth theme family (Jared, 2026-10-30, Q22)",
       "path": "Plans/_shards/decision_log/009-qa-round-2-nier-is-the-fifth-theme-family-jared-2026-10-30-q22.md",
-      "sha256": "bd54a1a6cb3b8761881fc8a53ca751ccbdcfd7737687a06d6b5bb1d55f11cfc9",
+      "sha256": "3601f60a73521e7a9a6bc8e2e8aadd9adddc3557f3c070f16998884e7399b3e5",
       "shard_id": "009",
-      "source_line_end": 19471,
-      "source_line_start": 18678,
+      "source_line_end": 26626,
+      "source_line_start": 25833,
       "split_rule": "heading-##"
     },
     {
       "heading": "DL-260 \u2014 Product canon excludes prototype mechanics (Jared, 2026-10-31, Q3 B)",
       "path": "Plans/_shards/decision_log/010-dl-260-product-canon-excludes-prototype-mechanics-jared-2026-10-.md",
-      "sha256": "a7696276707697531ef15086f840c1d4fec88c0d9ecba9c809d8c90a3d8913a7",
+      "sha256": "242008472bf524a8139a75b3ab21b79844d3599549166d500f95436d6e71f054",
       "shard_id": "010",
-      "source_line_end": 19637,
-      "source_line_start": 19473,
+      "source_line_end": 26792,
+      "source_line_start": 26628,
       "split_rule": "heading-##"
     },
     {
       "heading": "DL-271 \u2014 Onboarding credential, recovery and pairing feedback",
       "path": "Plans/_shards/decision_log/011-dl-271-onboarding-credential-recovery-and-pairing-feedback.md",
-      "sha256": "25cc6975225f7664477d047b3493eea02cd933c443f24f8bbe7730cd9988ec48",
+      "sha256": "b6d3fdfe846d66b0ebcc1ea461bef0349c3cdb33ded29c14a3a4eaeae74349a0",
       "shard_id": "011",
-      "source_line_end": 21106,
-      "source_line_start": 19639,
+      "source_line_end": 28530,
+      "source_line_start": 26794,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 21106,
+    "line_count": 28530,
     "path": "Plans/Decision_Log.md",
-    "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+    "sha256": "4b0b395198d993ff55a8c3aceef8c1f3c802c8f612fa49957caf2735a12543d1"
   }
 }

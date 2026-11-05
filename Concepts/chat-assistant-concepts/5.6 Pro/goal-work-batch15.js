@@ -171,7 +171,7 @@
  // Capture the actual proposal owner’s identity after Send; decisions remain on its ordinary controls.
  document.addEventListener('click',e=>{if(!playing||!e.target.closest?.(sel('send')))return;const s=playing;queueMicrotask(()=>{if(s!==playing)return;const proposals=Object.values(RT.goals.proposals).filter(p=>p.token.goalId===G.get(s.threadId)?.id);s.proposals=proposals.map(p=>p.id);});});
  E.chainAction('goal-cancel-edit',()=>{if(playing)playing.editCancelled=true;return false;});
- E.action('b15-start',(c,b)=>{const gallery=!!b.closest?.('.demo-dialog .demo-trigger');stop();seed(c,b.dataset.flow);if(gallery)playback(work.sessions[c.state.selectedThread]);return true;});
+ E.action('b15-start',(c,b)=>{const gallery=!!c.demo||!!b.closest?.('.demo-dialog .demo-trigger');stop();seed(c,b.dataset.flow);if(gallery)playback(work.sessions[c.state.selectedThread]);return true;});
  E.action('b15-replay',c=>{const flow=work.sessions[c.thread.id]?.flow;stop();seed(c,flow);playback(work.sessions[c.state.selectedThread]);return true;});
  E.action('b15-hide-guide',c=>{if(work.sessions[c.thread.id])work.sessions[c.thread.id].guide=false;stop();refresh();return true;});
  E.chainAction('reset-all',()=>{stop();return false;});

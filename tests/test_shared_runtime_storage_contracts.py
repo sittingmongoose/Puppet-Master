@@ -214,13 +214,21 @@ class SharedRuntimeStorageContractsTest(unittest.TestCase):
         # coordination_event_records and coordination_read_model_projections are materialized in place
         # as SP-320 keyed value compositions, so 272 materialized and 21 deferred become 274 and 19.
         # SP-322 adds one Release-owned schedule family after this SP-320 pin.
-        self.assertEqual(len(self.registry["families"]), 295)
+        # Re-pinned 2026-11-04 to the registry on main, following the readiness census re-pins in
+        # scripts/pm-implementation-readiness.py (STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 344), which this
+        # test had not followed since SP-322: SP-323 (project_automation_pause) and SP-330/SP-332
+        # (home_workspace_layout_v2) add two materialized families; SP-249/SP-330 (dashboard_board_layout,
+        # widget_presets), SP-331 (terminal_appearance_presets) and SP-330 (home_named_layouts) add four
+        # deferred_not_build_blocking families; the projects/settings refresh (SP-337..SP-353, DL-280..DL-300)
+        # adds 41 materialized families and the 2026-11-04 full-review fix (finding 14) two more. None was removed.
+        # 275 + 2 + 43 = 320 materialized, 19 + 4 = 23 deferred, 1 alias: 344.
+        self.assertEqual(len(self.registry["families"]), 344)
         self.assertEqual(
             Counter(row["status"] for row in self.registry["families"]),
             Counter(
                 {
-                    "materialized": 275,
-                    "deferred_not_build_blocking": 19,
+                    "materialized": 320,
+                    "deferred_not_build_blocking": 23,
                     "compatibility_alias": 1,
                 }
             ),

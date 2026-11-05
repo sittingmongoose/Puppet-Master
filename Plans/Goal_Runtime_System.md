@@ -4259,9 +4259,11 @@ preserved_exact_tokens:
   - "Auditor Model"
   - "Auditor audit-to-repair loop"
   - "critical block"
+  - "Do not introduce new references or meta-comments using the old Chain Wizard name."
 negative_constraints:
   - Do not enable this automatic launch yet.
   - Do not introduce new references using retired Chain Wizard or Plan Wizard names as active terminology.
+  - Do not introduce new references or meta-comments using the old Chain Wizard name.
 compatibility_only_notes:
   - Pre-rename Plan Wizard tokens may remain in source_lineage, preserved_exact_tokens, historical migration notes, and compatibility aliases only.
 stale_retired_dispositions:
@@ -8249,9 +8251,9 @@ acceptance_criteria:
 - No fifth state, child Goals, Goal budget/role fields, fake Plan, silent objective edit or fake Workflow certification
   appears.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows
@@ -8321,9 +8323,9 @@ acceptance_criteria:
   two live owners.
 - Explicit rebind is typed unavailable until complete owner transaction/version and all graph edges are admitted.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows

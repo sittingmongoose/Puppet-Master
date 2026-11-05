@@ -3,7 +3,7 @@
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
   "disposition": "RECLASSIFY_TO_EXCLUDED",
-  "disposition_rationale": "DL-039 Step 9 individual semantic adjudication at 2026-09-25T03:50:05Z: Jared answered EA-S09B2-SPAWN-REQUEST-001 with option 1 on 2026-09-25 (Plans/Decision_Log.md#DL-088): subagent.spawn_requested and subagent.spawn_completed are retired, and Puppet Master records no start request separately from the subagent it creates. A waiting start is a child in the queued state (Plans/assistant-chat-design.md:1836; Plans/Contracts_V0.md:2923), and a start refused before any child exists keeps its existing outcome reason. subagent.spawn_requested was named only for a dispatcher that distinguishes a request from child creation (Plans/Contracts_V0.md:2983); it has no payload row (Plans/Contracts_V0.md:2987-3007), no Plans document names a producer for it, and nothing writes it. The Contracts owner edit that removes the name from Plans/Contracts_V0.md:1469, 2983, CV-116 and CV-266 is still pending. This records the exclusion of this exact token from the persisted-family campaign as retired; it creates no alias, deletes no history and changes no registered family. Application: reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json. The legacy CPU bucket and cohort pins remain because the frozen schema and validator have no J248 exclusion category. No denominator removal, contract-depth pass or seal is claimed.",
+  "disposition_rationale": "DL-039 Step 9 individual semantic adjudication at 2026-09-25T03:50:05Z: Jared answered EA-S09B2-SPAWN-REQUEST-001 with option 1 on 2026-09-25 (Plans/Decision_Log.md#DL-088): subagent.spawn_requested and subagent.spawn_completed are retired, and Puppet Master records no start request separately from the subagent it creates. A waiting start is a child in the queued state (Plans/assistant-chat-design.md:1849; Plans/Contracts_V0.md:2990), and a start refused before any child exists keeps its existing outcome reason. subagent.spawn_requested was a producer-specific request/completion name; the current owner forbids that separate lifecycle (Plans/Contracts_V0.md:2990); it has no payload row (Plans/Contracts_V0.md:2994-3016), no Plans document names a producer for it, and nothing writes it. Batch 1 integration follow-up (2026-11-05, B1 part 2 review): the Contracts owner edits are complete in this integration at Plans/Contracts_V0.md:1471 and :2990, CV-116 (Plans/Contracts_V0.md:8999) and CV-266 (Plans/Contracts_V0.md:16562). The Run Modes clarification is also present (Plans/Run_Modes.md:195): a waiting start is a queued child, not a separate request record. This integration branch is prepared for review and has not itself landed on main. This records the exclusion of this exact token from the persisted-family campaign as retired; it creates no alias, deletes no history and changes no registered family. Application: reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json. The legacy CPU bucket and cohort pins remain because the frozen schema and validator have no J248 exclusion category. No denominator removal, contract-depth pass or seal is claimed.",
   "evidence": {
     "owner_doc": {
       "status": "OWNER_REQUIRED",
@@ -12,8 +12,8 @@
     },
     "producer": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:2887",
-      "note": "The canonical stable-subagent contract explicitly names `subagent.spawn_requested` and describes producer-specific spawn request while preserving the PM lineage envelope."
+      "citation": "Plans/Contracts_V0.md:2990",
+      "note": "Historical pre-retirement PASS assessment only, preserved without regrading: The canonical stable-subagent contract explicitly names `subagent.spawn_requested` and describes producer-specific spawn request while preserving the PM lineage envelope. The cited current owner text forbids this separate start-request lifecycle; this cell grants no current writer, producer or transition authority."
     },
     "membership_version": {
       "status": "FAIL",
@@ -27,8 +27,8 @@
     },
     "scope_identity": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:2874-2887",
-      "note": "The stable subagent contract requires child identity and the PM run/thread/agent lineage envelope for every subagent event."
+      "citation": "Plans/Contracts_V0.md:2990",
+      "note": "Historical pre-retirement PASS assessment only, preserved without regrading: The stable subagent contract requires child identity and the PM run/thread/agent lineage envelope for every subagent event. The cited current owner text forbids this separate start-request lifecycle; this cell grants no current writer, producer or transition authority."
     },
     "replay_idempotency": {
       "status": "OWNER_REQUIRED",
@@ -47,8 +47,8 @@
     },
     "transitions": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:2887",
-      "note": "The event-specific canonical text defines the observable transition as producer-specific spawn request while preserving the PM lineage envelope."
+      "citation": "Plans/Contracts_V0.md:2990",
+      "note": "Historical pre-retirement PASS assessment only, preserved without regrading: The event-specific canonical text defines the observable transition as producer-specific spawn request while preserving the PM lineage envelope. The cited current owner text forbids this separate start-request lifecycle; this cell grants no current writer, producer or transition authority."
     },
     "consumers_checkpoints": {
       "status": "OWNER_REQUIRED",
@@ -57,8 +57,8 @@
     },
     "compatibility_withdrawal": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:1466",
-      "note": "The runtime payload contract retires legacy chat.subagent aliases into the canonical subagent.* family and preserves producer-specific spawn names."
+      "citation": "Plans/Contracts_V0.md:1471",
+      "note": "Historical pre-retirement PASS assessment only, preserved without regrading: The runtime payload contract retires legacy chat.subagent aliases into the canonical subagent.* family and preserves producer-specific spawn names. The cited current owner text forbids this separate start-request lifecycle; this cell grants no current writer, producer or transition authority."
     },
     "positive_negative_oracles": {
       "status": "OWNER_REQUIRED",
@@ -68,44 +68,44 @@
   },
   "citations_checked": [
     {
-      "citation": "Plans/Contracts_V0.md:2874-2887",
-      "status": "ok",
-      "notes": "Declares stable subagent runtime families and the mandatory PM lineage envelope."
-    },
-    {
-      "citation": "Plans/Contracts_V0.md:2887",
-      "status": "ok",
-      "notes": "Explicitly names `subagent.spawn_requested` and defines producer-specific spawn request while preserving the PM lineage envelope."
-    },
-    {
-      "citation": "Plans/Contracts_V0.md:1466",
-      "status": "ok",
-      "notes": "Retires legacy chat.subagent aliases and preserves the canonical subagent namespace and producer-specific spawn names."
-    },
-    {
       "citation": "Plans/Decision_Log.md#DL-088",
       "status": "ok",
       "notes": "Jared's answer to EA-S09B2-SPAWN-REQUEST-001: Approve, option 1 (retire both names), 2026-09-25."
     },
     {
-      "citation": "Plans/Contracts_V0.md:2983",
-      "status": "ok",
-      "notes": "The name applies only when a dispatcher distinguishes a request from child creation; DL-088's Contracts owner edit removes it here and at 1469, CV-116 and CV-266 (pending)."
-    },
-    {
-      "citation": "Plans/Contracts_V0.md:2987-3007",
-      "status": "ok",
-      "notes": "The subagent payload table has 19 rows and none for this event."
-    },
-    {
-      "citation": "Plans/assistant-chat-design.md:1836",
+      "citation": "Plans/assistant-chat-design.md:1849",
       "status": "ok",
       "notes": "A queued child already exists before it starts; a waiting start is recorded as that child."
     },
     {
       "citation": "Plans/Run_Modes.md:195",
       "status": "ok",
-      "notes": "\"New crew spawn requests queue until a slot is free\": the row that gains DL-088's clarifying sentence (Run Modes owner edit pending)."
+      "notes": "DL-088 owner clarification is complete: a waiting start is a child in the queued state, not a separate request record."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:1471",
+      "status": "ok",
+      "notes": "Payload owner retains the subagent namespace/legacy-alias rule and forbids a separate start-request record."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2990",
+      "status": "ok",
+      "notes": "Lineage owner forbids a separate start-request lifecycle; historical producer/transition cells confer no current authority."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2994-3016",
+      "status": "ok",
+      "notes": "The current subagent table contains the 19 child-run event rows, with no request/completion event."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:8999-9019",
+      "status": "ok",
+      "notes": "CV-116 explicitly records the DL-088 amendment."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:16562-16583",
+      "status": "ok",
+      "notes": "CV-266 explicitly records the DL-088 amendment."
     }
   ],
   "owner_veto": null,

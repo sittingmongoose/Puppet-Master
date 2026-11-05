@@ -726,7 +726,14 @@ def resolve_ref(ref: str, root_schema: dict[str, Any]) -> Any:
     target: Any = root_schema
     for part in ref[2:].split("/"):
         part = part.replace("~1", "/").replace("~0", "~")
-        target = target[part]
+        if isinstance(target, list):
+            # RFC 6901 array index: "0" or digits without a leading zero (2026-11-04: the guided-tour
+            # application result refs the historical v3 result's allOf entries by index).
+            if re.fullmatch(r"0|[1-9][0-9]*", part, flags=re.ASCII) is None:
+                raise KeyError(f"invalid array index {part!r} in {ref}")
+            target = target[int(part)]
+        else:
+            target = target[part]
     return target
 
 
@@ -7016,7 +7023,7 @@ def cmd_validate_audit_closure(args: argparse.Namespace) -> dict[str, Any]:
 
     reopened_rows: list[dict[str, Any]] = []
     if registry.exists():
-        for line_no, line in enumerate(registry.read_text(encoding="utf-8").splitlines(), start=1):
+        for line_no, line in enumerate(registry.read_text(encoding="utf-8").split("\n"), start=1):  # LF only, as the core reads JSONL
             if not line.strip():
                 continue
             try:
@@ -7032,6 +7039,29 @@ def cmd_validate_audit_closure(args: argparse.Namespace) -> dict[str, Any]:
                         "finding_key": row.get("finding_key"),
                     }
                 )
+        # A reopened row stays open until a re-audit row validly supersedes it. Only
+        # pm-audit-closure.py checks that link (exact line hash, record hash, three
+        # agreeing verdicts), so when it reports its open rows, keep only those.
+        open_rows = raw_report.get("registry", {}).get("open_rows")
+        if isinstance(open_rows, list):
+            still_open = {
+                (row.get("line"), row.get("closure_id"))
+                for row in open_rows
+                if isinstance(row, dict) and row.get("closure_status") == "reopened"
+            }
+            reopened_rows = [row for row in reopened_rows if (row["line"], row["closure_id"]) in still_open]
+            blocked_rows = [
+                {"line": row.get("line"), "closure_id": row.get("closure_id"), "finding_key": row.get("finding_key")}
+                for row in open_rows
+                if isinstance(row, dict) and row.get("closure_status") == "blocked_requires_user_decision"
+            ]
+            if blocked_rows:
+                failures.append({
+                    "path": rel(registry),
+                    "error": "audit_closure_blocked_rows_present",
+                    "rows": blocked_rows[:50],
+                    "row_count": len(blocked_rows),
+                })
     else:
         failures.append({"path": rel(registry), "error": "missing_audit_closure_registry"})
     if reopened_rows:

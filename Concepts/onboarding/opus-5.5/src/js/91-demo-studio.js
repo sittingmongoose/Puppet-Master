@@ -753,7 +753,14 @@
        it opens by itself). The address keeps its other switches but loses the ones that skip or steer onboarding. */
     async everything() {
       if (O55.tour && O55.tour.running && O55.tour.reset) { try { await O55.tour.reset({ silent: true, force: true }); } catch (_) {} }
-      ownedKeys().forEach((k) => { try { localStorage.removeItem(k); } catch (_) {} });
+      const clear = () => ownedKeys().forEach((k) => { try { localStorage.removeItem(k); } catch (_) {} });
+      clear();
+      /* owners that save as the page goes write their keys back during the reload (SW-34: Home's layout, the pagehide
+         save in home-redesign 16-persist.js, so Home came back in the layout just reset; the chat composer's drafts on
+         pagehide and on hidden): these listeners, added after theirs, run after theirs (listeners run in the order they
+         were added) and clear again, last, whichever of the two events the browser fires first */
+      window.addEventListener('pagehide', clear);
+      document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') clear(); });
       try { if (window.indexedDB) window.indexedDB.deleteDatabase('pm.home.terminal:v1:saved'); } catch (_) {}
       const u = new URL(location.href);
       ['o55', 'o55scenario'].forEach((p) => u.searchParams.delete(p));

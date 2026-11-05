@@ -1356,9 +1356,6 @@
     ],
     "retired_onboarding_intent": "preview_nier",
     "retired_onboarding_field": "nier_mode",
-    "paint_family": "basic",
-    "paint_marker": "html[data-o55-nier='on']",
-    "logo_look": "nier-<scheme>",
     "transition_policy": {
       "enter_nier_with_reboot": "reboot",
       "enter_nier_without_reboot": "standard_cover",
@@ -1366,8 +1363,7 @@
       "change_nier_scheme": "standard_cover"
     },
     "basic_only_setting_ids": [
-      "general.visual.high-contrast",
-      "general.visual.basic-color-scheme"
+      "general.visual.high-contrast"
     ]
   },
   "nier_theme_migration_cases": [

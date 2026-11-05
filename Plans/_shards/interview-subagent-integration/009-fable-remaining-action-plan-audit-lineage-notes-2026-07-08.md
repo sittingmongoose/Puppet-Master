@@ -2,9 +2,9 @@
 
 Source: `Plans/interview-subagent-integration.md`
 
-Source lines: L1056-L1062
+Source lines: L1057-L1063
 
-Source SHA256: `4710bbe6b870afdf54d816fa9d13f83fe92722e1a2840ea8412de9d44f85966e`
+Source SHA256: `8226743db705a889683a4d00fce308fa29e13002f3f70345455e8249c35fffa4`
 
 ---
 

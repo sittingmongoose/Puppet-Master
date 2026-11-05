@@ -4,7 +4,7 @@ Source: `Plans/Shared_Integration_Runtime.md`
 
 Source lines: L2717-L3294
 
-Source SHA256: `0eb674f95b083572d08fa10b6506de4fb7e33e53dd80f2683155ea8f8e451cd1`
+Source SHA256: `bb9f233ffd1699001f2844d3b00ebda83049f6c86d3489a4e899d4e5ec416c12`
 
 ---
 
@@ -535,7 +535,7 @@ canonical_text: Application ordinary chat, Goal, Crew, Assistant Plan and schedu
   use {scope_partition}:{thread_id}:{generation}; a new versioned wrapper/checkpoint covers the app variant while
   exact Project historical bindings remain readable. Compaction/revert/recovery and ObservableWork/ProcessFacts/Resources
   preserve actual source scope and generation. Cross-project reads execute on the source Computer through existing
-  route/trust custody plus D's narrow read authority, never settings.follow or discovery authority. Full Server
+  route/trust custody plus Plans/Permissions_System.md's narrow read authority, never settings.follow or discovery authority. Full Server
   Backup retains coherent canonical app bodies, history/control, notebook, Plan, schedule, consent and occurrence
   custody under their owners; disposable projections stay rebuildable. Conversion consumes PSB-007 and the exact
   destination bindings, re-admits dispatch and attributes only later work to the destination; old Usage and original
@@ -553,9 +553,9 @@ acceptance_criteria:
 - Concurrent app and Project work obey one governor and scope-fenced detail publication.
 - Client close does not stop Server work; owner outage cannot create a second writer or optimistic completion.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows

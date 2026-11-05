@@ -2,9 +2,9 @@
 
 Source: `Plans/Widget_System.md`
 
-Source lines: L1732-L1967
+Source lines: L1732-L1968
 
-Source SHA256: `8b49cd774649939f9dca6f40cc75f8fd90f485e136697c78ecdf311c0f56c12b`
+Source SHA256: `9e42226e63687e7e7b591c9ebb574179b2c07c2b61c841b05d064f2fa4d910b7`
 
 ---
 
@@ -212,7 +212,8 @@ acceptance_criteria:
 - Existing widget hostability, 64 KB snapshot bound, Project migrations and read-only/service/retention evidence boundaries
   remain.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plans-verify.py
 risk_class: app_board_scope_or_hostability_drift
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103

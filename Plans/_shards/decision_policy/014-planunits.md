@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Policy.md`
 
-Source lines: L464-L3295
+Source lines: L786-L3620
 
-Source SHA256: `b6f1362ed05b4bcee76fb6d1326d496a23d2214f5ddab53b8b7d0e0dc3c479f1`
+Source SHA256: `79c1701509e6333d3470add092021dbf424a6992e9cae2ce874abfc7a555a58a`
 
 ---
 
@@ -1463,12 +1463,13 @@ reasoning_tier: high
 context_scope: clarification_start_run_block
 implementation_surfaces:
   - Plans/Decision_Policy.md
-  - Plans/chain-wizard-flexibility.md
+  - Plans/Planning_Wizard.md
 node_compile_hint:
   mode: pre_execution_clarification_start_run_block
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0020
+  - Plans/Decision_Log.md#DL-330
 preserved_exact_tokens:
   - "`Chain Wizard`"
   - "`Interview phase`"
@@ -1478,10 +1479,11 @@ preserved_exact_tokens:
 negative_constraints:
   - "If clarification cannot be resolved before run start, the run MUST NOT start."
   - "Do not use Chain Wizard or Interview as current product terminology outside compatibility/source-lineage contexts."
+owner_boundary_notes:
+  - "wizard_status and the attention_required state are owned by Plans/Planning_Wizard.md#PWIZ-038 (DL-330); retired Plans/chain-wizard-flexibility.md is source lineage only."
 owner_hints:
   - Plans/Decision_Policy.md
   - Plans/Planning_Wizard.md
-  - Plans/chain-wizard-flexibility.md
 ```
 
 ### DP-034 - Requirements Quality Report Boundary Severity Persistence
@@ -1512,13 +1514,13 @@ reasoning_tier: high
 context_scope: requirements_quality_report_boundary
 implementation_surfaces:
   - Plans/Decision_Policy.md
-  - Plans/chain-wizard-flexibility.md
   - Plans/requirements_quality_report.schema.json
 node_compile_hint:
   mode: requirements_quality_report_boundary_severity_persistence
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0021
+  - Plans/Decision_Log.md#DL-330 (amended 2026-11-05)
 preserved_exact_tokens:
   - "`requirements_quality_report`"
   - "`verdict: \"PASS\"`"
@@ -1529,9 +1531,10 @@ preserved_exact_tokens:
   - "`PolicyRule:no_secrets_in_storage`"
 negative_constraints:
   - "Do not copy credentials or tokens into requirements quality report fields."
+owner_boundary_notes:
+  - "The Requirements Completion Contract, the report rules and the requirements-quality steps of the Auditor loop that generate this report are owned by DP-066 in section 6.4 (DL-330, amended 2026-11-05); retired Plans/chain-wizard-flexibility.md is source lineage only."
 owner_hints:
   - Plans/Decision_Policy.md
-  - Plans/chain-wizard-flexibility.md
 ```
 
 ### DP-035 - Runtime Fallback Prohibition Defaults

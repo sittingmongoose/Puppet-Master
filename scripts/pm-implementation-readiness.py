@@ -786,8 +786,14 @@ STORAGE_VALUE_REGISTRY_SCHEMA_URI = (
 # Re-pinned 2026-11-04 for the full-review fixes (finding 14): dev_session_record_application and
 # eval_session_record_application add two materialized later_gui_or_feature_projection families, the app
 # DebugSessionRecord/EvalSessionRecord editions (SMPFS-139/140) that replace the browser records named before.
+# Re-pinned 2026-11-04 on branch plans/ea-storage-retention-20261104 (Plans/storage-plan.md Case L-3, DL-084 and
+# DL-092): the Storage owner's reuse check did not reuse RP-GOAL-THREAD-LIFETIME and materialized the Chat content
+# class as RP-CHAT-THREAD-LIFETIME@1.0.0, so the retention-policy count moves from 27 to 28. The family, status
+# and tier counts are unchanged.
 STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 344
-STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 27
+# Re-pinned 2026-11-05 (DL-401, DL-415..DL-421): telemetry plus six independent no-project
+# policies are materialized; existing policies and every family/status/tier count remain unchanged.
+STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 35
 STORAGE_VALUE_REGISTRY_EXPECTED_STATUS_COUNTS = {
     "materialized": 320,
     "deferred_not_build_blocking": 23,

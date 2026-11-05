@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L19639-L21106
+Source lines: L26794-L28530
 
-Source SHA256: `d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd`
+Source SHA256: `4b0b395198d993ff55a8c3aceef8c1f3c802c8f612fa49957caf2735a12543d1`
 
 ---
 
@@ -1406,7 +1406,7 @@ owner_hints:
 ContractRef: ContractName:Plans/Permissions_System.md#PS-147, ContractName:Plans/Permissions_System.md#PS-148, ContractName:Plans/orchestrator-subagent-integration.md#OSI-441, ContractName:Plans/human-in-the-loop.md#HITL-038, ContractName:Plans/FinalGUISpec.md#F3-673
 
 
-### DL-300 - Event Authority Admits The App Scope Editions And Three New Families
+### DL-300: Event Authority Admits The App Scope Editions And Three New Families
 
 ```yaml
 plan_unit_id: DL-300
@@ -1475,4 +1475,273 @@ owner_hints:
   - Plans/Settings_System.md
   - Plans/Permissions_System.md
   - Plans/Contracts_V0.md
+```
+
+
+### DL-301 - Theme Chooses A Family And One Control Chooses The Scheme
+
+```yaml
+plan_unit_id: DL-301
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared, 2026-11-04: "We don't need light and dark next to each theme, since it's at the top with auto. So just the 1 control."
+  Theme offers only Basic, Friendly, Retro, Glass and NieR. One Light / Dark / Auto control chooses the scheme for every family. A family pick preserves that scheme, including Auto. The title-bar quick switch retains its existing five-family and single-scheme separation. The older Basic light/dark control is no longer offered, including in advanced Settings.
+  This supersedes exactly the DL-228 amendment in SSYS-010 that read: "picking a named variant, such as Glass Light, while Theme Mode is Auto commits that variant and its mode as one SSYS-009 transaction, even when the variant is already the stored value, so the mode leaves Auto". Visible family picks now preserve Auto. The ten composite storage values remain compatible, existing per-Project selections survive reload, and no data migration is introduced. The older Basic scheme value remains compatibility input; theme-mode decides the scheme. SSYS-009's atomic pair, refusal behavior and Settings ownership remain binding.
+gui_related: true
+gui_classification_reason: Defines the visible theme choices and the single scheme control.
+split_recommended: false
+depends_on: [DL-228]
+unblocks: [SSYS-010]
+acceptance_criteria:
+- Theme offers five family names and no light/dark variants; exactly one scheme choice offers Light, Dark and Auto.
+- Every family works in both schemes and Auto; family changes preserve the scheme and existing per-Project selections survive reload.
+- The superseded DL-228 sentence is identified exactly; ten composite storage values remain compatible without migration.
+validation_surfaces:
+- Settings Theme and scheme controls, title-bar quick switch, Project reload and Auto OS appearance changes.
+risk_class: appearance_choice_or_compatibility_drift
+reasoning_tier: high
+context_scope: theme_scheme_ruling_20261104
+implementation_surfaces:
+- Plans/Settings_System.md
+- Plans/settings_inventory.json
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- "Jared's verbatim SW-04 ruling, 2026-11-04, implementation lane task in T3; /mnt/Cursor/share/puppet-master/2026-11-04-program/streams/F/theme/REPORT.md"
+- "pm-fo-lead mail 1104184345-2f61: Plans owner authorizes DL-301 and narrow DL-228 supersession"
+preserved_exact_tokens:
+- "We don't need light and dark next to each theme, since it's at the top with auto. So just the 1 control."
+- Light / Dark / Auto
+- DL-228
+negative_constraints:
+- Do not change the ten composite storage values, add a migration or remove the title-bar quick switch.
+owner_hints:
+- Plans/Settings_System.md#SSYS-010
+```
+
+ContractRef: ContractName:Plans/Settings_System.md#SSYS-010, ContractName:Plans/Decision_Log.md#DL-228
+
+### DL-302 - DL-260 Also Supersedes DL-173's Concept-Only Demo Controls
+
+```yaml
+plan_unit_id: DL-302
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-302 records Jared's answer of 2026-11-04 ("2. yes") to the demo-cleanup question whether DL-260 also covers
+  DL-173: DL-260 ("Product canon excludes prototype mechanics") supersedes the "concept-only demo controls" item in
+  DL-173's list of the Usage redesign's requirements, as it supersedes the concept-mechanics portions of the decisions
+  it names. DL-173's other decisions and its historical bytes are unchanged. Plans/usage-feature.md#UF-107 and the
+  other Usage owners carry only real product behavior; the concept keeps its demo controls (Jared, 2026-11-04: "the
+  demo stuff should be in PMConcept7, just not in the plans docs").
+gui_related: false
+gui_classification_reason: Records the supersession of a historical demo-control requirement; no GUI contract changes.
+split_recommended: false
+depends_on: [DL-260, DL-173]
+unblocks: []
+acceptance_criteria:
+  - "No live Plans unit treats DL-173's concept-only demo controls as a product requirement."
+  - "DL-173 and DL-260 keep their bytes."
+validation_surfaces:
+  - python3 scripts/pm7-demo-canon-check.py
+  - python3 scripts/pm-plan-index.py validate
+risk_class: prototype_promoted_to_product_or_real_rule_lost
+reasoning_tier: medium
+context_scope: product_canon_boundary
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/usage-feature.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-04: Jared's answer \"1. yes 2. yes\" to the stream P demo-cleanup questions; 2 is this entry"
+  - "/mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/demo-cleanup/classify-C.md (the DL-173 history row)"
+preserved_exact_tokens:
+  - "DL-302"
+  - "concept-only demo controls"
+owner_hints:
+  - Plans/usage-feature.md
+```
+
+
+### DL-330 - Planning Wizard Owns Wizard Status And The Blocked States; Decision Policy Keeps The Clarification Limits
+
+```yaml
+plan_unit_id: DL-330
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-330 records Jared's answer of 2026-11-05 ("approve all") to closure question 2 on wizard ownership.
+  Plans/Planning_Wizard.md owns wizard_status and the wizard attention_required and blocked states, their
+  transitions, the blocked record and the blocked clear rule (PWIZ-038), migrated from retired
+  Plans/chain-wizard-flexibility.md with only names updated to current canon. Plans/Decision_Policy.md keeps the clarification-round limits (section 6.5,
+  DP-064) and points them at the Planning Wizard, and keeps the requirements-quality check (section 6.4), whose
+  blocking rules are already there. Plans/DRY_Rules.md section 2.1 (DR-009) and the other live references that
+  named the retired document as the owner of these items now route to the new owners, and the retired document's
+  Owner / Consumer Map says where each item went. The approved removal of section 6.4's pointer to the retired
+  section 12 is not applied by this record: moving that loop definition showed it needs the Requirements Completion
+  Contract (retired section 14) and the report shaping rules (sections 14.1-14.2), which Decision Policy does not
+  hold, so the answer said to stop and return that question to Jared rather than invent a home for them.
+
+  Amended 2026-11-05 (coordinator resolution under Jared's answer to closure question 2; pm7-build, pm-mail
+  1105045522-d98a): the stop above is resolved without returning to Jared, because the move carries out the
+  recommendation his answer ("approve all") approved, that Decision Policy also keeps the requirements-quality check
+  because its blocking rules are already there. The Requirements Completion Contract C-1 to C-5 (retired section 14),
+  the report rules (sections 14.1-14.2), the requirements-quality steps of the section 12 Auditor loop and the part of
+  section 15 that the section 6.4 blocking rule relies on (its opening and the section 15.1 escalation trigger) move
+  into section 6.4 as a new unit, Plans/Decision_Policy.md#DP-066. The criteria and report steps keep their wording
+  except the retired vocabulary and references: the Planning Wizard replaces the Chain Wizard/Interview phase
+  (GRS-028), post-repair replaces post-Pass-2 (the 2026-06-18 retirement of fixed passes), and the retired document's
+  section references point inside DP-066, to Plans/Planning_Wizard.md#PWIZ-038 or to section 6.5. One pronoun names
+  the Auditor loop because the sentence it pointed back to did not move, and one added sentence says where the rest
+  of section 15 went. DP-066 lists every changed word and its reason. Section 6.4's pointer to the retired section 12 is replaced by DP-066, DP-034 no longer names the
+  retired document as a surface or owner hint, and the retired document's Owner / Consumer Map says where each item
+  went. Section 12's generic Auditor invariant loop, which other live documents still cite, is not part of this
+  answer.
+gui_related: false
+gui_classification_reason: Records an owner-routing decision; the GUI behavior it moves is defined by PWIZ-038.
+split_recommended: false
+depends_on: [PWIZ-038, DP-064, DP-066]
+unblocks: []
+acceptance_criteria:
+  - "No live Plans unit or routing table names Plans/chain-wizard-flexibility.md as the owner of wizard_status, the wizard blocked states and transitions, or the clarification-round limits."
+  - "PWIZ-038 and DP-064 carry the migrated semantics, and the retired document's Owner / Consumer Map names both."
+  - "Amended 2026-11-05: section 6.4 and DP-034 no longer point to retired Plans/chain-wizard-flexibility.md for the requirements-quality loop; DP-066 holds the Requirements Completion Contract, the report rules, the loop's requirements-quality steps and the escalation trigger."
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+risk_class: owner_routing_to_retired_document
+reasoning_tier: high
+context_scope: closure_owner_answers_20261105
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Planning_Wizard.md
+  - Plans/Decision_Policy.md
+  - Plans/DRY_Rules.md
+  - Plans/Progression_Gates.md
+  - Plans/FinalGUISpec.md
+  - Plans/Wiring_Matrix.md
+  - Plans/chain-wizard-flexibility.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T02:48:03Z: Jared's answer \"approve all\" to the closure questions; question 2 (closure rows B06 106, 112, 117, 118, 119, 125) is this entry"
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/source-records.md (the closure records and the fix each asked for)"
+  - "pm-mail 1105045522-d98a (coordinator pm7-build, 2026-11-05): resolution A, move the Requirements Completion Contract and the report steps into a new Decision_Policy section 6.4 unit as a coordinator resolution under this record, without the retired vocabulary"
+preserved_exact_tokens:
+  - "DL-330"
+  - "wizard_status"
+  - "clarification-round limits"
+  - "PWIZ-038"
+  - "DP-064"
+  - "DP-066"
+owner_hints:
+  - Plans/Planning_Wizard.md
+  - Plans/Decision_Policy.md
+  - Plans/DRY_Rules.md
+```
+
+
+### DL-331 - Retire The Exact Token "Playwright optional" With A Ledger Correction
+
+```yaml
+plan_unit_id: DL-331
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-331 records Jared's answer of 2026-11-05 ("approve all") to closure question 3: the exact-token requirement
+  "Playwright optional" of ledger pldg-20260617-001-plans-to-code-handoff atom-0031 is retired by an append-only
+  ledger correction (corr-0012, event evt-0019), and the words are not restored to ATS-004, RAP-029 or T-159. The
+  2026-08-13 browser terminology decision (Plans/Automated_Testing_System.md#ATS-035, Plans/Tools.md#T-159) removed
+  Playwright as any Puppet Master path on purpose: Puppet Master has no Playwright runtime, facade, compatibility
+  layer or fallback, and a user Project's own Playwright suite runs only as a generic external Project
+  command/process that is not a fallback for BrowserRuntimeService. atom-0031's other exact tokens and its rule that
+  native Puppet Master web testing is not defaulted to Playwright stay in force; the atom record is unchanged.
+gui_related: false
+gui_classification_reason: Records the retirement of a ledger exact-token requirement; no GUI contract changes.
+split_recommended: false
+depends_on: [ATS-035, T-159]
+unblocks: []
+acceptance_criteria:
+  - "Ledger pldg-20260617-001-plans-to-code-handoff records corr-0012 and evt-0019 linking atom-0031, and its validator passes."
+  - "ATS-004, RAP-029 and T-159 do not reintroduce an optional or fallback Puppet Master Playwright path."
+validation_surfaces:
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff
+  - python3 scripts/pm-plan-index.py validate
+risk_class: retired_token_revived_or_ledger_unrecorded
+reasoning_tier: medium
+context_scope: closure_owner_answers_20261105
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff/records/corrections.jsonl
+  - Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff/events.jsonl
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T02:48:03Z: Jared's answer \"approve all\" to the closure questions; question 3 (closure row B03 66) is this entry"
+  - "Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff/records/corrections.jsonl#corr-0012"
+preserved_exact_tokens:
+  - "DL-331"
+  - "Playwright optional"
+  - "atom-0031"
+  - "corr-0012"
+owner_hints:
+  - Plans/Automated_Testing_System.md
+  - Plans/Tools.md
+```
+
+
+### DL-332 - UF-019 Distinguishes Gemini Direct From Antigravity CLI
+
+```yaml
+plan_unit_id: DL-332
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-332 records Jared's answer of 2026-11-05 ("approve all") to closure question 4: Plans/usage-feature.md#UF-019
+  is reworded so Usage distinguishes the two current Gemini-family routes, Gemini Direct and Antigravity CLI, instead
+  of Gemini direct versus Gemini CLI. Gemini CLI stays retired/source-lineage vocabulary only (UF-021) and is never an
+  active Usage route or distinction.
+gui_related: false
+gui_classification_reason: Records a provider-route wording decision; no GUI contract changes.
+split_recommended: false
+depends_on: [UF-019, UF-021]
+unblocks: []
+acceptance_criteria:
+  - "UF-019 names Gemini Direct and Antigravity CLI as the routes Usage distinguishes, and names Gemini CLI only as retired lineage."
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+risk_class: retired_provider_route_revived
+reasoning_tier: medium
+context_scope: closure_owner_answers_20261105
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/usage-feature.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T02:48:03Z: Jared's answer \"approve all\" to the closure questions; question 4 (closure row B14 317) is this entry"
+preserved_exact_tokens:
+  - "DL-332"
+  - "Gemini Direct"
+  - "Antigravity CLI"
+  - "Gemini CLI"
+owner_hints:
+  - Plans/usage-feature.md
+  - Plans/CLI_Bridged_Providers.md
 ```

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36476-L37679
+Source lines: L36256-L37487
 
-Source SHA256: `5219317d3f6de37616de475f8713f24e8d655c778fdc8df3544ad7e22bd18a4d`
+Source SHA256: `5e31ae60db6d0b015b0d9deba42d940bae1d8f3edb4e4f588b40eac38c7f4cb8`
 
 ---
 
@@ -108,7 +108,7 @@ canonical_text: |-
   DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged. generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or mirror authority.
   DL-273, Jared 2026-11-01: Saved onboarding selections follow PWIZ-024 retirement invalidation on entry and resume. The wizard returns to explicit admitted service/address/account selection and never presents the retired selection or its authorization and Review as current.
   DL-273, Jared 2026-11-01: Source Control service controls and their activation consume the same current admission rule from PWIZ-024. A restored card choice cannot expose an eligible service action or open sign-in merely because the main online-service draft is unpicked; the person must select an admitted choice again.
-  FO-22, 2026-11-02: The visible step and typed Back control consume PWIZ-021’s current-answer navigation and PWIZ-024’s source-step entry/resume rules. Abandoned steps do not reappear through Back or subsequent Continue; fresh Review and a resumed service chooser keep their valid Back destination. Missing service identity is shown as a choice to make, never as an empty service name, raw enum or unresolved placeholder. F3-669/PWIZ-037 consume the same reviewed setup draft for New Project; all six entry ways, inspected full paths and retained spaces, Settings-only JJ object format, typed Starters, Standard backup and detached Your usual settings are owner-driven. Only Planning Wizard, PRD Builder and Orchestrator retain the no-project workflow gate; Goals/Crew/Plan/Deep Plan/scheduled tasks remain available. This supersedes only earlier Later/provider-deferred and universal no-Project Settings wording; current-answer FO-22 Back/Edit/Review, current DL-273 admission, all protected-auth/Recovery Kit gates, quiet Almost ready and O12 phases remain.
+  FO-22, 2026-11-02: The visible step and typed Back control consume PWIZ-021’s current-answer navigation and PWIZ-024’s source-step entry/resume rules. Abandoned steps do not reappear through Back or subsequent Continue; fresh Review and a resumed service chooser keep their valid Back destination. Missing service identity is shown as a choice to make, never as an empty service name, raw enum or unresolved placeholder. F3-669/PWIZ-037 consume the same reviewed setup draft for New Project; all six entry ways, inspected full paths and retained spaces, Settings-only JJ object format, typed Starters and Standard backup are owner-driven. Your usual settings follows the resolved Everywhere ladder without copying; detached copies from Saved setups or source Projects remain separate owner-driven choices. Only Planning Wizard, PRD Builder and Orchestrator retain the no-project workflow gate; Goals/Crew/Plan/Deep Plan/scheduled tasks remain available. This supersedes only earlier Later/provider-deferred and universal no-Project Settings wording; current-answer FO-22 Back/Edit/Review, current DL-273 admission, all protected-auth/Recovery Kit gates, quiet Almost ready and O12 phases remain.
 gui_related: true
 gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic motion.
 split_recommended: false
@@ -151,14 +151,17 @@ acceptance_criteria:
   including NieR Light/Dark with Adjust NieR opening the same editor (F3-598); no independent checkbox remains (Q22).
 - The ten-theme choice (Q22), the header Look menu and the NieR Mode editor panel each emit `ui.onboarding.choose_look`
   (intents choose_look, toggle_look_menu and toggle_look_editor; preview_nier is retired by Q22) with no owner route,
-  no `cmd.theme.*` and no Settings transaction; the previewed look is written with the Project at commit, a later change
-  through the same Settings binding when the window finishes or closes (DL-153).
+  no `cmd.theme.*` and no Settings transaction during preview. An accepted look commits once through the Settings owner
+  at its explicit admissible Everywhere/Device/Project level (DL-286); a Project own choice at actual Project commit,
+  a Later/app choice at the accepted application/Device boundary, and pre-claim preview only ephemerally. Later changes
+  use the same Settings binding when the window finishes or closes (DL-153).
 - 'Beyond welcome, the onboarding header keeps a persistent Look menu (`Change the look`: five families including NieR
   plus Light/Dark and the retained Adjust NieR button (Q22)) and sound control reachable by keyboard on every stage;
   Look changes preview presentation without dispatching owner work and persist only through the Settings owner (`general.visual.theme`,
   `general.visual.theme-mode`, and for NieR the retained `general.visual.nier-parts` and `general.visual.nier-background`
-  (Q22)) with a verified current Project binding after commit or connection; Project Later and every no-Project state
-  allow only ephemeral preview without durable writes, while the sound control binds to the Settings-owned `general.interaction.sound-effects`
+  (Q22)) at the explicitly accepted admissible Everywhere/Device/Project level (SSYS-002/059, DL-286); a Project write
+  requires a verified current Project binding, while Project Later and No project may persist at admitted app levels.
+  Only pre-claim/unbound preview stays ephemeral. The sound control binds to the Settings-owned `general.interaction.sound-effects`
   effective pref with an explicit `Sound off — click to turn on` state, honors effective Reduced Motion, and audio never
   carries a status alone.'
 - The header Look menu exposes its open state and family/mode choices as menuitemradio options including NieR as a menuitemradio
@@ -179,16 +182,15 @@ acceptance_criteria:
   real results; stale, unconfirmed, or expanded plans dispatch nothing.
 - 'DL-259 H2/FF-20: first_project exposes New, Existing and Restore as three aligned keyboard-reachable groups; Existing’s
   local/online/device choices open in its joined tray, before the other groups. All four semantic source intents stay
-  reachable without an unrelated More/Other disclosure, and Project Later works. Each choice creates only a draft. Start
-  fresh is the settings default; explicit copy offers a searchable real-Project picker, source-context summary and Settings
-  preview, never bulk copies secrets, machine paths, runtime state, or account capability.'
+  reachable without an unrelated More/Other disclosure, and Project Later works. Each choice creates only a draft. Your usual settings is the settings default;
+  explicit copy offers a searchable real-Project picker, source-context summary and Settings preview, never bulk copies secrets, machine paths, runtime state, or account capability.'
 - 'Source-control setup keeps two independent visible axes: local Safe History uses Git or Jujutsu on the selected computer,
   while an optional forge account/repository keeps a separate online copy; Jujutsu is never presented as an account,
   website, or online-copy provider, and FileSafe is described only as complementary local recovery.'
 - 'After current Review confirmation, a new-project owner route follows the reviewed Safe History choice through `cmd.project.new_local`
-  and its backend-native child owner: local Git initializes only when the reviewed draft selected Git, a reviewed Jujutsu
-  choice routes through the existing Jujutsu owner route and is never silently substituted with Git, and explicit no-history
-  initializes no Git per PJCT-007 and Project_System.md:93; local-engine selection uses the canonical Source Control
+  and its backend-native child owner: Git and Jujutsu are equal local history choices under PJCT-009, existing verified history wins, and a folder
+  without a repository still initializes the reviewed Git-or-Jujutsu backend. A reviewed Jujutsu choice routes through
+  its existing owner route and is never silently substituted with Git; local-engine selection uses the canonical Source Control
   owner, while GitHub, GitLab, Azure DevOps, Bitbucket, Forgejo and Gitea account verification, repository creation/selection,
   visibility, and binding remain explicit forge/auth owner routes. Forgejo and Gitea each require the person’s own server
   (DL-273).'
@@ -435,15 +437,13 @@ acceptance_criteria:
   data and exact return destinations, show a human-readable missing choice, and never paint an empty Creating or unselected-service details screen.'
 
 validation_surfaces:
-- Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (owner-referenced
-  eleven/six/deferred stage graphs, draft/copy/preflight/commit/paid/free phase fences; F3-521 retains the separate v3
-  Guided Tour contract)
-- Plans/product_onboarding_contracts.schema.json and Plans/product_onboarding_contract_fixtures.json (v2 owner actions,
-  durable bounded draft, exact commit/result binding and phase continuation)
+- Plans/final_gui_interaction_contracts.schema.json
+- Plans/final_gui_interaction_contract_fixtures.json
+- Plans/product_onboarding_contracts.schema.json
+- Plans/product_onboarding_contract_fixtures.json
 - tests/test_pm_onboarding_phases.py
 - tests/test_pm_settings_draft_transfer.py
-- Verify F3-520's onboarding presentation, owner-bound actions, ephemeral pre-Project look choices, return routes, interruption/reversal,
-  accessibility and short-window behavior.
+- future verify F3-520's onboarding presentation, owner-bound actions, ephemeral pre-Project look choices, return routes, interruption/reversal, accessibility and short-window behavior.
 - future ten-theme, Reduced Motion, interruption, reversal, and short-window film review
 risk_class: onboarding_overload_or_motion_blocking
 reasoning_tier: high
@@ -504,56 +504,52 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
   /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F06,A-F09,C-F02,C-F11,E-F07,E-F08
 preserved_exact_tokens:
-- welcome
-- simple_path
-- first_project
-- source_control_setup
-- server_storage_client
-- remote_access_setup
-- review_setup_plan
-- automatic_preparation
-- ready
-- connect_existing
-- Get Started
-- Begin setup
-- Confirm and prepare
-- Continue Setup
-- Open Repository
-- Delete Repository
-- Do this later
-- Run setup wizard
-- Reset Layout
-- ui.onboarding.start
-- home_menu
-- Start a new project
-- Open a folder here
-- Bring one from online
-- Restore a backup
-- Safe History
-- FileSafe
-- Local or VPN
-- You can connect through a VPN too
-- Reverse proxy
-- Puppet Master Remote Link
-- SSH/SFTP
-- 1.2-1.5 seconds
-- 420-560 ms
-- 60-80 ms
-- 120-220 ms
-- 700 ms
-- puppet_master
-- cmd.client.pair.start
-- source_access_authorization_refs
-- Source Location
-- Change the look
-- Sound on — click to mute
-- Sound off — click to turn on
-- general.visual.theme
-- general.visual.theme-mode
-- general.interaction.sound-effects
-- NieR Mode
-- Adjust NieR look
-- menuitemcheckbox
+- "welcome"
+- "simple_path"
+- "first_project"
+- "source_control_setup"
+- "server_storage_client"
+- "remote_access_setup"
+- "review_setup_plan"
+- "automatic_preparation"
+- "ready"
+- "connect_existing"
+- "Get Started"
+- "Begin setup"
+- "Confirm and prepare"
+- "Continue Setup"
+- "Open Repository"
+- "Delete Repository"
+- "Do this later"
+- "Run setup wizard"
+- "Reset Layout"
+- "ui.onboarding.start"
+- "home_menu"
+- "Open a folder here"
+- "Restore a backup"
+- "Safe History"
+- "FileSafe"
+- "Local or VPN"
+- "You can connect through a VPN too"
+- "Reverse proxy"
+- "Puppet Master Remote Link"
+- "SSH/SFTP"
+- "1.2-1.5 seconds"
+- "420-560 ms"
+- "60-80 ms"
+- "120-220 ms"
+- "700 ms"
+- "puppet_master"
+- "cmd.client.pair.start"
+- "source_access_authorization_refs"
+- "Source Location"
+- "Change the look"
+- "Sound off — click to turn on"
+- "general.visual.theme"
+- "general.visual.theme-mode"
+- "general.interaction.sound-effects"
+- "NieR Mode"
+- "Adjust NieR look"
 negative_constraints:
 - Do not render Product Onboarding as a full-page route or replacement application experience.
 - Do not restore F3-411's four-screen/provider-first choreography.
@@ -565,8 +561,9 @@ negative_constraints:
   Connected Server pairing/trust, restore, repository/filesystem mutation, or Project commit before exact current Review
   confirmation. Do not treat a detected account, reachable endpoint, ref prefix, cached result, or GUI choice as owner
   authorization.
-- Do not initialize local Git for an explicit no-history choice, substitute Git for a reviewed Jujutsu choice, or let
-  a legacy `init_git` payload summary override the reviewed PJCT-007 draft binding.
+- Offer only Git and Jujutsu as equal local history choices under PJCT-009; preserve existing verified history and
+  initialize the reviewed backend when the folder has no repository. Do not substitute Git for a reviewed Jujutsu choice
+  or let a legacy `init_git` payload summary override the reviewed PJCT-007 draft binding.
 - Do not hide any of the four First Project choices behind More/Other project choices or frontload unrelated advanced
   Settings.
 - Do not use left-edge accent rails, floating footer actions that cover scrollable content, multiple simultaneously expanded
@@ -581,8 +578,9 @@ negative_constraints:
 - Do not add a surface-owned physics loop or require unsupported effects; F3-663’s approved bounded solver/CRT/world
   effects obey O2 and the supported reduced-motion/capability path. Filter replacements require a look-preserving recorded
   A/B.
-- Include family nier in the ten-theme choices and Look menu (Q22); do not write a NieR choice durably before the existing
-  Project binding exists.
+- Include family nier in the five visible family choices and Look menu, with one Light/Dark/Auto control resolving ten variants (DL-301); commit only through the Settings owner at an
+  explicitly accepted admissible level. A Project own write requires a real Project binding; Later/app writes use
+  admitted app levels and pre-claim/unbound preview stays ephemeral (DL-286).
 - Do not move server, provider, Project, backup/restore, authentication, or persistence ownership into Final GUI.
 - Do not let the Home relaunch item create a second onboarding controller, persistence record, or domain command.
 - Do not promote browser-concept projections, route previews, local persistence, or receipts into production owner-work,
@@ -639,10 +637,11 @@ acceptance_criteria:
   retained Adjust NieR button (Q22) whose editor opens as a popup dialog above the Tour) and sound control reachable
   by keyboard on every step: Look choices apply through the Settings owner (`general.visual.theme`, `general.visual.theme-mode`,
   and for NieR the retained `general.visual.nier-parts` and `general.visual.nier-background` (Q22)) at once with presentation-only
-  effect under the verified current Project binding and the Tour follows its effective theme; Project switching rebinds
-  both controls, while no-Project state permits only ephemeral preview without durable writes. The sound control binds
+  effect at the explicitly accepted admissible Everywhere/Device/Project level, and the Tour follows the same effective
+  value. Project switching re-resolves both controls; No project permits admitted app-level persistence, while only
+  pre-claim/unbound preview remains ephemeral (SSYS-002/059, DL-286). The sound control binds
   to the Settings-owned `general.interaction.sound-effects` effective pref with an explicit `Sound off — click to turn
-  on` state; both are shared chrome controls with Project-scoped persistence and neither becomes a tour-specific preference
+  on` state; both are shared chrome controls using their Settings-declared levels and neither becomes a tour-specific preference
   toggle beside `ui.guided_tour.toggle_eli5`. Neither is a `ui.guided_tour.*` action: five-family Look choices (Q22),
   live editor edits and the sound control dispatch cmd.settings.transaction.preview then cmd.settings.transaction.apply,
   and Adjust NieR emits ui.settings.nier_editor.open (DL-153).'
@@ -663,8 +662,8 @@ acceptance_criteria:
 - The learner changes an answer rather than an Edit button silently choosing for them; only the dependent shared-access
   consequence changes, unaffected outcomes retain object identity/position, and an unsure answer stays unresolved.
 - 'Assistant Chat opens first through its real shell action and keeps the same conversation throughout; successful Finish
-  lands on the real Planning Wizard, not Chat, without starting work (amended 2026-10-09, DL-180: the chat is not moved
-  by the Tour).'
+  lands on the real Planning Wizard when a committed Project exists, otherwise in No project chat on the named
+  Computer, without starting work or fabricating a practice Project (DL-287). The chat is not moved by the Tour (DL-180).'
 - Teacher's built-in example is deterministic and local, presents an ordinary-language question and answer in the real
   Chat surface, and uses no provider, model, network, token budget, protected browser content, or AI-plan execution.
 - 'Teacher normal and ELI5 answers preserve the same facts but are materially different: Normal gives useful adult-beginner
@@ -690,7 +689,7 @@ acceptance_criteria:
   work. Late local-stream callbacks are fenced to their original session and conversation, and missing usage telemetry
   is not zero-use proof. Ordinary conversations keep their normal behavior.
 - Every automatic non-interaction scene transition puts programmatic focus on the current h2 scene heading with tabindex=-1
-  and the documented programmatic-focus-landmark exemption; it never auto-focuses an action or opens a visual PMHoverTag,
+  and the documented programmatic-focus-landmark exemption; it never auto-focuses an action or opens a visual shared hover-help overlay,
   while exact coached interactions wait for the person to focus or activate the real target.
 - Teacher practice uses the exact novice composer placeholder `Ask Teacher anything about Puppet Master…`; Skip reinstates
   the exact pre-tour placeholder and pre-tour layout rather than leaving Teacher copy or a partial tour arrangement behind.
@@ -699,7 +698,8 @@ acceptance_criteria:
   in product copy.
 - Pause, Back, valid forward navigation, and Skip remain reachable and operational. Close/reload resumes the last safe
   step after owner-state revalidation. Skip restores captured layout/Chat state/focus; Finish tour restores by default
-  and keeps demonstrated layout only after explicit selection, then focuses the real Planning Wizard. Failed restoration
+  and keeps demonstrated layout only after explicit selection, then focuses the real Planning Wizard for a committed
+  Project or No project chat on the named Computer otherwise (DL-287). Failed restoration
   exposes recovery, never false completion.
 - Effective Reduced Motion uses restrained transitions that preserve sequence and cause/effect, focus, hierarchy, announcements,
   and action parity. Settings changes are honored without discarding the step; hidden/collapsed surfaces stop decorative
@@ -886,7 +886,7 @@ owner_boundary_notes:
 owner_hints: [Plans/FinalGUISpec.md, Plans/newtools.md, Plans/Settings_System.md]
 ```
 
-### F3-523 - Global PMHoverTag Overlay And Accessibility
+### F3-523 - Global Hover Help Overlay And Accessibility
 
 ```yaml
 plan_unit_id: F3-523
@@ -894,7 +894,7 @@ unit_type: interaction_contract
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: |-
-  One shared PMHoverTag and HoverTagController renders theme-native hover/focus help in a shared overlay root for every actionable or focusable control, truncated value, technical identifier, status, badge, chart mark, disabled control, and dynamic state such as pin/unpin, unless a documented static-copy or decorative exemption applies. A one-line tag has at least 24 px height, 8 px horizontal padding, and compact 12 px text; detailed tags emphasize line one and use 11 px explanatory text. Tags are at most 280 px wide, keep an 8 px anchor gap and 8 px viewport margin, center above, flip below, and clamp to every edge. Persistent accessible descriptions bind immediately, while the visible tag waits for deliberate intent: at least 1600 ms of pointer residence and 1100 ms of stationary intent within a 5 px radius, or 1000 ms of continuous keyboard focus. Pointer movement beyond that radius, target movement, pointer press, a scroll that moves the anchor, or departure before the thresholds resets or cancels the pending opening; pointer departure after opening uses a 160 ms grace period; Escape closes. A pointer press on an anchor closes its open tag, and that anchor's tag stays closed until the pointer leaves it (amended 2026-10-08, DL-145; scroll narrowed 2026-10-23, DL-232). Copy is concise, human, contextual, and consequence-first. It explains what the control does, its current state, shortcut, full value, consequence, or human disabled reason without falling back to raw command IDs, schema/route IDs, DOM labels, machine tokens, or developer jargon; dynamic pin/unpin and other changing states remain current. While Product Onboarding or Guided Tour is open, only anchors inside the active overlay may open tags. Pending or open tags outside it close, outside description nodes temporarily lose tooltip semantics and accessibility exposure, and their stable relationships restore when the overlay closes. Non-Retro entrance is the reference 240 ms translate/scale/fade; Retro uses 140 ms stepped motion with no scale; Reduced Motion is immediate. Glass follows live transparency while maintaining readable contrast. Initial and live census work is frame-bounded, performs one startup pass, and ignores exact old/current attribute reassertions while retaining every real semantic change, so unrelated application reconciliation cannot create a perpetual tooltip invalidation loop or steal Onboarding or Guided Tour's animation budget. Amended 2026-10-17 (DL-228): a tag never covers a primary action such as the chat's Send: it slides along its side or flips, and with no clear place it stays shut while its accessible description is still read. File references and tabs keep their path or name literally (a reference's tag is its path and line), the one exception to replacing paths, file names and host:port text with generic words. Focus the application moves, by an open, a reveal, a panel focus change or F6, opens no tag until the pointer reaches that control or focus moves on; the 1000 ms keyboard-focus tag is for focus the person moves with Tab or the arrows. Documented exemptions also include a picker plate (`menu`: its rows without their own label, Back and the search field already show their names; a row given its own hover label keeps its tag) and a Settings field whose label and help line sit beside it (`labelled-field`). DL-259 QA2 M2, 2026-10-31: technical-identifier candidacy requires a small element that actually presents the identifier, or an explicit technical-identifier declaration. Transcript, whole-message and card containers do not qualify merely because they carry internal identity, render, sort or scroll keys; such internal keys never create a technical tooltip target. An explicit technical declaration remains eligible, and a container’s own semantic control label may independently qualify it under this same shared controller. The origin word opens F3-670’s Details panel; it is visible and keyboard reachable without waiting for a hover tag. Hover help, labels, accessible descriptions and exact full paths keep the existing shared controller rules and FO-20 material. No new tooltip system or automatic theme write is introduced.
+  One shared hover-help overlay and controller render theme-native hover/focus help in a shared overlay root for every actionable or focusable control, truncated value, technical identifier, status, badge, chart mark, disabled control, and dynamic state such as pin/unpin, unless a documented static-copy or decorative exemption applies. A one-line tag has at least 24 px height, 8 px horizontal padding, and compact 12 px text; detailed tags emphasize line one and use 11 px explanatory text. Tags are at most 280 px wide, keep an 8 px anchor gap and 8 px viewport margin, center above, flip below, and clamp to every edge. Persistent accessible descriptions bind immediately, while the visible tag waits for deliberate intent: at least 1600 ms of pointer residence and 1100 ms of stationary intent within a 5 px radius, or 1000 ms of continuous keyboard focus. Pointer movement beyond that radius, target movement, pointer press, a scroll that moves the anchor, or departure before the thresholds resets or cancels the pending opening; pointer departure after opening uses a 160 ms grace period; Escape closes. A pointer press on an anchor closes its open tag, and that anchor's tag stays closed until the pointer leaves it (amended 2026-10-08, DL-145; scroll narrowed 2026-10-23, DL-232). Copy is concise, human, contextual, and consequence-first. It explains what the control does, its current state, shortcut, full value, consequence, or human disabled reason without falling back to raw command IDs, schema/route IDs, DOM labels, machine tokens, or developer jargon; dynamic pin/unpin and other changing states remain current. While Product Onboarding or Guided Tour is open, only anchors inside the active overlay may open tags. Pending or open tags outside it close, outside description nodes temporarily lose tooltip semantics and accessibility exposure, and their stable relationships restore when the overlay closes. Non-Retro entrance is the reference 240 ms translate/scale/fade; Retro uses 140 ms stepped motion with no scale; Reduced Motion is immediate. Glass follows live transparency while maintaining readable contrast. Initial and live census work is frame-bounded, performs one startup pass, and ignores exact old/current attribute reassertions while retaining every real semantic change, so unrelated application reconciliation cannot create a perpetual tooltip invalidation loop or steal Onboarding or Guided Tour's animation budget. Amended 2026-10-17 (DL-228): a tag never covers a primary action such as the chat's Send: it slides along its side or flips, and with no clear place it stays shut while its accessible description is still read. File references and tabs keep their path or name literally (a reference's tag is its path and line), the one exception to replacing paths, file names and host:port text with generic words. Focus the application moves, by an open, a reveal, a panel focus change or F6, opens no tag until the pointer reaches that control or focus moves on; the 1000 ms keyboard-focus tag is for focus the person moves with Tab or the arrows. Documented exemptions also include a picker plate (`menu`: its rows without their own label, Back and the search field already show their names; a row given its own hover label keeps its tag) and a Settings field whose label and help line sit beside it (`labelled-field`). DL-259 QA2 M2, 2026-10-31: technical-identifier candidacy requires a small element that actually presents the identifier, or an explicit technical-identifier declaration. Transcript, whole-message and card containers do not qualify merely because they carry internal identity, render, sort or scroll keys; such internal keys never create a technical tooltip target. An explicit technical declaration remains eligible, and a container’s own semantic control label may independently qualify it under this same shared controller. The origin word opens F3-670’s Details panel; it is visible and keyboard reachable without waiting for a hover tag. Hover help, labels, accessible descriptions and exact full paths keep the existing shared controller rules and FO-20 material. No new tooltip system or automatic theme write is introduced.
 gui_related: true
 gui_classification_reason: This unit owns the global tooltip overlay's paint, geometry, timing, and accessible attachment.
 split_recommended: false
@@ -935,17 +935,19 @@ acceptance_criteria:
   target. An explicit technical declaration remains eligible, and a container’s own semantic control label may independently
   qualify it under this same shared controller.'
 validation_surfaces:
-  - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (separate 1600 ms pointer-residence, 1100 ms stationary-intent, 5 px radius, 1000 ms visual-focus dwell, immediate accessible-description binding, and 160 ms departure-grace fields are required for current acceptance)"
-  - "Verify the F3-523 hover-tag census and pointer, keyboard, Escape, grace, collision, zoom, theme, transparency and reduced-motion acceptance."
+  - Plans/final_gui_interaction_contracts.schema.json
+  - Plans/final_gui_interaction_contract_fixtures.json
+  - future Verify the F3-523 hover-tag census and pointer, keyboard, Escape, grace, collision, zoom, theme, transparency and reduced-motion acceptance.
   - future hover census, pointer/keyboard/Escape/grace/collision/zoom/theme/transparency/reduced-motion tests
 risk_class: hover_overlay_accessibility_or_census_drift
 reasoning_tier: high
 context_scope: global_pm_hover_tag
 implementation_surfaces:
   - Plans/FinalGUISpec.md
-  - future native Slint PMHoverTag and HoverTagController components
+  - future native Slint shared hover-help overlay and controller components
 node_compile_hint: {mode: global_hover_tag_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): PMHoverTag and HoverTagController were concept hover-help component/controller names; attributeOldValue was browser observer plumbing. F3-523 specifies the shared overlay and controller by role, with typed anchors, accessibility bindings, dwell/cancellation and bounded work, not an implementation symbol."
 - Concepts/chat-assistant-concepts/5.6 Pro/PM_Chat_Assistant_5.6_Pro_Standalone.html
 - Concepts/pm7-tools/global_hover_tags_source.py
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/chatpip/REPORT.md — F5 candidate rule, 2026-10-31;
@@ -953,7 +955,22 @@ source_lineage:
   only.
 - /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
   /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F10
-preserved_exact_tokens: [PMHoverTag, HoverTagController, 24px, 8px, 12px, 11px, 280px, 1600 ms, 1100 ms, 5 px, 1000 ms, 160 ms, 240 ms, 140 ms, role=tooltip, aria-describedby, general.interaction.show-tooltips, attributeOldValue]
+preserved_exact_tokens:
+- "24 px"
+- "8 px"
+- "12 px"
+- "11 px"
+- "280 px"
+- "1600 ms"
+- "1100 ms"
+- "5 px"
+- "1000 ms"
+- "160 ms"
+- "240 ms"
+- "140 ms"
+- "role=tooltip"
+- "aria-describedby"
+- "general.interaction.show-tooltips"
 negative_constraints:
   - "Do not invent domain commands for opening, closing, or repositioning a hover tag; these are typed local UI actions."
   - "Do not remove accessible explanatory text when visual tooltips are disabled."
@@ -975,10 +992,10 @@ unit_type: acceptance_contract
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Settings, Doctor, Product Onboarding, Guided Tour, and PMHoverTag target Rust stable plus Slint 1.17.1.
+  Settings, Doctor, Product Onboarding, Guided Tour, and the shared hover-help overlay target Rust stable plus Slint 1.17.1.
   Settings binds the owner inventory and manager projections through stable typed models and variable-height
   virtualization; Doctor binds stable normalized finding IDs; Onboarding and Tour bind their owner state
-  machines; PMHoverTag binds typed anchor geometry, timers, hover/focus state, accessible description identity,
+  machines; the shared hover-help overlay binds typed anchor geometry, timers, hover/focus state, accessible description identity,
   and theme tokens. Essential behavior uses native properties, models, transforms, opacity, scale,
   clipping/masking, vector shapes, bounded timelines, and precomputed tokens/assets. PMConcept7
   HTML/JavaScript/localStorage, DOM selectors, CSS viewport logic, browser physics, Canvas/WebGL, arbitrary
@@ -1042,7 +1059,7 @@ canonical_text: >-
   roster/detail geometry, document/index/detail continuity, or responsive host behavior. Its detail uses calm
   progressive tabs for overview, update review, access/runtime bounds, and integrity/evidence. Compact cards
   show Plugins System owner facts rather than a copied runtime reducer. Every exact cmd.agent_plugin.* action is
-  focusable, PMHoverTag-described, theme-native across Basic, Friendly, Glass, and Retro light/dark, and visibly
+  focusable, described by F3-523’s shared hover help, theme-native across Basic, Friendly, Glass, and Retro light/dark, and visibly
   handler_unavailable until a native owner handler exists. Invoking an unavailable action opens one truthful
   bounded explanation without changing plugin fixture state, fabricating success, issuing a production receipt,
   or emitting an EventRecord. The Doctor projects eight separate Plugins System findings and returns to the
@@ -1057,7 +1074,7 @@ acceptance_criteria:
   - "K3 geometry remains within the frozen manifest; only plugin detail content, owner-action chrome, theme paint, hover overlay, and named mild chrome adaptations differ."
   - "Overview separates package/plugin identities, three generations, manifest lane, required/optional component state, adapter round trips, conformance, and freshness."
   - "Update, Access, and Integrity tabs progressively disclose complete diff/reapproval/rollback, permissions/containment/runtime bounds, and supply-chain/bounded-evidence facts without a dense configuration wall."
-  - "The exact twelve command controls expose handler_unavailable, a human disabled reason, typed PluginCommandResult, receipt-only/no-EventRecord policy, stable accessible name, and PMHoverTag consequence text."
+  - "The exact twelve command controls expose handler_unavailable, a human disabled reason, typed PluginCommandResult, receipt-only/no-EventRecord policy, stable accessible name, and shared hover-help consequence text."
   - "Legacy generic Add/Edit/Test/More, Permissions, Discover, and Remove paths fail closed for plugins and cannot mutate the concept fixture."
   - "Pointer, keyboard, narrow widths, all ten themes, full/Reduced Motion, hover/focus help, Doctor routing, and no-state-change assertions pass in the browser concept; results remain non-native evidence."
   - "The consolidated final film includes the Plugins owner projection, all four progressive detail tabs, one truthful handler-unavailable command path, and an exact Doctor-to-Plugins return route without promoting the recording to native or runtime proof."
@@ -1082,7 +1099,18 @@ source_lineage:
   - Plans/Plugins_System.md#PLUG-070
   - Plans/Settings_System.md#SSYS-024
   - Plans/newtools.md#N2-154
-preserved_exact_tokens: [250 px, 62 px, plugin.json, pm-plugin.json, cmd.agent_plugin, handler_unavailable, PluginCommandResult, EventRecord, PMHoverTag, Basic, Friendly, Glass, Retro, Reduced Motion]
+preserved_exact_tokens:
+- "250 px"
+- "62 px"
+- "cmd.agent_plugin"
+- "handler_unavailable"
+- "PluginCommandResult"
+- "EventRecord"
+- "Basic"
+- "Friendly"
+- "Glass"
+- "Retro"
+- "Reduced Motion"
 negative_constraints:
   - "Do not create a second Plugins System owner, package reducer, permission reducer, update engine, runtime manager, or Doctor repair path in the GUI."
   - "Do not replace K3 geometry with cards, a new sidebar, a full-page plugin surface, Back chrome, or breadcrumbs."

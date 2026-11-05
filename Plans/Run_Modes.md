@@ -192,7 +192,7 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractNa
 
 | Cap | Default | Scope | Kill / behavior |
 |---|---|---|---|
-| `max_concurrent_crews_per_platform` | 4 | Per provider platform | New crew spawn requests queue until a slot is free. |
+| `max_concurrent_crews_per_platform` | 4 | Per provider platform | New crew spawn requests queue until a slot is free. A waiting start is a child in the `queued` state, not a separate request record (DL-088). |
 | `max_concurrent_agents_per_crew` | 8 | Per active crew context | Reviewer or worker spawns queue rather than widening the limit. |
 | `max_total_active_agents` | 32 | Entire run | Global cap across all crews and direct child agents. |
 
@@ -1933,9 +1933,8 @@ acceptance_criteria:
 - A saved Ask me first or task/scope Stop/pause blocks delayed YOLO work; direct-user exceptions preserve
   the pause record and unrelated latches.
 validation_surfaces:
-- 'Phase 2: owner/companion semantic fixtures and exact positive/negative checks in D-requests.md.'
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F deliverable; not run in phase 1).'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate; static success is not native execution proof.'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: authority_scope_and_target_drift
 reasoning_tier: high
 context_scope: project_refresh_permissions_and_automation

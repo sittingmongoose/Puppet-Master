@@ -477,7 +477,11 @@
   }
 
   function activeThread() { return state.threads.find(t => t.id === state.selectedThread) || state.threads[0]; }
-  function selectedModel() { return D.models.find(m => m.id === state.model) || D.models[0]; }
+  function selectedModel() {
+    const models = configuredModels();
+    return models.find(m => m.id === state.model) || models[0] ||
+      { id: '', name: 'No AI connected', provider: '', account: '', accountId: '', efforts: [], fast: false };
+  }
   function workStep() { return D.workSteps[clamp(state.work.step,0,D.workSteps.length-1)]; }
   /* hosted: History pins beside the messages from a 560 px column (a 360 px message area and the 200 px drawer) */
   function isNarrow() { return HOSTED ? HOST.width() < 560 : window.innerWidth < 821; }
@@ -4779,6 +4783,19 @@ suggested path                    migration 0043, reversible</div></div></sectio
     renderApp();
   }
 
+  // Demo actions share the module chains with real gallery controls. Their origin
+  // is explicit; callers pass values rather than creating a hidden DOM control.
+  function runDemoAction(action, data, button, event){
+    const values=Object.fromEntries(Object.entries(data||{}).map(([k,v])=>[k,String(v)]));
+    values.action=action;
+    const control=button||{dataset:values};
+    if(action!=='reset-all') window.PM56_RECPLAY?.stopAll('another example');
+    if(extRun(action,control,event,{demo:true})) return true;
+    if(action==='reset-all'){globalReset();return true;}
+    if(action==='demo-trigger'){runDemoTrigger(values.trigger||'');return true;}
+    return extRunAfter(action,control,event,{demo:true});
+  }
+
   /* F0b: the clicked menu row's rect, written on #pmOverlayRoot BEFORE any action runs
      closeMenu() (DESIGN-SPEC 4.5 origin, brief D.5). A sheet opened from the wand grows from
      that row; pmx-system.css reads --pmx-from-x/-y (the row's centre) and -w/-h. This also
@@ -4827,6 +4844,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
     if(!btn){if(state.menu&&!e.target.closest('.overlay-menu,.lens-dock'))closeMenu();return;}
     const a=btn.dataset.action;
     if(!acked&&holdForAck(e,btn,a)) return;
+    if(btn.closest('.demo-dialog')&&(btn.classList.contains('demo-trigger')||a==='reset-all')){runDemoAction(a,btn.dataset,btn,e);return;}
     /* Stop (send-stop.js): the second click of a double-click on Send lands on the Stop it became, so a click with
        detail > 1 is never a stop (a time window would also swallow a fast deliberate stop); a stop-run click is the
        one "stopped" signal (a turn, goal or plan that ends any other way has "finished"). Before the module actions,
@@ -5604,6 +5622,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
       render:()=>renderApp(), renderOverlays:()=>renderOverlays(), savePrefs:()=>savePrefs(),
       openEditor:(id,o)=>openEditor(id,o), closeEditor:(id)=>closeEditor(id),
       editorTabLabel:(id)=>editorTabLabel(id), renderEditorBodyFor:(id)=>renderEditorBodyFor(id),
+      demoAction:(action,data)=>runDemoAction(action,data),
       demoTriggerGroups:()=>demoTriggerGroups(), demoFamilies:families,
       activeThread:()=>activeThread(), switchThread:(id)=>switchThread(id), compose:hostedCompose, reveal:hostedReveal,
       closeMenu:()=>closeMenu(), openMenu:(t,a,x)=>openMenu(t,a,x), toast:(t,d)=>toast(t,d),

@@ -56,7 +56,7 @@ The normative model is not a Phase/Task/Subtask/Iteration hierarchy and does not
 ### Application-Level Rules (Puppet Master)
 - **Scope:** every agent run under Puppet Master, regardless of whether the work is Assistant, Interview, Orchestrator, or a delegated child run
 - **Purpose:** global policies that apply everywhere
-- **Storage:** owner record `app.agent_rules.application_markdown` at the Everywhere home, with applicable Computer application context and source revisions; F binds exact scope-aware storage refs without a second rule writer
+- **Storage:** owner record `app.agent_rules.application_markdown` at the Everywhere home, with applicable Computer application context and source revisions; the storage owner binds exact scope-aware storage refs without a second rule writer
 - **Bootstrap:** if empty, seed from the Puppet Master repo `AGENTS.md`
 
 ### Project-Level Rules

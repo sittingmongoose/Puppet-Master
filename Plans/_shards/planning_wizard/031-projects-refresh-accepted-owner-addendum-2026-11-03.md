@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L3925-L4059
+Source lines: L3926-L4057
 
-Source SHA256: `cf42e4927a229ccf6cb92a3e5dc034396c6b106366b4099bfc22a0fb450c88f6`
+Source SHA256: `79283d3bca2817d9938a91ae294e40f949d206dc26b3a19dc7ed8207ab30f276`
 
 ---
 
@@ -63,11 +63,8 @@ acceptance_criteria:
   SSH prerequisites use the exact Server request/result and captured return context; changed fingerprints, stale key/target, weak keys, uncertain installs and missing handlers cannot be rendered trusted or installed.
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
-- Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandRequestV1
-- Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandResultV1
-- Plans/server_system_contracts.schema.json#/$defs/SshPublicKeyInstallCommandRequestV1
-- Plans/server_system_contracts.schema.json#/$defs/SshPublicKeyInstallCommandResultV1
-- F companion positive/negative semantic fixtures; not_run in phase 1
+- Plans/server_system_contracts.schema.json
+- scripts/pm-projects-refresh-contracts.py
 risk_class: identity_authority_or_false_completion
 reasoning_tier: high
 context_scope: projects_refresh_pwiz_037

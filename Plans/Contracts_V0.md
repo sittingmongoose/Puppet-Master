@@ -1468,7 +1468,7 @@ Batch web operations preserve one parent audit event for the batch and child aud
 
 #### Runtime snapshot and tool/chat payloads
 
-Tool payloads consumed by storage, tools, and chat carry `runtime_snapshot`, `task_id`, `subagent_type`, `resumed`, `chat.plan_todo_updated`, `/turn`, `/todo`, and `/tokens` when those fields participate in runtime or chat projection. Subagent lifecycle payloads use the canonical `subagent.*` event family without a `chat.` prefix: legacy `chat.subagent_*`, `chat.subagent_`, and `chat.subagent_spawned` references are retired aliases and normalize to `subagent.*`. Producer-specific request/completion names such as `subagent.spawn_requested` and `subagent.spawn_completed` preserve the same PM lineage envelope as `subagent.spawned` and `subagent.completed` instead of creating a parallel chat namespace. The PM lineage envelope includes `run_id`, `thread_id`, `agent_id`, `parent_run_id?`, `child_run_id?`, `parent_thread_id?`, and requested/effective runtime descriptors when they differ. Runtime snapshot fields remain cross-cutting payload extensions rather than local tool-result decorations.
+Tool payloads consumed by storage, tools, and chat carry `runtime_snapshot`, `task_id`, `subagent_type`, `resumed`, `chat.plan_todo_updated`, `/turn`, `/todo`, and `/tokens` when those fields participate in runtime or chat projection. Subagent lifecycle payloads use the canonical `subagent.*` event family without a `chat.` prefix: legacy `chat.subagent_*`, `chat.subagent_`, and `chat.subagent_spawned` references are retired aliases and normalize to `subagent.*`. Puppet Master does not record a request to start a subagent separately from the subagent it creates (DL-088): a start that has to wait is a child in the `queued` state, and a start refused for budget before any child exists keeps its existing outcome reason in the orchestrator. The PM lineage envelope includes `run_id`, `thread_id`, `agent_id`, `parent_run_id?`, `child_run_id?`, `parent_thread_id?`, and requested/effective runtime descriptors when they differ. Runtime snapshot fields remain cross-cutting payload extensions rather than local tool-result decorations.
 
 The historical `chat.plan_todo_updated` payload shape is `{ plan_id: string, todo_id: string, field: string, old_value: any, new_value: any, source: "agent" | "user" }` for durable TODO mutations. These historical fields remain readable under TDR-012; future structural changes use its individually mapped events only after admission. The legacy shape does not authorize new appends or supply current revision/work evidence.
 
@@ -2987,7 +2987,7 @@ For every `subagent.*` event below, the payload MUST preserve the PM lineage env
 - `parent_thread_id?`
 - requested and effective runtime descriptors when they differ
 
-The same lineage envelope applies to `subagent.spawn_requested` and `subagent.spawn_completed` when a dispatcher distinguishes request lifecycle from child-run creation and terminal completion. These names remain under `subagent.*`; `chat.subagent_*` and `chat.subagent_spawned` are legacy source aliases only.
+No start-request lifecycle shares this envelope: a start that has to wait is already a child in the `queued` state, so no request is recorded apart from the child (DL-088). Subagent events remain under `subagent.*`; `chat.subagent_*` and `chat.subagent_spawned` are legacy source aliases only.
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Run_Modes.md
 
@@ -3055,7 +3055,9 @@ Coordination consumers use `coordination_agent_projection.v1:{project_id}:{agent
 
 ContractRef: ContractName:Plans/storage-plan.md#Coordination-record-projection-and-mirror-export-families, ContractName:Plans/orchestrator-subagent-integration.md#Canonical-active-agent-coordination-records-and-projections
 
-For every `crew.*` event below, the payload MUST preserve crew and child lineage together:
+Amended 2026-11-04 (DL-087): the six crew lifecycle events `crew.formed`, `crew.member_added`, `crew.member_removed`, `crew.coordination`, `crew.completed` and `crew.disbanded` are retired, their rows are removed from the table below, and CV-271 is retired. A Crew run is recorded only by the history that all collaborative workflows share (`Plans/Collaborative_Workflows.md`), and Crew keeps no second lifecycle history. Until the shared collaborative workflow events are registered (DL-090), a Crew run has no registered record of its own start, finish or cancellation, only its members' child-run histories (DL-084) and the crew board (DL-085). The three crew board events are not part of this retirement (DL-085).
+
+For every `crew.*` board event below, the payload MUST preserve crew and child lineage together:
 - `run_id`
 - `thread_id`
 - `crew_id`
@@ -3067,15 +3069,9 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/orc
 
 | event_type | payload_fields | description |
 |---|---|---|
-| `crew.formed` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `member_agent_ids[]`, `purpose` | Crew created. |
-| `crew.member_added` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `agent_id`, `role` | Member joined. |
-| `crew.member_removed` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `agent_id`, `reason` | Member left. |
-| `crew.coordination` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `coordination_type`, `details` | Inter-agent coordination. |
 | `crew.board_message_posted` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `message_id`, `from_agent_id`, `to_agent_id?`, `to_agent_type?`, `subject`, `priority` | Attributable crew-board message posted. |
 | `crew.board_message_read` | `run_id`, `thread_id`, `crew_id`, `message_id`, `agent_id`, `read_at_utc` | Crew-board message read receipt. |
 | `crew.board_messages_archived` | `run_id`, `thread_id`, `crew_id`, `archived_before_utc`, `message_ids[]?`, `archive_reason` | Crew-board messages archived by retention policy. |
-| `crew.completed` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `result_summary`, `duration_ms` | Crew finished. |
-| `crew.disbanded` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `reason` | Crew dissolved. |
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
 
@@ -9009,8 +9005,10 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   Subagent lifecycle payloads use the canonical subagent.* event family without
-  a chat. prefix, and request/completion variants preserve the same PM lineage
-  envelope instead of creating a parallel chat namespace.
+  a chat. prefix instead of creating a parallel chat namespace, and carry the PM
+  lineage envelope. Amended 2026-11-04 (DL-088): no separate request or
+  completion variant is recorded for starting a subagent; a start that has to
+  wait is a child in the queued state.
 gui_related: false
 gui_classification_reason: This unit defines runtime event namespace compatibility for subagents.
 split_recommended: true
@@ -9019,7 +9017,6 @@ unblocks: []
 acceptance_criteria:
   - subagent.* remains the canonical subagent lifecycle event family.
   - Legacy chat.subagent_* aliases normalize to subagent.*.
-  - subagent.spawn_requested and subagent.spawn_completed preserve the same PM lineage envelope as subagent.spawned and subagent.completed.
   - PM lineage envelope fields include run_id, thread_id, agent_id, parent_run_id?, child_run_id?, parent_thread_id?, and requested/effective runtime descriptors.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -9036,13 +9033,12 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0042
+  - Plans/Decision_Log.md#DL-088 (amendment of 2026-11-04, Jared's answer of 2026-09-25)
 preserved_exact_tokens:
   - "`subagent.*`"
   - "`chat.subagent_*`"
   - "`chat.subagent_`"
   - "`chat.subagent_spawned`"
-  - "`subagent.spawn_requested`"
-  - "`subagent.spawn_completed`"
   - "`run_id`"
   - "`agent_id`"
   - "`parent_run_id?`"
@@ -9051,6 +9047,9 @@ compatibility_only_notes:
   - "legacy chat.subagent_* aliases normalize to subagent.*."
 negative_constraints:
   - "Subagent lifecycle payloads must not create a parallel chat namespace."
+  - "Do not record a request to start a subagent apart from the child it creates (DL-088)."
+stale_retired_dispositions:
+  - "Amended 2026-11-04 (DL-088): the two start-request names and their criterion are removed; a start that has to wait is a queued child, and a start refused for budget before any child exists keeps its orchestrator outcome reason."
 owner_hints:
   - Plans/Contracts_V0.md
 ```
@@ -16570,9 +16569,9 @@ owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   Stable subagent.* event families preserve the PM lineage envelope with run,
   thread, agent, parent, child, parent-thread, and requested/effective runtime
-  descriptor fields; subagent.spawn_requested and subagent.spawn_completed
-  remain under subagent.*, while chat.subagent_* and chat.subagent_spawned are
-  legacy source aliases only.
+  descriptor fields, while chat.subagent_* and chat.subagent_spawned are legacy
+  source aliases only. Amended 2026-11-04 (DL-088): no start-request lifecycle
+  shares the envelope; a start that has to wait is a child in the queued state.
 gui_related: false
 gui_classification_reason: This unit defines runtime lineage and event alias boundaries.
 split_recommended: false
@@ -16580,7 +16579,6 @@ depends_on: [CV-256]
 unblocks: [CV-267, CV-268, CV-269]
 acceptance_criteria:
   - "Every subagent.* event preserves the PM lineage envelope."
-  - "subagent.spawn_requested and subagent.spawn_completed remain under subagent.*."
   - "chat.subagent_* and chat.subagent_spawned remain legacy source aliases only."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -16599,6 +16597,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0115
+  - Plans/Decision_Log.md#DL-088 (amendment of 2026-11-04, Jared's answer of 2026-09-25)
 preserved_exact_tokens:
   - "`subagent.*`"
   - "`run_id`"
@@ -16607,8 +16606,6 @@ preserved_exact_tokens:
   - "`parent_run_id?`"
   - "`child_run_id?`"
   - "`parent_thread_id?`"
-  - "`subagent.spawn_requested`"
-  - "`subagent.spawn_completed`"
   - "`chat.subagent_*`"
   - "`chat.subagent_spawned`"
   - "ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md"
@@ -16617,6 +16614,8 @@ compatibility_only_notes:
   - "chat.subagent_* and chat.subagent_spawned are legacy source aliases only."
 negative_constraints:
   - "Child identity and lineage are not optional metadata for subagent.* events."
+stale_retired_dispositions:
+  - "Amended 2026-11-04 (DL-088): the two start-request names, their clause in the canonical text and their criterion are removed; the lineage envelope sentence keeps its chat.subagent_* alias clause."
 owner_hints:
   - Plans/Contracts_V0.md
   - Plans/orchestrator-subagent-integration.md
@@ -16774,17 +16773,20 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  Every crew.* event preserves crew and child lineage together, including
-  run_id, thread_id, crew_id, optional parent_run_id, optional child_run_id, and
-  member_agent_ids when membership matters.
+  Every crew.* board event (crew.board_message_posted, crew.board_message_read
+  and crew.board_messages_archived) preserves crew and child lineage together,
+  including run_id, thread_id, crew_id, optional parent_run_id, optional
+  child_run_id, and member_agent_ids when membership matters. Amended 2026-11-04
+  (DL-087): narrowed to the three crew board events; the six crew lifecycle
+  events are retired with CV-271.
 gui_related: false
 gui_classification_reason: This unit defines crew runtime event lineage fields.
 split_recommended: false
 depends_on: [CV-256]
 unblocks: [CV-271]
 acceptance_criteria:
-  - "Every crew.* event preserves run_id, thread_id, crew_id, parent_run_id, child_run_id, and member_agent_ids where relevant."
-  - "Crew and child lineage remain linked in crew events."
+  - "Every crew.* board event preserves run_id, thread_id, crew_id, parent_run_id, child_run_id, and member_agent_ids where relevant."
+  - "Crew and child lineage remain linked in crew board events."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -16801,6 +16803,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0115
+  - Plans/Decision_Log.md#DL-087 (amendment of 2026-11-04, Jared's words of 2026-09-25)
 preserved_exact_tokens:
   - "`crew.*`"
   - "`crew_id`"
@@ -16808,6 +16811,8 @@ preserved_exact_tokens:
   - "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/orchestrator-subagent-integration.md"
 negative_constraints:
   - "Crew event payloads must not drop child lineage when membership matters."
+stale_retired_dispositions:
+  - "Amended 2026-11-04 (DL-087): narrowed from every crew.* event to the three crew board events, since the six crew lifecycle events are retired."
 owner_hints:
   - Plans/Contracts_V0.md
   - Plans/assistant-chat-design.md
@@ -16819,20 +16824,24 @@ owner_hints:
 ```yaml
 plan_unit_id: CV-271
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  Crew event-family rows and payloads are preserved for crew.formed,
-  crew.member_added, crew.member_removed, crew.coordination, crew.completed,
-  and crew.disbanded.
+  CV-271 is retired by DL-087 (amendment of 2026-11-04). The six crew lifecycle
+  events crew.formed, crew.member_added, crew.member_removed, crew.coordination,
+  crew.completed and crew.disbanded are retired and their rows are removed from
+  the crew event table. A Crew run is recorded only by the history that all
+  collaborative workflows share (Plans/Collaborative_Workflows.md), and Crew
+  keeps no second lifecycle history. The ID remains only for historical
+  references; it defines no event family, payload or test obligation.
 gui_related: false
 gui_classification_reason: This unit defines crew runtime event table rows.
 split_recommended: false
 depends_on: [CV-270]
 unblocks: []
 acceptance_criteria:
-  - "crew.formed, crew.member_added, crew.member_removed, crew.coordination, crew.completed, and crew.disbanded remain stable event families."
-  - "Each event row preserves its source payload field list and description."
+  - "The crew event table carries no crew lifecycle row; its rows are the three crew board events."
+  - "No consumer cites CV-271 as authority for an event family, payload or test."
   - "The final storage-plan and Run_Modes ContractRef is preserved."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -16845,10 +16854,12 @@ implementation_surfaces:
   - Plans/storage-plan.md
   - Plans/Run_Modes.md
 node_compile_hint:
-  mode: crew_event_family_table
+  mode: retired_crew_lifecycle_event_table
   create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0115
+  - Plans/Decision_Log.md#DL-087 (amendment of 2026-11-04, Jared's words of 2026-09-25)
 preserved_exact_tokens:
   - "`crew.formed`"
   - "`crew.member_added`"
@@ -16857,7 +16868,10 @@ preserved_exact_tokens:
   - "`crew.completed`"
   - "`crew.disbanded`"
   - "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md"
-negative_constraints: []
+negative_constraints:
+  - "Do not reintroduce the six crew lifecycle events or a second Crew lifecycle history (DL-087)."
+stale_retired_dispositions:
+  - "Amended 2026-11-04 (DL-087): retired; the six crew lifecycle rows are removed from the crew event table."
 owner_hints:
   - Plans/Contracts_V0.md
   - Plans/storage-plan.md
@@ -20296,7 +20310,7 @@ unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: |-
-  Contracts_V0 defines FileSafe fail-closed security EventRecord payloads for filesafe.guard_init_failed, filesafe.command_denied, filesafe.path_denied, filesafe.destructive_override_requested, filesafe.destructive_override_granted, filesafe.destructive_override_denied, and filesafe.policy_degraded. The payloads preserve guard type, denial/diagnostic codes, normalized command/path identity, permission and FileSafe scope refs, project/run/worktree scope, authenticated operator override request/grant/denial fields, expiry, receipt refs, event refs, and redaction posture. policy_degraded is limited to non-authoritative/advisory degradation or embedded fallback use where fail-closed enforcement remains intact. App FileSafe/ChatToolApproval uses D’s PS-145/F2-213 and CV-366’s explicit successor envelopes with real Host/absolute root/thread/run evidence. Preserve exact Project security payloads and all fail-closed rules; approval.chat_tool_requested/resolved do not reuse Orchestrator node/blocked_sequence payloads with null fields.
+  Contracts_V0 defines FileSafe fail-closed security EventRecord payloads for filesafe.guard_init_failed, filesafe.command_denied, filesafe.path_denied, filesafe.destructive_override_requested, filesafe.destructive_override_granted, filesafe.destructive_override_denied, and filesafe.policy_degraded. The payloads preserve guard type, denial/diagnostic codes, normalized command/path identity, permission and FileSafe scope refs, project/run/worktree scope, authenticated operator override request/grant/denial fields, expiry, receipt refs, event refs, and redaction posture. policy_degraded is limited to non-authoritative/advisory degradation or embedded fallback use where fail-closed enforcement remains intact. Application FileSafe uses F2-213’s authenticated scope-bound owner operation/override receipts with real Host/absolute root/thread/run evidence; CV-366 defines no filesafe.* application EventRecord successor. These unregistered app security events remain missing_event_registration/non-emitting until separate Event Authority admission and full owner adoption, and unavailable durable receipt custody fails closed. ChatToolApproval separately uses PS-145/CV-366’s approval.chat_tool_requested and approval.chat_tool_resolved payloads registered by DL-300, retaining requires_owner_adoption for app producers. Preserve exact historical Project security payloads and all fail-closed rules; chat-tool approvals do not reuse Orchestrator node/blocked_sequence payloads with null fields.
 gui_related: false
 gui_classification_reason: This unit defines security event payload contracts, not visual presentation.
 depends_on: [CV-309, CV-081, F2-199]
@@ -20308,9 +20322,8 @@ acceptance_criteria:
   - Destructive override requires authenticated operator identity, auth realm, reason, scope, expiry, event refs, and receipt fields.
   - policy_degraded is not used when authoritative allowlist, baseline, root, canonical path, or override authority is absent.
 validation_surfaces:
-  - python3 scripts/pm-plans-verify.py validate-filesafe-security-policy
-  - python3 scripts/pm-plan-index.py validate
-  - python3 scripts/pm-plans-verify.py run-gates
+  - scripts/pm-plans-verify.py
+  - scripts/pm-plan-index.py
 risk_class: filesafe_event_payload_drift
 reasoning_tier: high
 context_scope: filesafe_fail_closed_security_repair
@@ -21592,7 +21605,7 @@ owner_hints:
 
 ## Compaction completion envelope consumer (DL-039 and DL-040)
 
-`context.compaction.completed` uses the existing closed `EventRecord` envelope `pm.event.v0@2.0.0`; ACD-461 owns the event meaning and closed payload, SP-259 owns persistence/registry/retention, and SIR-038 owns its exact shared replay binding. The original payload edition remains Project-only with exact payload/envelope Project/thread equality. CV-366/SP-349 select the separate app payload/source edition with null Project, real Server/thread equality and its full append/read/custody graph. Both use `dedupe_by_idempotency_key` and inline `payload_ref=null`; no historical byte or digest is reinterpreted. It is a commit marker and bounded content-free audit receipt projection, not a second transcript or detailed CompactionReceipt schema. No started/failed family, legacy alias or new envelope field is introduced. SP-259 supplies the exact ID derivations and producer semantic-digest inputs remain the existing EventRecord rule.
+`context.compaction.completed` uses the existing closed `EventRecord` envelope `pm.event.v0@2.0.0`; ACD-461 owns the event meaning and closed payload, SP-259 owns persistence/registry/retention, and SIR-038 owns its exact shared replay binding. The original payload edition remains Project-only with exact payload/envelope Project/thread equality. CV-366/SP-349 retain a separately specified app payload/source candidate with null Project and actual Server/thread equality; it is not an admitted EventRecord edition. The registry remains `project_only`, DL-300 grants no app compaction edition, and app emission stays `missing_event_registration`/non-emitting until separate Event Authority admission and complete owner adoption. App owner operation/result receipts cannot enter the Project event checkpoint. The admitted Project event uses `dedupe_by_idempotency_key` and inline `payload_ref=null`; no historical byte or digest is reinterpreted. It is a commit marker and bounded content-free audit receipt projection, not a second transcript or detailed CompactionReceipt schema. No started/failed family, legacy alias or new envelope field is introduced. SP-259 supplies the exact ID derivations and producer semantic-digest inputs remain the existing EventRecord rule.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-461, ContractName:Plans/storage-plan.md#SP-259, ContractName:Plans/Shared_Integration_Runtime.md#SIR-038, SchemaID:pm.event.v0, SchemaID:pm.context_compaction_completed.schema.v1
 ### CV-329 - Compaction Completion Envelope Consumer
@@ -21603,7 +21616,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: |-
-  Compaction completion consumes the existing EventRecord v2 envelope and its scoped idempotency contract; Assistant Chat and Storage retain event payload, binding, retention and admission authority. For an owner-admitted app feature, CV-365/366 selects explicit application scope and the exact application envelope/source/physical-key/append/read/retention graph; required-present project_id is null and actual thread/Server/Host/root identities remain. Original Project resources and historical policy/receipts stay exact. This adds no app PRD/PlanningRun/WorkNode or Project-native SCM authority, no global nullable rewrite and no ambient cross-Project merge. Compaction has an application sibling under CV-366/SP-349; this unit, not CV-334, is the envelope consumer.
+  Project compaction completion consumes the existing EventRecord v2 envelope and its scoped idempotency contract; Assistant Chat and Storage retain event payload, binding, retention and admission authority. context.compaction.completed remains project_only in the registry and DL-300 grants no app edition. CV-366/SP-349 retain a separately specified application payload/source candidate, not an admitted event sibling. App operation/result receipts keep null project_id and actual thread/Server/Host/root identities without entering this Project event append/replay/checkpoint. App event emission remains missing_event_registration/non-emitting until separate Event Authority admission and complete payload/source/append/read/retention adoption; missing durable owner receipt/source custody is unavailable. Original Project resources and historical policy/receipts stay exact. This adds no app PRD/PlanningRun/WorkNode or Project-native SCM authority, no global nullable rewrite and no ambient cross-Project merge. This unit, not CV-334, remains the compaction envelope consumer.
 gui_related: false
 gui_classification_reason: This unit defines persisted-event contracts and owner boundaries.
 depends_on: []
@@ -24016,9 +24029,9 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: |-
   WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage §2.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.
-  CV-169’s reconciled route vocabulary includes application. App routes, WebSocket identity, permission and payload contexts bind exact scope/object/Server and issued currentness/return. Conversion reissues destination auth/route/permission rather than reusing source capability. Default/Computer Settings, settings.follow and client reachability grant no Project/content/execution authority. B’s explicit projects.* reads use current source-Computer access and coverage; actual Project writes use that Project’s chat/owner/conversion.
+  CV-169’s reconciled route vocabulary includes application. App routes, WebSocket identity, permission and payload contexts bind exact scope/object/Server and issued currentness/return. Conversion reissues destination auth/route/permission rather than reusing source capability. Default/Computer Settings, settings.follow and client reachability grant no Project/content/execution authority. Explicit projects.* reads owned by Plans/Tools.md and Plans/Permissions_System.md use current source-Computer access and coverage; actual Project writes use that Project’s chat/owner/conversion.
   Thread preview is a typed local draft projection: ui.thread.request.preview and ui.thread.spawn.preview, not new domain commands or fresh authority. Send reuses the registered cmd.thread.request -> handlers::thread::request and cmd.thread.spawn -> handlers::thread::spawn; cmd.thread.await retains its existing wait owner and adds the explicitly selected ThreadAwaitRequestScopeV2/ThreadAwaitResultScopeV2 compatibility union. The proposed cmd.thread.request.preview/send and cmd.thread.spawn.preview/send spellings are rejected duplicates, not aliases. New ThreadRequestFacadeRequestV2/ResultV2 and ThreadSpawnFacadeRequestV2/ResultV2 live at Plans/application_workflow_contracts.schema.json#/$defs/<name>, each logical pm.thread.<request|spawn>.facade_<request|result>.v2 version 2.0.0. Legacy requests retain their exact interpretation; the new send variants are explicit schema/version selectors and do not add operation=preview.
-  A preview binds sender scope/thread/Computer/mode and receiver scope/thread or bounded requested child role, exact bounded body/context ref+hash, parent Goal/Plan/run/agent lineage, request/spawn id, permission ceiling, target/topology/body generations, automatic_round_trip_count, offline expiry and origin return. Keep protected input/credential bytes out. preview_sha256 uses CV-366’s thread-preview domain; expires_at and the captured revisions make stale state explicit. Result display is truthful draft/as-of state, not an allow receipt. Send revalidates actual source/target/mode/Off/permission/Stop/body/preview/currentness immediately before the one durable outbox commit. Request uses request_id, spawn uses spawn_request_id; conflicting same identity/digest refuses, duplicate same intent returns the original continuity result. No new conversation transport, branch command or queue is created. Incoming receiver-owned accept/decline uses C’s commands; sender authority never changes receiver mode or answers its retained approvals. Three automatic round trips and one-day offline expiry remain. Return preserves exact request/child/target/initiating Client, route/focus/context revision and continuation generation. Preview is no-persist/no EventRecord; Send keeps existing continuity/outbox result and no EventRecord pending Event Authority. Handler absence remains handler_unavailable. The local preview envelope defs ThreadFacadePreviewLocalActionRequestV2 and ThreadFacadePreviewLocalActionResultV2 also live in the new app resource; logical IDs are pm.thread.facade_preview.local_request.v2 and pm.thread.facade_preview.local_result.v2, both 2.0.0. No facade or ScopeV2 alias is added inside full_thread_runtime_contracts.schema.json or goal_runtime_contracts.schema.json or goal_body_custody.schema.json: their whole bytes are selected by ten frozen source manifests. General aggregate companions not selected whole by a frozen bank may add $ref aliases while retaining original definitions; any selected-whole aggregate uses a new-resource alias instead. Pure conversation/internal planning carries an explicit empty admitted-root set and null working_directory until an actual file/command creates the lazy folder or a directory grant supplies a root. Null cwd never launches a process or triggers HOME/CWD/Project fallback.
+  A preview binds sender scope/thread/Computer/mode and receiver scope/thread or bounded requested child role, exact bounded body/context ref+hash, parent Goal/Plan/run/agent lineage, request/spawn id, permission ceiling, target/topology/body generations, automatic_round_trip_count, offline expiry and origin return. Keep protected input/credential bytes out. preview_sha256 uses CV-366’s thread-preview domain; expires_at and the captured revisions make stale state explicit. Result display is truthful draft/as-of state, not an allow receipt. Send revalidates actual source/target/mode/Off/permission/Stop/body/preview/currentness immediately before the one durable outbox commit. Request uses request_id, spawn uses spawn_request_id; conflicting same identity/digest refuses, duplicate same intent returns the original continuity result. No new conversation transport, branch command or queue is created. Incoming receiver-owned accept/decline uses the existing commands owned by Plans/Commands_System.md; sender authority never changes receiver mode or answers its retained approvals. Three automatic round trips and one-day offline expiry remain. Return preserves exact request/child/target/initiating Client, route/focus/context revision and continuation generation. Preview is no-persist/no EventRecord; Send keeps existing continuity/outbox result and no EventRecord pending Event Authority. Handler absence remains handler_unavailable. The local preview envelope defs ThreadFacadePreviewLocalActionRequestV2 and ThreadFacadePreviewLocalActionResultV2 also live in the new app resource; logical IDs are pm.thread.facade_preview.local_request.v2 and pm.thread.facade_preview.local_result.v2, both 2.0.0. No facade or ScopeV2 alias is added inside full_thread_runtime_contracts.schema.json or goal_runtime_contracts.schema.json or goal_body_custody.schema.json: their whole bytes are selected by ten frozen source manifests. General aggregate companions not selected whole by a frozen bank may add $ref aliases while retaining original definitions; any selected-whole aggregate uses a new-resource alias instead. Pure conversation/internal planning carries an explicit empty admitted-root set and null working_directory until an actual file/command creates the lazy folder or a directory grant supplies a root. Null cwd never launches a process or triggers HOME/CWD/Project fallback.
   Application-only logical codecs constrain WorkflowScopeV2 to scope_kind=application, including schedule, quota consent, artifact, Home and Goal payload siblings. A physical wrapper joins its complete scope, server_id and storage_instance_id to the corresponding logical fields or application_context; individually valid but different outer/inner identities refuse before custody or dispatch. Project codecs remain separate.
   ThreadAwaitRequestApplicationV2 binds actual app sender context, original request_id/await_request_id, exact receiver scope/thread/generation, condition, expiry, outbox evidence and reply route without Project Home Server or Source Location placeholders. Its result preserves those joins and the existing ordered reply sequence, expiry, cancellation and idempotent wait identity. ThreadAwaitRequestScopeV2/ResultScopeV2 preserve the historical Project request/result exactly and use handlers::thread::await_condition for both app-to-Project and app-to-app waits; a reply from another request, receiver or sequence cannot settle this wait.
   SettingsOperationContextV1 carries actual record scope/storage, actor, permission/writer generations, initiating Client route/focus and idempotent return. Its settings_surface/setup origin has no execution root or task/thread requirement; a thread origin embeds the unchanged strict WorkflowCommandContextV1. Selected Settings preview/apply/rollback V3 compatibility unions add this owner context, with exact destination level/Computer/Device and preview generation joins. AttachmentOwnerContextV1 instead discriminates pre-message draft ownership from committed-thread execution, preserving actual Host/root and composer identity. StarterCatalogContextV1 is an application record/catalog owner context without a thread. These editions do not weaken execution contexts or mint a thread/Project for owner metadata work.
@@ -24034,8 +24047,8 @@ acceptance_criteria:
 - Two existing thread primaries/handlers and local previews share exact bounded intent/currentness/receiver joins.
 - Legacy exact requests/routes remain readable; new contexts do not widen authority.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -24092,12 +24105,12 @@ unit_type: interface_contract
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: |-
-  The frozen application tables attached to this unit define selected versioned siblings, never an in-place relaxation of a Project codec. Existing Project resource bytes, schema IDs/versions, original accepted-source/hash domains, source/cancel/certification banks and replay readers remain exact. F-d may add current compatibility $refs in non-frozen aggregate companions, but never replace an immutable historical resource or rebind an old literal URI to new contents. New app logical IDs use .application.v1 and 1.0.0; shared WorkflowScopeV2 and the thread facade editions are explicit v2 exceptions. The absent-but-required assistant_plan_runtime_contracts.schema.json/fixtures pair must be created with original Project definitions under their own exact identities and references to the new app definitions, never a duplicate Plan engine.
+  The frozen application tables attached to this unit define selected versioned siblings, never an in-place relaxation of a Project codec. Existing Project resource bytes, schema IDs/versions, original accepted-source/hash domains, source/cancel/certification banks and replay readers remain exact. Current compatibility $refs may be added in non-frozen aggregate companions, but never replace an immutable historical resource or rebind an old literal URI to new contents. New app logical IDs use .application.v1 and 1.0.0; shared WorkflowScopeV2 and the thread facade editions are explicit v2 exceptions. The Plans/assistant_plan_runtime_contracts.schema.json and Plans/assistant_plan_runtime_contract_fixtures.json pair was created with original Project definitions under their own exact identities and references to the new app definitions, never a duplicate Plan engine.
   Hash domains are frozen separately from payload-store addressing and physical codecs. New application semantic hashes use pm.application.semantic_hash.v1: SHA-256, lowercase hex, over UTF-8 domain prefix "pm.application.semantic_hash.v1\0" + exact closed kind + "\0" + RFC8785 canonical JSON of a lossless typed tree. The typed tree is ["null"], ["bool",value], ["string",exact Unicode scalar string], ["int",canonical signed base-10 integer string with no +/leading zero/-0], ["float64",sixteen lowercase hex digits of the big-endian IEEE754 finite value], ["array",ordered typed children] or ["object",[[exact key,typed value],...]] with keys in unsigned UTF-8 byte order. Duplicate keys, non-scalar Unicode, NaN/infinity and unknown kinds reject; strings are never normalized/trimmed. This retains arbitrary exact integer identity without coercing values to floating point. Physical records still use their declared numeric types.
   Closed semantic kinds are goal_body_currentness, goal_objective_revision, accepted_source, operation_intent, thread_preview, schedule_target, conversion_manifest and source_graph. Each preimage is a closed object: schema_id/schema_version of the selected semantic record, WorkflowScopeV2, the complete semantic record and purpose-specific immutable identity. goal_body_currentness uses the exact eleven-field Goal body with only currentness_hash omitted, plus scope; objective revision hashes its full selected revision including source body link. operation_intent includes command/owner interface, exact actor/target/input/source commitments, expected revisions/Stop/permission/writer generations and idempotency identity; thread_preview includes the full redacted CV-365 preview including expiry. schedule_target includes actual target version/hash/topology/team or exact message text/attachments/destination/time/runtime snapshots. conversion_manifest covers the entire CV-367 manifest excluding only its self-hash. source_graph covers the complete resource/method/graph manifest excluding only graph_sha256. A source hash authenticates bytes only; accepted-source authority still requires its genuine original owner joins.
   App physical codec pm.application.physical_messagepack.v1 is deterministic MessagePack of the complete closed wrapper: maps in unsigned UTF-8 key order, minimal integer widths (positive values use unsigned encodings), exact UTF-8 strings without normalization, declared binary as MessagePack binary, finite floats as IEEE754 binary64, arrays in semantic order, no duplicate keys, trailing data or nonminimal encoding. SHA-256 of those exact encoded wrapper bytes is physical_record_sha256, never body currentness/source/semantic digest. Original Project MessagePack/JSON codecs are unchanged. CV-339/SP-286 shared append/wire/full-value commitments stay their own exact domains; SP-337 BLAKE3 payload IDs and immutable binary bytes are not converted to SHA-256 or re-encoded through JSON.
   App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage’s project~base64url rule, never a new project:hex scheme.
-  The attached table is the closed event/app-source selection policy. settings.layer.changed and app folder events are application-only; normal chat/history/run/tool/Usage/recovery/Goal/Crew/Plan/schedule/attention/layout app variants are application_or_project only for their actual admitted writer. Every selected variant must join full original source, commit/append/first-receipt, canonical or derived read/checkpoint, backup/restore and retention. New approval.chat_tool_requested/resolved payloads are thread/tool/target bound, distinct from Project Orchestrator node approval events. Wizard handoff, PRD/PlanningRun/NamedPlan/WorkNode/gates and frozen Workflow/certified sources stay Project-only. Unknown/missing source, version or family is unavailable/quarantined; a registry or all-true fixture boolean cannot admit native writes. Existing notebook/plugin/auth/pause/scheduler candidate/non-emitting dispositions remain until their own complete admission. goal.paused/resumed or any other required unregistered semantic name cannot emit by inference; missing_event_registration is preserved. App support is an accepted requirement, while native availability and exact source adoption remain evidence-bounded.
+  The attached table is the closed event/app-source selection policy. Its CompactionCompletionApplicationV1 shape and source are non-emitting candidates only: context.compaction.completed remains project_only, DL-300 admits no app edition, and missing_event_registration persists until separate Event Authority admission and complete owner adoption. A schema/source row is not an append or event-checkpoint grant. settings.layer.changed is application-only; normal chat/history/run/tool/Usage/recovery/Goal/Crew/Plan/schedule/attention/layout app variants are application_or_project only for their actual admitted writer. Every selected variant must join full original source, commit/append/first-receipt, canonical or derived read/checkpoint, backup/restore and retention. New approval.chat_tool_requested/resolved payloads are thread/tool/target bound, distinct from Project Orchestrator node approval events. Wizard handoff, PRD/PlanningRun/NamedPlan/WorkNode/gates and frozen Workflow/certified sources stay Project-only. Unknown/missing source, version or family is unavailable/quarantined; a registry or all-true fixture boolean cannot admit native writes. Existing notebook/plugin/auth/pause/scheduler candidate/non-emitting dispositions remain until their own complete admission. goal.paused/resumed or any other required unregistered semantic name cannot emit by inference; missing_event_registration is preserved. App support is an accepted requirement, while native availability and exact source adoption remain evidence-bounded.
   The developer-session resources are separately selected in Plans/developer_session_application_contracts.schema.json: DebugSessionRecordApplicationV1 and EvalSessionRecordApplicationV1 plus their physical wrappers. OriginalDebugSessionSource and OriginalEvalSessionSource select owner.debug.session.application@1.0.0 and owner.eval.session.application@1.0.0 under the existing DebugSessionBroker/EvalSessionBroker. The two added ordered source graphs cover original intent, pending/lease/Stop fence, commit, receipt/result/read, coherent backup and retention; both stay specified_unimplemented. Browser sources/profile/page/controller records belong only to the browser owner. Project dev_session_record/eval_session_record codecs and sources retain exact bytes.
 gui_related: false
 gui_classification_reason: Defines data, identity, custody, version or source contracts; no presentation ownership.
@@ -24113,8 +24126,8 @@ acceptance_criteria:
 - Each graph edge is genuinely adopted or explicitly unavailable; historical/certified exclusions never gain app
   writes.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -24291,7 +24304,7 @@ canonical_text: |-
   New Project registration/listing completes before chat cutover. Existing Project uses actual destination backend and the chosen separate draft/folder by default; source raw git/jj is content, not PM Project authority. Files copy and verify before source removal. A generation-bound writer fence and destination verified claim make one authoritative cutover. A crash/partition exposes paused/resume/cancel and exact known/unknown effects; no speculative source deletion, automatic failover or offline write queue. Same-store payloads share immutable refs; cross-Server payloads copy/check before commit. Source conversation records seal; destination receives full owned records with origin links, preserving thread_id without changing original EventRecord/Usage/result bytes.
   N25 defaults to a new destination Goal/Plan/Crew record linked to the immutable source. Source active work/claims/timers must reach its admitted safe stop/fence; destination authority is freshly resolved. Ordinary Goal update, Plan revise or run mutation cannot change project_id/thread_id/creation or an admitted run binding. The optional explicit association rebind is unavailable until its separately versioned complete owner transaction/source/Stop/lease/control/currentness/cancel/replay/backup graph exists; no pretend rebind is registered here. Moved transcript approval/certification is historical evidence only. Preserve one current Plan slot for the retained thread and no two live source/destination continuations. Schedules explicitly hold/invalidate old pending bindings and create chosen destination replacements/rebinds for exact frozen target/text/time under fresh consent; source occurrences remain retained and no dispatch happens twice.
   Regular conversion applies by the person; N27’s YOLO agent route uses the same owner command and exact unambiguous destination/task/preview/fresh authority, never a human click. Source YOLO, read access or Project build grant never becomes destination authority. Ambiguous convert this asks for destination. Undo is owner-verified inverse for eligible unchanged effects until first new work or seven days. It cannot delete a remote repository/branch/backup, discard modified work, clear Stop, auto-resume source or purge held independent Goal/Plan/Crew/schedule/permission custody. Exiting Undo permits only eligible sealed conversation cleanup under its deletion rules. Full Server restore checks current lineage/tombstone/cutover generation before making old source live.
-  Project setup/provenance/recovery refs consume PJCT-009/010 and E’s exact nine existing registration kinds plus mounted_existing; acquisition_provenance online_import/fork_contribute composes native git_clone/jujutsu_clone, never a generic clone or P11 import. F-b’s source_control_command_request_v2/result_v2/scope_v2 and remote_operation_target_v2/local_reconcile_only target own contribution reconciliation; preserve v1 exact receipts and keep publish separate. Starter file sets and configuration Saved setups retain their distinct Project/Settings owners.
+  Project setup/provenance/recovery refs consume PJCT-009/010 and the exact nine existing registration kinds plus mounted_existing owned by Plans/Project_System.md; acquisition_provenance online_import/fork_contribute composes native git_clone/jujutsu_clone, never a generic clone or P11 import. Plans/Source_Control_System.md and Plans/source_control_contracts.schema.json own contribution reconciliation through source_control_command_request_v2/result_v2/scope_v2 and the remote_operation_target_v2/local_reconcile_only target; preserve v1 exact receipts and keep publish separate. Starter file sets and configuration Saved setups retain their distinct Project/Settings owners.
   Conversion-to-new preview selects ChatMoveDraftPreviewManifestV1: real setup draft_id/revision/hash, proposed Server/Computer/folder/native plan and registration-plan hash, complete planned family dispositions and visible-effect digest, with project_id=null and no destination writer or native-change receipt. Read-only preview never reserves a Project. Create project and move chat consumes ChatMoveCreateAndApplyRequestV2, then PJCT-009 reserves once. After owner registration/listing/readback, ChatMoveCutoverManifestV2 links that exact draft preview to the real-target ChatMoveManifestV1 and real destination writer/native receipts. Revalidate source, draft, current permissions/Stop and every family before transfer/cutover; any user-visible destination/effect change requires renewed review, not implicit rebind. Existing-project previews retain their real selected target and historical codecs remain exact.
   The selected ChatMoveCreateApplyResultV2 connects the bound ChatMoveCutoverManifestV2 to the actual command result. A completed result requires the real Project ID, creation operation and cutover manifest; preview_refused returns null destination/creation/manifest and preserves the source. Thus pre-reservation failures do not invent a destination scope, and a standalone cutover schema is not treated as an accepted result.
 gui_related: false
@@ -24305,8 +24318,8 @@ acceptance_criteria:
 - Copy/verify/fence/one-writer cutover and failure/replay/Undo are explicit.
 - Immutable task bindings use linked birth; optional rebind stays unavailable until complete.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -24414,8 +24427,8 @@ acceptance_criteria:
 - App pause birth/CAS/no-op/user-only clear/results/epochs and missing state are closed.
 - Project originals and immutable accepted-source/cancel graphs remain exact.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows

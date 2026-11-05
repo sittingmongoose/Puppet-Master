@@ -171,7 +171,7 @@ canonical_text: >-
   owner-DRY discriminated scope plus generic request/result/error/availability/disabled-reason schemas; this
   static contract does not establish central catalog rows, native handlers, production wiring, admitted events,
   or runtime proof.
-  SCS-025 adds read-only source-context repository inspection, including unregistered drafts with application scope and null Project. Its typed source variant binds the actual Computer/Server, Host, Environment, transport, locator and trust/currentness evidence; it does not require a fake repository ID or mutation lease. The neutral command census grows only by repository.inspect and remote.add through F companion registration, preserving the existing nineteen historical IDs.
+  SCS-025 adds read-only source-context repository inspection, including unregistered drafts with application scope and null Project. Its typed source variant binds the actual Computer/Server, Host, Environment, transport, locator and trust/currentness evidence; it does not require a fake repository ID or mutation lease. The neutral command census grows only by repository.inspect and remote.add through the adopted source-control command registration, preserving the existing nineteen historical IDs.
 gui_related: true
 gui_classification_reason: Commands expose visible actions, progress, disabled reasons, and recovery routes.
 depends_on: [SCS-002, SIR-008]
@@ -457,7 +457,7 @@ Setup follows cached state -> exact Host/Environment discovery -> tool availabil
 
 Product Onboarding projects this flow as two independent beginner-facing choices. `scm_backend=git|jujutsu` is the local Safe History backend on the selected work computer. `forge_provider=github|gitlab|azure_devops|bitbucket_cloud|bitbucket_data_center|forgejo|gitea|none` is an optional online-copy binding. Local history and an online copy may coexist; selecting a forge never disables local Git/Jujutsu, and selecting local-only never disables Source Control. FileSafe safe points complement Source Control and do not replace Git or Jujutsu. Git and Jujutsu are local tools and have no service accounts; GitHub, GitLab, Azure DevOps, Bitbucket, Forgejo and Gitea are optional services where an account and online repository may exist. Forgejo and Gitea setup preserves distinct typed instance, API, SSH, trust, product/version/schema, Git/API/Actions-state, credential-reference, and currentness fields; an API-disabled instance may still be Git-ready. No Git account, Jujutsu account, Git/Jujutsu signup, or Git/Jujutsu authentication route exists.
 
-For a new local Project, the reviewed commit uses Project System's `cmd.project.new_local` and its exact current setup binding. Project System resolves the confirmed draft's history choice; a consumer must not force `init_git:true` over an explicit no-history choice or substitute Git for Jujutsu. After the owner returns the actual identities, Source Control may detect, select, and bind the requested admitted local backend with `cmd.source_control.backend.detect`, `cmd.source_control.backend.select`, and `cmd.source_control.repository.bind`. `cmd.source_control.repository.init` does not exist and MUST NOT be registered, aliased, dispatched, or shown. Selecting Jujutsu is allowed only when the Jujutsu owner can establish or bind the exact certified repository/workspace state; a missing owner route is `handler_unavailable`/`not_available` with a human recovery route, never an inferred initialization.
+For a new local Project, the reviewed commit uses Project System's `cmd.project.new_local` and its exact current setup binding. Project System resolves the confirmed draft's history choice under PJCT-009: Git and Jujutsu are equal, existing verified history wins, and a folder without a repository still initializes the reviewed Git-or-Jujutsu backend. No no-history setup option is offered. A consumer must not force `init_git:true` over a reviewed Jujutsu choice or silently substitute Git for Jujutsu. After the owner returns the actual identities, Source Control may detect, select, and bind the requested admitted local backend with `cmd.source_control.backend.detect`, `cmd.source_control.backend.select`, and `cmd.source_control.repository.bind`. `cmd.source_control.repository.init` does not exist and MUST NOT be registered, aliased, dispatched, or shown. Selecting Jujutsu is allowed only when the Jujutsu owner can establish or bind the exact certified repository/workspace state; a missing owner route is `handler_unavailable`/`not_available` with a human recovery route, never an inferred initialization.
 
 An optional online copy uses the common integration, account, forge, and backend owners: existing accounts use `cmd.integration.connection.add` plus `cmd.auth_profile.sign_in`; people without an account may use `cmd.auth_profile.open_official_page` to visit the verified official provider signup page, then return for owner verification/sign-in. Puppet Master never claims to create the provider account. Repository discovery/creation uses `cmd.forge.repository.list|create`; ordinary Git clone/publish uses `cmd.source_control.repository.clone {scm_backend=git}` and `cmd.source_control.remote.publish`; Jujutsu clone/publish remains `cmd.jujutsu.git.clone` and `cmd.jujutsu.git.push`; successful terminal identities feed the exact `cmd.project.add_existing` registration kind. Protected AuthBrowserSession is human-only, non-recordable, non-inspectable, unavailable to agents/adapters, and excluded from capture, logs, receipts, persistence, and concept simulation.
 
@@ -1748,19 +1748,19 @@ preserved_exact_tokens:
 
 ## DL-051 Accepted New-Repository Object Format Choice - 2026-09-16
 
-This addendum compiles the DL-051 answer as accepted planning requirements for the Source Control setup surface. It admits no command, request meaning, handler, event, certified engine version or runtime capability; SCS-018 admission requirements apply. The exact engine, command-line and repository-format qualification requirement is a prerequisite owned by SCS-004 and SCS-015 and is referenced, not restated. Nothing here changes a default object format, authorizes cross-format migration, or claims universal SHA-256 support.
+This addendum compiles the DL-051 format requirements for the Settings Source Control surface; DL-297 supersedes its earlier setup-picker placement. It admits no command, request meaning, handler, event, certified engine version or runtime capability; SCS-018 admission requirements apply. The exact engine, command-line and repository-format qualification requirement is a prerequisite owned by SCS-004 and SCS-015 and is referenced, not restated. Nothing here changes a default object format, authorizes cross-format migration, or claims universal SHA-256 support.
 
 ContractRef: ContractName:Plans/Decision_Log.md, ContractName:Plans/Jujutsu_Integration.md, ContractName:Plans/Source_Control_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md
 
-### SCS-022 - New Repository Object Format Choice In The Setup Flow
+### SCS-022 - New Repository Object Format Choice In Settings
 
 ```yaml
 plan_unit_id: SCS-022
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Source_Control_System.md
-canonical_text: 'Settings Source Control setup alone offers object format and permanence acknowledgement for a new repository. Other setup consumers show only the owner-resolved choice or discovered effective format. It is one surface on the existing flow, not a separate
-  wizard, and it is bound to the exact Execution Host and Execution Environment the flow already binds. Every offered
+canonical_text: 'Settings Source Control setup alone offers object format and permanence acknowledgement for a new repository. Other setup consumers show only the owner-resolved choice or discovered effective format. It is one surface in the existing Settings Source Control flow, not a separate
+  wizard or a New Project picker, and binds the exact Execution Host and Execution Environment. Every offered
   format comes from an owner-owned format profile, so a choice is enabled or disabled by current capability evidence
   and never by assumption; an uncertified or not-yet-known format is shown disabled with its reason rather than hidden
   or silently substituted. The copy states that the object format of a repository is permanent once it is created, and
@@ -1775,8 +1775,8 @@ gui_classification_reason: The unit is a visible setup-flow control, its disable
 depends_on: [SCS-004, SCS-005, SCS-015, SCS-018, JJI-006, JJI-021, JJI-022, DL-051]
 unblocks: []
 acceptance_criteria:
-- The choice appears only on the existing Source Control setup flow, for a repository being created, and carries the
-  same exact Execution Host and Execution Environment identity the flow already binds.
+- The choice appears only in Settings Source Control for a repository being created, with the exact Execution Host
+  and Execution Environment. Onboarding and New Project show only the owner-resolved choice or discovered format.
 - Every offered or disabled format is backed by a `pm.source_control.repository_object_format_profile.v1` record; the
   flow offers no format it has no profile for.
 - A disabled format shows a reason code from its profile, and an unknown capability state is shown as unknown rather
@@ -1792,10 +1792,9 @@ acceptance_criteria:
   not onboarding. Existing-repository format observation, unknown/capability handling and the Source Control owner’s
   safeguards remain unchanged.'
 validation_surfaces:
-  - Plans/source_control_contracts.schema.json#/$defs/new_repository_object_format_selection
-  - Plans/source_control_contracts.schema.json#/$defs/repository_object_format_profile
+  - Plans/source_control_contracts.schema.json
   - Plans/source_control_contract_fixtures.json
-  - python3 scripts/pm-new-contracts-verify.py
+  - scripts/pm-new-contracts-verify.py
   - future exact-host setup, disabled-choice, cancellation and discovered-format tests; static prose is not runtime proof
 risk_class: permanent_repository_format_chosen_without_evidence_or_consent
 reasoning_tier: high
@@ -2053,7 +2052,7 @@ canonical_text: |-
 
   Both new primaries extend the neutral scope-aware command family deliberately; historical nineteen-ID v1 requests remain exact and the 31 Jujutsu command IDs do not grow. No new EventRecord follows from these receipts. Final dispatch uses the same Permissions admission as other source operations; inspection permission never authorizes add, fork, publish or destination writes.
 
-  B-E01/Fb-E01 close contribution synchronization through the existing cmd.source_control.remote.sync, sole handlers::source_control::remote_sync and unchanged catalog.source_control_remote_sync identity. Consume the five selected definitions in Plans/source_control_contracts.schema.json: source_control_command_request_v2, source_control_command_result_v2, source_control_command_scope_v2, remote_operation_target_v2 and remote_sync_local_reconcile_target_v2. The closed remote_effect branch retains the exact v1 target; the local_reconcile_only branch binds captured original repository/binding/remote/fetched revision and fetch receipt, fork repository/binding/native workspace and expected native revision, head/base and contribution/review refs, actual generations/lease/permission/FileSafe/Stop and the current preview/expiry/exact return. reconciliation_strategy is the existing resolved native merge/rebase policy ID/revision/hash, admitted by the actual backend capability. Require push_targets=[] and publish_performed=false. Changed original/fork/workspace/revision/strategy/lease or authority refuses rather than silently selecting a newer revision. Owner results retain exact before/after/local receipts and outcome_unknown reconciliation. Publication is a separately admitted cmd.source_control.remote.publish naming the fork; no new sync engine, remote-name role inference, network publication or direct-Git fallback is hidden in local reconciliation. Historical v1 bytes, semantic hashes, results and replay remain exact.
+  Contribution synchronization uses the existing cmd.source_control.remote.sync, sole handlers::source_control::remote_sync and unchanged catalog.source_control_remote_sync identity. Consume the five selected definitions in Plans/source_control_contracts.schema.json: source_control_command_request_v2, source_control_command_result_v2, source_control_command_scope_v2, remote_operation_target_v2 and remote_sync_local_reconcile_target_v2. The closed remote_effect branch retains the exact v1 target; the local_reconcile_only branch binds captured original repository/binding/remote/fetched revision and fetch receipt, fork repository/binding/native workspace and expected native revision, head/base and contribution/review refs, actual generations/lease/permission/FileSafe/Stop and the current preview/expiry/exact return. reconciliation_strategy is the existing resolved native merge/rebase policy ID/revision/hash, admitted by the actual backend capability. Require push_targets=[] and publish_performed=false. Changed original/fork/workspace/revision/strategy/lease or authority refuses rather than silently selecting a newer revision. Owner results retain exact before/after/local receipts and outcome_unknown reconciliation. Publication is a separately admitted cmd.source_control.remote.publish naming the fork; no new sync engine, remote-name role inference, network publication or direct-Git fallback is hidden in local reconciliation. Historical v1 bytes, semantic hashes, results and replay remain exact.
 
   For existing-Project chat conversion, ACD-510/511 owns the current preview and destination authority. Git defaults to a separate work branch/worktree in the chosen folder; direct main is Advanced only. Inspect the actual destination/history and block unsaved target buffers or a source-history graft before writes. Missing Git name/email remains a named owner blocker. Jujutsu follows JJI-023 and its admitted native adapter; this inspection receipt never authorizes conversion or publication.
 
@@ -2081,7 +2080,7 @@ acceptance_criteria:
   SSH inspection cannot perform trust/key installation or treat its result as repository identity; only current owner-validated prerequisites permit the actual fresh read.
 validation_surfaces:
 - Plans/source_control_contracts.schema.json
-- F companion positive/negative semantic fixtures; not_run in phase 1
+- scripts/pm-projects-refresh-contracts.py
 risk_class: identity_authority_or_false_completion
 reasoning_tier: high
 context_scope: projects_refresh_scs_025

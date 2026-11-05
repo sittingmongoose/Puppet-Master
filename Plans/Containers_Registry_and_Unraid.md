@@ -1166,8 +1166,8 @@ acceptance_criteria:
 - Browser-login and PAT entry controls both remain present.
 - Helper text explicitly says PAT is recommended and links or explains how to obtain a PAT.
 - Requested auth mode and effective capability are displayed distinctly.
-- The settings-level create-repository toggle remains distinct from mandatory confirmation when repository
-  creation becomes a remote side effect.
+- The settings-level create-repository toggle remains distinct from PS-146/147 effect authority; Regular confirms
+  when approval is missing; admitted YOLO or an exact build grant uses the same writer without another ordinary yes.
 - Tag template defaults preserve {commit}, {version}, {timestamp}, and future canonical tag variables.
 - Push policy preserves manual default and optional after_build.
 validation_surfaces:
@@ -2644,7 +2644,19 @@ canonical_text: >-
   needed for first publish; Docker CLI and Buildx own local build, run, login,
   and push behavior, Docker Hub API owns app-managed namespace/repository
   discovery and creation, and image registry push is not conflated with template
-  distribution.
+  distribution. The code.execution.dockerhub-repository setting (Publish to)
+  uses owner-sourced options: its repository choices come only from this Docker
+  registry owner's discovered repositories for the selected account and
+  namespace. Refresh and account/namespace changes update that scoped choice
+  set without carrying repository choices over from another account/namespace.
+  Plans/settings_inventory.json contributes only custom… (Other…) for manual
+  entry, with no unconditional repository-name preset. An empty discovery result
+  offers only Other…; a repository named puppet-master may appear when returned
+  by the owner for the selected account/namespace or typed by the user. Manual
+  entry accepts a repository name outside the discovered list for existing owner
+  validation; discovery, selection, and typing do not create a repository or
+  authorize a push. Existing capability gates, target validation, and protected
+  creation/push authority remain with their current owners.
 gui_related: true
 gui_classification_reason: Repository discovery, selectors, refresh, existing-repository choice, and create action are visible repository-management controls.
 split_recommended: false
@@ -2655,6 +2667,10 @@ acceptance_criteria:
   - Docker CLI and Buildx handle local build, run, login, and push behavior.
   - Docker Hub API handles namespace/repository discovery and repository creation when app-managed listing/creation is needed.
   - Image registry push is not conflated with template distribution.
+  - The code.execution.dockerhub-repository inventory row retains only custom… in options, labelled Other…, with its existing empty default and Project layering unchanged.
+  - With only service-api returned for the selected account/namespace, choices are service-api and Other…; no fixed repository name is added. The name in this case is example input, not a preset.
+  - With an empty repository result, only Other… is offered; typing release-image still reaches the existing owner validation without requiring any fixed repository name or bypassing creation/push gates. The typed name is example input, not a preset.
+  - Refresh and switching the selected account or namespace replace discovered choices with that owner's scoped result; a real returned puppet-master repository is handled like any other repository.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -2664,6 +2680,7 @@ context_scope: dockerhub_repository_selection_api_boundary
 implementation_surfaces:
   - Plans/Containers_Registry_and_Unraid.md
   - Plans/newtools.md
+  - Plans/settings_inventory.json
 node_compile_hint:
   mode: repository_management_contract
   create_worknodes: false
@@ -2673,6 +2690,9 @@ preserved_exact_tokens:
   - "DockerHub API behavior"
   - "Docker CLI / Buildx"
   - "Docker Hub API"
+  - "code.execution.dockerhub-repository"
+  - "custom…"
+  - "Other…"
 negative_constraints:
   - "Image registry push must not be conflated with template distribution."
 owner_hints:
@@ -2708,8 +2728,10 @@ unblocks: []
 acceptance_criteria:
 - Missing repository creation is explicit and visible during first-push preparation.
 - Confirmation shows namespace, repository name, and privacy.
-- Confirmation cannot be bypassed by YOLO modes, agent autonomy, or any fast-path setting.
-- cmd.docker.create_repository validates namespace/repository/privacy and emits docker.repository.create.confirmation_requested.
+- Regular requires confirmation when exact-effect approval is absent. Admitted PS-146 YOLO or a PS-147 build grant
+  invokes the same writer with typed authority evidence; no automated route fabricates a human confirmation.
+- cmd.docker.create_repository validates namespace/repository/privacy and emits docker.repository.create.confirmation_requested
+  only when actually awaiting a human decision.
 - Confirm dispatches cmd.docker.create_repository.confirm.
 - Cancel dispatches cmd.docker.create_repository.cancel.
 - Approving image push does not implicitly approve creation of a missing DockerHub repository.
@@ -3417,7 +3439,8 @@ unblocks:
 - CRAU-045
 acceptance_criteria:
 - Missing repository during push preserves the local build result.
-- The flow enters awaiting_repo_creation_confirmation and emits docker.repository.create.confirmation_requested.
+- Only an unsatisfied human decision enters awaiting_repo_creation_confirmation and emits
+  docker.repository.create.confirmation_requested; admitted YOLO/grant authority creates directly through the same writer.
 - Successful repository creation resumes the pending push attempt without forcing rebuild.
 - Cancelled, rejected, or policy-blocked creation emits docker.publish.blocked with reason_code repo_creation_not_confirmed,
   blocked_step create_repository, and allowed_action_ids[].
@@ -3488,9 +3511,10 @@ acceptance_criteria:
 - push_policy after_build does not grant standing approval for remote side effects.
 - Build click approves only local build execution.
 - Auto-dispatch evaluates external_publish_side_effect for cmd.orchestrator.push_image.
-- Missing approval emits docker.publish.blocked with blocked_step push_image, preserves local build result,
+- Missing PS-146/147 effect authority emits docker.publish.blocked with blocked_step push_image, preserves local build result,
   and surfaces Push image as recovery CTA.
-- Repository creation and managed-template remote repo create/push remain separately approved side effects.
+- Repository creation and managed-template remote repo create/push remain separately evaluated side effects under
+  PS-146/147; Regular asks for missing approval, while admitted YOLO or an exact build grant proceeds without another ordinary yes.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -5309,7 +5333,8 @@ unblocks:
 - CRAU-082
 - CRAU-083
 acceptance_criteria:
-- Repository creation confirmation is mandatory and non-bypassable.
+- Repository creation requires current PS-146/147 effect authority; missing Regular approval asks; admitted YOLO
+  or an exact build grant proceeds with recorded authority and no fabricated human confirmation.
 - Secrets are not written to redb, project files, YAML, or evidence.
 - Publish/template-repo logs and evidence redact secrets.
 - Docs distinguish DockerHub image distribution from Unraid template distribution.
@@ -6907,9 +6932,8 @@ acceptance_criteria:
 - Grant-created exact-resource cleanup can pass; same-name/pre-existing/unrelated or unlisted resource refuses.
 - Stop/revoke/current target and capability drift prevents new effects and action rows remain honest.
 validation_surfaces:
-- 'Phase 2: owner/companion semantic fixtures and exact positive/negative checks in D-requests.md.'
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F deliverable; not run in phase 1).'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate; static success is not native execution proof.'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: authority_scope_and_target_drift
 reasoning_tier: high
 context_scope: project_refresh_permissions_and_automation
