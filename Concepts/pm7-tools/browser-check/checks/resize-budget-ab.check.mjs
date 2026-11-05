@@ -18,12 +18,13 @@ export default async function(t){
     if(!p)throw Error('Left Rail divider not reachable');
     await f.waitForTimeout(2500);
     if(startup===undefined){const raw=await f.evaluate(()=>window.__rz.stop());startup=q(gaps(raw.frames));await f.evaluate(target,'left');await f.waitForTimeout(2500);}
-    if(kind==='A')await f.evaluate(target,'left');
+    if(kind==='A'){await f.evaluate(()=>window.__rz.stop());await f.evaluate(target,'left');}
     await t.page.mouse.move(p.x,p.y);await t.page.mouse.down();
     try{for(const end of [200,0]){const start=end===200?0:200;for(let n=1;n<=60;n++){await t.page.mouse.move(p.x+start+(end-start)*n/60,p.y);await f.waitForTimeout(25);}}}
     finally{await t.page.mouse.up();}
     await f.waitForTimeout(kind==='A'?700:2000);
     const raw=await f.evaluate(()=>window.__rz.stop());
+    await t.check(kind+i+' one sample per frame',new Set(raw.frames.map(x=>x[0])).size===raw.frames.length,'',{hard:true});
     const down=raw.marks.find(x=>x[0]==='down')?.[1],up=raw.marks.find(x=>x[0]==='up')?.[1];
     const drag=raw.frames.filter(x=>x[0]>=down&&x[0]<=up);
     const idle=[...gaps(raw.frames.filter(x=>x[0]<down-50)),...gaps(raw.frames.filter(x=>x[0]>up+800))];
