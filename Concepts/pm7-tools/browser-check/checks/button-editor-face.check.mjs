@@ -17,14 +17,15 @@ export default async function(t){
     for(let rep=0;rep<2;rep++){
      await t.page.mouse.move(2,2);await f.waitForTimeout(600);
      await c.evaluate(async e=>{getComputedStyle(e).transform;await Promise.all(e.getAnimations({subtree:true}).filter(a=>Number.isFinite(a.effect.getComputedTiming().endTime)).map(a=>a.finished.catch(()=>{})));});
+     const kidRest=await c.evaluate(e=>e.firstElementChild?.getBoundingClientRect().width??null);
      const b=await c.boundingBox(),r={x:Math.floor(b.x-10),y:Math.floor(b.y-10),width:Math.ceil(b.width+20),height:Math.ceil(b.height+20)},tag=`${look}-${motion}-${kind}-${rep}`;
      if(rep===0)await t.crop(tag+'-rest',r,'Resting native boundary, words and shadow; compare paired immutable builds at original resolution.');
      await t.mark('rest '+tag);await t.page.mouse.move(off.x+b.x+Math.min(7,b.width/4),off.y+b.y+b.height/2);await f.waitForTimeout(300);
      await t.mark('down '+tag);await t.page.mouse.down();await f.waitForTimeout(500);
-     const held=await c.evaluate(e=>{const b=e.getBoundingClientRect(),s=getComputedStyle(e),ks=e.firstElementChild&&getComputedStyle(e.firstElementChild);return {x:b.x,y:b.y,width:b.width,height:b.height,active:e.matches(':active'),transform:s.transform,scale:s.scale,translate:s.translate,kid:ks&&{transform:ks.transform,scale:ks.scale,translate:ks.translate}};});
+     const held=await c.evaluate(e=>{const b=e.getBoundingClientRect(),s=getComputedStyle(e),ks=e.firstElementChild&&getComputedStyle(e.firstElementChild);return {x:b.x,y:b.y,width:b.width,height:b.height,active:e.matches(':active'),transform:s.transform,scale:s.scale,translate:s.translate,kid:ks&&{transform:ks.transform,scale:ks.scale,translate:ks.translate,width:e.firstElementChild.getBoundingClientRect().width,display:ks.display}};});
      if(rep===0)await t.crop(tag+'-held',r,'Held native boundary and inner press feel. Film contains the transition and release.');
      await t.mark('up '+tag);await t.page.mouse.up();await f.waitForTimeout(650);await t.mark('end '+tag);
-     records.push({look,motion,actual,screen,kind,rep,tag,rect:r,rest:b,held,offset:off});await t.check('Editor target stays stationary '+tag,Math.abs(held.x-b.x)<.01&&Math.abs(held.y-b.y)<.01&&Math.abs(held.width-b.width)<.01&&Math.abs(held.height-b.height)<.01);if(kind.startsWith('editor-'))await t.check('Editor press cue follows look and motion '+tag,motion==='no-preference'&&look.startsWith('friendly')?(held.kid&&held.kid.scale==='0.97'):(held.transform==='none'&&(!held.kid||['none','1'].includes(held.kid.scale))),JSON.stringify(held));await t.check(`film actual active press ${tag}`,held.active);
+     records.push({look,motion,actual,screen,kind,rep,tag,rect:r,rest:b,kidRest,held,offset:off});await t.check('Editor target stays stationary '+tag,Math.abs(held.x-b.x)<.01&&Math.abs(held.y-b.y)<.01&&Math.abs(held.width-b.width)<.01&&Math.abs(held.height-b.height)<.01);if(kind.startsWith('editor-'))await t.check('Editor press cue follows look and motion '+tag,motion==='no-preference'&&look.startsWith('friendly')?(held.kid&&held.kid.scale==='0.97'&&held.kid.width<kidRest-.1):(held.transform==='none'&&(!held.kid||['none','1'].includes(held.kid.scale))),JSON.stringify(held));await t.check(`film actual active press ${tag}`,held.active);
     }
    }
   }
