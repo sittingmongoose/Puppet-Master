@@ -3,8 +3,11 @@ export default async function(t){
  await t.page.addInitScript(()=>{
   window.__primeStarts=[];window.__primeGestures=0;
   document.addEventListener('pointerdown',e=>{if(e.isTrusted)window.__primeGestures++;},true);
-  const real=AudioScheduledSourceNode.prototype.start;
-  AudioScheduledSourceNode.prototype.start=function(...a){const stack=new Error().stack;if(stack.includes('primePlayback'))window.__primeStarts.push({offline:this.context instanceof OfflineAudioContext,gestures:window.__primeGestures});return real.apply(this,a);};
+  for(const proto of [AudioScheduledSourceNode.prototype,AudioBufferSourceNode.prototype]){
+   if(!Object.hasOwn(proto,'start'))continue;
+   const real=proto.start;
+   proto.start=function(...a){const stack=new Error().stack;if(stack.includes('primePlayback'))window.__primeStarts.push({offline:this.context instanceof OfflineAudioContext,gestures:window.__primeGestures});return real.apply(this,a);};
+  }
  });
  const f=await t.app.open();
  await f.waitForFunction(()=>!!window.O55?.sound?.ctx,null,{timeout:30000});
