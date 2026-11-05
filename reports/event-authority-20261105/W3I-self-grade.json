@@ -7,7 +7,7 @@
     "Plans/storage-plan.md": "2fb28708857f38a7c7b4104cd89faecba36701dc1e41574139976e93f510ed5e",
     "Plans/Automated_Testing_System.md": "ccfb27fa3d6277eb9ac8f3ff6107474a33fc9843836f7df50f44a359dbeb425f",
     "Plans/continuity_event_contracts.schema.json": "89a618dcbc23731d072a1a21c329e0d91275158969a421452f49c6e74c1ba1c4",
-    "Plans/storage_value_registry.json": "3db9fa47ceb18c7daf9cb93c91fad510f70313317e779e2eebb47758e1ce77fc"
+    "Plans/storage_value_registry.json": "666b72e890d1293cda8fa294f5b27b574a1354c71f1441dca69a28513f30603f"
   },
   "families": [
     {
@@ -1243,5 +1243,157 @@
       "notes": "PASS cells assess explicit prepared owner contracts, not implementation or admission; no native oracle was run."
     }
   ],
-  "native_execution": "NOT_RUN"
+  "native_execution": "NOT_RUN",
+  "phase_1_review_round_1": {
+    "reviewed_head": "e6df324998c9f8f2d97c43e071daf0910404eae8",
+    "review_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/W3I-sol/REVIEW-phase1.md",
+    "review_sha256": "4b0dd05a4ee31f67f088c421a1269c89fb92f65480a783f7732f28d189f825e1",
+    "assessment": "Worker reassessment after B1; semantic grades remain unchanged. No independent re-review or runtime oracle/guard-isolation pass is claimed.",
+    "families": [
+      {
+        "event_type": "continuity.actor_identified",
+        "criteria_before_and_after": {
+          "membership_version": "ABSENT",
+          "owner_doc": "PASS",
+          "producer": "PASS",
+          "closed_payload_schema": "PASS",
+          "scope_identity": "PASS",
+          "replay_idempotency": "PASS",
+          "retention": "PASS",
+          "redaction_custody": "PASS",
+          "transitions": "PASS",
+          "consumers_checkpoints": "PASS",
+          "compatibility_withdrawal": "PASS",
+          "positive_negative_oracles": "PARTIAL"
+        },
+        "mandatory_storage_companion_before": "B1: own event profile and shared projection/checkpoint profiles missing",
+        "mandatory_storage_companion_after": "PASS: own event plus both shared derived profiles exist with declared encodings and 16 KiB derived limits",
+        "storage_profile_evidence": [
+          {
+            "path": "Plans/storage_value_registry.json",
+            "line": 127100,
+            "family_id": "continuity_actor_identified_event"
+          },
+          {
+            "path": "Plans/storage_value_registry.json",
+            "line": 127124,
+            "family_id": "continuity_record"
+          },
+          {
+            "path": "Plans/storage_value_registry.json",
+            "line": 127131,
+            "family_id": "continuity_replay_checkpoint"
+          }
+        ]
+      },
+      {
+        "event_type": "continuity.provenance_recorded",
+        "criteria_before_and_after": {
+          "membership_version": "ABSENT",
+          "owner_doc": "PASS",
+          "producer": "PASS",
+          "closed_payload_schema": "PASS",
+          "scope_identity": "PASS",
+          "replay_idempotency": "PASS",
+          "retention": "PASS",
+          "redaction_custody": "PASS",
+          "transitions": "PASS",
+          "consumers_checkpoints": "PASS",
+          "compatibility_withdrawal": "PASS",
+          "positive_negative_oracles": "PARTIAL"
+        },
+        "mandatory_storage_companion_before": "B1: own event profile and shared projection/checkpoint profiles missing",
+        "mandatory_storage_companion_after": "PASS: own event plus both shared derived profiles exist with declared encodings and 16 KiB derived limits",
+        "storage_profile_evidence": [
+          {
+            "path": "Plans/storage_value_registry.json",
+            "line": 127106,
+            "family_id": "continuity_provenance_recorded_event"
+          },
+          {
+            "path": "Plans/storage_value_registry.json",
+            "line": 127124,
+            "family_id": "continuity_record"
+          },
+          {
+            "path": "Plans/storage_value_registry.json",
+            "line": 127131,
+            "family_id": "continuity_replay_checkpoint"
+          }
+        ]
+      },
+      {
+        "event_type": "continuity.redaction_applied",
+        "criteria_before_and_after": {
+          "membership_version": "ABSENT",
+          "owner_doc": "PASS",
+          "producer": "PASS",
+          "closed_payload_schema": "PASS",
+          "scope_identity": "PASS",
+          "replay_idempotency": "PASS",
+          "retention": "PASS",
+          "redaction_custody": "PASS",
+          "transitions": "PASS",
+          "consumers_checkpoints": "PASS",
+          "compatibility_withdrawal": "PASS",
+          "positive_negative_oracles": "PARTIAL"
+        },
+        "mandatory_storage_companion_before": "B1: own event profile and shared projection/checkpoint profiles missing",
+        "mandatory_storage_companion_after": "PASS: own event plus both shared derived profiles exist with declared encodings and 16 KiB derived limits",
+        "storage_profile_evidence": [
+          {
+            "path": "Plans/storage_value_registry.json",
+            "line": 127112,
+            "family_id": "continuity_redaction_applied_event"
+          },
+          {
+            "path": "Plans/storage_value_registry.json",
+            "line": 127124,
+            "family_id": "continuity_record"
+          },
+          {
+            "path": "Plans/storage_value_registry.json",
+            "line": 127131,
+            "family_id": "continuity_replay_checkpoint"
+          }
+        ]
+      },
+      {
+        "event_type": "continuity.replay_checkpointed",
+        "criteria_before_and_after": {
+          "membership_version": "ABSENT",
+          "owner_doc": "PASS",
+          "producer": "PASS",
+          "closed_payload_schema": "PASS",
+          "scope_identity": "PASS",
+          "replay_idempotency": "PASS",
+          "retention": "PASS",
+          "redaction_custody": "PASS",
+          "transitions": "PASS",
+          "consumers_checkpoints": "PASS",
+          "compatibility_withdrawal": "PASS",
+          "positive_negative_oracles": "PARTIAL"
+        },
+        "mandatory_storage_companion_before": "B1: own event profile and shared projection/checkpoint profiles missing",
+        "mandatory_storage_companion_after": "PASS: own event plus both shared derived profiles exist with declared encodings and 16 KiB derived limits",
+        "storage_profile_evidence": [
+          {
+            "path": "Plans/storage_value_registry.json",
+            "line": 127118,
+            "family_id": "continuity_replay_checkpointed_event"
+          },
+          {
+            "path": "Plans/storage_value_registry.json",
+            "line": 127124,
+            "family_id": "continuity_record"
+          },
+          {
+            "path": "Plans/storage_value_registry.json",
+            "line": 127131,
+            "family_id": "continuity_replay_checkpoint"
+          }
+        ]
+      }
+    ]
+  }
 }

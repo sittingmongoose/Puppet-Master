@@ -127096,6 +127096,44 @@
         "encoding_target": "messagepack_canonical",
         "encoding_note": "unchanged",
         "max_value_bytes": 16384
+      },
+      "continuity_actor_identified_event": {
+        "redb_file": "seglog",
+        "storage_group": "event_log",
+        "encoding_target": "seglog_messagepack",
+        "encoding_note": "Matches the declared event-body encoding (SP-1600); oversized bodies use SP-337."
+      },
+      "continuity_provenance_recorded_event": {
+        "redb_file": "seglog",
+        "storage_group": "event_log",
+        "encoding_target": "seglog_messagepack",
+        "encoding_note": "Matches the declared event-body encoding (SP-1601); oversized bodies use SP-337."
+      },
+      "continuity_redaction_applied_event": {
+        "redb_file": "seglog",
+        "storage_group": "event_log",
+        "encoding_target": "seglog_messagepack",
+        "encoding_note": "Matches the declared event-body encoding (SP-1602); oversized bodies use SP-337."
+      },
+      "continuity_replay_checkpointed_event": {
+        "redb_file": "seglog",
+        "storage_group": "event_log",
+        "encoding_target": "seglog_messagepack",
+        "encoding_note": "Matches the declared event-body encoding (SP-1603); oversized bodies use SP-337."
+      },
+      "continuity_record": {
+        "redb_file": "derived",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "Matches the declared bounded continuity projection encoding (SP-1600..1603).",
+        "max_value_bytes": 16384
+      },
+      "continuity_replay_checkpoint": {
+        "redb_file": "derived",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "projection_checkpoint",
+        "encoding_note": "Matches the declared continuity checkpoint encoding (SP-1600..1603, SP-278).",
+        "max_value_bytes": 16384
       }
     },
     "planned_families": [
