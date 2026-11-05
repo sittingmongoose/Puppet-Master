@@ -3342,6 +3342,9 @@ def validate_audit_dir(
     errors: list[str] = AuditDiagnostics()
     warnings: list[str] = []
     audit_dir = audit_dir if audit_dir.is_absolute() else ROOT / audit_dir
+    # One registry path for the symlink guard and the read, anchored like audit_dir (Q7 Sol r8):
+    # a relative path is repository-relative, never relative to the process working directory.
+    registry_path = registry_path if registry_path.is_absolute() else ROOT / registry_path
     matrix_path = audit_dir / "repair_closure_matrix.jsonl"
     if not audit_dir.exists():
         return {"path": rel(audit_dir), "errors": [f"missing audit dir {rel(audit_dir)}"], "warnings": warnings}
@@ -5316,6 +5319,20 @@ def cmd_self_test(args: argparse.Namespace) -> int:
                                     source_artifacts=["semantic_risks.jsonl", "validator_results.json"], registry_path=legacy_registry)
             check("legacy_rule_duplicate_result_name_with_stated_level_is_not_inferred",
                   any("non-actionable source rows" in e for e in vr["errors"]), vr["errors"])
+            # A relative registry path is repository-relative whatever the working directory (Sol r8).
+            elsewhere = tmp / "cwd-elsewhere"
+            elsewhere.mkdir(parents=True, exist_ok=True)
+            saved_cwd = os.getcwd()
+            try:
+                os.chdir(elsewhere)
+                vr_rel = validate_audit_dir(legacy_dir, require_matrix=True, require_effective_status=False,
+                                            source_artifacts=["semantic_risks.jsonl", "validator_results.json"],
+                                            registry_path=Path(rel(legacy_registry)))
+            finally:
+                os.chdir(saved_cwd)
+            check("legacy_rule_relative_registry_is_repository_relative",
+                  vr_rel.get("errors") == vr.get("errors") and vr_rel.get("warnings") == vr.get("warnings"),
+                  {"relative": vr_rel.get("errors"), "absolute": vr.get("errors")})
             # Files written after the freeze get the full rules, even in a frozen directory (Sol r2).
             (legacy_dir / "validator_results.json").unlink()
             (legacy_dir / "repair_closure_matrix.jsonl").write_text(historical, encoding="utf-8")
