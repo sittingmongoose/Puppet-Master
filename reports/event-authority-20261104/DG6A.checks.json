@@ -1,126 +1,205 @@
 {
-  "worker": "DG6A-FIX5",
-  "round": 5,
-  "reviewed_head": "370e7718684f2bcb025dafa3a3993091a96a49fd",
-  "technical_head": "e0102de48fd3d5ce199473f3ac91e6ee425af973",
-  "broad_regression_head": "87628f167daf8372a65ba652c2fd4371ae63d651",
-  "focused_cli_head": "50d7f966de",
-  "checks": [
+  "status": "pass",
+  "code_head": "7a56f2132d37b48085cb5e39c94c4f4e23da7f97",
+  "reviewed_head": "69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+  "admission": "ABSENT",
+  "native": "NOT_RUN",
+  "retention": "PENDING_RETENTION_DECISION",
+  "family_entrypoint_cases": 3343,
+  "guards": 493,
+  "current_negatives": 1822,
+  "historical_negatives": 513,
+  "duplicate_set_matrices": 26,
+  "sweep_observations": 403,
+  "full_cli_observations": 725,
+  "actual_cli_invocations": 428,
+  "composed_history_observations": 297,
+  "restored_inputs": 30,
+  "held_rows_unchanged": 9,
+  "repository_checks": [
     {
-      "name": "alerts",
+      "check": "shard-check",
+      "command": [
+        "/usr/bin/python3",
+        "scripts/pm-shard-plans.py",
+        "--check",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
       "exit": 0,
-      "status": "pass",
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/alerts.log",
-      "sha256": "3fb03e13b1754c8b753da6651205994686faf373868692a210337ae80483f53c"
-    },
-    {
-      "name": "panels",
-      "exit": 0,
-      "status": "pass",
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/panels.log",
-      "sha256": "4381506461cc2d4ddafab8725308f771ec4c03a0de9e3e5cdaed900aa6c1f196"
-    },
-    {
-      "name": "concern",
-      "exit": 0,
-      "status": "pass",
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/concern.log",
-      "sha256": "394fd4143a3567424d3b704d3d1606149716339af93fbe81b532ff13a3e9cab3"
-    },
-    {
-      "name": "guard removal",
-      "exit": 0,
-      "status": "pass",
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/guard-check.log",
-      "sha256": "d4513c631cef0d76470342463b6a9815d7a7025949c2d527831fd721367fe685"
-    },
-    {
-      "name": "grade citations",
-      "exit": 0,
-      "status": "pass",
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/grade-audit.json",
-      "sha256": "e673d3b8b7c02c0dc158f9aa7b1f79de8622d2d07e368cb5625f0304fa824457"
-    },
-    {
-      "name": "shard check",
-      "exit": 0,
-      "status": "pass",
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/shard-check.log",
+      "passed": true,
+      "available_gib": 15,
+      "detail": null,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix6/shard-check.log",
       "sha256": "48c1f857e2193456e9db56b97c616373bfca9a7db703b6ebe4b0efe2ae378363"
     },
     {
-      "name": "index validate",
-      "exit": 0,
-      "status": "pass",
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/index-validate.json",
-      "sha256": "f4514cf8c856e212bb47a90831ad2bfa3661df07c1d10f918f150669a629393d"
-    },
-    {
-      "name": "shard generate",
-      "exit": 0,
-      "status": "pass",
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/shard-generate.json",
-      "sha256": "32a149ab6029e00e969dad0c0c34dec8d8559259481c573d0387cd6050928d52"
-    },
-    {
-      "name": "index generate",
-      "exit": 0,
-      "status": "pass",
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/index-generate.json",
-      "sha256": "5aff95b150b6a7fea98fbb9794671240dc785886f4f1745e74a361008eb5c32f"
-    },
-    {
-      "name": "broad CLI regression",
-      "exit": 0,
-      "status": "pass",
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/full-cli-mutations.json",
-      "sha256": "75d6bbaa3676db7983341f3d0596d76958348308919034e4c135450a06d85fdc"
-    },
-    {
-      "name": "focused CLI",
-      "exit": 0,
-      "status": "pass",
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/final-cli.json",
-      "sha256": "e9cb51c6f8f9d7e8d6a00a1441bc1565c2339aa664cde32bfebd75317ee7eb75"
-    },
-    {
-      "name": "offset interpretation",
-      "exit": 0,
-      "status": "pass",
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/representation-probe.json",
-      "sha256": "04203bfbf9e1a02ce5ca6263305d8e9a517b33bfe1b3c9de6b4daa8b866e1f56"
-    },
-    {
-      "name": "historical typed source joins",
-      "exit": 0,
-      "status": "pass",
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/historical-representation-probe.json",
-      "sha256": "6451d522dbb62ec4c16dda42afff1c90705edac5e2af3c2f027c014f872576e8"
-    },
-    {
-      "name": "Assistant regression",
-      "exit": 1,
-      "status": "pre_existing_failures",
-      "tests": 41,
-      "failures": [
-        "test_definitionless_records_stay_blocked",
-        "test_live_equivalent_negatives_fail_for_intended_reason"
+      "check": "index-validate",
+      "command": [
+        "/usr/bin/python3",
+        "scripts/pm-plan-index.py",
+        "validate"
       ],
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/assistant-tests.log",
-      "sha256": "ec1eb8cc809b5a847c88c7459bb47f169b4c1a3115bcee66643a6b76317d1c89"
+      "exit": 1,
+      "passed": true,
+      "available_gib": 15,
+      "detail": {
+        "failures": [
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260622-001-fff/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260624-001-provider-updates/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260626-001-feature-name/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260629-001-feature-name/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260801-001-feature-intake/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260908-002-terminal-workflow-findings/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260909-001-research-decision-review/records/decisions.jsonl"
+          },
+          {
+            "detail": "dec-031: superseded_by must be a string array",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/decisions.jsonl"
+          },
+          {
+            "baseline_ref": "origin/main",
+            "error": "plan_unit_removed_without_ledger_decision",
+            "owner_doc": "Plans/Decision_Log.md",
+            "path": "Plans/Decision_Log.md",
+            "plan_unit_id": "DL-302"
+          }
+        ],
+        "generated_at_utc": "2026-11-05T01:25:43Z",
+        "schema_id": "pm.plan_index.validation_report.v1",
+        "status": "fail",
+        "summary": {
+          "acceptance_unit_count": 29981,
+          "coverage_status": "pass",
+          "node_readiness_status": "blocked_runtime_certification_incomplete",
+          "plan_unit_count": 7446
+        }
+      },
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix6/index-validate.log",
+      "sha256": "3e7f1b56b1c686ee2a6490099ecfe40afd81e08945be53ed2325535a8bf34380",
+      "status": "preexisting_failure",
+      "baseline_comparison": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix6/index-baseline-comparison.json"
+    },
+    {
+      "check": "assistant-tests",
+      "command": [
+        "/usr/bin/python3",
+        "tests/test_pm_assistant_contract_closure.py"
+      ],
+      "exit": 1,
+      "passed": true,
+      "status": "preexisting_failure",
+      "available_gib": 16,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix6/assistant-tests.log",
+      "sha256": "4eb1fcf329433e09957183b5bc8b4237e4c06a275ab360762a52764546e9608e"
+    },
+    {
+      "check": "grade-audit",
+      "command": [
+        "/usr/bin/python3",
+        "scripts/pm-dg6a-final-regression-check.py",
+        "--audit-grade-only"
+      ],
+      "exit": 0,
+      "passed": true,
+      "status": "pass",
+      "available_gib": 15,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix6/grade-audit.log",
+      "sha256": "97e1cdf976881188f483138b653d937297f3d35668783ec1c7f52a98da51cdcd"
     }
   ],
-  "guard_removal": {
-    "guards": 247,
-    "current_guards": 148,
-    "current_negatives": 702,
-    "current_trials": 35036,
-    "history_negatives": 513,
-    "history_trials": 5643
-  },
-  "native": "NOT_RUN",
-  "admission": "ABSENT",
-  "retention": "PENDING_RETENTION_DECISION",
-  "stopped_families_unchanged": 9,
-  "new_planunit_ids": []
+  "evidence_root": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix6"
 }
