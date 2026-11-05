@@ -202,7 +202,7 @@
   // the input clock for quiet jobs: the last pointer move, press, key, wheel or touch, and input already queued
   let inputAt = -1e9;
   ['pointermove', 'pointerdown', 'keydown', 'wheel', 'touchstart'].forEach((t) => window.addEventListener(t, () => { inputAt = performance.now(); }, { capture: true, passive: true }));
-  const inputPending = () => { try { const s = navigator.scheduling; return !!(s && s.isInputPending && s.isInputPending()); } catch (_) { return false; } };
+  const inputPending = () => { try { const s = navigator.scheduling; return !!(s && s.isInputPending && s.isInputPending({ includeContinuous: true })); } catch (_) { return false; } };
   window.PM_BUSY.idle = function idleWhenStill(fn, timeout, opts) {
     if (typeof fn !== 'function') return null;
     const job = { dead: false, id: 0, timer: 0 };
@@ -398,7 +398,7 @@
     warmD1 = warmD2; warmD2 = d;
     warmDeltas.push(d); if (warmDeltas.length > 30) warmDeltas.shift();
   };
-  const pending = () => { try { const s = navigator.scheduling; return !!(s && s.isInputPending && s.isInputPending()); } catch (_) { return false; } };
+  const pending = () => { try { const s = navigator.scheduling; return !!(s && s.isInputPending && s.isInputPending({ includeContinuous: true })); } catch (_) { return false; } };
   /* the gates that read nothing of style or layout, so they may be looked at inside a frame: '' when all hold, else
      the first that does not (state().waiting) */
   const blocked = () => {
