@@ -435,27 +435,43 @@ const GEOMETRY = (e, label) => {
 	if (!m || ![m.a, m.b, m.c, m.d, m.e, m.f].every(Number.isFinite) || !Number.isFinite(m.a * m.d - m.b * m.c) || m.a * m.d - m.b * m.c === 0 || ![box.x, box.y, box.width, box.height].every(Number.isFinite) || box.width <= 0 || box.height <= 0) throw new Error(`${label}: invalid SVG geometry`);
 	return b;
 };
-const MOTION = async (ms, probeSource, geometrySource, selftest) => {
+const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 	const overlap = (0, eval)(`(${probeSource})`), geometry = (0, eval)(`(${geometrySource})`);
 	const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage'));
 	if (!st) return { err: 'no stage' };
 	const PH = O55.pipStage.h;
 	const R = (e, label) => geometry(e, label);
-	const out = { n: 0, validPairs: 0, validFrames: 0, geometryError: '', off: 0, offWhy: '', moving: 0, boxFrames: 0, worstBox: 0, worst: 0, at: null, kinds: { tilt: 0, swing: 0, hop: 0, cheer: 0, propKick: 0 } };
+	const out = { n: 0, validPairs: 0, validFrames: 0, geometryError: '', off: 0, offWhy: '', moving: 0, movingMs: 0, boxFrames: 0, worstBox: 0, worst: 0, at: null, kinds: { tilt: 0, swing: 0, hop: 0, cheer: 0, propKick: 0 } };
 	const was = { tilt: false, swing: false, hop: false, cheer: false, kick: false };
+	let rnd = null, restoreN = 0, prevV = null;
 	const t0 = performance.now();
+	let tPrev = t0;
 	while (performance.now() - t0 < ms) {
 		await new Promise((r) => requestAnimationFrame(() => r()));
 		out.n++;
+		/* (each frame's time, at most 50 ms: a stall is not time Pip was seen moving) */
+		const tNow = performance.now(), dtF = Math.min(50, tNow - tPrev); tPrev = tNow;
 		const s2 = O55.pipStage.of(O55.S.root.querySelector('.o55-stage'));
 		if (!s2 || !s2.ps) { out.geometryError = 'stage or physics disappeared'; break; }
 		const ps = s2.ps;
+		/* swing at a screen change (force: { at, r }): at ms the stage's own idle timer is made due, with its random draw
+		   fixed for three frames so it picks a swing (r .75: to the right, .5: to the left); the product sizes the kick */
+		if (force && !out.forced && performance.now() - t0 >= force.at) {
+			out.forced = { at: Math.round(performance.now() - t0), fired: false, swung: false, wiggled: false };
+			rnd = Math.random; Math.random = () => force.r; s2.idleNext = s2.t - 1e-3; s2.busyT = s2.t - 3.6; restoreN = out.n + 3;
+		}
+		if (out.forced && prevV && out.n <= restoreN + 1) {
+			if (Math.abs(ps.thv - prevV.th) > .06) out.forced.swung = true;
+			if (Math.abs(ps.tiltv - prevV.tilt) > 1.5) out.forced.wiggled = true;
+		}
+		prevV = { th: ps.thv, tilt: ps.tiltv };
+		if (rnd && out.n >= restoreN) { Math.random = rnd; rnd = null; out.forced.fired = s2.idleNext > s2.t; }
 		const nominal = !s2.reduced && !O55.motion.lowResource && PH.part('sway-and-physics') && PH.part('idle-life');
 		if (!nominal) { out.off++; out.offWhy = s2.reduced ? 'reduced' : O55.motion.lowResource ? 'low-resource' : 'a Pip part off'; }
 		const props = [...s2.props.values()].filter((p) => p.state !== 'out' && p.op > .95);
 		const now = { tilt: Math.abs(ps.tiltv) > 1.5, swing: Math.abs(ps.thv) > .25, hop: ps.dyv < -80, cheer: s2.moodOverride === 'happy' && s2.moodUntil > s2.t, kick: props.some((p) => Math.abs(p.av) > .12) };
 		for (const k of Object.keys(now)) { if (now[k] && !was[k]) out.kinds[k === 'kick' ? 'propKick' : k]++; was[k] = now[k]; }
-		if (Math.abs(ps.tilt - ps.tiltT) > .02 || Math.abs(ps.th) > .02 || Math.abs(ps.dy) > 1 || props.some((p) => Math.abs(p.a) > .02)) out.moving++;
+		if (Math.abs(ps.tilt - ps.tiltT) > .02 || Math.abs(ps.th) > .02 || Math.abs(ps.dy) > 1 || props.some((p) => Math.abs(p.a) > .02)) { out.moving++; out.movingMs += dtF; }
 		// No comparison is eligible during the props' entrance fade. Coverage below must still become positive.
 		if (!props.length) continue;
 		try {
@@ -516,11 +532,15 @@ async function awakeMotion(t, mode) {
 				if (r.err) { await t.check(`${tag}: the stage`, false, r.err); continue; }
 				for (const k of Object.keys(r.kinds)) total[k] += r.kinds[k];
 				total.boxFrames += r.boxFrames;
-				const why = JSON.stringify({ frames: r.n, validPairs: r.validPairs, validFrames: r.validFrames, geometryError: r.geometryError, moving: r.moving, kinds: r.kinds, boxFrames: r.boxFrames, worstBox: Math.round(r.worstBox), at: r.at });
+				const why = JSON.stringify({ frames: r.n, validPairs: r.validPairs, validFrames: r.validFrames, geometryError: r.geometryError, moving: r.moving, movingMs: Math.round(r.movingMs), kinds: r.kinds, boxFrames: r.boxFrames, worstBox: Math.round(r.worstBox), at: r.at });
 				await t.check(`${tag}: head and eligible props have valid visible geometry`, !r.geometryError, why, { hard: true });
 				await t.check(`${tag}: positive valid measurement coverage`, r.validPairs > 0 && r.validFrames > 0, why, { hard: true });
 				await t.check(`${tag}: normal motion stayed on`, r.off === 0, `${r.off}/${r.n} frames without it (${r.offWhy})`);
-				await t.check(`${tag}: Pip was seen moving`, r.moving >= 20, why);
+				/* (in time, not frames: one nod keeps Pip off its rest pose for 333 ms on the stage's tilt spring, a wiggle 467 ms,
+				   at any frame rate; 20 frames were 435 ms at the VM's 46 fps, more than a nod, and 171 ms at Windows' 117 fps.
+				   NieR's c-ready has one idle wiggle or nod in 14 s, by design (no swing, no hop): 13-16 frames on the VM, 45-56 on
+				   Windows, retro-c4. 200 ms is stricter than 20 frames were on every Windows run, and below one nod) */
+				await t.check(`${tag}: Pip was seen moving`, r.movingMs >= 200, why);
 				const okInk = r.worst <= 4;
 				await t.check(`${tag}: no painted overlap of Pip's head and a prop`, okInk, `${r.worst} px² painted; ${why}`);
 				if (!okInk) await t.crop(`awake-${mode}-${look}-${scr}-${w}x${h}`, '#pm-o55-onboarding .o55-stage', `${tag}: painted overlap ${r.worst} px²`);
@@ -535,6 +555,55 @@ async function awakeMotion(t, mode) {
 	await t.check(`${mode}: cheers seen`, total.cheer > 0, JSON.stringify(total));
 	await t.check(`${mode}: props kicked swinging seen`, total.propKick > 0, JSON.stringify(total));
 	await t.check(`${mode}: Pip swings seen`, total.swing > 0, JSON.stringify(total));
+	await t.viewport(1920, 1080);
+}
+
+// FO-50 (retro-c4): an idle swing as the screen changes. Its room was measured where each prop was drawn at the kick,
+// so props still being lowered in after a screen change were not counted, and a prop swung away counted too much room;
+// the prop then hung, or swung back, beside a head still swinging (Glass Light, Online details, 860: 48 px² in
+// retro-c3's full sandbox run). Pinned here: c-ready, then Online details opened fresh, and at each phase (ms after the
+// change) the stage's own idle timer made due with its random draw fixed so it picks a swing to either side; the product
+// sizes the kick, or wiggles when there is no room. 6 s sampled per case, as the awake guard samples (geometry
+// preconditions, fill/stroke ink, at most 4 px²). The case fails on the build before the fix (be4766513f..24178cad2b:
+// 648, 128 and 248 px² at 60, 120 and 900 ms to the right). --set looks=, --set sizes=, --set phases= pick some.
+const SWING_LOOKS = ['glass-light', 'glass-dark', 'friendly-light', 'retro-dark'];
+const SWING_PHASES = [60, 120, 900, 2500];
+async function swingAtChange(t, mode) {
+	if (t.args.motion === 'reduce') return t.check('not run: this case is about normal motion', true);
+	const looks = t.args.looks ? String(t.args.looks).split(',') : SWING_LOOKS, phases = t.args.phases ? String(t.args.phases).split(',').map(Number) : SWING_PHASES;
+	const n = { cases: 0, swung: 0, wiggled: 0 };
+	await probeFixture(t, await frameFor(t, mode), mode);
+	for (const look of looks) for (const [w, h] of sizesArg(t) || [[860, 768]]) {
+		await t.viewport(w, h);
+		const f = await frameFor(t, mode);
+		await t.emulate({ reducedMotion: 'no-preference' });
+		await stageLook(t, f, look);
+		for (const at of phases) for (const [r, side] of [[.75, 'right'], [.5, 'left']]) {
+			const tag = `${mode} ${look} ${w}x${h} swing ${side} ${at} ms after c-ready > online-details`;
+			await f.evaluate(() => window.O55.ui.open({ fresh: true, screen: 'c-ready' }));
+			await f.waitForTimeout(250);
+			await t.check(`${tag}: Pip is awake (the pointer arrived)`, await arrive(t, f), 'still asleep after 4 s');
+			await f.waitForTimeout(2500);
+			await t.mark(tag); /* (on a film, where to step through) */
+			await f.evaluate(() => window.O55.ui.open({ fresh: true, screen: 'online-details' }));
+			const r0 = await f.evaluate(`(${MOTION.toString()})(6000, ${JSON.stringify(INK_OVERLAP.toString())}, ${JSON.stringify(GEOMETRY.toString())}, "", ${JSON.stringify({ at, r })})`);
+			if (r0.err) { await t.check(`${tag}: the stage`, false, r0.err); continue; }
+			const fo = r0.forced || {};
+			n.cases++; if (fo.swung) n.swung++; if (fo.wiggled) n.wiggled++;
+			const why = JSON.stringify({ forced: fo, frames: r0.n, validPairs: r0.validPairs, boxFrames: r0.boxFrames, at: r0.at });
+			await t.check(`${tag}: the idle action came`, !!fo.fired && (fo.swung || fo.wiggled), why);
+			await t.check(`${tag}: head and eligible props have valid visible geometry`, !r0.geometryError, why, { hard: true });
+			await t.check(`${tag}: positive valid measurement coverage`, r0.validPairs > 0 && r0.validFrames > 0, why, { hard: true });
+			await t.check(`${tag}: normal motion stayed on`, r0.off === 0, `${r0.off}/${r0.n} frames without it (${r0.offWhy})`);
+			const okInk = r0.worst <= 4;
+			await t.check(`${tag}: no painted overlap of Pip's head and a prop`, okInk, `${r0.worst} px² painted; ${why}`);
+			if (!okInk) await t.crop(`swing-${mode}-${look}-${w}x${h}-${side}-${at}`, '#pm-o55-onboarding .o55-stage', `${tag}: painted overlap ${r0.worst} px²`);
+			else t.log(`${tag}: ${why}`);
+		}
+	}
+	// (not vacuous: the pinned idle swings did swing where there was room)
+	t.log(`swing at a screen change totals: ${JSON.stringify(n)}`);
+	await t.check(`${mode}: pinned idle swings swung`, n.swung > 0, JSON.stringify(n));
 	await t.viewport(1920, 1080);
 }
 
@@ -622,5 +691,7 @@ export const tests = {
 	'layout change replays nothing normal': (t) => (t.args.film ? t.check('not run under film', true) : on('normal', noReplay)(t)),
 	'layout change replays nothing sandbox': (t) => (t.args.film ? t.check('not run under film', true) : on('sandbox', noReplay)(t)),
 	'awake motion over props normal': (t) => (t.args.film ? t.check('not run under film', true) : on('normal', awakeMotion)(t)),
-	'awake motion over props sandbox': (t) => (t.args.film ? t.check('not run under film', true) : on('sandbox', awakeMotion)(t))
+	'awake motion over props sandbox': (t) => (t.args.film ? t.check('not run under film', true) : on('sandbox', awakeMotion)(t)),
+	'swing at a screen change normal': (t) => (t.args.film ? t.check('not run under film', true) : on('normal', swingAtChange)(t)),
+	'swing at a screen change sandbox': (t) => (t.args.film ? t.check('not run under film', true) : on('sandbox', swingAtChange)(t))
 };
