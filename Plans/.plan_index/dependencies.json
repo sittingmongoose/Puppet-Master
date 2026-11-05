@@ -7183,6 +7183,7 @@
     "SP-423",
     "BRS-029",
     "SP-425",
+    "CV-1136",
     "EP-1131",
     "UCC-216",
     "WM-062",
@@ -23835,6 +23836,31 @@
       "edge_type": "depends_on",
       "from": "CV-1131",
       "to": "SP-1131"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1136",
+      "to": "CV-347"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1136",
+      "to": "EP-121"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1136",
+      "to": "GRS-1137"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1136",
+      "to": "SP-1138"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1136",
+      "to": "SP-312"
     },
     {
       "edge_type": "depends_on",
@@ -118662,7 +118688,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-05T11:38:37Z",
+  "generated_at_utc": "2026-11-05T13:56:46Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -141783,6 +141809,23 @@
       },
       "status": "accepted",
       "unit_type": "owner_boundary"
+    },
+    {
+      "context_scope": "dg_own_c3_w34b_20261105",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1136",
+      "reasoning_tier": "high",
+      "risk_class": "wrong_original_source_realm_or_implicit_reference_alias",
+      "source_location": {
+        "heading": "CV-1136 - Explicit older cancelled-v3 scoped-routing successor",
+        "heading_level": 3,
+        "heading_line": 24939,
+        "line": 24947,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
     },
     {
       "context_scope": "web_payload_ref_blob_batch_audit",
@@ -245916,10 +245959,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 19026,
+    "depends_on_edge_count": 19031,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22234,
-    "node_count": 7485,
+    "edge_count": 22239,
+    "node_count": 7486,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0

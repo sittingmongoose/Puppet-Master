@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L24828-L24937
+Source lines: L24828-L25001
 
-Source SHA256: `721cb42951bfe6e616ae9a8be4ca68fcdb9eabbeafffdee2d71b21ba97a6d3b1`
+Source SHA256: `3b7e18721a0a8661d5c9d0a985b5cc47dae9a6b944a8144240254f2400595e19`
 
 ---
 
@@ -118,3 +118,67 @@ negative_constraints:
 The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (Goal cancellation source migration roots and original realms). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; complete original source roots and methods remain selected in their original banks.
 
 ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json
+
+### CV-1136 - Explicit older cancelled-v3 scoped-routing successor
+
+Newly authored owner contract under DL-045 and the C3-W34b general successor ruling. Exactly the Project edition of `goal_run.cancelled` selects `Plans/goal_run_cancelled_w4_contracts/selection.v1.json` and its complete `protocol.md`. The pinned predecessor banks, schema bytes, URIs and hashes remain byte-exact history. Every selected method explicitly selects the new route together with the already authored cancelled projection-reference edition; no caller-selected or implicit fallback exists.
+
+Only the eleven listed literal-reference locations in the whole original native WorkNode schema, in native_consumer, can enter the whole retained_original_d05 handoff resource at its original hash. Both original retrieval aliases are inspected. Nested references stay in the retained realm. Whole-source hash, exact location, literal and absolute-target checks precede dispatch; no guessed alias, fragment copying, global merge, network/host retrieval or original hash restamping is permitted. Eager qualification includes every unused schema branch. `pm_goal_own_c3_w34b_oracles.py` records qualification independently of full original-path closure.
+
+EP-121/SP-312 still require complete authentic original D06/D05/D01/Start/Goal/FileSafe/process custody, distinct operation identities and complete first receipts. Schema resolution supplies no owner authority. Fresh current arguments, historical write-time recipes, SP-337 source-coupled payload references, whole row/checkpoint CAS, rebuild/cutover and SP-425 withdrawal retain their existing independent predicates. The new composition changes no event selector, admission, native registration, source lifetime or retention/deletion policy. The complete contract is `Plans/goal_run_cancelled_w4_contracts/protocol.md`.
+
+```yaml
+plan_unit_id: CV-1136
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: |-
+  Newly authored owner contract for exactly the Project edition of goal_run.cancelled: an explicitly selected older source-composition successor admits only the eleven pinned native_consumer reference locations into the whole original retained_original_d05 realm, preserving predecessor bytes and nested realm resolution. Eager whole-bank qualification does not authenticate originals or close W4 semantics.
+gui_related: false
+gui_classification_reason: Defines isolated schema routing and source qualification without visual presentation.
+depends_on:
+- CV-347
+- SP-312
+- EP-121
+- GRS-1137
+- SP-1138
+unblocks: []
+acceptance_criteria:
+- Every selected method names the versioned composition; predecessor banks and original resources remain byte-exact.
+- Only the exact source realm, whole resource, hash, schema location and literal target can cross into the pinned retained realm; nested resolution stays there.
+- Every reference, including unused definitions, resolves eagerly without a global merge or fallback.
+- Qualification and full original-path closure are reported separately; no schema-shaped value supplies native authority.
+validation_surfaces:
+- Plans/goal_run_cancelled_w4_contracts/selection.v1.json
+- Plans/goal_run_cancelled_w4_contracts/routing.v1.json
+- Plans/goal_run_cancelled_w4_contracts/protocol.md
+- scripts/pm_goal_own_c3_w34b_roots.py
+- scripts/pm_goal_own_c3_w34b_oracles.py
+risk_class: wrong_original_source_realm_or_implicit_reference_alias
+reasoning_tier: high
+context_scope: dg_own_c3_w34b_20261105
+implementation_surfaces:
+- Plans/goal_run_cancelled_w4_contracts
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/goal_certified_event_coordinator_contracts/original-reference-routing.json
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/DG-OWN-C3.md
+preserved_exact_tokens:
+- goal_run.cancelled
+- native_consumer
+- retained_original_d05
+negative_constraints:
+- No event-registry edit, admission, Decision Log entry, native installation, retention/deletion change or application stopped-event edition.
+- No original-bank rewrite, guessed alias, fragment copy, global realm merge, network retrieval or full W4 PASS from schema qualification.
+owner_hints:
+- Plans/Contracts_V0.md
+- Plans/Executor_Protocol.md#EP-121
+- Plans/storage-plan.md#SP-312
+```
+
+ContractRef: ContractName:Plans/goal_run_cancelled_w4_contracts/protocol.md, ContractName:Plans/goal_run_cancelled_w4_contracts/selection.v1.json

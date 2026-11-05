@@ -4530,10 +4530,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 294,
+        "False": 295,
         "True": 76
       },
-      "heading_count": 571,
+      "heading_count": 572,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -4602,6 +4602,7 @@
         "Plans/goal_certified_producer_source_contracts",
         "Plans/goal_own_c_contracts/contracts.schema.json",
         "Plans/goal_own_c_contracts/protocol.md",
+        "Plans/goal_run_cancelled_w4_contracts",
         "Plans/goal_run_certified_consumer_contracts",
         "Plans/goal_runtime_events.schema.json",
         "Plans/goal_start_command_custody.schema.json",
@@ -4641,9 +4642,9 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 24937,
+      "line_count": 25001,
       "path": "Plans/Contracts_V0.md",
-      "plan_unit_count": 370,
+      "plan_unit_count": 371,
       "plan_unit_ids": [
         "CV-292",
         "CV-293",
@@ -5014,7 +5015,8 @@
         "CV-425",
         "CV-426",
         "CV-1130",
-        "CV-1131"
+        "CV-1131",
+        "CV-1136"
       ],
       "reasoning_tiers": [
         "high",
@@ -5377,12 +5379,13 @@
         "wizard_unblocked_payload_loss",
         "workflow_activation_original_source_or_lifetime_drift",
         "worktree_lane_context_loss",
-        "worktree_lifecycle_record_loss"
+        "worktree_lifecycle_record_loss",
+        "wrong_original_source_realm_or_implicit_reference_alias"
       ],
-      "sha256": "721cb42951bfe6e616ae9a8be4ca68fcdb9eabbeafffdee2d71b21ba97a6d3b1",
+      "sha256": "3b7e18721a0a8661d5c9d0a985b5cc47dae9a6b944a8144240254f2400595e19",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 370
+        "accepted": 371
       },
       "title": "Contracts V0 (Canonical)",
       "unit_type_counts": {
@@ -5395,7 +5398,7 @@
         "owner_boundary": 3,
         "owner_contract": 5,
         "requirement": 232,
-        "schema_contract": 28,
+        "schema_contract": 29,
         "source_lineage_residual_disposition": 1
       },
       "validation_surfaces": [
@@ -5468,6 +5471,9 @@
         "Plans/goal_receipt_recorded_history_contract_fixtures.json",
         "Plans/goal_receipt_version_routes.json",
         "Plans/goal_replanned_history_contract_fixtures.json",
+        "Plans/goal_run_cancelled_w4_contracts/protocol.md",
+        "Plans/goal_run_cancelled_w4_contracts/routing.v1.json",
+        "Plans/goal_run_cancelled_w4_contracts/selection.v1.json",
         "Plans/goal_run_certified_consumer_contracts/protocol.md",
         "Plans/goal_run_stop_block_oracle_fixtures.json",
         "Plans/goal_runtime_contracts.schema.json",
@@ -5566,6 +5572,8 @@
         "reports/event-authority-20260911/step-08-goal-update-validation.md",
         "reports/event-authority-20260911/step-08-wire-validation.md - python3 scripts/pm-implementation-readiness.py validate - python3 scripts/pm-plan-index.py validate - python3 scripts/pm-plans-verify.py run-gates --subcheck-timeout-seconds 120",
         "reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md",
+        "scripts/pm_goal_own_c3_w34b_oracles.py",
+        "scripts/pm_goal_own_c3_w34b_roots.py",
         "scripts/pm_goal_own_c_oracles.py",
         "secret-bearing receipt rejection fixtures",
         "security receipts are visible and redacted.",
@@ -21793,7 +21801,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-05T11:38:37Z",
+  "generated_at_utc": "2026-11-05T13:56:46Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -21801,13 +21809,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3693,
+      "False": 3694,
       "True": 3792
     },
-    "plan_unit_count": 7485,
+    "plan_unit_count": 7486,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 7268,
+      "accepted": 7269,
       "retired": 194,
       "superseded": 23
     },
@@ -21884,7 +21892,7 @@
       "runtime_contract": 22,
       "runtime_disclosure": 2,
       "runtime_policy": 5,
-      "schema_contract": 123,
+      "schema_contract": 124,
       "schema_mirror": 1,
       "security_constraint": 3,
       "security_contract": 18,

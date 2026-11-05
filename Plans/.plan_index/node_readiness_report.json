@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 19026,
+    "depends_on_edge_count": 19031,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22234,
-    "node_count": 7485,
+    "edge_count": 22239,
+    "node_count": 7486,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-05T11:38:37Z",
+  "generated_at_utc": "2026-11-05T13:56:47Z",
   "gui_related_units": {
     "count": 3792,
     "units": [
@@ -41736,10 +41736,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 7485,
+  "plan_unit_count": 7486,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2807,
+      "high": 2808,
       "low": 9,
       "medium": 29,
       "standard": 4640
@@ -45885,6 +45885,7 @@
       "wrong_chat_owner_or_unproved_dispatch": 1,
       "wrong_environment_or_stale_version_certification": 1,
       "wrong_git_target_or_phantom_handler": 1,
+      "wrong_original_source_realm_or_implicit_reference_alias": 1,
       "wrong_plan_version_built_or_duplicate_nightly_build": 1,
       "wrong_pr_target": 1,
       "wrong_version_or_duplicate_scheduled_build": 1,
@@ -45894,7 +45895,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 7268,
+      "accepted": 7269,
       "retired": 194,
       "superseded": 23
     },
@@ -45971,7 +45972,7 @@
       "runtime_contract": 22,
       "runtime_disclosure": 2,
       "runtime_policy": 5,
-      "schema_contract": 123,
+      "schema_contract": 124,
       "schema_mirror": 1,
       "security_constraint": 3,
       "security_contract": 18,
