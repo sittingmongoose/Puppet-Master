@@ -1,16 +1,15 @@
 {
   "method": "B: guard tables",
-  "review": "Method B round 2 / tool batch 1",
-  "base": "a9f87e04b0d9e839b039cb04a7ed72a35577ab07",
-  "implementation": "3ddf4a255afd7f90438338e1d0f1ebf56ded2a81",
-  "core_implementation": "21090120781e742ee26f629897a1d51ced969a28",
+  "review": "Tool batch 1, recheck cycle 4",
+  "base": "dec0a57dce93238ab33452f6b7ca1c759435b587",
+  "implementation": "45538a7f57dd51e4028302e2c4ffb4185dafa59d",
   "status": "PARTIAL",
   "tool_validation": "PASS",
   "traps": {
-    "caught": 130,
-    "total": 130,
-    "preserved_existing": 104,
-    "added": 26,
+    "caught": 173,
+    "total": 173,
+    "preserved_existing": 130,
+    "added": 43,
     "changed_prior_expectations": 0
   },
   "cycle2": {
@@ -25,36 +24,59 @@
     "dormant_suites": 4,
     "static_failures_with_zero_credit": 4
   },
-  "assertions": 1603,
+  "cycle4": {
+    "total_boundary": {
+      "false_passes_closed": 2,
+      "numeric_control": "PASS"
+    },
+    "adjacent_suites": 13,
+    "adjacent_unchanged": true,
+    "hidden_operations": 3,
+    "hidden_operations_unchanged": true
+  },
+  "allowlist": {
+    "written_forms": 36,
+    "used_by_corpus": 36,
+    "unused_by_corpus": []
+  },
+  "dormant_sweep": {
+    "snippets": 211,
+    "false_passes": 0,
+    "raising_refused": 203,
+    "base_tool_false_passes": 27
+  },
+  "base_tool_on_new_corpus": {
+    "false_passes": 27,
+    "already_obligations": 11,
+    "earlier_schema_controls_differing_by_new_declaration": 7
+  },
+  "assertions": 1234,
   "dg6b_example": {
     "normal": "PASS",
     "optimized": "PASS",
     "guards": 7,
     "matrix_cells": 49,
     "evaluations": 176,
-    "factories": 353,
-    "snapshot_equality": "PASS"
+    "factories": 353
   },
   "standalone": {
     "repository_layout": "PASS",
     "flat_distribution": "PASS",
     "different_project_directory": true,
-    "private_scratch_mkdir_denied": true,
-    "default_os_temp": true,
+    "mount_denied": true,
     "explicit_scratch": "PASS",
-    "traps_per_run": 130
+    "traps_per_run": 173
   },
-  "schema_cut_segments_unchanged": 5,
   "commands": [
     {
       "name": "self-test",
       "argv": [
         "/usr/bin/python3",
         "-B",
-        "/home/sittingmongoose/pm-scratch/guardtool-bfix2-runtime/scripts/pm_guard_isolation.py",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/guard/scripts/pm_guard_isolation.py",
         "--self-test",
         "--json",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix2/self-test.json",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix3/self-test.json",
         "--max-rss",
         "1536",
         "--pause-when-low",
@@ -64,10 +86,11 @@
         "--pause-poll",
         "30"
       ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/other-project",
       "exit": 0,
-      "seconds": 46.013,
-      "available_before": 8648052736,
-      "available_after": 11585830912,
+      "seconds": 44.643,
+      "available_before": 28281229312,
+      "available_after": 28196782080,
       "stdout": "",
       "stderr": "guard-isolation paused: 5 GiB available; resume at 7\n"
     },
@@ -76,11 +99,11 @@
       "argv": [
         "/usr/bin/python3",
         "-B",
-        "/home/sittingmongoose/pm-scratch/guardtool-bfix2-runtime/scripts/pm_guard_isolation.py",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/guard/scripts/pm_guard_isolation.py",
         "--adapter",
-        "/home/sittingmongoose/pm-scratch/guardtool-bfix2-runtime/scripts/pm_guard_isolation_dg6b_example.py:factory",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/guard/scripts/pm_guard_isolation_dg6b_example.py:factory",
         "--json",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix2/dg6b-example.json",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix3/dg6b-example.json",
         "--max-rss",
         "1536",
         "--pause-when-low",
@@ -90,10 +113,11 @@
         "--pause-poll",
         "30"
       ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/other-project",
       "exit": 0,
-      "seconds": 46.158,
-      "available_before": 11585576960,
-      "available_after": 11262291968,
+      "seconds": 36.954,
+      "available_before": 28196782080,
+      "available_after": 28160843776,
       "stdout": "",
       "stderr": ""
     },
@@ -103,11 +127,11 @@
         "/usr/bin/python3",
         "-B",
         "-O",
-        "/home/sittingmongoose/pm-scratch/guardtool-bfix2-runtime/scripts/pm_guard_isolation.py",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/guard/scripts/pm_guard_isolation.py",
         "--adapter",
-        "/home/sittingmongoose/pm-scratch/guardtool-bfix2-runtime/scripts/pm_guard_isolation_dg6b_example.py:factory",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/guard/scripts/pm_guard_isolation_dg6b_example.py:factory",
         "--json",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix2/dg6b-example-optimized.json",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix3/dg6b-example-optimized.json",
         "--max-rss",
         "1536",
         "--pause-when-low",
@@ -117,10 +141,11 @@
         "--pause-poll",
         "30"
       ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/other-project",
       "exit": 0,
-      "seconds": 42.975,
-      "available_before": 11262062592,
-      "available_after": 14094934016,
+      "seconds": 31.206,
+      "available_before": 28162330624,
+      "available_after": 28485611520,
       "stdout": "",
       "stderr": ""
     },
@@ -129,14 +154,15 @@
       "argv": [
         "/usr/bin/python3",
         "-B",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix2/B-cycle2/probe.py",
-        "/home/sittingmongoose/pm-scratch/guardtool-bfix2-runtime"
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix3/B-cycle2/probe.py",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/guard"
       ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/other-project",
       "exit": 0,
-      "seconds": 2.27,
-      "available_before": 14093987840,
-      "available_after": 13819666432,
-      "stdout": "shared-class-state FAIL proved 0 failures ['hidden_static_sites', 'state_shared_across_cases']\nshared-bound-builtin-state FAIL proved 0 failures ['hidden_static_sites', 'state_shared_across_cases']\nimport-outside-guessed-roots FAIL proved 0 failures ['hidden_static_sites']\nimport-detected-ordinary-path-control FAIL proved 0 failures ['hidden_static_sites']\ndirect-other-predicate-call FAIL proved 0 failures ['control_refused', 'hidden_static_sites', 'table_protocol_error', 'untracked_refusal', 'wrong_baseline_guard']\ndocumented-predicate-honesty-boundary PASS proved 1 failures []\npredicate-reorders-frozen-mapping FAIL proved 0 failures ['control_refused', 'hidden_static_sites', 'table_protocol_error', 'untracked_refusal', 'wrong_baseline_guard']\nwrote /mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix2/B-cycle2/probes.json\n",
+      "seconds": 1.4,
+      "available_before": 28485611520,
+      "available_after": 28556505088,
+      "stdout": "shared-class-state FAIL proved 0 failures ['hidden_static_sites', 'state_shared_across_cases']\nshared-bound-builtin-state FAIL proved 0 failures ['hidden_static_sites', 'state_shared_across_cases']\nimport-outside-guessed-roots FAIL proved 0 failures ['hidden_static_sites']\nimport-detected-ordinary-path-control FAIL proved 0 failures ['hidden_static_sites']\ndirect-other-predicate-call FAIL proved 0 failures ['control_refused', 'hidden_static_sites', 'table_protocol_error', 'untracked_refusal', 'wrong_baseline_guard']\ndocumented-predicate-honesty-boundary PASS proved 1 failures []\npredicate-reorders-frozen-mapping FAIL proved 0 failures ['control_refused', 'hidden_static_sites', 'table_protocol_error', 'untracked_refusal', 'wrong_baseline_guard']\nwrote /mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix3/B-cycle2/probes.json\n",
       "stderr": ""
     },
     {
@@ -144,13 +170,14 @@
       "argv": [
         "/usr/bin/python3",
         "-B",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix2/B-cycle2/probe-more.py",
-        "/home/sittingmongoose/pm-scratch/guardtool-bfix2-runtime"
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix3/B-cycle2/probe-more.py",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/guard"
       ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/other-project",
       "exit": 0,
-      "seconds": 1.207,
-      "available_before": 13814513664,
-      "available_after": 13866696704,
+      "seconds": 0.906,
+      "available_before": 28557000704,
+      "available_after": 28574879744,
       "stdout": "exception-translation-same-line FAIL proved 0 failures ['hidden_static_sites', 'runtime_untracked_site']\nexception-translation-separate-line-control FAIL proved 0 failures ['hidden_static_sites', 'runtime_untracked_site']\ndormant-property-refusal-control FAIL proved 0 failures ['hidden_static_sites', 'state_shared_across_cases']\ndormant-decorator-refusal-control FAIL proved 0 failures ['hidden_static_sites']\nnested-table-require-control FAIL proved 0 failures ['control_refused', 'hidden_static_sites', 'runtime_untracked_site', 'table_protocol_error', 'untracked_refusal', 'wrong_baseline_guard']\nruntime-unscanned-helper-control FAIL proved 0 failures ['hidden_static_sites']\naliased-dynamic-import FAIL proved 0 failures ['hidden_static_sites', 'state_shared_across_cases']\n",
       "stderr": ""
     },
@@ -159,13 +186,14 @@
       "argv": [
         "/usr/bin/python3",
         "-B",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix2/B-cycle2/probe-purity.py",
-        "/home/sittingmongoose/pm-scratch/guardtool-bfix2-runtime"
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix3/B-cycle2/probe-purity.py",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/guard"
       ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/other-project",
       "exit": 0,
-      "seconds": 0.825,
-      "available_before": 13861052416,
-      "available_after": 14468116480,
+      "seconds": 0.732,
+      "available_before": 28574474240,
+      "available_after": 28548927488,
       "stdout": "order-mutation-uncut-vs-cut FAIL proved 0 failures ['control_refused', 'hidden_static_sites', 'table_protocol_error', 'untracked_refusal', 'wrong_baseline_guard']\nalias-mutation-uncut-vs-cut FAIL proved 0 failures ['control_refused', 'hidden_static_sites', 'table_protocol_error', 'untracked_refusal', 'wrong_baseline_guard']\ndirect-independent-predicate-call FAIL proved 0 failures ['control_refused', 'hidden_static_sites', 'table_protocol_error', 'untracked_refusal', 'wrong_baseline_guard']\n",
       "stderr": ""
     },
@@ -174,13 +202,14 @@
       "argv": [
         "/usr/bin/python3",
         "-B",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix2/B-cycle2/probe-adjacent.py",
-        "/home/sittingmongoose/pm-scratch/guardtool-bfix2-runtime"
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix3/B-cycle2/probe-adjacent.py",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/guard"
       ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/other-project",
       "exit": 0,
-      "seconds": 1.329,
-      "available_before": 14467231744,
-      "available_after": 14247989248,
+      "seconds": 0.777,
+      "available_before": 28548927488,
+      "available_after": 28581847040,
       "stdout": "B1-two-expressions-in-exempt-call FAIL proved 0 failures ['hidden_static_sites', 'runtime_untracked_site']\nB2-closure-over-module-object FAIL proved 0 failures ['hidden_static_sites', 'state_shared_across_cases']\nB3-getattr-import-loader FAIL proved 0 failures ['hidden_static_sites', 'state_shared_across_cases']\nB4-nested-mutating-method FAIL proved 0 failures ['control_refused', 'hidden_static_sites', 'table_protocol_error', 'untracked_refusal', 'wrong_baseline_guard']\nB5-partial-predicate-call FAIL proved 0 failures ['control_refused', 'hidden_static_sites', 'state_shared_across_cases', 'table_protocol_error', 'untracked_refusal', 'wrong_baseline_guard']\n",
       "stderr": ""
     },
@@ -189,13 +218,14 @@
       "argv": [
         "/usr/bin/python3",
         "-B",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix2/B-cycle3/probe.py",
-        "/home/sittingmongoose/pm-scratch/guardtool-bfix2-runtime"
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix3/B-cycle3/probe.py",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/guard"
       ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/other-project",
       "exit": 0,
-      "seconds": 2.158,
-      "available_before": 14247288832,
-      "available_after": 14188654592,
+      "seconds": 1.693,
+      "available_before": 28581847040,
+      "available_after": 28484780032,
       "stdout": "{\"id\": \"fresh-control\", \"status\": \"PASS\", \"failures\": [], \"proved\": 1, \"observation\": null, \"repeat_observation\": null}\n{\"id\": \"shared-global-scalar-binding\", \"status\": \"FAIL\", \"failures\": [\"hidden_static_sites\", \"state_shared_across_cases\"], \"proved\": 0, \"observation\": {\"attempts\": 2}, \"repeat_observation\": {\"attempts\": 4}}\n{\"id\": \"shared-nonlocal-scalar-binding\", \"status\": \"FAIL\", \"failures\": [\"hidden_static_sites\", \"state_shared_across_cases\"], \"proved\": 0, \"observation\": {\"attempts\": 2}, \"repeat_observation\": {\"attempts\": 4}}\n{\"id\": \"shared-factory-list\", \"status\": \"FAIL\", \"failures\": [\"hidden_static_sites\", \"state_shared_across_cases\"], \"proved\": 0, \"observation\": {\"constructions\": 5}, \"repeat_observation\": {\"constructions\": 10}}\n{\"id\": \"shared-factory-changes-enforcement\", \"status\": \"FAIL\", \"failures\": [\"hidden_static_sites\", \"state_shared_across_cases\"], \"proved\": 0, \"observation\": {\"strictness\": [true, true, true, true, true], \"uncut_predicate_on_cut_state\": null}, \"repeat_observation\": {\"strictness\": [true, true, true, true, true, true, false, true, true, true], \"uncut_predicate_on_cut_state\": null}}\n{\"id\": \"predicate-global-scalar-mutation\", \"status\": \"FAIL\", \"failures\": [\"hidden_static_sites\", \"state_shared_across_cases\"], \"proved\": 0, \"observation\": {\"predicate_calls\": 2}, \"repeat_observation\": {\"predicate_calls\": 4}}\n{\"id\": \"shared-slotted-closure\", \"status\": \"FAIL\", \"failures\": [\"hidden_static_sites\", \"state_shared_across_cases\"], \"proved\": 0, \"observation\": {\"attempts\": 0}, \"repeat_observation\": {\"attempts\": 0}}\n{\"id\": \"shared-slotted-global-control\", \"status\": \"FAIL\", \"failures\": [\"hidden_static_sites\", \"state_shared_across_cases\"], \"proved\": 0, \"observation\": {\"attempts\": 0}, \"repeat_observation\": null}\n",
       "stderr": ""
     },
@@ -204,13 +234,14 @@
       "argv": [
         "/usr/bin/python3",
         "-B",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix2/B-cycle3/probe-static.py",
-        "/home/sittingmongoose/pm-scratch/guardtool-bfix2-runtime"
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix3/B-cycle3/probe-static.py",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/guard"
       ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/other-project",
       "exit": 0,
-      "seconds": 1.709,
-      "available_before": 14185472000,
-      "available_after": 15941558272,
+      "seconds": 1.379,
+      "available_before": 28485058560,
+      "available_after": 28382076928,
       "stdout": "{\"id\": \"inline-conversion\", \"status\": \"FAIL\", \"static\": \"FAIL\", \"failures\": [\"hidden_static_sites\"], \"proved\": 0, \"held_out_original\": {\"type\": \"ValueError\", \"error\": \"invalid literal for int() with base 10: 'bad'\", \"table_issued\": false}, \"visited_status\": \"FAIL\", \"visited_failures\": [\"control_refused\", \"hidden_static_sites\", \"runtime_untracked_site\", \"untracked_refusal\"]}\n{\"id\": \"inline-lookup\", \"status\": \"FAIL\", \"static\": \"FAIL\", \"failures\": [\"hidden_static_sites\"], \"proved\": 0, \"held_out_original\": {\"type\": \"KeyError\", \"error\": \"'bad'\", \"table_issued\": false}, \"visited_status\": \"FAIL\", \"visited_failures\": [\"control_refused\", \"hidden_static_sites\", \"runtime_untracked_site\", \"untracked_refusal\"]}\n{\"id\": \"inline-unpacking\", \"status\": \"FAIL\", \"static\": \"FAIL\", \"failures\": [\"hidden_static_sites\"], \"proved\": 0, \"held_out_original\": {\"type\": \"ValueError\", \"error\": \"not enough values to unpack (expected 2, got 1)\", \"table_issued\": false}, \"visited_status\": \"FAIL\", \"visited_failures\": [\"control_refused\", \"hidden_static_sites\", \"runtime_untracked_site\", \"untracked_refusal\"]}\n{\"id\": \"dormant-missing-table-entry\", \"status\": \"FAIL\", \"static\": \"FAIL\", \"failures\": [\"hidden_static_sites\"], \"proved\": 0, \"held_out_original\": {\"type\": \"IsolationError\", \"error\": \"guard missing from table: missing-y\", \"table_issued\": false}, \"visited_status\": \"FAIL\", \"visited_failures\": [\"control_refused\", \"hidden_static_sites\", \"runtime_untracked_site\", \"table_protocol_error\", \"untracked_refusal\"]}\n",
       "stderr": ""
     },
@@ -219,29 +250,79 @@
       "argv": [
         "/usr/bin/python3",
         "-B",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix2/B-cycle3/portability.py",
-        "/home/sittingmongoose/pm-scratch/guardtool-bfix2-runtime"
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix3/B-cycle3/portability.py",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/guard"
       ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/other-project",
       "exit": 0,
-      "seconds": 52.396,
-      "available_before": 15938981888,
-      "available_after": 10878611456,
+      "seconds": 43.12,
+      "available_before": 28381581312,
+      "available_after": 27942535168,
       "stdout": "{\"cli_exit\": 0, \"denied_paths\": []}\n",
       "stderr": "guard-isolation paused: 5 GiB available; resume at 7\n"
     },
     {
-      "name": "standalone-flat",
+      "name": "B-cycle4/total-boundary.py",
       "argv": [
         "/usr/bin/python3",
         "-B",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix2/portability-flat.py",
-        "/home/sittingmongoose/pm-scratch/guardtool-bfix2-standalone"
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix3/B-cycle4/total-boundary.py",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/guard"
       ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/other-project",
       "exit": 0,
-      "seconds": 55.082,
-      "available_before": 10875129856,
-      "available_after": 9004265472,
-      "stdout": "{\"cli_exit\": 0, \"denied_paths\": []}\n",
+      "seconds": 1.694,
+      "available_before": 27942535168,
+      "available_after": 28062203904,
+      "stdout": "{\"id\": \"hidden-invariant-constructor\", \"status\": \"FAIL\", \"static\": \"FAIL\", \"failures\": [\"hidden_static_sites\"], \"proved\": 0, \"held_out_original\": {\"type\": \"IsolationError\", \"error\": \"invariant requires a nonempty field and predicate\", \"table_issued\": false}, \"visited_status\": \"FAIL\", \"visited_failures\": [\"control_refused\", \"hidden_static_sites\", \"runtime_untracked_site\", \"untracked_refusal\"]}\n{\"id\": \"hidden-unary-constant\", \"status\": \"FAIL\", \"static\": \"FAIL\", \"failures\": [\"hidden_static_sites\"], \"proved\": 0, \"held_out_original\": {\"type\": \"TypeError\", \"error\": \"bad operand type for unary -: 'str'\", \"table_issued\": false}, \"visited_status\": \"FAIL\", \"visited_failures\": [\"control_refused\", \"hidden_static_sites\", \"runtime_untracked_site\", \"untracked_refusal\"]}\n{\"id\": \"honest-unary-numeric\", \"status\": \"PASS\", \"static\": \"PASS\", \"failures\": [], \"proved\": 1, \"held_out_original\": {\"returned\": true}, \"visited_status\": \"PASS\", \"visited_failures\": []}\n",
+      "stderr": ""
+    },
+    {
+      "name": "B-cycle4/adjacent.py",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix3/B-cycle4/adjacent.py",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/guard"
+      ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/other-project",
+      "exit": 0,
+      "seconds": 2.498,
+      "available_before": 28060221440,
+      "available_after": 28232343552,
+      "stdout": "{\"id\": \"fresh-control\", \"status\": \"PASS\", \"failures\": [], \"proved\": 1, \"observation\": null, \"repeat_observation\": null}\n{\"id\": \"imported-module-state\", \"status\": \"FAIL\", \"failures\": [\"hidden_static_sites\", \"state_shared_across_cases\"], \"proved\": 0, \"observation\": null, \"repeat_observation\": null}\n{\"id\": \"lru-cache\", \"status\": \"FAIL\", \"failures\": [\"hidden_static_sites\", \"state_shared_across_cases\"], \"proved\": 0, \"observation\": null, \"repeat_observation\": null}\n{\"id\": \"retained-generator\", \"status\": \"FAIL\", \"failures\": [\"hidden_static_sites\", \"state_shared_across_cases\"], \"proved\": 0, \"observation\": null, \"repeat_observation\": null}\n{\"id\": \"retained-iterator\", \"status\": \"FAIL\", \"failures\": [\"hidden_static_sites\", \"state_shared_across_cases\"], \"proved\": 0, \"observation\": null, \"repeat_observation\": null}\n{\"id\": \"random-factory\", \"status\": \"FAIL\", \"failures\": [\"factory_nondeterministic\", \"hidden_static_sites\", \"state_shared_across_cases\"], \"proved\": 0, \"observation\": null, \"repeat_observation\": null}\n{\"id\": \"time-factory\", \"status\": \"FAIL\", \"failures\": [\"factory_nondeterministic\", \"hidden_static_sites\", \"state_shared_across_cases\"], \"proved\": 0, \"observation\": null, \"repeat_observation\": null}\n{\"id\": \"instance-class-counter\", \"status\": \"FAIL\", \"failures\": [\"hidden_static_sites\", \"state_shared_across_cases\"], \"proved\": 0, \"observation\": null, \"repeat_observation\": null}\n{\"id\": \"hidden-next\", \"status\": \"FAIL\", \"failures\": [\"control_refused\", \"hidden_static_sites\", \"runtime_untracked_site\", \"untracked_refusal\", \"wrong_baseline_guard\"], \"proved\": 0, \"observation\": null, \"repeat_observation\": null}\n{\"id\": \"hidden-index\", \"status\": \"FAIL\", \"failures\": [\"control_refused\", \"hidden_static_sites\", \"runtime_untracked_site\", \"untracked_refusal\", \"wrong_baseline_guard\"], \"proved\": 0, \"observation\": null, \"repeat_observation\": null}\n{\"id\": \"hidden-getattr\", \"status\": \"FAIL\", \"failures\": [\"control_refused\", \"hidden_static_sites\", \"runtime_untracked_site\", \"untracked_refusal\", \"wrong_baseline_guard\"], \"proved\": 0, \"observation\": null, \"repeat_observation\": null}\n{\"id\": \"raising-property\", \"status\": \"FAIL\", \"failures\": [\"hidden_static_sites\", \"state_shared_across_cases\"], \"proved\": 0, \"observation\": null, \"repeat_observation\": null}\n{\"id\": \"constant-expression-table-name\", \"status\": \"FAIL\", \"failures\": [\"hidden_static_sites\"], \"proved\": 0, \"observation\": null, \"repeat_observation\": null}\n",
+      "stderr": ""
+    },
+    {
+      "name": "B-cycle4/hidden-operations.py",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix3/B-cycle4/hidden-operations.py",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/guard"
+      ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/other-project",
+      "exit": 0,
+      "seconds": 1.28,
+      "available_before": 28232392704,
+      "available_after": 28236914688,
+      "stdout": "{\"id\": \"hidden-next\", \"status\": \"FAIL\", \"static\": \"FAIL\", \"failures\": [\"hidden_static_sites\"], \"proved\": 0, \"held_out_original\": {\"type\": \"StopIteration\", \"error\": \"\", \"table_issued\": false}, \"visited_status\": \"FAIL\", \"visited_failures\": [\"control_refused\", \"hidden_static_sites\", \"runtime_untracked_site\", \"untracked_refusal\"]}\n{\"id\": \"hidden-index\", \"status\": \"FAIL\", \"static\": \"FAIL\", \"failures\": [\"hidden_static_sites\"], \"proved\": 0, \"held_out_original\": {\"type\": \"ValueError\", \"error\": \"list.index(x): x not in list\", \"table_issued\": false}, \"visited_status\": \"FAIL\", \"visited_failures\": [\"control_refused\", \"hidden_static_sites\", \"runtime_untracked_site\", \"untracked_refusal\"]}\n{\"id\": \"hidden-getattr\", \"status\": \"FAIL\", \"static\": \"FAIL\", \"failures\": [\"hidden_static_sites\"], \"proved\": 0, \"held_out_original\": {\"type\": \"AttributeError\", \"error\": \"'int' object has no attribute 'upper'\", \"table_issued\": false}, \"visited_status\": \"FAIL\", \"visited_failures\": [\"control_refused\", \"hidden_static_sites\", \"runtime_untracked_site\", \"untracked_refusal\"]}\n",
+      "stderr": ""
+    },
+    {
+      "name": "standalone-mount-denied",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix3/mount-denied.py",
+        "guard"
+      ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/other-project",
+      "exit": 0,
+      "seconds": 40.499,
+      "available_before": 28236914688,
+      "available_after": 29172240384,
+      "stdout": "t discards a value; the expression is classified on its own.\"\n            },\n            \"statement:return-true\": {\n              \"count\": 1,\n              \"reason\": \"Returns the literal True, the engine success value.\"\n            }\n          },\n          \"errors\": [],\n          \"files\": [\n            {\n              \"path\": \"subject.py\",\n              \"sha256\": \"ef76885b4321887b25e83a2a74d5b0e22d8eec629f51fefc1f120628c8028327\"\n            }\n          ],\n          \"imports\": [\n            {\n              \"external\": true,\n              \"from\": \"subject.py\",\n              \"module\": \"pm_guard_isolation\",\n              \"optional_attribute\": false,\n              \"repository_files\": []\n            }\n          ],\n          \"predicate_functions\": [\n            [\n              \"/tmp/guardtool-b-trap-j30z8wzs/subject.py\",\n              3,\n              \"px\"\n            ]\n          ],\n          \"review\": \"Every non-guard reason and each predicate body versus its declared field/predicate needs review.\",\n          \"sites\": [\n            {\n              \"exception_operation\": \"\",\n              \"exception_span\": [\n                21,\n                21,\n                4,\n                40\n              ],\n              \"function\": \"factory\",\n              \"id\": \"subject.py:21:4:return\",\n              \"kind\": \"return\",\n              \"line\": 21,\n              \"non_guard\": true,\n              \"path\": \"subject.py\",\n              \"reason\": \"Factory returns a newly constructed execution object; it does not decide acceptance.\",\n              \"source\": \"return g.Case(table, check, context)\"\n            },\n            {\n              \"exception_span\": [\n                13,\n                13,\n                26,\n                28\n              ],\n              \"function\": \"factory.check\",\n              \"id\": \"subject.py:13:26:data_operation\",\n              \"kind\": \"data_operation\",\n              \"line\": 13,\n              \"non_guard\": true,\n              \"path\": \"subject.py\",\n              \"reason\": \"Iterate an empty literal tuple; the for clause stays its own obligation.\",\n              \"source\": \" for item in ()\"\n            }\n          ],\n          \"status\": \"PASS\"\n        },\n        \"status\": \"PASS\",\n        \"suite\": \"C4-remaining-automatic-forms-control\",\n        \"tool_sha256\": \"671dd8b735db51c18f2056c3ddc9443a8fd7d75c7aa218af5fcd84da9aa95efc\",\n        \"trust_decisions\": [\n          \"Review predicate bodies against their one-field/one-predicate declarations.\",\n          \"Review complete boundary coverage, factory reset and every non-guard reason.\",\n          \"Finite matrices do not prove arbitrary predicate semantics or duplicate equivalence.\"\n        ],\n        \"unproved_guards\": [],\n        \"version\": 2\n      }\n    },\n    {\n      \"caught\": true,\n      \"expected\": \"Every automatic form and allowlisted constructor carries a written totality reason.\",\n      \"id\": \"C4-allowlist-written-reasons\",\n      \"report\": {\n        \"blank\": [],\n        \"constructors_without_reason\": [],\n        \"forms\": 36\n      }\n    },\n    {\n      \"caught\": true,\n      \"expected\": \"Only Guard and Invariant have validation hooks; Guard.id and GuardTable.guards are read-only properties that construction never reads; a new hook must change the written argument.\",\n      \"id\": \"C4-constructor-hook-audit\",\n      \"report\": {\n        \"descriptors\": {\n          \"Case\": [],\n          \"Control\": [],\n          \"Duplicate\": [],\n          \"Guard\": [\n            \"id\"\n          ],\n          \"GuardTable\": [\n            \"guards\"\n          ],\n          \"Invariant\": [],\n          \"Negative\": [],\n          \"NonGuard\": [],\n          \"Suite\": []\n        },\n        \"hooks\": {\n          \"Case\": [],\n          \"Control\": [],\n          \"Duplicate\": [],\n          \"Guard\": [\n            \"__post_init__\"\n          ],\n          \"Invariant\": [\n            \"__post_init__\"\n          ],\n          \"Negative\": [],\n          \"NonGuard\": [],\n          \"Suite\": []\n        }\n      }\n    }\n  ],\n  \"version\": 2\n}\n",
       "stderr": "guard-isolation paused: 5 GiB available; resume at 7\n"
     },
     {
@@ -249,12 +330,12 @@
       "argv": [
         "/usr/bin/python3",
         "-B",
-        "/home/sittingmongoose/pm-scratch/guardtool-bfix2-standalone/pm_guard_isolation.py",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/flat-guard/pm_guard_isolation.py",
         "--self-test",
         "--scratch",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix2/scratch-override",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/override",
         "--json",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix2/scratch-override-self-test.json",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix3/scratch-override-self-test.json",
         "--max-rss",
         "1536",
         "--pause-when-low",
@@ -264,48 +345,84 @@
         "--pause-poll",
         "30"
       ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/other-project",
       "exit": 0,
-      "seconds": 60.482,
-      "available_before": 9004007424,
-      "available_after": 12103643136,
+      "seconds": 43.12,
+      "available_before": 29196640256,
+      "available_after": 28767420416,
+      "stdout": "",
+      "stderr": "guard-isolation paused: 5 GiB available; resume at 7\n"
+    },
+    {
+      "name": "dormant-sweep",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix3/dormant-sweep.py",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/guard",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix3/dormant-sweep.json"
+      ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/other-project",
+      "exit": 0,
+      "seconds": 24.852,
+      "available_before": 28767916032,
+      "available_after": 27993124864,
+      "stdout": "{\n  \"snippets\": 211,\n  \"false_passes\": [],\n  \"refused\": 210,\n  \"clean_passes\": [\n    \"table.require('x', value, context)\"\n  ],\n  \"not_python\": [],\n  \"refused_with_credit\": [],\n  \"raising_refused\": 203\n}\n",
+      "stderr": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/guard/sweep-opr8qka5/subject.py:11: SyntaxWarning: 'NoneType' object is not callable; perhaps you missed a comma?\n  None()\n/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/guard/sweep-1d470k4n/subject.py:11: SyntaxWarning: 'int' object is not callable; perhaps you missed a comma?\n  1()\n/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/guard/sweep-a4h4h3no/subject.py:11: SyntaxWarning: 'str' object is not callable; perhaps you missed a comma?\n  'a'()\n/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/guard/sweep-377h4e07/subject.py:11: SyntaxWarning: 'ellipsis' object is not callable; perhaps you missed a comma?\n  ...()\n/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/guard/sweep-s7q35ml1/subject.py:11: SyntaxWarning: 'ellipsis' object is not subscriptable; perhaps you missed a comma?\n  ...[0]\n"
+    },
+    {
+      "name": "dormant-sweep-base-tool",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix3/dormant-sweep.py",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/old",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix3/dormant-sweep-base-tool.json"
+      ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/other-project",
+      "exit": 1,
+      "seconds": 32.887,
+      "available_before": 27993124864,
+      "available_after": 28865454080,
+      "stdout": "{\n  \"snippets\": 211,\n  \"false_passes\": [\n    \"def h(pm_undefined=pm_undefined): return True\",\n    \"lambda pm_undefined=pm_undefined: 1\",\n    \"-'a'\",\n    \"+'a'\",\n    \"~'a'\",\n    \"~1.5\",\n    \"-None\",\n    \"+None\",\n    \"~None\",\n    \"-b'a'\",\n    \"-...\",\n    \"g.Invariant('', 'b')\",\n    \"g.Invariant(' ', 'b')\",\n    \"g.Invariant('/a', '')\",\n    \"g.Invariant('/a', predicate=' ')\",\n    \"g.Invariant(1, 'b')\",\n    \"g.Invariant(None, 'b')\",\n    \"g.Invariant(b'/a', 'b')\",\n    \"table.require('x')\",\n    \"table.require('x', value, context, 1)\",\n    \"table.require('x', value, {})\",\n    \"table.require('x', {}, context)\",\n    \"table.require('x', None, context)\",\n    \"table.require('x', value=None)\",\n    \"table.validate('x', value)\",\n    \"table.validate('x', value, context)\",\n    \"table.validate()\"\n  ],\n  \"refused\": 182,\n  \"clean_passes\": [\n    \"import json as __builtins__\",\n    \"table.require('x', value, context)\"\n  ],\n  \"not_python\": [],\n  \"refused_with_credit\": [],\n  \"raising_refused\": 176\n}\n",
+      "stderr": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/old/sweep-ifpca0qh/subject.py:11: SyntaxWarning: 'NoneType' object is not callable; perhaps you missed a comma?\n  None()\n/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/old/sweep-2q4b4lmc/subject.py:11: SyntaxWarning: 'int' object is not callable; perhaps you missed a comma?\n  1()\n/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/old/sweep-txia7tg9/subject.py:11: SyntaxWarning: 'str' object is not callable; perhaps you missed a comma?\n  'a'()\n/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/old/sweep-nbxpph10/subject.py:11: SyntaxWarning: 'ellipsis' object is not callable; perhaps you missed a comma?\n  ...()\n/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/old/sweep-s_eb_e8q/subject.py:11: SyntaxWarning: 'ellipsis' object is not subscriptable; perhaps you missed a comma?\n  ...[0]\n"
+    },
+    {
+      "name": "new-corpus-on-base-tool",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/old/scripts/pm_guard_isolation.py",
+        "--self-test",
+        "--json",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix3/new-corpus-on-base-tool.json",
+        "--max-rss",
+        "1536",
+        "--pause-when-low",
+        "6",
+        "--resume-at",
+        "7",
+        "--pause-poll",
+        "30"
+      ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/guard-checks/other-project",
+      "exit": 1,
+      "seconds": 50.905,
+      "available_before": 28864524288,
+      "available_after": 28647043072,
       "stdout": "",
       "stderr": "guard-isolation paused: 5 GiB available; resume at 7\n"
     }
   ],
-  "evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix2",
+  "evidence": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix3",
   "findings": {
-    "C3-B1": {
+    "C4-B1": {
       "status": "fixed",
-      "commits": [
-        "2109012078",
-        "3ddf4a255a"
-      ]
+      "commit": "45538a7f57dd51e4028302e2c4ffb4185dafa59d"
     },
-    "C3-B2": {
+    "C4-B2": {
       "status": "fixed",
-      "commits": [
-        "2109012078",
-        "3ddf4a255a"
-      ]
-    },
-    "C3-B3": {
-      "status": "fixed",
-      "commits": [
-        "2109012078",
-        "3ddf4a255a"
-      ]
-    },
-    "C3-B4": {
-      "status": "fixed",
-      "commits": [
-        "2109012078"
-      ]
-    },
-    "C3-B5": {
-      "status": "fixed",
-      "commits": [
-        "2109012078"
-      ]
+      "commit": "45538a7f57dd51e4028302e2c4ffb4185dafa59d"
     }
   },
   "not_rerun": [

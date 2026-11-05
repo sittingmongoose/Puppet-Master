@@ -30,19 +30,23 @@ Registered predicate entry is checked by its known function/code/global identity
 Example predicate and checker wiring:
 
 ```python
+import pm_guard_isolation as g
+
 def nonnegative_x(value, context):
     return 'bad_x' if value['x'] < 0 else None
 
 def make_case(value):
     context = {}
-    table = GuardTable([Guard('x', Invariant('/x', 'nonnegative'), 'bad_x', nonnegative_x)])
+    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', nonnegative_x)])
     def check(complete):
         table.require('x', complete, context)
         return True
-    return Case(table, check, context)
+    return g.Case(table, check, context)
 ```
 
-The return of `Case(...)` is a plumbing return: declare its exact source as a non-guard. Pure helper returns, mutation used by an original successful transition, and delegation calls likewise need specific reasons when flagged. A declaration does not allow an untagged runtime rejection: an uncaught plumbing exception still fails the case. A caught plumbing exception is permitted only at a specifically declared exception site. An exception in a guard predicate remains an error.
+Keep this shape: the engine imported as `g`, `table` bound once in the factory, and each `table.require` directly in the function passed to `g.Case`. The automatic forms below are proven only for that shape. Any other shape is still valid but needs a `call_review` declaration for the reasoning the scan cannot do, including `table.require` in a helper and every `table.validate`.
+
+The return of `g.Case(...)` is a plumbing return: declare its exact source as a non-guard. Pure helper returns, mutation used by an original successful transition, and delegation calls likewise need specific reasons when flagged. A declaration does not allow an untagged runtime rejection: an uncaught plumbing exception still fails the case. A caught plumbing exception is permitted only at a specifically declared exception site. An exception in a guard predicate remains an error.
 
 An exception allowance binds the exact bytecode operation and source span: the assertion's raise, the explicit raise, or the declared refusal-helper call. It does not cover another statement on the same line, evaluation failures in an assertion test/raise payload, or an undeclared new raise of a previously allowed exception. Only verified propagation of the same authorized exception is permitted. Missing instruction positions fail closed.
 
@@ -64,9 +68,98 @@ The complete checker then runs with all entries enabled, each single entry swapp
 
 Runtime refusals must be exception objects issued by the active table, with that guard's name and code. Merely having matching attributes is insufficient. Swallowed table refusals, unknown table names, predicate protocol errors, rejecting returns and untracked exceptions fail the run. A runtime trace also catches handled exceptions in the scanned source and calls into repository source missing from the static closure.
 
-The static allowlist requires obligations for conversions, subscripts/lookups, unpacking, data attribute access, potentially raising comparisons, iteration, unproven bindings and calls, in addition to raises, assertions, non-success/implicit returns, yields and mutation/error-list writes outside predicate bodies. Single-argument canonical builtin type/bool and engine constructors with a verified argument boundary are the total-call exceptions. Static literal table names must exist in the inventory; dynamic names are refused even on dormant paths. Each other operation needs an exact reviewed plumbing declaration; finite fixture agreement does not exempt it. Predicate identification includes the exact file, definition line and qualified name, so a comprehension target or same-line function cannot waive another function. Nested predicate code and unknown statement forms fail closed. This census grants no cut credit. The adapter's non-guard reasons and predicate bodies remain reviewer obligations.
+The static allowlist requires obligations for conversions, subscripts/lookups, unpacking, data attribute access, potentially raising comparisons, iteration, unproven bindings and calls, in addition to raises, assertions, non-success/implicit returns, yields and mutation/error-list writes outside predicate bodies. Only the forms in the allowlist audit below are automatic; each has a written reason. Static literal table names must exist in the inventory; dynamic names are refused even on dormant paths. Each other operation needs an exact reviewed plumbing declaration; finite fixture agreement does not exempt it. Predicate identification includes the exact file, definition line and qualified name, so a comprehension target or same-line function cannot waive another function. Nested predicate code and unknown statement forms fail closed. This census grants no cut credit. The adapter's non-guard reasons and predicate bodies remain reviewer obligations.
 
 Any safety, inventory, matrix or proof failure withholds every row's credit. JSON includes guard metadata, source SHA-256 hashes, the full predicate matrix, exact baseline/cut/restoration outcomes, per-site duplicate checks, masks, static sites and non-guard reasons. Markdown summarizes those same rows. Missing witnesses are unproved. Neither a successful constructor nor a suite-level FAIL excuses a broad credited cut.
+
+## Outside-predicate allowlist audit
+
+Every operation outside a guard predicate is either in this table or an obligation. An obligation needs a table predicate or an exact reviewed `NonGuard`. The table is `TOTAL_FORMS` in the tool: `static_scan` classifies each syntax node through an explicit allowlist, so a form with no entry here, including syntax added by a later Python, is an obligation by default. Each report's `static.automatic_totals` lists the forms that scan used, with counts and these reasons. Resource exhaustion, interpreter interruption and warnings promoted to errors are outside every argument.
+
+### Automatic forms and why they cannot raise
+
+| Form | Why it cannot raise at this boundary |
+|---|---|
+| `statement:control-transfer` | pass, break and continue only move the program counter. |
+| `statement:expression` | An expression statement discards a value; the expression is classified on its own. |
+| `statement:try` | Entering try runs no code and each handler is classified on its own; except* is excluded. |
+| `statement:except-builtin` | A bare except or unshadowed canonical builtin exception classes: matching is a subclass check with no user hook. |
+| `statement:return-true` | Returns the literal True, the engine success value. |
+| `statement:executed-module-import` | Module scope of a loaded module: the import already ran, its live binding is verified and no case runs it again. |
+| `definition:function` | def and lambda only build a function object; defaults, annotations and decorators are classified on their own in the enclosing scope. |
+| `binding:name` | Binding a plain name to a computed value runs no hook; unpacking, attribute and subscript targets and any __builtins__ binding are excluded. |
+| `control:literal-test` | if or a conditional expression on a builtin literal: literal truthiness has no failure path. |
+| `expression:literal` | Loading a compile-time constant cannot raise. |
+| `expression:bound-name` | A binding dominates the read: parameter, earlier sibling statement, loop, comprehension or handler target in its own body, or the certified module or builtin namespace; a deleted name or a handler name outside its handler is excluded. |
+| `expression:identity-compare` | is and is not compare identities with no user hook; every other comparison is an obligation. |
+| `unary:not-literal` | not on a builtin literal (None, bool, int, float, complex, str, bytes, Ellipsis): literal truthiness has no failure path. |
+| `unary:sign-numeric-literal` | Unary + or - on an exact int or float literal is defined for every value. |
+| `unary:invert-int-literal` | ~ on an exact int literal is defined for every value. |
+| `display:sequence` | A list or tuple display stores already computed values; star items are excluded. |
+| `display:dict-literal-keys` | A dict display whose keys are builtin literals, which always hash; ** and mixed str and bytes keys are excluded. |
+| `display:set-literal-items` | A set display whose items are builtin literals, which always hash; mixed str and bytes items are excluded. |
+| `display:comprehension-shell` | A list comprehension or generator shell only collects or wraps results; each for clause is its own obligation. |
+| `display:covered-by-parent` | An f-string field or a slice exists only under a JoinedStr or Subscript, which is itself an obligation. |
+| `attribute:function-code` | Reading __code__ on an unshadowed module-level Python function reads a fixed function slot. |
+| `attribute:code-bytes` | Reading co_code on that code object is defined for every code object. |
+| `attribute:engine-callee` | A callee read on the verified, unshadowed engine alias for a name present in the engine namespace. |
+| `attribute:table-callee` | require or validate read on the factory single fresh engine table; both are GuardTable methods. |
+| `call:type-one-argument` | Unshadowed canonical one-argument type(x) reads the object type with no user hook; star arguments are excluded. |
+| `call:bool-literal` | Unshadowed canonical bool on a builtin literal: literal truthiness has no failure path. |
+| `call:table.require` | Receiver is the factory single fresh table, the name is a literal inventory row, the value is the Case checker unrebound root parameter and the context is the Case context: the only remaining exits are the tagged refusal and errors inside the table row. |
+| `constructor:Invariant` | __post_init__ raises only on a non-string or blank field; both arguments must be literal nonblank strings. |
+| `constructor:Guard` | __post_init__ only strips name and code and tests callable; name and code must be literal nonblank strings and the predicate an unshadowed module-level callable. |
+| `constructor:GuardTable` | __init__ raises only on a non-Guard row or a repeated name; the argument must be a literal sequence of total g.Guard calls with distinct literal names. |
+| `constructor:Case` | Dataclass with no __post_init__, __new__ or validating descriptor: argument binding, which is checked, is its whole boundary. |
+| `constructor:Suite` | Dataclass with no __post_init__, __new__ or validating descriptor; its only default factories are list: argument binding, which is checked, is its whole boundary. |
+| `constructor:Control` | Frozen dataclass with no __post_init__, __new__ or validating descriptor: argument binding, which is checked, is its whole boundary. |
+| `constructor:Negative` | Frozen dataclass with no __post_init__, __new__ or validating descriptor: argument binding, which is checked, is its whole boundary. |
+| `constructor:NonGuard` | Frozen dataclass with no __post_init__, __new__ or validating descriptor: argument binding, which is checked, is its whole boundary. |
+| `constructor:Duplicate` | Frozen dataclass with no __post_init__, __new__ or validating descriptor: argument binding, which is checked, is its whole boundary. |
+
+Syntax nodes with no operation of their own (operators, argument lists, aliases, contexts) are not listed. Raises, assertions, deletions, augmented assignments, `yield`, `global`, `nonlocal` and other calls are explicit sites, never automatic.
+
+### Constructor and call hook audit
+
+The trap `C4-constructor-hook-audit` fails if any of these changes, so a new hook cannot arrive without revisiting its argument.
+
+| Constructor | Validation hooks | Descriptors | Argument boundary |
+|---|---|---|---|
+| `Invariant` | `__post_init__` raises on a non-string or blank field | None | Both arguments are literal nonblank strings |
+| `Guard` | `__post_init__` strips name and code and tests `callable` | Read-only `id` property, not read during construction | Name and code are literal nonblank strings; predicate is an unshadowed module-level callable |
+| `GuardTable` | `__init__` raises on a non-`Guard` row or a repeated name | Read-only `guards` property, not read during construction | A literal list or tuple of total `g.Guard` calls with distinct literal names |
+| `Case`, `Suite` | None | None | Argument binding only; `Suite` defaults are `list` factories |
+| `Control`, `Negative`, `NonGuard`, `Duplicate` | None; frozen dataclass `__setattr__` is not reached by `__init__` | None | Argument binding only |
+
+### Now an obligation
+
+These were automatic at `dec0a57dce`, and each named trap was a credited PASS there. Where the operation can raise, its trap also runs the unchanged original on a held-out input to prove it. Entries marked removed needed no argument because nothing uses them.
+
+| Form | Why it is not total | Trap |
+|---|---|---|
+| `g.Invariant` with a non-literal, blank or non-string argument | `__post_init__` raises `IsolationError` | `C4-hidden-invariant-constructor`, `C4-blank-invariant-literal`, `C4-nonstring-invariant-literal`, `C4-invariant-name-argument` |
+| `g.Guard` whose predicate name is rebound locally | `__post_init__` raises when the local value is not callable | `C4-guard-shadowed-predicate` |
+| Unary operators outside the three certified pairs, including `-'x'`, `~1.5`, `+None`, `-b'x'`, `-True` and `-1j` | Most raise `TypeError`; the rest have no written argument | `C4-hidden-unary-string`, `C4-hidden-float-invert`, `C4-hidden-none-plus`, `C4-hidden-bytes-minus`, `C4-uncertified-unary-forms` |
+| `table.require` with a foreign value or context, in a helper, or on a rebound receiver | Protocol `IsolationError` or `AttributeError`; a runtime check cannot see a dormant call | `C4-table-foreign-value`, `C4-table-foreign-context`, `C4-table-rebound-receiver` |
+| `table.validate`, always | Raises on a missing schema, an undeclared root or an unattributable refusal, and runs the selector and validator | `C4-table-validate-without-schema` |
+| Engine callee read for an absent name or a rebound `g` | `AttributeError` | `C4-engine-missing-member`, `C4-engine-alias-shadowed` |
+| Function-scope imports, and module-scope imports in a module that is not loaded | They execute module code on the visited path | `C4-function-scope-import` |
+| Reads of a default's or annotation's own parameter name | Defaults and annotations run in the enclosing scope | `C4-default-argument-name` |
+| Reads of a name made local by a nested `def`, import, handler or match capture | `UnboundLocalError`, even when a module binding of that name exists | `C4-read-before-nested-def`, `C4-read-before-local-import` |
+| Reads of a deleted name, or a handler target outside its handler | `UnboundLocalError`; a handler target is deleted when the handler ends | `C4-deleted-name`, `C4-handler-name-implicit-delete` |
+| Any binding of `__builtins__`, and reads of a builtin the module's own builtins lack | `NameError` in functions defined after the rebinding | `C4-private-builtins-binding` |
+| `except` naming a rebound builtin exception | Matching raises `TypeError` | `C4-shadowed-exception-class` |
+| `except*` | Matching has its own runtime failures | `C4-except-star` |
+| `type(*x)` | A star can select another `type` form or arity | `C4-star-type-argument` |
+| Dict or set displays mixing `str` and `bytes` literals | Equal-hash items compare during construction, which `-bb` makes an error | `C4-mixed-text-dict-keys` |
+| `__code__` on a rebound name | The local value need not be a function | Removed from the automatic path; covered by the same local-binding rule |
+| `type` alias statements and generic parameters on `def` | No lane needs them and no argument was written | Removed; covered by the default for unlisted forms |
+
+### Already obligations, confirmed
+
+The audit found these forms correct and left them unchanged: subscripts of literals (`(1,)[5]`), comparisons other than `is` and `is not`, including of literals (`1 < 'a'`), every f-string (`f'{1:zz}'`), binary and boolean operators on literals, and truth tests of non-literals (`if`, `while`, `not x` and conditional expressions). So are iteration and comprehension `for` clauses, `with`, `match`, classes, `await`, star items, `**`, and displays with non-literal keys.
+
+`len`, `isinstance`, `int` and every other builtin are `call_review` outside predicates. The pure builtin and method lists apply only inside a predicate body, because an exception there stays inside the table row and fails the run; they grant nothing outside it. `C4-literal-*` keeps one dormant regression for each of these.
 
 ## Duplicates
 

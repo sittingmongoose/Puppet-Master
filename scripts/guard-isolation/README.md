@@ -78,11 +78,15 @@ Function metadata and immutable code include constants, argument/operand tables
 and cell aliases. Lazy function annotations are refused without evaluation;
 materialize reviewed builtin-only annotations before running the suite.
 
-Outside predicates, data conversions, lookups, unpacking, descriptors,
-comparisons, iteration and unproven calls need exact reviewed `NonGuard`
-declarations. The automatic total-call list is single-argument builtin `type`
-and literal-argument `bool`, plus engine constructors whose argument boundary is statically
-verified. Literal table names must exist; dynamic table names fail. A declaration
+Outside predicates, every operation needs a written reason it cannot raise or an
+exact reviewed `NonGuard` declaration. `TOTAL_FORMS` in the tool lists the automatic
+forms with their reasons, and the adoption guide's allowlist audit records each
+entry and each form that became an obligation. A form with no entry, including new
+syntax, is an obligation by default. Each report's `static.automatic_totals` shows
+which forms that scan used. Literal table names must exist; dynamic table names fail.
+Import the engine as `g` and call `table.require` directly in the function passed
+to `g.Case`; other shapes work but need a `call_review` declaration, as does every
+`table.validate`. A declaration
 grants no permission to translate an untracked runtime exception into a guard.
 The static scan and baselines still run for useful diagnostics after a snapshot
 failure; that execution earns no proof credit and is not a sandbox.

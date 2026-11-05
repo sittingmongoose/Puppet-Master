@@ -772,3 +772,82 @@ Scope is limited to tool/runner/example, trap corpus, standalone README, adoptio
 | `B-cycle3/probes-static.json` | `e8d5f0a8963d6abd11f0e40083e84ae8f071b3f5e858152fcd56dde00c196cb7` |
 | `portability-self-test.json` | `541af758b616bd14fb7ab11cda572a367459e8a6c06b46a60da1aab8e3e69cc7` |
 | `verification-manifest.json` | `dfac8d577b944fe9e96bb63ff6481891d23531da9ff37866e915fcd9a5ea5b19` |
+
+## Batch 1, recheck cycle 4: findings and responses
+
+**C4-B1 and C4-B2 are fixed in `45538a7f57dd51e4028302e2c4ffb4185dafa59d`; neither is disputed.** Base: `dec0a57dce93238ab33452f6b7ca1c759435b587`. This section supersedes earlier claims about automatic operations outside predicates. Capability remains **PARTIAL** pending independent review and complete lane adoption.
+
+**The structural change.** Both findings were allowlist entries assumed total, so the scan's default is reversed. It used to list obligations and let everything else through. It now classifies each syntax node through an explicit allowlist, and each accepted form cites a written reason in `TOTAL_FORMS`. A form with no entry, including syntax from a later Python, is an obligation. Reports list the forms each scan used in `static.automatic_totals`.
+
+| Finding | Location, cause and fix | Regression evidence |
+|---|---|---|
+| **C4-B1 — fixed** | `scripts/pm_guard_isolation.py`, `static_scan`. Constructors were treated as having no validation hooks, but `Invariant.__post_init__` raises on a blank or non-string field. `Invariant` is now automatic only with literal nonblank string arguments; anything else is a `call_review` obligation. | The review's `hidden-invariant-constructor` fails with `hidden_static_sites`, zero credit, naming only that call. The held-out input still raises `IsolationError`. `C4-valid-invariant-constructor` passes, and `C4-constructor-hook-audit` fails if a hook is added to any allowlisted class. |
+| **C4-B2 — fixed** | `static_scan`, `unary_form`. Any unary operator on a constant was accepted. It is now certified per operator and exact literal type: `not` on builtin literals, `+` and `-` on int or float, `~` on int. Everything else is an obligation, including valid forms such as `-True` and `-1j`. | The review's `hidden-unary-constant` fails with zero credit, naming only `-'invalid'`. String, float-invert, `None` and bytes negatives each hold out a real `TypeError`. The `-1` control passes both inputs. |
+
+### What the audit changed
+
+The adoption guide's "Outside-predicate allowlist audit" lists all 36 automatic forms with their reasons, the constructor hook audit, each form that became an obligation and those confirmed unchanged. Beyond the two findings, the audit found these automatic forms had no valid argument:
+
+| Now an obligation | Why |
+|---|---|
+| `table.require` outside the exact checker shape | A foreign value or context raises the protocol error, and a rebound receiver raises `AttributeError`. The earlier "enforced at runtime" reason does not cover a dormant call. |
+| Every `table.validate` | Raises on a missing schema, an undeclared root or an unattributable refusal. |
+| Function-scope imports | They run module code on the visited path. |
+| Name reads with no dominating binding | Defaults and annotations naming their own parameter, names made local by a nested `def` or import, deleted names, handler targets after their handler, and builtins the module's own builtins lack. |
+| Shadowed aliases | A rebound `g`, predicate name or builtin exception class, and an engine callee absent from the engine. |
+| Smaller forms | `except*`, `type(*x)`, mixed `str` and `bytes` display keys. `type` aliases and generic parameters were removed because nothing uses them. |
+
+Subscripts and comparisons of literals, f-strings, literal operators and `len` or `isinstance` outside predicates were already obligations. The audit left them unchanged and added one dormant regression for each.
+
+**Effect on adapters.** `table.validate` and `table.require` in a helper now need a `call_review` declaration. The trap runner's shared schema suite builder gained exactly one such declaration; the corpus entries for those traps are unchanged. Lane adapters written to the guide's checker shape need no other change, but each lane must run the new scan.
+
+### Rerun results
+
+Each command ran serially from a scratch copy of the commit, in another project directory, with a 1 GiB address-space cap and a 6 GiB available-memory floor, on CPython 3.14.4/Linux with jsonschema 4.19.2 and referencing 0.36.2. Review drivers were copied unchanged; `mount-denied.py` changes only its hard-coded distribution path.
+
+| Check | Result |
+|---|---|
+| **Self-test** | **173/173 caught.** All 130 earlier traps are byte-equal in order, source and expectation, and 43 are new. |
+| **`total-boundary.py`** | Both false passes now FAIL, for `hidden_static_sites` only, with zero credit. `honest-unary-numeric` passes both inputs. |
+| **Cycle-2 replay** | All **22** suites keep their status, failure kinds and credit, with unchanged inputs. 21 rejecting suites have zero credit; the disclosed honesty-limit sample still passes. |
+| **Cycle-3 replay** | All 8 state suites and 4 dormant suites keep their results, with zero credit on every rejection. |
+| **`adjacent.py`, `hidden-operations.py`** | All 13 and all 3 keep their results. |
+| **DG6B example** | Normal and optimized: **7/7 guards**, 49 matrix cells, 176 evaluations, 353 factory constructions. Results agree apart from process-specific hashes. No declaration changed. |
+| **Standalone** | Flat copy from another project with the PuppetMaster mount denied: exit 0. Repository layout with the private scratch denied: exit 0. Explicit `--scratch`: 173/173. |
+| **Worker sweep `dormant-sweep.py`** | 211 raising or suspect forms on a dormant branch, with only the dispatch declared. **0 false passes** and 203 raising forms refused; the one clean pass is an honest `table.require`. On the base tool the same sweep has **27 false passes**. |
+| **New corpus on the base tool** | 27 new negatives were credited PASSes there. The 11 `C4-literal-*` traps were already caught, which confirms the unchanged list. |
+| **Evidence audit** | **1234 assertions pass**, covering unchanged inputs, exact sites, zero credit, every reason's presence in the guide and unchanged schema, snapshot and table code. |
+
+**Limits.** The sweep is this worker's own list, not a proof of completeness; it is evidence for the allowlist, whose soundness rests on the written reasons, which need independent review. Those reasons exclude resource exhaustion, interpreter interruption and warnings promoted to errors. Predicate bodies stay outside this scan: an exception inside one fails the run if visited, so predicate honesty remains a review obligation. Only CPython 3.14.4/Linux was exercised. The 768-cell schema campaign, lane adoption and governance checks were not rerun.
+
+**Scope.** Tool, trap runner, corpus, standalone README, adoption guide and compact report companions. No owner Markdown, registry, Decision Log, Spec Lock, generated shard, index or evidence, `.gitignore`, `main` push, pm-mail or subagent.
+
+Evidence directory: `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix3/`.
+
+| Evidence under that directory | SHA-256 |
+|---|---|
+| `self-test.json` | `364859d80c01d0beb9f45ec9a571e7a22c6fdff9b6062c23e978ee1370487d14` |
+| `audit-results.json` | `e80123059b828215279becfa3396ab2b3be3622c5f1774b4ecd873cdd3b5a1fc` |
+| `dormant-sweep.json` | `751e3330d950cf2d4e341f7646539883512011ae5a34443e58ff7d020383f8e2` |
+| `dormant-sweep-base-tool.json` | `59722719c19da07f9a1086f1efb1e6610a314231b5b0e402d79b6bc4f6b6f6e9` |
+| `new-corpus-on-base-tool.json` | `8a03f5c22e78244c31b3b52da08c308fecc68fb225a1a9588cec50f2e4bdc839` |
+| `dg6b-example.json` | `dc6b5630cdafe4703315e2d44db98e0c9e2f327601c6c6fd5d1dacfb2576be1f` |
+| `dg6b-example-optimized.json` | `7f2db93d47aa63c5616726f7a599f3a5eb8abacfebac811d059a9610eef893e8` |
+| `scratch-override-self-test.json` | `d2e65f7a3cf2633541df33134f7cdaa9ee7a21db81dc6239e85cdacc00a9aeee` |
+| `commands.json` | `746c6747405bf92f9a794e84b67dd1a29c3b3d2beeae79b43360c5253edaeb0b` |
+| `run-checks.py` | `8d13a10add6f123e257c05e874f573918a8da4e29c98d33d5bb4dfd1e5d17f6c` |
+| `audit-fix3.py` | `350452e69cd02fbd42df24fa2b539f30d1a45b3369921a66d861cd5a174e66f8` |
+| `dormant-sweep.py` | `a1516e83123f722e5a16cf059b1ffd284d471ccf75217185265688b89e91f8c5` |
+| `mount-denied.py` | `d8dc84c019f189b7d32f056e5f353e690219133bf167b4ef8407db51103fbf22` |
+| `prepare-report.py` | `b9a0e6c7900b982bb4e010a5aeb7b6d4cd915dbde989230b3a09ecb4fd93bc64` |
+| `B-cycle4/total-boundary.py` | `4f317a34f152e4dc714a31cc8465c1d23eb3ca264eda0cac04f60ff9f9cc4fcd` |
+| `B-cycle4/total-boundary.json` | `281c90370f3cd5eb6a04c22bbe0db7a61546656f753e132303890a19c9d2e5db` |
+| `B-cycle4/adjacent.json` | `464f12e26fc73b9ca9b6470888cae9190fad3218e82f522aa3644799dee183c2` |
+| `B-cycle4/hidden-operations.json` | `429fbb834141b54ac347daeb615148dac381414cef9f16a6091312820a094acb` |
+| `B-cycle3/probes.json` | `d5d7621de657c89ee18c2ce2be4197439fee019a37713771af41fc6cce4b23cd` |
+| `B-cycle3/probes-static.json` | `3c765ea58db9d75fee3ffb85b363e3e4491c37238ffca9cdec207e3b10756935` |
+| `B-cycle3/portability.json` | `ef4b1e03a5ee54d265868dcdbb8e2f929ef7a349dd13d6f5ebf398fc6706a0d9` |
+| `B-cycle2/probes.json` | `9ab745fc8ee8a3af4ed037a088b34fe08f93d2b49a1459fca9ab4f79f6c3b6d7` |
+| `B-cycle2/probes-more.json` | `beb8dc04d21503a0e52200029bd38c71c55ebab7bc83e1c3ed3eefc6c66bc583` |
+| `B-cycle2/probes-purity.json` | `142262367c5ed953eb9f622a5b335f8e20920d0e04b2cbd6d0b5c7e1e8585d8a` |
+| `B-cycle2/probes-adjacent.json` | `cb2bb3591d5c7e118bac3026de4cc12b9085a2f82c20294676b57b6a30858963` |

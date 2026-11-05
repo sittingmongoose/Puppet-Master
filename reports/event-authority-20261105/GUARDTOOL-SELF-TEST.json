@@ -2,7 +2,7 @@
   "version": 2,
   "method": "B: guard tables",
   "status": "PASS",
-  "caught": 130,
+  "caught": 173,
   "traps": [
     {
       "id": "table-single-swaps",
@@ -652,6 +652,221 @@
     {
       "id": "C3-snapshot-scalar-topology",
       "expected": "Snapshots retain scalar alias topology and detect equal-value shared rebinding, while erasing fresh identities.",
+      "caught": true
+    },
+    {
+      "id": "C4-hidden-invariant-constructor",
+      "expected": "Invariant validation on data is an obligation even when the field read is declared; otherwise a blank y raises untagged.",
+      "caught": true
+    },
+    {
+      "id": "C4-valid-invariant-constructor",
+      "expected": "PASS: literal nonblank Invariant arguments cannot reach its validation, so no declaration is needed.",
+      "caught": true
+    },
+    {
+      "id": "C4-blank-invariant-literal",
+      "expected": "A blank literal is not a valid Invariant argument; it stays an obligation.",
+      "caught": true
+    },
+    {
+      "id": "C4-nonstring-invariant-literal",
+      "expected": "A non-string literal is not a valid Invariant argument; it stays an obligation.",
+      "caught": true
+    },
+    {
+      "id": "C4-invariant-name-argument",
+      "expected": "A non-literal Invariant argument is an obligation even when its current value is valid.",
+      "caught": true
+    },
+    {
+      "id": "C4-guard-shadowed-predicate",
+      "expected": "A local name shadowing a module predicate does not prove Guard receives a callable.",
+      "caught": true
+    },
+    {
+      "id": "C4-hidden-unary-string",
+      "expected": "Unary minus on a string literal raises; a constant operand does not prove the operation total.",
+      "caught": true
+    },
+    {
+      "id": "C4-hidden-float-invert",
+      "expected": "Invert on a float literal raises; it is certified only for int literals.",
+      "caught": true
+    },
+    {
+      "id": "C4-hidden-none-plus",
+      "expected": "Unary plus on None raises; it is certified only for int and float literals.",
+      "caught": true
+    },
+    {
+      "id": "C4-hidden-bytes-minus",
+      "expected": "Unary minus on bytes raises.",
+      "caught": true
+    },
+    {
+      "id": "C4-uncertified-unary-forms",
+      "expected": "Valid operands outside the certified operator and type pairs are still obligations.",
+      "caught": true
+    },
+    {
+      "id": "C4-unary-numeric-control",
+      "expected": "PASS: certified operator and literal type pairs need no declaration.",
+      "caught": true
+    },
+    {
+      "id": "C4-table-foreign-value",
+      "expected": "require is total only on the bound root; a foreign value raises the protocol error.",
+      "caught": true
+    },
+    {
+      "id": "C4-table-foreign-context",
+      "expected": "require is total only with the Case context; a foreign context raises the protocol error.",
+      "caught": true
+    },
+    {
+      "id": "C4-table-validate-without-schema",
+      "expected": "validate can raise on a missing schema, an undeclared root or an unattributable refusal, so it is always an obligation.",
+      "caught": true
+    },
+    {
+      "id": "C4-table-rebound-receiver",
+      "expected": "A rebinding of table disproves the receiver; the attribute read and the call are obligations.",
+      "caught": true
+    },
+    {
+      "id": "C4-engine-missing-member",
+      "expected": "A reviewed call does not prove the callee read; a name absent from the engine is an obligation.",
+      "caught": true
+    },
+    {
+      "id": "C4-engine-alias-shadowed",
+      "expected": "A local rebinding of the alias disproves the engine constructor.",
+      "caught": true
+    },
+    {
+      "id": "C4-default-argument-name",
+      "expected": "A default runs in the enclosing scope; its own parameter name does not bind it.",
+      "caught": true
+    },
+    {
+      "id": "C4-function-scope-import",
+      "expected": "A function-scope import runs module code on the visited path; only an executed module-scope import is automatic.",
+      "caught": true
+    },
+    {
+      "id": "C4-deleted-name",
+      "expected": "A deleted name has no dominating binding.",
+      "caught": true
+    },
+    {
+      "id": "C4-star-type-argument",
+      "expected": "Star arguments can select another type() form or arity; only a single plain argument is total.",
+      "caught": true
+    },
+    {
+      "id": "C4-literal-subscript",
+      "expected": "Literal operands do not make this form total; it remains an obligation outside predicates.",
+      "caught": true
+    },
+    {
+      "id": "C4-literal-comparison",
+      "expected": "Literal operands do not make this form total; it remains an obligation outside predicates.",
+      "caught": true
+    },
+    {
+      "id": "C4-literal-fstring",
+      "expected": "Literal operands do not make this form total; it remains an obligation outside predicates.",
+      "caught": true
+    },
+    {
+      "id": "C4-literal-binop",
+      "expected": "Literal operands do not make this form total; it remains an obligation outside predicates.",
+      "caught": true
+    },
+    {
+      "id": "C4-literal-boolop",
+      "expected": "Literal operands do not make this form total; it remains an obligation outside predicates.",
+      "caught": true
+    },
+    {
+      "id": "C4-literal-len",
+      "expected": "Literal operands do not make this form total; it remains an obligation outside predicates.",
+      "caught": true
+    },
+    {
+      "id": "C4-literal-isinstance",
+      "expected": "Literal operands do not make this form total; it remains an obligation outside predicates.",
+      "caught": true
+    },
+    {
+      "id": "C4-literal-int",
+      "expected": "Literal operands do not make this form total; it remains an obligation outside predicates.",
+      "caught": true
+    },
+    {
+      "id": "C4-literal-getattr-on-literal",
+      "expected": "Literal operands do not make this form total; it remains an obligation outside predicates.",
+      "caught": true
+    },
+    {
+      "id": "C4-literal-dict-star",
+      "expected": "Literal operands do not make this form total; it remains an obligation outside predicates.",
+      "caught": true
+    },
+    {
+      "id": "C4-literal-set-star",
+      "expected": "Literal operands do not make this form total; it remains an obligation outside predicates.",
+      "caught": true
+    },
+    {
+      "id": "C4-shadowed-exception-class",
+      "expected": "A local rebinding of a builtin exception name makes the handler match raise.",
+      "caught": true
+    },
+    {
+      "id": "C4-handler-name-implicit-delete",
+      "expected": "A handler target is deleted when the handler ends; an earlier sibling binding does not dominate the later read.",
+      "caught": true
+    },
+    {
+      "id": "C4-except-star",
+      "expected": "except* has its own runtime matching failures, so try-star is an obligation.",
+      "caught": true
+    },
+    {
+      "id": "C4-private-builtins-binding",
+      "expected": "Rebinding __builtins__ removes the names the certified read relies on; the binding and the read are obligations.",
+      "caught": true
+    },
+    {
+      "id": "C4-read-before-nested-def",
+      "expected": "A nested definition makes the name local to the checker, so a module binding of the same name does not dominate the earlier read.",
+      "caught": true
+    },
+    {
+      "id": "C4-read-before-local-import",
+      "expected": "A function-scope import makes the name local, so a module binding of the same name does not dominate the earlier read.",
+      "caught": true
+    },
+    {
+      "id": "C4-mixed-text-dict-keys",
+      "expected": "Equal-hash str and bytes keys compare during construction, which -bb makes an error, so the display is an obligation.",
+      "caught": true
+    },
+    {
+      "id": "C4-remaining-automatic-forms-control",
+      "expected": "PASS: every remaining written automatic form is accepted with no declaration, so the table describes live behavior.",
+      "caught": true
+    },
+    {
+      "id": "C4-allowlist-written-reasons",
+      "expected": "Every automatic form and allowlisted constructor carries a written totality reason.",
+      "caught": true
+    },
+    {
+      "id": "C4-constructor-hook-audit",
+      "expected": "Only Guard and Invariant have validation hooks; Guard.id and GuardTable.guards are read-only properties that construction never reads; a new hook must change the written argument.",
       "caught": true
     }
   ]
