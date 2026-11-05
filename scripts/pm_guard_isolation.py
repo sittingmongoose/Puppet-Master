@@ -1141,6 +1141,73 @@ class Suite:
     reset_seams: list[NonGuard] = field(default_factory=list)
 
 
+# Every form the outside-predicate scan accepts without a declaration, with its
+# written totality argument at the stated boundary. Resource exhaustion,
+# interpreter interruption and warnings promoted to errors are outside every
+# argument. A node that matches no entry is an obligation: a table predicate or
+# an exact reviewed NonGuard.
+TOTAL_FORMS = {
+    'statement:control-transfer': 'pass, break and continue only move the program counter.',
+    'statement:expression': 'An expression statement discards a value; the expression is classified on its own.',
+    'statement:try': 'Entering try runs no code and each handler is classified on its own; except* is excluded.',
+    'statement:except-builtin': 'A bare except or unshadowed canonical builtin exception classes: matching is a subclass check with no user hook.',
+    'statement:return-true': 'Returns the literal True, the engine success value.',
+    'statement:executed-module-import': 'Module scope of a loaded module: the import already ran, its live binding is verified and no case runs it again.',
+    'definition:function': 'def and lambda only build a function object; defaults, annotations and decorators are classified on their own in the enclosing scope.',
+    'binding:name': 'Binding a plain name to a computed value runs no hook; unpacking, attribute and subscript targets and any __builtins__ binding are excluded.',
+    'control:literal-test': 'if or a conditional expression on a builtin literal: literal truthiness has no failure path.',
+    'expression:literal': 'Loading a compile-time constant cannot raise.',
+    'expression:bound-name': 'A binding dominates the read: parameter, earlier sibling statement, loop, comprehension or handler target in its own body, or the certified module or builtin namespace; a deleted name or a handler name outside its handler is excluded.',
+    'expression:identity-compare': 'is and is not compare identities with no user hook; every other comparison is an obligation.',
+    'unary:not-literal': 'not on a builtin literal (None, bool, int, float, complex, str, bytes, Ellipsis): literal truthiness has no failure path.',
+    'unary:sign-numeric-literal': 'Unary + or - on an exact int or float literal is defined for every value.',
+    'unary:invert-int-literal': '~ on an exact int literal is defined for every value.',
+    'display:sequence': 'A list or tuple display stores already computed values; star items are excluded.',
+    'display:dict-literal-keys': 'A dict display whose keys are builtin literals, which always hash; ** and mixed str and bytes keys are excluded.',
+    'display:set-literal-items': 'A set display whose items are builtin literals, which always hash; mixed str and bytes items are excluded.',
+    'display:comprehension-shell': 'A list comprehension or generator shell only collects or wraps results; each for clause is its own obligation.',
+    'display:covered-by-parent': 'An f-string field or a slice exists only under a JoinedStr or Subscript, which is itself an obligation.',
+    'attribute:function-code': 'Reading __code__ on an unshadowed module-level Python function reads a fixed function slot.',
+    'attribute:code-bytes': 'Reading co_code on that code object is defined for every code object.',
+    'attribute:engine-callee': 'A callee read on the verified, unshadowed engine alias for a name present in the engine namespace.',
+    'attribute:table-callee': 'require or validate read on the factory single fresh engine table; both are GuardTable methods.',
+    'call:type-one-argument': 'Unshadowed canonical one-argument type(x) reads the object type with no user hook; star arguments are excluded.',
+    'call:bool-literal': 'Unshadowed canonical bool on a builtin literal: literal truthiness has no failure path.',
+    'call:table.require': 'Receiver is the factory single fresh table, the name is a literal inventory row, the value is the Case checker unrebound root parameter and the context is the Case context: the only remaining exits are the tagged refusal and errors inside the table row.',
+    'constructor:Invariant': '__post_init__ raises only on a non-string or blank field; both arguments must be literal nonblank strings.',
+    'constructor:Guard': '__post_init__ only strips name and code and tests callable; name and code must be literal nonblank strings and the predicate an unshadowed module-level callable.',
+    'constructor:GuardTable': '__init__ raises only on a non-Guard row or a repeated name; the argument must be a literal sequence of total g.Guard calls with distinct literal names.',
+    'constructor:Case': 'Dataclass with no __post_init__, __new__ or validating descriptor: argument binding, which is checked, is its whole boundary.',
+    'constructor:Suite': 'Dataclass with no __post_init__, __new__ or validating descriptor; its only default factories are list: argument binding, which is checked, is its whole boundary.',
+    'constructor:Control': 'Frozen dataclass with no __post_init__, __new__ or validating descriptor: argument binding, which is checked, is its whole boundary.',
+    'constructor:Negative': 'Frozen dataclass with no __post_init__, __new__ or validating descriptor: argument binding, which is checked, is its whole boundary.',
+    'constructor:NonGuard': 'Frozen dataclass with no __post_init__, __new__ or validating descriptor: argument binding, which is checked, is its whole boundary.',
+    'constructor:Duplicate': 'Frozen dataclass with no __post_init__, __new__ or validating descriptor: argument binding, which is checked, is its whole boundary.',
+}
+_ENGINE_CONSTRUCTORS = {'Guard': Guard, 'GuardTable': GuardTable, 'Invariant': Invariant, 'Case': Case, 'Suite': Suite,
+                        'Control': Control, 'Negative': Negative, 'NonGuard': NonGuard, 'Duplicate': Duplicate}
+_BUILTIN_LITERALS = (type(None), bool, int, float, complex, str, bytes, type(Ellipsis))
+
+
+def _names_bound_by(part):
+    """Every name this one AST node binds, including forms with no ast.Name."""
+    if isinstance(part, ast.Name):
+        return set() if isinstance(part.ctx, ast.Load) else {part.id}
+    if isinstance(part, ast.arg):
+        return {part.arg}
+    if isinstance(part, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef, ast.ExceptHandler)):
+        return {part.name} if part.name else set()
+    if isinstance(part, (ast.Global, ast.Nonlocal)):
+        return set(part.names)
+    if isinstance(part, (ast.Import, ast.ImportFrom)):
+        return {alias.asname or alias.name.split('.')[0] for alias in part.names}
+    if type(part).__name__ in ('MatchAs', 'MatchStar', 'TypeVar', 'ParamSpec', 'TypeVarTuple'):
+        return {part.name} if part.name else set()
+    if type(part).__name__ == 'MatchMapping':
+        return {part.rest} if part.rest else set()
+    return set()
+
+
 def _function_key(fn):
     fn = fn.__func__ if inspect.ismethod(fn) else fn
     if not inspect.isfunction(fn) or fn.__code__.co_name == '<lambda>':
@@ -1172,6 +1239,7 @@ def static_scan(suite, table):
     located_predicates = set()
     files, sites, imports, errors = {}, [], [], []
     allowed, reset_allowed = {}, {}
+    automatic = {}
     for declaration in [*suite.non_guards, *suite.reset_seams]:
         path = (root / declaration.path).resolve()
         key = (str(path), declaration.function, declaration.kind, declaration.source)
@@ -1338,6 +1406,15 @@ def static_scan(suite, table):
         shadowed = {part.name for part in ast.walk(tree) if isinstance(part, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef))}
         shadowed.update(part.id for part in ast.walk(tree) if isinstance(part, ast.Name) and isinstance(part.ctx, ast.Store))
         shadowed.update(part.arg for part in ast.walk(tree) if isinstance(part, ast.arg))
+        # Bindings other than the module's own top-level definitions and imports.
+        local_bindings = set()
+        for part in ast.walk(tree):
+            if isinstance(part, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef, ast.Import, ast.ImportFrom)) and not owners[parents[part]]:
+                continue
+            local_bindings |= _names_bound_by(part)
+        shadowed |= local_bindings
+        deleted_names = {part.id for part in ast.walk(tree) if isinstance(part, ast.Name) and isinstance(part.ctx, ast.Del)}
+        handler_names = {part.name for part in ast.walk(tree) if isinstance(part, ast.ExceptHandler) and part.name}
         def data_expression(part, names, calls):
             if isinstance(part, ast.Name):
                 return part.id in names
@@ -1350,9 +1427,9 @@ def static_scan(suite, table):
             return False
         def builtin_is(name):
             modules = source_modules.get(path, [])
-            if not modules:
+            if not modules or name not in vars(builtins):
                 return False
-            canonical = vars(builtins).get(name)
+            canonical = vars(builtins)[name]
             for module in modules:
                 namespace = vars(module)
                 environment = namespace.get('__builtins__')
@@ -1360,39 +1437,125 @@ def static_scan(suite, table):
                 if type(environment) is not dict or namespace.get(name, environment.get(name)) is not canonical:
                     return False
             return True
-        def engine_constructor_total(node):
-            if not (isinstance(node.func, ast.Attribute) and isinstance(node.func.value, ast.Name) and node.func.value.id == 'g'):
-                return False
-            name = node.func.attr
-            constructors = {'Guard': Guard, 'GuardTable': GuardTable, 'Invariant': Invariant, 'Case': Case,
-                            'Suite': Suite, 'Control': Control, 'Negative': Negative, 'NonGuard': NonGuard, 'Duplicate': Duplicate}
+        def module_name_bound(name):
+            # The module's own namespace, else the builtins its functions actually see.
             modules = source_modules.get(path, [])
-            if name not in constructors or not modules or any(vars(module).get('g') is not sys.modules[__name__] for module in modules):
+            if not modules:
                 return False
-            if any(isinstance(arg, ast.Starred) for arg in node.args) or any(kw.arg is None for kw in node.keywords):
-                return False
-            try:
-                arguments = inspect.signature(constructors[name]).bind(*node.args, **{kw.arg: kw.value for kw in node.keywords}).arguments
-            except TypeError:
-                return False
-            if name == 'Guard':
-                for key in ('name', 'refusal_code'):
-                    value = arguments[key]
-                    if not isinstance(value, ast.Constant) or type(value.value) is not str or not value.value.strip():
-                        return False
-                predicate = arguments['predicate']
-                if not isinstance(predicate, ast.Name) or not any(callable(vars(module).get(predicate.id)) for module in modules):
+            for module in modules:
+                namespace = vars(module)
+                environment = namespace.get('__builtins__')
+                environment = vars(environment) if type(environment) is types.ModuleType else environment
+                if name not in namespace and (type(environment) is not dict or name not in environment):
                     return False
+            return True
+        def engine_alias():
+            modules = source_modules.get(path, [])
+            return bool(modules) and 'g' not in shadowed and all(vars(module).get('g') is sys.modules[__name__] for module in modules)
+        def literal_text(node):
+            return isinstance(node, ast.Constant) and type(node.value) is str and bool(node.value.strip())
+        def builtin_literal(node):
+            return isinstance(node, ast.Constant) and type(node.value) in _BUILTIN_LITERALS
+        def mixed_text(items):
+            # Equal-hash str and bytes keys compare during construction; -bb turns that into an error.
+            return {str, bytes} <= {type(item.value) for item in items}
+        def bound_arguments(signature_of, node, *leading):
+            if any(isinstance(arg, ast.Starred) for arg in node.args) or any(kw.arg is None for kw in node.keywords):
+                return None
+            try:
+                return inspect.signature(signature_of).bind(*leading, *node.args, **{kw.arg: kw.value for kw in node.keywords}).arguments
+            except TypeError:
+                return None
+        def engine_constructor_form(node):
+            """Automatic only when the argument boundary proves its validation cannot fire."""
+            if not (isinstance(node.func, ast.Attribute) and isinstance(node.func.value, ast.Name) and node.func.value.id == 'g'):
+                return None
+            name = node.func.attr
+            if name not in _ENGINE_CONSTRUCTORS or not engine_alias():
+                return None
+            arguments = bound_arguments(_ENGINE_CONSTRUCTORS[name], node)
+            if arguments is None:
+                return None
+            if name == 'Invariant' and not (literal_text(arguments['subject']) and literal_text(arguments['predicate'])):
+                return None
+            if name == 'Guard':
+                predicate = arguments['predicate']
+                if not (literal_text(arguments['name']) and literal_text(arguments['refusal_code']) and isinstance(predicate, ast.Name) and
+                        predicate.id not in local_bindings and all(callable(vars(module).get(predicate.id)) for module in source_modules[path])):
+                    return None
             if name == 'GuardTable':
                 rows = arguments['guards']
-                if not isinstance(rows, (ast.List, ast.Tuple)) or any(not isinstance(row, ast.Call) or not engine_constructor_total(row) or ast.unparse(row.func) != 'g.Guard' for row in rows.elts):
-                    return False
-                names = [row.args[0].value if row.args else next(kw.value.value for kw in row.keywords if kw.arg == 'name') for row in rows.elts]
+                if not isinstance(rows, (ast.List, ast.Tuple)) or any(not isinstance(row, ast.Call) or ast.unparse(row.func) != 'g.Guard' or not engine_constructor_form(row) for row in rows.elts):
+                    return None
+                names = [bound_arguments(Guard, row)['name'].value for row in rows.elts]
                 if len(set(names)) != len(names):
-                    return False
-            # The remaining constructors are dataclasses with no validation
-            # hooks: argument binding is their entire exception boundary.
-            return True
+                    return None
+            return 'constructor:' + name
+        def enclosing_function(node):
+            node = parents.get(node)
+            while node is not None and not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda, ast.ClassDef)):
+                node = parents.get(node)
+            return node
+        def binders(scope, name):
+            return [part for part in ast.walk(scope) if part is not scope and name in _names_bound_by(part)]
+        def single_assignment(scope, name):
+            """The one direct `name = value` statement, when nothing else in the scope binds it."""
+            found = binders(scope, name)
+            if len(found) != 1 or not isinstance(found[0], ast.Name):
+                return None
+            statement = parents[found[0]]
+            return statement if isinstance(statement, ast.Assign) and statement.targets == found and statement in scope.body else None
+        def table_factory(node):
+            """The factory scope that binds `table` once to a fresh engine table, read from its direct checker."""
+            checker = enclosing_function(node)
+            scope = enclosing_function(checker) if isinstance(checker, ast.FunctionDef) else None
+            if not isinstance(scope, ast.FunctionDef) or not engine_alias():
+                return None
+            statement = single_assignment(scope, 'table')
+            maker = statement.value if statement else None
+            return scope if isinstance(maker, ast.Call) and ast.unparse(maker.func) in ('g.GuardTable', 'g.schema_table') else None
+        def proved_none(expression, scope):
+            if expression is None or isinstance(expression, ast.Constant):
+                return expression is None or expression.value is None
+            statement = single_assignment(scope, expression.id) if isinstance(expression, ast.Name) else None
+            return statement is not None and isinstance(statement.value, ast.Constant) and statement.value.value is None
+        def table_require_total(node):
+            if not (isinstance(node.func, ast.Attribute) and node.func.attr == 'require' and isinstance(node.func.value, ast.Name) and node.func.value.id == 'table'):
+                return False
+            scope = table_factory(node)
+            arguments = bound_arguments(GuardTable.require, node, None)
+            if scope is None or arguments is None:
+                return False
+            checker = enclosing_function(node)
+            positional = [*checker.args.posonlyargs, *checker.args.args]
+            if not positional or binders(checker, positional[0].arg) != [positional[0]]:
+                return False
+            guard, root, context = arguments['name'], arguments['value'], arguments.get('context')
+            if not (isinstance(guard, ast.Constant) and type(guard.value) is str and guard.value in table.guards and
+                    isinstance(root, ast.Name) and root.id == positional[0].arg):
+                return False
+            # This function is the Case checker, so the engine passes the bound root to it.
+            cases = []
+            for part in ast.walk(scope):
+                if isinstance(part, ast.Call) and ast.unparse(part.func) == 'g.Case':
+                    bound = bound_arguments(Case, part)
+                    if bound and isinstance(bound['table'], ast.Name) and bound['table'].id == 'table' and isinstance(bound['check'], ast.Name) and bound['check'].id == checker.name:
+                        cases.append(bound)
+            if len(cases) != 1 or len(binders(scope, checker.name)) != 1:
+                return False
+            case_context = cases[0].get('context')
+            if proved_none(context, scope) and proved_none(case_context, scope):
+                return True
+            return (isinstance(context, ast.Name) and isinstance(case_context, ast.Name) and context.id == case_context.id and
+                    single_assignment(scope, context.id) is not None)
+        def call_total_form(node):
+            if (isinstance(node.func, ast.Name) and node.func.id in ('type', 'bool') and node.func.id not in shadowed and builtin_is(node.func.id) and
+                    len(node.args) == 1 and not node.keywords and not isinstance(node.args[0], ast.Starred)):
+                if node.func.id == 'type':
+                    return 'call:type-one-argument'
+                if builtin_literal(node.args[0]):
+                    return 'call:bool-literal'
+            return engine_constructor_form(node) or ('call:table.require' if table_require_total(node) else None)
         exempt = set()
         predicate_data = {}
         for node in ast.walk(tree):
@@ -1471,17 +1634,11 @@ def static_scan(suite, table):
                     leaf = name.split('.')[-1]
                     if leaf in ('append', 'extend', 'insert', 'update', 'add', 'setdefault', 'clear', 'pop', 'remove', 'discard', 'write', 'write_text', 'write_bytes'):
                         kind = 'mutation_or_error_write'
-                    elif leaf in ('require', 'refuse', 'reject', 'deny', 'fail', 'abort', 'exit', '_exit', 'throw'):
-                        # Exact table calls are checked for actual table identity at runtime.
-                        if not (isinstance(node.func, ast.Attribute) and node.func.attr in ('require', 'validate') and
-                                isinstance(node.func.value, ast.Name) and node.func.value.id == 'table'):
-                            kind = 'refusal_helper'
-                    elif not (isinstance(node.func, ast.Name) and node.func.id in ('type', 'bool') and node.func.id not in shadowed and
-                              builtin_is(node.func.id) and len(node.args) == 1 and not node.keywords
-                              and (node.func.id == 'type' or isinstance(node.args[0], ast.Constant))
-                              or engine_constructor_total(node)
-                              or name in ('table.require', 'table.validate')):
-                        kind = 'call_review'
+                    elif call_total_form(node) is None:
+                        table_call = (isinstance(node.func, ast.Attribute) and node.func.attr in ('require', 'validate') and
+                                      isinstance(node.func.value, ast.Name) and node.func.value.id == 'table')
+                        helper = leaf in ('require', 'refuse', 'reject', 'deny', 'fail', 'abort', 'exit', '_exit', 'throw') and not table_call
+                        kind = 'refusal_helper' if helper else 'call_review'
             if node in exempt:
                 if isinstance(node, (ast.AugAssign, ast.Delete, ast.NamedExpr)) or isinstance(node, (ast.Assign, ast.AnnAssign)) and any(
                         isinstance(part, (ast.Attribute, ast.Subscript)) for target in (node.targets if isinstance(node, ast.Assign) else [node.target]) for part in ast.walk(target)):
@@ -1549,20 +1706,21 @@ def static_scan(suite, table):
         def bound_function(name):
             bindings = [vars(module).get(name) for module in source_modules.get(path, [])]
             return bindings[0] if bindings and all(value is bindings[0] for value in bindings) else None
-        def total_attribute(node):
-            # Immutable original Python code observation used by the no-clone
-            # control. General attribute access/descriptors are obligations.
+        def attribute_form(node):
+            # General attribute access and descriptors are obligations.
             if isinstance(node.value, ast.Name) and node.attr == '__code__':
-                return type(bound_function(node.value.id)) is types.FunctionType
+                if node.value.id not in local_bindings and type(bound_function(node.value.id)) is types.FunctionType:
+                    return 'attribute:function-code'
+                return None
             if isinstance(node.value, ast.Attribute) and node.attr == 'co_code':
-                return node.value.attr == '__code__' and total_attribute(node.value)
+                return 'attribute:code-bytes' if node.value.attr == '__code__' and attribute_form(node.value) else None
             parent = parents.get(node)
-            if isinstance(parent, ast.Call) and parent.func is node:
-                if isinstance(node.value, ast.Name) and node.value.id == 'table' and node.attr in ('require', 'validate'):
-                    return True  # actual receiver is enforced at the engine entry
-                if isinstance(node.value, ast.Name) and node.value.id == 'g':
-                    return all(vars(module).get('g') is sys.modules[__name__] for module in source_modules.get(path, []))
-            return False
+            if isinstance(parent, ast.Call) and parent.func is node and isinstance(node.value, ast.Name):
+                if node.value.id == 'table' and node.attr in ('require', 'validate') and table_factory(node):
+                    return 'attribute:table-callee'
+                if node.value.id == 'g' and engine_alias() and node.attr in vars(sys.modules[__name__]):
+                    return 'attribute:engine-callee'
+            return None
         def target_names(target):
             return {part.id for part in ast.walk(target) if isinstance(part, ast.Name) and isinstance(part.ctx, ast.Store)}
         def statement_binds(statement, name):
@@ -1575,6 +1733,8 @@ def static_scan(suite, table):
             return False
         def total_name(node):
             name, child = node.id, node
+            if name in deleted_names:
+                return False
             while child in parents:
                 parent = parents[child]
                 if isinstance(parent, (ast.ListComp, ast.SetComp, ast.DictComp, ast.GeneratorExp)):
@@ -1588,18 +1748,97 @@ def static_scan(suite, table):
                 for field in ('body', 'orelse', 'finalbody'):
                     siblings = getattr(parent, field, None)
                     if isinstance(siblings, list) and child in siblings:
-                        if any(statement_binds(statement, name) for statement in siblings[:siblings.index(child)]):
+                        # A handler target is implicitly deleted when its handler ends.
+                        if name not in handler_names and any(statement_binds(statement, name) for statement in siblings[:siblings.index(child)]):
                             return True
-                if isinstance(parent, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda)):
+                # Defaults, annotations and decorators run in the enclosing scope.
+                if isinstance(parent, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda)) and (child is parent.body or isinstance(parent.body, list) and child in parent.body):
                     args = parent.args
-                    if name in {arg.arg for arg in [*args.posonlyargs, *args.args, *args.kwonlyargs, *([args.vararg] if args.vararg else []), *([args.kwarg] if args.kwarg else [])]}:
+                    if name not in handler_names and name in {arg.arg for arg in [*args.posonlyargs, *args.args, *args.kwonlyargs, *([args.vararg] if args.vararg else []), *([args.kwarg] if args.kwarg else [])]}:
                         return True
-                    local = any(owners.get(part) == owners[parent] and isinstance(part, ast.Name) and isinstance(part.ctx, ast.Store) and part.id == name for part in ast.walk(parent))
+                    # Any binding form makes the name local, including nested
+                    # definitions, imports, handler targets and match captures.
+                    local = any(part is not parent and name in _names_bound_by(part) and not isinstance(part, (ast.Global, ast.Nonlocal)) and
+                                (owners[parents[part]] if isinstance(part, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) else owners.get(part)) == owners[parent]
+                                for part in ast.walk(parent))
                     declared = any(owners.get(part) == owners[parent] and isinstance(part, (ast.Global, ast.Nonlocal)) and name in part.names for part in ast.walk(parent))
                     if local and not declared:
                         return False  # binding exists, but does not dominate the read
                 child = parent
-            return any(name in vars(module) for module in source_modules.get(path, [])) or name in vars(builtins)
+            return module_name_bound(name)
+        def unary_form(node):
+            # Certified per operator against the exact literal type; all else is an obligation.
+            if not isinstance(node.operand, ast.Constant):
+                return None
+            literal = type(node.operand.value)
+            if isinstance(node.op, ast.Not) and literal in _BUILTIN_LITERALS:
+                return 'unary:not-literal'
+            if isinstance(node.op, (ast.UAdd, ast.USub)) and literal in (int, float):
+                return 'unary:sign-numeric-literal'
+            if isinstance(node.op, ast.Invert) and literal is int:
+                return 'unary:invert-int-literal'
+            return None
+        def total_form(node):
+            """The written argument that this node cannot raise; None is an obligation.
+
+            '' marks syntax with no operation of its own or a node another check
+            already classifies as an explicit site.
+            """
+            if '__builtins__' in _names_bound_by(node):
+                return None
+            if isinstance(node, (ast.mod, ast.arguments, ast.arg, ast.keyword, ast.alias, ast.withitem, ast.match_case, ast.pattern,
+                                 ast.expr_context, ast.boolop, ast.operator, ast.unaryop, ast.cmpop)):
+                return ''
+            if isinstance(node, (ast.Raise, ast.Assert, ast.Delete, ast.AugAssign, ast.Global, ast.Nonlocal, ast.Yield, ast.YieldFrom)):
+                return ''
+            if isinstance(node, ast.Return):
+                return 'statement:return-true' if isinstance(node.value, ast.Constant) and node.value.value is True else ''
+            if isinstance(node, (ast.Pass, ast.Break, ast.Continue)):
+                return 'statement:control-transfer'
+            if isinstance(node, ast.Expr):
+                return 'statement:expression'
+            if isinstance(node, ast.Try):
+                return 'statement:try'
+            if isinstance(node, ast.ExceptHandler):
+                caught = [] if node.type is None else node.type.elts if isinstance(node.type, ast.Tuple) else [node.type]
+                return 'statement:except-builtin' if all(isinstance(item, ast.Name) and item.id not in shadowed and builtin_is(item.id) and
+                                                          isinstance(vars(builtins)[item.id], type) and issubclass(vars(builtins)[item.id], BaseException)
+                                                          for item in caught) else None
+            if isinstance(node, (ast.Import, ast.ImportFrom)):
+                return 'statement:executed-module-import' if not owners[node] and source_modules.get(path) else None
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda)):
+                return 'definition:function'
+            if isinstance(node, (ast.Assign, ast.AnnAssign, ast.NamedExpr)):
+                return ''  # the target node carries the binding or the obligation
+            if isinstance(node, (ast.If, ast.IfExp)):
+                return 'control:literal-test' if builtin_literal(node.test) else None
+            if isinstance(node, ast.Constant):
+                return 'expression:literal'
+            if isinstance(node, ast.Name):
+                if isinstance(node.ctx, ast.Load):
+                    return 'expression:bound-name' if total_name(node) else None
+                return 'binding:name' if isinstance(node.ctx, ast.Store) else ''
+            if isinstance(node, ast.Attribute):
+                return attribute_form(node) if isinstance(node.ctx, ast.Load) else ''
+            if isinstance(node, ast.Subscript):
+                return None if isinstance(node.ctx, ast.Load) else ''
+            if isinstance(node, ast.Compare):
+                return 'expression:identity-compare' if all(isinstance(op, (ast.Is, ast.IsNot)) for op in node.ops) else None
+            if isinstance(node, ast.UnaryOp):
+                return unary_form(node)
+            if isinstance(node, (ast.List, ast.Tuple)):
+                return 'display:sequence' if isinstance(node.ctx, ast.Load) else None if isinstance(node.ctx, ast.Store) else ''
+            if isinstance(node, ast.Dict):
+                return 'display:dict-literal-keys' if all(key is not None and builtin_literal(key) for key in node.keys) and not mixed_text(node.keys) else None
+            if isinstance(node, ast.Set):
+                return 'display:set-literal-items' if all(builtin_literal(item) for item in node.elts) and not mixed_text(node.elts) else None
+            if isinstance(node, (ast.ListComp, ast.GeneratorExp)):
+                return 'display:comprehension-shell'
+            if isinstance(node, ast.FormattedValue) and isinstance(parents.get(node), ast.JoinedStr) or isinstance(node, ast.Slice):
+                return 'display:covered-by-parent'
+            if isinstance(node, ast.Call):
+                return None if any(keyword.arg is None for keyword in node.keywords) else call_total_form(node) or ''
+            return None
         functions = [node for node in ast.walk(tree) if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))]
         function_bindings = {}
         for fn in functions:
@@ -1647,35 +1886,13 @@ def static_scan(suite, table):
             if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
                 for decorator in node.decorator_list:
                     obligation(decorator, 'implicit_call')
-            if isinstance(node, ast.ExceptHandler) and node.type is not None:
-                types_ = node.type.elts if isinstance(node.type, ast.Tuple) else [node.type]
-                if not all(isinstance(item, ast.Name) and builtin_is(item.id) and isinstance(vars(builtins)[item.id], type) and
-                           issubclass(vars(builtins)[item.id], BaseException) for item in types_):
-                    obligation(node, 'data_operation')
-            # Explicit grammar allowlist: new/unknown expression forms cannot
-            # inherit a safe default when CPython adds syntax.
-            known_expressions = (ast.BoolOp, ast.NamedExpr, ast.BinOp, ast.UnaryOp, ast.Lambda, ast.IfExp,
-                                 ast.Dict, ast.Set, ast.ListComp, ast.SetComp, ast.DictComp, ast.GeneratorExp,
-                                 ast.Await, ast.Yield, ast.YieldFrom, ast.Compare, ast.Call, ast.FormattedValue,
-                                 ast.JoinedStr, ast.Constant, ast.Attribute, ast.Subscript, ast.Starred,
-                                 ast.Name, ast.List, ast.Tuple, ast.Slice)
-            potential = (isinstance(node, ast.Subscript) and isinstance(node.ctx, ast.Load) or
-                         isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load) and not total_name(node) or
-                         isinstance(node, ast.Attribute) and isinstance(node.ctx, ast.Load) and not total_attribute(node) or
-                         isinstance(node, ast.Compare) and any(not isinstance(op, (ast.Is, ast.IsNot)) for op in node.ops) or
-                         isinstance(node, (ast.BinOp, ast.BoolOp, ast.JoinedStr, ast.Starred, ast.Await, ast.DictComp, ast.SetComp)) or
-                         isinstance(node, ast.UnaryOp) and not isinstance(node.operand, ast.Constant) or
-                         isinstance(node, (ast.If, ast.IfExp)) and not isinstance(node.test, ast.Constant) or
-                         isinstance(node, (ast.While, ast.Match, ast.ClassDef)) or
-                         isinstance(node, (ast.For, ast.AsyncFor, ast.comprehension)) or
-                         isinstance(node, (ast.With, ast.AsyncWith)) or
-                         isinstance(node, ast.Dict) and any(key is None or not isinstance(key, ast.Constant) for key in node.keys) or
-                         isinstance(node, ast.Set) and any(not isinstance(value, ast.Constant) for value in node.elts) or
-                         isinstance(node, ast.Call) and any(keyword.arg is None for keyword in node.keywords) or
-                         isinstance(node, ast.expr) and not isinstance(node, known_expressions) or
-                         isinstance(node, (ast.Tuple, ast.List)) and isinstance(node.ctx, ast.Store))
-            if potential:
+            # Explicit allowlist: unknown syntax and any form without a written
+            # argument cannot inherit a safe default.
+            form = total_form(node)
+            if form is None:
                 obligation(node, 'data_operation')
+            elif form:
+                automatic[form] = automatic.get(form, 0) + 1
     for key, (declaration, matches) in allowed.items():
         if matches != 1:
             errors.append({'kind': 'non_guard_not_exactly_one_site', 'declaration': asdict(declaration), 'matches': matches})
@@ -1687,6 +1904,7 @@ def static_scan(suite, table):
     return {'status': 'FAIL' if errors or any(not s['non_guard'] for s in sites) else 'PASS',
             'files': sorted(files.values(), key=lambda f: f['path']), 'imports': imports,
             'sites': sites, 'errors': errors, 'predicate_functions': sorted([list(k) for k in predicate_keys]),
+            'automatic_totals': {form: {'count': automatic[form], 'reason': TOTAL_FORMS[form]} for form in sorted(automatic)},
             'review': 'Every non-guard reason and each predicate body versus its declared field/predicate needs review.'}
 
 

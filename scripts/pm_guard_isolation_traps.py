@@ -108,7 +108,8 @@ def factory():
         _allow(g, 'subject.py', 'selected', 'return', 'return value', 'Pure schema input selector; it returns data and cannot decide acceptance.'),
         _allow(g, 'subject.py', 'factory', 'return', 'return g.Case(table, check, context)', 'Fresh execution object construction.'),
         _allow(g, 'subject.py', 'factory', 'call_review', 'g.SchemaCatalog(DOCUMENTS, roots=ROOTS)', 'Eager complete schema inventory, retaining the original validator semantics.'),
-        _allow(g, 'subject.py', 'factory', 'call_review', 'g.schema_table(catalog, {entry: selected for entry in ROOTS})', 'Engine schema/table plumbing; no adapter-issued refusal.')]
+        _allow(g, 'subject.py', 'factory', 'call_review', 'g.schema_table(catalog, {entry: selected for entry in ROOTS})', 'Engine schema/table plumbing; no adapter-issued refusal.'),
+        _allow(g, 'subject.py', 'factory.check', 'call_review', 'table.validate(entry, value)', 'Complete schema boundary for a declared root; a refusal stays tagged by the table and an unattributable refusal fails the run.')]
     suite.non_guards += [
         _allow(g, 'subject.py', 'factory.check', 'data_operation', 'for entry in ROOTS:\n    table.validate(entry, value)', 'Iterate the declared immutable tuple of schema-root strings; each complete validation stays tagged.'),
         _allow(g, 'subject.py', 'factory', 'data_operation', ' for entry in ROOTS', 'Construct selector bindings over the declared immutable tuple of roots.')]
@@ -153,6 +154,23 @@ def _special(g, trap, memory):
         gate.check()
         gate.check()
         return sleeps == [1], {'sleeps': sleeps}
+    if kind == 'allowlist-written-reasons':
+        blank = sorted(form for form, reason in g.TOTAL_FORMS.items() if type(reason) is not str or not reason.strip())
+        missing = sorted('constructor:' + name for name in g._ENGINE_CONSTRUCTORS if 'constructor:' + name not in g.TOTAL_FORMS)
+        return not blank and not missing and bool(g.TOTAL_FORMS), {'forms': len(g.TOTAL_FORMS), 'blank': blank, 'constructors_without_reason': missing}
+    if kind == 'constructor-hook-audit':
+        # A new validation hook on an allowlisted class must change this expectation
+        # and its written argument together.
+        validating = {name: sorted(hook for hook in ('__post_init__', '__new__', '__setattr__', '__getattribute__', '__init_subclass__')
+                                   if hook in vars(cls) and not (hook == '__setattr__' and cls.__dataclass_params__.frozen))
+                      for name, cls in g._ENGINE_CONSTRUCTORS.items() if name != 'GuardTable'}
+        descriptors = {name: sorted(key for key, member in vars(cls).items() if hasattr(type(member), '__set__') and not key.startswith('__'))
+                       for name, cls in g._ENGINE_CONSTRUCTORS.items()}
+        expected = {name: [] for name in validating}
+        expected.update(Guard=['__post_init__'], Invariant=['__post_init__'])
+        readable = {name: [] for name in descriptors}
+        readable.update(Guard=['id'], GuardTable=['guards'])
+        return validating == expected and descriptors == readable, {'hooks': validating, 'descriptors': descriptors}
     if kind == 'removed-backend':
         return not hasattr(g, 'AstGuards') and not hasattr(g, 'CodeSite'), {'AstGuards_present': hasattr(g, 'AstGuards')}
     raise RuntimeError('unknown special trap: ' + kind)
@@ -225,6 +243,23 @@ def exercise(g, memory, *, scratch=None):
                             row['caught'] = row['caught'] and observations[0]['aliased'] is False and observations[1]['aliased'] is True
                         else:
                             row['caught'] = row['caught'] and observations[0]['order'] == ['b', 'a'] and observations[1]['order'] == ['a', 'b']
+                    if trap.get('static_source'):
+                        row['caught'] = row['caught'] and any(s['source'] == trap['static_source'] and not s['non_guard'] for s in result.get('static', {}).get('sites', []))
+                    if trap.get('automatic_forms'):
+                        row['caught'] = row['caught'] and set(trap['automatic_forms']) <= set(result.get('static', {}).get('automatic_totals', {}))
+                    if trap.get('held_out'):
+                        # The dormant path is real: the unchanged original raises when it is visited.
+                        probe = g._fixture_copy(trap['held_out']['value'])
+                        case = suite.factory()
+                        case.table._bind(probe, case.context, frozenset())
+                        try:
+                            case.check(probe)
+                            row['held_out_raised'] = None
+                        except BaseException as exc:
+                            row['held_out_raised'] = type(exc).__name__
+                        finally:
+                            case.table._restore()
+                        row['caught'] = row['caught'] and row['held_out_raised'] == trap['held_out']['raises']
                     if trap.get('imported_file'):
                         row['caught'] = row['caught'] and any(f['path'] == trap['imported_file'] for f in result.get('static', {}).get('files', []))
                     if trap.get('matrix_guard'):

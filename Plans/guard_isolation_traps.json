@@ -4995,6 +4995,2240 @@
       "id": "C3-snapshot-scalar-topology",
       "kind": "snapshot-scalar-topology",
       "expected": "Snapshots retain scalar alias topology and detect equal-value shared rebinding, while erasing fresh identities."
+    },
+    {
+      "id": "C4-hidden-invariant-constructor",
+      "kind": "code",
+      "expected": "Invariant validation on data is an obligation even when the field read is declared; otherwise a blank y raises untagged.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        g.Invariant(value['y'], 'nonempty')\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": "ok"
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": "ok"
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present y field; fixtures and held-out input have the same field."
+        }
+      ],
+      "static_source": "g.Invariant(value['y'], 'nonempty')",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "y": ""
+        },
+        "raises": "IsolationError"
+      }
+    },
+    {
+      "id": "C4-valid-invariant-constructor",
+      "kind": "code",
+      "expected": "PASS: literal nonblank Invariant arguments cannot reach its validation, so no declaration is needed.",
+      "status": "PASS",
+      "failure_kinds": [],
+      "proved_rows": 1,
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        g.Invariant('/y', 'nonempty')\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "automatic_forms": [
+        "constructor:Invariant",
+        "constructor:Guard",
+        "constructor:GuardTable",
+        "constructor:Case"
+      ]
+    },
+    {
+      "id": "C4-blank-invariant-literal",
+      "kind": "code",
+      "expected": "A blank literal is not a valid Invariant argument; it stays an obligation.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            g.Invariant(' ', 'nonempty')\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n    g.Invariant(' ', 'nonempty')",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        }
+      ],
+      "static_source": "g.Invariant(' ', 'nonempty')",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "y": true
+        },
+        "raises": "IsolationError"
+      }
+    },
+    {
+      "id": "C4-nonstring-invariant-literal",
+      "kind": "code",
+      "expected": "A non-string literal is not a valid Invariant argument; it stays an obligation.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            g.Invariant(1, 'nonempty')\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n    g.Invariant(1, 'nonempty')",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        }
+      ],
+      "static_source": "g.Invariant(1, 'nonempty')",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "y": true
+        },
+        "raises": "IsolationError"
+      }
+    },
+    {
+      "id": "C4-invariant-name-argument",
+      "kind": "code",
+      "expected": "A non-literal Invariant argument is an obligation even when its current value is valid.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            label = '/y'\n            g.Invariant(label, 'nonempty')\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n    label = '/y'\n    g.Invariant(label, 'nonempty')",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        }
+      ],
+      "static_source": "g.Invariant(label, 'nonempty')"
+    },
+    {
+      "id": "C4-guard-shadowed-predicate",
+      "kind": "code",
+      "expected": "A local name shadowing a module predicate does not prove Guard receives a callable.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            px = None\n            g.Guard('z', g.Invariant('/z', 'p'), 'bad_z', px)\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n    px = None\n    g.Guard('z', g.Invariant('/z', 'p'), 'bad_z', px)",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        }
+      ],
+      "static_source": "g.Guard('z', g.Invariant('/z', 'p'), 'bad_z', px)",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "y": true
+        },
+        "raises": "IsolationError"
+      }
+    },
+    {
+      "id": "C4-hidden-unary-string",
+      "kind": "code",
+      "expected": "Unary minus on a string literal raises; a constant operand does not prove the operation total.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            -'invalid'\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n    -'invalid'",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        }
+      ],
+      "static_source": "-'invalid'",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "y": true
+        },
+        "raises": "TypeError"
+      }
+    },
+    {
+      "id": "C4-hidden-float-invert",
+      "kind": "code",
+      "expected": "Invert on a float literal raises; it is certified only for int literals.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            ~1.5\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n    ~1.5",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        }
+      ],
+      "static_source": "~1.5",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "y": true
+        },
+        "raises": "TypeError"
+      }
+    },
+    {
+      "id": "C4-hidden-none-plus",
+      "kind": "code",
+      "expected": "Unary plus on None raises; it is certified only for int and float literals.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            +None\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n    +None",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        }
+      ],
+      "static_source": "+None",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "y": true
+        },
+        "raises": "TypeError"
+      }
+    },
+    {
+      "id": "C4-hidden-bytes-minus",
+      "kind": "code",
+      "expected": "Unary minus on bytes raises.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            -b'x'\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n    -b'x'",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        }
+      ],
+      "static_source": "-b'x'",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "y": true
+        },
+        "raises": "TypeError"
+      }
+    },
+    {
+      "id": "C4-uncertified-unary-forms",
+      "kind": "code",
+      "expected": "Valid operands outside the certified operator and type pairs are still obligations.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            -True\n            ~False\n            -1j\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n    -True\n    ~False\n    -1j",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        }
+      ],
+      "static_source": "-True"
+    },
+    {
+      "id": "C4-unary-numeric-control",
+      "kind": "code",
+      "expected": "PASS: certified operator and literal type pairs need no declaration.",
+      "status": "PASS",
+      "failure_kinds": [],
+      "proved_rows": 1,
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        -1\n        +1.5\n        ~1\n        not 'x'\n        not None\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "automatic_forms": [
+        "unary:sign-numeric-literal",
+        "unary:invert-int-literal",
+        "unary:not-literal"
+      ]
+    },
+    {
+      "id": "C4-table-foreign-value",
+      "kind": "code",
+      "expected": "require is total only on the bound root; a foreign value raises the protocol error.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            table.require('x', {}, context)\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n    table.require('x', {}, context)",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        }
+      ],
+      "static_source": "table.require('x', {}, context)",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "y": true
+        },
+        "raises": "IsolationError"
+      }
+    },
+    {
+      "id": "C4-table-foreign-context",
+      "kind": "code",
+      "expected": "require is total only with the Case context; a foreign context raises the protocol error.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            table.require('x', value, {})\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n    table.require('x', value, {})",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        }
+      ],
+      "static_source": "table.require('x', value, {})",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "y": true
+        },
+        "raises": "IsolationError"
+      }
+    },
+    {
+      "id": "C4-table-validate-without-schema",
+      "kind": "code",
+      "expected": "validate can raise on a missing schema, an undeclared root or an unattributable refusal, so it is always an obligation.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            table.validate('https://pm.invalid/root', value, context)\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n    table.validate('https://pm.invalid/root', value, context)",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        }
+      ],
+      "static_source": "table.validate('https://pm.invalid/root', value, context)",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "y": true
+        },
+        "raises": "IsolationError"
+      }
+    },
+    {
+      "id": "C4-table-rebound-receiver",
+      "kind": "code",
+      "expected": "A rebinding of table disproves the receiver; the attribute read and the call are obligations.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            def dormant():\n                table = None\n                table.require('x', value, context)\n                return True\n            dormant()\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n\n    def dormant():\n        table = None\n        table.require('x', value, context)\n        return True\n    dormant()",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "dormant()",
+          "reason": "Call the local diagnostic helper; its body is checked independently."
+        }
+      ],
+      "static_source": "table.require('x', value, context)",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "y": true
+        },
+        "raises": "AttributeError"
+      }
+    },
+    {
+      "id": "C4-engine-missing-member",
+      "kind": "code",
+      "expected": "A reviewed call does not prove the callee read; a name absent from the engine is an obligation.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            g.NoSuchMember(value)\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n    g.NoSuchMember(value)",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "g.NoSuchMember(value)",
+          "reason": "Reviewed delegation; the callee read stays separately checked."
+        }
+      ],
+      "static_source": "g.NoSuchMember",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "y": true
+        },
+        "raises": "AttributeError"
+      }
+    },
+    {
+      "id": "C4-engine-alias-shadowed",
+      "kind": "code",
+      "expected": "A local rebinding of the alias disproves the engine constructor.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            g = None\n            g.Invariant('/a', 'b')\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n    g = None\n    g.Invariant('/a', 'b')",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        }
+      ],
+      "static_source": "g.Invariant('/a', 'b')",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "y": true
+        },
+        "raises": "AttributeError"
+      }
+    },
+    {
+      "id": "C4-default-argument-name",
+      "kind": "code",
+      "expected": "A default runs in the enclosing scope; its own parameter name does not bind it.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            def helper(unbound_default=unbound_default):\n                return True\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n\n    def helper(unbound_default=unbound_default):\n        return True",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        }
+      ],
+      "static_source": "unbound_default",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "y": true
+        },
+        "raises": "NameError"
+      }
+    },
+    {
+      "id": "C4-function-scope-import",
+      "kind": "code",
+      "expected": "A function-scope import runs module code on the visited path; only an executed module-scope import is automatic.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            import json\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n    import json",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        }
+      ],
+      "static_source": "import json"
+    },
+    {
+      "id": "C4-deleted-name",
+      "kind": "code",
+      "expected": "A deleted name has no dominating binding.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            temp = 1\n            del temp\n            temp\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n    temp = 1\n    del temp\n    temp",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "mutation_or_error_write",
+          "source": "del temp",
+          "reason": "Reviewed local cleanup; later reads stay checked."
+        }
+      ],
+      "static_source": "temp",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "y": true
+        },
+        "raises": "UnboundLocalError"
+      }
+    },
+    {
+      "id": "C4-star-type-argument",
+      "kind": "code",
+      "expected": "Star arguments can select another type() form or arity; only a single plain argument is total.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            type(*value['z'])\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false,
+            "z": []
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false,
+            "z": []
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n    type(*value['z'])",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['z']",
+          "reason": "Read the declared present z field."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "*value['z']",
+          "reason": "Expand the declared z field."
+        }
+      ],
+      "static_source": "type(*value['z'])",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "y": true,
+          "z": []
+        },
+        "raises": "TypeError"
+      }
+    },
+    {
+      "id": "C4-literal-subscript",
+      "kind": "code",
+      "expected": "Literal operands do not make this form total; it remains an obligation outside predicates.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            (1,)[5]\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n    (1,)[5]",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        }
+      ],
+      "static_source": "(1,)[5]",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "y": true
+        },
+        "raises": "IndexError"
+      }
+    },
+    {
+      "id": "C4-literal-comparison",
+      "kind": "code",
+      "expected": "Literal operands do not make this form total; it remains an obligation outside predicates.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            1 < 'a'\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n    1 < 'a'",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        }
+      ],
+      "static_source": "1 < 'a'",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "y": true
+        },
+        "raises": "TypeError"
+      }
+    },
+    {
+      "id": "C4-literal-fstring",
+      "kind": "code",
+      "expected": "Literal operands do not make this form total; it remains an obligation outside predicates.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            f'{1:zz}'\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n    f'{1:zz}'",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        }
+      ],
+      "static_source": "f'{1:zz}'",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "y": true
+        },
+        "raises": "ValueError"
+      }
+    },
+    {
+      "id": "C4-literal-binop",
+      "kind": "code",
+      "expected": "Literal operands do not make this form total; it remains an obligation outside predicates.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            1 + 'a'\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n    1 + 'a'",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        }
+      ],
+      "static_source": "1 + 'a'",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "y": true
+        },
+        "raises": "TypeError"
+      }
+    },
+    {
+      "id": "C4-literal-boolop",
+      "kind": "code",
+      "expected": "Literal operands do not make this form total; it remains an obligation outside predicates.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            None or 1\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n    None or 1",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        }
+      ],
+      "static_source": "None or 1"
+    },
+    {
+      "id": "C4-literal-len",
+      "kind": "code",
+      "expected": "Literal operands do not make this form total; it remains an obligation outside predicates.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            len(1)\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n    len(1)",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        }
+      ],
+      "static_source": "len(1)",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "y": true
+        },
+        "raises": "TypeError"
+      }
+    },
+    {
+      "id": "C4-literal-isinstance",
+      "kind": "code",
+      "expected": "Literal operands do not make this form total; it remains an obligation outside predicates.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            isinstance(1, 2)\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n    isinstance(1, 2)",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        }
+      ],
+      "static_source": "isinstance(1, 2)",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "y": true
+        },
+        "raises": "TypeError"
+      }
+    },
+    {
+      "id": "C4-literal-int",
+      "kind": "code",
+      "expected": "Literal operands do not make this form total; it remains an obligation outside predicates.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            int('x')\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n    int('x')",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        }
+      ],
+      "static_source": "int('x')",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "y": true
+        },
+        "raises": "ValueError"
+      }
+    },
+    {
+      "id": "C4-literal-getattr-on-literal",
+      "kind": "code",
+      "expected": "Literal operands do not make this form total; it remains an obligation outside predicates.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            'a'.missing\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n    'a'.missing",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        }
+      ],
+      "static_source": "'a'.missing",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "y": true
+        },
+        "raises": "AttributeError"
+      }
+    },
+    {
+      "id": "C4-literal-dict-star",
+      "kind": "code",
+      "expected": "Literal operands do not make this form total; it remains an obligation outside predicates.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            {**1}\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n    {**1}",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        }
+      ],
+      "static_source": "{**1}",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "y": true
+        },
+        "raises": "TypeError"
+      }
+    },
+    {
+      "id": "C4-literal-set-star",
+      "kind": "code",
+      "expected": "Literal operands do not make this form total; it remains an obligation outside predicates.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            {*1}\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n    {*1}",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        }
+      ],
+      "static_source": "*1",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "y": true
+        },
+        "raises": "TypeError"
+      }
+    },
+    {
+      "id": "C4-shadowed-exception-class",
+      "kind": "code",
+      "expected": "A local rebinding of a builtin exception name makes the handler match raise.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        StopIteration = None\n        try:\n            value['maybe']\n        except StopIteration:\n            pass\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "maybe": 1
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "maybe": 1
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['maybe']",
+          "reason": "Read the optional diagnostic field; the handler is checked independently."
+        }
+      ],
+      "static_source": "except StopIteration:\n    pass",
+      "held_out": {
+        "value": {
+          "x": 0
+        },
+        "raises": "TypeError"
+      }
+    },
+    {
+      "id": "C4-handler-name-implicit-delete",
+      "kind": "code",
+      "expected": "A handler target is deleted when the handler ends; an earlier sibling binding does not dominate the later read.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        stale = 1\n        try:\n            value['maybe']\n        except KeyError as stale:\n            pass\n        stale\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "maybe": 1
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "maybe": 1
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['maybe']",
+          "reason": "Read the optional diagnostic field; the handler is checked independently."
+        }
+      ],
+      "static_source": "stale",
+      "held_out": {
+        "value": {
+          "x": 0
+        },
+        "raises": "UnboundLocalError"
+      }
+    },
+    {
+      "id": "C4-except-star",
+      "kind": "code",
+      "expected": "except* has its own runtime matching failures, so try-star is an obligation.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        try:\n            value['maybe']\n        except* ExceptionGroup:\n            pass\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "maybe": 1
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "maybe": 1
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['maybe']",
+          "reason": "Read the optional diagnostic field; the handler is checked independently."
+        }
+      ],
+      "static_source": "try:\n    value['maybe']\nexcept* ExceptionGroup:\n    pass",
+      "held_out": {
+        "value": {
+          "x": 0
+        },
+        "raises": "TypeError"
+      }
+    },
+    {
+      "id": "C4-private-builtins-binding",
+      "kind": "code",
+      "expected": "Rebinding __builtins__ removes the names the certified read relies on; the binding and the read are obligations.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\n__builtins__ = {}\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            len\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n    len",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        }
+      ],
+      "static_source": "__builtins__",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "y": true
+        },
+        "raises": "NameError"
+      }
+    },
+    {
+      "id": "C4-read-before-nested-def",
+      "kind": "code",
+      "expected": "A nested definition makes the name local to the checker, so a module binding of the same name does not dominate the earlier read.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef helper():\n    return True\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            helper\n            def helper():\n                return True\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n    helper\n\n    def helper():\n        return True",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        }
+      ],
+      "static_source": "helper",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "y": true
+        },
+        "raises": "UnboundLocalError"
+      }
+    },
+    {
+      "id": "C4-read-before-local-import",
+      "kind": "code",
+      "expected": "A function-scope import makes the name local, so a module binding of the same name does not dominate the earlier read.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\nimport pm_guard_isolation as helper\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            helper\n            import pm_guard_isolation as helper\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n    helper\n    import pm_guard_isolation as helper",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        }
+      ],
+      "static_source": "helper",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "y": true
+        },
+        "raises": "UnboundLocalError"
+      }
+    },
+    {
+      "id": "C4-mixed-text-dict-keys",
+      "kind": "code",
+      "expected": "Equal-hash str and bytes keys compare during construction, which -bb makes an error, so the display is an obligation.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            {'a': 1, b'a': 2}\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['y']:\n    {'a': 1, b'a': 2}",
+          "reason": "Dispatch an optional diagnostic branch; its body operations are checked independently."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['y']",
+          "reason": "Read the declared present routing flag."
+        }
+      ],
+      "static_source": "{'a': 1, b'a': 2}"
+    },
+    {
+      "id": "C4-remaining-automatic-forms-control",
+      "kind": "code",
+      "expected": "PASS: every remaining written automatic form is accepted with no declaration, so the table describes live behavior.",
+      "status": "PASS",
+      "failure_kinds": [],
+      "proved_rows": 1,
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        type(value)\n        bool(1)\n        {'a', 'b'}\n        [item for item in ()]\n        g.Control('c', 1, 'synthetic')\n        g.Negative('n', 1, 'x', 'bad_x', 'c', 'd')\n        g.NonGuard('p', 'f', 'k', 's', 'r')\n        g.Duplicate('d', ('a', 'b'), g.Invariant('/a', 'b'), 'e')\n        g.Suite('s', px, [], [], (), '.')\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "automatic_forms": [
+        "call:type-one-argument",
+        "call:bool-literal",
+        "display:set-literal-items",
+        "display:comprehension-shell",
+        "constructor:Control",
+        "constructor:Negative",
+        "constructor:NonGuard",
+        "constructor:Duplicate",
+        "constructor:Suite"
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": " for item in ()",
+          "reason": "Iterate an empty literal tuple; the for clause stays its own obligation."
+        }
+      ]
+    },
+    {
+      "id": "C4-allowlist-written-reasons",
+      "kind": "allowlist-written-reasons",
+      "expected": "Every automatic form and allowlisted constructor carries a written totality reason."
+    },
+    {
+      "id": "C4-constructor-hook-audit",
+      "kind": "constructor-hook-audit",
+      "expected": "Only Guard and Invariant have validation hooks; Guard.id and GuardTable.guards are read-only properties that construction never reads; a new hook must change the written argument."
     }
   ]
 }
