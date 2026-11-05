@@ -9251,7 +9251,54 @@
           "minLength": 1,
           "maxLength": 256
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "write_kind": {
+                "const": "create_if_absent"
+              }
+            },
+            "required": [
+              "write_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "expected_revision": {
+                "type": "null"
+              },
+              "expected_absent": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "write_kind": {
+                "const": "update_existing"
+              }
+            },
+            "required": [
+              "write_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "expected_revision": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "expected_absent": {
+                "const": false
+              }
+            }
+          }
+        }
+      ]
     },
     "backup_policy_write_result_v2": {
       "type": "object",

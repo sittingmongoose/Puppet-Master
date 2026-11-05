@@ -206,5 +206,8 @@
     set(id, value) { if (!Object.values(I).includes(id)) return false; return saveOne(id, value); },
     snapshot: () => ({ values: B.values(), changed: B.changed(), chat: snapshot(), scope: 'project_concept', allChatsPersistence: 'session_only' })
   });
+  // Onboarding publishes account availability after selecting the new Project.
+  // Refresh the composer from that projection as well as the model picker.
+  window.addEventListener('pm:onboarding-result', () => A.render());
   applySettings(true);
 })();

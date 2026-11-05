@@ -4,13 +4,13 @@ Source: `Plans/Runtime_Artifacts_Panel.md`
 
 Source lines: L2666-L2718
 
-Source SHA256: `b45561569a06ac308e7bed4f95971921c0d57cde2047701ec1004abb787af8ce`
+Source SHA256: `8aff2bd6a2752c1623fa0b8dea793189a10d3523646fbca327e2e9b2172a6749`
 
 ---
 
 ## Run & Debug Revival Addendum - 2026-07-27
 
-This addendum closes the cross-cutting "debug adapter model" deferral recorded in this document's consume-list by pointing contract ownership at `Plans/FinalGUISpec.md` Run & Debug Revival Addendum (F3-482..F3-496, referenced by unit id only, never restated). It introduces no artifact schema changes and creates no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks.
+This addendum closes the cross-cutting "debug adapter model" deferral recorded in this document's consume-list by pointing contract ownership at `Plans/FinalGUISpec.md` Run & Debug Revival Addendum (F3-482..F3-495, referenced by unit id only, never restated). It introduces no artifact schema changes and creates no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks.
 
 ### RAP-053 - Debug Adapter Model Deferral Closure
 

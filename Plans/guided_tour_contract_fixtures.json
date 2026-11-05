@@ -810,7 +810,7 @@
             "question_count": 7
           }
         ],
-        "mounted_inside": "#chatPanel",
+        "mounted_inside": "Assistant Chat",
         "library_open": true,
         "callout": {
           "yields": true,
@@ -1078,6 +1078,226 @@
         "evidence_scope": "contract_fixture_only",
         "production_receipt_claim": false,
         "result_revision": 1
+      }
+    },
+    {
+      "name": "sweep.finish_application_restore_lands_no_project",
+      "definition": "guided_tour_terminal_result",
+      "value": {
+        "schema_id": "pm.guided_tour.terminal_result.application.v1",
+        "schema_version": "1.0.0",
+        "action_id": "ui.guided_tour.finish",
+        "tour_session_id": "tour:newbie:finish-restore-terminal:1",
+        "project_id": null,
+        "step": "planning_wizard",
+        "status": "completed",
+        "target_label": "Finish tour",
+        "layout_disposition": "restore",
+        "layout_selection_source": "default_restore",
+        "captured_state_ref": "captured-state:tour:1",
+        "restoration": {
+          "status": "applied",
+          "layout_owner_snapshot_ref": "layout_owner_snapshot:tour:1",
+          "chat_owner_snapshot_ref": "chat_owner_snapshot:tour:1",
+          "layout_restored": true,
+          "chat_state_restored": true,
+          "initiating_focus_restored": false,
+          "returned_focus_ref": "planning-wizard:heading:1",
+          "attempt_ref": "restore-attempt:tour:finish:1",
+          "error_code": null,
+          "reason": null,
+          "retryable": false,
+          "original_snapshot_reused": true
+        },
+        "practice_content_removed": true,
+        "landing": {
+          "real_planning_wizard": false,
+          "committed_project_selected": false,
+          "focus_ref": "chat:no-project",
+          "no_project_chat": true
+        },
+        "completion_reported": true,
+        "domain_work_started": false,
+        "approval_granted": false,
+        "evidence_scope": "contract_fixture_only",
+        "production_receipt_claim": false,
+        "result_revision": 1,
+        "thread_id": "thread:no-project",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server:named-computer"
+        }
+      }
+    },
+    {
+      "name": "sweep.finish_application_explicit_keep",
+      "definition": "guided_tour_terminal_result",
+      "value": {
+        "schema_id": "pm.guided_tour.terminal_result.application.v1",
+        "schema_version": "1.0.0",
+        "action_id": "ui.guided_tour.finish",
+        "tour_session_id": "tour:newbie:finish-keep-terminal:1",
+        "project_id": null,
+        "step": "planning_wizard",
+        "status": "completed",
+        "target_label": "Finish tour",
+        "layout_disposition": "keep",
+        "layout_selection_source": "explicit_keep",
+        "captured_state_ref": "captured-state:tour:1",
+        "restoration": {
+          "status": "not_required",
+          "layout_owner_snapshot_ref": "layout_owner_snapshot:tour:1",
+          "chat_owner_snapshot_ref": "chat_owner_snapshot:tour:1",
+          "layout_restored": false,
+          "chat_state_restored": true,
+          "initiating_focus_restored": false,
+          "returned_focus_ref": "planning-wizard:heading:1",
+          "attempt_ref": "restore-attempt:tour:keep:1",
+          "error_code": null,
+          "reason": null,
+          "retryable": false,
+          "original_snapshot_reused": true
+        },
+        "practice_content_removed": true,
+        "landing": {
+          "real_planning_wizard": false,
+          "committed_project_selected": false,
+          "focus_ref": "planning-wizard:heading:1",
+          "no_project_chat": true
+        },
+        "completion_reported": true,
+        "domain_work_started": false,
+        "approval_granted": false,
+        "evidence_scope": "contract_fixture_only",
+        "production_receipt_claim": false,
+        "result_revision": 1,
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server:named-computer"
+        },
+        "thread_id": "thread:no-project"
+      }
+    },
+    {
+      "name": "sweep.skip_application_restores_state",
+      "definition": "guided_tour_terminal_result",
+      "value": {
+        "schema_id": "pm.guided_tour.terminal_result.application.v1",
+        "schema_version": "1.0.0",
+        "action_id": "ui.guided_tour.skip",
+        "tour_session_id": "tour:newbie:skip-terminal:1",
+        "project_id": null,
+        "step": "workspace",
+        "status": "skipped",
+        "target_label": "Skip Tour",
+        "layout_disposition": "restore",
+        "layout_selection_source": "skip_required_restore",
+        "captured_state_ref": "captured-state:tour:1",
+        "restoration": {
+          "status": "applied",
+          "layout_owner_snapshot_ref": "layout_owner_snapshot:tour:1",
+          "chat_owner_snapshot_ref": "chat_owner_snapshot:tour:1",
+          "layout_restored": true,
+          "chat_state_restored": true,
+          "initiating_focus_restored": true,
+          "returned_focus_ref": "workspace:initiator:1",
+          "attempt_ref": "restore-attempt:tour:skip:1",
+          "error_code": null,
+          "reason": null,
+          "retryable": false,
+          "original_snapshot_reused": true
+        },
+        "practice_content_removed": true,
+        "landing": {
+          "real_planning_wizard": false,
+          "committed_project_selected": false,
+          "focus_ref": null,
+          "no_project_chat": false
+        },
+        "completion_reported": false,
+        "domain_work_started": false,
+        "approval_granted": false,
+        "evidence_scope": "contract_fixture_only",
+        "production_receipt_claim": false,
+        "result_revision": 1,
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server:named-computer"
+        },
+        "thread_id": "thread:no-project"
+      }
+    },
+    {
+      "name": "sweep.application_restoration_failure",
+      "definition": "guided_tour_terminal_result",
+      "value": {
+        "schema_id": "pm.guided_tour.terminal_result.application.v1",
+        "schema_version": "1.0.0",
+        "action_id": "ui.guided_tour.finish",
+        "tour_session_id": "tour:newbie:finish-recovery-terminal:1",
+        "project_id": null,
+        "step": "planning_wizard",
+        "status": "recovery_required",
+        "target_label": "Finish tour",
+        "layout_disposition": "restore",
+        "layout_selection_source": "default_restore",
+        "captured_state_ref": "captured-state:tour:1",
+        "restoration": {
+          "status": "failed",
+          "layout_owner_snapshot_ref": "layout_owner_snapshot:tour:1",
+          "chat_owner_snapshot_ref": "chat_owner_snapshot:tour:1",
+          "layout_restored": false,
+          "chat_state_restored": false,
+          "initiating_focus_restored": false,
+          "returned_focus_ref": null,
+          "attempt_ref": "restore-attempt:tour:finish:failed:1",
+          "error_code": "owner_restore_failed",
+          "reason": "The original layout could not be restored yet.",
+          "retryable": true,
+          "original_snapshot_reused": true
+        },
+        "practice_content_removed": true,
+        "landing": {
+          "real_planning_wizard": false,
+          "committed_project_selected": false,
+          "focus_ref": "planning-wizard:heading:1",
+          "no_project_chat": true
+        },
+        "completion_reported": false,
+        "domain_work_started": false,
+        "approval_granted": false,
+        "evidence_scope": "contract_fixture_only",
+        "production_receipt_claim": false,
+        "result_revision": 1,
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server:named-computer"
+        },
+        "thread_id": "thread:no-project"
       }
     }
   ],
@@ -1632,6 +1852,84 @@
         "approval_granted": true
       },
       "expected_error": "Tour does not grant approval"
+    },
+    {
+      "name": "sweep.invalid.application_tour.project_id",
+      "definition": "guided_tour_terminal_result",
+      "base_valid": "sweep.finish_application_restore_lands_no_project",
+      "patch": {
+        "project_id": "project:fake"
+      },
+      "expected_error": "Application Tour completion preserves app scope/null Project and captured Server/thread, removes practice and starts no work or approval."
+    },
+    {
+      "name": "sweep.invalid.application_tour.thread_id",
+      "definition": "guided_tour_terminal_result",
+      "base_valid": "sweep.finish_application_restore_lands_no_project",
+      "patch": {
+        "thread_id": null
+      },
+      "expected_error": "Application Tour completion preserves app scope/null Project and captured Server/thread, removes practice and starts no work or approval."
+    },
+    {
+      "name": "sweep.invalid.application_tour.domain_work_started",
+      "definition": "guided_tour_terminal_result",
+      "base_valid": "sweep.finish_application_restore_lands_no_project",
+      "patch": {
+        "domain_work_started": true
+      },
+      "expected_error": "Application Tour completion preserves app scope/null Project and captured Server/thread, removes practice and starts no work or approval."
+    },
+    {
+      "name": "sweep.invalid.application_tour.approval_granted",
+      "definition": "guided_tour_terminal_result",
+      "base_valid": "sweep.finish_application_restore_lands_no_project",
+      "patch": {
+        "approval_granted": true
+      },
+      "expected_error": "Application Tour completion preserves app scope/null Project and captured Server/thread, removes practice and starts no work or approval."
+    },
+    {
+      "name": "sweep.invalid.application_tour.landing",
+      "definition": "guided_tour_terminal_result",
+      "base_valid": "sweep.finish_application_restore_lands_no_project",
+      "patch": {
+        "landing": {
+          "real_planning_wizard": true,
+          "committed_project_selected": true,
+          "no_project_chat": false,
+          "focus_ref": "planning:wizard"
+        }
+      },
+      "expected_error": "Application Tour completion preserves app scope/null Project and captured Server/thread, removes practice and starts no work or approval."
+    },
+    {
+      "name": "sweep.invalid.application_tour.scope",
+      "definition": "guided_tour_terminal_result",
+      "base_valid": "sweep.finish_application_restore_lands_no_project",
+      "patch": {
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "scope_partition": "project~fake",
+          "project_id": "project:fake",
+          "project_home_server_id": "server:a",
+          "named_plan_id": null,
+          "server_id": "server:a"
+        }
+      },
+      "expected_error": "Application Tour completion preserves app scope/null Project and captured Server/thread, removes practice and starts no work or approval."
+    },
+    {
+      "name": "sweep.invalid.application_tour.failed_restore_cannot_complete",
+      "definition": "guided_tour_terminal_result",
+      "base_valid": "sweep.application_restoration_failure",
+      "patch": {
+        "status": "completed",
+        "completion_reported": true
+      },
+      "expected_error": "Restoration failure is recoverable, never completed."
     }
   ]
 }

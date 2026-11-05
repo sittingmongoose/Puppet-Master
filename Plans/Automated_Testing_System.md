@@ -110,7 +110,7 @@ Acceptance coverage must prove effective-policy receipts, visible-session receip
 
 ## GUI web development and smoke-test workflow addendum (2026-07-07)
 
-The Leptos web GUI development workflow (DL-139; it replaces the Slint/WASM web GUI) uses a trusted local daemon plus a static web route, fixture mode, browser automation smoke tests, screenshots/state capture, deterministic state hooks, and fast rebuild/reload loops. Because the web GUI is drawn with browser elements, smoke tests and state capture drive and read the page's own elements, and the same fixtures and behavioral scenarios also run through the Slint desktop, with each interface's screenshots checked against its own visual baselines, because the two share behavior, not pixels (F3-583). The test harness must prove daemon capability probes, pairing/origin/CSRF protections, degraded reasons when the daemon is absent or narrowed, screenshot and state-capture evidence, and reload behavior for the static web route. Production builds must not enable dev/test, MCP, live-preview, fixture, or browser automation controls unless explicit configuration enables the capability and records permission/audit receipts.
+The Leptos web GUI development workflow (DL-139; it replaces the Slint/WASM web GUI) uses a trusted local daemon plus a static web route, fixture mode, browser automation smoke tests, screenshots/state capture, deterministic state hooks, and fast rebuild/reload loops. Because the web GUI is drawn with browser elements, smoke tests and state capture drive and read the page's own elements, and the same fixtures and behavioral scenarios also run through the Slint desktop, with each interface's screenshots checked against its own visual baselines, because the two share behavior, not pixels (F3-583). The test harness must prove daemon capability probes, pairing/origin/CSRF protections, degraded reasons when the daemon is absent or narrowed, screenshot and state-capture evidence, and reload behavior for the static web route. Production builds must not enable dev/test, MCP, live-preview, or browser automation controls unless explicit configuration enables the capability and records permission/audit receipts. Fixture mode is a developer and test tool for building Puppet Master, not a prototype scenario picker or a product run-mode switch. Deterministic fixture data stays isolated and labelled; it cannot enter production owner state, satisfy production admission, or earn readiness, production receipt or real-work credit. No production configuration enables fixture mode.
 
 ### ATS-023 - Web GUI Dev Preview And Smoke Tests
 
@@ -124,8 +124,7 @@ canonical_text: >-
   automation smoke test that drives and reads the page's own elements, screenshots/state-capture, deterministic state
   hooks, and fast rebuild/reload; the same fixtures and behavioral scenarios also run through the Slint desktop, and
   each interface's screenshots are checked against its own visual baselines. Production builds must not
-  enable dev/test, MCP, live-preview, fixture, or browser automation features unless explicit configuration enables the
-  capability and records permission/audit receipts.
+  enable dev/test, MCP, live-preview or browser automation features unless explicit configuration enables the capability and records permission/audit receipts. Fixture mode is excluded from this exception. Fixture mode is a developer and test tool for building Puppet Master, not a prototype scenario picker or a product run-mode switch. Deterministic fixture data stays isolated and labelled; it cannot enter production owner state, satisfy production admission, or earn readiness, production receipt or real-work credit. No production configuration enables fixture mode.
 gui_related: true
 gui_classification_reason: This unit defines user-visible web GUI development preview controls, screenshots, and smoke-test evidence.
 depends_on:
@@ -135,16 +134,15 @@ depends_on:
 unblocks:
 - F3-417
 acceptance_criteria:
-- The local daemon plus static web route workflow has fixture mode, browser automation smoke test, screenshots/state-capture, state hooks, and fast reload coverage.
-- The shared fixtures and behavioral scenarios also run through the Slint desktop, and screenshots of the web and desktop interfaces are captured and each is checked against its own interface's visual baselines.
-- Smoke tests prove authenticated local origin or pairing, origin/CSRF protection, capability probe, degraded reason, and permission/audit receipt projection.
-- Production builds keep dev/test, MCP, live-preview, fixture, and browser automation controls disabled unless explicit configuration enables the capability.
-- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this spec.
+- "The local daemon plus static web route workflow has fixture mode, browser automation smoke test, screenshots/state-capture, state hooks, and fast reload coverage."
+- "The shared fixtures and behavioral scenarios also run through the Slint desktop, and screenshots of the web and desktop interfaces are captured and each is checked against its own interface's visual baselines."
+- "Smoke tests prove authenticated local origin or pairing, origin/CSRF protection, capability probe, degraded reason, and permission/audit receipt projection."
+- "Production builds keep dev/test, MCP, live-preview and browser automation controls disabled unless explicit configuration enables the capability; fixture mode is never available in production."
+- "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this spec."
+- "Fixture-mode tests use isolated labelled deterministic state in both GUI targets, with no prototype scenario picker, product run-mode switch, production admission, readiness, production receipt or real-work credit."
 validation_surfaces:
-- python3 scripts/pm-gui-asset-policy.py
-- python3 scripts/pm-plans-verify.py validate-gui-asset-policy
-- python3 scripts/pm-plans-verify.py validate-implementation-readiness
-- python3 scripts/pm-plans-verify.py run-gates
+- "scripts/pm-gui-asset-policy.py"
+- "scripts/pm-plans-verify.py"
 risk_class: web_gui_dev_test_authority_leak
 reasoning_tier: high
 context_scope: gui_platform_currentness_repair
@@ -172,6 +170,7 @@ preserved_exact_tokens:
 negative_constraints:
 - "Production builds must not enable dev/test/MCP/live-preview features unless explicitly configured."
 - "Browser-only WASM must not claim direct OS authority."
+- "Do not ship fixture mode in production, offer a prototype scenario picker or treat fixture state/captures as real owner state, production receipts or readiness evidence."
 stale_retired_dispositions:
 - "DL-139 retires the Slint/WASM web GUI this workflow was first written for; the workflow now serves the Leptos web GUI."
 owner_hints:
@@ -1676,9 +1675,9 @@ acceptance_criteria:
   focus and expiry are joined. Ref-shaped strings, detected accounts, stale sources or UI availability alone never
   authorize work.
 - First Project keeps new/open decisions visually distinct and progressively discloses less-common origins. Its selection
-  queues canonical Project-owner intent; only a confirmed Review may dispatch `cmd.project.new_local {init_git:true}`
-  through Project System, and tests reject `cmd.source_control.repository.init` as a request, alias, handler, or visible
-  route.
+  queues canonical Project-owner intent; only a confirmed Review may dispatch `cmd.project.new_local` through
+  Project System with the exact reviewed `project_setup_binding` and selected Git or Jujutsu backend under PJCT-009.
+  Tests reject no-history setup and `cmd.source_control.repository.init` as a request, alias, handler, or visible route.
 - Source Control tests state plainly that Safe History is local and verify independent `scm_backend_selection=git|jujutsu|null`
   and `forge_provider_selection=github|gitlab|azure_devops|bitbucket_cloud|bitbucket_data_center|forgejo|gitea|none|null`
   axes, including Git/local-only, Git/online, Jujutsu/local-only, and Jujutsu/online cases. Git and Jujutsu never
@@ -1805,9 +1804,10 @@ acceptance_criteria:
   resize, scale, localization, movement, and route changes; stale or missing target geometry cannot advance the film.
 - Skip restores exact captured layout, Chat thread/selection/placeholder/draft, and focus. Finish requires current
   prerequisite predicates, restores temporary layout by default or honors explicit Keep, removes practice content,
-  and lands on the real Planning Wizard without work. Restoration failure remains recoverable, never completed. Safe
-  checkpoint tests revalidate owner state on Close/reload/resume, reject stale/secret-bearing records, return to the
-  earliest unsatisfied prerequisite, and never replay domain work.
+  and lands without starting work on the owner-approved real Project Planning Wizard or, for N15 Later, the No project
+  chat. Restoration failure remains recoverable, never completed. Safe checkpoint tests revalidate owner state on
+  Close/reload/resume, reject stale/secret-bearing records, return to the earliest unsatisfied prerequisite,
+  and never replay domain work.
 - Reload tests prove that Skip or Finish after a reload still restores through the layout owner's snapshot ref; that
   a checkpoint which cannot be revalidated restores whatever of its basis is still resolvable, never adopts the temporary
   arrangement as the new starting point, and starts a fresh session with a plain notice instead of a dead-end recovery
@@ -3636,7 +3636,7 @@ acceptance_criteria:
   - "The golden matrix contains exactly GUI-USG-001 through GUI-USG-008, GUI-CBP-001, GUI-CBP-002, GUI-ROUTE-001, GUI-RAW-001, and GUI-RAP-001 with no duplicate or unexpected fixture identity."
   - "Each golden row has surfaces, source_lineage, must, and must_not assertions, and each identity has a matching standalone case fixture."
   - "Companion matrices cover all thirteen rooms, At a glance/Detailed/Diagnostics, curated semantic sizes, complete-or-hidden tiers, measured physical content/placeholder footprints, stable identity-based insertion intent, Usage live occupied-neighbor pointer-resize preview with accepted-settlement topology parity up to settle-time gravity (the accepted layout equals the last-painted layout with only the Usage board gravity of WS-019 applied at settle), and the recovered width families; chart fixture expectations preserve the full ordered accessible series while checking exactly one visible in-plot label for every painted vertical bar, including zero bars, measured direct or vertical-lane placement keeps each label horizontally associated with its own bar, inside the plot, and pairwise non-overlapping without suppression, declared-unit formatting includes exactly two currency decimals for attempt-charge integer cents, and title/Latest/distinct-peak composition remains complete."
-  - "Fresh, migrated, invalid-reference, and prototype-key fixtures encode expected current defaults, settled restore, and preview-state exclusion without claiming that those behaviors executed."
+  - Fresh, genuine supported-migration and invalid-reference fixtures encode current defaults, settled restore and preview-state exclusion without claiming execution.
   - "Fixture expectations forbid unknown, hidden, disabled, unsupported, partial, missing, and redacted values from being represented as zero, success, settled, or authoritative; live rendering remains browser-audit work."
   - "python3 scripts/pm-plans-verify.py validate-usage-gui-fixtures and python3 scripts/pm-validate-pm7-gui-fixtures.py validate both pass for static fixture representation; runtime, visual, motion, and migration acceptance still requires fresh browser execution, raw receipts, and independent review."
   - "Accounts room fixtures list every account of a provider as its own row (three ChatGPT / Codex accounts as three rows in both Accounts and Plans & limits), show Use this account only when supports_manual_set_active is true and expect one cmd.account.select_profile per use with a confirmation first when the account is past its provider's switch point, and expect the card body and Details to dispatch nothing."
@@ -6048,25 +6048,22 @@ plan_unit_id: ATS-067
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
-canonical_text: >-
-  Test-build observability: development and test builds of both the Slint desktop and the Leptos web GUI
-  (DL-139, F3-583) expose to test agents the active screen, the focused control, the text selection, the scroll
-  position, every dispatched command with its result, frame timing, redraw activity, memory growth, and the
-  requested and effective renderer with any fallback reason (F3-033). Production builds of either interface never
-  include this surface, and no production configuration can enable it.
+canonical_text: |-
+  Test-build observability: development and test builds of both the Slint desktop and the Leptos web GUI (DL-139, F3-583) expose to test agents the active screen, the focused control, the text selection, the scroll position, every dispatched command with its result, frame timing, redraw activity, memory growth, and the requested and effective renderer with any fallback reason (F3-033). Production builds of either interface never include this surface, and no production configuration can enable it. Fixture-mode observations are labelled developer/test evidence only: they neither admit fixture data into production nor confer readiness, production receipt or real-work credit. No prototype scenario picker or product run-mode switch is included.
 gui_related: true
 gui_classification_reason: "Defines what test agents can observe of the visible desktop and web interfaces in development and test builds."
 split_recommended: false
 depends_on: [DL-139, ATS-023, F3-033, F3-583]
 unblocks: []
 acceptance_criteria:
-  - "In a development or test build of each interface, a test agent can read every listed item for the current window or page."
-  - "The renderer report names the requested renderer, the effective renderer and the fallback reason, including a software GPU adapter routed to the Skia CPU raster."
-  - "A production build of either interface contains no part of this surface, and no configuration enables it there."
-  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+- "In a development or test build of each interface, a test agent can read every listed item for the current window or page."
+- "The renderer report names the requested renderer, the effective renderer and the fallback reason, including a software GPU adapter routed to the Skia CPU raster."
+- "A production build of either interface contains no part of this surface, and no configuration enables it there."
+- "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+- "Fixture-mode observations distinguish test inputs/results from real owner state and confer no production admission, readiness, production receipt or real-work credit."
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
+- "scripts/pm-shard-plans.py"
+- "scripts/pm-plan-index.py"
 risk_class: test_observability_gap_or_production_leak
 reasoning_tier: high
 context_scope: gui_stack_skia_leptos
@@ -6085,8 +6082,9 @@ preserved_exact_tokens:
   - "requested and effective renderer"
   - "fallback reason"
 negative_constraints:
-  - "Do not ship this surface in production builds or let a production configuration enable it."
-  - "Do not treat observability output by itself as runtime, visual or performance acceptance."
+- "Do not ship this surface in production builds or let a production configuration enable it."
+- "Do not treat observability output by itself as runtime, visual or performance acceptance."
+- "Do not turn fixture-mode observability into a prototype scenario picker, product run-mode switch or production-evidence path."
 owner_boundary_notes:
   - "ATS-023's production-configuration exception for dev/test controls does not extend to this surface."
 owner_hints:
@@ -6820,13 +6818,13 @@ unit_type: acceptance_gate
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
 canonical_text: |-
-  Acceptance checks every live inventory row against SSYS-059's reviewed classification, offered-level/key/combine/atomic/not_offered contract and the actual census. Seven approved additions use the final F-d/A/D spelling map; 1010 is only the starting count, 12 categories and 38 managers remain. Test host paths versus Project-relative paths, no Computer+Device combination, declared scalar careful_order versus per_item maps, custom profile fallback, Computer ceilings, Managed limits, atomic theme_pair and Reduce motion plus OS. An Everywhere default may be loosened only where the owners allow it; a Computer safety answer/cap and parent mandatory ceiling still hold.
+  Acceptance checks every live inventory row against SSYS-059's reviewed classification, offered-level/key/combine/atomic/not_offered contract and the actual census. Seven approved additions use their final canonical IDs in Plans/settings_inventory.json; 1010 is only the starting count, 12 categories and 38 managers remain. Test host paths versus Project-relative paths, no Computer+Device combination, declared scalar careful_order versus per_item maps, custom profile fallback, Computer ceilings, Managed limits, atomic theme_pair and Reduce motion plus OS. An Everywhere default may be loosened only where the owners allow it; a Computer safety answer/cap and parent mandatory ceiling still hold.
 
   Test the single writer/home/mirror and per-setting CAS: independent edits succeed, same-setting/stale preview fails, offline writes queue nothing, join shows alternatives and supports 30-day Undo, home transfer requires old-writer fencing, and same raw IDs from different key domains never collide. Stale indexes disclose as-of rather than fabricating Varies. No credential/content leakage in mirrors/index/history/events/exports. Q5 keeps general.interaction.thread-archive-days zero as non-offered compatibility only, never an auto-archive offer. Retired Goal worker/verifier rows stay non-offered pending their explicit owner retirement. The five already missing branching.plan/deep-plan subgroup declarations are reported as a pre-existing census defect, not repaired by inventing another category or silently changing the denominator. Human origin edits, agent narrowest/mode handling and protected Always/source acceptance remain distinct.
 
   Detached own_values/effective_values copy tests exact disjoint selectors, owner things/readback/eligible compensation, chosen account readiness and no install/trust/keys/paths/live-body transfer. New-registry draft rebind/listing and Later/connect-only exclusions use real owner joins. Same-Computer unchosen account never reuses sign-in. App auth keeps protected pre-identity and exact Client/Host/return.
 
-  Model acceptance uses A's lead-accepted scoped-owner chain and explicit tier edition: explicit, scoped owner, Persona, surface/stage, Project own, Computer own, Everywhere/factory, permitted last-used, provider. Standard uses 1–7, Aggressive 1–9, Conservative 1,2,5,6,7,9, explicitly excluding Persona and stage. Preserve historical audit tiers/bytes, account/capability clamps and owner merge semantics; no new model router follows.
+  Model acceptance uses Plans/Models_System.md's accepted scoped-owner chain and explicit tier edition: explicit, scoped owner, Persona, surface/stage, Project own, Computer own, Everywhere/factory, permitted last-used, provider. Standard uses 1–7, Aggressive 1–9, Conservative 1,2,5,6,7,9, explicitly excluding Persona and stage. Preserve historical audit tiers/bytes, account/capability clamps and owner merge semantics; no new model router follows.
 gui_related: false
 gui_classification_reason: This unit defines decision history, vocabulary, owner boundaries or data-contract acceptance,
   not visual implementation.
@@ -6840,10 +6838,10 @@ acceptance_criteria:
   fixtures unchanged.
 - Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating omitted
   scenarios as pass.
-- All code changes and repository checks are phase-2 work after the actual PM7 landing and owner/interface freeze;
-  no new runtime proof follows here.
+- Run the adopted static contract checks against the current owner and companion editions;
+  no new runtime proof follows from these checks.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
 risk_class: missing_scope_semantics_or_false_certification
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -6907,10 +6905,11 @@ acceptance_criteria:
   fixtures unchanged.
 - Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating omitted
   scenarios as pass.
-- All code changes and repository checks are phase-2 work after the actual PM7 landing and owner/interface freeze;
-  no new runtime proof follows here.
+- Run the adopted static contract checks against the current owner and companion editions;
+  no new runtime proof follows from these checks.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
 risk_class: missing_scope_semantics_or_false_certification
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -6979,10 +6978,11 @@ acceptance_criteria:
   fixtures unchanged.
 - Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating omitted
   scenarios as pass.
-- All code changes and repository checks are phase-2 work after the actual PM7 landing and owner/interface freeze;
-  no new runtime proof follows here.
+- Run the adopted static contract checks against the current owner and companion editions;
+  no new runtime proof follows from these checks.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
 risk_class: missing_scope_semantics_or_false_certification
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -7046,10 +7046,11 @@ acceptance_criteria:
   fixtures unchanged.
 - Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating omitted
   scenarios as pass.
-- All code changes and repository checks are phase-2 work after the actual PM7 landing and owner/interface freeze;
-  no new runtime proof follows here.
+- Run the adopted static contract checks against the current owner and companion editions;
+  no new runtime proof follows from these checks.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plans-verify.py
 risk_class: missing_scope_semantics_or_false_certification
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -7114,10 +7115,11 @@ acceptance_criteria:
   fixtures unchanged.
 - Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating omitted
   scenarios as pass.
-- All code changes and repository checks are phase-2 work after the actual PM7 landing and owner/interface freeze;
-  no new runtime proof follows here.
+- Run the adopted static contract checks against the current owner and companion editions;
+  no new runtime proof follows from these checks.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plans-verify.py
 risk_class: missing_scope_semantics_or_false_certification
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -7174,7 +7176,7 @@ canonical_text: |-
 
   Scenario evidence covers all changed Settings rows/panel/managers/copy; Split Projects/New Project and owner recovery; No project/draft/folder/Computer/offline; explicit read coverage/incoming requests; both conversions/report/Undo; app Goal/Crew/Plan/Deep Plan/Build At/Schedule Manager/pause; grant review/live targets/Stop/Undo; and allowed computer-use strip/Stop. Check all ten look variants, effective Reduced Motion, narrow/long-content reflow, accessible labels/reasons, keyboard/pointer equivalence, stale/late returns and stable focus. Keep the one Assistant node, board/rail/menu/hover/overlay/sound/loader owners, all PM7 Glass/FO-22/service-refusal rules and native source/composer capture-return fences. Cached/partial/offline/unknown data never presents healthy/zero/none or completed effects.
 
-  Report exact card/register row → owner unit → companion → command/touch → check/evidence mapping, plus each omitted/not_run/native gap. TCME-007 owns exact subject/configuration/artifact hashes, delivered frames, review findings/repair/replacement and raw/derived distinction. Static schema/semantic fixtures, source checks, browser concept review, native runtime/custody, rendering/motion, actual providers/media/WAN/hardware and assistive technology have separate verdicts. A passing contract or concept never proves native handler/Event Authority/readiness. Phase 2 runs focused checks after interface/companion freeze, serial derived-file generation and authorized full-tree aggregates; no raw capture, baseline excuse or governance reseal is introduced here.
+  Report exact card/register row → owner unit → companion → command/touch → check/evidence mapping, plus each omitted/not_run/native gap. TCME-007 owns exact subject/configuration/artifact hashes, delivered frames, review findings/repair/replacement and raw/derived distinction. Static schema/semantic fixtures, source checks, browser concept review, native runtime/custody, rendering/motion, actual providers/media/WAN/hardware and assistive technology have separate verdicts. A passing contract or concept never proves native handler/Event Authority/readiness. Run the adopted static contract, Settings, wiring and touch checks against the current owner and companion editions; these checks provide no new runtime proof, and no raw capture, baseline excuse or governance reseal is introduced here.
 gui_related: true
 gui_classification_reason: This unit governs visible controls, context, feedback, accessibility or visual acceptance.
 depends_on:
@@ -7192,10 +7194,14 @@ acceptance_criteria:
   fixtures unchanged.
 - Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating omitted
   scenarios as pass.
-- All code changes and repository checks are phase-2 work after the actual PM7 landing and owner/interface freeze;
-  no new runtime proof follows here.
+- Run the adopted static contract checks against the current owner and companion editions;
+  no new runtime proof follows from these checks.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-settings-layering-check.py
+- scripts/pm-plans-verify.py
+- scripts/pm7-build-check.py
+- scripts/pm7-canon-check.py
 risk_class: missing_scope_semantics_or_false_certification
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103

@@ -8283,7 +8283,7 @@
       ],
       "production_entries": [],
       "setting_ids": [],
-      "payload": "value={column:title|rank|time|cpu|mem|ports|where,direction:-1|1}; closed view-only value; Time compares startedAt with stable title ties.",
+      "payload": "value={column:title|rank|time|cpu|mem|ports|where,direction:-1|1}; closed view-only value; Time compares run start times from the owner-backed Work projection with stable title ties.",
       "no_production_reason": "Typed local view action; no runtime/durable write or domain event. Return focus and release subscriptions on close.",
       "concept_sources": [
         {

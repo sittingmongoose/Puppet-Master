@@ -710,7 +710,7 @@ owner_hints: [Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.production.json]
 
 ## PMConcept7 Cozy Shelves Integration Addendum - 2026-07-28
 
-§0.1 update: `Concepts/PMConcept7.html` remains the primary concept input for wiring review, now carrying the integrated Cozy Shelves rail panels (File Manager, Search, Source Control, GitHub Actions, Docker, Testing, Agents, Runtime Artifacts per `Plans/FinalGUISpec.md` F3-497) and the Debug & Run panel with its fleshed bottom Debug tab (Run & Debug Revival, F3-482..F3-496). `Plans/CozyShelves_PM7_Control_Reconciliation.json` preserves the historical 2026-07-29 integrated-panel census, but it is not currentness evidence after the PM6/PM7 rebaseline; a true re-census is required before restoring any 100% command-coverage claim. `Plans/CozyShelves_Control_Reconciliation.json` remains the concept-phase census of the source-lineage `Concepts/rail-concepts/**` files and is current at its relocated `QwenRailConcepts/**` paths. Independently of the deferred PM7 census, the catalog and wiring rows retain the named command dispositions: the `cmd.run_debug.*` family is registered in the Run & Debug Revival Addendum and wired in `Plans/Wiring_Matrix.production.json` (rows `catalog.run_debug_*`), and `cmd.chat.open` is recorded as a compatibility alias of `cmd.chat.open_thread` (exclusions-registered, no second primary row). This note creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+§0.1 update: `Concepts/PMConcept7.html` remains the primary concept input for wiring review, now carrying the integrated Cozy Shelves rail panels (File Manager, Search, Source Control, GitHub Actions, Docker, Testing, Agents, Runtime Artifacts per `Plans/FinalGUISpec.md` F3-497) and the Debug & Run panel with its fleshed bottom Debug tab (Run & Debug Revival, F3-482..F3-495). `Plans/CozyShelves_PM7_Control_Reconciliation.json` preserves the historical 2026-07-29 integrated-panel census, but it is not currentness evidence after the PM6/PM7 rebaseline; a true re-census is required before restoring any 100% command-coverage claim. `Plans/CozyShelves_Control_Reconciliation.json` remains the concept-phase census of the source-lineage `Concepts/rail-concepts/**` files and is current at its relocated `QwenRailConcepts/**` paths. Independently of the deferred PM7 census, the catalog and wiring rows retain the named command dispositions: the `cmd.run_debug.*` family is registered in the Run & Debug Revival Addendum and wired in `Plans/Wiring_Matrix.production.json` (rows `catalog.run_debug_*`), and `cmd.chat.open` is recorded as a compatibility alias of `cmd.chat.open_thread` (exclusions-registered, no second primary row). This note creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
 
 §0.1 update 2026-10-09 (`Plans/Decision_Log.md#DL-162`, `#DL-163`): `Concepts/PMConcept7.html` remains the primary concept input for wiring review. Its rail panels and bottom Debug tab now carry the Polish design (`Plans/FinalGUISpec.md` F3-618 to F3-625), shown as a skin over the same shell panels: every shell control keeps its command id and its `data-demo-action` and `data-demo-arg`, and the Jujutsu view's five tabs (F3-623, F3-624) dispatch only existing `cmd.jujutsu.*`, `cmd.forge.review.*`, `cmd.file.open` and `ui.source_control.backup_history.open` ids, so the skin adds no wiring row and changes no census disposition. `Concepts/LeftRailPMConcept7.html` is the comparison copy (concepts A, B, C and "Original", the rail before Polish) and is not a wiring input. This note creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
 
@@ -804,7 +804,7 @@ The shared Assistant has one DOM/native component identity and one thread/contex
 re-seat that same node between its saved Home host and the right-side global host for other primary pages.
 `cmd.panel.switch` controls visibility; re-parenting is local shell projection and must preserve node
 identity, active thread, draft, transcript, attachments, context state, Context Detail Pane state, and
-focus-return target. A second `chatPanel`, `chatResizer`, Assistant controller, transcript store, or context
+focus-return target. A second Assistant panel, resize controller, Assistant controller, transcript store, or context
 store is a wiring failure.
 
 ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/DRY_Rules.md, ContractName:Plans/assistant-chat-design.md
@@ -827,7 +827,7 @@ canonical_text: >-
   cmd.nav.open_usage_subject as a usage_attempt/attempt_id object route without OpenSubject and retains the
   event ref as correlation. Home preset sizing normalizes to resize_surface, and shell
   wiring re-seats one shared Assistant node/store between Home and global hosts without
-  cloning or losing thread/context continuity. Amended 2026-10-09 (DL-180): the same
+  cloning or losing thread/context continuity; cmd.panel.switch controls visibility. Amended 2026-10-09 (DL-180): the same
   transaction carries every panel and tab gesture of the universal panels (a tab drag, a
   panel move, a divider, a fold); the chat never moves inside the window, Pop out into its
   own window is its only relocation, and the same node/store serves that window. Usage
@@ -861,8 +861,8 @@ acceptance_criteria:
   - "A tab drag, a panel move, a divider drag and a fold each follow this transaction: one changed release dispatches one command and emits one workspace.layout_changed; cancel, no change and failure dispatch nothing (amended 2026-10-09, DL-180)."
   - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.
 validation_surfaces:
-  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
-  - python3 scripts/pm-plan-index.py validate
+  - scripts/pm-plans-verify.py
+  - scripts/pm-plan-index.py
 risk_class: pm7_preview_cleanup_or_shared_assistant_identity_drift
 reasoning_tier: high
 context_scope: pm7_commands_wiring_dry_assistant
@@ -880,12 +880,11 @@ source_lineage:
   - Concepts/pm7-tools/widget_live_resize_preview_source.py (authored T43 Usage-only live resize-preview transform)
   - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local successor audit status; verdict remains report-owned)
+  - "DL-260 source lineage only (no product API or implementation obligation): chatPanel and chatResizer were concept DOM identities; the shared Assistant component, resize ownership and state continuity remain product requirements."
 preserved_exact_tokens:
   - pointercancel
   - cmd.workspace_layout.resize_surface
   - cmd.panel.switch
-  - chatPanel
-  - chatResizer
 negative_constraints:
   - Do not dispatch or persist pointer-preview frames.
   - Do not leave pointer capture, pending animation frames, portals, ghosts, placeholders, or transient listeners after commit or cancel.
@@ -903,9 +902,9 @@ owner_hints:
 
 ## Typed controls, exact owner routes, and shared hover-overlay addendum - 2026-08-31
 
-Every actionable or focusable control on a touched surface carries exactly one canonical `data-command-id` or typed local `data-ui-action-id`. It also exposes current availability, a machine-readable disabled reason when unavailable, one owner/handler destination, and a deterministic result/error/return route. A command-required control cannot degrade into page-local mutation. A presentation-only control cannot manufacture a domain command. PMConcept7 controls remain simulation-marked until the native dispatcher and owner handler are observed.
+Every actionable or focusable control on a touched surface has exactly one canonical command binding or typed local UI action through its real owner. It also exposes current availability, a machine-readable disabled reason when unavailable, one owner/handler destination, and a deterministic result/error/exact return route. A command-required control cannot degrade into page-local mutation. A presentation-only control cannot manufacture a domain command. PMConcept7 controls remain simulation-marked until the native dispatcher and owner handler are observed.
 
-`PMHoverTag`/`HoverTagController` is one shared Final GUI overlay consumer. It binds actionable/focusable elements, truncated values, technical identifiers, statuses, badges, chart marks, disabled controls, and dynamic pin/unpin state; static body copy and purely decorative nodes are the default exemptions. It preserves the accessible name, supplies stable `aria-describedby` text and `role="tooltip"`, replaces user-facing native `title`, and makes disabled controls keyboard-reachable without allowing activation. Three exemption kinds are documented: a picker plate (`menu`) and a labelled Settings field (`labelled-field`), both in FinalGUISpec F3-523 (amended 2026-10-17, DL-228; it read: one exception), and this one (DL-157, FinalGUISpec F3-590): inside an open assistant-chat activity bar domain preview, which is itself a hover surface, a control opens no hover tag, because the chat shows one hover surface at a time and a tag would replace the preview card under the pointer; such a control names itself by its visible text or accessible name, and a native `title` it carries there is the only tooltip it has. F3-590 lists the controls this covers. `general.interaction.show-tooltips` hides visual paint only; accessibility descriptions remain. Positioning centers above, flips below, clamps to the viewport, never covers a primary action (F3-523, DL-228), and uses the shared overlay root without changing document layout.
+The shared accessible hover overlay owned by FinalGUISpec F3-523 is one consumer of the shared overlay root. It binds actionable/focusable elements, truncated values, technical identifiers, statuses, badges, chart marks, disabled controls, and dynamic pin/unpin state; static body copy and purely decorative nodes are the default exemptions. It preserves the accessible name, supplies stable `aria-describedby` text and `role="tooltip"`, replaces user-facing native `title`, and makes disabled controls keyboard-reachable without allowing activation. Three exemption kinds are documented: a picker plate (`menu`) and a labelled Settings field (`labelled-field`), both in FinalGUISpec F3-523 (amended 2026-10-17, DL-228; it read: one exception), and this one (DL-157, FinalGUISpec F3-590): inside an open assistant-chat activity bar domain preview, which is itself a hover surface, a control opens no hover tag, because the chat shows one hover surface at a time and a tag would replace the preview card under the pointer; such a control names itself by its visible text or accessible name, and a native `title` it carries there is the only tooltip it has. F3-590 lists the controls this covers. `general.interaction.show-tooltips` hides visual paint only; accessibility descriptions remain. Positioning centers above, flips below, clamps to the viewport, never covers a primary action (F3-523, DL-228), and uses the shared overlay root without changing document layout.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/touch_closure.json, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.production.json
 
@@ -916,7 +915,7 @@ plan_unit_id: UIW-013
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Wiring_Rules.md
-canonical_text: Every touched actionable or focusable control has exactly one canonical command ID or typed local UI action, one availability and disabled-reason contract, one owner route, one tested response and exact return, and a Touch Closure reverse-consumer row. The shared PMHoverTag overlay supplies stable accessible descriptions and theme-native pointer/focus presentation without changing accessible names, enabling disabled actions, dispatching domain work, or changing layout. Native title-only behavior, orphan controls, duplicate keys, missing bindings, inaccessible disabled controls, clipping, stale text, and undocumented exemptions fail the generated census. One exemption is documented (DL-157, F3-590). A control inside an open assistant-chat activity bar domain preview opens no hover tag, since a tag would replace the preview card, and keeps its visible text or accessible name, with a native title where F3-590 lists one; the census counts these as documented exemptions, not missing bindings.
+canonical_text: Every touched actionable or focusable control has exactly one canonical command ID or typed local UI action, one availability and disabled-reason contract, one owner route, one tested response and exact return, and a Touch Closure reverse-consumer row. The shared hover overlay owned by FinalGUISpec F3-523 supplies stable aria-describedby descriptions and role=tooltip semantics and theme-native pointer/focus presentation without changing accessible names, enabling disabled actions, dispatching domain work, or changing layout. Native title-only behavior, orphan controls, duplicate keys, missing bindings, inaccessible disabled controls, clipping, stale text, and undocumented exemptions fail the generated census. The documented exemptions remain with F3-523 and F3-590 (DL-157, DL-228); general.interaction.show-tooltips hides visual paint only, retaining accessible descriptions. A control inside an open assistant-chat activity bar domain preview opens no hover tag, since a tag would replace the preview card, and keeps its visible text or accessible name, with a native title where F3-590 lists one; the census counts these as documented exemptions, not missing bindings.
 gui_related: true
 gui_classification_reason: Defines visible control activation, disabled behavior, hover tags, keyboard access, and exact return.
 split_recommended: false
@@ -931,9 +930,9 @@ acceptance_criteria:
   - The census treats the controls inside an open activity bar domain preview that F3-590 lists as documented exemptions (DL-157) and still fails a hover tag on any of them.
   - PMConcept7 remains simulation-only until native dispatcher and handler evidence exists.
 validation_surfaces:
-  - Plans/FinalGUISpec.md#F3-523 (hover/focus, Escape, departure grace, geometry, themes and reduced-motion acceptance)
-  - Plans/UI_Wiring_Rules.md#UIW-013 (accessible names/descriptions, disabled focus without activation, keyboard parity and documented exemptions)
-  - python3 scripts/pm-touch-closure-verify.py
+  - Plans/FinalGUISpec.md
+  - Plans/UI_Wiring_Rules.md
+  - scripts/pm-touch-closure-verify.py
 risk_class: orphan_control_or_inaccessible_hover_overlay
 reasoning_tier: high
 context_scope: typed_controls_and_hover_overlay
@@ -942,7 +941,9 @@ node_compile_hint: {mode: typed_control_and_hover_binding, create_worknodes: fal
 source_lineage:
   - Concepts/chat-assistant-concepts/5.6 Pro/PM_Chat_Assistant_5.6_Pro_Standalone.html
   - approved Parallel Canon, Settings, and PMConcept7 Integration Plan
-preserved_exact_tokens: [PMHoverTag, HoverTagController, aria-describedby, role=tooltip, general.interaction.show-tooltips]
+  - "DL-260 source lineage only (no product API or implementation obligation): PMHoverTag/HoverTagController were concept overlay names; F3-523 owns the shared product hover overlay."
+  - "DL-260/DL-280 source lineage only (no product DOM or exact-token obligation): data-command-id and data-ui-action-id were concept census instrumentation; product controls bind one canonical command or typed local UI action through the actual owner."
+preserved_exact_tokens: [ aria-describedby, role=tooltip, general.interaction.show-tooltips]
 negative_constraints:
   - Do not rely on native title as the user-facing tooltip, except for the controls inside an open activity bar domain preview that F3-590 lists (DL-157).
   - Do not enable a disabled control merely to make it focusable.
@@ -1117,8 +1118,9 @@ acceptance_criteria:
 - ui.onboarding.choose_look's choose_look intent (Q22 retires preview_nier) carry a closed look_choice with only the
   changed fields non-null and write the session with look_previewed; its two toggles carry look_choice null and write
   nothing; none has an owner route, owner command, cmd.theme.* or Settings transaction (DL-153).
-- ui.onboarding.start with source_surface first_run paints a Basic Dark preview with Basic Dark preselected; with
-  settings_rerun it keeps the look on screen preselected; neither writes a setting (F3-520, DL-153).
+- ui.onboarding.start with source_surface first_run preselects the one Settings-resolved saved look, including
+  without a Project; Basic Dark is only the factory/pre-claim fallback. settings_rerun keeps the look on screen
+  preselected; neither writes a setting. The preview commits once at the accepted application/Computer or real-Project boundary (F3-520, DL-286).
 - Every request/result validates against pm.product_onboarding.action_request.v2 and pm.product_onboarding.action_result.v2
   with closed applied, disabled, and rejected outcomes.
 - local_context consumes PWIZ-021's exact closed v2 owner definition, including required nullable phase/command/preflight/Project-commit
@@ -2852,7 +2854,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Wiring_Rules.md
 canonical_text: |-
-  W1–W9, B1–B6, S5, G1–G10. Every visible control in WM-097 has an exact census row; repeated rows use stable IDs, never array positions. Menu open and local view changes write nothing; work mutations call owner handlers after permissions/currentness and match keyboard/pointer requests. Reduced Motion and disabled states preserve meaningful feedback without activation; ack ≤100 ms and commit once. Full Activity Detail replaces only the small view; G1 B (Jared 2026-10-30) restores ui.activity_detail.pin / chat.activity.pin. Pin keeps detail open across switches while data follows the new thread; unpinned detail closes on a switch, without a runtime or Settings write. Resources subscribes only while visible; stale requests cannot leak samples across Project/server/environment. One overlay/hover/loader/Pip kit and one work projection; no injection hooks, synthetic resize or replacement observers. D11/G4, PM7 Step4, 2026-10-30: System status is a small read-only overlay popover, reached from the existing status-bar System status item and the Processes System services link. ui.system_status.open and ui.system_status.close are typed local visibility actions, with statusbar.system_status, work.open_system_status and system_status.close binding families. Service owner links use the existing ui.settings.route.open action and system_status.service.open_settings binding, selecting code.editing.lsp-server-catalog for language servers, system.mcp.server-list for MCP servers or web.index.enable for the search index. They open Settings and reveal the owner row without writing a value or controlling a service. The popover has close/Escape/outside closure, return focus and the common overlay/Glass plate; unavailable owner navigation says why. WM-097’s optional concept_sources records pair stable control families with the joined source paths and exact tokens. They witness source alignment only; native dispatcher, owner, focus, storage and effect evidence stays partial until implemented. Pin/Processes, work-panel tabs and quit actions keep their stable IDs even when a concept data-action spelling differs. D7/D8/D13, PM7 companion review fix1, 2026-10-30: WM-097’s reverse source-control census and action-specific local payload validation close the visible work-detail controls. Local owner selection never dispatches cmd.agents.open_thread; actual Assistant thread open, browser port open, scheduled Cancel and terminal Rerun use UCC-210’s existing owner routes. Clipboard and owner-surface navigation are declared local actions. Missing control dispositions or invalid local payloads fail focused checks; source anchors still certify no native signal or effect. G2/F3-1, Jared follow-ups 2026-10-30: Activity Detail widens first, then at the column limit docks and squeezes messages if at least 360 px remain, otherwise covers the transcript at full height. Notice stage placement uses the one bell anchor and the theme menu’s resting top on every page with the inbox closed (selector wrapper bottom plus its gap, not title-bar bottom; negative stage drop is allowed); while the inbox is open the lead’s 2026-10-30 exception keeps the stage under that inbox via --pmn-push. Other controls and the chat head do not trigger clearance. F3-5: body/action/dismiss clicks on entering or leaving cards dispatch nothing on every page, Usage included; pointer routing passes through, with no queued dispatch or late reactivation. Reduced Motion settles placement/removal instantly. F3-6: read the authoritative inbox push after its sprout owner opens it, using resting/destination height, and refresh it on content/height changes or resize; close clears it. Bindings retain their existing owner routes and count; no geometry or entry-state field becomes a persisted preference or runtime mutation. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and the panel. Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope creates no Stop/Restart/Stop all or service-control authority. DL-259 FS-1, 2026-10-31, supersedes Q17’s dimming: hover/focus emphasis begins only at an actual control in its affects region, including an embedded plate control; plain text, empty space and the picture alone trigger none. Affected marks take a one-pixel theme accent ring, with the shared soft glow in Glass and ink in NieR; their connecting lines and the job-card edge take accent, and the linked read-back takes the shared wash. Hover/focus never lowers another cast part’s opacity or recolours a Pip body, seat or label; each retains its intrinsic colours. Genuine owner-state quietness remains independent of hover. Scheduled emphasises only a row/mark with a drawn partner and never dims unrelated marks. Keyboard focus uses the same emphasis, Reduced Motion settles it instantly, and emphasis changes no layout or owner state. One shared affects/partner owner serves every sheet; there is no per-sheet hover engine. DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell inbox through the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement and entry/exit click guards remain.
+  W1–W9, B1–B6, S5, G1–G10. Every visible control in WM-097 has an exact census row; repeated rows use stable IDs, never array positions. Menu open and local view changes write nothing; work mutations call owner handlers after permissions/currentness and match keyboard/pointer requests. Reduced Motion and disabled states preserve meaningful feedback without activation; ack ≤100 ms and commit once. Full Activity Detail replaces only the small view; G1 B (Jared 2026-10-30) restores ui.activity_detail.pin / chat.activity.pin. Pin keeps detail open across switches while data follows the new thread; unpinned detail closes on a switch, without a runtime or Settings write. Resources subscribes only while visible; stale requests cannot leak samples across Project/server/environment. One overlay/hover/loader/Pip kit and one work projection; no injection hooks, synthetic resize or replacement observers. D11/G4, PM7 Step4, 2026-10-30: System status is a small read-only overlay popover, reached from the existing status-bar System status item and the Processes System services link. ui.system_status.open and ui.system_status.close are typed local visibility actions, with statusbar.system_status, work.open_system_status and system_status.close binding families. Service owner links use the existing ui.settings.route.open action and system_status.service.open_settings binding, selecting code.editing.lsp-server-catalog for language servers, system.mcp.server-list for MCP servers or web.index.enable for the search index. They open Settings and reveal the owner row without writing a value or controlling a service. The popover has close/Escape/outside closure, return focus and the common overlay/Glass plate; unavailable owner navigation says why. WM-097’s optional concept_sources records pair stable control families with the joined source paths and exact tokens. They witness source alignment only; native dispatcher, owner, focus, storage and effect evidence stays partial until implemented. Pin/Processes, work-panel tabs and quit actions keep their stable IDs even when a concept data-action spelling differs. D7/D8/D13, PM7 companion review fix1, 2026-10-30: WM-097’s reverse source-control census and action-specific local payload validation close the visible work-detail controls. Local owner selection never dispatches cmd.agents.open_thread; actual Assistant thread open, browser port open, scheduled Cancel and terminal Rerun use UCC-210’s existing owner routes. Clipboard and owner-surface navigation are declared local actions. Missing control dispositions or invalid local payloads fail focused checks; source anchors still certify no native signal or effect. G2/F3-1, Jared follow-ups 2026-10-30: Activity Detail widens first, then at the column limit docks and squeezes messages if at least 360 px remain, otherwise covers the transcript at full height. Notice stage placement uses the one bell anchor and the theme menu’s resting top on every page with the inbox closed (selector wrapper bottom plus its gap, not title-bar bottom; negative stage drop is allowed); while the inbox is open the lead’s 2026-10-30 exception keeps the stage under that inbox through the shared inbox owner’s measured stage offset. Other controls and the chat head do not trigger clearance. F3-5: body/action/dismiss clicks on entering or leaving cards dispatch nothing on every page, Usage included; pointer routing passes through, with no queued dispatch or late reactivation. Reduced Motion settles placement/removal instantly. F3-6: read the authoritative inbox push after its sprout owner opens it, using resting/destination height, and refresh it on content/height changes or resize; close clears it. Bindings retain their existing owner routes and count; no geometry or entry-state field becomes a persisted preference or runtime mutation. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the owner-backed work dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and the panel. Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope creates no Stop/Restart/Stop all or service-control authority. DL-259 FS-1, 2026-10-31, supersedes Q17’s dimming: hover/focus emphasis begins only at an actual control in its affects region, including an embedded plate control; plain text, empty space and the picture alone trigger none. Affected marks take a one-pixel theme accent ring, with the shared soft glow in Glass and ink in NieR; their connecting lines and the job-card edge take accent, and the linked read-back takes the shared wash. Hover/focus never lowers another cast part’s opacity or recolours a Pip body, seat or label; each retains its intrinsic colours. Genuine owner-state quietness remains independent of hover. Scheduled emphasises only a row/mark with a drawn partner and never dims unrelated marks. Keyboard focus uses the same emphasis, Reduced Motion settles it instantly, and emphasis changes no layout or owner state. One shared affects/partner owner serves every sheet; there is no per-sheet hover engine. DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell inbox through the shared inbox owner’s measured stage offset; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement and entry/exit click guards remain.
 
   The same census, generation fences and shared projection now cover application Goal/Crew/Assistant Plan/scheduled tasks, incoming requests and app pause. Selectors bind actual scope/Server/thread/run/occurrence; switching Project or focus never retargets a Stop, Cancel, terminal Rerun, incoming decision, capture attachment or retained detail. Resource reads stay visible-only and read-only, and dock presentation expiry never stops work.
 gui_related: true
@@ -2870,7 +2872,7 @@ acceptance_criteria:
 - Stale/disabled/unsupported targets retain an accessible exact reason and make no prohibited effect.
 - Closing/replacing the view releases overlays, rig/loader subscriptions and resource sampling; no injection/synthetic-resize/private
   owner remains.
-- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process and
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the owner-backed work dock provider gives a live process and
   the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection.
   Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not
   restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you
@@ -2892,13 +2894,13 @@ acceptance_criteria:
   Reduced Motion settles it instantly, and emphasis changes no layout or owner state. One shared affects/partner owner
   serves every sheet; there is no per-sheet hover engine.'
 - 'DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell inbox through
-  the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
+  the shared inbox owner’s measured stage offset; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
   and entry/exit click guards remain.'
 validation_surfaces:
-- python3 scripts/pm-shard-plans.py --check
-- python3 scripts/pm-plan-index.py validate
-- python3 scripts/pm7-build-check.py
-- python3 scripts/pm-plans-verify.py run-gates
+- "scripts/pm-shard-plans.py"
+- "scripts/pm-plan-index.py"
+- "scripts/pm7-build-check.py"
+- "scripts/pm-plans-verify.py"
 risk_class: owner_drift
 reasoning_tier: high
 context_scope: pm7_build_20261029
@@ -2909,11 +2911,13 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- "DL-260/DL-280 source lineage only (no product DOM or CSS obligation): #themeMenuWrap, MENU_GAP and --pmn-push were concept selector/paint shims. F3-447 owns the theme-menu resting-top anchor; F3-461 supplies the inbox owner’s resting/destination-height stage offset, update triggers and close cleanup."
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)
 - 'PM7 final FS-1: chatpip fc1aa3f503 / deliverable 8ae180658e; pmx-system generatedCss and scheduling linkStyle are
   source evidence, not native APIs.'
+- "DL-260 source lineage only (no product API or implementation obligation): PM_WORK was the concept work-projection adapter; dock eligibility and lifetime are DR-078/ACD-476 product presentation rules."
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -3068,7 +3072,10 @@ acceptance_criteria:
 - Unregistered names remain command_not_registered and missing native handlers remain handler_unavailable; no optimistic
   saved/sent/completed state.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-settings-layering-check.py
+- scripts/pm-plans-verify.py
+- scripts/pm-touch-closure-verify.py
 risk_class: scope_actor_dispatch_or_return_drift
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -3135,7 +3142,9 @@ acceptance_criteria:
 - Unregistered names remain command_not_registered and missing native handlers remain handler_unavailable; no optimistic
   saved/sent/completed state.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plans-verify.py
+- scripts/pm-touch-closure-verify.py
 risk_class: scope_actor_dispatch_or_return_drift
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -3205,7 +3214,9 @@ acceptance_criteria:
 - Unregistered names remain command_not_registered and missing native handlers remain handler_unavailable; no optimistic
   saved/sent/completed state.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plans-verify.py
+- scripts/pm-touch-closure-verify.py
 risk_class: scope_actor_dispatch_or_return_drift
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -3277,7 +3288,9 @@ acceptance_criteria:
 - Unregistered names remain command_not_registered and missing native handlers remain handler_unavailable; no optimistic
   saved/sent/completed state.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plans-verify.py
+- scripts/pm-touch-closure-verify.py
 risk_class: scope_actor_dispatch_or_return_drift
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -3348,7 +3361,9 @@ acceptance_criteria:
 - Unregistered names remain command_not_registered and missing native handlers remain handler_unavailable; no optimistic
   saved/sent/completed state.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plans-verify.py
+- scripts/pm-touch-closure-verify.py
 risk_class: scope_actor_dispatch_or_return_drift
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103

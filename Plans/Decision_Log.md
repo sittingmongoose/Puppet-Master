@@ -21104,3 +21104,49 @@ owner_hints:
   - Plans/Permissions_System.md
   - Plans/Contracts_V0.md
 ```
+
+
+### DL-302 - DL-260 Also Supersedes DL-173's Concept-Only Demo Controls
+
+```yaml
+plan_unit_id: DL-302
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-302 records Jared's answer of 2026-11-04 ("2. yes") to the demo-cleanup question whether DL-260 also covers
+  DL-173: DL-260 ("Product canon excludes prototype mechanics") supersedes the "concept-only demo controls" item in
+  DL-173's list of the Usage redesign's requirements, as it supersedes the concept-mechanics portions of the decisions
+  it names. DL-173's other decisions and its historical bytes are unchanged. Plans/usage-feature.md#UF-107 and the
+  other Usage owners carry only real product behavior; the concept keeps its demo controls (Jared, 2026-11-04: "the
+  demo stuff should be in PMConcept7, just not in the plans docs").
+gui_related: false
+gui_classification_reason: Records the supersession of a historical demo-control requirement; no GUI contract changes.
+split_recommended: false
+depends_on: [DL-260, DL-173]
+unblocks: []
+acceptance_criteria:
+  - "No live Plans unit treats DL-173's concept-only demo controls as a product requirement."
+  - "DL-173 and DL-260 keep their bytes."
+validation_surfaces:
+  - python3 scripts/pm7-demo-canon-check.py
+  - python3 scripts/pm-plan-index.py validate
+risk_class: prototype_promoted_to_product_or_real_rule_lost
+reasoning_tier: medium
+context_scope: product_canon_boundary
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/usage-feature.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-04: Jared's answer \"1. yes 2. yes\" to the stream P demo-cleanup questions; 2 is this entry"
+  - "/mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/demo-cleanup/classify-C.md (the DL-173 history row)"
+preserved_exact_tokens:
+  - "DL-302"
+  - "concept-only demo controls"
+owner_hints:
+  - Plans/usage-feature.md
+```

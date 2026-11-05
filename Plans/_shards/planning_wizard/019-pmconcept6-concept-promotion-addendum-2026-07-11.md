@@ -4,7 +4,7 @@ Source: `Plans/Planning_Wizard.md`
 
 Source lines: L1656-L1711
 
-Source SHA256: `cf42e4927a229ccf6cb92a3e5dc034396c6b106366b4099bfc22a0fb450c88f6`
+Source SHA256: `8e3b6ab6b7a416691ba6fa667c37e42c99ffddb147ac55a34fe9bff33ee799aa`
 
 ---
 
@@ -19,7 +19,7 @@ plan_unit_id: PWIZ-019
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
-canonical_text: 'Planning Wizard and PRD Builder workspaces embed Assistant Chat instances per topic conversation and per PRD discovery interview. Each embedded instance is the same Assistant Chat component and message pipeline as the global chat panel, rendered from one template and state source in a chrome-reduced embedded mode: the message stream, composer, and quick-reply chips remain, send stays gated by conversation state, and panel-level chrome such as the thread rail, thread search, issues and worktree indicators, persona and model selectors, the mode strip, and panel toggles is omitted. Stream, footer, and suggestion content resolve per thread, and context boxes are thread-scoped. Embedded instances are additive: the separate global Assistant Chat side panel remains the canonical #chatPanel surface, so embedding inside the wizard workspace does not replace or remove the separate chat side panel.'
+canonical_text: 'Planning Wizard and PRD Builder workspaces embed Assistant Chat instances per topic conversation and per PRD discovery interview. Each embedded instance is the same Assistant Chat component and message pipeline as the global chat panel, rendered from one template and state source in a chrome-reduced embedded mode: the message stream, composer, and quick-reply chips remain, send stays gated by conversation state, and panel-level chrome such as the thread rail, thread search, issues and worktree indicators, persona and model selectors, the mode strip, and panel toggles is omitted. Stream, footer, and suggestion content resolve per thread, and context boxes are thread-scoped. Embedded instances are additive: the separate global Assistant Chat side panel remains the canonical global chat surface, so embedding inside the wizard workspace does not replace or remove the separate chat side panel.'
 gui_related: true
 gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
 depends_on: [PWIZ-013, F3-131, F3-357]
@@ -30,8 +30,8 @@ acceptance_criteria:
 - The separate global Assistant Chat side panel remains available while embedded instances are active.
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this unit.
 validation_surfaces:
-- python3 scripts/pm-plan-index.py validate
-- python3 scripts/pm-shard-plans.py --check
+  - scripts/pm-plan-index.py
+  - scripts/pm-shard-plans.py
 risk_class: owner_drift
 reasoning_tier: standard
 context_scope: planning_wizard_embedded_chat_instances
@@ -47,6 +47,7 @@ source_lineage:
 - source_ref:concept:pm6-build-2026-07-11
 - Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
 - Plans/FinalGUISpec.md#F3-420
+- "DL-260 source lineage only (no product selector or implementation obligation): #chatPanel named the concept global chat container; embedding remains additive to the separate global Assistant Chat side panel."
 source_atom_ids: []
 decision_refs:
 - dec-2026-07-11-pm6-concept-promotion-planunits-seal
@@ -55,7 +56,6 @@ preserved_exact_tokens:
 - Assistant Chat
 - embedded
 - quick-reply chips
-- '#chatPanel'
 negative_constraints:
 - Do not replace or remove the separate Assistant Chat side panel; embedded instances are additive to the separate panel surface.
 - Embedded chat chrome must not require arbitrary-content backdrop blur or SVG filters; color styling must be precomputed rather than runtime color mixing, and any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset.

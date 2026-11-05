@@ -1,0 +1,35 @@
+{
+  "ai": {
+    "installFailure": {
+      "title": "Install failed",
+      "offline": "The download could not finish. Check this computer’s internet connection, then try again.",
+      "unsupported": "The official installer does not support this operating system. Use a supported work computer, then try again.",
+      "permission": "The installer was refused permission. Check this computer’s install permissions, then try again.",
+      "verify": "The installed program could not be verified. Nothing is ready to sign in. Try the official installation again.",
+      "demo": {
+        "works": "Install succeeds",
+        "offline": "Download offline",
+        "unsupported": "Unsupported operating system",
+        "permission": "Permission refused",
+        "verify": "Verification fails"
+      },
+      "chosen": "selected"
+    }
+  },
+  "pip": {
+    "oops": {
+      "ai": {
+        "installFailure": {
+          "title": "The install stopped. Check the reason, then we can try again."
+        }
+      }
+    },
+    "cheer": {
+      "ai": {
+        "installFailure": {
+          "title": "The program is installed and checked. Onward!"
+        }
+      }
+    }
+  }
+}

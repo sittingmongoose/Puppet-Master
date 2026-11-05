@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L7520-L7906
+Source lines: L7520-L7908
 
-Source SHA256: `3899744314444527ed5abfa724f4abdb67822efa4d7b3852a2db461438fffebe`
+Source SHA256: `3819f6ec249a5245d6ea0b61a8aa574ecd65cb2cf84f00db2a3beb0b6bdf5bf1`
 
 ---
 
@@ -135,7 +135,7 @@ canonical_text: 'The hosted 5.6 Pro chat reuses the production-intent rows of it
   colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon. Q16: You
   is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette
   cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to
-  You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew
+  You express the plate’s result/topology, not puppet strings. The one shared person-silhouette renderer owned by F3-594 serves crew
   diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain
   their existing meaning. Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation
   requirement.
@@ -183,14 +183,14 @@ acceptance_criteria:
   a second wand or fallback icon. Q16: You is the person alone, head and shoulders in each family’s materials
   and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross,
   and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings.
-  The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent
+  The one shared person-silhouette renderer owned by F3-594 serves crew diagrams, cast plates, run cards and rosters. Optional agent
   strings and the single Pip primitive retain their existing meaning.'
 - Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
   refusal and the exact command/local/tool binding from UCC-216; no native/event/governance proof follows from
   static closure.
 validation_surfaces:
-- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-- python3 scripts/pm-plan-index.py validate
+  - scripts/pm-shard-plans.py
+  - scripts/pm-plan-index.py
 risk_class: hosted_chat_owner_drift
 reasoning_tier: high
 context_scope: chat56_pmconcept7_port
@@ -215,6 +215,7 @@ source_lineage:
 - 'PM7 final FS-1: chatpip fc1aa3f503 / deliverable 8ae180658e; pmx-system generatedCss and scheduling linkStyle
   are source evidence, not native APIs.'
 - source_ref:chat:2026-11-03-projects-pass2-approved
+- "DL-260 source lineage only (no product API or implementation obligation): ppYou/PX_YOU/pnYou were the concept person-rendering helpers and pixel table; the shared product renderer is owned by F3-594."
 preserved_exact_tokens:
 - Keep open
 negative_constraints:
@@ -261,9 +262,7 @@ canonical_text: 'B1/B2/B6, S1–S9, D1–D14, G1–G10. pm7_control_bindings.jso
   carries concept_sources path/token anchors for its actual GUI adapter. DL-260: project controls, Work surfaces
   and the Pip editor consume their shared product owners; System status owner links use the existing Settings
   reveal route. Source adapter names are lineage only. No JavaScript adapter is native command/effect proof.
-  W6 identity mapping: PM_WORK item delivery maps to completion_delivery, restarting maps to pending with Restarting
-  words, and its clearFinished platform/thread:<id> views map to the invoking view. canSendInput/answer are
-  concept projections of current prompt eligibility and owner answers; native process identity, generation,
+  W6 identity mapping: Work item delivery maps to completion_delivery, restarting maps to pending with Restarting words, and Clear finished binds the exact invoking platform or thread view. Current prompt eligibility and answers come from their owner; native process identity, generation,
   permission, yes/no-only stdin and read-only-service gates remain unchanged. D2/D7, PM7 Step4 final-source
   alignment, 2026-10-30 (integration e9b15abc64): chat.work_dock.process_open maps Review/Show to existing
   pm7.processes_open / cmd.chat.processes.open. chat.work_dock.agent_review records ordinary local Subagents
@@ -272,8 +271,7 @@ canonical_text: 'B1/B2/B6, S1–S9, D1–D14, G1–G10. pm7_control_bindings.jso
   Resources Time reuses ui.work_panel.sort. No new production row or Touch action is created by these producers;
   the Q22 census has 479 records, with 61 source-anchored producer families after QA2 family-control alignment;
   the three retired checkbox rows remain non_dispatch tombstones. D7/D8/D13, PM7 companion review fix1, 2026-10-30:
-  the reverse work-detail census discovers emitted data-work-act values and act.* button labels, including
-  both goto destinations and scheduled Cancel versus process Stop, and requires their binding/owner dispositions.
+  the reverse work-detail census covers every rendered action, including both owner-navigation destinations and scheduled Cancel versus process Stop, and requires each action’s binding/owner disposition through the existing UCC-210/UIW-045 owners.
   It covers Copy command, Open port, Rerun, actual Open thread/Open surface and local owner selection; forward
   token counts alone are not closure. Existing owner commands receive producer/Touch coverage, never a new
   native handler or evidence promotion. D7/D8/D13, PM7 final-review direct correction, 2026-10-30 (Astra r2
@@ -292,7 +290,7 @@ canonical_text: 'B1/B2/B6, S1–S9, D1–D14, G1–G10. pm7_control_bindings.jso
   contracts and record the transient no-dispatch gate; static cases and actual pure-helper probes remain distinct
   from native or rendered evidence. No control-clearance or chat-head placement rule, new binding, command,
   event, setting or native certification is introduced. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18:
-  Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run a 60000 ms presentation
+  Q13/CC5: the owner-backed work dock provider gives a live process and the next pending scheduled run a 60000 ms presentation
   lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and
   run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new
   occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry
@@ -306,7 +304,7 @@ canonical_text: 'B1/B2/B6, S1–S9, D1–D14, G1–G10. pm7_control_bindings.jso
   available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact host/environment
   identity and stale disclosure remain authoritative; shared read scope creates no Stop/Restart/Stop all or
   service-control authority. DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts
-  stay below the open bell inbox through the existing --pmn-push; it is his ruling, not an unresolved lead
+  stay below the open bell inbox through the shared inbox owner’s measured stage offset; it is his ruling, not an unresolved lead
   exception. Closed-inbox theme-menu resting-top placement and entry/exit click guards remain.
 
 
@@ -338,7 +336,7 @@ acceptance_criteria:
   requirements and one handler.
 - Touch covers each admitted action once; Stop all and all reused terminal/Settings routes retain their owner
   identity without native-certification promotion.
-- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the owner-backed work dock provider gives a live process
   and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s
   dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning
   to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000
@@ -353,16 +351,16 @@ acceptance_criteria:
   Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope
   creates no Stop/Restart/Stop all or service-control authority.'
 - 'DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell
-  inbox through the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu
+  inbox through the shared inbox owner’s measured stage offset; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu
   resting-top placement and entry/exit click guards remain.'
 - Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
   refusal and the exact command/local/tool binding from UCC-215; no native/event/governance proof follows from
   static closure.
 validation_surfaces:
-- python3 scripts/pm-shard-plans.py --check
-- python3 scripts/pm-plan-index.py validate
-- python3 scripts/pm7-build-check.py
-- python3 scripts/pm-plans-verify.py run-gates
+- "scripts/pm-shard-plans.py"
+- "scripts/pm-plan-index.py"
+- "scripts/pm7-build-check.py"
+- "scripts/pm-plans-verify.py"
 risk_class: owner_drift
 reasoning_tier: high
 context_scope: pm7_build_20261029
@@ -373,6 +371,8 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- "DL-260/DL-280 source lineage only (no product DOM or implementation obligation): data-work-act, act.* and goto were concept action-emission spellings used by the source audit; product coverage follows the actual Work controls and their declared owner bindings."
+- "DL-260/DL-280 source lineage only (no product DOM or CSS obligation): #themeMenuWrap, MENU_GAP and --pmn-push were concept selector/paint shims. F3-447 owns the theme-menu resting-top anchor; F3-461 supplies the inbox owner’s resting/destination-height stage offset, update triggers and close cleanup."
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)
@@ -380,6 +380,8 @@ source_lineage:
   for work, PM_PIP_EDITOR and the shared parts registry for Pip, and the existing Settings reveal route for
   System status owner links.'
 - source_ref:chat:2026-11-03-projects-pass2-approved
+- "DL-260 source lineage only (no product API or implementation obligation): PM_WORK was the concept work-projection adapter; dock eligibility and lifetime are DR-078/ACD-476 product presentation rules."
+- "DL-260 source lineage only (no product API): PM7_WORK_UI/PM_WORK, clearFinished platform/thread:<id> and canSendInput/answer were concept route/view adapters; native owners retain exact command, view, prompt, generation and permission checks."
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.

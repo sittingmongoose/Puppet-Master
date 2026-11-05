@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L26359-L27006
+Source lines: L26341-L26986
 
-Source SHA256: `a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d`
+Source SHA256: `286c122ca3de84e4f6e7e3bfc7e476e3732a05f2be6594add4ee6244789f01f2`
 
 ---
 
@@ -497,8 +497,7 @@ canonical_text: 'Chat motion has one voice per theme family (DL-106): Basic, Fri
   answer says whether a look''s cover hides the page; a surface it hides draws nothing new until the cover lifts, and
   a selection chip waits only for a real cover, never for a merely busy page. A move begun in a frame that was drawn
   late starts from its beginning once frames come on time again, at most six frames later or until a page-change hold
-  ends, so no move is spent before it is seen. In the concept these are PM_BUSY, the pm-idle event, PM_LOOK_COVERED and
-  PM_START_ON_SHOWN. Amended 2026-10-17 (DL-219, DL-222): a page change may hold while the arriving page is still drawing
+  ends, so no move is spent before it is seen. One shared presentation owner supplies busy/idle, look-cover and on-time entrance gates to all consumers. Amended 2026-10-17 (DL-219, DL-222): a page change may hold while the arriving page is still drawing
   its first screen. The leaving page stays, with the click''s motion still running, until the arrival is ready or about
   1.5 s from the click''s own frame, whichever is first; then the entrance plays from the start, and the exit takes over
   from the opacity the click''s fade has reached (F3-464; amended 2026-10-17, review r1). That hold is the covering transition
@@ -529,9 +528,7 @@ canonical_text: 'Chat motion has one voice per theme family (DL-106): Basic, Fri
   pauses hidden/offscreen/during drags. Loader uses family periods and reduced-motion breath/blink exception of F3-662,
   no travel. App chirps use the one master player and existing chat mute, default off as a Pip part. Main-button pointer/keyboard
   acknowledgement is within 100 ms with no busy stall/deferral workaround and no double commit; disabled oops never activates.
-  X2/L8, PM7 final GUI alignment f99ad183d2, 2026-10-30 (F3-3): the shared PM_BUSY signal also names drag, after cover
-  reasons so a cover retains priority. PM_BUSY.drag() reads the five shared body drag classes; PM_BUSY.idle(fn, timeout)
-  defers a request made during a drag and rechecks a callback that lands in one, resubmitting after pm-idle. No idle
+  X2/L8, PM7 final GUI alignment f99ad183d2, 2026-10-30 (F3-3): the shared busy signal also names drag, after cover reasons so a cover retains priority. The shared idle-work owner defers requests made during a drag, rechecks callbacks that arrive during a drag and resubmits them after the drag gate clears. No idle
   job runs inside a held drag. This helper does not make a hidden tab busy by itself or waive caller visibility, other
   busy/cover, interaction and animation gates. No new command, binding, setting or event family is introduced. QA round
   2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q1/Q2: onboarding sound defaults on under general.interaction.sound-effects,
@@ -583,8 +580,8 @@ acceptance_criteria:
   value wins when it binds; a genuinely refused bound write remains refused. An unavailable Settings projection never
   fabricates a saved value or authorizes a write.'
 validation_surfaces:
-- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-- python3 scripts/pm-plan-index.py validate
+- "scripts/pm-shard-plans.py"
+- "scripts/pm-plan-index.py"
 risk_class: chat_motion_and_sound_drift
 reasoning_tier: high
 context_scope: chat_motion_sound
@@ -630,6 +627,7 @@ source_lineage:
   source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-16-p1000-speed/IDLE-WARM-RULE.md, SHA-256 9a79df01751fbd98f1b4d597d40e520e662b5d584e97ef9094c27dd8aa55736d
   (Jared, 2026-10-17 10:27Z, no platform-specific acceptance; source lineage)
+- "DL-260 source lineage only (no product API or implementation obligation): PM_BUSY/PM_BUSY.drag()/PM_BUSY.idle(fn, timeout), pm-idle, PM_LOOK_COVERED, PM_START_ON_SHOWN and the shared body drag classes were concept motion helpers."
 preserved_exact_tokens:
 - DL-138
 - Basic

@@ -6298,6 +6298,2136 @@
         }
       ],
       "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-grant-approve-absent-key",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/build_grant_approve_request",
+      "record": {
+        "command_id": "cmd.build_grant.approve",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "scope_partition": "project~cHJvamVjdC1h",
+            "project_id": "project-a",
+            "project_home_server_id": "server-a",
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "key-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 0,
+          "task_stop_epoch": 0,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "project_id": "project-a",
+        "plan_id": "fixture-a",
+        "plan_version": 1,
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "build_id": "fixture-a",
+        "expected_grant_revision": null,
+        "preview_ref": "preview-a",
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "targets": [],
+        "person_approval_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-grant-approve-null-preview_ref",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/build_grant_approve_request",
+      "record": {
+        "command_id": "cmd.build_grant.approve",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "scope_partition": "project~cHJvamVjdC1h",
+            "project_id": "project-a",
+            "project_home_server_id": "server-a",
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "key-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 0,
+          "task_stop_epoch": 0,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "project_id": "project-a",
+        "plan_id": "fixture-a",
+        "plan_version": 1,
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "build_id": "fixture-a",
+        "expected_grant_revision": null,
+        "preview_ref": null,
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "targets": [],
+        "person_approval_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-grant-approve-null-preview_sha256",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/build_grant_approve_request",
+      "record": {
+        "command_id": "cmd.build_grant.approve",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "scope_partition": "project~cHJvamVjdC1h",
+            "project_id": "project-a",
+            "project_home_server_id": "server-a",
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "key-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 0,
+          "task_stop_epoch": 0,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "project_id": "project-a",
+        "plan_id": "fixture-a",
+        "plan_version": 1,
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "build_id": "fixture-a",
+        "expected_grant_revision": null,
+        "preview_ref": "preview-a",
+        "preview_sha256": null,
+        "targets": [],
+        "person_approval_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-grant-approve-missing-cas",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/build_grant_approve_request",
+      "record": {
+        "command_id": "cmd.build_grant.approve",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "scope_partition": "project~cHJvamVjdC1h",
+            "project_id": "project-a",
+            "project_home_server_id": "server-a",
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "key-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 0,
+          "task_stop_epoch": 0,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "project_id": "project-a",
+        "plan_id": "fixture-a",
+        "plan_version": 1,
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "build_id": "fixture-a",
+        "preview_ref": "preview-a",
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "targets": [],
+        "person_approval_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-grant-approve-revision-cas",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/build_grant_approve_request",
+      "record": {
+        "command_id": "cmd.build_grant.approve",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "scope_partition": "project~cHJvamVjdC1h",
+            "project_id": "project-a",
+            "project_home_server_id": "server-a",
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "key-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 0,
+          "task_stop_epoch": 0,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "project_id": "project-a",
+        "plan_id": "fixture-a",
+        "plan_version": 1,
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "build_id": "fixture-a",
+        "expected_grant_revision": 1,
+        "preview_ref": "preview-a",
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "targets": [],
+        "person_approval_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-grant-revoke-target",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/build_grant_revoke_request",
+      "record": {
+        "command_id": "cmd.build_grant.revoke",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "scope_partition": "project~cHJvamVjdC1h",
+            "project_id": "project-a",
+            "project_home_server_id": "server-a",
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "key-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 0,
+          "task_stop_epoch": 0,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "project_id": "project-a",
+        "plan_id": "fixture-a",
+        "plan_version": 1,
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "build_id": "fixture-a",
+        "expected_grant_revision": 0,
+        "schema_id": "pm.build_grant.revoke.request.v2",
+        "schema_version": "2.0.0",
+        "grant_id": "fixture-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-grant-revoke-null-grant_id",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/build_grant_revoke_request",
+      "record": {
+        "command_id": "cmd.build_grant.revoke",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "scope_partition": "project~cHJvamVjdC1h",
+            "project_id": "project-a",
+            "project_home_server_id": "server-a",
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "key-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 0,
+          "task_stop_epoch": 0,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "project_id": "project-a",
+        "plan_id": "fixture-a",
+        "plan_version": 1,
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "build_id": "fixture-a",
+        "expected_grant_revision": 0,
+        "schema_id": "pm.build_grant.revoke.request.v2",
+        "schema_version": "2.0.0",
+        "grant_id": null
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-grant-revoke-null-expected_grant_revision",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/build_grant_revoke_request",
+      "record": {
+        "command_id": "cmd.build_grant.revoke",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "scope_partition": "project~cHJvamVjdC1h",
+            "project_id": "project-a",
+            "project_home_server_id": "server-a",
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "key-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 0,
+          "task_stop_epoch": 0,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "project_id": "project-a",
+        "plan_id": "fixture-a",
+        "plan_version": 1,
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "build_id": "fixture-a",
+        "expected_grant_revision": null,
+        "schema_id": "pm.build_grant.revoke.request.v2",
+        "schema_version": "2.0.0",
+        "grant_id": "fixture-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-grant-revoke-historical-reader",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/build_grant_revoke_request_legacy_v1",
+      "record": {
+        "command_id": "cmd.build_grant.revoke",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "scope_partition": "project~cHJvamVjdC1h",
+            "project_id": "project-a",
+            "project_home_server_id": "server-a",
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "key-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 0,
+          "task_stop_epoch": 0,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "project_id": "project-a",
+        "plan_id": "fixture-a",
+        "plan_version": 1,
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "build_id": "fixture-a",
+        "expected_grant_revision": null,
+        "preview_ref": null,
+        "preview_sha256": null,
+        "targets": []
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-grant-revoke-legacy-not-current",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/build_grant_revoke_request",
+      "record": {
+        "command_id": "cmd.build_grant.revoke",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "scope_partition": "project~cHJvamVjdC1h",
+            "project_id": "project-a",
+            "project_home_server_id": "server-a",
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "key-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 0,
+          "task_stop_epoch": 0,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "project_id": "project-a",
+        "plan_id": "fixture-a",
+        "plan_version": 1,
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "build_id": "fixture-a",
+        "expected_grant_revision": null,
+        "preview_ref": null,
+        "preview_sha256": null,
+        "targets": []
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-grant-preview-commitment",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/build_grant_preview_result",
+      "record": {
+        "command_id": "cmd.build_grant.preview",
+        "operation_id": "fixture-a",
+        "status": "previewed",
+        "grant_ref": null,
+        "grant_revision": null,
+        "preview_ref": "preview-a",
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "blocker_refs": [],
+        "result_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-grant-preview-null-preview_ref",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/build_grant_preview_result",
+      "record": {
+        "command_id": "cmd.build_grant.preview",
+        "operation_id": "fixture-a",
+        "status": "previewed",
+        "grant_ref": null,
+        "grant_revision": null,
+        "preview_ref": null,
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "blocker_refs": [],
+        "result_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-grant-preview-null-preview_sha256",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/build_grant_preview_result",
+      "record": {
+        "command_id": "cmd.build_grant.preview",
+        "operation_id": "fixture-a",
+        "status": "previewed",
+        "grant_ref": null,
+        "grant_revision": null,
+        "preview_ref": "preview-a",
+        "preview_sha256": null,
+        "blocker_refs": [],
+        "result_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-grant-preview-not-approved",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/build_grant_preview_result",
+      "record": {
+        "command_id": "cmd.build_grant.preview",
+        "operation_id": "fixture-a",
+        "status": "approved",
+        "grant_ref": null,
+        "grant_revision": null,
+        "preview_ref": "preview-a",
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "blocker_refs": [],
+        "result_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-grant-preview-not-revoked",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/build_grant_preview_result",
+      "record": {
+        "command_id": "cmd.build_grant.preview",
+        "operation_id": "fixture-a",
+        "status": "revoked",
+        "grant_ref": null,
+        "grant_revision": null,
+        "preview_ref": "preview-a",
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "blocker_refs": [],
+        "result_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-create_global_rule-cas",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.create_global_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": null,
+        "normalized_pattern": "web.search",
+        "action": "deny",
+        "expected_owner_revision": 0,
+        "expected_source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-create_global_rule-null-expected_owner_revision",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.create_global_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": null,
+        "normalized_pattern": "web.search",
+        "action": "deny",
+        "expected_owner_revision": null,
+        "expected_source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-create_global_rule-null-expected_source_sha256",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.create_global_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": null,
+        "normalized_pattern": "web.search",
+        "action": "deny",
+        "expected_owner_revision": 0,
+        "expected_source_sha256": null,
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-create_global_rule-always-person",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.create_global_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": null,
+        "normalized_pattern": "web.search",
+        "action": "allow",
+        "expected_owner_revision": 0,
+        "expected_source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_authority_ref": "person-a",
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-create_global_rule-always-no-person",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.create_global_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": null,
+        "normalized_pattern": "web.search",
+        "action": "allow",
+        "expected_owner_revision": 0,
+        "expected_source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-create_project_rule-cas",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.create_project_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "scope_partition": "project~cHJvamVjdC1h",
+          "project_id": "project-a",
+          "project_home_server_id": "server-a",
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "project",
+          "level_key": "project-a",
+          "computer_key": null,
+          "project_id": "project-a",
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": null,
+        "normalized_pattern": "web.search",
+        "action": "deny",
+        "expected_owner_revision": 0,
+        "expected_source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-create_project_rule-null-expected_owner_revision",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.create_project_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "scope_partition": "project~cHJvamVjdC1h",
+          "project_id": "project-a",
+          "project_home_server_id": "server-a",
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "project",
+          "level_key": "project-a",
+          "computer_key": null,
+          "project_id": "project-a",
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": null,
+        "normalized_pattern": "web.search",
+        "action": "deny",
+        "expected_owner_revision": null,
+        "expected_source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-create_project_rule-null-expected_source_sha256",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.create_project_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "scope_partition": "project~cHJvamVjdC1h",
+          "project_id": "project-a",
+          "project_home_server_id": "server-a",
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "project",
+          "level_key": "project-a",
+          "computer_key": null,
+          "project_id": "project-a",
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": null,
+        "normalized_pattern": "web.search",
+        "action": "deny",
+        "expected_owner_revision": 0,
+        "expected_source_sha256": null,
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-create_project_rule-always-person",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.create_project_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "scope_partition": "project~cHJvamVjdC1h",
+          "project_id": "project-a",
+          "project_home_server_id": "server-a",
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "project",
+          "level_key": "project-a",
+          "computer_key": null,
+          "project_id": "project-a",
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": null,
+        "normalized_pattern": "web.search",
+        "action": "allow",
+        "expected_owner_revision": 0,
+        "expected_source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_authority_ref": "person-a",
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-create_project_rule-always-no-person",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.create_project_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "scope_partition": "project~cHJvamVjdC1h",
+          "project_id": "project-a",
+          "project_home_server_id": "server-a",
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "project",
+          "level_key": "project-a",
+          "computer_key": null,
+          "project_id": "project-a",
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": null,
+        "normalized_pattern": "web.search",
+        "action": "allow",
+        "expected_owner_revision": 0,
+        "expected_source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-create_computer_rule-cas",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.create_computer_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "computer",
+          "level_key": "server:server-a",
+          "computer_key": {
+            "kind": "server",
+            "id": "server-a"
+          },
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": null,
+        "normalized_pattern": "web.search",
+        "action": "deny",
+        "expected_owner_revision": 0,
+        "expected_source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-create_computer_rule-null-expected_owner_revision",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.create_computer_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "computer",
+          "level_key": "server:server-a",
+          "computer_key": {
+            "kind": "server",
+            "id": "server-a"
+          },
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": null,
+        "normalized_pattern": "web.search",
+        "action": "deny",
+        "expected_owner_revision": null,
+        "expected_source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-create_computer_rule-null-expected_source_sha256",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.create_computer_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "computer",
+          "level_key": "server:server-a",
+          "computer_key": {
+            "kind": "server",
+            "id": "server-a"
+          },
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": null,
+        "normalized_pattern": "web.search",
+        "action": "deny",
+        "expected_owner_revision": 0,
+        "expected_source_sha256": null,
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-create_computer_rule-always-person",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.create_computer_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "computer",
+          "level_key": "server:server-a",
+          "computer_key": {
+            "kind": "server",
+            "id": "server-a"
+          },
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": null,
+        "normalized_pattern": "web.search",
+        "action": "allow",
+        "expected_owner_revision": 0,
+        "expected_source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_authority_ref": "person-a",
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-create_computer_rule-always-no-person",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.create_computer_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "computer",
+          "level_key": "server:server-a",
+          "computer_key": {
+            "kind": "server",
+            "id": "server-a"
+          },
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": null,
+        "normalized_pattern": "web.search",
+        "action": "allow",
+        "expected_owner_revision": 0,
+        "expected_source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-update_rule-cas",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.update_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": "rule-a",
+        "normalized_pattern": "web.search",
+        "action": "deny",
+        "expected_owner_revision": 0,
+        "expected_source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-update_rule-null-expected_owner_revision",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.update_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": "rule-a",
+        "normalized_pattern": "web.search",
+        "action": "deny",
+        "expected_owner_revision": null,
+        "expected_source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-update_rule-null-expected_source_sha256",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.update_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": "rule-a",
+        "normalized_pattern": "web.search",
+        "action": "deny",
+        "expected_owner_revision": 0,
+        "expected_source_sha256": null,
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-update_rule-missing-rule-id",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.update_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": null,
+        "normalized_pattern": "web.search",
+        "action": "deny",
+        "expected_owner_revision": 0,
+        "expected_source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-update_rule-always-person",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.update_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": "rule-a",
+        "normalized_pattern": "web.search",
+        "action": "allow",
+        "expected_owner_revision": 0,
+        "expected_source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_authority_ref": "person-a",
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-update_rule-always-no-person",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.update_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": "rule-a",
+        "normalized_pattern": "web.search",
+        "action": "allow",
+        "expected_owner_revision": 0,
+        "expected_source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-reorder_rule-cas",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.reorder_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": "rule-a",
+        "normalized_pattern": "web.search",
+        "action": "deny",
+        "expected_owner_revision": 0,
+        "expected_source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-reorder_rule-null-expected_owner_revision",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.reorder_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": "rule-a",
+        "normalized_pattern": "web.search",
+        "action": "deny",
+        "expected_owner_revision": null,
+        "expected_source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-reorder_rule-null-expected_source_sha256",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.reorder_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": "rule-a",
+        "normalized_pattern": "web.search",
+        "action": "deny",
+        "expected_owner_revision": 0,
+        "expected_source_sha256": null,
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-reorder_rule-missing-rule-id",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.reorder_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": null,
+        "normalized_pattern": "web.search",
+        "action": "deny",
+        "expected_owner_revision": 0,
+        "expected_source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-delete_rule-cas",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.delete_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": "rule-a",
+        "normalized_pattern": "web.search",
+        "action": "deny",
+        "expected_owner_revision": 0,
+        "expected_source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-delete_rule-null-expected_owner_revision",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.delete_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": "rule-a",
+        "normalized_pattern": "web.search",
+        "action": "deny",
+        "expected_owner_revision": null,
+        "expected_source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-delete_rule-null-expected_source_sha256",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.delete_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": "rule-a",
+        "normalized_pattern": "web.search",
+        "action": "deny",
+        "expected_owner_revision": 0,
+        "expected_source_sha256": null,
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-delete_rule-missing-rule-id",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.delete_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": null,
+        "normalized_pattern": "web.search",
+        "action": "deny",
+        "expected_owner_revision": 0,
+        "expected_source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-revoke-cas",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.revoke",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": "rule-a",
+        "normalized_pattern": "web.search",
+        "action": "deny",
+        "expected_owner_revision": 0,
+        "expected_source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-revoke-null-expected_owner_revision",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.revoke",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": "rule-a",
+        "normalized_pattern": "web.search",
+        "action": "deny",
+        "expected_owner_revision": null,
+        "expected_source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-revoke-null-expected_source_sha256",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.revoke",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": "rule-a",
+        "normalized_pattern": "web.search",
+        "action": "deny",
+        "expected_owner_revision": 0,
+        "expected_source_sha256": null,
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-revoke-missing-rule-id",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.revoke",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": null,
+        "normalized_pattern": "web.search",
+        "action": "deny",
+        "expected_owner_revision": 0,
+        "expected_source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-validate-no-write-cas",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.validate_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": null,
+        "normalized_pattern": "fixture-a",
+        "action": "deny",
+        "expected_owner_revision": null,
+        "expected_source_sha256": null,
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
     }
   ]
 }

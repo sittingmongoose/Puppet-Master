@@ -8988,6 +8988,456 @@
         }
       ],
       "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-setup-draft-no-copy",
+      "schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_setup_binding_v2",
+      "record": {
+        "schema_id": "pm.project_setup_binding.v2",
+        "schema_version": "2.0.0",
+        "setup_consumer": "new_project",
+        "session_id": "session-a",
+        "draft_id": "draft-a",
+        "draft_revision": 1,
+        "draft_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "review_revision": 1,
+        "review_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "preflight_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "project_id": null,
+        "settings_preview_ref": null,
+        "settings_preview_sha256": null,
+        "settings_rebind_ref": null,
+        "permission_authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "source_inspection_ref": null,
+        "starter_version_ref": null,
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-setup-draft-no-rebind",
+      "schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_setup_binding_v2",
+      "record": {
+        "schema_id": "pm.project_setup_binding.v2",
+        "schema_version": "2.0.0",
+        "setup_consumer": "new_project",
+        "session_id": "session-a",
+        "draft_id": "draft-a",
+        "draft_revision": 1,
+        "draft_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "review_revision": 1,
+        "review_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "preflight_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "project_id": null,
+        "settings_preview_ref": null,
+        "settings_preview_sha256": null,
+        "settings_rebind_ref": "rebind-a",
+        "permission_authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "source_inspection_ref": null,
+        "starter_version_ref": null,
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-setup-draft-preview-pair",
+      "schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_setup_binding_v2",
+      "record": {
+        "schema_id": "pm.project_setup_binding.v2",
+        "schema_version": "2.0.0",
+        "setup_consumer": "new_project",
+        "session_id": "session-a",
+        "draft_id": "draft-a",
+        "draft_revision": 1,
+        "draft_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "review_revision": 1,
+        "review_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "preflight_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "project_id": null,
+        "settings_preview_ref": "preview-a",
+        "settings_preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "settings_rebind_ref": null,
+        "permission_authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "source_inspection_ref": null,
+        "starter_version_ref": null,
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-setup-ref-requires-hash",
+      "schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_setup_binding_v2",
+      "record": {
+        "schema_id": "pm.project_setup_binding.v2",
+        "schema_version": "2.0.0",
+        "setup_consumer": "new_project",
+        "session_id": "session-a",
+        "draft_id": "draft-a",
+        "draft_revision": 1,
+        "draft_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "review_revision": 1,
+        "review_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "preflight_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "project_id": null,
+        "settings_preview_ref": "preview-a",
+        "settings_preview_sha256": null,
+        "settings_rebind_ref": null,
+        "permission_authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "source_inspection_ref": null,
+        "starter_version_ref": null,
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-setup-hash-requires-ref",
+      "schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_setup_binding_v2",
+      "record": {
+        "schema_id": "pm.project_setup_binding.v2",
+        "schema_version": "2.0.0",
+        "setup_consumer": "new_project",
+        "session_id": "session-a",
+        "draft_id": "draft-a",
+        "draft_revision": 1,
+        "draft_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "review_revision": 1,
+        "review_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "preflight_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "project_id": null,
+        "settings_preview_ref": null,
+        "settings_preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "settings_rebind_ref": null,
+        "permission_authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "source_inspection_ref": null,
+        "starter_version_ref": null,
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-setup-reserved-rebind",
+      "schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_setup_binding_v2",
+      "record": {
+        "schema_id": "pm.project_setup_binding.v2",
+        "schema_version": "2.0.0",
+        "setup_consumer": "new_project",
+        "session_id": "session-a",
+        "draft_id": "draft-a",
+        "draft_revision": 1,
+        "draft_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "review_revision": 1,
+        "review_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "preflight_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "project_id": "project-a",
+        "settings_preview_ref": "preview-a",
+        "settings_preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "settings_rebind_ref": "rebind-a",
+        "permission_authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "source_inspection_ref": null,
+        "starter_version_ref": null,
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-setup-reserved-null-settings_preview_ref",
+      "schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_setup_binding_v2",
+      "record": {
+        "schema_id": "pm.project_setup_binding.v2",
+        "schema_version": "2.0.0",
+        "setup_consumer": "new_project",
+        "session_id": "session-a",
+        "draft_id": "draft-a",
+        "draft_revision": 1,
+        "draft_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "review_revision": 1,
+        "review_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "preflight_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "project_id": "project-a",
+        "settings_preview_ref": null,
+        "settings_preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "settings_rebind_ref": "rebind-a",
+        "permission_authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "source_inspection_ref": null,
+        "starter_version_ref": null,
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-setup-reserved-null-settings_preview_sha256",
+      "schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_setup_binding_v2",
+      "record": {
+        "schema_id": "pm.project_setup_binding.v2",
+        "schema_version": "2.0.0",
+        "setup_consumer": "new_project",
+        "session_id": "session-a",
+        "draft_id": "draft-a",
+        "draft_revision": 1,
+        "draft_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "review_revision": 1,
+        "review_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "preflight_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "project_id": "project-a",
+        "settings_preview_ref": "preview-a",
+        "settings_preview_sha256": null,
+        "settings_rebind_ref": "rebind-a",
+        "permission_authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "source_inspection_ref": null,
+        "starter_version_ref": null,
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-setup-reserved-null-settings_rebind_ref",
+      "schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_setup_binding_v2",
+      "record": {
+        "schema_id": "pm.project_setup_binding.v2",
+        "schema_version": "2.0.0",
+        "setup_consumer": "new_project",
+        "session_id": "session-a",
+        "draft_id": "draft-a",
+        "draft_revision": 1,
+        "draft_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "review_revision": 1,
+        "review_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "preflight_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "project_id": "project-a",
+        "settings_preview_ref": "preview-a",
+        "settings_preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "settings_rebind_ref": null,
+        "permission_authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "source_inspection_ref": null,
+        "starter_version_ref": null,
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
     }
   ],
   "starter_owner_sources": {

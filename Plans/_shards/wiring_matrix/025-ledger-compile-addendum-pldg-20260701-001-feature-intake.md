@@ -4,7 +4,7 @@ Source: `Plans/Wiring_Matrix.md`
 
 Source lines: L3642-L4494
 
-Source SHA256: `3899744314444527ed5abfa724f4abdb67822efa4d7b3852a2db461438fffebe`
+Source SHA256: `3819f6ec249a5245d6ea0b61a8aa574ecd65cb2cf84f00db2a3beb0b6bdf5bf1`
 
 ---
 
@@ -21,8 +21,8 @@ status: accepted
 owner_doc: Plans/Wiring_Matrix.md
 canonical_text: 'Current Product Onboarding wiring consumes PWIZ-021''s owner-defined main_stage_order, connect_existing_stage_order,
   and deferred_project_stage_order. The eleven-stage main path commits the Project before paid-provider setup
-  and then Free Models; the six-stage connect-existing shortcut and explicit Project Later path do not fabricate
-  a Project or run its provider phases. These graphs bind exactly fourteen typed local actions: `ui.onboarding.start`,
+  and then Free Models. The six-stage connect-existing shortcut does not fabricate a Project or run provider phases;
+  Project Later sets up AI and Free Models through its explicit app/Computer binding, then lands in No project (DL-287). These graphs bind exactly fourteen typed local actions: `ui.onboarding.start`,
   `ui.onboarding.next`, `ui.onboarding.back`, `ui.onboarding.close`, `ui.onboarding.skip`, `ui.onboarding.defer`,
   `ui.onboarding.open_details`, `ui.onboarding.more_ways`, `ui.onboarding.choose_simple_path`, `ui.onboarding.open_owner_flow`,
   `ui.onboarding.run_automatic_preparation`, `ui.onboarding.choose_first_project`, `ui.onboarding.finish`,
@@ -32,20 +32,20 @@ canonical_text: 'Current Product Onboarding wiring consumes PWIZ-021''s owner-de
   local contract. Every request has required closed, normalized, secret-free local_context fields; arbitrary/raw
   payload fields, additional keys, and secret-bearing values are rejected. Exact intent/scope/choice/branch
   combinations distinguish setup/project disclosure from branch-local more_ways updates and whole-session Skip
-  from Project/Remote-Access optional-scope Skip. `ui.onboarding.start` opens a first_run window in a Basic
-  Dark preview, with Basic Dark preselected, and a settings_rerun window in the look on screen; `ui.onboarding.choose_look`
+  from Project/Remote-Access optional-scope Skip. `ui.onboarding.start` consumes the one Settings-resolved first-paint look for first_run, including before
+  a Project exists, with Basic Dark only as the factory/pre-claim fallback; settings_rerun preselects the look on screen; `ui.onboarding.choose_look`
   previews the five-family look choice (Q22), the header''s Look menu and the NieR Mode editor panel through
-  a closed look_choice. Neither dispatches `cmd.theme.*` or a Settings transaction; the look is written with
-  the Project at commit (F3-520, DL-153). When a selected branch needs owner work, its local draft queues the
+  a closed look_choice. Neither dispatches `cmd.theme.*` or a Settings transaction; the look is written once at
+  the accepted application/Computer or real-Project commit boundary (F3-520, DL-286). When a selected branch needs owner work, its local draft queues the
   typed owner route and intent. The only precommit dispatch is owner-authorized read-only preflight or authentication
   necessary for the selected source, with exact current owner request validation, permission, consent, draft/session
   revision, hash, expiry and return context. MACS-005 supports first-time source sign-in without phantom Project/account/repository
-  identities; it is not broad provider setup. Every other owner mutation waits for current Review and PJCT-007''s
-  exact Project-owned setup-commit binding. That confirmation binds `path_kind`, `queued_setup_plan_ref`, `queued_setup_plan_revision`,
+  identities; it is not broad provider setup. Other Project mutations wait for current Review and PJCT-007''s
+  exact Project-owned setup-commit binding; N15 Later instead uses its reviewed app/Computer setup binding. The Project confirmation binds `path_kind`, `queued_setup_plan_ref`, `queued_setup_plan_revision`,
   `reviewed_setup_plan_revision`, `review_confirmation=person_confirmed_reviewed_plan`, `approved_setup_plan_sha256`,
   revision, and continuation generation plus the bounded draft and actual commit binding; a matching `automatic_preparation_currentness_ref`
   admits the Project owner''s existing command and sole commit chain once. Settings copy uses SSYS-036''s precommit
-  preview and postcommit rebind/apply. Paid-provider setup then Free Models use the actual Project result;
+  preview and postcommit rebind/apply. Paid-provider setup then Free Models use the actual Project result on the Project path or the explicit app/Computer binding on Later;
   explicit paid Skip still offers Free Models. Current owner ObservableWork/results/receipts reverse-project
   through the exact reviewed revision and plan hash; terminal success may advance without a second confirmation,
   while stale, mismatched, blocked, failed, cancelled, or recovery-required results dispatch nothing new and
@@ -90,7 +90,7 @@ canonical_text: 'Current Product Onboarding wiring consumes PWIZ-021''s owner-de
   runs, the application''s own notices about it (a widget removed, a persona applied from the next turn) stay
   quiet in every look, and the Tour''s closing note says what was put back (F3-521, DL-153). Finish restores
   by default or keeps layout only after explicit selection through the existing finish action, removes practice
-  content, and lands on the real Planning Wizard with the committed Project selected and no work auto-started.
+  content, and lands on the real Planning Wizard when a Project is committed, otherwise in the No project chat; no work auto-starts.
   Close/reload requires a safe owner- revalidated checkpoint; absent original state or stale observations never
   yield a newly invented snapshot: what of the original basis still resolves is restored, then a fresh session
   starts with a plain notice, and only a restoration failure exposes recovery. Run Onboarding Again resets
@@ -269,8 +269,8 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Main, connect-existing and Project Later consume the three exact PWIZ-021 stage-order definitions; wiring
-  does not re-own their roster. Provider/Free Models phases require a real committed Project and never appear
-  in connect-existing or Project Later as fake completed work.
+  does not re-own their roster. Provider/Free Models phases use a real committed Project on the Project path,
+  the reviewed app/Computer binding on Later, and do not run on connect-existing; no path fabricates completed work.
 - Back consumes the exact durable history of the currently valid path under PWIZ-021: connect-existing `remote_access_setup`
     returns to `simple_path`, while main-path `remote_access_setup` returns to `server_storage_client`; no
     skipped shortcut stage is synthesized into reverse wiring. FO-22 excludes steps invalidated by a replaced
@@ -278,10 +278,10 @@ acceptance_criteria:
 - The exact current action set contains the fourteen named `ui.onboarding.*` IDs; every authored control emits
   one typed local action and no action is registered as a UICommand, domain event, or production wiring row.
   `simple_path` and `ui.onboarding.choose_simple_path` are current visible behavior.
-- '`ui.onboarding.start` paints a Basic Dark preview for first_run (Basic Dark preselected, with NieR available
-  as the fifth family (Q22)) and keeps the look on screen for settings_rerun; `ui.onboarding.choose_look` previews
+- '`ui.onboarding.start` preselects the Settings-resolved saved look for first_run, even without a Project; Basic Dark
+  is only the factory/pre-claim fallback. settings_rerun keeps the look on screen. `ui.onboarding.choose_look` previews
   the five-family look, including NieR (Q22), the Look menu and the editor panel with no owner route, `cmd.theme.*`
-  or Settings transaction, the look being written with the Project at commit (DL-153).'
+  or Settings transaction; the look commits once at the accepted application/Computer or real-Project boundary (DL-286).'
 - Requests and results validate against the closed action schema; applied, disabled, and rejected are distinct,
   and disabled/rejected results dispatch no owner work, write no session/continuation, carry no production
   receipt, and expose exact reasons.
@@ -368,7 +368,7 @@ acceptance_criteria:
   `cmd.panel_tab.*` commits), and the restore stays quiet (DL-153) (amended 2026-10-09, DL-180).
 - Skip restores captured layout, Chat state, placeholder, and focus through existing owners; Finish restores
   by default or keeps layout only on explicit selection through `ui.guided_tour.finish`, then removes practice
-  content and focuses the real Planning Wizard with the committed Project and no auto-started work. No `ui.guided_tour.restore_layout`,
+  content and focuses the real Planning Wizard with a committed Project, otherwise the No project chat, with no auto-started work. No `ui.guided_tour.restore_layout`,
   `ui.guided_tour.keep_layout`, or generic owner mutation is introduced.
 - Close/reload revalidates the last safe checkpoint and original restoration references against current owners
   before resume; missing or stale state restores what still resolves and starts a fresh session with a notice,

@@ -175,6 +175,10 @@
   /* the fixture's answer to a key: no connection, too short to be a key, one the vendor revoked (or that expired), or works */
   const keyVerdict = (v, offline) => (offline ? 'offline' : v.length < 12 ? 'key_rejected' : /revoked/i.test(v) ? 'key_revoked' : null);
   const hint = (id, items, when) => (F.hint ? F.hint(id, items, { when }) : '');
+  function installConsent(S, p, r) {
+    const w = way(p, r);
+    return `<span class="o55-labq">${U.esc(T('ai.installAsk', { name: w.tool || pname(p), host: hostName(S), vendor: p.vendor }))}${O55.tips.q('group:install')}</span>${O55.ui.btn({ label: T('ai.installGo'), do: 'installGo', arg: p.id, cls: 'o55-small', tip: false, by: 'group:install' }, 'o55-primary')}${O55.tips.explainer('group:install')}` + hint('install:' + p.id, ['works', 'offline', 'unsupported', 'permission', 'verify'].map(code => ({ label: T('ai.installFailure.demo.' + code) + (r.installDemo === code ? ' (' + T('ai.installFailure.chosen') + ')' : ''), outcome: code === 'works' ? 'works' : 'refused', act: ['installExample', p.id + ':' + code] })));
+  }
   /* a key's name said once: "OpenAI API key", "Groq API key", "Cloudflare Workers AI API token" (Opus p66) */
   const keyLabel = (name, token) => (token ? T('ai.tokenLabel', { name }) : / API$/.test(name) ? T('ai.keyLabelApi', { name }) : T('ai.keyLabel', { name }));
   function keyArea(S, o) {
@@ -205,6 +209,7 @@
       if (r.manage) extra = ex('mg', manageHtml(S, p, r));
     }
     if (st === 'install') { pill = ['needs', T('ai.notInstalled')]; action = { label: onServer(S) ? T('ai.installOn', { host: host(S).name }) : w.tool ? T('ai.installTool', { tool: w.tool }) : T('ai.install'), do: 'install', arg: p.id }; }
+    if (st === 'installFailed') { pill = ['fail', T('ai.installFailure.title')]; meta = T('ai.installFailure.' + r.installFailCode); action = { label: T('chrome.tryAgain'), do: 'install', arg: p.id }; }
     if (st === 'expired') { pill = ['fail', T('ai.expired.title')]; meta = T('ai.expired.body', { who: d.account || pname(p) }); action = { label: T('ai.signinFail.retry'), do: 'signin', arg: p.id }; }
     if (st === 'signin') { pill = ['needs', T('ai.notReady')]; action = { label: T('ai.signIn'), do: 'signin', arg: p.id }; }
     /* the provider's other way in, and Cancel while adding another account, as small links under a row at its start */
@@ -216,7 +221,7 @@
     else if (fromCopy) meta = T('ai.from', { project: cp.name }) + ' · ' + meta;
     else if (d && d.installed && !['ready', 'server', 'expired'].includes(st)) meta = (onServer(S) ? T('ai.foundOn', { host: host(S).name }) : T('ai.found')) + ' · ' + meta;
     /* inline states */
-    if (r.confirmInstall) extra = ex('ask', `<span class="o55-labq">${U.esc(T('ai.installAsk', { name: w.tool || pname(p), host: hostName(S), vendor: p.vendor }))}${O55.tips.q('group:install')}</span>${O55.ui.btn({ label: T('ai.installGo'), do: 'installGo', arg: p.id, cls: 'o55-small', tip: false, by: 'group:install' }, 'o55-primary')}${O55.tips.explainer('group:install')}`);
+    if (r.confirmInstall) extra = ex('ask', installConsent(S, p, r));
     if (st === 'installing') { pill = ['wait', T('chrome.working')]; extra = ex('ph', F.phases(S, 'install:' + p.id + (r.method === 'alt' ? ':alt' : ''), ['download', 'install', 'verify'], { download: T('ai.installPhases.download', { vendor: p.vendor }), install: T('ai.installPhases.install'), verify: T('ai.installPhases.verify') })); }
     if (st === 'signingIn') {
       pill = ['wait', T('ai.signinWaitPill')]; meta = onServer(S) ? T('ai.signinWaitOn', { host: host(S).name }) : T('ai.signinWait');
@@ -315,8 +320,7 @@
      one the person runs. The server's own username and password are its own, not a model provider's key. */
   function serverHtml(S, p, r) {
     const inst = installed(S, p, r), ok = F.isHttps(r.endpoint) || /^http:\/\/[^\s/?#]+(?::\d+)?\/?$/.test(String(r.endpoint || '').trim());
-    const managed = inst ? `<div class="o55-inline">${btnIn(T('ai.oc.start', { host: hostName(S) }), 'ocStart', p.id, 'primary')}</div>`
-      : `<span class="o55-labq">${U.esc(T('ai.installAsk', { name: pname(p), host: hostName(S), vendor: p.vendor }))}${O55.tips.q('group:install')}</span>${O55.ui.btn({ label: T('ai.installGo'), do: 'installGo', arg: p.id, cls: 'o55-small', tip: false, by: 'group:install' }, 'o55-primary')}${O55.tips.explainer('group:install')}`;
+    const managed = inst ? `<div class="o55-inline">${btnIn(T('ai.oc.start', { host: hostName(S) }), 'ocStart', p.id, 'primary')}</div>` : installConsent(S, p, r);
     const attached = C.field({ bind: 'ocAddr:' + p.id, id: 'o55f-ocaddr', label: T('ai.oc.addr'), value: r.endpoint || '', placeholder: 'http://127.0.0.1:4096', hint: T('ai.oc.addrHint'), tip: 'field:ocAddr' })
       + hint('ocAddr', [{ label: 'http://127.0.0.1:4096', outcome: 'works', fills: [['ocAddr:' + p.id, 'http://127.0.0.1:4096']] }, { label: 'http://192.168.1.99:4096', outcome: 'noAnswer', fills: [['ocAddr:' + p.id, 'http://192.168.1.99:4096']] }], !ok)
       + C.field({ bind: 'ocUser:' + p.id, id: 'o55f-ocuser', label: T('ai.oc.user'), value: r.user || '', placeholder: 'opencode', tip: 'field:ocUser' })
@@ -372,13 +376,27 @@
         const st = startOf(S, p, r); r.state = st === 'key' && r.adding ? 'keyEntry' : st;
         S.save(); O55.ui.refresh(); O55.sound.play('reveal');
       },
-      install(S, id) { R(S, id).confirmInstall = true; S.save(); O55.ui.refresh(); },
+      install(S, id) { const r = R(S, id); r.confirmInstall = true; r.installDemo = 'works'; S.save(); O55.ui.refresh(); },
+      installExample(S, arg) {
+        const [id, code] = String(arg).split(':');
+        const r = R(S, id);
+        if (!(r.confirmInstall || (r.state === 'serverPick' && r.mode === 'managed')) || !['works', 'offline', 'unsupported', 'permission', 'verify'].includes(code)) return;
+        r.installDemo = code; S.save(); O55.ui.refresh();
+      },
       installGo(S, id) {
         const p = prov(id), r = R(S, id), alt = r.method === 'alt', w = way(p, r);
-        Object.assign(r, { confirmInstall: false, state: 'installing' });
+        if (!(r.confirmInstall || (p.auth === 'server' && r.state === 'serverPick' && r.mode === 'managed')) || r.state === 'installing') return;
+        /* aiOffline's one-shot drop belongs to sign-in/checks, not CLI acquisition. */
+        const fail = !S.env.here.internet ? 'offline' : r.installDemo || 'works';
+        F.reset(S, 'install:' + id + (alt ? ':alt' : ''));
+        Object.assign(r, { confirmInstall: false, state: 'installing', installFailCode: null });
         S.save(); O55.ui.refresh(); O55.sound.play('tap');
-        F.op(S, 'install:' + id + (alt ? ':alt' : ''), 'cmd.tool_product.install', [{ key: 'download', ms: 1300 }, { key: 'install', ms: 1100 }, { key: 'verify', ms: 700 }], {
+        F.op(S, 'install:' + id + (alt ? ':alt' : ''), 'cmd.tool_product.install', [{ key: 'download', ms: 1300, fail: () => ['offline', 'unsupported'].includes(fail) ? fail : null }, { key: 'install', ms: 1100, fail: () => fail === 'permission' ? fail : null }, { key: 'verify', ms: 700, fail: () => fail === 'verify' ? fail : null }], {
           payload: { product: w.cli, host_id: host(S).id, host_role: host(S).role, official: true },
+          onFail: (S2, st) => {
+            if (alt) r.altInstalled = false; else r.installed = false;
+            r.state = 'installFailed'; r.installFailCode = st.code; S.save(); O55.ui.refresh();
+          },
           onDone: () => {
             if (alt) r.altInstalled = true; else r.installed = true;
             /* OpenCode Managed Server: installed, then started on the same computer */

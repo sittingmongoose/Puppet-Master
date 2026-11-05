@@ -541,7 +541,7 @@
     room.inner = inner; room.h0 = before || inner.offsetHeight;
     room.on = true; room.rel = false; room.transient = false; room.x = null; room.v = 0; room.last = now(); room.tier = false; room.own = 0;
     roomFloor(room.h0);
-    if (!room.raf) room.raf = requestAnimationFrame(roomFrame);
+    if (!room.raf) room.raf = requestAnimationFrame(roomTick);
   }
   function releaseRoom() { if (room.on && !room.rel) { room.rel = true; room.x = null; room.v = 0; room.last = now(); room.lastTs = null; room.pdt = null; room.floorAt = room.h0; room.lg = false; room.keep = 0; room.keepWas = 0; } }
   /* Round 3 (A): app.js rewound the transcript (rewindTranscript, a thread switch): no room is kept for what left,
@@ -746,7 +746,7 @@
     room.on = true; room.rel = false; room.transient = true; room.relAt = finite === true ? now() + SHRINK_HOLD : shrinkRelAt();
     room.x = null; room.v = 0; room.last = now();
     roomFloor(room.h0);
-    if (!room.raf) room.raf = requestAnimationFrame(roomFrame);
+    if (!room.raf) room.raf = requestAnimationFrame(roomTick);
   }
   /* P5: Orbit's dial changes size when its ring crosses a density tier (orbit.js renderStage): a 420 ms CSS transition
      on the dial and its grid row, which app.js's height FLIP reads at its start (no change yet) and so never announces.
@@ -768,6 +768,13 @@
     holdShrink(false, false, Math.ceil(nat - 0.001));
     if (!room.on) return;
     room.tier = true; room.grownAt = nat;
+  }
+  // Room measurements follow this frame's natural layout. Reading the last card in rAF forced a
+  // second page layout during a width drag; the room's writes still land before the same frame paints.
+  function roomTick(ts) {
+    var pending = room.raf;
+    if (window.PM_AFTER_LAYOUT) window.PM_AFTER_LAYOUT(function () { if (room.raf === pending) roomFrame(ts); });
+    else roomFrame(ts);
   }
   function roomFrame(ts) {
     room.raf = 0;
@@ -804,7 +811,7 @@
         if (closing && naturalH(inner) > room.floorAt + 0.5) {
           room.last = now(); room.lastTs = typeof ts === 'number' ? ts : null;
           try { C().followIfSticky(); } catch (e) { }
-          lgMark(inner); room.raf = requestAnimationFrame(roomFrame); return;
+          lgMark(inner); room.raf = requestAnimationFrame(roomTick); return;
         }
         room.viewCut = false; room.x = Math.max(0, room.floorAt - naturalH(inner)); room.v = 0;
       }
@@ -819,7 +826,7 @@
       if (room.lg) lgRestick(inner);
       if (room.x == null) {
         /* P5 v2: a reader's close (letGo) eases from its own shrink: until the content is under the floor, nothing */
-        if (room.lg && t < room.lgUntil && nat > room.h0 - 0.5) { try { C().followIfSticky(); } catch (e) { } lgMark(inner); room.raf = requestAnimationFrame(roomFrame); return; }
+        if (room.lg && t < room.lgUntil && nat > room.h0 - 0.5) { try { C().followIfSticky(); } catch (e) { } lgMark(inner); room.raf = requestAnimationFrame(roomTick); return; }
         /* P5 v2: the release eases down to the content, or to the room the run keeps (room.keep) while it still keeps room
            (runHoldsRoom); the SHRINK_VMAX bound below eases any drop of that base too */
         if (room.lg && (room.keep > nat || room.own > nat) && !runHoldsRoom()) { room.keep = 0; room.own = 0; }
@@ -849,14 +856,14 @@
          target until the body's original FLIP has reached the same content. */
       if (room.lg && room.viewCut && room.x < 0.5 && naturalH(inner) > base + 0.5) {
         room.floorAt = base; if (room.floorW !== base) roomFloor(base);
-        try { C().followIfSticky(); } catch (e) { } lgMark(inner); room.raf = requestAnimationFrame(roomFrame); return;
+        try { C().followIfSticky(); } catch (e) { } lgMark(inner); room.raf = requestAnimationFrame(roomTick); return;
       }
       /* under reduced motion (only a held demo run holds room there) the floor goes at once */
       if (room.x < 0.5 && base > nat + 0.5 && !reduced()) {
         /* P5 v2: what the close gave back is gone; the run's own room stays held, run-long, as E holds it */
         room.rel = false; room.lg = false; room.h0 = Math.ceil(base - 0.001); room.keep = 0; room.x = null; room.v = 0;
         room.transient = true; room.relAt = Infinity; roomFloor(room.h0);
-        try { C().followIfSticky(); } catch (e) { } room.raf = requestAnimationFrame(roomFrame); return;
+        try { C().followIfSticky(); } catch (e) { } room.raf = requestAnimationFrame(roomTick); return;
       }
       /* Growth can pass h0 while the installed floor still carries spring
          residual. Drop only once content reaches that actual floor; otherwise
@@ -873,7 +880,7 @@
     }
     try { C().followIfSticky(); } catch (e) { }
     if (room.rel && room.lg) lgMark(inner);
-    room.raf = requestAnimationFrame(roomFrame);
+    room.raf = requestAnimationFrame(roomTick);
   }
 
   /* ================================================================ 6 directors

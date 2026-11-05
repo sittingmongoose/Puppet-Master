@@ -11174,7 +11174,7 @@
     {
       "item_id": "PROC-004",
       "title": "Implementation closure",
-      "requirement": "Runtime implementation packets require GUI projections, Plan owner updates, Command ID census/adjudication, wiring, DRY reuse, schemas/events/storage, permissions, migrations, demo fixtures, tests, and receipts.",
+      "requirement": "Runtime implementation packets require GUI projections, Plan owner updates, Command ID census/adjudication, wiring, DRY reuse, schemas/events/storage, permissions, migrations, deterministic contract fixtures, tests, and receipts.",
       "category": "process",
       "packet_links": [
         "prompt",

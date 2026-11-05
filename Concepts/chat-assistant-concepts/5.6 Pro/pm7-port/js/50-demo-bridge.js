@@ -18,12 +18,9 @@
      reset()             the chat's own Reset all -> { ok }
      avail()             the chat is on the page and booted
 
-   Every run goes through the chat's own click path, exactly as the lab gallery's buttons did: a button inside a hidden
-   <section class="demo-dialog"> in #pmOverlayRoot is clicked. That keeps what the gallery relied on: modules chain
-   'demo-trigger' (BSD, ELI5, Context Lens, the quota strip) and about fifty chain 'reset-all'; b14-start and b15-start
-   play their recording only when the button sits in '.demo-dialog .demo-trigger'; recorded-play.js stops the example
-   that is playing when such a button is clicked. Before a run the chat is brought on screen (PMW.chatCol.show(), on the
-   Home page), so a module that measures the chat's width at seed time measures the real column.
+   Runs use PM56_APP.demoAction(action, dataset). The chat owns extension chains, reset,
+   recorded-player cancellation and explicit demo origin. Before a run the chat is brought
+   on screen so a module measures the real column when it seeds its example.
 
    Dropped from the lab's Demo Studio (D26 clean-up; DEMO-INVENTORY.md in the port's share folder lists every decision):
    the theme list and the NieR Mode section (PMConcept7's Looks section owns looks and NieR), the Edit and branch and
@@ -40,7 +37,7 @@
   var fn = function (o, k) { return !!(o && typeof o[k] === 'function'); };
   var slug = function (s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); };
 
-  function avail() { return !!(lab() && ext() && fn(ext(), 'ctx') && document.getElementById('pmRoot')); }
+  function avail() { return !!(fn(app(), 'demoAction') && lab() && ext() && fn(ext(), 'ctx') && document.getElementById('pmRoot')); }
   function state() {
     var A = app();
     if (A && A.state) return A.state;
@@ -70,28 +67,10 @@
     W.requestAnimationFrame(function () { W.requestAnimationFrame(fire); });
   }
 
-  /* ---- the chat's click path ----
-     Flagged (Astra W8 review R10, 2026-10-30): this is a synthetic click on a hidden button, kept because the chat
-     exposes no public dispatcher that runs what that click runs. Its handlers are chained through PM56_EXT.action and
-     app.js's onAppClick, and several read the button itself (b14/b15 play only from '.demo-dialog .demo-trigger';
-     recorded-play.js stops the playing example on such a click; about fifty modules chain 'reset-all'). PM56_DEMO.trigger
-     and PM56_DEMO.reset run only app.js's own part and would skip those chains. The fix belongs to the chat's owner: a
-     PM56_APP dispatcher taking (action, dataset, { demo: true }) that both real clicks and this bridge call. */
-  function host() {
-    var h = document.getElementById('pm56-demo-host');
-    if (h && h.isConnected) return h;
-    h = document.createElement('section');
-    h.id = 'pm56-demo-host'; h.className = 'demo-dialog';
-    h.hidden = true; h.setAttribute('aria-hidden', 'true'); h.style.display = 'none';
-    (document.getElementById('pmOverlayRoot') || document.body).appendChild(h);
-    return h;
-  }
+  /* ---- structured entry into the chat owner ---- */
   function press(action, dataset) {
-    var b = document.createElement('button');
-    b.type = 'button'; b.className = 'demo-trigger'; b.setAttribute('data-action', action);
-    Object.keys(dataset || {}).forEach(function (k) { b.dataset[k] = dataset[k]; });
-    host().appendChild(b);
-    try { b.click(); } finally { if (b.parentNode) b.parentNode.removeChild(b); }
+    var A = app();
+    return fn(A, 'demoAction') ? A.demoAction(action, dataset || {}) : false;
   }
 
   /* ---- the gallery the modules chain onto PM56_REPAIR_DEMOS.gallery (and PM56_POLISH's feature rows), read once per
@@ -246,7 +225,7 @@
   function voice() { var st = state(); return st && VOICES.indexOf(st.motionVoice) > 0 ? st.motionVoice : 'auto'; }
   function setVoice(v) { var L = lab(); if (!avail() || !fn(L, 'setVoice')) return { ok: false }; L.setVoice(v); return { ok: voice() === (VOICES.indexOf(v) > 0 ? v : 'auto') }; }
 
-  /* the chat's own Reset all, through the click path so every module's chained reset runs */
+  /* The same owner dispatcher runs every module's chained reset. */
   function reset() { if (!avail()) return { ok: false, reason: 'unavailable' }; press('reset-all', {}); return { ok: true }; }
 
   PORT.demo = {
