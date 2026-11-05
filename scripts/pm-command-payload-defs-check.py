@@ -126,14 +126,24 @@ NAMESPACE_RE = re.compile(r"[a-z][a-z0-9_]*(?:\.[a-z][a-z0-9_]*)*")
 BACKTICK_RE = re.compile(r"`([^`]+)`")
 DEFS_ROOT_KEY = "command_payload_definitions"
 YAML_ESCAPE_RE = re.compile(r"\\(?:x([0-9A-Fa-f]{2})|u([0-9A-Fa-f]{4})|U([0-9A-Fa-f]{8}))")
-YAML_ESCAPED_BREAK_RE = re.compile(r"\\\r?\n[ \t]*")
+# Every escaped line break YAML accepts in a double-quoted scalar: CRLF, LF, CR, NEL, LS and PS,
+# with the next line's leading indentation (Sol r7).
+YAML_ESCAPED_BREAK_RE = re.compile("\\\\(?:\r\n|[\r\n\x85\u2028\u2029])[ \t]*")
+
+
+def _decode_escape(match: re.Match) -> str:
+    code = int(next(g for g in match.groups() if g), 16)
+    if code > 0x10FFFF or 0xD800 <= code <= 0xDFFF:
+        return "\ufffd"  # not a code point: substitute and keep searching (never raise)
+    return chr(code)
 
 
 def _decoded_for_key_search(block: str) -> str:
     """The fence text with YAML's hex and unicode escapes and escaped line breaks decoded, so an
-    escaped spelling of the root key can be found in YAML that cannot be parsed."""
+    escaped spelling of the root key can be found in YAML that cannot be parsed. Total over any
+    text: an escape that names no code point becomes U+FFFD instead of raising."""
     text = YAML_ESCAPED_BREAK_RE.sub("", block)
-    return YAML_ESCAPE_RE.sub(lambda m: chr(int(next(g for g in m.groups() if g), 16)), text)
+    return YAML_ESCAPE_RE.sub(_decode_escape, text)
 JSON_DEF_REF_RE = re.compile(r"^(Plans/[A-Za-z0-9_.\-/]+\.json)#/\$defs/([A-Za-z0-9_]+)$")
 DOC_UNIT_REF_RE = re.compile(r"^(Plans/[A-Za-z0-9_.\-]+\.md)#([A-Z][A-Z0-9]*-\d+)$")
 LOCAL_REF_RE = re.compile(r"^local:([A-Za-z][A-Za-z0-9_]*)$")
@@ -329,7 +339,12 @@ def is_definitions_block(block: str) -> bool:
         # badly escaped flow value, a NUL or other forbidden character), so text presence alone
         # suffices: a malformed fence that mentions the key gets C14 instead of a silent pass.
         found, _scanner_failed = _root_key_by_tokens(block)
-        return found or DEFS_ROOT_KEY in _decoded_for_key_search(block)
+        if found:
+            return True
+        try:
+            return DEFS_ROOT_KEY in _decoded_for_key_search(block)
+        except Exception:  # noqa: BLE001 - discovery never raises; fall back to the raw text
+            return DEFS_ROOT_KEY in block
     for node in nodes:
         if isinstance(node, yaml.MappingNode):
             for key, _value in node.value:
@@ -2435,7 +2450,18 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
         def _(fx: Fixture, text=text) -> None:
             fx.doc_suffix["Plans/Containers_Registry_and_Unraid.md"] = "\n\n```yaml\n" + text + "\n```\n"
 
-    for label, text in [("flow mapping with an unterminated value", '{command_payload_definitions: "unterminated}'),
+    for label, text in [("escaped CR line break in an explicit key, NUL value",
+                         '? "command_payload_' + chr(92) + chr(13) + '  definitions"' + chr(10) + ': "bad' + chr(0) + 'value"'),
+                        ("escaped NEL line break in a flow key, NUL value",
+                         '{"command_payload_' + chr(92) + chr(0x85) + 'definitions": "bad' + chr(0) + 'value"}'),
+                        ("escaped LINE SEPARATOR in a key, NUL value",
+                         '"command_payload_' + chr(92) + chr(0x2028) + 'definitions": "bad' + chr(0) + 'value"'),
+                        ("escaped PARAGRAPH SEPARATOR in a key, NUL value",
+                         '"command_payload_' + chr(92) + chr(0x2029) + 'definitions": "bad' + chr(0) + 'value"'),
+                        ("out-of-range unicode escape in a flow value", '{command_payload_definitions: "bad' + chr(92) + 'U00110000"}'),
+                        ("out-of-range escape in an escaped key's value",
+                         '{"command' + chr(92) + 'x5fpayload_definitions": "bad' + chr(92) + 'U00110000"}'),
+                        ("flow mapping with an unterminated value", '{command_payload_definitions: "unterminated}'),
                         ("flow mapping with a bad escape", '{command_payload_definitions: "bad\\qescape"}'),
                         ("quoted flow key with a bad escape", '{"command_payload_definitions": "bad\\qescape"}'),
                         ("flow mapping with a bad tag", "{command_payload_definitions: !<bad%xx> false}"),
@@ -2452,6 +2478,10 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
         @case(f"fail C14: a {label} in a document with no other definitions block is detected", 1, {"C14"})
         def _(fx: Fixture, text=text) -> None:
             fx.doc_suffix["Plans/Probe_Doc.md"] = "\n\n```yaml\n" + text + "\n```\n"
+
+    @case("pass: an unrelated malformed fence with an out-of-range escape is not a block", 0, set())
+    def _(fx: Fixture) -> None:
+        fx.doc_suffix["Plans/Probe_Doc.md"] = "\n\n```yaml\n" + '{note: "x' + chr(92) + 'U00110000"}' + "\n```\n"
 
     for label, text in [("multi-line double-quoted scalar", 'description: "The text\ncommand_payload_definitions: false\nis illustrative."'),
                         ("multi-line single-quoted scalar", "description: 'The text\ncommand_payload_definitions: false\nis illustrative.'"),
