@@ -9032,22 +9032,27 @@
     "additional_runs": [
       {
         "argv": [
-          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/run.py",
+          "/home/sittingmongoose/PM-Experiments/DR-fix8/venv/bin/python",
+          "/home/sittingmongoose/PM-Experiments/DR-fix8/run.py",
           "families"
         ],
+        "driver_snapshot": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/run.py",
         "exit_code": 0,
         "scope": "all nineteen, sequential; immutable input reuse only"
       },
       {
         "argv": [
-          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/run.py",
+          "/home/sittingmongoose/PM-Experiments/DR-fix8/venv/bin/python",
+          "/home/sittingmongoose/PM-Experiments/DR-fix8/run.py",
           "new-guards"
         ],
+        "driver_snapshot": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/run.py",
         "exit_code": 0,
         "scope": "O11-O13 against all 6910 pairs and nineteen full checkers per mutant"
       },
       {
         "argv": [
+          "/home/sittingmongoose/PM-Experiments/DR-fix8/venv/bin/python",
           "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/raw-guard-proof.py",
           "/home/sittingmongoose/pm-worktrees/DR-fix8"
         ],
