@@ -11,7 +11,27 @@
     "datetime_offset": "{\"occurred_at_utc\":\"2026-01-01T00:00:00+05:30\"}",
     "datetime_long-fraction": "{\"occurred_at_utc\":\"2026-01-01T00:00:00.123456789123456789123456789Z\"}",
     "datetime_leap-offset": "{\"occurred_at_utc\":\"2017-01-01T05:29:60+05:30\"}",
-    "datetime_invalid": "{\"occurred_at_utc\": \"2026-02-30T00:00:00Z\"}"
+    "datetime_invalid": "{\"occurred_at_utc\": \"2026-02-30T00:00:00Z\"}",
+    "datetime_observed_at_utc_utc": "{\"observed_at_utc\":\"2026-01-01T00:00:00Z\"}",
+    "datetime_observed_at_utc_lower-t": "{\"observed_at_utc\":\"2026-01-01t00:00:00Z\"}",
+    "datetime_observed_at_utc_fraction": "{\"observed_at_utc\":\"2026-01-01T00:00:00.123456789Z\"}",
+    "datetime_observed_at_utc_long-fraction": "{\"observed_at_utc\":\"2026-01-01T00:00:00.123456789123456789Z\"}",
+    "datetime_observed_at_utc_leap": "{\"observed_at_utc\":\"1990-12-31T23:59:60Z\"}",
+    "datetime_observed_at_utc_offset": "{\"observed_at_utc\":\"2026-01-01T00:00:00+05:30\"}",
+    "datetime_observed_at_utc_positive-zero": "{\"observed_at_utc\":\"2026-01-01T00:00:00+00:00\"}",
+    "datetime_observed_at_utc_negative-zero": "{\"observed_at_utc\":\"2026-01-01T00:00:00-00:00\"}",
+    "datetime_observed_at_utc_lower-z": "{\"observed_at_utc\":\"2026-01-01T00:00:00z\"}",
+    "datetime_observed_at_utc_lower-t-z": "{\"observed_at_utc\":\"2026-01-01t00:00:00z\"}",
+    "datetime_persisted_at_utc_utc": "{\"persisted_at_utc\":\"2026-01-01T00:00:00Z\"}",
+    "datetime_persisted_at_utc_lower-t": "{\"persisted_at_utc\":\"2026-01-01t00:00:00Z\"}",
+    "datetime_persisted_at_utc_fraction": "{\"persisted_at_utc\":\"2026-01-01T00:00:00.123456789Z\"}",
+    "datetime_persisted_at_utc_long-fraction": "{\"persisted_at_utc\":\"2026-01-01T00:00:00.123456789123456789Z\"}",
+    "datetime_persisted_at_utc_leap": "{\"persisted_at_utc\":\"1990-12-31T23:59:60Z\"}",
+    "datetime_persisted_at_utc_offset": "{\"persisted_at_utc\":\"2026-01-01T00:00:00+05:30\"}",
+    "datetime_persisted_at_utc_positive-zero": "{\"persisted_at_utc\":\"2026-01-01T00:00:00+00:00\"}",
+    "datetime_persisted_at_utc_negative-zero": "{\"persisted_at_utc\":\"2026-01-01T00:00:00-00:00\"}",
+    "datetime_persisted_at_utc_lower-z": "{\"persisted_at_utc\":\"2026-01-01T00:00:00z\"}",
+    "datetime_persisted_at_utc_lower-t-z": "{\"persisted_at_utc\":\"2026-01-01t00:00:00z\"}"
   },
   "cases": [
     {
@@ -23,7 +43,8 @@
         "C06",
         "C07"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "token.valid_input"
     },
     {
       "id": "token-1",
@@ -34,7 +55,8 @@
         "C06",
         "C07"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "token.valid_input"
     },
     {
       "id": "token--1",
@@ -45,7 +67,8 @@
         "C06",
         "C07"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "token.valid_input"
     },
     {
       "id": "token-9007199254740991",
@@ -56,7 +79,8 @@
         "C06",
         "C07"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "token.valid_input"
     },
     {
       "id": "token-9007199254740992",
@@ -67,7 +91,8 @@
         "C06",
         "C07"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "token.valid_input"
     },
     {
       "id": "token-9007199254740993",
@@ -78,7 +103,8 @@
         "C06",
         "C07"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "token.valid_input"
     },
     {
       "id": "token-1152921504606846976",
@@ -89,7 +115,8 @@
         "C06",
         "C07"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "token.valid_input"
     },
     {
       "id": "token-9223372036854775808",
@@ -100,7 +127,8 @@
         "C06",
         "C07"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "token.valid_input"
     },
     {
       "id": "token-18446744073709551615",
@@ -111,7 +139,8 @@
         "C06",
         "C07"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "token.valid_input"
     },
     {
       "id": "token-18446744073709551616",
@@ -122,7 +151,8 @@
         "C06",
         "C07"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "token.valid_input"
     },
     {
       "id": "token--9223372036854775808",
@@ -133,7 +163,8 @@
         "C06",
         "C07"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "token.valid_input"
     },
     {
       "id": "token--9223372036854775809",
@@ -144,7 +175,8 @@
         "C06",
         "C07"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "token.valid_input"
     },
     {
       "id": "bad-token-'1.0'",
@@ -398,7 +430,8 @@
         "C07",
         "C08"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "slot.valid_input"
     },
     {
       "id": "slot-ok-1",
@@ -408,7 +441,8 @@
         "C07",
         "C08"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "slot.valid_input"
     },
     {
       "id": "slot-ok-9007199254740993",
@@ -418,7 +452,8 @@
         "C07",
         "C08"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "slot.valid_input"
     },
     {
       "id": "slot-ok-18446744073709551615",
@@ -428,7 +463,8 @@
         "C07",
         "C08"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "slot.valid_input"
     },
     {
       "id": "int-string",
@@ -679,7 +715,8 @@
       "conflicts": [
         "C07"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "boolean.valid_input"
     },
     {
       "id": "bool-ok-False",
@@ -688,7 +725,8 @@
       "conflicts": [
         "C07"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "boolean.valid_input"
     },
     {
       "id": "raw-preserved-1.0",
@@ -697,7 +735,8 @@
       "conflicts": [
         "C08"
       ],
-      "output": "1.0"
+      "output": "1.0",
+      "target_predicate": "parse_token.valid_input"
     },
     {
       "id": "raw-preserved-1e0",
@@ -706,7 +745,8 @@
       "conflicts": [
         "C08"
       ],
-      "output": "1e0"
+      "output": "1e0",
+      "target_predicate": "parse_token.valid_input"
     },
     {
       "id": "raw-preserved--0",
@@ -715,7 +755,8 @@
       "conflicts": [
         "C08"
       ],
-      "output": "-0"
+      "output": "-0",
+      "target_predicate": "parse_token.valid_input"
     },
     {
       "id": "raw-preserved--0.0",
@@ -724,7 +765,8 @@
       "conflicts": [
         "C08"
       ],
-      "output": "-0.0"
+      "output": "-0.0",
+      "target_predicate": "parse_token.valid_input"
     },
     {
       "id": "raw-preserved-9007199254740993.0",
@@ -733,7 +775,8 @@
       "conflicts": [
         "C08"
       ],
-      "output": "9007199254740993.0"
+      "output": "9007199254740993.0",
+      "target_predicate": "parse_token.valid_input"
     },
     {
       "id": "raw-preserved-1e-7",
@@ -742,7 +785,8 @@
       "conflicts": [
         "C08"
       ],
-      "output": "1e-7"
+      "output": "1e-7",
+      "target_predicate": "parse_token.valid_input"
     },
     {
       "id": "raw-preserved-1e20",
@@ -751,7 +795,8 @@
       "conflicts": [
         "C08"
       ],
-      "output": "1e20"
+      "output": "1e20",
+      "target_predicate": "parse_token.valid_input"
     },
     {
       "id": "raw-preserved-1e9999",
@@ -760,7 +805,8 @@
       "conflicts": [
         "C08"
       ],
-      "output": "1e9999"
+      "output": "1e9999",
+      "target_predicate": "parse_token.valid_input"
     },
     {
       "id": "raw-preserved-1e-9999",
@@ -769,7 +815,8 @@
       "conflicts": [
         "C08"
       ],
-      "output": "1e-9999"
+      "output": "1e-9999",
+      "target_predicate": "parse_token.valid_input"
     },
     {
       "id": "parse-NaN",
@@ -912,7 +959,8 @@
         "C06",
         "C08"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "current_json.valid_input"
     },
     {
       "id": "token-unbounded",
@@ -922,7 +970,8 @@
         "C03",
         "C08"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "token.valid_input"
     },
     {
       "id": "jcs-1",
@@ -935,7 +984,8 @@
         "C04",
         "C08"
       ],
-      "output": "1"
+      "output": "1",
+      "target_predicate": "jcs.exact_value"
     },
     {
       "id": "jcs-1.0",
@@ -948,7 +998,8 @@
         "C04",
         "C08"
       ],
-      "output": "1"
+      "output": "1",
+      "target_predicate": "jcs.exact_value"
     },
     {
       "id": "jcs-1e0",
@@ -961,7 +1012,8 @@
         "C04",
         "C08"
       ],
-      "output": "1"
+      "output": "1",
+      "target_predicate": "jcs.exact_value"
     },
     {
       "id": "jcs--0",
@@ -974,7 +1026,8 @@
         "C04",
         "C08"
       ],
-      "output": "0"
+      "output": "0",
+      "target_predicate": "jcs.exact_value"
     },
     {
       "id": "jcs--0.0",
@@ -987,7 +1040,8 @@
         "C04",
         "C08"
       ],
-      "output": "0"
+      "output": "0",
+      "target_predicate": "jcs.exact_value"
     },
     {
       "id": "jcs-1e-7",
@@ -1000,7 +1054,8 @@
         "C04",
         "C08"
       ],
-      "output": "1e-7"
+      "output": "1e-7",
+      "target_predicate": "jcs.exact_value"
     },
     {
       "id": "jcs-1e20",
@@ -1013,7 +1068,8 @@
         "C04",
         "C08"
       ],
-      "output": "100000000000000000000"
+      "output": "100000000000000000000",
+      "target_predicate": "jcs.exact_value"
     },
     {
       "id": "jcs-9007199254740991",
@@ -1026,7 +1082,8 @@
         "C04",
         "C08"
       ],
-      "output": "9007199254740991"
+      "output": "9007199254740991",
+      "target_predicate": "jcs.exact_value"
     },
     {
       "id": "jcs-9007199254740992",
@@ -1039,7 +1096,8 @@
         "C04",
         "C08"
       ],
-      "output": "9007199254740992"
+      "output": "9007199254740992",
+      "target_predicate": "jcs.exact_value"
     },
     {
       "id": "jcs-binary64-only-10^23",
@@ -1180,7 +1238,8 @@
         "C04",
         "C08"
       ],
-      "output": "-9007199254740992"
+      "output": "-9007199254740992",
+      "target_predicate": "jcs.exact_value"
     },
     {
       "id": "jcs--1152921504606846976",
@@ -1205,7 +1264,8 @@
       "conflicts": [
         "C02"
       ],
-      "output": "{\"\ud800\udc00\":2,\"\ue000\":1}"
+      "output": "{\"\ud800\udc00\":2,\"\ue000\":1}",
+      "target_predicate": "jcs.exact_value"
     },
     {
       "id": "jcs-nan",
@@ -1291,7 +1351,8 @@
         "C05",
         "C06"
       ],
-      "output": "00"
+      "output": "00",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "physical-int-1",
@@ -1303,7 +1364,8 @@
         "C05",
         "C06"
       ],
-      "output": "01"
+      "output": "01",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "physical-int-127",
@@ -1315,7 +1377,8 @@
         "C05",
         "C06"
       ],
-      "output": "7f"
+      "output": "7f",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "physical-int-128",
@@ -1327,7 +1390,8 @@
         "C05",
         "C06"
       ],
-      "output": "cc80"
+      "output": "cc80",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "physical-int-255",
@@ -1339,7 +1403,8 @@
         "C05",
         "C06"
       ],
-      "output": "ccff"
+      "output": "ccff",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "physical-int-256",
@@ -1351,7 +1416,8 @@
         "C05",
         "C06"
       ],
-      "output": "cd0100"
+      "output": "cd0100",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "physical-int-65535",
@@ -1363,7 +1429,8 @@
         "C05",
         "C06"
       ],
-      "output": "cdffff"
+      "output": "cdffff",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "physical-int-65536",
@@ -1375,7 +1442,8 @@
         "C05",
         "C06"
       ],
-      "output": "ce00010000"
+      "output": "ce00010000",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "physical-int-4294967295",
@@ -1387,7 +1455,8 @@
         "C05",
         "C06"
       ],
-      "output": "ceffffffff"
+      "output": "ceffffffff",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "physical-int-4294967296",
@@ -1399,7 +1468,8 @@
         "C05",
         "C06"
       ],
-      "output": "cf0000000100000000"
+      "output": "cf0000000100000000",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "physical-int-9007199254740991",
@@ -1411,7 +1481,8 @@
         "C05",
         "C06"
       ],
-      "output": "cf001fffffffffffff"
+      "output": "cf001fffffffffffff",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "physical-int-9007199254740992",
@@ -1423,7 +1494,8 @@
         "C05",
         "C06"
       ],
-      "output": "cf0020000000000000"
+      "output": "cf0020000000000000",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "physical-int-9007199254740993",
@@ -1435,7 +1507,8 @@
         "C05",
         "C06"
       ],
-      "output": "cf0020000000000001"
+      "output": "cf0020000000000001",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "physical-int-1152921504606846976",
@@ -1447,7 +1520,8 @@
         "C05",
         "C06"
       ],
-      "output": "cf1000000000000000"
+      "output": "cf1000000000000000",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "physical-int-9223372036854775808",
@@ -1459,7 +1533,8 @@
         "C05",
         "C06"
       ],
-      "output": "cf8000000000000000"
+      "output": "cf8000000000000000",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "physical-int-18446744073709551615",
@@ -1471,7 +1546,8 @@
         "C05",
         "C06"
       ],
-      "output": "cfffffffffffffffff"
+      "output": "cfffffffffffffffff",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "physical-int--1",
@@ -1483,7 +1559,8 @@
         "C05",
         "C06"
       ],
-      "output": "ff"
+      "output": "ff",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "physical-int--32",
@@ -1495,7 +1572,8 @@
         "C05",
         "C06"
       ],
-      "output": "e0"
+      "output": "e0",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "physical-int--33",
@@ -1507,7 +1585,8 @@
         "C05",
         "C06"
       ],
-      "output": "d0df"
+      "output": "d0df",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "physical-int--128",
@@ -1519,7 +1598,8 @@
         "C05",
         "C06"
       ],
-      "output": "d080"
+      "output": "d080",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "physical-int--129",
@@ -1531,7 +1611,8 @@
         "C05",
         "C06"
       ],
-      "output": "d1ff7f"
+      "output": "d1ff7f",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "physical-int--32768",
@@ -1543,7 +1624,8 @@
         "C05",
         "C06"
       ],
-      "output": "d18000"
+      "output": "d18000",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "physical-int--32769",
@@ -1555,7 +1637,8 @@
         "C05",
         "C06"
       ],
-      "output": "d2ffff7fff"
+      "output": "d2ffff7fff",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "physical-int--2147483648",
@@ -1567,7 +1650,8 @@
         "C05",
         "C06"
       ],
-      "output": "d280000000"
+      "output": "d280000000",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "physical-int--2147483649",
@@ -1579,7 +1663,8 @@
         "C05",
         "C06"
       ],
-      "output": "d3ffffffff7fffffff"
+      "output": "d3ffffffff7fffffff",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "physical-int--9223372036854775808",
@@ -1591,7 +1676,8 @@
         "C05",
         "C06"
       ],
-      "output": "d38000000000000000"
+      "output": "d38000000000000000",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "physical-overflow--9223372036854775809",
@@ -1630,7 +1716,8 @@
       "conflicts": [
         "C05"
       ],
-      "output": "ca3f800000"
+      "output": "ca3f800000",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "app-float-1.0",
@@ -1642,7 +1729,8 @@
       "conflicts": [
         "C05"
       ],
-      "output": "cb3ff0000000000000"
+      "output": "cb3ff0000000000000",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "physical-float-0.0",
@@ -1653,7 +1741,8 @@
       "conflicts": [
         "C05"
       ],
-      "output": "ca00000000"
+      "output": "ca00000000",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "app-float-0.0",
@@ -1665,7 +1754,8 @@
       "conflicts": [
         "C05"
       ],
-      "output": "cb0000000000000000"
+      "output": "cb0000000000000000",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "physical-float--0.0",
@@ -1676,7 +1766,8 @@
       "conflicts": [
         "C05"
       ],
-      "output": "ca80000000"
+      "output": "ca80000000",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "app-float--0.0",
@@ -1688,7 +1779,8 @@
       "conflicts": [
         "C05"
       ],
-      "output": "cb8000000000000000"
+      "output": "cb8000000000000000",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "physical-float-0.5",
@@ -1699,7 +1791,8 @@
       "conflicts": [
         "C05"
       ],
-      "output": "ca3f000000"
+      "output": "ca3f000000",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "app-float-0.5",
@@ -1711,7 +1804,8 @@
       "conflicts": [
         "C05"
       ],
-      "output": "cb3fe0000000000000"
+      "output": "cb3fe0000000000000",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "physical-float-1e-7",
@@ -1722,7 +1816,8 @@
       "conflicts": [
         "C05"
       ],
-      "output": "cb3e7ad7f29abcaf48"
+      "output": "cb3e7ad7f29abcaf48",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "app-float-1e-7",
@@ -1734,7 +1829,8 @@
       "conflicts": [
         "C05"
       ],
-      "output": "cb3e7ad7f29abcaf48"
+      "output": "cb3e7ad7f29abcaf48",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "physical-float-1e20",
@@ -1745,7 +1841,8 @@
       "conflicts": [
         "C05"
       ],
-      "output": "cb4415af1d78b58c40"
+      "output": "cb4415af1d78b58c40",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "app-float-1e20",
@@ -1757,7 +1854,8 @@
       "conflicts": [
         "C05"
       ],
-      "output": "cb4415af1d78b58c40"
+      "output": "cb4415af1d78b58c40",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "physical-float-1.7976931348623157e308",
@@ -1768,7 +1866,8 @@
       "conflicts": [
         "C05"
       ],
-      "output": "cb7fefffffffffffff"
+      "output": "cb7fefffffffffffff",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "app-float-1.7976931348623157e308",
@@ -1780,7 +1879,8 @@
       "conflicts": [
         "C05"
       ],
-      "output": "cb7fefffffffffffff"
+      "output": "cb7fefffffffffffff",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "physical-nan",
@@ -1862,7 +1962,8 @@
       "conflicts": [
         "C05"
       ],
-      "output": "c4020102"
+      "output": "c4020102",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "unknown-physical-profile",
@@ -1887,7 +1988,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-sequence_id-9007199254740992",
@@ -1899,7 +2001,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-sequence_id-9007199254740993",
@@ -1911,7 +2014,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-sequence_id-1152921504606846976",
@@ -1923,7 +2027,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-sequence_id-9223372036854775808",
@@ -1935,7 +2040,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-sequence_id-18446744073709551615",
@@ -1947,7 +2053,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-segment_generation-9007199254740991",
@@ -1959,7 +2066,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-segment_generation-9007199254740992",
@@ -1971,7 +2079,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-segment_generation-9007199254740993",
@@ -1983,7 +2092,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-segment_generation-1152921504606846976",
@@ -1995,7 +2105,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-segment_generation-9223372036854775808",
@@ -2007,7 +2118,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-segment_generation-18446744073709551615",
@@ -2019,7 +2131,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-selected_segment_generation-9007199254740991",
@@ -2031,7 +2144,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-selected_segment_generation-9007199254740992",
@@ -2043,7 +2157,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-selected_segment_generation-9007199254740993",
@@ -2055,7 +2170,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-selected_segment_generation-1152921504606846976",
@@ -2067,7 +2183,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-selected_segment_generation-9223372036854775808",
@@ -2079,7 +2196,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-selected_segment_generation-18446744073709551615",
@@ -2091,7 +2209,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-manifest_generation-9007199254740991",
@@ -2103,7 +2222,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-manifest_generation-9007199254740992",
@@ -2115,7 +2235,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-manifest_generation-9007199254740993",
@@ -2127,7 +2248,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-manifest_generation-1152921504606846976",
@@ -2139,7 +2261,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-manifest_generation-9223372036854775808",
@@ -2151,7 +2274,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-manifest_generation-18446744073709551615",
@@ -2163,7 +2287,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-recovery_epoch-9007199254740991",
@@ -2175,7 +2300,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-recovery_epoch-9007199254740992",
@@ -2187,7 +2313,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-recovery_epoch-9007199254740993",
@@ -2199,7 +2326,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-recovery_epoch-1152921504606846976",
@@ -2211,7 +2339,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-recovery_epoch-9223372036854775808",
@@ -2223,7 +2352,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-recovery_epoch-18446744073709551615",
@@ -2235,7 +2365,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-frontier_revision-9007199254740991",
@@ -2247,7 +2378,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-frontier_revision-9007199254740992",
@@ -2259,7 +2391,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-frontier_revision-9007199254740993",
@@ -2271,7 +2404,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-frontier_revision-1152921504606846976",
@@ -2283,7 +2417,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-frontier_revision-9223372036854775808",
@@ -2295,7 +2430,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-frontier_revision-18446744073709551615",
@@ -2307,7 +2443,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-retained_event_count-9007199254740991",
@@ -2319,7 +2456,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-retained_event_count-9007199254740992",
@@ -2331,7 +2469,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-retained_event_count-9007199254740993",
@@ -2343,7 +2482,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-retained_event_count-1152921504606846976",
@@ -2355,7 +2495,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-retained_event_count-9223372036854775808",
@@ -2367,7 +2508,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-retained_event_count-18446744073709551615",
@@ -2379,7 +2521,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-byte_offset-9007199254740991",
@@ -2391,7 +2534,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-byte_offset-9007199254740992",
@@ -2403,7 +2547,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-byte_offset-9007199254740993",
@@ -2415,7 +2560,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-byte_offset-1152921504606846976",
@@ -2427,7 +2573,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-byte_offset-9223372036854775808",
@@ -2439,7 +2586,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-byte_offset-18446744073709551615",
@@ -2451,7 +2599,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-frame_end_offset-9007199254740991",
@@ -2463,7 +2612,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-frame_end_offset-9007199254740992",
@@ -2475,7 +2625,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-frame_end_offset-9007199254740993",
@@ -2487,7 +2638,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-frame_end_offset-1152921504606846976",
@@ -2499,7 +2651,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-frame_end_offset-9223372036854775808",
@@ -2511,7 +2664,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-frame_end_offset-18446744073709551615",
@@ -2523,7 +2677,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-byte_size-9007199254740991",
@@ -2535,7 +2690,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-byte_size-9007199254740992",
@@ -2547,7 +2703,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-byte_size-9007199254740993",
@@ -2559,7 +2716,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-byte_size-1152921504606846976",
@@ -2571,7 +2729,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-byte_size-9223372036854775808",
@@ -2583,7 +2742,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "metadata-byte_size-18446744073709551615",
@@ -2595,7 +2755,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "uint64.valid_input"
     },
     {
       "id": "uint64-overflow--1",
@@ -2685,7 +2846,8 @@
       "conflicts": [
         "C06"
       ],
-      "output": "01"
+      "output": "01",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "binding-18446744073709551615",
@@ -2697,7 +2859,8 @@
       "conflicts": [
         "C06"
       ],
-      "output": "cfffffffffffffffff"
+      "output": "cfffffffffffffffff",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "binding-bad-float",
@@ -2885,7 +3048,8 @@
         "C05",
         "C06"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "decode-good-float",
@@ -2895,7 +3059,8 @@
         "C05",
         "C06"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "decode-good-negative-zero",
@@ -2905,7 +3070,8 @@
         "C05",
         "C06"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "decode-good-uint64",
@@ -2915,7 +3081,8 @@
         "C05",
         "C06"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "physical.canonical_bytes"
     },
     {
       "id": "append-append_once",
@@ -2924,7 +3091,8 @@
       "conflicts": [
         "C09"
       ],
-      "output": "append_once"
+      "output": "append_once",
+      "target_predicate": "append_policy.valid_input"
     },
     {
       "id": "append-dedupe_by_event_id",
@@ -2933,7 +3101,8 @@
       "conflicts": [
         "C09"
       ],
-      "output": "dedupe_by_event_id"
+      "output": "dedupe_by_event_id",
+      "target_predicate": "append_policy.valid_input"
     },
     {
       "id": "append-dedupe_by_idempotency_key",
@@ -2942,7 +3111,8 @@
       "conflicts": [
         "C09"
       ],
-      "output": "dedupe_by_idempotency_key"
+      "output": "dedupe_by_idempotency_key",
+      "target_predicate": "append_policy.valid_input"
     },
     {
       "id": "append-replay-only",
@@ -2964,7 +3134,8 @@
         "C09",
         "C10"
       ],
-      "output": "original-returned-with-zero-effects"
+      "output": "original-returned-with-zero-effects",
+      "target_predicate": "original.authentic_retained"
     },
     {
       "id": "history-exponent",
@@ -2974,7 +3145,8 @@
         "C09",
         "C10"
       ],
-      "output": "original-returned-with-zero-effects"
+      "output": "original-returned-with-zero-effects",
+      "target_predicate": "original.authentic_retained"
     },
     {
       "id": "history-negative_zero",
@@ -2984,7 +3156,8 @@
         "C09",
         "C10"
       ],
-      "output": "original-returned-with-zero-effects"
+      "output": "original-returned-with-zero-effects",
+      "target_predicate": "original.authentic_retained"
     },
     {
       "id": "history-large_decimal",
@@ -2994,7 +3167,8 @@
         "C09",
         "C10"
       ],
-      "output": "original-returned-with-zero-effects"
+      "output": "original-returned-with-zero-effects",
+      "target_predicate": "original.authentic_retained"
     },
     {
       "id": "history-large_metadata",
@@ -3004,7 +3178,8 @@
         "C09",
         "C10"
       ],
-      "output": "original-returned-with-zero-effects"
+      "output": "original-returned-with-zero-effects",
+      "target_predicate": "original.authentic_retained"
     },
     {
       "id": "history-current-original",
@@ -3013,7 +3188,8 @@
       "conflicts": [
         "C10"
       ],
-      "output": "original-returned-with-zero-effects"
+      "output": "original-returned-with-zero-effects",
+      "target_predicate": "original.authentic_retained"
     },
     {
       "id": "history-caller_override",
@@ -3367,7 +3543,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "payload.exact_bytes"
     },
     {
       "id": "payload-reference-boundary",
@@ -3379,7 +3556,8 @@
         "C06",
         "C09"
       ],
-      "output": "accepted"
+      "output": "accepted",
+      "target_predicate": "payload.exact_bytes"
     },
     {
       "id": "payload-size",
@@ -3473,7 +3651,8 @@
       "conflicts": [
         "C07",
         "C10"
-      ]
+      ],
+      "target_predicate": "recipe_constructor.valid_input"
     },
     {
       "id": "recipe-hash-trailing-lf",
@@ -3568,7 +3747,8 @@
         "C07",
         "C10"
       ],
-      "output": "1.5"
+      "output": "1.5",
+      "target_predicate": "jcs.exact_value"
     },
     {
       "id": "jcs-typed-current-1.5",
@@ -3581,7 +3761,8 @@
         "C07",
         "C10"
       ],
-      "output": "1.5"
+      "output": "1.5",
+      "target_predicate": "jcs.exact_value"
     },
     {
       "id": "jcs-typed-float-1.5",
@@ -3595,7 +3776,8 @@
         "C07",
         "C10"
       ],
-      "output": "1.5"
+      "output": "1.5",
+      "target_predicate": "jcs.exact_value"
     },
     {
       "id": "jcs-typed-decimal-1.5",
@@ -3609,7 +3791,8 @@
         "C07",
         "C10"
       ],
-      "output": "1.5"
+      "output": "1.5",
+      "target_predicate": "jcs.exact_value"
     },
     {
       "id": "jcs-typed-exact-1.25",
@@ -3622,7 +3805,8 @@
         "C07",
         "C10"
       ],
-      "output": "1.25"
+      "output": "1.25",
+      "target_predicate": "jcs.exact_value"
     },
     {
       "id": "jcs-typed-current-1.25",
@@ -3635,7 +3819,8 @@
         "C07",
         "C10"
       ],
-      "output": "1.25"
+      "output": "1.25",
+      "target_predicate": "jcs.exact_value"
     },
     {
       "id": "jcs-typed-float-1.25",
@@ -3649,7 +3834,8 @@
         "C07",
         "C10"
       ],
-      "output": "1.25"
+      "output": "1.25",
+      "target_predicate": "jcs.exact_value"
     },
     {
       "id": "jcs-typed-decimal-1.25",
@@ -3663,7 +3849,8 @@
         "C07",
         "C10"
       ],
-      "output": "1.25"
+      "output": "1.25",
+      "target_predicate": "jcs.exact_value"
     },
     {
       "id": "jcs-decimal-kind-1.0",
@@ -3721,7 +3908,7 @@
       "value": {
         "@decimal": "1.5"
       },
-      "typed": true,
+      "typed": false,
       "kind": "unknown",
       "conflicts": [
         "C07",
@@ -3842,7 +4029,8 @@
         "C07",
         "C10"
       ],
-      "output": "2026-01-01T00:00:00Z"
+      "output": "2026-01-01T00:00:00Z",
+      "target_predicate": "date_time.event_record"
     },
     {
       "id": "datetime-valid-1",
@@ -3852,7 +4040,8 @@
         "C07",
         "C10"
       ],
-      "output": "2026-01-01t00:00:00z"
+      "output": "2026-01-01t00:00:00z",
+      "target_predicate": "date_time.event_record"
     },
     {
       "id": "datetime-valid-2",
@@ -3862,7 +4051,8 @@
         "C07",
         "C10"
       ],
-      "output": "2026-01-01T00:00:00+05:30"
+      "output": "2026-01-01T00:00:00+05:30",
+      "target_predicate": "date_time.event_record"
     },
     {
       "id": "datetime-valid-3",
@@ -3872,7 +4062,8 @@
         "C07",
         "C10"
       ],
-      "output": "2026-01-01T00:00:00-07:00"
+      "output": "2026-01-01T00:00:00-07:00",
+      "target_predicate": "date_time.event_record"
     },
     {
       "id": "datetime-valid-4",
@@ -3882,7 +4073,8 @@
         "C07",
         "C10"
       ],
-      "output": "2026-01-01T00:00:00-00:00"
+      "output": "2026-01-01T00:00:00-00:00",
+      "target_predicate": "date_time.event_record"
     },
     {
       "id": "datetime-valid-5",
@@ -3892,7 +4084,8 @@
         "C07",
         "C10"
       ],
-      "output": "2026-01-01T00:00:00.1Z"
+      "output": "2026-01-01T00:00:00.1Z",
+      "target_predicate": "date_time.event_record"
     },
     {
       "id": "datetime-valid-6",
@@ -3902,7 +4095,8 @@
         "C07",
         "C10"
       ],
-      "output": "2026-01-01T00:00:00.123456789123456789123456789Z"
+      "output": "2026-01-01T00:00:00.123456789123456789123456789Z",
+      "target_predicate": "date_time.event_record"
     },
     {
       "id": "datetime-valid-7",
@@ -3912,7 +4106,8 @@
         "C07",
         "C10"
       ],
-      "output": "2024-02-29T23:59:59Z"
+      "output": "2024-02-29T23:59:59Z",
+      "target_predicate": "date_time.event_record"
     },
     {
       "id": "datetime-valid-8",
@@ -3922,7 +4117,8 @@
         "C07",
         "C10"
       ],
-      "output": "2000-02-29T00:00:00Z"
+      "output": "2000-02-29T00:00:00Z",
+      "target_predicate": "date_time.event_record"
     },
     {
       "id": "datetime-valid-9",
@@ -3932,7 +4128,8 @@
         "C07",
         "C10"
       ],
-      "output": "0000-02-29T00:00:00Z"
+      "output": "0000-02-29T00:00:00Z",
+      "target_predicate": "date_time.event_record"
     },
     {
       "id": "datetime-valid-10",
@@ -3942,7 +4139,8 @@
         "C07",
         "C10"
       ],
-      "output": "9999-12-31T23:59:59+23:59"
+      "output": "9999-12-31T23:59:59+23:59",
+      "target_predicate": "date_time.event_record"
     },
     {
       "id": "datetime-valid-11",
@@ -3952,7 +4150,8 @@
         "C07",
         "C10"
       ],
-      "output": "2016-12-31T23:59:60Z"
+      "output": "2016-12-31T23:59:60Z",
+      "target_predicate": "date_time.event_record"
     },
     {
       "id": "datetime-valid-12",
@@ -3962,7 +4161,8 @@
         "C07",
         "C10"
       ],
-      "output": "2017-01-01T05:29:60+05:30"
+      "output": "2017-01-01T05:29:60+05:30",
+      "target_predicate": "date_time.event_record"
     },
     {
       "id": "datetime-valid-13",
@@ -3972,7 +4172,8 @@
         "C07",
         "C10"
       ],
-      "output": "2016-12-31T16:59:60-07:00"
+      "output": "2016-12-31T16:59:60-07:00",
+      "target_predicate": "date_time.event_record"
     },
     {
       "id": "datetime-valid-14",
@@ -3982,7 +4183,8 @@
         "C07",
         "C10"
       ],
-      "output": "2016-12-31t23:59:60.123456789123z"
+      "output": "2016-12-31t23:59:60.123456789123z",
+      "target_predicate": "date_time.event_record"
     },
     {
       "id": "datetime-missing-zone",
@@ -4240,7 +4442,8 @@
         "C07",
         "C10"
       ],
-      "output": "2026-01-01T00:00:00.123456789Z"
+      "output": "2026-01-01T00:00:00.123456789Z",
+      "target_predicate": "date_time.event_record"
     },
     {
       "id": "datetime-coordination_utc_z-offset",
@@ -4279,7 +4482,8 @@
         "C07",
         "C10"
       ],
-      "output": "2026-01-01T00:00:00.123456789Z"
+      "output": "2026-01-01T00:00:00.123456789Z",
+      "target_predicate": "date_time.event_record"
     },
     {
       "id": "datetime-legacy_normalization_output-offset",
@@ -4360,7 +4564,8 @@
         "C07",
         "C10"
       ],
-      "output": "2026-01-01t00:00:00.123456789Z"
+      "output": "2026-01-01t00:00:00.123456789Z",
+      "target_predicate": "date_time.event_record"
     },
     {
       "id": "datetime-unknown-profile",
@@ -4399,7 +4604,8 @@
         "C07",
         "C10"
       ],
-      "output": "original-returned-with-zero-effects"
+      "output": "original-returned-with-zero-effects",
+      "target_predicate": "original.authentic_retained"
     },
     {
       "id": "history-datetime-offset",
@@ -4410,7 +4616,8 @@
         "C07",
         "C10"
       ],
-      "output": "original-returned-with-zero-effects"
+      "output": "original-returned-with-zero-effects",
+      "target_predicate": "original.authentic_retained"
     },
     {
       "id": "history-datetime-long-fraction",
@@ -4421,7 +4628,8 @@
         "C07",
         "C10"
       ],
-      "output": "original-returned-with-zero-effects"
+      "output": "original-returned-with-zero-effects",
+      "target_predicate": "original.authentic_retained"
     },
     {
       "id": "history-datetime-leap-offset",
@@ -4432,7 +4640,8 @@
         "C07",
         "C10"
       ],
-      "output": "original-returned-with-zero-effects"
+      "output": "original-returned-with-zero-effects",
+      "target_predicate": "original.authentic_retained"
     },
     {
       "id": "history-datetime-forged-coordination_utc_z",
@@ -4553,7 +4762,8 @@
       "conflicts": [
         "C01",
         "C08"
-      ]
+      ],
+      "target_predicate": "jcs.exact_value"
     },
     {
       "id": "jcs-parsed-kind-exact-1.25",
@@ -4565,7 +4775,8 @@
       "conflicts": [
         "C01",
         "C08"
-      ]
+      ],
+      "target_predicate": "jcs.exact_value"
     },
     {
       "id": "jcs-parsed-kind-current-1.5",
@@ -4577,7 +4788,8 @@
       "conflicts": [
         "C01",
         "C08"
-      ]
+      ],
+      "target_predicate": "jcs.exact_value"
     },
     {
       "id": "jcs-parsed-kind-current-1.25",
@@ -4589,7 +4801,1082 @@
       "conflicts": [
         "C01",
         "C08"
-      ]
+      ],
+      "target_predicate": "jcs.exact_value"
+    },
+    {
+      "id": "jcs-declared-decimal-kind-loss",
+      "op": "jcs_value",
+      "value": {
+        "@decimal": "1.5"
+      },
+      "typed": true,
+      "kind": "decimal",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "jcs_kind",
+      "error": "jcs_kind",
+      "enforcement": "authored",
+      "single_defect": "jcs_kind"
+    },
+    {
+      "id": "envelope-observed_at_utc-utc",
+      "op": "envelope_datetime",
+      "field": "observed_at_utc",
+      "value": "2026-01-01T00:00:00Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "observed_at_utc.storage_utc_z",
+      "output": "2026-01-01T00:00:00Z"
+    },
+    {
+      "id": "envelope-observed_at_utc-lower-t",
+      "op": "envelope_datetime",
+      "field": "observed_at_utc",
+      "value": "2026-01-01t00:00:00Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "observed_at_utc.storage_utc_z",
+      "output": "2026-01-01t00:00:00Z"
+    },
+    {
+      "id": "envelope-observed_at_utc-fraction",
+      "op": "envelope_datetime",
+      "field": "observed_at_utc",
+      "value": "2026-01-01T00:00:00.123456789Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "observed_at_utc.storage_utc_z",
+      "output": "2026-01-01T00:00:00.123456789Z"
+    },
+    {
+      "id": "envelope-observed_at_utc-long-fraction",
+      "op": "envelope_datetime",
+      "field": "observed_at_utc",
+      "value": "2026-01-01T00:00:00.123456789123456789Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "observed_at_utc.storage_utc_z",
+      "output": "2026-01-01T00:00:00.123456789123456789Z"
+    },
+    {
+      "id": "envelope-observed_at_utc-leap",
+      "op": "envelope_datetime",
+      "field": "observed_at_utc",
+      "value": "1990-12-31T23:59:60Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "observed_at_utc.storage_utc_z",
+      "output": "1990-12-31T23:59:60Z"
+    },
+    {
+      "id": "envelope-observed_at_utc-offset",
+      "op": "envelope_datetime",
+      "field": "observed_at_utc",
+      "value": "2026-01-01T00:00:00+05:30",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "observed_at_utc.storage_utc_z",
+      "error": "date_time_utc_z",
+      "enforcement": "authored",
+      "single_defect": "observed_at_utc.storage_utc_z"
+    },
+    {
+      "id": "envelope-observed_at_utc-positive-zero",
+      "op": "envelope_datetime",
+      "field": "observed_at_utc",
+      "value": "2026-01-01T00:00:00+00:00",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "observed_at_utc.storage_utc_z",
+      "error": "date_time_utc_z",
+      "enforcement": "authored",
+      "single_defect": "observed_at_utc.storage_utc_z"
+    },
+    {
+      "id": "envelope-observed_at_utc-negative-zero",
+      "op": "envelope_datetime",
+      "field": "observed_at_utc",
+      "value": "2026-01-01T00:00:00-00:00",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "observed_at_utc.storage_utc_z",
+      "error": "date_time_utc_z",
+      "enforcement": "authored",
+      "single_defect": "observed_at_utc.storage_utc_z"
+    },
+    {
+      "id": "envelope-observed_at_utc-lower-z",
+      "op": "envelope_datetime",
+      "field": "observed_at_utc",
+      "value": "2026-01-01T00:00:00z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "observed_at_utc.storage_utc_z",
+      "error": "date_time_utc_z",
+      "enforcement": "authored",
+      "single_defect": "observed_at_utc.storage_utc_z"
+    },
+    {
+      "id": "envelope-observed_at_utc-lower-t-z",
+      "op": "envelope_datetime",
+      "field": "observed_at_utc",
+      "value": "2026-01-01t00:00:00z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "observed_at_utc.storage_utc_z",
+      "error": "date_time_utc_z",
+      "enforcement": "authored",
+      "single_defect": "observed_at_utc.storage_utc_z"
+    },
+    {
+      "id": "history-observed_at_utc-utc",
+      "op": "history",
+      "original": "datetime_observed_at_utc_utc",
+      "date_time_profile": "storage_utc_z",
+      "sealed_date_time_profile": "storage_utc_z",
+      "sealed_date_time_field": "observed_at_utc",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "observed_at_utc.storage_utc_z",
+      "output": "original-returned-with-zero-effects"
+    },
+    {
+      "id": "history-observed_at_utc-lower-t",
+      "op": "history",
+      "original": "datetime_observed_at_utc_lower-t",
+      "date_time_profile": "storage_utc_z",
+      "sealed_date_time_profile": "storage_utc_z",
+      "sealed_date_time_field": "observed_at_utc",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "observed_at_utc.storage_utc_z",
+      "output": "original-returned-with-zero-effects"
+    },
+    {
+      "id": "history-observed_at_utc-fraction",
+      "op": "history",
+      "original": "datetime_observed_at_utc_fraction",
+      "date_time_profile": "storage_utc_z",
+      "sealed_date_time_profile": "storage_utc_z",
+      "sealed_date_time_field": "observed_at_utc",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "observed_at_utc.storage_utc_z",
+      "output": "original-returned-with-zero-effects"
+    },
+    {
+      "id": "history-observed_at_utc-long-fraction",
+      "op": "history",
+      "original": "datetime_observed_at_utc_long-fraction",
+      "date_time_profile": "storage_utc_z",
+      "sealed_date_time_profile": "storage_utc_z",
+      "sealed_date_time_field": "observed_at_utc",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "observed_at_utc.storage_utc_z",
+      "output": "original-returned-with-zero-effects"
+    },
+    {
+      "id": "history-observed_at_utc-leap",
+      "op": "history",
+      "original": "datetime_observed_at_utc_leap",
+      "date_time_profile": "storage_utc_z",
+      "sealed_date_time_profile": "storage_utc_z",
+      "sealed_date_time_field": "observed_at_utc",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "observed_at_utc.storage_utc_z",
+      "output": "original-returned-with-zero-effects"
+    },
+    {
+      "id": "history-observed_at_utc-offset",
+      "op": "history",
+      "original": "datetime_observed_at_utc_offset",
+      "date_time_profile": "storage_utc_z",
+      "sealed_date_time_profile": "storage_utc_z",
+      "sealed_date_time_field": "observed_at_utc",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "observed_at_utc.storage_utc_z",
+      "error": "date_time_utc_z",
+      "enforcement": "authored",
+      "single_defect": "observed_at_utc.storage_utc_z"
+    },
+    {
+      "id": "history-observed_at_utc-positive-zero",
+      "op": "history",
+      "original": "datetime_observed_at_utc_positive-zero",
+      "date_time_profile": "storage_utc_z",
+      "sealed_date_time_profile": "storage_utc_z",
+      "sealed_date_time_field": "observed_at_utc",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "observed_at_utc.storage_utc_z",
+      "error": "date_time_utc_z",
+      "enforcement": "authored",
+      "single_defect": "observed_at_utc.storage_utc_z"
+    },
+    {
+      "id": "history-observed_at_utc-negative-zero",
+      "op": "history",
+      "original": "datetime_observed_at_utc_negative-zero",
+      "date_time_profile": "storage_utc_z",
+      "sealed_date_time_profile": "storage_utc_z",
+      "sealed_date_time_field": "observed_at_utc",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "observed_at_utc.storage_utc_z",
+      "error": "date_time_utc_z",
+      "enforcement": "authored",
+      "single_defect": "observed_at_utc.storage_utc_z"
+    },
+    {
+      "id": "history-observed_at_utc-lower-z",
+      "op": "history",
+      "original": "datetime_observed_at_utc_lower-z",
+      "date_time_profile": "storage_utc_z",
+      "sealed_date_time_profile": "storage_utc_z",
+      "sealed_date_time_field": "observed_at_utc",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "observed_at_utc.storage_utc_z",
+      "error": "date_time_utc_z",
+      "enforcement": "authored",
+      "single_defect": "observed_at_utc.storage_utc_z"
+    },
+    {
+      "id": "history-observed_at_utc-lower-t-z",
+      "op": "history",
+      "original": "datetime_observed_at_utc_lower-t-z",
+      "date_time_profile": "storage_utc_z",
+      "sealed_date_time_profile": "storage_utc_z",
+      "sealed_date_time_field": "observed_at_utc",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "observed_at_utc.storage_utc_z",
+      "error": "date_time_utc_z",
+      "enforcement": "authored",
+      "single_defect": "observed_at_utc.storage_utc_z"
+    },
+    {
+      "id": "history-observed_at_utc-forged-profile",
+      "op": "history",
+      "original": "datetime_observed_at_utc_utc",
+      "date_time_profile": "event_record",
+      "sealed_date_time_profile": "storage_utc_z",
+      "sealed_date_time_field": "observed_at_utc",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "original.datetime_profile",
+      "error": "original_verification",
+      "enforcement": "authored",
+      "single_defect": "original.datetime_profile"
+    },
+    {
+      "id": "envelope-persisted_at_utc-utc",
+      "op": "envelope_datetime",
+      "field": "persisted_at_utc",
+      "value": "2026-01-01T00:00:00Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "persisted_at_utc.storage_utc_z",
+      "output": "2026-01-01T00:00:00Z"
+    },
+    {
+      "id": "envelope-persisted_at_utc-lower-t",
+      "op": "envelope_datetime",
+      "field": "persisted_at_utc",
+      "value": "2026-01-01t00:00:00Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "persisted_at_utc.storage_utc_z",
+      "output": "2026-01-01t00:00:00Z"
+    },
+    {
+      "id": "envelope-persisted_at_utc-fraction",
+      "op": "envelope_datetime",
+      "field": "persisted_at_utc",
+      "value": "2026-01-01T00:00:00.123456789Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "persisted_at_utc.storage_utc_z",
+      "output": "2026-01-01T00:00:00.123456789Z"
+    },
+    {
+      "id": "envelope-persisted_at_utc-long-fraction",
+      "op": "envelope_datetime",
+      "field": "persisted_at_utc",
+      "value": "2026-01-01T00:00:00.123456789123456789Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "persisted_at_utc.storage_utc_z",
+      "output": "2026-01-01T00:00:00.123456789123456789Z"
+    },
+    {
+      "id": "envelope-persisted_at_utc-leap",
+      "op": "envelope_datetime",
+      "field": "persisted_at_utc",
+      "value": "1990-12-31T23:59:60Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "persisted_at_utc.storage_utc_z",
+      "output": "1990-12-31T23:59:60Z"
+    },
+    {
+      "id": "envelope-persisted_at_utc-offset",
+      "op": "envelope_datetime",
+      "field": "persisted_at_utc",
+      "value": "2026-01-01T00:00:00+05:30",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "persisted_at_utc.storage_utc_z",
+      "error": "date_time_utc_z",
+      "enforcement": "authored",
+      "single_defect": "persisted_at_utc.storage_utc_z"
+    },
+    {
+      "id": "envelope-persisted_at_utc-positive-zero",
+      "op": "envelope_datetime",
+      "field": "persisted_at_utc",
+      "value": "2026-01-01T00:00:00+00:00",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "persisted_at_utc.storage_utc_z",
+      "error": "date_time_utc_z",
+      "enforcement": "authored",
+      "single_defect": "persisted_at_utc.storage_utc_z"
+    },
+    {
+      "id": "envelope-persisted_at_utc-negative-zero",
+      "op": "envelope_datetime",
+      "field": "persisted_at_utc",
+      "value": "2026-01-01T00:00:00-00:00",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "persisted_at_utc.storage_utc_z",
+      "error": "date_time_utc_z",
+      "enforcement": "authored",
+      "single_defect": "persisted_at_utc.storage_utc_z"
+    },
+    {
+      "id": "envelope-persisted_at_utc-lower-z",
+      "op": "envelope_datetime",
+      "field": "persisted_at_utc",
+      "value": "2026-01-01T00:00:00z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "persisted_at_utc.storage_utc_z",
+      "error": "date_time_utc_z",
+      "enforcement": "authored",
+      "single_defect": "persisted_at_utc.storage_utc_z"
+    },
+    {
+      "id": "envelope-persisted_at_utc-lower-t-z",
+      "op": "envelope_datetime",
+      "field": "persisted_at_utc",
+      "value": "2026-01-01t00:00:00z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "persisted_at_utc.storage_utc_z",
+      "error": "date_time_utc_z",
+      "enforcement": "authored",
+      "single_defect": "persisted_at_utc.storage_utc_z"
+    },
+    {
+      "id": "history-persisted_at_utc-utc",
+      "op": "history",
+      "original": "datetime_persisted_at_utc_utc",
+      "date_time_profile": "storage_utc_z",
+      "sealed_date_time_profile": "storage_utc_z",
+      "sealed_date_time_field": "persisted_at_utc",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "persisted_at_utc.storage_utc_z",
+      "output": "original-returned-with-zero-effects"
+    },
+    {
+      "id": "history-persisted_at_utc-lower-t",
+      "op": "history",
+      "original": "datetime_persisted_at_utc_lower-t",
+      "date_time_profile": "storage_utc_z",
+      "sealed_date_time_profile": "storage_utc_z",
+      "sealed_date_time_field": "persisted_at_utc",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "persisted_at_utc.storage_utc_z",
+      "output": "original-returned-with-zero-effects"
+    },
+    {
+      "id": "history-persisted_at_utc-fraction",
+      "op": "history",
+      "original": "datetime_persisted_at_utc_fraction",
+      "date_time_profile": "storage_utc_z",
+      "sealed_date_time_profile": "storage_utc_z",
+      "sealed_date_time_field": "persisted_at_utc",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "persisted_at_utc.storage_utc_z",
+      "output": "original-returned-with-zero-effects"
+    },
+    {
+      "id": "history-persisted_at_utc-long-fraction",
+      "op": "history",
+      "original": "datetime_persisted_at_utc_long-fraction",
+      "date_time_profile": "storage_utc_z",
+      "sealed_date_time_profile": "storage_utc_z",
+      "sealed_date_time_field": "persisted_at_utc",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "persisted_at_utc.storage_utc_z",
+      "output": "original-returned-with-zero-effects"
+    },
+    {
+      "id": "history-persisted_at_utc-leap",
+      "op": "history",
+      "original": "datetime_persisted_at_utc_leap",
+      "date_time_profile": "storage_utc_z",
+      "sealed_date_time_profile": "storage_utc_z",
+      "sealed_date_time_field": "persisted_at_utc",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "persisted_at_utc.storage_utc_z",
+      "output": "original-returned-with-zero-effects"
+    },
+    {
+      "id": "history-persisted_at_utc-offset",
+      "op": "history",
+      "original": "datetime_persisted_at_utc_offset",
+      "date_time_profile": "storage_utc_z",
+      "sealed_date_time_profile": "storage_utc_z",
+      "sealed_date_time_field": "persisted_at_utc",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "persisted_at_utc.storage_utc_z",
+      "error": "date_time_utc_z",
+      "enforcement": "authored",
+      "single_defect": "persisted_at_utc.storage_utc_z"
+    },
+    {
+      "id": "history-persisted_at_utc-positive-zero",
+      "op": "history",
+      "original": "datetime_persisted_at_utc_positive-zero",
+      "date_time_profile": "storage_utc_z",
+      "sealed_date_time_profile": "storage_utc_z",
+      "sealed_date_time_field": "persisted_at_utc",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "persisted_at_utc.storage_utc_z",
+      "error": "date_time_utc_z",
+      "enforcement": "authored",
+      "single_defect": "persisted_at_utc.storage_utc_z"
+    },
+    {
+      "id": "history-persisted_at_utc-negative-zero",
+      "op": "history",
+      "original": "datetime_persisted_at_utc_negative-zero",
+      "date_time_profile": "storage_utc_z",
+      "sealed_date_time_profile": "storage_utc_z",
+      "sealed_date_time_field": "persisted_at_utc",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "persisted_at_utc.storage_utc_z",
+      "error": "date_time_utc_z",
+      "enforcement": "authored",
+      "single_defect": "persisted_at_utc.storage_utc_z"
+    },
+    {
+      "id": "history-persisted_at_utc-lower-z",
+      "op": "history",
+      "original": "datetime_persisted_at_utc_lower-z",
+      "date_time_profile": "storage_utc_z",
+      "sealed_date_time_profile": "storage_utc_z",
+      "sealed_date_time_field": "persisted_at_utc",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "persisted_at_utc.storage_utc_z",
+      "error": "date_time_utc_z",
+      "enforcement": "authored",
+      "single_defect": "persisted_at_utc.storage_utc_z"
+    },
+    {
+      "id": "history-persisted_at_utc-lower-t-z",
+      "op": "history",
+      "original": "datetime_persisted_at_utc_lower-t-z",
+      "date_time_profile": "storage_utc_z",
+      "sealed_date_time_profile": "storage_utc_z",
+      "sealed_date_time_field": "persisted_at_utc",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "persisted_at_utc.storage_utc_z",
+      "error": "date_time_utc_z",
+      "enforcement": "authored",
+      "single_defect": "persisted_at_utc.storage_utc_z"
+    },
+    {
+      "id": "history-persisted_at_utc-forged-profile",
+      "op": "history",
+      "original": "datetime_persisted_at_utc_utc",
+      "date_time_profile": "event_record",
+      "sealed_date_time_profile": "storage_utc_z",
+      "sealed_date_time_field": "persisted_at_utc",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "original.datetime_profile",
+      "error": "original_verification",
+      "enforcement": "authored",
+      "single_defect": "original.datetime_profile"
+    },
+    {
+      "id": "source-occurred-utc",
+      "op": "envelope_datetime",
+      "field": "occurred_at_utc",
+      "value": "2026-01-01T00:00:00Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "occurred_at_utc.event_record",
+      "output": "2026-01-01T00:00:00Z"
+    },
+    {
+      "id": "family-ts-utc",
+      "op": "family_datetime",
+      "value": "2026-01-01T00:00:00Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "family.ts.event_record",
+      "output": "2026-01-01T00:00:00Z"
+    },
+    {
+      "id": "source-occurred-lower-t",
+      "op": "envelope_datetime",
+      "field": "occurred_at_utc",
+      "value": "2026-01-01t00:00:00Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "occurred_at_utc.event_record",
+      "output": "2026-01-01t00:00:00Z"
+    },
+    {
+      "id": "family-ts-lower-t",
+      "op": "family_datetime",
+      "value": "2026-01-01t00:00:00Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "family.ts.event_record",
+      "output": "2026-01-01t00:00:00Z"
+    },
+    {
+      "id": "source-occurred-fraction",
+      "op": "envelope_datetime",
+      "field": "occurred_at_utc",
+      "value": "2026-01-01T00:00:00.123456789Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "occurred_at_utc.event_record",
+      "output": "2026-01-01T00:00:00.123456789Z"
+    },
+    {
+      "id": "family-ts-fraction",
+      "op": "family_datetime",
+      "value": "2026-01-01T00:00:00.123456789Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "family.ts.event_record",
+      "output": "2026-01-01T00:00:00.123456789Z"
+    },
+    {
+      "id": "source-occurred-long-fraction",
+      "op": "envelope_datetime",
+      "field": "occurred_at_utc",
+      "value": "2026-01-01T00:00:00.123456789123456789Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "occurred_at_utc.event_record",
+      "output": "2026-01-01T00:00:00.123456789123456789Z"
+    },
+    {
+      "id": "family-ts-long-fraction",
+      "op": "family_datetime",
+      "value": "2026-01-01T00:00:00.123456789123456789Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "family.ts.event_record",
+      "output": "2026-01-01T00:00:00.123456789123456789Z"
+    },
+    {
+      "id": "source-occurred-leap",
+      "op": "envelope_datetime",
+      "field": "occurred_at_utc",
+      "value": "1990-12-31T23:59:60Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "occurred_at_utc.event_record",
+      "output": "1990-12-31T23:59:60Z"
+    },
+    {
+      "id": "family-ts-leap",
+      "op": "family_datetime",
+      "value": "1990-12-31T23:59:60Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "family.ts.event_record",
+      "output": "1990-12-31T23:59:60Z"
+    },
+    {
+      "id": "source-occurred-offset",
+      "op": "envelope_datetime",
+      "field": "occurred_at_utc",
+      "value": "2026-01-01T00:00:00+05:30",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "occurred_at_utc.event_record",
+      "output": "2026-01-01T00:00:00+05:30"
+    },
+    {
+      "id": "family-ts-offset",
+      "op": "family_datetime",
+      "value": "2026-01-01T00:00:00+05:30",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "family.ts.event_record",
+      "output": "2026-01-01T00:00:00+05:30"
+    },
+    {
+      "id": "source-occurred-positive-zero",
+      "op": "envelope_datetime",
+      "field": "occurred_at_utc",
+      "value": "2026-01-01T00:00:00+00:00",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "occurred_at_utc.event_record",
+      "output": "2026-01-01T00:00:00+00:00"
+    },
+    {
+      "id": "family-ts-positive-zero",
+      "op": "family_datetime",
+      "value": "2026-01-01T00:00:00+00:00",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "family.ts.event_record",
+      "output": "2026-01-01T00:00:00+00:00"
+    },
+    {
+      "id": "source-occurred-negative-zero",
+      "op": "envelope_datetime",
+      "field": "occurred_at_utc",
+      "value": "2026-01-01T00:00:00-00:00",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "occurred_at_utc.event_record",
+      "output": "2026-01-01T00:00:00-00:00"
+    },
+    {
+      "id": "family-ts-negative-zero",
+      "op": "family_datetime",
+      "value": "2026-01-01T00:00:00-00:00",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "family.ts.event_record",
+      "output": "2026-01-01T00:00:00-00:00"
+    },
+    {
+      "id": "source-occurred-lower-z",
+      "op": "envelope_datetime",
+      "field": "occurred_at_utc",
+      "value": "2026-01-01T00:00:00z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "occurred_at_utc.event_record",
+      "output": "2026-01-01T00:00:00z"
+    },
+    {
+      "id": "family-ts-lower-z",
+      "op": "family_datetime",
+      "value": "2026-01-01T00:00:00z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "family.ts.event_record",
+      "output": "2026-01-01T00:00:00z"
+    },
+    {
+      "id": "source-occurred-lower-t-z",
+      "op": "envelope_datetime",
+      "field": "occurred_at_utc",
+      "value": "2026-01-01t00:00:00z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "occurred_at_utc.event_record",
+      "output": "2026-01-01t00:00:00z"
+    },
+    {
+      "id": "family-ts-lower-t-z",
+      "op": "family_datetime",
+      "value": "2026-01-01t00:00:00z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "family.ts.event_record",
+      "output": "2026-01-01t00:00:00z"
+    },
+    {
+      "id": "datetime-storage_utc_z-utc",
+      "op": "datetime",
+      "profile": "storage_utc_z",
+      "value": "2026-01-01T00:00:00Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "date_time.storage_utc_z",
+      "output": "2026-01-01T00:00:00Z"
+    },
+    {
+      "id": "datetime-storage_utc_z-lower-t",
+      "op": "datetime",
+      "profile": "storage_utc_z",
+      "value": "2026-01-01t00:00:00Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "date_time.storage_utc_z",
+      "output": "2026-01-01t00:00:00Z"
+    },
+    {
+      "id": "datetime-storage_utc_z-fraction",
+      "op": "datetime",
+      "profile": "storage_utc_z",
+      "value": "2026-01-01T00:00:00.123456789Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "date_time.storage_utc_z",
+      "output": "2026-01-01T00:00:00.123456789Z"
+    },
+    {
+      "id": "datetime-storage_utc_z-long-fraction",
+      "op": "datetime",
+      "profile": "storage_utc_z",
+      "value": "2026-01-01T00:00:00.123456789123456789Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "date_time.storage_utc_z",
+      "output": "2026-01-01T00:00:00.123456789123456789Z"
+    },
+    {
+      "id": "datetime-storage_utc_z-leap",
+      "op": "datetime",
+      "profile": "storage_utc_z",
+      "value": "1990-12-31T23:59:60Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "date_time.storage_utc_z",
+      "output": "1990-12-31T23:59:60Z"
+    },
+    {
+      "id": "datetime-storage_utc_z-offset",
+      "op": "datetime",
+      "profile": "storage_utc_z",
+      "value": "2026-01-01T00:00:00+05:30",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "date_time.storage_utc_z",
+      "error": "date_time_utc_z",
+      "enforcement": "authored",
+      "single_defect": "date_time.storage_utc_z"
+    },
+    {
+      "id": "datetime-storage_utc_z-positive-zero",
+      "op": "datetime",
+      "profile": "storage_utc_z",
+      "value": "2026-01-01T00:00:00+00:00",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "date_time.storage_utc_z",
+      "error": "date_time_utc_z",
+      "enforcement": "authored",
+      "single_defect": "date_time.storage_utc_z"
+    },
+    {
+      "id": "datetime-storage_utc_z-negative-zero",
+      "op": "datetime",
+      "profile": "storage_utc_z",
+      "value": "2026-01-01T00:00:00-00:00",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "date_time.storage_utc_z",
+      "error": "date_time_utc_z",
+      "enforcement": "authored",
+      "single_defect": "date_time.storage_utc_z"
+    },
+    {
+      "id": "datetime-storage_utc_z-lower-z",
+      "op": "datetime",
+      "profile": "storage_utc_z",
+      "value": "2026-01-01T00:00:00z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "date_time.storage_utc_z",
+      "error": "date_time_utc_z",
+      "enforcement": "authored",
+      "single_defect": "date_time.storage_utc_z"
+    },
+    {
+      "id": "datetime-storage_utc_z-lower-t-z",
+      "op": "datetime",
+      "profile": "storage_utc_z",
+      "value": "2026-01-01t00:00:00z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "date_time.storage_utc_z",
+      "error": "date_time_utc_z",
+      "enforcement": "authored",
+      "single_defect": "date_time.storage_utc_z"
+    },
+    {
+      "id": "full-value-frozen-positive",
+      "op": "full_value_commitment",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "full_value.current_commitment",
+      "output": "8d63522b12bcf9d32e7eec9b4723ed442f9beed498e60d8655d2cfb6021d6b33"
+    },
+    {
+      "id": "full-value-wrong-version",
+      "op": "full_value_commitment",
+      "changes": {
+        "schema_version": "1.0.0"
+      },
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "full_value.schema_version",
+      "error": "full_value_edition",
+      "enforcement": "authored",
+      "single_defect": "full_value.schema_version"
+    },
+    {
+      "id": "full-value-wrong-schema-id",
+      "op": "full_value_commitment",
+      "changes": {
+        "schema_id": "pm.other.v0"
+      },
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "full_value.schema_id",
+      "error": "full_value_edition",
+      "enforcement": "authored",
+      "single_defect": "full_value.schema_id"
+    },
+    {
+      "id": "full-value-container-array",
+      "op": "full_value_commitment",
+      "container": [],
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "full_value.container_type",
+      "error": "full_value_edition",
+      "enforcement": "authored",
+      "single_defect": "full_value.container_type"
+    },
+    {
+      "id": "full-value-container-string",
+      "op": "full_value_commitment",
+      "container": "event",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "full_value.container_type",
+      "error": "full_value_edition",
+      "enforcement": "authored",
+      "single_defect": "full_value.container_type"
+    },
+    {
+      "id": "full-value-container-null",
+      "op": "full_value_commitment",
+      "container": null,
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "full_value.container_type",
+      "error": "full_value_edition",
+      "enforcement": "authored",
+      "single_defect": "full_value.container_type"
+    },
+    {
+      "id": "full-value-container-boolean",
+      "op": "full_value_commitment",
+      "container": true,
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "full_value.container_type",
+      "error": "full_value_edition",
+      "enforcement": "authored",
+      "single_defect": "full_value.container_type"
+    },
+    {
+      "id": "full-value-container-integer",
+      "op": "full_value_commitment",
+      "container": 1,
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "full_value.container_type",
+      "error": "full_value_edition",
+      "enforcement": "authored",
+      "single_defect": "full_value.container_type"
     }
   ],
   "guard_isolation_sweep": [

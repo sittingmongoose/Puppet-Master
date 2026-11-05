@@ -137,7 +137,8 @@ def _retained(m, case, corpus):
             observed_profile = case["date_time_profile"]
             if observed_profile != selected:
                 return False
-            date_time(json.loads(record.record_bytes)["occurred_at_utc"], profile=selected)
+            field = case.get("sealed_date_time_field", "occurred_at_utc")
+            date_time(json.loads(record.record_bytes)[field], profile=selected)
         return authentic
 
     dispatcher = m.RetainedDispatcher(FixtureOwner(), {
@@ -205,6 +206,33 @@ def execute(m, case, corpus):
     if op == "datetime_direct":
         from pm_event_datetime import date_time
         return date_time(case["value"], profile=case.get("profile", "event_record"))
+    if op == "envelope_datetime":
+        from pm_event_datetime import datetime_validator
+        from jsonschema import ValidationError
+        root = Path(__file__).resolve().parents[1]
+        event = json.loads((root / "Plans/seglog_frame_v2_wire_fixtures.json").read_text())["base_event"]
+        schema = json.loads((root / "Plans/event_record.schema.json").read_text())
+        event[case["field"]] = case["value"]
+        try:
+            datetime_validator(schema).validate(event)
+        except ValidationError as error:
+            if isinstance(error.cause, m.Refusal):
+                raise error.cause
+            if error.validator == "pattern" and case["field"] in ("observed_at_utc", "persisted_at_utc"):
+                raise m.Refusal("date_time_utc_z") from error
+            raise
+        return case["value"]
+    if op == "family_datetime":
+        from pm_event_datetime import datetime_validator
+        root = Path(__file__).resolve().parents[1]
+        schema = json.loads((root / "Plans/event_payloads/file_manager/file_created.schema.json").read_text())
+        datetime_validator(schema["properties"]["ts"]).validate(case["value"])
+        return case["value"]
+    if op == "full_value_commitment":
+        root = Path(__file__).resolve().parents[1]
+        event = json.loads((root / "Plans/event_append_receipt_full_value_fixtures.json").read_text())["base_original_event"]
+        event.update(case.get("changes", {}))
+        return m.full_value_commitment(_value(case["container"]) if "container" in case else event)
     if op == "physical":
         return m.storage_value_bytes(_value(case["value"]), profile=case.get("profile", m.EVENT_VALUE)).hex()
     if op == "decode":
@@ -257,7 +285,7 @@ def run_corpus(path):
         elif "output" in c:
             for error in success_errors(result):
                 failures.append({"id": c["id"], "postcondition": error})
-        if "error" in c and not c.get("target_predicate"):
+        if not c.get("target_predicate"):
             failures.append({"id": c["id"], "missing_target_predicate": True})
     # Real unchanged owner vectors, not self-generated expected bytes.
     root = Path(__file__).resolve().parents[1]
@@ -319,6 +347,7 @@ def run_corpus(path):
             "case_passes": len(corpus["cases"]) - sum("id" in f for f in failures),
             "positives": sum("output" in c for c in corpus["cases"]),
             "negatives": sum("error" in c for c in corpus["cases"]),
+            "labelled_cases": sum(bool(c.get("target_predicate")) for c in corpus["cases"]),
             "labelled_negatives": sum("error" in c and bool(c.get("target_predicate")) for c in corpus["cases"]),
             "outcomes": outcomes,
             "guard_isolation": {"status": "SWEEP_PENDING", "tool": "scripts/pm_guard_isolation.py",

@@ -6,14 +6,16 @@ from SP-1101 authenticated frozen resources, never from a request parameter.
 from __future__ import annotations
 
 import calendar
+from copy import deepcopy
 import re
 
 from pm_event_numbers import Refusal, _refuse
 
 EVENT_RECORD = "event_record"
+STORAGE_UTC_Z = "storage_utc_z"
 COORDINATION_UTC_Z = "coordination_utc_z"
 LEGACY_NORMALIZATION_OUTPUT = "legacy_normalization_output"
-PROFILES = (EVENT_RECORD, COORDINATION_UTC_Z, LEGACY_NORMALIZATION_OUTPUT)
+PROFILES = (EVENT_RECORD, STORAGE_UTC_Z, COORDINATION_UTC_Z, LEGACY_NORMALIZATION_OUTPUT)
 _DATE_TIME = re.compile(
     r"([0-9]{4})-([0-9]{2})-([0-9]{2})[Tt]"
     r"([0-9]{2}):([0-9]{2}):([0-9]{2})(?:\.([0-9]+))?"
@@ -83,7 +85,7 @@ def date_time(value, *, profile=EVENT_RECORD):
         preceding = _day_number(year, month, day) * 86400 + hour * 3600 + minute * 60 + 59 - offset
         if preceding not in _LEAP_PRECEDING_SECONDS:
             _refuse("date_time_leap_second")
-    if profile in (COORDINATION_UTC_Z, LEGACY_NORMALIZATION_OUTPUT) and zone != "Z":
+    if profile in (STORAGE_UTC_Z, COORDINATION_UTC_Z, LEGACY_NORMALIZATION_OUTPUT) and zone != "Z":
         _refuse("date_time_utc_z")
     if profile == LEGACY_NORMALIZATION_OUTPUT:
         if fraction is None or len(fraction) != 9:
@@ -106,7 +108,25 @@ def format_checker(*, profile=EVENT_RECORD):
     return checker
 
 
+def _eventrecord_storage_profiles(schema):
+    """Compose CV-253 on the pinned envelope without rewriting its resource.
+
+    The original resource's complete hash is used by existing registry joins.
+    Keep its predicates and add only the two Storage field zone constraints.
+    Other schema resources and standalone source/family fields stay unchanged.
+    """
+    if type(schema) is not dict or schema.get("$id") != "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json":
+        return schema
+    bound = deepcopy(schema)
+    for field in ("observed_at_utc", "persisted_at_utc"):
+        bound["properties"][field] = {"allOf": [
+            bound["properties"][field], {"pattern": r"Z(?![\s\S])"},
+        ]}
+    return bound
+
+
 def datetime_validator(schema, *, profile=EVENT_RECORD, **kwargs):
-    """Draft202012Validator with the installed date-time check actually passed."""
+    """Pass the installed predicate and compose the envelope's CV-253 fields."""
     from jsonschema import Draft202012Validator
-    return Draft202012Validator(schema, format_checker=format_checker(profile=profile), **kwargs)
+    return Draft202012Validator(_eventrecord_storage_profiles(schema),
+                               format_checker=format_checker(profile=profile), **kwargs)

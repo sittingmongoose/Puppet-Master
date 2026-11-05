@@ -1152,20 +1152,22 @@ unit_type: interface_contract
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: |-
-  This newly authored technical owner unit binds the existing EventRecord envelope date_time_string format: date-time to an enforced RFC 3339 section 5.6 date-time predicate, with section 5.7 calendar and leap-second restrictions. It is owned by EventRecord/CV-317, independently of CV-1100's number-input grammar. Validate the entire string: four-digit Gregorian year, real month/day, T or t separator, hour 00..23, minute 00..59, second 00..59 or a legitimate second 60, optional fraction with one or more decimal digits and no general digit ceiling, then Z/z or a signed hh:mm offset with hour 00..23 and minute 00..59. Missing zone, space separator, trailing LF, invalid calendar/range/offset and an illegitimate leap second refuse. Lowercase t/z and nonzero offsets remain owner-valid in the envelope profile.
+  This newly authored technical owner unit binds the existing EventRecord envelope date_time_string format: date-time to an enforced RFC 3339 section 5.6 date-time predicate, with section 5.7 calendar and leap-second restrictions. It is owned by EventRecord/CV-317, independently of CV-1100's number-input grammar. Validate the entire string: four-digit Gregorian year, real month/day, T or t separator, hour 00..23, minute 00..59, second 00..59 or a legitimate second 60, optional fraction with one or more decimal digits and no general digit ceiling, then Z/z or a signed hh:mm offset with hour 00..23 and minute 00..59. Missing zone, space separator, trailing LF, invalid calendar/range/offset and an illegitimate leap second refuse. Lowercase t/z and nonzero offsets remain owner-valid for occurred_at_utc and broad family ts fields. CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse. The enforced EventRecord validator composes CV-253 constraints on only these two fields, combining the original schema and enforced date-time predicate with the terminal-Z restriction. Composition preserves the pinned envelope schema bytes and every existing schema predicate; it does not restamp a registry resource hash. This profile retains arbitrary fractional precision and legitimate UTC leap seconds; it adds no universal nine-digit input requirement.
   Second 60 is admitted only at a real announced leap second after mathematically applying the complete signed offset to the represented instant; a local month-end check is insufficient. Frozen validator resources include their authoritative leap-second data edition. The reference predicate pins the IERS Bulletin C72 insertion history through 2016-12-31; later announced insertions require the applicable resource/edition update rather than guessing from a clock or treating every June/December boundary as a leap second. Four-digit year 0000 and Gregorian century rules are handled without a narrower host datetime range.
   Preserve every original timestamp string, case, zone spelling and all fractional digits in identity/hash preimages. Validation never rewrites timestamps, rounds a fraction, converts to floating epoch seconds or truncates to microseconds. Exact instant comparisons remain with their existing owners and compare offsets mathematically and complete fractional values.
   Stricter local profiles remain selectable only where their existing field owners require them. The coordination record timestamp profile requires trailing uppercase Z; do not impose that restriction on every envelope timestamp. Legacy normalization's exactly nine fractional digits and trailing uppercase Z are its output form, not the current envelope input grammar; excess precision is never rounded merely to manufacture that output. No existing local profile, hash recipe, schema range or field is replaced here.
   Install and pass the actual date-time predicate to validation. The shared reference helper supplies an explicitly registered jsonschema format checker and a validator constructor that passes it; merely constructing FormatChecker(), or relying on a format annotation, is insufficient. Negatives must demonstrate that the installed predicate runs through the validator. Every lane adopts this check at its timestamp boundaries using the relevant existing owner profile, not a new local regex.
-  SP-1101 selects the authentic frozen original schema and date-time profile/resources before retained validation. Valid lowercase, offset and arbitrarily precise old timestamps remain readable with exact original bytes/results under that profile; forged/wrong-profile selections and owner-invalid originals refuse. Accidental past acceptance by a validator that skipped format is not an owner-valid legacy grammar. This binds existing envelope behavior under DL-045; it creates no family admission, new encoding, product feature or native custody proof.
+  SP-1101 selects the authentic frozen original schema and date-time profile/resources before retained validation. Valid lowercase, offset and arbitrarily precise old source/family timestamps remain readable with exact original bytes/results under that profile; retained Storage-assigned timestamps still use CV-253's uppercase-Z profile, and skipped past format enforcement never authorizes offset or lowercase-z Storage history; forged/wrong-profile selections and owner-invalid originals refuse. Accidental past acceptance by a validator that skipped format is not an owner-valid legacy grammar. This binds existing envelope behavior under DL-045; it creates no family admission, new encoding, product feature or native custody proof.
 gui_related: false
 gui_classification_reason: Defines envelope timestamp validation and original-resource custody, not visual presentation.
 depends_on:
 - CV-317
+- CV-253
 - SP-1101
 unblocks: []
 acceptance_criteria:
-- Enforced validator accepts valid lowercase, offsets, real offset-adjusted leap seconds and long fractions without rewriting strings.
+- Enforced source/family validator accepts valid lowercase, offsets, real offset-adjusted leap seconds and long fractions without rewriting strings.
+- Storage observed_at_utc and persisted_at_utc accept uppercase-Z UTC and refuse offsets including signed zero offsets and lowercase z under CV-253.
 - Missing zone, space, LF, invalid day/hour/offset and false leap seconds refuse through the registered format predicate.
 - Coordination Z-only and legacy normalization output checks are selected only for their existing owner contexts.
 - Authentic retained profiles preserve exact original timestamp spelling; forged profile selections and invalid originals refuse.
@@ -1187,6 +1189,7 @@ node_compile_hint:
   runtime_enabled: false
 source_lineage:
 - Plans/Contracts_V0.md#CV-317
+- Plans/Contracts_V0.md#CV-253
 - Plans/event_record.schema.json#/$defs/date_time_string
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/NUMRULE-sol/REVIEW.md
 - https://www.rfc-editor.org/rfc/rfc3339.html#section-5.6
@@ -1199,9 +1202,10 @@ negative_constraints:
 - No caller-selected historical profile, skipped format enforcement, new family admission or native proof.
 owner_hints:
 - Plans/Contracts_V0.md#CV-317
+- Plans/Contracts_V0.md#CV-253
 ```
 
-ContractRef: ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-1100, ContractName:Plans/storage-plan.md#SP-1101, ContractName:Plans/event_record.schema.json
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-253, ContractName:Plans/Contracts_V0.md#CV-1100, ContractName:Plans/storage-plan.md#SP-1101, ContractName:Plans/event_record.schema.json
 
 ## Provider/Model Capability Snapshot Reference Envelope
 
