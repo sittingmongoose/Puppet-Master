@@ -73,8 +73,19 @@ def cases(m, rows, fixtures):
             m.checkpoint_rebind(full,issued,b)
         for field,value in bundle['selected_source']['source_selection'].items():
             if type(value) is int:
-                for form,changed in [('float',float(value))]+([('boolean',bool(value))] if value in (0,1) else []):
+                forms=([('float',float(value))] if field=='selected_segment_generation' else [])
+                forms+=([('boolean',bool(value))] if value in (0,1) else [])
+                for form,changed in forms:
                     bad=copy.deepcopy(bundle);bad['selected_source']['source_selection'][field]=changed
+                    # Rebind publication-locator observations of this source
+                    # counter. SP-278's codec independently refuses floats in
+                    # those locators, so only encodable bool 0/1 isolates here.
+                    if field in ('manifest_generation','recovery_epoch'):
+                        node=bad['checkpoint']['generations'][bad['checkpoint']['current_generation_id']]
+                        dataset=next(iter(bad['datasets'].values()))
+                        for value_row in dataset.values():value_row['publication_locator'][field]=changed
+                        node['frontier']['index_row_set_sha256']=m.binding_digest(dict(domain='pm.event_index.row_set.v1',entries=[dict(key=k,value=v) for k,v in sorted(dataset.items())]))
+                        bad['read_token']['frontier_sha256']=m.binding_digest(node['frontier'])
                     add('C04',family,'primary_selection_'+field+'_'+form,
                         lambda n,r=row,e=full,o=issued,b=bundle:n.checkpoint_matches(r,e,o,b),
                         lambda n,r=row,e=full,o=issued,b=bad:n.checkpoint_matches(r,e,o,b))

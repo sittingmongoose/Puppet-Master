@@ -279,6 +279,9 @@ def main():
         code=report=None
         if args.full_checker:
             stream=io.StringIO()
+            # Cache only clean inputs; every good/bad invocation still calls
+            # this mutant's actual production boundary functions.
+            m.guard_cases=lambda boundary,excluded=(): [c for c in suite if c[1] not in excluded]
             with contextlib.redirect_stdout(stream):code=int(m.main())
             report=json.loads(stream.getvalue())
         passed=bool(own) and not masked and not cross and not baseline_bad
@@ -292,6 +295,7 @@ def main():
     report=dict(status='pass' if rows and all(r['pass_'] for r in rows) else 'fail',
         checker_sha256=hashlib.sha256(source.encode()).hexdigest(),guard_count=len(GUARDS),
         witness_sha256=hashlib.sha256((ROOT/'scripts/pm_runtime_artifact_guard_cases.py').read_bytes()).hexdigest(),
+        round6_witness_sha256=hashlib.sha256((ROOT/'scripts/pm_runtime_artifact_round6_cases.py').read_bytes()).hexdigest(),
         driver_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         negative_pairs=len(outcomes),baseline_failures=baseline_bad,rows=rows,native_execution='NOT_RUN',admission='NONE')
     body=json.dumps(report,indent=2)+'\n'

@@ -23,6 +23,7 @@ CHECKER = ROOT / 'scripts/pm-runtime-artifact-event-drafts.py'
 SPEC = importlib.util.spec_from_file_location('dr_guard_isolation', ROOT / 'scripts/pm-runtime-artifact-guard-isolation.py')
 ISOLATION = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(ISOLATION)
+CANONICAL_CASES = None
 
 
 def module(source=None):
@@ -30,6 +31,7 @@ def module(source=None):
 
 
 def run(name, standing, configure=None, source=None, selected=None):
+    global CANONICAL_CASES
     source = source or CHECKER.read_text()
     if configure is None and source == CHECKER.read_text():
         raise ValueError(name + ': mutation did not change checker source')
@@ -45,7 +47,9 @@ def run(name, standing, configure=None, source=None, selected=None):
     # they cannot turn the witness constructor into a second broken input.
     canonical = module()
     causal_cases = m.guard_cases
-    m.guard_cases = lambda boundary, excluded=(): causal_cases(canonical, excluded=excluded)
+    if CANONICAL_CASES is None:
+        CANONICAL_CASES = causal_cases(canonical)
+    m.guard_cases = lambda boundary, excluded=(): [c for c in CANONICAL_CASES if c[1] not in excluded]
     output = io.StringIO()
     started = time.monotonic()
     with contextlib.redirect_stdout(output):
