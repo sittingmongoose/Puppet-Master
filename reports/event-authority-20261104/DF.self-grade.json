@@ -1,11 +1,11 @@
 {
   "schema_id": "pm.event_authority.depth_assessment.v1",
-  "assessment_id": "event-authority-20261104-DF-FIX4",
+  "assessment_id": "event-authority-20261104-DF-FIX5",
   "assessment_kind": "self_grade",
-  "assessed_tree": "67aeb8c7228003c40324d5b30a0fdf875a5665ec",
-  "assessed_tree_note": "Extra authorized standing-check round 4: historical issued authority and exhaustive schema closure, before report-only commit. Native NOT_RUN, membership ABSENT, seven narrowed retention questions unchanged.",
-  "prior_assessed_tree": "d82ede0801cf2f66a5bc869e4664838729ea1241",
-  "prior_report_commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+  "assessed_tree": "4309f746955e76e73f43a95e1b51defa6a793325",
+  "assessed_tree_note": "Round-5 source and literal guard-removal result bundle before the report-only commit. R4-B1 is repaired, but C12 retains the cycle-4 independent PARTIAL because of the newly demonstrated out-of-scope numeric-epoch counterexample FIX5-N2; every other cell is retained. Native NOT_RUN, membership ABSENT, seven exact retention questions pending.",
+  "prior_assessed_tree": "79baed4be8b1de3770846647eb27e4f438a72081",
+  "prior_report_commit": "79baed4be8b1de3770846647eb27e4f438a72081",
   "rubric": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
   "native_execution": "NOT_RUN",
   "rows": [
@@ -29,11 +29,11 @@
           "quote_check": "exact"
         }
       ],
-      "outcome": "register (prepared; individual admission absent; event-history retention pending)",
-      "pass_count": 10,
+      "outcome": "prepare (check-11 repair complete; numeric epoch counterexample FIX5-N2 remains outside authorized scope; admission absent)",
+      "pass_count": 9,
       "before_pass_count": 9,
       "normative_depth_complete": false,
-      "technical_depth_complete": true,
+      "technical_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
         "CV-550",
@@ -64,12 +64,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "owner_doc": {
           "status": "PASS",
@@ -98,12 +98,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "producer": {
           "status": "PASS",
@@ -142,12 +142,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -176,12 +176,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "scope_identity": {
           "status": "PASS",
@@ -220,12 +220,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -294,12 +294,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "retention": {
           "status": "PARTIAL",
@@ -328,12 +328,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -362,12 +362,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "transitions": {
           "status": "PASS",
@@ -396,12 +396,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -420,12 +420,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -474,17 +474,17 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "ATS-275: own inline/reference historical reads survive writer changes/control disposal; withdrawn/forged/lost authority and unavailable bodies refuse. Both full CLIs exhaustively resolve pinned schemas and reject rehashed dangling references, including unused/nested definitions. All ten standing checks and earlier B1..B8 mutations pass. Native NOT_RUN.",
+          "finding": "Own-family single-defect inputs preserve unrelated typed values and recompute source/body/digest/receipt/issued/boundary copies. The literal 830-guard / 3119-negative matrix has zero uncovered guards, unexpected flips or exceptions; every flip/stay set is explicit, including overlapping upper layers. Schema ingress, owner predicates and complete-step/materialization results are explicitly separated. Actual CLI thread/epoch/full-value/scope removals expose accepted negatives. Earlier B1..B8 and standing checks 1..10 hold. R4-B1 is fixed, but C12 stays PARTIAL: independent FIX5-N2 accepts application writer_epoch 1 and 1.0 with distinct source commitments; adding a numeric guard is outside the explicit check-11 scope. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -499,11 +499,11 @@
             {
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-550",
-              "line_start": 16828,
-              "line_end": 16828,
+              "line_start": 13714,
+              "line_end": 13714,
               "quote": "\"id\": \"filesafe_command_denied.fix1.1.missing_custody_after_recovery\"",
               "excerpt_sha256": "fe70aa7ba7849dd6c6894a53252133887ad5d2441c3f711f3ac04a676f1de13e",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -530,10 +530,10 @@
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-550",
               "quote": "\"id\": \"filesafe_command_denied.fix2.replay_only_writer.project\"",
-              "line_start": 7475,
-              "line_end": 7475,
+              "line_start": 10216,
+              "line_end": 10216,
               "excerpt_sha256": "bde7172df303c29c7ec0d1c9770e1f6c9ff82c99d70814237a183f23f04640e0",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -570,10 +570,10 @@
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-550",
               "quote": "\"id\": \"filesafe_command_denied.fix3.inline_utf8_16385.project\"",
-              "line_start": 8158,
-              "line_end": 8158,
+              "line_start": 10610,
+              "line_end": 10610,
               "excerpt_sha256": "c2d99634d9472285c82f6b7e25079c47a291038858f490c826d466957b25775c",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -583,7 +583,7 @@
               "line_start": 5778,
               "line_end": 5778,
               "excerpt_sha256": "e67d1243b7ceee7d638e44ce4b900ba6f0e4fb659d20458555b85d667724b0e4",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -610,20 +610,20 @@
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-550",
               "quote": "\"id\": \"filesafe_command_denied.fix4.history.project.inline.epoch_rollover\"",
-              "line_start": 20219,
-              "line_end": 20219,
+              "line_start": 17105,
+              "line_end": 17105,
               "excerpt_sha256": "e2efadb97a56c990ce304d69c371dd58894edc77bb32763a6e4c5738fd14512e",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-550",
               "quote": "\"id\": \"filesafe_command_denied.fix4.history.application.ref.disposed_controls\"",
-              "line_start": 22095,
-              "line_end": 22095,
+              "line_start": 18981,
+              "line_end": 18981,
               "excerpt_sha256": "6833be5bbafe624095175640d88b7a1de3e8aac5904e006409dadb0acb36dae8",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -645,36 +645,75 @@
               "excerpt_sha256": "d5ece7815a275b1f0afe12843580458e2f86cc71abf08ab632ba1ef07a3beef4",
               "file_sha256": "7e641ea2058f970b61af47d2717d87a4d532fb1891a20f86e103038f378ffb29",
               "quote_check": "exact"
+            },
+            {
+              "path": "scripts/pm_filesafe_guard_isolation.py",
+              "unit": "ATS-275",
+              "quote": "class Suite:",
+              "line_start": 224,
+              "line_end": 224,
+              "excerpt_sha256": "9ab9ca826cf5b5850c08794b5dd18fe5fa2ebe26b1092b58a081e023240324aa",
+              "file_sha256": "5ebbbcc633b845d9d0a95a516617e0119f340787e109973b0ff35d55fca34d88",
+              "quote_check": "exact"
+            },
+            {
+              "path": "reports/event-authority-20261104/DF.guard-removal.json",
+              "unit": "ATS-275",
+              "quote": "\"literal_mutant_evaluations\":",
+              "line_start": 8,
+              "line_end": 8,
+              "excerpt_sha256": "4ecd8185ab2fd646e5a9db399302b86b68a5309dce1030585e459e51fab0fe16",
+              "file_sha256": "2e73ee343b9ecc68d59a347a39dfad55415820dab3498d0f685d0d87af7220fc",
+              "quote_check": "exact"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PARTIAL"
           },
-          "change": "upgraded",
-          "change_reason": "Round-4 historical reader and schema closure mutations pass both complete checker entry points; all earlier B1..B8 mutations rerun."
+          "change": "carried",
+          "change_reason": "R4-B1 guard isolation is repaired; new confirmed FIX5-N2 outside the authorized check-11 scope prevents upgrading C12.",
+          "guard_isolation": {
+            "command": "python3 scripts/pm_filesafe_guard_isolation.py --output <evidence-path>",
+            "status": "PASS",
+            "literal_matrix": true,
+            "guards": 830,
+            "negatives": 3119,
+            "uncovered": 0,
+            "unexpected_flips": 0,
+            "exceptions": 0,
+            "proof_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix5/guard-removal-matrix.json",
+            "proof_sha256": "c0d75d433620ecac9ae4cf6e341cf80d3fc2aec694e71cf20b87d0d6e6221fa7"
+          },
+          "out_of_scope_finding": {
+            "id": "FIX5-N2",
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix5/numeric-epoch-probes.json",
+            "sha256": "c4c296207762e6ab556ea1b7f47f1dcce668bb5117cd564cc865a839c5fbc457"
+          }
         }
       },
       "remaining_gaps": [
         "RETENTION: Does the retained command-denial EventRecord constitute audit authority (RP-AUTHORITY-INDEFINITE), or non-authority security diagnostic history (RP-OPERATIONAL-2555D)? PENDING_RETENTION_DECISION remains in SP-550.",
-        "ADMISSION: filesafe.command_denied membership_version remains ABSENT; separate individual batch admission is required."
+        "ADMISSION: filesafe.command_denied membership_version remains ABSENT; separate individual batch admission is required.",
+        "FIX5-N2: Application writer_epoch 1.0 passes as 1 with a distinct accepted_source_sha256; numeric-ingress follow-up required."
       ],
       "static_checks_seen": [
         "python3 scripts/pm_filesafe_event_contracts.py",
         "python3 scripts/pm_filesafe_event_authority.py",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
-        "python3 scripts/pm-plan-index.py validate"
+        "python3 scripts/pm-plan-index.py validate",
+        "python3 scripts/pm_filesafe_guard_isolation.py --output <evidence-path>"
       ],
       "notes": "Prepared normative depth only. Native execution/authenticity, durable storage, filesystem effects, payload addressing and CAS remain NOT_RUN; no admission or governance certification.",
-      "grading_batch": "DF_FIX4_self_grade",
-      "assessed_head": "67aeb8c7228003c40324d5b30a0fdf875a5665ec",
+      "grading_batch": "DF_FIX5_self_grade",
+      "assessed_head": "4309f746955e76e73f43a95e1b51defa6a793325",
       "counts": {
-        "PASS": 10,
-        "PARTIAL": 1,
+        "PASS": 9,
+        "PARTIAL": 2,
         "ABSENT": 1
       },
-      "prepared_verdict": "PREPARED_WITHOUT_ADMISSION_RETENTION_PENDING"
+      "prepared_verdict": "NOT_READY_FIX5_N2"
     },
     {
       "event_type": "filesafe.destructive_override_denied",
@@ -696,11 +735,11 @@
           "quote_check": "exact"
         }
       ],
-      "outcome": "register (prepared; individual admission absent; event-history retention pending)",
-      "pass_count": 10,
+      "outcome": "prepare (check-11 repair complete; numeric epoch counterexample FIX5-N2 remains outside authorized scope; admission absent)",
+      "pass_count": 9,
       "before_pass_count": 9,
       "normative_depth_complete": false,
-      "technical_depth_complete": true,
+      "technical_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
         "CV-551",
@@ -731,12 +770,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "owner_doc": {
           "status": "PASS",
@@ -765,12 +804,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "producer": {
           "status": "PASS",
@@ -809,12 +848,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -843,12 +882,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "scope_identity": {
           "status": "PASS",
@@ -887,12 +926,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -961,12 +1000,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "retention": {
           "status": "PARTIAL",
@@ -995,12 +1034,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1029,12 +1068,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "transitions": {
           "status": "PASS",
@@ -1063,12 +1102,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1087,12 +1126,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1141,17 +1180,17 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "ATS-275: own inline/reference historical reads survive writer changes/control disposal; withdrawn/forged/lost authority and unavailable bodies refuse. Both full CLIs exhaustively resolve pinned schemas and reject rehashed dangling references, including unused/nested definitions. All ten standing checks and earlier B1..B8 mutations pass. Native NOT_RUN.",
+          "finding": "Own-family single-defect inputs preserve unrelated typed values and recompute source/body/digest/receipt/issued/boundary copies. The literal 830-guard / 3119-negative matrix has zero uncovered guards, unexpected flips or exceptions; every flip/stay set is explicit, including overlapping upper layers. Schema ingress, owner predicates and complete-step/materialization results are explicitly separated. Actual CLI thread/epoch/full-value/scope removals expose accepted negatives. Earlier B1..B8 and standing checks 1..10 hold. R4-B1 is fixed, but C12 stays PARTIAL: independent FIX5-N2 accepts application writer_epoch 1 and 1.0 with distinct source commitments; adding a numeric guard is outside the explicit check-11 scope. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -1166,11 +1205,11 @@
             {
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-551",
-              "line_start": 39380,
-              "line_end": 39380,
+              "line_start": 33232,
+              "line_end": 33232,
               "quote": "\"id\": \"filesafe_destructive_override_denied.fix1.1.missing_custody_after_recovery\"",
               "excerpt_sha256": "0deb1f72bd2f17a196e5708d1fac227a0547d8cd456fc38d86e52f71f3c66de3",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -1197,10 +1236,10 @@
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-551",
               "quote": "\"id\": \"filesafe_destructive_override_denied.fix2.replay_only_writer.project\"",
-              "line_start": 30130,
-              "line_end": 30130,
+              "line_start": 29734,
+              "line_end": 29734,
               "excerpt_sha256": "0e22ca293557b84b6ebb128523052aef8b65920e1923d62f590a55cd01f0def5",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -1237,20 +1276,20 @@
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-551",
               "quote": "\"id\": \"filesafe_destructive_override_denied.fix3.inline_utf8_16385.project\"",
-              "line_start": 30798,
-              "line_end": 30798,
+              "line_start": 30128,
+              "line_end": 30128,
               "excerpt_sha256": "418bc564651e793fb3c6ff178311e642ae25210744f01d6f58ab99b126b2d90f",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-551",
               "quote": "\"id\": \"filesafe_destructive_override_denied.fix3.sp337_reference.application\"",
-              "line_start": 28422,
-              "line_end": 28422,
+              "line_start": 25308,
+              "line_end": 25308,
               "excerpt_sha256": "764ff2348cc285969a5a2bbde1ec57ec6d749d37e046cb1649052186dd5ce94b",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -1277,20 +1316,20 @@
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-551",
               "quote": "\"id\": \"filesafe_destructive_override_denied.fix4.history.project.inline.epoch_rollover\"",
-              "line_start": 42733,
-              "line_end": 42733,
+              "line_start": 36585,
+              "line_end": 36585,
               "excerpt_sha256": "a116d01054e67153c51d32828806a69e5272106fbf2ad2d9f3839336433d1a65",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-551",
               "quote": "\"id\": \"filesafe_destructive_override_denied.fix4.history.application.ref.disposed_controls\"",
-              "line_start": 44599,
-              "line_end": 44599,
+              "line_start": 38451,
+              "line_end": 38451,
               "excerpt_sha256": "3a3cbcea0d72d17e4761f53abc539a6f7eb79ad9b709ca19231cc0c470748970",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -1312,36 +1351,75 @@
               "excerpt_sha256": "d5ece7815a275b1f0afe12843580458e2f86cc71abf08ab632ba1ef07a3beef4",
               "file_sha256": "7e641ea2058f970b61af47d2717d87a4d532fb1891a20f86e103038f378ffb29",
               "quote_check": "exact"
+            },
+            {
+              "path": "scripts/pm_filesafe_guard_isolation.py",
+              "unit": "ATS-275",
+              "quote": "class Suite:",
+              "line_start": 224,
+              "line_end": 224,
+              "excerpt_sha256": "9ab9ca826cf5b5850c08794b5dd18fe5fa2ebe26b1092b58a081e023240324aa",
+              "file_sha256": "5ebbbcc633b845d9d0a95a516617e0119f340787e109973b0ff35d55fca34d88",
+              "quote_check": "exact"
+            },
+            {
+              "path": "reports/event-authority-20261104/DF.guard-removal.json",
+              "unit": "ATS-275",
+              "quote": "\"literal_mutant_evaluations\":",
+              "line_start": 8,
+              "line_end": 8,
+              "excerpt_sha256": "4ecd8185ab2fd646e5a9db399302b86b68a5309dce1030585e459e51fab0fe16",
+              "file_sha256": "2e73ee343b9ecc68d59a347a39dfad55415820dab3498d0f685d0d87af7220fc",
+              "quote_check": "exact"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PARTIAL"
           },
-          "change": "upgraded",
-          "change_reason": "Round-4 historical reader and schema closure mutations pass both complete checker entry points; all earlier B1..B8 mutations rerun."
+          "change": "carried",
+          "change_reason": "R4-B1 guard isolation is repaired; new confirmed FIX5-N2 outside the authorized check-11 scope prevents upgrading C12.",
+          "guard_isolation": {
+            "command": "python3 scripts/pm_filesafe_guard_isolation.py --output <evidence-path>",
+            "status": "PASS",
+            "literal_matrix": true,
+            "guards": 830,
+            "negatives": 3119,
+            "uncovered": 0,
+            "unexpected_flips": 0,
+            "exceptions": 0,
+            "proof_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix5/guard-removal-matrix.json",
+            "proof_sha256": "c0d75d433620ecac9ae4cf6e341cf80d3fc2aec694e71cf20b87d0d6e6221fa7"
+          },
+          "out_of_scope_finding": {
+            "id": "FIX5-N2",
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix5/numeric-epoch-probes.json",
+            "sha256": "c4c296207762e6ab556ea1b7f47f1dcce668bb5117cd564cc865a839c5fbc457"
+          }
         }
       },
       "remaining_gaps": [
         "RETENTION: Does the retained destructive-override refusal EventRecord constitute an authority decision receipt (RP-AUTHORITY-INDEFINITE), or non-authority security diagnostic history (RP-OPERATIONAL-2555D)? PENDING_RETENTION_DECISION remains in SP-551.",
-        "ADMISSION: filesafe.destructive_override_denied membership_version remains ABSENT; separate individual batch admission is required."
+        "ADMISSION: filesafe.destructive_override_denied membership_version remains ABSENT; separate individual batch admission is required.",
+        "FIX5-N2: Application writer_epoch 1.0 passes as 1 with a distinct accepted_source_sha256; numeric-ingress follow-up required."
       ],
       "static_checks_seen": [
         "python3 scripts/pm_filesafe_event_contracts.py",
         "python3 scripts/pm_filesafe_event_authority.py",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
-        "python3 scripts/pm-plan-index.py validate"
+        "python3 scripts/pm-plan-index.py validate",
+        "python3 scripts/pm_filesafe_guard_isolation.py --output <evidence-path>"
       ],
       "notes": "Prepared normative depth only. Native execution/authenticity, durable storage, filesystem effects, payload addressing and CAS remain NOT_RUN; no admission or governance certification.",
-      "grading_batch": "DF_FIX4_self_grade",
-      "assessed_head": "67aeb8c7228003c40324d5b30a0fdf875a5665ec",
+      "grading_batch": "DF_FIX5_self_grade",
+      "assessed_head": "4309f746955e76e73f43a95e1b51defa6a793325",
       "counts": {
-        "PASS": 10,
-        "PARTIAL": 1,
+        "PASS": 9,
+        "PARTIAL": 2,
         "ABSENT": 1
       },
-      "prepared_verdict": "PREPARED_WITHOUT_ADMISSION_RETENTION_PENDING"
+      "prepared_verdict": "NOT_READY_FIX5_N2"
     },
     {
       "event_type": "filesafe.destructive_override_granted",
@@ -1363,11 +1441,11 @@
           "quote_check": "exact"
         }
       ],
-      "outcome": "register (prepared; individual admission absent)",
-      "pass_count": 11,
+      "outcome": "prepare (check-11 repair complete; numeric epoch counterexample FIX5-N2 remains outside authorized scope; admission absent)",
+      "pass_count": 10,
       "before_pass_count": 10,
       "normative_depth_complete": false,
-      "technical_depth_complete": true,
+      "technical_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
         "CV-552",
@@ -1398,12 +1476,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1432,12 +1510,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "producer": {
           "status": "PASS",
@@ -1476,12 +1554,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1510,12 +1588,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1554,12 +1632,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1628,12 +1706,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "retention": {
           "status": "PASS",
@@ -1662,12 +1740,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1696,12 +1774,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "transitions": {
           "status": "PASS",
@@ -1730,12 +1808,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1754,12 +1832,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1808,17 +1886,17 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "ATS-276: own inline/reference historical reads survive writer changes/control disposal; withdrawn/forged/lost authority and unavailable bodies refuse. Both full CLIs exhaustively resolve pinned schemas and reject rehashed dangling references, including unused/nested definitions. All ten standing checks and earlier B1..B8 mutations pass. Native NOT_RUN.",
+          "finding": "Own-family single-defect inputs preserve unrelated typed values and recompute source/body/digest/receipt/issued/boundary copies. The literal 830-guard / 3119-negative matrix has zero uncovered guards, unexpected flips or exceptions; every flip/stay set is explicit, including overlapping upper layers. Schema ingress, owner predicates and complete-step/materialization results are explicitly separated. Actual CLI thread/epoch/full-value/scope removals expose accepted negatives. Earlier B1..B8 and standing checks 1..10 hold. R4-B1 is fixed, but C12 stays PARTIAL: independent FIX5-N2 accepts application writer_epoch 1 and 1.0 with distinct source commitments; adding a numeric guard is outside the explicit check-11 scope. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -1833,11 +1911,11 @@
             {
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-552",
-              "line_start": 64297,
-              "line_end": 64297,
+              "line_start": 55255,
+              "line_end": 55255,
               "quote": "\"id\": \"filesafe_destructive_override_granted.fix1.1.missing_custody_after_recovery\"",
               "excerpt_sha256": "694b0e3a17495ad4376e60e18f2375174812e79e4664673f513e320d1055e270",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -1864,10 +1942,10 @@
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-552",
               "quote": "\"id\": \"filesafe_destructive_override_granted.fix2.replay_only_writer.project\"",
-              "line_start": 54256,
-              "line_end": 54256,
+              "line_start": 51611,
+              "line_end": 51611,
               "excerpt_sha256": "f3962a3bb8477e3010680ba7ea1379d2dbee31546e405ea948f14ebae4a11392",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -1904,20 +1982,20 @@
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-552",
               "quote": "\"id\": \"filesafe_destructive_override_granted.fix3.inline_utf8_16385.project\"",
-              "line_start": 54975,
-              "line_end": 54975,
+              "line_start": 52015,
+              "line_end": 52015,
               "excerpt_sha256": "49d38214b93eafcfbe53f03b34ec55e6df99be855ac69bca7465dd72789e0897",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-552",
               "quote": "\"id\": \"filesafe_destructive_override_granted.fix3.sp337_reference.application\"",
-              "line_start": 52305,
-              "line_end": 52305,
+              "line_start": 46157,
+              "line_end": 46157,
               "excerpt_sha256": "d1d44050bad86b689cc7fc7a27342993a1fdf81a4c6db2c08132e6c8d40d5a9b",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -1944,20 +2022,20 @@
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-552",
               "quote": "\"id\": \"filesafe_destructive_override_granted.fix4.history.project.inline.epoch_rollover\"",
-              "line_start": 67894,
-              "line_end": 67894,
+              "line_start": 58852,
+              "line_end": 58852,
               "excerpt_sha256": "b8f4d494e23f8609eb3c8d8a23f41eaa06449f83236b17c63b65991dc7460701",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-552",
               "quote": "\"id\": \"filesafe_destructive_override_granted.fix4.history.application.ref.disposed_controls\"",
-              "line_start": 69789,
-              "line_end": 69789,
+              "line_start": 60747,
+              "line_end": 60747,
               "excerpt_sha256": "9185cdc35f4dd6681c10560f8b75553501333b2ed8238a081644f41ccb49bf45",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -1979,35 +2057,74 @@
               "excerpt_sha256": "d5ece7815a275b1f0afe12843580458e2f86cc71abf08ab632ba1ef07a3beef4",
               "file_sha256": "7e641ea2058f970b61af47d2717d87a4d532fb1891a20f86e103038f378ffb29",
               "quote_check": "exact"
+            },
+            {
+              "path": "scripts/pm_filesafe_guard_isolation.py",
+              "unit": "ATS-276",
+              "quote": "class Suite:",
+              "line_start": 224,
+              "line_end": 224,
+              "excerpt_sha256": "9ab9ca826cf5b5850c08794b5dd18fe5fa2ebe26b1092b58a081e023240324aa",
+              "file_sha256": "5ebbbcc633b845d9d0a95a516617e0119f340787e109973b0ff35d55fca34d88",
+              "quote_check": "exact"
+            },
+            {
+              "path": "reports/event-authority-20261104/DF.guard-removal.json",
+              "unit": "ATS-276",
+              "quote": "\"literal_mutant_evaluations\":",
+              "line_start": 8,
+              "line_end": 8,
+              "excerpt_sha256": "4ecd8185ab2fd646e5a9db399302b86b68a5309dce1030585e459e51fab0fe16",
+              "file_sha256": "2e73ee343b9ecc68d59a347a39dfad55415820dab3498d0f685d0d87af7220fc",
+              "quote_check": "exact"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PARTIAL"
           },
-          "change": "upgraded",
-          "change_reason": "Round-4 historical reader and schema closure mutations pass both complete checker entry points; all earlier B1..B8 mutations rerun."
+          "change": "carried",
+          "change_reason": "R4-B1 guard isolation is repaired; new confirmed FIX5-N2 outside the authorized check-11 scope prevents upgrading C12.",
+          "guard_isolation": {
+            "command": "python3 scripts/pm_filesafe_guard_isolation.py --output <evidence-path>",
+            "status": "PASS",
+            "literal_matrix": true,
+            "guards": 830,
+            "negatives": 3119,
+            "uncovered": 0,
+            "unexpected_flips": 0,
+            "exceptions": 0,
+            "proof_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix5/guard-removal-matrix.json",
+            "proof_sha256": "c0d75d433620ecac9ae4cf6e341cf80d3fc2aec694e71cf20b87d0d6e6221fa7"
+          },
+          "out_of_scope_finding": {
+            "id": "FIX5-N2",
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix5/numeric-epoch-probes.json",
+            "sha256": "c4c296207762e6ab556ea1b7f47f1dcce668bb5117cd564cc865a839c5fbc457"
+          }
         }
       },
       "remaining_gaps": [
-        "ADMISSION: filesafe.destructive_override_granted membership_version remains ABSENT; separate individual batch admission is required."
+        "ADMISSION: filesafe.destructive_override_granted membership_version remains ABSENT; separate individual batch admission is required.",
+        "FIX5-N2: Application writer_epoch 1.0 passes as 1 with a distinct accepted_source_sha256; numeric-ingress follow-up required."
       ],
       "static_checks_seen": [
         "python3 scripts/pm_filesafe_event_contracts.py",
         "python3 scripts/pm_filesafe_event_authority.py",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
-        "python3 scripts/pm-plan-index.py validate"
+        "python3 scripts/pm-plan-index.py validate",
+        "python3 scripts/pm_filesafe_guard_isolation.py --output <evidence-path>"
       ],
       "notes": "Prepared normative depth only. Native execution/authenticity, durable storage, filesystem effects, payload addressing and CAS remain NOT_RUN; no admission or governance certification.",
-      "grading_batch": "DF_FIX4_self_grade",
-      "assessed_head": "67aeb8c7228003c40324d5b30a0fdf875a5665ec",
+      "grading_batch": "DF_FIX5_self_grade",
+      "assessed_head": "4309f746955e76e73f43a95e1b51defa6a793325",
       "counts": {
-        "PASS": 11,
-        "PARTIAL": 0,
+        "PASS": 10,
+        "PARTIAL": 1,
         "ABSENT": 1
       },
-      "prepared_verdict": "PREPARED_WITHOUT_ADMISSION"
+      "prepared_verdict": "NOT_READY_FIX5_N2"
     },
     {
       "event_type": "filesafe.destructive_override_requested",
@@ -2029,11 +2146,11 @@
           "quote_check": "exact"
         }
       ],
-      "outcome": "register (prepared; individual admission absent; event-history retention pending)",
-      "pass_count": 10,
+      "outcome": "prepare (check-11 repair complete; numeric epoch counterexample FIX5-N2 remains outside authorized scope; admission absent)",
+      "pass_count": 9,
       "before_pass_count": 9,
       "normative_depth_complete": false,
-      "technical_depth_complete": true,
+      "technical_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
         "CV-553",
@@ -2064,12 +2181,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2098,12 +2215,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "producer": {
           "status": "PASS",
@@ -2142,12 +2259,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2176,12 +2293,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2220,12 +2337,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2294,12 +2411,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2328,12 +2445,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2362,12 +2479,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "transitions": {
           "status": "PASS",
@@ -2396,12 +2513,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2420,12 +2537,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2474,17 +2591,17 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "ATS-276: own inline/reference historical reads survive writer changes/control disposal; withdrawn/forged/lost authority and unavailable bodies refuse. Both full CLIs exhaustively resolve pinned schemas and reject rehashed dangling references, including unused/nested definitions. All ten standing checks and earlier B1..B8 mutations pass. Native NOT_RUN.",
+          "finding": "Own-family single-defect inputs preserve unrelated typed values and recompute source/body/digest/receipt/issued/boundary copies. The literal 830-guard / 3119-negative matrix has zero uncovered guards, unexpected flips or exceptions; every flip/stay set is explicit, including overlapping upper layers. Schema ingress, owner predicates and complete-step/materialization results are explicitly separated. Actual CLI thread/epoch/full-value/scope removals expose accepted negatives. Earlier B1..B8 and standing checks 1..10 hold. R4-B1 is fixed, but C12 stays PARTIAL: independent FIX5-N2 accepts application writer_epoch 1 and 1.0 with distinct source commitments; adding a numeric guard is outside the explicit check-11 scope. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -2499,11 +2616,11 @@
             {
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-553",
-              "line_start": 89268,
-              "line_end": 89268,
+              "line_start": 77123,
+              "line_end": 77123,
               "quote": "\"id\": \"filesafe_destructive_override_requested.fix1.1.missing_custody_after_recovery\"",
               "excerpt_sha256": "011b49fb3b8d27359ee3f0e4e554407d22a88a3a1e3ea9c543cc4c0a91e9691e",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -2530,10 +2647,10 @@
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-553",
               "quote": "\"id\": \"filesafe_destructive_override_requested.fix2.replay_only_writer.project\"",
-              "line_start": 79291,
-              "line_end": 79291,
+              "line_start": 73633,
+              "line_end": 73633,
               "excerpt_sha256": "6846f84740c4788a2aea2d7b6fc6ea6c84167d57844421268aeaa23c4c285e2f",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -2570,20 +2687,20 @@
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-553",
               "quote": "\"id\": \"filesafe_destructive_override_requested.fix3.inline_utf8_16385.project\"",
-              "line_start": 80002,
-              "line_end": 80002,
+              "line_start": 74017,
+              "line_end": 74017,
               "excerpt_sha256": "614138dbb3d1a79ef7cf8eaec45fd4de5041b2e4fc15453be7240201583bc180",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-553",
               "quote": "\"id\": \"filesafe_destructive_override_requested.fix3.sp337_reference.application\"",
-              "line_start": 77387,
-              "line_end": 77387,
+              "line_start": 68345,
+              "line_end": 68345,
               "excerpt_sha256": "cbbfdc6817289f44115a0c2dc9d86b6c319ab6245c3b557884b174f259c12bf9",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -2610,20 +2727,20 @@
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-553",
               "quote": "\"id\": \"filesafe_destructive_override_requested.fix4.history.project.inline.epoch_rollover\"",
-              "line_start": 92849,
-              "line_end": 92849,
+              "line_start": 80704,
+              "line_end": 80704,
               "excerpt_sha256": "9a99e8c6c0c6d6a492fa4c07f6429fcdb1753ebed68cbb9dc3b8d221df07e2d8",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-553",
               "quote": "\"id\": \"filesafe_destructive_override_requested.fix4.history.application.ref.disposed_controls\"",
-              "line_start": 94744,
-              "line_end": 94744,
+              "line_start": 82599,
+              "line_end": 82599,
               "excerpt_sha256": "2b3d80f584d416bcfa78a56003388d2f59bc0ca00589350eb2f513b2fb4c0fea",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -2645,36 +2762,75 @@
               "excerpt_sha256": "d5ece7815a275b1f0afe12843580458e2f86cc71abf08ab632ba1ef07a3beef4",
               "file_sha256": "7e641ea2058f970b61af47d2717d87a4d532fb1891a20f86e103038f378ffb29",
               "quote_check": "exact"
+            },
+            {
+              "path": "scripts/pm_filesafe_guard_isolation.py",
+              "unit": "ATS-276",
+              "quote": "class Suite:",
+              "line_start": 224,
+              "line_end": 224,
+              "excerpt_sha256": "9ab9ca826cf5b5850c08794b5dd18fe5fa2ebe26b1092b58a081e023240324aa",
+              "file_sha256": "5ebbbcc633b845d9d0a95a516617e0119f340787e109973b0ff35d55fca34d88",
+              "quote_check": "exact"
+            },
+            {
+              "path": "reports/event-authority-20261104/DF.guard-removal.json",
+              "unit": "ATS-276",
+              "quote": "\"literal_mutant_evaluations\":",
+              "line_start": 8,
+              "line_end": 8,
+              "excerpt_sha256": "4ecd8185ab2fd646e5a9db399302b86b68a5309dce1030585e459e51fab0fe16",
+              "file_sha256": "2e73ee343b9ecc68d59a347a39dfad55415820dab3498d0f685d0d87af7220fc",
+              "quote_check": "exact"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PARTIAL"
           },
-          "change": "upgraded",
-          "change_reason": "Round-4 historical reader and schema closure mutations pass both complete checker entry points; all earlier B1..B8 mutations rerun."
+          "change": "carried",
+          "change_reason": "R4-B1 guard isolation is repaired; new confirmed FIX5-N2 outside the authorized check-11 scope prevents upgrading C12.",
+          "guard_isolation": {
+            "command": "python3 scripts/pm_filesafe_guard_isolation.py --output <evidence-path>",
+            "status": "PASS",
+            "literal_matrix": true,
+            "guards": 830,
+            "negatives": 3119,
+            "uncovered": 0,
+            "unexpected_flips": 0,
+            "exceptions": 0,
+            "proof_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix5/guard-removal-matrix.json",
+            "proof_sha256": "c0d75d433620ecac9ae4cf6e341cf80d3fc2aec694e71cf20b87d0d6e6221fa7"
+          },
+          "out_of_scope_finding": {
+            "id": "FIX5-N2",
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix5/numeric-epoch-probes.json",
+            "sha256": "c4c296207762e6ab556ea1b7f47f1dcce668bb5117cd564cc865a839c5fbc457"
+          }
         }
       },
       "remaining_gaps": [
         "RETENTION: Does the retained destructive-override request EventRecord itself constitute approval/audit authority (RP-AUTHORITY-INDEFINITE), or non-authority security diagnostic history (RP-OPERATIONAL-2555D)? PENDING_RETENTION_DECISION remains in SP-553.",
-        "ADMISSION: filesafe.destructive_override_requested membership_version remains ABSENT; separate individual batch admission is required."
+        "ADMISSION: filesafe.destructive_override_requested membership_version remains ABSENT; separate individual batch admission is required.",
+        "FIX5-N2: Application writer_epoch 1.0 passes as 1 with a distinct accepted_source_sha256; numeric-ingress follow-up required."
       ],
       "static_checks_seen": [
         "python3 scripts/pm_filesafe_event_contracts.py",
         "python3 scripts/pm_filesafe_event_authority.py",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
-        "python3 scripts/pm-plan-index.py validate"
+        "python3 scripts/pm-plan-index.py validate",
+        "python3 scripts/pm_filesafe_guard_isolation.py --output <evidence-path>"
       ],
       "notes": "Prepared normative depth only. Native execution/authenticity, durable storage, filesystem effects, payload addressing and CAS remain NOT_RUN; no admission or governance certification.",
-      "grading_batch": "DF_FIX4_self_grade",
-      "assessed_head": "67aeb8c7228003c40324d5b30a0fdf875a5665ec",
+      "grading_batch": "DF_FIX5_self_grade",
+      "assessed_head": "4309f746955e76e73f43a95e1b51defa6a793325",
       "counts": {
-        "PASS": 10,
-        "PARTIAL": 1,
+        "PASS": 9,
+        "PARTIAL": 2,
         "ABSENT": 1
       },
-      "prepared_verdict": "PREPARED_WITHOUT_ADMISSION_RETENTION_PENDING"
+      "prepared_verdict": "NOT_READY_FIX5_N2"
     },
     {
       "event_type": "filesafe.guard_init_failed",
@@ -2696,11 +2852,11 @@
           "quote_check": "exact"
         }
       ],
-      "outcome": "register (prepared; individual admission absent; event-history retention pending)",
-      "pass_count": 10,
+      "outcome": "prepare (check-11 repair complete; numeric epoch counterexample FIX5-N2 remains outside authorized scope; admission absent)",
+      "pass_count": 9,
       "before_pass_count": 9,
       "normative_depth_complete": false,
-      "technical_depth_complete": true,
+      "technical_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
         "CV-554",
@@ -2731,12 +2887,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2765,12 +2921,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "producer": {
           "status": "PASS",
@@ -2809,12 +2965,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2843,12 +2999,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2887,12 +3043,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2961,12 +3117,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2995,12 +3151,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3029,12 +3185,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "transitions": {
           "status": "PASS",
@@ -3063,12 +3219,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3087,12 +3243,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3141,17 +3297,17 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "ATS-277: own inline/reference historical reads survive writer changes/control disposal; withdrawn/forged/lost authority and unavailable bodies refuse. Both full CLIs exhaustively resolve pinned schemas and reject rehashed dangling references, including unused/nested definitions. All ten standing checks and earlier B1..B8 mutations pass. Native NOT_RUN.",
+          "finding": "Own-family single-defect inputs preserve unrelated typed values and recompute source/body/digest/receipt/issued/boundary copies. The literal 830-guard / 3119-negative matrix has zero uncovered guards, unexpected flips or exceptions; every flip/stay set is explicit, including overlapping upper layers. Schema ingress, owner predicates and complete-step/materialization results are explicitly separated. Actual CLI thread/epoch/full-value/scope removals expose accepted negatives. Earlier B1..B8 and standing checks 1..10 hold. R4-B1 is fixed, but C12 stays PARTIAL: independent FIX5-N2 accepts application writer_epoch 1 and 1.0 with distinct source commitments; adding a numeric guard is outside the explicit check-11 scope. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -3166,11 +3322,11 @@
             {
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-554",
-              "line_start": 112048,
-              "line_end": 112048,
+              "line_start": 97122,
+              "line_end": 97122,
               "quote": "\"id\": \"filesafe_guard_init_failed.fix1.1.missing_custody_after_recovery\"",
               "excerpt_sha256": "c6702e20a311c0358bc2ec5eca3eab6fdb3f4cedcf2b501557f0816c2c3ada2f",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -3197,10 +3353,10 @@
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-554",
               "quote": "\"id\": \"filesafe_guard_init_failed.fix2.replay_only_writer.project\"",
-              "line_start": 102967,
-              "line_end": 102967,
+              "line_start": 93624,
+              "line_end": 93624,
               "excerpt_sha256": "a645d4a6c687d8d41e717791473bd46b315b7f8fe9b56e543f4378cbdd1820f8",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -3237,20 +3393,20 @@
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-554",
               "quote": "\"id\": \"filesafe_guard_init_failed.fix3.inline_utf8_16385.project\"",
-              "line_start": 103622,
-              "line_end": 103622,
+              "line_start": 94018,
+              "line_end": 94018,
               "excerpt_sha256": "c445e22c8ccf4d7e52aef3883849207c2f9875d65efcbc0378be4227cfd5f317",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-554",
               "quote": "\"id\": \"filesafe_guard_init_failed.fix3.sp337_reference.application\"",
-              "line_start": 101316,
-              "line_end": 101316,
+              "line_start": 89171,
+              "line_end": 89171,
               "excerpt_sha256": "dc19a8d6f8fdf4fd2334cf1164899eefdbc7bd3176faa4ad2d3f7d0f486943c0",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -3277,20 +3433,20 @@
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-554",
               "quote": "\"id\": \"filesafe_guard_init_failed.fix4.history.project.inline.epoch_rollover\"",
-              "line_start": 115359,
-              "line_end": 115359,
+              "line_start": 100433,
+              "line_end": 100433,
               "excerpt_sha256": "4ccabb351a0ce95c2bcfb71862f7388ce991ac71ff96c718984a630a9b4a5c30",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-554",
               "quote": "\"id\": \"filesafe_guard_init_failed.fix4.history.application.ref.disposed_controls\"",
-              "line_start": 117227,
-              "line_end": 117227,
+              "line_start": 102301,
+              "line_end": 102301,
               "excerpt_sha256": "c92b4752cfa3b9ac392a01be6765dc78ce59f776b8927ba4821f3a2aeb5b739d",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -3312,36 +3468,75 @@
               "excerpt_sha256": "d5ece7815a275b1f0afe12843580458e2f86cc71abf08ab632ba1ef07a3beef4",
               "file_sha256": "7e641ea2058f970b61af47d2717d87a4d532fb1891a20f86e103038f378ffb29",
               "quote_check": "exact"
+            },
+            {
+              "path": "scripts/pm_filesafe_guard_isolation.py",
+              "unit": "ATS-277",
+              "quote": "class Suite:",
+              "line_start": 224,
+              "line_end": 224,
+              "excerpt_sha256": "9ab9ca826cf5b5850c08794b5dd18fe5fa2ebe26b1092b58a081e023240324aa",
+              "file_sha256": "5ebbbcc633b845d9d0a95a516617e0119f340787e109973b0ff35d55fca34d88",
+              "quote_check": "exact"
+            },
+            {
+              "path": "reports/event-authority-20261104/DF.guard-removal.json",
+              "unit": "ATS-277",
+              "quote": "\"literal_mutant_evaluations\":",
+              "line_start": 8,
+              "line_end": 8,
+              "excerpt_sha256": "4ecd8185ab2fd646e5a9db399302b86b68a5309dce1030585e459e51fab0fe16",
+              "file_sha256": "2e73ee343b9ecc68d59a347a39dfad55415820dab3498d0f685d0d87af7220fc",
+              "quote_check": "exact"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PARTIAL"
           },
-          "change": "upgraded",
-          "change_reason": "Round-4 historical reader and schema closure mutations pass both complete checker entry points; all earlier B1..B8 mutations rerun."
+          "change": "carried",
+          "change_reason": "R4-B1 guard isolation is repaired; new confirmed FIX5-N2 outside the authorized check-11 scope prevents upgrading C12.",
+          "guard_isolation": {
+            "command": "python3 scripts/pm_filesafe_guard_isolation.py --output <evidence-path>",
+            "status": "PASS",
+            "literal_matrix": true,
+            "guards": 830,
+            "negatives": 3119,
+            "uncovered": 0,
+            "unexpected_flips": 0,
+            "exceptions": 0,
+            "proof_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix5/guard-removal-matrix.json",
+            "proof_sha256": "c0d75d433620ecac9ae4cf6e341cf80d3fc2aec694e71cf20b87d0d6e6221fa7"
+          },
+          "out_of_scope_finding": {
+            "id": "FIX5-N2",
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix5/numeric-epoch-probes.json",
+            "sha256": "c4c296207762e6ab556ea1b7f47f1dcce668bb5117cd564cc865a839c5fbc457"
+          }
         }
       },
       "remaining_gaps": [
         "RETENTION: Does the retained fail-closed guard-initialization EventRecord constitute audit authority (RP-AUTHORITY-INDEFINITE), or non-authority security diagnostic history (RP-OPERATIONAL-2555D)? PENDING_RETENTION_DECISION remains in SP-554.",
-        "ADMISSION: filesafe.guard_init_failed membership_version remains ABSENT; separate individual batch admission is required."
+        "ADMISSION: filesafe.guard_init_failed membership_version remains ABSENT; separate individual batch admission is required.",
+        "FIX5-N2: Application writer_epoch 1.0 passes as 1 with a distinct accepted_source_sha256; numeric-ingress follow-up required."
       ],
       "static_checks_seen": [
         "python3 scripts/pm_filesafe_event_contracts.py",
         "python3 scripts/pm_filesafe_event_authority.py",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
-        "python3 scripts/pm-plan-index.py validate"
+        "python3 scripts/pm-plan-index.py validate",
+        "python3 scripts/pm_filesafe_guard_isolation.py --output <evidence-path>"
       ],
       "notes": "Prepared normative depth only. Native execution/authenticity, durable storage, filesystem effects, payload addressing and CAS remain NOT_RUN; no admission or governance certification.",
-      "grading_batch": "DF_FIX4_self_grade",
-      "assessed_head": "67aeb8c7228003c40324d5b30a0fdf875a5665ec",
+      "grading_batch": "DF_FIX5_self_grade",
+      "assessed_head": "4309f746955e76e73f43a95e1b51defa6a793325",
       "counts": {
-        "PASS": 10,
-        "PARTIAL": 1,
+        "PASS": 9,
+        "PARTIAL": 2,
         "ABSENT": 1
       },
-      "prepared_verdict": "PREPARED_WITHOUT_ADMISSION_RETENTION_PENDING"
+      "prepared_verdict": "NOT_READY_FIX5_N2"
     },
     {
       "event_type": "filesafe.path_denied",
@@ -3363,11 +3558,11 @@
           "quote_check": "exact"
         }
       ],
-      "outcome": "register (prepared; individual admission absent; event-history retention pending)",
-      "pass_count": 10,
+      "outcome": "prepare (check-11 repair complete; numeric epoch counterexample FIX5-N2 remains outside authorized scope; admission absent)",
+      "pass_count": 9,
       "before_pass_count": 9,
       "normative_depth_complete": false,
-      "technical_depth_complete": true,
+      "technical_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
         "CV-555",
@@ -3398,12 +3593,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3432,12 +3627,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "producer": {
           "status": "PASS",
@@ -3476,12 +3671,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3510,12 +3705,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3554,12 +3749,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3628,12 +3823,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3662,12 +3857,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3696,12 +3891,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "transitions": {
           "status": "PASS",
@@ -3730,12 +3925,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3754,12 +3949,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3808,17 +4003,17 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "ATS-277: own inline/reference historical reads survive writer changes/control disposal; withdrawn/forged/lost authority and unavailable bodies refuse. Both full CLIs exhaustively resolve pinned schemas and reject rehashed dangling references, including unused/nested definitions. All ten standing checks and earlier B1..B8 mutations pass. Native NOT_RUN.",
+          "finding": "Own-family single-defect inputs preserve unrelated typed values and recompute source/body/digest/receipt/issued/boundary copies. The literal 830-guard / 3119-negative matrix has zero uncovered guards, unexpected flips or exceptions; every flip/stay set is explicit, including overlapping upper layers. Schema ingress, owner predicates and complete-step/materialization results are explicitly separated. Actual CLI thread/epoch/full-value/scope removals expose accepted negatives. Earlier B1..B8 and standing checks 1..10 hold. R4-B1 is fixed, but C12 stays PARTIAL: independent FIX5-N2 accepts application writer_epoch 1 and 1.0 with distinct source commitments; adding a numeric guard is outside the explicit check-11 scope. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -3833,11 +4028,11 @@
             {
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-555",
-              "line_start": 134866,
-              "line_end": 134866,
+              "line_start": 116833,
+              "line_end": 116833,
               "quote": "\"id\": \"filesafe_path_denied.fix1.1.missing_custody_after_recovery\"",
               "excerpt_sha256": "87179e1a338303acd086cee7658db49b60680a118f30c1c7d3036185e28a379a",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -3864,10 +4059,10 @@
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-555",
               "quote": "\"id\": \"filesafe_path_denied.fix2.replay_only_writer.project\"",
-              "line_start": 125429,
-              "line_end": 125429,
+              "line_start": 113335,
+              "line_end": 113335,
               "excerpt_sha256": "ff39324e9c069bb277bbbca16780c62e4f4830604ae80932dce50dded0f400cd",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -3904,20 +4099,20 @@
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-555",
               "quote": "\"id\": \"filesafe_path_denied.fix3.inline_utf8_16385.project\"",
-              "line_start": 126121,
-              "line_end": 126121,
+              "line_start": 113729,
+              "line_end": 113729,
               "excerpt_sha256": "b9d2faa208930fd3a3420ba3cd97a9ed59605fb1f08870a9a13f3d6cd4636064",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-555",
               "quote": "\"id\": \"filesafe_path_denied.fix3.sp337_reference.application\"",
-              "line_start": 123690,
-              "line_end": 123690,
+              "line_start": 108764,
+              "line_end": 108764,
               "excerpt_sha256": "b1a348da50fb99949b7c4b4db90f06ba898681d7e6efd37e1cedf8056b8de24e",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -3944,20 +4139,20 @@
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-555",
               "quote": "\"id\": \"filesafe_path_denied.fix4.history.project.inline.epoch_rollover\"",
-              "line_start": 138281,
-              "line_end": 138281,
+              "line_start": 120248,
+              "line_end": 120248,
               "excerpt_sha256": "415802c5e8f88c0817ab53e0dfe7b2ad265dd6d64c6a929a4d89380116951f4c",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-555",
               "quote": "\"id\": \"filesafe_path_denied.fix4.history.application.ref.disposed_controls\"",
-              "line_start": 140159,
-              "line_end": 140159,
+              "line_start": 122126,
+              "line_end": 122126,
               "excerpt_sha256": "35f6378c23e684380a1570111bd42f43c013a93b8186e275e8fe44ebe062a260",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -3979,36 +4174,75 @@
               "excerpt_sha256": "d5ece7815a275b1f0afe12843580458e2f86cc71abf08ab632ba1ef07a3beef4",
               "file_sha256": "7e641ea2058f970b61af47d2717d87a4d532fb1891a20f86e103038f378ffb29",
               "quote_check": "exact"
+            },
+            {
+              "path": "scripts/pm_filesafe_guard_isolation.py",
+              "unit": "ATS-277",
+              "quote": "class Suite:",
+              "line_start": 224,
+              "line_end": 224,
+              "excerpt_sha256": "9ab9ca826cf5b5850c08794b5dd18fe5fa2ebe26b1092b58a081e023240324aa",
+              "file_sha256": "5ebbbcc633b845d9d0a95a516617e0119f340787e109973b0ff35d55fca34d88",
+              "quote_check": "exact"
+            },
+            {
+              "path": "reports/event-authority-20261104/DF.guard-removal.json",
+              "unit": "ATS-277",
+              "quote": "\"literal_mutant_evaluations\":",
+              "line_start": 8,
+              "line_end": 8,
+              "excerpt_sha256": "4ecd8185ab2fd646e5a9db399302b86b68a5309dce1030585e459e51fab0fe16",
+              "file_sha256": "2e73ee343b9ecc68d59a347a39dfad55415820dab3498d0f685d0d87af7220fc",
+              "quote_check": "exact"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PARTIAL"
           },
-          "change": "upgraded",
-          "change_reason": "Round-4 historical reader and schema closure mutations pass both complete checker entry points; all earlier B1..B8 mutations rerun."
+          "change": "carried",
+          "change_reason": "R4-B1 guard isolation is repaired; new confirmed FIX5-N2 outside the authorized check-11 scope prevents upgrading C12.",
+          "guard_isolation": {
+            "command": "python3 scripts/pm_filesafe_guard_isolation.py --output <evidence-path>",
+            "status": "PASS",
+            "literal_matrix": true,
+            "guards": 830,
+            "negatives": 3119,
+            "uncovered": 0,
+            "unexpected_flips": 0,
+            "exceptions": 0,
+            "proof_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix5/guard-removal-matrix.json",
+            "proof_sha256": "c0d75d433620ecac9ae4cf6e341cf80d3fc2aec694e71cf20b87d0d6e6221fa7"
+          },
+          "out_of_scope_finding": {
+            "id": "FIX5-N2",
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix5/numeric-epoch-probes.json",
+            "sha256": "c4c296207762e6ab556ea1b7f47f1dcce668bb5117cd564cc865a839c5fbc457"
+          }
         }
       },
       "remaining_gaps": [
         "RETENTION: Does the retained path-denial EventRecord constitute audit authority (RP-AUTHORITY-INDEFINITE), or non-authority security diagnostic history (RP-OPERATIONAL-2555D)? PENDING_RETENTION_DECISION remains in SP-555.",
-        "ADMISSION: filesafe.path_denied membership_version remains ABSENT; separate individual batch admission is required."
+        "ADMISSION: filesafe.path_denied membership_version remains ABSENT; separate individual batch admission is required.",
+        "FIX5-N2: Application writer_epoch 1.0 passes as 1 with a distinct accepted_source_sha256; numeric-ingress follow-up required."
       ],
       "static_checks_seen": [
         "python3 scripts/pm_filesafe_event_contracts.py",
         "python3 scripts/pm_filesafe_event_authority.py",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
-        "python3 scripts/pm-plan-index.py validate"
+        "python3 scripts/pm-plan-index.py validate",
+        "python3 scripts/pm_filesafe_guard_isolation.py --output <evidence-path>"
       ],
       "notes": "Prepared normative depth only. Native execution/authenticity, durable storage, filesystem effects, payload addressing and CAS remain NOT_RUN; no admission or governance certification.",
-      "grading_batch": "DF_FIX4_self_grade",
-      "assessed_head": "67aeb8c7228003c40324d5b30a0fdf875a5665ec",
+      "grading_batch": "DF_FIX5_self_grade",
+      "assessed_head": "4309f746955e76e73f43a95e1b51defa6a793325",
       "counts": {
-        "PASS": 10,
-        "PARTIAL": 1,
+        "PASS": 9,
+        "PARTIAL": 2,
         "ABSENT": 1
       },
-      "prepared_verdict": "PREPARED_WITHOUT_ADMISSION_RETENTION_PENDING"
+      "prepared_verdict": "NOT_READY_FIX5_N2"
     },
     {
       "event_type": "filesafe.policy_degraded",
@@ -4030,11 +4264,11 @@
           "quote_check": "exact"
         }
       ],
-      "outcome": "register (prepared; individual admission absent)",
-      "pass_count": 11,
+      "outcome": "prepare (check-11 repair complete; numeric epoch counterexample FIX5-N2 remains outside authorized scope; admission absent)",
+      "pass_count": 10,
       "before_pass_count": 10,
       "normative_depth_complete": false,
-      "technical_depth_complete": true,
+      "technical_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
         "CV-556",
@@ -4065,12 +4299,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "owner_doc": {
           "status": "PASS",
@@ -4099,12 +4333,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "producer": {
           "status": "PASS",
@@ -4143,12 +4377,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -4177,12 +4411,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "scope_identity": {
           "status": "PASS",
@@ -4221,12 +4455,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -4295,12 +4529,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "retention": {
           "status": "PASS",
@@ -4329,12 +4563,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -4363,12 +4597,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "transitions": {
           "status": "PASS",
@@ -4397,12 +4631,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -4421,12 +4655,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4475,17 +4709,17 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "ATS-278: own inline/reference historical reads survive writer changes/control disposal; withdrawn/forged/lost authority and unavailable bodies refuse. Both full CLIs exhaustively resolve pinned schemas and reject rehashed dangling references, including unused/nested definitions. All ten standing checks and earlier B1..B8 mutations pass. Native NOT_RUN.",
+          "finding": "Own-family single-defect inputs preserve unrelated typed values and recompute source/body/digest/receipt/issued/boundary copies. The literal 830-guard / 3119-negative matrix has zero uncovered guards, unexpected flips or exceptions; every flip/stay set is explicit, including overlapping upper layers. Schema ingress, owner predicates and complete-step/materialization results are explicitly separated. Actual CLI thread/epoch/full-value/scope removals expose accepted negatives. Earlier B1..B8 and standing checks 1..10 hold. R4-B1 is fixed, but C12 stays PARTIAL: independent FIX5-N2 accepts application writer_epoch 1 and 1.0 with distinct source commitments; adding a numeric guard is outside the explicit check-11 scope. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -4500,11 +4734,11 @@
             {
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-556",
-              "line_start": 157148,
-              "line_end": 157148,
+              "line_start": 136302,
+              "line_end": 136302,
               "quote": "\"id\": \"filesafe_policy_degraded.fix1.1.missing_custody_after_recovery\"",
               "excerpt_sha256": "41846465204120f4ad56768df48c350153cb89423f2d22488af16066b22d3cae",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -4531,10 +4765,10 @@
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-556",
               "quote": "\"id\": \"filesafe_policy_degraded.fix2.replay_only_writer.project\"",
-              "line_start": 148207,
-              "line_end": 148207,
+              "line_start": 132804,
+              "line_end": 132804,
               "excerpt_sha256": "aef91ebabdf37cca6e2e78e6bf4aee438ae9e562b854d95ac66eafd67c07ae1e",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -4571,20 +4805,20 @@
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-556",
               "quote": "\"id\": \"filesafe_policy_degraded.fix3.inline_utf8_16385.project\"",
-              "line_start": 148849,
-              "line_end": 148849,
+              "line_start": 133198,
+              "line_end": 133198,
               "excerpt_sha256": "9a43204b3a564192fad25a635fbed5d4abd32ff1970ea1ccc48d97c464ab88f5",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-556",
               "quote": "\"id\": \"filesafe_policy_degraded.fix3.sp337_reference.application\"",
-              "line_start": 146584,
-              "line_end": 146584,
+              "line_start": 128551,
+              "line_end": 128551,
               "excerpt_sha256": "4d1d3a9afe2833c279950f3a71c549dc524b879bb9b5c47bb4583b7168f6b03e",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -4611,20 +4845,20 @@
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-556",
               "quote": "\"id\": \"filesafe_policy_degraded.fix4.history.project.inline.epoch_rollover\"",
-              "line_start": 160415,
-              "line_end": 160415,
+              "line_start": 139569,
+              "line_end": 139569,
               "excerpt_sha256": "b745380df7d57875f0cd7c92b7044c06a5c2079bb8f11ca2f68c99c8fcdb36a8",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-556",
               "quote": "\"id\": \"filesafe_policy_degraded.fix4.history.application.ref.disposed_controls\"",
-              "line_start": 162277,
-              "line_end": 162277,
+              "line_start": 141431,
+              "line_end": 141431,
               "excerpt_sha256": "6a5011498588bec44a6275263429be01cd97cccc4b1516a7f2a034b28fbcdf03",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -4646,35 +4880,74 @@
               "excerpt_sha256": "d5ece7815a275b1f0afe12843580458e2f86cc71abf08ab632ba1ef07a3beef4",
               "file_sha256": "7e641ea2058f970b61af47d2717d87a4d532fb1891a20f86e103038f378ffb29",
               "quote_check": "exact"
+            },
+            {
+              "path": "scripts/pm_filesafe_guard_isolation.py",
+              "unit": "ATS-278",
+              "quote": "class Suite:",
+              "line_start": 224,
+              "line_end": 224,
+              "excerpt_sha256": "9ab9ca826cf5b5850c08794b5dd18fe5fa2ebe26b1092b58a081e023240324aa",
+              "file_sha256": "5ebbbcc633b845d9d0a95a516617e0119f340787e109973b0ff35d55fca34d88",
+              "quote_check": "exact"
+            },
+            {
+              "path": "reports/event-authority-20261104/DF.guard-removal.json",
+              "unit": "ATS-278",
+              "quote": "\"literal_mutant_evaluations\":",
+              "line_start": 8,
+              "line_end": 8,
+              "excerpt_sha256": "4ecd8185ab2fd646e5a9db399302b86b68a5309dce1030585e459e51fab0fe16",
+              "file_sha256": "2e73ee343b9ecc68d59a347a39dfad55415820dab3498d0f685d0d87af7220fc",
+              "quote_check": "exact"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PARTIAL"
           },
-          "change": "upgraded",
-          "change_reason": "Round-4 historical reader and schema closure mutations pass both complete checker entry points; all earlier B1..B8 mutations rerun."
+          "change": "carried",
+          "change_reason": "R4-B1 guard isolation is repaired; new confirmed FIX5-N2 outside the authorized check-11 scope prevents upgrading C12.",
+          "guard_isolation": {
+            "command": "python3 scripts/pm_filesafe_guard_isolation.py --output <evidence-path>",
+            "status": "PASS",
+            "literal_matrix": true,
+            "guards": 830,
+            "negatives": 3119,
+            "uncovered": 0,
+            "unexpected_flips": 0,
+            "exceptions": 0,
+            "proof_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix5/guard-removal-matrix.json",
+            "proof_sha256": "c0d75d433620ecac9ae4cf6e341cf80d3fc2aec694e71cf20b87d0d6e6221fa7"
+          },
+          "out_of_scope_finding": {
+            "id": "FIX5-N2",
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix5/numeric-epoch-probes.json",
+            "sha256": "c4c296207762e6ab556ea1b7f47f1dcce668bb5117cd564cc865a839c5fbc457"
+          }
         }
       },
       "remaining_gaps": [
-        "ADMISSION: filesafe.policy_degraded membership_version remains ABSENT; separate individual batch admission is required."
+        "ADMISSION: filesafe.policy_degraded membership_version remains ABSENT; separate individual batch admission is required.",
+        "FIX5-N2: Application writer_epoch 1.0 passes as 1 with a distinct accepted_source_sha256; numeric-ingress follow-up required."
       ],
       "static_checks_seen": [
         "python3 scripts/pm_filesafe_event_contracts.py",
         "python3 scripts/pm_filesafe_event_authority.py",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
-        "python3 scripts/pm-plan-index.py validate"
+        "python3 scripts/pm-plan-index.py validate",
+        "python3 scripts/pm_filesafe_guard_isolation.py --output <evidence-path>"
       ],
       "notes": "Prepared normative depth only. Native execution/authenticity, durable storage, filesystem effects, payload addressing and CAS remain NOT_RUN; no admission or governance certification.",
-      "grading_batch": "DF_FIX4_self_grade",
-      "assessed_head": "67aeb8c7228003c40324d5b30a0fdf875a5665ec",
+      "grading_batch": "DF_FIX5_self_grade",
+      "assessed_head": "4309f746955e76e73f43a95e1b51defa6a793325",
       "counts": {
-        "PASS": 11,
-        "PARTIAL": 0,
+        "PASS": 10,
+        "PARTIAL": 1,
         "ABSENT": 1
       },
-      "prepared_verdict": "PREPARED_WITHOUT_ADMISSION"
+      "prepared_verdict": "NOT_READY_FIX5_N2"
     },
     {
       "event_type": "safe_point.created",
@@ -4696,11 +4969,11 @@
           "quote_check": "exact"
         }
       ],
-      "outcome": "register (prepared; individual admission absent; event-history retention pending)",
-      "pass_count": 10,
+      "outcome": "prepare (check-11 repair complete; numeric epoch counterexample FIX5-N2 remains outside authorized scope; admission absent)",
+      "pass_count": 9,
       "before_pass_count": 9,
       "normative_depth_complete": false,
-      "technical_depth_complete": true,
+      "technical_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
         "CV-557",
@@ -4731,12 +5004,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "owner_doc": {
           "status": "PASS",
@@ -4765,12 +5038,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "producer": {
           "status": "PASS",
@@ -4849,12 +5122,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -4883,12 +5156,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "scope_identity": {
           "status": "PASS",
@@ -4927,12 +5200,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -5001,12 +5274,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "retention": {
           "status": "PARTIAL",
@@ -5035,12 +5308,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -5069,12 +5342,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "transitions": {
           "status": "PASS",
@@ -5103,12 +5376,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -5127,12 +5400,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -5181,17 +5454,17 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "ATS-279: own inline/reference historical reads survive writer changes/control disposal; withdrawn/forged/lost authority and unavailable bodies refuse. Both full CLIs exhaustively resolve pinned schemas and reject rehashed dangling references, including unused/nested definitions. All ten standing checks and earlier B1..B8 mutations pass. Native NOT_RUN.",
+          "finding": "Own-family single-defect inputs preserve unrelated typed values and recompute source/body/digest/receipt/issued/boundary copies. The literal 830-guard / 3119-negative matrix has zero uncovered guards, unexpected flips or exceptions; every flip/stay set is explicit, including overlapping upper layers. Schema ingress, owner predicates and complete-step/materialization results are explicitly separated. Actual CLI thread/epoch/full-value/scope removals expose accepted negatives. Earlier B1..B8 and standing checks 1..10 hold. R4-B1 is fixed, but C12 stays PARTIAL: independent FIX5-N2 accepts application writer_epoch 1 and 1.0 with distinct source commitments; adding a numeric guard is outside the explicit check-11 scope. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -5206,11 +5479,11 @@
             {
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-557",
-              "line_start": 186522,
-              "line_end": 186522,
+              "line_start": 166210,
+              "line_end": 166210,
               "quote": "\"id\": \"safe_point_created.fix1.1.missing_custody_after_recovery\"",
               "excerpt_sha256": "958ab4a3b9ff2dba80b21a8988ae196f73a26388efb0598c5dd1e447c7fa0e18",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -5237,10 +5510,10 @@
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-557",
               "quote": "\"id\": \"safe_point_created.fix2.replay_only_writer.project\"",
-              "line_start": 175391,
-              "line_end": 175391,
+              "line_start": 159988,
+              "line_end": 159988,
               "excerpt_sha256": "701953eb8b3da0ae7244e2b1666123732b89051aefc810d86875845d2807248f",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -5277,20 +5550,20 @@
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-557",
               "quote": "\"id\": \"safe_point_created.fix3.inline_utf8_16385.project\"",
-              "line_start": 176177,
-              "line_end": 176177,
+              "line_start": 160432,
+              "line_end": 160432,
               "excerpt_sha256": "b42147fac5fc31162f8871c2fdd375f82b9af04979306be6b9ffda599c78ea31",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-557",
               "quote": "\"id\": \"safe_point_created.fix3.sp337_reference.application\"",
-              "line_start": 171180,
-              "line_end": 171180,
+              "line_start": 150334,
+              "line_end": 150334,
               "excerpt_sha256": "a95cebbfe105b760841286ad77c5649243b784dad9accf5e53fdbea266a9898b",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -5317,20 +5590,20 @@
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-557",
               "quote": "\"id\": \"safe_point_created.fix4.history.project.inline.epoch_rollover\"",
-              "line_start": 190402,
-              "line_end": 190402,
+              "line_start": 170090,
+              "line_end": 170090,
               "excerpt_sha256": "a9cc36d6843eec66db1497e35225e1aa58a1c4ba4f6647bc02ff95c3fa74310c",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-557",
               "quote": "\"id\": \"safe_point_created.fix4.history.application.ref.disposed_controls\"",
-              "line_start": 192284,
-              "line_end": 192284,
+              "line_start": 171972,
+              "line_end": 171972,
               "excerpt_sha256": "7128d569f696cbb1a22946f73328ef53792be89c4d3fccd50917fd636b376ade",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -5352,36 +5625,75 @@
               "excerpt_sha256": "d5ece7815a275b1f0afe12843580458e2f86cc71abf08ab632ba1ef07a3beef4",
               "file_sha256": "7e641ea2058f970b61af47d2717d87a4d532fb1891a20f86e103038f378ffb29",
               "quote_check": "exact"
+            },
+            {
+              "path": "scripts/pm_filesafe_guard_isolation.py",
+              "unit": "ATS-279",
+              "quote": "class Suite:",
+              "line_start": 224,
+              "line_end": 224,
+              "excerpt_sha256": "9ab9ca826cf5b5850c08794b5dd18fe5fa2ebe26b1092b58a081e023240324aa",
+              "file_sha256": "5ebbbcc633b845d9d0a95a516617e0119f340787e109973b0ff35d55fca34d88",
+              "quote_check": "exact"
+            },
+            {
+              "path": "reports/event-authority-20261104/DF.guard-removal.json",
+              "unit": "ATS-279",
+              "quote": "\"literal_mutant_evaluations\":",
+              "line_start": 8,
+              "line_end": 8,
+              "excerpt_sha256": "4ecd8185ab2fd646e5a9db399302b86b68a5309dce1030585e459e51fab0fe16",
+              "file_sha256": "2e73ee343b9ecc68d59a347a39dfad55415820dab3498d0f685d0d87af7220fc",
+              "quote_check": "exact"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PARTIAL"
           },
-          "change": "upgraded",
-          "change_reason": "Round-4 historical reader and schema closure mutations pass both complete checker entry points; all earlier B1..B8 mutations rerun."
+          "change": "carried",
+          "change_reason": "R4-B1 guard isolation is repaired; new confirmed FIX5-N2 outside the authorized check-11 scope prevents upgrading C12.",
+          "guard_isolation": {
+            "command": "python3 scripts/pm_filesafe_guard_isolation.py --output <evidence-path>",
+            "status": "PASS",
+            "literal_matrix": true,
+            "guards": 830,
+            "negatives": 3119,
+            "uncovered": 0,
+            "unexpected_flips": 0,
+            "exceptions": 0,
+            "proof_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix5/guard-removal-matrix.json",
+            "proof_sha256": "c0d75d433620ecac9ae4cf6e341cf80d3fc2aec694e71cf20b87d0d6e6221fa7"
+          },
+          "out_of_scope_finding": {
+            "id": "FIX5-N2",
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix5/numeric-epoch-probes.json",
+            "sha256": "c4c296207762e6ab556ea1b7f47f1dcce668bb5117cd564cc865a839c5fbc457"
+          }
         }
       },
       "remaining_gaps": [
         "RETENTION: Is safe_point.created EventRecord history an authority/capture receipt (RP-AUTHORITY-INDEFINITE), non-authority recovery operational history (RP-OPERATIONAL-2555D), or runtime history (RP-RUNTIME-365D), independently of the already-governed released snapshot bodies? PENDING_RETENTION_DECISION remains in SP-557.",
-        "ADMISSION: safe_point.created membership_version remains ABSENT; separate individual batch admission is required."
+        "ADMISSION: safe_point.created membership_version remains ABSENT; separate individual batch admission is required.",
+        "FIX5-N2: Application writer_epoch 1.0 passes as 1 with a distinct accepted_source_sha256; numeric-ingress follow-up required."
       ],
       "static_checks_seen": [
         "python3 scripts/pm_filesafe_event_contracts.py",
         "python3 scripts/pm_filesafe_event_authority.py",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
-        "python3 scripts/pm-plan-index.py validate"
+        "python3 scripts/pm-plan-index.py validate",
+        "python3 scripts/pm_filesafe_guard_isolation.py --output <evidence-path>"
       ],
       "notes": "Prepared normative depth only. Native execution/authenticity, durable storage, filesystem effects, payload addressing and CAS remain NOT_RUN; no admission or governance certification.",
-      "grading_batch": "DF_FIX4_self_grade",
-      "assessed_head": "67aeb8c7228003c40324d5b30a0fdf875a5665ec",
+      "grading_batch": "DF_FIX5_self_grade",
+      "assessed_head": "4309f746955e76e73f43a95e1b51defa6a793325",
       "counts": {
-        "PASS": 10,
-        "PARTIAL": 1,
+        "PASS": 9,
+        "PARTIAL": 2,
         "ABSENT": 1
       },
-      "prepared_verdict": "PREPARED_WITHOUT_ADMISSION_RETENTION_PENDING"
+      "prepared_verdict": "NOT_READY_FIX5_N2"
     },
     {
       "event_type": "safe_point.restored",
@@ -5403,11 +5715,11 @@
           "quote_check": "exact"
         }
       ],
-      "outcome": "register (prepared; individual admission absent; event-history retention pending)",
-      "pass_count": 10,
+      "outcome": "prepare (check-11 repair complete; numeric epoch counterexample FIX5-N2 remains outside authorized scope; admission absent)",
+      "pass_count": 9,
       "before_pass_count": 9,
       "normative_depth_complete": false,
-      "technical_depth_complete": true,
+      "technical_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
         "CV-558",
@@ -5438,12 +5750,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "owner_doc": {
           "status": "PASS",
@@ -5472,12 +5784,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "producer": {
           "status": "PASS",
@@ -5556,12 +5868,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -5590,12 +5902,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "scope_identity": {
           "status": "PASS",
@@ -5634,12 +5946,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -5708,12 +6020,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "retention": {
           "status": "PARTIAL",
@@ -5742,12 +6054,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -5776,12 +6088,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "transitions": {
           "status": "PASS",
@@ -5810,12 +6122,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -5834,12 +6146,12 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -5888,17 +6200,17 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
+          "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "ATS-279: own inline/reference historical reads survive writer changes/control disposal; withdrawn/forged/lost authority and unavailable bodies refuse. Both full CLIs exhaustively resolve pinned schemas and reject rehashed dangling references, including unused/nested definitions. All ten standing checks and earlier B1..B8 mutations pass. Native NOT_RUN.",
+          "finding": "Own-family single-defect inputs preserve unrelated typed values and recompute source/body/digest/receipt/issued/boundary copies. The literal 830-guard / 3119-negative matrix has zero uncovered guards, unexpected flips or exceptions; every flip/stay set is explicit, including overlapping upper layers. Schema ingress, owner predicates and complete-step/materialization results are explicitly separated. Actual CLI thread/epoch/full-value/scope removals expose accepted negatives. Earlier B1..B8 and standing checks 1..10 hold. R4-B1 is fixed, but C12 stays PARTIAL: independent FIX5-N2 accepts application writer_epoch 1 and 1.0 with distinct source commitments; adding a numeric guard is outside the explicit check-11 scope. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -5913,11 +6225,11 @@
             {
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-558",
-              "line_start": 264124,
-              "line_end": 264124,
+              "line_start": 237097,
+              "line_end": 237097,
               "quote": "\"id\": \"safe_point_restored.fix1.1.missing_custody_after_recovery\"",
               "excerpt_sha256": "f5c9d237db4a59902d93ce7ef2ffe760bfcda251ea22d013ec993f604b1af736",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -5944,10 +6256,10 @@
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-558",
               "quote": "\"id\": \"safe_point_restored.fix2.replay_only_writer.project\"",
-              "line_start": 250152,
-              "line_end": 250152,
+              "line_start": 225598,
+              "line_end": 225598,
               "excerpt_sha256": "7e4d6d02f2aeb889940f90437452dca5021dbba32a863f69f9cdb0519548a2a4",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -5964,10 +6276,10 @@
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-558",
               "quote": "\"id\": \"safe_point_restored.fix2.wrong_result_event_ref.1\"",
-              "line_start": 250242,
-              "line_end": 250242,
+              "line_start": 225932,
+              "line_end": 225932,
               "excerpt_sha256": "7b20511323aad1f7caa62093ae51150f446f57446666fafc6e9f67ffc29fd6bc",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -6004,20 +6316,20 @@
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-558",
               "quote": "\"id\": \"safe_point_restored.fix3.inline_utf8_16385.project\"",
-              "line_start": 252442,
-              "line_end": 252442,
+              "line_start": 230464,
+              "line_end": 230464,
               "excerpt_sha256": "9ca63b817c51bf817cd94e16938531cc2fada69ae340e2f03580e13d4310d5d4",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-558",
               "quote": "\"id\": \"safe_point_restored.fix3.sp337_reference.application\"",
-              "line_start": 225186,
-              "line_end": 225186,
+              "line_start": 204874,
+              "line_end": 204874,
               "excerpt_sha256": "af287f5be80e0657e1bece5f3a21745a381ac8ff4ec21b5407c182b01550b3da",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -6034,10 +6346,10 @@
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-558",
               "quote": "\"id\": \"safe_point_restored.fix2.wrong_result_event_ref.1\"",
-              "line_start": 250242,
-              "line_end": 250242,
+              "line_start": 225932,
+              "line_end": 225932,
               "excerpt_sha256": "7b20511323aad1f7caa62093ae51150f446f57446666fafc6e9f67ffc29fd6bc",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -6064,20 +6376,20 @@
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-558",
               "quote": "\"id\": \"safe_point_restored.fix4.history.project.inline.epoch_rollover\"",
-              "line_start": 268378,
-              "line_end": 268378,
+              "line_start": 241351,
+              "line_end": 241351,
               "excerpt_sha256": "585b6f769a85e4bc39d1884c4539ab42d3f23b9b1ce22afa258cbd1449141b33",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
               "path": "Plans/filesafe_event_authority_fixtures.json",
               "unit": "CV-558",
               "quote": "\"id\": \"safe_point_restored.fix4.history.application.ref.disposed_controls\"",
-              "line_start": 270246,
-              "line_end": 270246,
+              "line_start": 243219,
+              "line_end": 243219,
               "excerpt_sha256": "8c5545e9974a9b4c2d02a7a1c57da8941f74367904dfabc91175fcb967cfc08a",
-              "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+              "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
               "quote_check": "exact"
             },
             {
@@ -6099,36 +6411,75 @@
               "excerpt_sha256": "d5ece7815a275b1f0afe12843580458e2f86cc71abf08ab632ba1ef07a3beef4",
               "file_sha256": "7e641ea2058f970b61af47d2717d87a4d532fb1891a20f86e103038f378ffb29",
               "quote_check": "exact"
+            },
+            {
+              "path": "scripts/pm_filesafe_guard_isolation.py",
+              "unit": "ATS-279",
+              "quote": "class Suite:",
+              "line_start": 224,
+              "line_end": 224,
+              "excerpt_sha256": "9ab9ca826cf5b5850c08794b5dd18fe5fa2ebe26b1092b58a081e023240324aa",
+              "file_sha256": "5ebbbcc633b845d9d0a95a516617e0119f340787e109973b0ff35d55fca34d88",
+              "quote_check": "exact"
+            },
+            {
+              "path": "reports/event-authority-20261104/DF.guard-removal.json",
+              "unit": "ATS-279",
+              "quote": "\"literal_mutant_evaluations\":",
+              "line_start": 8,
+              "line_end": 8,
+              "excerpt_sha256": "4ecd8185ab2fd646e5a9db399302b86b68a5309dce1030585e459e51fab0fe16",
+              "file_sha256": "2e73ee343b9ecc68d59a347a39dfad55415820dab3498d0f685d0d87af7220fc",
+              "quote_check": "exact"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
-            "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
+            "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
             "status": "PARTIAL"
           },
-          "change": "upgraded",
-          "change_reason": "Round-4 historical reader and schema closure mutations pass both complete checker entry points; all earlier B1..B8 mutations rerun."
+          "change": "carried",
+          "change_reason": "R4-B1 guard isolation is repaired; new confirmed FIX5-N2 outside the authorized check-11 scope prevents upgrading C12.",
+          "guard_isolation": {
+            "command": "python3 scripts/pm_filesafe_guard_isolation.py --output <evidence-path>",
+            "status": "PASS",
+            "literal_matrix": true,
+            "guards": 830,
+            "negatives": 3119,
+            "uncovered": 0,
+            "unexpected_flips": 0,
+            "exceptions": 0,
+            "proof_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix5/guard-removal-matrix.json",
+            "proof_sha256": "c0d75d433620ecac9ae4cf6e341cf80d3fc2aec694e71cf20b87d0d6e6221fa7"
+          },
+          "out_of_scope_finding": {
+            "id": "FIX5-N2",
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix5/numeric-epoch-probes.json",
+            "sha256": "c4c296207762e6ab556ea1b7f47f1dcce668bb5117cd564cc865a839c5fbc457"
+          }
         }
       },
       "remaining_gaps": [
         "RETENTION: Is safe_point.restored EventRecord history an authority/outcome receipt (RP-AUTHORITY-INDEFINITE), non-authority recovery operational history (RP-OPERATIONAL-2555D), or runtime history (RP-RUNTIME-365D), independently of the already-governed original restore transaction and snapshot bodies? PENDING_RETENTION_DECISION remains in SP-558.",
-        "ADMISSION: safe_point.restored membership_version remains ABSENT; separate individual batch admission is required."
+        "ADMISSION: safe_point.restored membership_version remains ABSENT; separate individual batch admission is required.",
+        "FIX5-N2: Application writer_epoch 1.0 passes as 1 with a distinct accepted_source_sha256; numeric-ingress follow-up required."
       ],
       "static_checks_seen": [
         "python3 scripts/pm_filesafe_event_contracts.py",
         "python3 scripts/pm_filesafe_event_authority.py",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
-        "python3 scripts/pm-plan-index.py validate"
+        "python3 scripts/pm-plan-index.py validate",
+        "python3 scripts/pm_filesafe_guard_isolation.py --output <evidence-path>"
       ],
       "notes": "Prepared normative depth only. Native execution/authenticity, durable storage, filesystem effects, payload addressing and CAS remain NOT_RUN; no admission or governance certification.",
-      "grading_batch": "DF_FIX4_self_grade",
-      "assessed_head": "67aeb8c7228003c40324d5b30a0fdf875a5665ec",
+      "grading_batch": "DF_FIX5_self_grade",
+      "assessed_head": "4309f746955e76e73f43a95e1b51defa6a793325",
       "counts": {
-        "PASS": 10,
-        "PARTIAL": 1,
+        "PASS": 9,
+        "PARTIAL": 2,
         "ABSENT": 1
       },
-      "prepared_verdict": "PREPARED_WITHOUT_ADMISSION_RETENTION_PENDING"
+      "prepared_verdict": "NOT_READY_FIX5_N2"
     }
   ]
 }
