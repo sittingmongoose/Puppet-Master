@@ -116,6 +116,11 @@
       "id": "date_time.unicode_digits",
       "value": "\uff12\uff10\uff12\uff16-02-01T10:00:00Z",
       "accepted": false
+    },
+    {
+      "id": "date_time.year_zero",
+      "value": "0000-02-01T10:00:00Z",
+      "accepted": false
     }
   ]
 }

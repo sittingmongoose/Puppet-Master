@@ -1877,6 +1877,49 @@
               "working_directory": "/work/p1"
             }
           }
+        },
+        {
+          "case_id": "filesafe.command_denied.sweep1.format.year_zero",
+          "layer": "schema",
+          "payload": {
+            "schema_version": "2.0.0",
+            "operation_id": "op-filesafe-command_denied",
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "srv1"
+            },
+            "ts": "0000-02-01T10:00:00Z",
+            "guard_type": "bash_guard",
+            "denial_code": "denial_code-1",
+            "command_preview": "command_preview-1",
+            "normalized_command_identity": "normalized_command_identity-1",
+            "segment_index": 1,
+            "pattern_matched": "pattern_matched-1",
+            "permission_snapshot_id": "permission_snapshot_id-1",
+            "filesafe_scope_ref": "filesafe_scope_ref-1",
+            "project_id": null,
+            "run_id": "run1",
+            "worktree_id": "worktree_id-1",
+            "allowed_action_ids": [
+              "open_details"
+            ],
+            "execution_context": {
+              "thread_id": "th1",
+              "run_id": "run1",
+              "computer_id": "c1",
+              "host_id": "h1",
+              "environment_id": "e1",
+              "root_id": "root1",
+              "root_generation": "rg1",
+              "working_directory": "/work/p1"
+            }
+          }
         }
       ],
       "identity_vectors": [
@@ -3524,6 +3567,44 @@
               "server_id": "srv1"
             },
             "ts": "２０２６-02-01T10:00:00Z",
+            "request_id": "request_id-1",
+            "guard_type": "bash_guard",
+            "denial_code": "denial_code-1",
+            "denial_reason": "denial_reason-1",
+            "auth_realm": "auth_realm-1",
+            "operator_identity_ref": "operator_identity_ref-1",
+            "project_id": null,
+            "run_id": "run1",
+            "worktree_id": "worktree_id-1",
+            "execution_context": {
+              "thread_id": "th1",
+              "run_id": "run1",
+              "computer_id": "c1",
+              "host_id": "h1",
+              "environment_id": "e1",
+              "root_id": "root1",
+              "root_generation": "rg1",
+              "working_directory": "/work/p1"
+            }
+          }
+        },
+        {
+          "case_id": "filesafe.destructive_override_denied.sweep1.format.year_zero",
+          "layer": "schema",
+          "payload": {
+            "schema_version": "2.0.0",
+            "operation_id": "op-filesafe-destructive_override_denied",
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "srv1"
+            },
+            "ts": "0000-02-01T10:00:00Z",
             "request_id": "request_id-1",
             "guard_type": "bash_guard",
             "denial_code": "denial_code-1",
@@ -6155,6 +6236,64 @@
               "server_id": "srv1"
             },
             "ts": "２０２６-02-01T10:00:00Z",
+            "request_id": "request_id-1",
+            "receipt_id": "receipt_id-1",
+            "guard_type": "bash_guard",
+            "authorized_scope": {
+              "scope_kind": "application",
+              "project_id": null,
+              "run_id": "run1",
+              "normalized_command_identity": "normalized-redacted-command-1",
+              "server_id": "srv1",
+              "computer_id": "c1",
+              "thread_id": "th1",
+              "host_id": "h1",
+              "environment_id": "e1",
+              "recorded_roots": [
+                {
+                  "root_id": "root1",
+                  "root_generation": "rg1",
+                  "canonical_path": "/work/p1"
+                }
+              ]
+            },
+            "reason": "reason-1",
+            "auth_realm": "auth_realm-1",
+            "operator_identity_ref": "operator_identity_ref-1",
+            "issued_at": "2026-11-04T12:00:00Z",
+            "expires_at": "2026-11-04T12:05:00Z",
+            "project_id": null,
+            "run_id": "run1",
+            "worktree_id": "worktree_id-1",
+            "execution_context": {
+              "thread_id": "th1",
+              "run_id": "run1",
+              "computer_id": "c1",
+              "host_id": "h1",
+              "environment_id": "e1",
+              "root_id": "root1",
+              "root_generation": "rg1",
+              "working_directory": "/work/p1"
+            }
+          }
+        },
+        {
+          "case_id": "filesafe.destructive_override_granted.sweep1.format.year_zero",
+          "layer": "schema",
+          "payload": {
+            "schema_version": "2.0.0",
+            "operation_id": "op-filesafe-destructive_override_granted",
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "srv1"
+            },
+            "ts": "0000-02-01T10:00:00Z",
             "request_id": "request_id-1",
             "receipt_id": "receipt_id-1",
             "guard_type": "bash_guard",
@@ -8846,6 +8985,64 @@
               "working_directory": "/work/p1"
             }
           }
+        },
+        {
+          "case_id": "filesafe.destructive_override_requested.sweep1.format.year_zero",
+          "layer": "schema",
+          "payload": {
+            "schema_version": "2.0.0",
+            "operation_id": "op-filesafe-destructive_override_requested",
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "srv1"
+            },
+            "ts": "0000-02-01T10:00:00Z",
+            "request_id": "request_id-1",
+            "guard_type": "bash_guard",
+            "command_preview": "command_preview-1",
+            "normalized_command_identity": "normalized_command_identity-1",
+            "requested_scope": {
+              "scope_kind": "application",
+              "project_id": null,
+              "run_id": "run1",
+              "normalized_command_identity": "normalized_command_identity-1",
+              "server_id": "srv1",
+              "computer_id": "c1",
+              "thread_id": "th1",
+              "host_id": "h1",
+              "environment_id": "e1",
+              "recorded_roots": [
+                {
+                  "root_id": "root1",
+                  "root_generation": "rg1",
+                  "canonical_path": "/work/p1"
+                }
+              ]
+            },
+            "requested_duration": 1,
+            "reason": "reason-1",
+            "auth_realm": "auth_realm-1",
+            "operator_identity_ref": "operator_identity_ref-1",
+            "project_id": null,
+            "run_id": "run1",
+            "worktree_id": "worktree_id-1",
+            "execution_context": {
+              "thread_id": "th1",
+              "run_id": "run1",
+              "computer_id": "c1",
+              "host_id": "h1",
+              "environment_id": "e1",
+              "root_id": "root1",
+              "root_generation": "rg1",
+              "working_directory": "/work/p1"
+            }
+          }
         }
       ],
       "identity_vectors": [
@@ -10647,6 +10844,45 @@
               "server_id": "srv1"
             },
             "ts": "２０２６-02-01T10:00:00Z",
+            "guard_type": "bash_guard",
+            "diagnostic_code": "diagnostic_code-1",
+            "failure_stage": "failure_stage-1",
+            "baseline_source": "baseline_source-1",
+            "project_id": null,
+            "run_id": "run1",
+            "worktree_id": "worktree_id-1",
+            "blocked_capability": "blocked_capability-1",
+            "user_visible_message": "user_visible_message-1",
+            "redaction_profile": "redaction_profile-1",
+            "execution_context": {
+              "thread_id": "th1",
+              "run_id": "run1",
+              "computer_id": "c1",
+              "host_id": "h1",
+              "environment_id": "e1",
+              "root_id": "root1",
+              "root_generation": "rg1",
+              "working_directory": "/work/p1"
+            }
+          }
+        },
+        {
+          "case_id": "filesafe.guard_init_failed.sweep1.format.year_zero",
+          "layer": "schema",
+          "payload": {
+            "schema_version": "2.0.0",
+            "operation_id": "op-filesafe-guard_init_failed",
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "srv1"
+            },
+            "ts": "0000-02-01T10:00:00Z",
             "guard_type": "bash_guard",
             "diagnostic_code": "diagnostic_code-1",
             "failure_stage": "failure_stage-1",
@@ -12648,6 +12884,50 @@
               "working_directory": "/work/p1"
             }
           }
+        },
+        {
+          "case_id": "filesafe.path_denied.sweep1.format.year_zero",
+          "layer": "schema",
+          "payload": {
+            "schema_version": "2.0.0",
+            "operation_id": "op-filesafe-path_denied",
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "srv1"
+            },
+            "ts": "0000-02-01T10:00:00Z",
+            "guard_type": "bash_guard",
+            "denial_code": "denial_code-1",
+            "path_preview": "path_preview-1",
+            "normalized_path": "normalized_path-1",
+            "canonical_parent": "canonical_parent-1",
+            "path_kind": "path_kind-1",
+            "operation": "operation-1",
+            "filesafe_scope_ref": "filesafe_scope_ref-1",
+            "permission_snapshot_id": "permission_snapshot_id-1",
+            "project_id": null,
+            "run_id": "run1",
+            "worktree_id": "worktree_id-1",
+            "allowed_action_ids": [
+              "open_details"
+            ],
+            "execution_context": {
+              "thread_id": "th1",
+              "run_id": "run1",
+              "computer_id": "c1",
+              "host_id": "h1",
+              "environment_id": "e1",
+              "root_id": "root1",
+              "root_generation": "rg1",
+              "working_directory": "/work/p1"
+            }
+          }
         }
       ],
       "identity_vectors": [
@@ -14239,6 +14519,42 @@
               "server_id": "srv1"
             },
             "ts": "２０２６-02-01T10:00:00Z",
+            "degraded_component": "degraded_component-1",
+            "degradation_reason": "degradation_reason-1",
+            "authoritative_enforcement_intact": true,
+            "fallback_source": "fallback_source-1",
+            "project_id": null,
+            "run_id": "run1",
+            "worktree_id": "worktree_id-1",
+            "execution_context": {
+              "thread_id": "th1",
+              "run_id": "run1",
+              "computer_id": "c1",
+              "host_id": "h1",
+              "environment_id": "e1",
+              "root_id": "root1",
+              "root_generation": "rg1",
+              "working_directory": "/work/p1"
+            }
+          }
+        },
+        {
+          "case_id": "filesafe.policy_degraded.sweep1.format.year_zero",
+          "layer": "schema",
+          "payload": {
+            "schema_version": "2.0.0",
+            "operation_id": "op-filesafe-policy_degraded",
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "srv1"
+            },
+            "ts": "0000-02-01T10:00:00Z",
             "degraded_component": "degraded_component-1",
             "degradation_reason": "degradation_reason-1",
             "authoritative_enforcement_intact": true,
@@ -16688,6 +17004,52 @@
               "working_directory": "/work/p1"
             }
           }
+        },
+        {
+          "case_id": "safe_point.created.sweep1.format.year_zero",
+          "layer": "schema",
+          "payload": {
+            "schema_version": "2.0.0",
+            "operation_id": "op-safe_point-created",
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "srv1"
+            },
+            "ts": "0000-02-01T10:00:00Z",
+            "safe_point_id": "safe_point_id-1",
+            "run_id": "run1",
+            "node_id": null,
+            "attempt_id": null,
+            "worktree_id": "worktree_id-1",
+            "worktree_path": "worktree_path-1",
+            "branch_name": "branch_name-1",
+            "HEAD_sha": "HEAD_sha-1",
+            "baseline_ref": "baseline_ref-1",
+            "replan_generation": 1,
+            "creation_reason": "creation_reason-1",
+            "snapshot_format_version": "1",
+            "content_scope_version": "1",
+            "snapshot_manifest_ref": "snapshot_manifest_ref-1",
+            "snapshot_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "content_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "capture_status": "complete",
+            "execution_context": {
+              "thread_id": "th1",
+              "run_id": "run1",
+              "computer_id": "c1",
+              "host_id": "h1",
+              "environment_id": "e1",
+              "root_id": "root1",
+              "root_generation": "rg1",
+              "working_directory": "/work/p1"
+            }
+          }
         }
       ],
       "identity_vectors": [
@@ -18846,6 +19208,45 @@
               "server_id": "srv1"
             },
             "ts": "２０２６-02-01T10:00:00Z",
+            "restore_transaction_id": "restore_transaction_id-1",
+            "safe_point_id": "safe_point_id-1",
+            "run_id": "run1",
+            "node_id": null,
+            "attempt_id": null,
+            "restore_outcome": "restored_clean",
+            "target_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "pre_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "post_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "recovered_after_restart": false,
+            "execution_context": {
+              "thread_id": "th1",
+              "run_id": "run1",
+              "computer_id": "c1",
+              "host_id": "h1",
+              "environment_id": "e1",
+              "root_id": "root1",
+              "root_generation": "rg1",
+              "working_directory": "/work/p1"
+            }
+          }
+        },
+        {
+          "case_id": "safe_point.restored.sweep1.format.year_zero",
+          "layer": "schema",
+          "payload": {
+            "schema_version": "2.0.0",
+            "operation_id": "op-safe_point-restored",
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "srv1"
+            },
+            "ts": "0000-02-01T10:00:00Z",
             "restore_transaction_id": "restore_transaction_id-1",
             "safe_point_id": "safe_point_id-1",
             "run_id": "run1",
