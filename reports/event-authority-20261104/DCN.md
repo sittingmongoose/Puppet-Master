@@ -1,6 +1,6 @@
 # DCN — Card 2 names, prepared without admission
 
-Base `origin/main`: `16acf7594a3fe8559af89491b895f440b314b99e`. Branch: `plans/ea-w3-card2-names-20261104`. Round 2 implementation commit: `ace2fabbb63f55d833db1383cf3e49b025396fd2` (reviewed prior head `83b4c94950504b7085aa7c65b2a0712b1c51dcf5`). Native execution: **NOT_RUN**. Cycle-two blind review: **NOT_READY**, browser 9/2/1 and memory 7/4/1. The round-2 response and guard table below supersede the historical round-1 claims; this remains a self-grade.
+Base `origin/main`: `16acf7594a3fe8559af89491b895f440b314b99e`. Branch: `plans/ea-w3-card2-names-20261104`. Round-3 implementation: `eb4c782f744151d6eaf99208415eb974e4c0d079`; reviewed starting head `585dc855196a4bb4fbc81ace71da46f8c9c3a71f`. The round-3 findings, proof, grades and limits below supersede earlier claims. Native **NOT_RUN**; membership **ABSENT**.
 
 **Scope count:** DCN is assigned 17 names: 7 Browser + 8 memory + 2 already-retired names. All 17 are handled. The lane also explicitly lists `chat.response_stop_requested` as **not yours**, assigned to DCH; including that held name gives 18 overall. This branch leaves that name to DCH and does not extend DCN’s scope.
 
@@ -335,7 +335,7 @@ Whole-lane synthetic suite: **189 positives / 1616 negatives**, all **125 guards
 IDs reused, none minted: **SMPFS-244..248, CV-780..785, SP-760..765, AMS-130, ATS-380**. Existing UCC-084 companion changes and all eleven exclusion records are preserved.
 
 
-## Review round 2: findings and responses
+## Review round 2: findings and responses (historical; B6/B8 superseded by round 3)
 
 Implementation `ace2fabbb63f55d833db1383cf3e49b025396fd2` applies exactly **DL-405 (2a A)** and **DL-407 (2c A)**. No new ID or product choice is introduced.
 
@@ -606,3 +606,280 @@ Duplicate sets concern the same defect: schema/size; scope/schema joins; schema/
 - `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round2/build-fixtures.py` — SHA-256 `13ccb69b5909c6f52263c854b0e595d09588495ce731994814f024c73b52e95c`.
 
 IDs reused, none minted: **SMPFS-244..248, CV-780..785, SP-760..765, AMS-130, ATS-380**. Existing UCC-084 and all eleven exclusion rows are preserved. No admission/registry/Decision Log/governance edit, main push, landing lock, subagent or product choice.
+
+
+## Review round 3: findings and responses
+
+Implementation `eb4c782f744151d6eaf99208415eb974e4c0d079` fixes the full cycle-three review against `585dc855196a4bb4fbc81ace71da46f8c9c3a71f`. Applied decisions are exactly **DL-405 / 2a A** and **DL-407 / 2c A**. Both Astra items 10 and 11 apply. No finding is disputed, no product question is stopped, and no new product policy, ID, admission or governance artifact is authored.
+
+- **DCN-B6 — fixed** (`eb4c782f744151d6eaf99208415eb974e4c0d079`). `scripts/pm_card2_events.py:216` and AMS-130 validate all six claim facts on both immutable snapshots. **AMS-044 / section 5.3** define support as a subset of the gist version evidence_refs, scoped to what it establishes, with exact currentness `current | needs_revalidation | source_unavailable`; AMS-045 defines invalidation and preserves history. Every required nested omission and wrong type refuses on append/retry/history in both scopes and on no-event verification. Distinct claim identities, support membership/uniqueness, nonempty scope and exact enum values are checked. New Verified results require actual nonempty/current per-claim support plus genuine owner evaluation; optional gist summaries cannot substitute. The existing configured manual-only exception still works and cannot authorize automatic override, malformed facts or foreign support. Complete two-claim/currentness-change controls pass; removing currentness from both and reporting only verification_state refuses. No deterministic natural-language entailment is claimed.
+- **DCN-B8 — fixed** (`eb4c782f744151d6eaf99208415eb974e4c0d079`). The cap originated in draft commit `66480989f15aa8bf48fbd6c2dd2017caadc26c50`, `Plans/card2_event_payloads.schema.json` (reviewed line 1488). Section 3.1/3.3 MemoryGist/EvidenceRef canon and Storage set no 16-reference limit. The draft-derived memory <=6144-byte claim in SP-765 was not an independent owner count policy and is replaced. The schema count cap is removed. Complete **16/17-reference** controls pass on all six scope/path combinations. Larger evidence lists use a closed **SP-337 collection reference**, not truncation: original Storage/server/scope/thread custody, actual pack bytes, BLAKE3, exact integer byte count, media type, canonical MessagePack array, durability and complete source equality are checked. A 2,000-pointer list and exact **16,384-inline / 16,385-referenced** boundaries pass for every path/scope; unexternalized large bodies refuse solely at inline_size. Referenced memory metadata is at most **2,057 bytes** at all field maxima. The whole inline ceiling stays **16 KiB**. No new gist limit, body store, retention choice or successor requirement is introduced.
+
+Only AMS-130, SP-765 and their companions change. The five Browser semantic contracts, payload definitions, positive/negative fixtures and admission manifest remain unchanged. The shared anyOf full-match helper now visits array/object alternatives; this tightens validation, and all Browser suites were rerun. The eleven existing exclusion/application records and UCC-084 remain unchanged.
+
+### Grades and the seven memory exclusions
+
+| Family | Cycle-three review before | Round-3 self-grade after |
+|---|---|---|
+| browser.session.created | 11 PASS / 0 PARTIAL / 1 ABSENT | 11 PASS / 0 PARTIAL / 1 ABSENT |
+| browser.session.state_changed | 11 PASS / 0 PARTIAL / 1 ABSENT | 11 PASS / 0 PARTIAL / 1 ABSENT |
+| browser.session.closed | 11 PASS / 0 PARTIAL / 1 ABSENT | 11 PASS / 0 PARTIAL / 1 ABSENT |
+| browser.session.promoted | 11 PASS / 0 PARTIAL / 1 ABSENT | 11 PASS / 0 PARTIAL / 1 ABSENT |
+| browser.session.takeover_state_changed | 11 PASS / 0 PARTIAL / 1 ABSENT | 11 PASS / 0 PARTIAL / 1 ABSENT |
+| memory.gist_state_changed | 7 PASS / 4 PARTIAL / 1 ABSENT | 11 PASS / 0 PARTIAL / 1 ABSENT |
+
+The four memory upgrades are producer, closed_payload_schema, transitions and positive_negative_oracles. Every current grade quotation is checked against its exact owner unit. In my judgment the seven memory exclusions now satisfy DL-407 at **prepared static-contract depth**: requested/failed/unchanged verification retains only its command result; successful verify/edit/pin/unpin/discard and automatic changes have one complete state-change contract. Names: memory.gist.verification_requested, memory.gist.verified, memory.gist.verification_failed, memory.gist.updated, memory.gist.pinned, memory.gist.unpinned, memory.gist.discarded. No denominator removal or runtime/admission proof is claimed. Pinned answer and retention branches must integrate before admission.
+
+### Standing checks 1–11 — round 3
+
+| Check | Evidence and result |
+|---|---|
+| 1 | Current append/retry refuse replay-only; retained original policies remain independently readable. |
+| 2 | CV-366 application identity is recomputed from exact server/operation UTF-8. |
+| 3 | All Project positives use encoded project~ partitions; raw/foreign partitions refuse. |
+| 4 | Uncapped evidence uses full-root 16 KiB measurement and SP-337 collection custody. Exact boundary/large-list controls and all-field reference-root maximum are tested; no separately persisted operation body is added. |
+| 5 | Full-match checks now traverse the new union too; LF/representation negatives refuse. Source support references use full-match validation. |
+| 6 | The unchanged RFC 8785 producer-semantic digest excludes assigned sequence/times; original/receipt custody remains exact. Frozen reference descriptors are included in that same semantic recipe. |
+| 7 | Every checkpoint positive matches its event; all twelve coherent foreign checkpoint cases still flip solely with token_storage removed. |
+| 8 | Actual failing CLI processes exit 1; a success exit fails the failure oracle. |
+| 9 | Unvisited dangling refs in all three schemas fail eagerly before fixtures; all refs resolve normally. |
+| 10 | Genuine retained policy/source history survives changed live subjects/stop generation, including replay-only; forged/withdrawn/access/deletion/foreign sources refuse. Nested source structure is mandatory, independently of live state. |
+| 11 | Entire lane actual callable removal/restoration, one guard or named duplicate set at a time; all other predicates run. All old 4,970 cases remain isolated. New cases are built from valid controls with truthful deltas and coherent copies. |
+
+### What Astra keeps finding — all eleven classes for memory
+
+| Class | Mutation and ruling |
+|---|---|
+| 1 Forged/contradictory inputs | Fresh forged original IDs and foreign original subjects refuse on all paths/scopes. Nested incomplete support, foreign support subsets and noncurrent Verified claims now refuse; original/key/hash recipes still recompute from genuine sources. Pack IDs hash actual raw bytes rather than trusted copies. |
+| 2 Payload-trusted Storage metadata | Fresh receipt-time contradictions refuse on retry/history. Valid candidate assigned metadata remains outside semantic comparison; original/receipt authenticity and exact types remain mandatory. Pack durability/authenticity also refuse string/number aliases. |
+| 3 History wrong either way | Fresh history controls accept all four original policy forms after live subject disappearance/stale stop. Forged/foreign/withdrawn/access/deletion inputs refuse. Historical original admission never receives current-writer rules; old noncurrent before facts do not become current support. |
+| 4 One field read two ways | Full-match identifiers/hashes refuse integer, case, whitespace and LF aliases. Exact-type source values are never coerced; reference bytes are decoded uniformly and must reencode canonically. Semantic numeric equality stays RFC 8785; custody stays strict. |
+| 5 Unvisited dangling refs | Three actual CLI injections in unvisited definitions fail with exit 1. Eager traversal is unchanged. |
+| 6 Size only part of value | The original 16-count cap is removed. The complete metadata root is measured, not only its ref. 16,384/16,385-byte and 2,000-reference controls prove the route. All-property referenced metadata is <=2,057 bytes; its external collection is intentionally larger. No hidden operation body or new checkpoint exists, and the contradictory SP-765 small-body/successor-only sentence is removed. |
+| 7 Missing custody path | All six path/scope combinations reject original record subject contradictions and pack authenticity/durability/scope/digest/size/media/encoding/resolution defects. Genuine but different resolved collections fail full source equality. Missing pack resolution never authorizes a mutation, retry result or disclosure. |
+| 8 Masked negatives | Full whole-lane guard proof below. Observational event/Storage/original copies and exact deltas are coherent. Every unrelated negative retains its remaining intended failure set. Only named same-value schema/codec duplicates are removed together; no composite bypass or guard is left weakened. |
+| 9 Grade overclaim | Memory starts at independent 7/4/1 and upgrades only after B6/B8 defect controls, valid-domain controls and full removal proof pass. Membership ABSENT and native NOT_RUN remain explicit. Index baseline failures below are reported, not called PASS. |
+| 10 Numbers two ways | Full regression numeric recipes and fresh memory retry controls cover 1/1.0/1e0 and signed/decimal/exponent zero; leading-zero JSON refuses parsing. BLAKE3 inputs are canonical pointer-array bytes; reference byte counts require exact integers (including a float-equal-count negative). No alternate reference identity is accepted for noncanonical bytes. |
+| 11 Types confused | Both snapshots, every required claim field and both claim positions get isolated omission/type tests, including string booleans/numbers, null, arrays, objects and numeric bool/int aliases. Fresh scope-array/object probes refuse. No-event claims are equally checked. Collection size/media/pack bytes and authenticity/durability types refuse malformed forms. |
+
+### Guard-removal table — round 3
+
+**PASS: 317 positives / 6785 negatives / 129 guards / 141 unique removal sets; every removal restored, zero proof errors.** Plus 36 full-JSON parser refusals. The checker replaces actual GUARDS callables and rechecks every negative before, during and after each removal. Full flipping/still-rejected IDs are in the pinned oracles.json; the self-grade keeps flipping IDs and its hash-pinned complete remaining list.
+
+New intentional duplicate sets concern the **same malformed descriptor value**: payload_schema plus memory_evidence_custody for invalid size/media, and inline_size plus memory_evidence_custody for a float byte count that the physical MessagePack codec also refuses. Existing named duplicates are preserved. Source/pack resolution is only an applicability prerequisite for dereferencing unavailable values; unrelated guards still execute. Invalid source fields are never repaired with defaults.
+
+| Guard or named duplicate set | Negatives that flip | Others still reject | Restored |
+|---|---:|---:|---|
+| `scenario_path` | 12 | 6773 | yes |
+| `scenario_shape` | 12 | 6773 | yes |
+| `envelope_schema` | 36 | 6749 | yes |
+| `envelope_schema`, `payload_schema` | 108 | 6677 | yes |
+| `envelope_schema`, `scope_project_id` | 48 | 6737 | yes |
+| `envelope_schema`, `storage_format_observed_at_utc` | 48 | 6737 | yes |
+| `envelope_schema`, `storage_format_persisted_at_utc` | 60 | 6725 | yes |
+| `inline_size`, `payload_schema` | 30 | 6755 | yes |
+| `memory_evidence_custody`, `payload_schema` | 282 | 6503 | yes |
+| `payload_schema` | 12 | 6773 | yes |
+| `payload_fullmatch` | 12 | 6773 | yes |
+| `inline_size` | 6 | 6779 | yes |
+| `inline_size`, `memory_evidence_custody` | 204 | 6581 | yes |
+| `inline_reference` | 12 | 6773 | yes |
+| `scope_scope_kind`, `source_scope_kind` | 24 | 6761 | yes |
+| `scope_project_id` | 6 | 6779 | yes |
+| `scope_thread_id` | 12 | 6773 | yes |
+| `scope_schema` | 12 | 6773 | yes |
+| `scope_partition` | 12 | 6773 | yes |
+| `private_thread` | 1 | 6784 | yes |
+| `source_storage_instance_id` | 12 | 6773 | yes |
+| `source_server_id` | 12 | 6773 | yes |
+| `source_computer_id` | 12 | 6773 | yes |
+| `source_thread_id` | 12 | 6773 | yes |
+| `source_project_id` | 12 | 6773 | yes |
+| `source_scope_kind` | 12 | 6773 | yes |
+| `lineage_shape` | 12 | 6773 | yes |
+| `lineage_run_id` | 12 | 6773 | yes |
+| `lineage_node_id` | 12 | 6773 | yes |
+| `lineage_attempt_id` | 12 | 6773 | yes |
+| `source_owner_operation_id` | 12 | 6773 | yes |
+| `source_owner_change_id` | 12 | 6773 | yes |
+| `source_revision_before` | 10 | 6775 | yes |
+| `source_revision_after` | 12 | 6773 | yes |
+| `source_before_record_ref` | 10 | 6775 | yes |
+| `source_after_record_ref` | 12 | 6773 | yes |
+| `source_subject` | 12 | 6773 | yes |
+| `source_workspace` | 10 | 6775 | yes |
+| `source_authentic` | 360 | 6425 | yes |
+| `source_committed` | 336 | 6449 | yes |
+| `current_stop` | 228 | 6557 | yes |
+| `record_resolution` | 12 | 6773 | yes |
+| `record_subject_id` | 12 | 6773 | yes |
+| `record_storage_instance_id` | 12 | 6773 | yes |
+| `record_server_id` | 12 | 6773 | yes |
+| `record_computer_id` | 12 | 6773 | yes |
+| `record_project_id` | 12 | 6773 | yes |
+| `record_thread_id` | 12 | 6773 | yes |
+| `record_scope_kind` | 12 | 6773 | yes |
+| `record_run_id` | 12 | 6773 | yes |
+| `record_node_id` | 12 | 6773 | yes |
+| `record_attempt_id` | 12 | 6773 | yes |
+| `record_revision` | 12 | 6773 | yes |
+| `record_ref` | 36 | 6749 | yes |
+| `record_workspace` | 10 | 6775 | yes |
+| `command_source` | 12 | 6773 | yes |
+| `memory_command` | 1 | 6784 | yes |
+| `revision_step` | 12 | 6773 | yes |
+| `real_change` | 336 | 6449 | yes |
+| `memory_delta`, `transition` | 68 | 6717 | yes |
+| `memory_fact_verification_state`, `transition` | 50 | 6735 | yes |
+| `transition` | 48 | 6737 | yes |
+| `verification_support` | 44 | 6741 | yes |
+| `memory_evidence_custody` | 192 | 6593 | yes |
+| `memory_verified_claims` | 18 | 6767 | yes |
+| `memory_fact_evidence_refs`, `memory_source_shape` | 1470 | 5315 | yes |
+| `memory_fact_pinned`, `memory_fact_previous_pinned`, `memory_source_shape` | 1466 | 5319 | yes |
+| `memory_fact_previous_verification_state`, `memory_fact_verification_state`, `memory_source_shape` | 1464 | 5321 | yes |
+| `memory_fact_source`, `memory_source_shape` | 1464 | 5321 | yes |
+| `memory_source_shape` | 1460 | 5325 | yes |
+| `memory_delta` | 16 | 6769 | yes |
+| `memory_fact_previous_pinned` | 2 | 6783 | yes |
+| `memory_fact_pinned` | 2 | 6783 | yes |
+| `memory_fact_previous_verification_state` | 2 | 6783 | yes |
+| `memory_fact_source` | 2 | 6783 | yes |
+| `memory_fact_evidence_refs` | 8 | 6777 | yes |
+| `browser_fact_previous_session_class` | 8 | 6777 | yes |
+| `browser_fact_session_class` | 10 | 6775 | yes |
+| `browser_fact_previous_takeover_state` | 8 | 6777 | yes |
+| `browser_fact_takeover_state` | 10 | 6775 | yes |
+| `browser_fact_previous_lifecycle_state` | 8 | 6777 | yes |
+| `browser_fact_lifecycle_state` | 10 | 6775 | yes |
+| `browser_delta` | 8 | 6777 | yes |
+| `double_record` | 84 | 6701 | yes |
+| `replay_only` | 48 | 6737 | yes |
+| `idempotency` | 12 | 6773 | yes |
+| `event_identity` | 24 | 6761 | yes |
+| `first_receipt` | 228 | 6557 | yes |
+| `storage_authentic` | 240 | 6545 | yes |
+| `original_record` | 72 | 6713 | yes |
+| `historical_record` | 12 | 6773 | yes |
+| `storage_event_id` | 12 | 6773 | yes |
+| `storage_sequence_id` | 24 | 6761 | yes |
+| `storage_observed_at_utc` | 12 | 6773 | yes |
+| `storage_persisted_at_utc` | 12 | 6773 | yes |
+| `storage_receipt_issued` | 228 | 6557 | yes |
+| `retry` | 300 | 6485 | yes |
+| `digest_frontier`, `token_schema` | 48 | 6737 | yes |
+| `token_schema` | 12 | 6773 | yes |
+| `token_observation` | 12 | 6773 | yes |
+| `snapshot` | 60 | 6725 | yes |
+| `token_storage` | 12 | 6773 | yes |
+| `token_source_identity` | 12 | 6773 | yes |
+| `token_key` | 12 | 6773 | yes |
+| `token_ref` | 12 | 6773 | yes |
+| `token_dataset` | 12 | 6773 | yes |
+| `reader_partition` | 12 | 6773 | yes |
+| `reader_event_id` | 12 | 6773 | yes |
+| `reader_event_type` | 12 | 6773 | yes |
+| `reader_sequence_id` | 84 | 6701 | yes |
+| `digest_current_bytes_sha256` | 12 | 6773 | yes |
+| `digest_manifest_bytes_sha256` | 12 | 6773 | yes |
+| `digest_manifest_survivor_prefix_sha256` | 12 | 6773 | yes |
+| `digest_retained_inventory_sha256` | 12 | 6773 | yes |
+| `digest_durable_watermarks_sha256` | 12 | 6773 | yes |
+| `digest_excluded_ranges_sha256` | 12 | 6773 | yes |
+| `digest_retired_inputs_sha256` | 12 | 6773 | yes |
+| `selection_selected_segment_generation` | 12 | 6773 | yes |
+| `selection_manifest_generation` | 12 | 6773 | yes |
+| `selection_recovery_epoch` | 12 | 6773 | yes |
+| `digest_anchor` | 12 | 6773 | yes |
+| `digest_frontier` | 12 | 6773 | yes |
+| `frontier_revision` | 12 | 6773 | yes |
+| `generation_identity` | 12 | 6773 | yes |
+| `anchor_storage` | 12 | 6773 | yes |
+| `frontier_selection` | 12 | 6773 | yes |
+| `historical_authentic` | 120 | 6665 | yes |
+| `withdrawn` | 240 | 6545 | yes |
+| `reader_withdrawn` | 120 | 6665 | yes |
+| `access` | 120 | 6665 | yes |
+| `deleted_disclosure` | 120 | 6665 | yes |
+| `reader_effect` | 12 | 6773 | yes |
+| `family_checkpoint` | 84 | 6701 | yes |
+| `command_only_count` | 21 | 6764 | yes |
+| `command_only_result` | 30 | 6755 | yes |
+| `command_only_command` | 3 | 6782 | yes |
+| `command_only_outcome` | 3 | 6782 | yes |
+| `command_only_source_shape` | 209 | 6576 | yes |
+| `command_only_source_shape`, `command_only_verified` | 211 | 6574 | yes |
+| `command_only_delta` | 3 | 6782 | yes |
+| `command_only_verified` | 1 | 6784 | yes |
+
+### Validation and limits — round 3
+
+| Check | Exit / result |
+|---|---|
+| Whole-lane full guard proof | 0 / PASS, counts above |
+| Extended review regressions | 0 / 6,090 probes, zero unexpected outcomes |
+| Prior review regressions | 0 / 1,620 probes, zero unexpected outcomes |
+| Required-memory completeness regression | 0 / 48 operation bases, zero accepted incomplete sources; combined controls pass and omissions refuse |
+| Numeric recipes | 0 / 168 per-family negatives and eight codec cases, all expected |
+| Fresh memory class probes | 0 / 49 expected outcomes |
+| Size and failing CLI probes | 0 / six all-property bounds and three expected exit-1 CLI processes |
+| Shard generate/check | 0 / top-level pass; changed shard owners only assistant-memory-subsystem and storage-plan |
+| Index generate | 0 / top-level pass |
+| Index validate | 1 / top-level fail: exactly 22 pre-existing removal-gate failures against newer origin/main; coverage pass; readiness blocked_runtime_certification_incomplete |
+| Browser semantics | 0 / ten tests pass |
+| Browser admission checker | 0 / PASS, 53 positives / 576 negatives |
+| Browser admission unittest | 1 / 38 tests, exactly 30 known upstream40 failures |
+| Coordination checker | 1 / exactly its two unchanged baseline failures |
+| Baseline/scope/grade citations and git diff --check | 0 / PASS |
+
+The index failure is reproduced with the unmodified starting-head index against the same current origin/main: missing newer DL-302 invokes the existing removal-ledger gate, which reports twenty-one unchanged ledger-format errors plus that missing unit. The implementation adds/removes no PlanUnit and edits none of those inputs. It is not repaired or hidden by moving origin/main, substituting a passing baseline, changing validators or editing another lane. The branch stays at its requested ancestry. Browser input hashes and unchanged schemas/fixtures are recorded in baseline-witness.json. Native execution remains NOT_RUN.
+
+Resources: preflight 10 GB available RAM / 92 GB disk; later samples remained at least 8 GB RAM / 88 GB disk. Sparse local worktree, fifteen copied currentness files SHA-256 matched before generation. No pm-mail, subagent, admission, registry/Decision Log append, main push, landing lock or reseal. No IDs minted; reused **SMPFS-244..248, CV-780..785, SP-760..765, AMS-130, ATS-380**. Worktree cleanup follows the pushed report commit.
+
+### Round-3 evidence (paths plus SHA-256)
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round3/oracles.json` — SHA-256 `425628f85bf9826fb87549fee2da282c061efa92cc75c92151e120b9ed13a8c2`.
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round3/regression-extended-probes.json` — SHA-256 `d0e973313868c2959505a9cc3dbe0b446d83321c9b8bbbd0d0064a7eea09ff3f`.
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round3/regression-independent-probes.json` — SHA-256 `2e519dd5853368de8aec05f59773080da41be25511cbb8544d61b1a14f9e6811`.
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round3/regression-memory-completeness.json` — SHA-256 `5afe3f4b71edad61cd54d4cec82f6827dc4b2d30bfe96627e1a25bbfcfeca58c`.
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round3/regression-numeric-recipes.json` — SHA-256 `135b466b802f67989524e2fc81936cab55f5ef82a685d8c302e01654e845a014`.
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round3/memory-class-probes.json` — SHA-256 `ed8607bf547bc465429a986362c1f051d4c141bc4c5ac929f2fad81ddf68e0b8`.
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round3/regression-size-and-cli.json` — SHA-256 `f473d34f37543633c7aef9ab8f6fa69dfe96d3dc2a2a5d47ab37c56e1136b545`.
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round3/evidence-size-cases.json` — SHA-256 `928b8e641ae460f4821ed545397cb79ca78642f63dd88c439a4bbfcb3326d206`.
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round3/baseline-witness.json` — SHA-256 `e4748d3eb86041b215f129d9b33d77011a1739b5580275ab5319a11fe121d179`.
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round3/source-domain-search.json` — SHA-256 `51b1beb9e6c27c52c7ec9d5e60d075664fdd46fb56bc97286afcf6f5e95ffb6e`.
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round3/currentness-copy.json` — SHA-256 `ca2d5e7006f07aa13dd0c118f82ffcb29c20a655a7145631160f9516461e7c3c`.
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round3/shards-generate.log` — SHA-256 `48c09691cf1c0464d1276a594016813a0df26d1a721256cd653580869c58d3c4`.
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round3/shards-check.log` — SHA-256 `3df84afb0ff89f7052554bb9700a1bc3294714b9109ec8257ee2b7ab46a86b21`.
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round3/index-generate.log` — SHA-256 `5d11561152bf638c3af3324f6c3a1b7fbd66e76819a8cb73c1cab8c245a1f46f`.
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round3/index-validate.log` — SHA-256 `d26ae005e95d918b45f36203ae2a665763eeb188dbf6477512802485f177652f`.
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round3/browser-semantics.log` — SHA-256 `3f00542a994b3090378a811bb0f5e17a31a8c3593df158f21bf3e04a841c4d60`.
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round3/browser-admission.log` — SHA-256 `c8c8a795d92bc4f9cfc05125a85b541b54b21af920bb359a4a6d172aaab7cf65`.
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round3/browser-admission-tests.log` — SHA-256 `f40ab592db030b25235403d3a30d9b6c89797b2d1f65a9694c41a842155ec1a4`.
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round3/coordination.log` — SHA-256 `a7a906d97e05afa3eec03aded40a2428d67c353bc3292400bddad104e8584b8d`.
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round3/build-fixtures.py` — SHA-256 `95d0bd073d3b42bd7b22535aef07be4dac53d7a2f5e43361cde7ef4ef951591a`.
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round3/scope-audit.json` — SHA-256 `afa066224462c3b2638004e242928f4c78dbc0c5754297929e64ef3486648d95`.
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round3/unit-and-dependency-audit.json` — SHA-256 `9fa54629da64a50df9143bd7038b096a01591edff512624d15aa871630590e3a`.
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round3/oracle-inputs.json` — SHA-256 `1227daa9378aa02b5568d90a07237fbbc26d4affd1eb4b98d17f82598d7c132a`.
