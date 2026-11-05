@@ -3,7 +3,7 @@
   "assessment_id": "DCO-fix1-20261104",
   "assessment_kind": "self_grade_prepared_without_admission",
   "rubric": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
-  "assessed_tree": "21e4dede26ba23a8374f42cb7873c8d23111db7d",
+  "assessed_tree": "d212ce609fa4d1170e5a39df31c71ebd911b8073",
   "registry": {
     "path": "Plans/event_family_registry.json",
     "modified": false
@@ -24,11 +24,11 @@
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-540",
-          "line_start": 27251,
-          "line_end": 27251,
+          "line_start": 27360,
+          "line_end": 27360,
           "quote": "**Producer and ordering.** `AgentCoordinator.record_abort(AgentAbortResolution)`: Only the component that resolves the abort: the parent run's orchestration path, the user command path or th",
           "excerpt_sha256": "740c5dedaf3254c22088c849d95960cd6e89c066c738d2d2672829f30955fe8a",
-          "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+          "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
           "quote_check": "exact"
         }
       ],
@@ -54,11 +54,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-540",
-              "line_start": 27265,
-              "line_end": 27265,
+              "line_start": 27374,
+              "line_end": 27374,
               "quote": "**Oracles.** ATS-058 and this family's own `validation_case_ids` in `Plans/coordination_event_admission.json` bind its positive/negative payloads, EventRecord joins, identity vector, transit",
               "excerpt_sha256": "6e0c9415b6b77e005f69c054c2f6ef0633462effc79ef7c82ce66556b845c3ca",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -77,11 +77,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-540",
-              "line_start": 27249,
-              "line_end": 27249,
+              "line_start": 27358,
+              "line_end": 27358,
               "quote": "This family's own prepared contract reuses OSI-438, CV-353 and SP-320 at payload 1.0.0, after the per-family current search in `reports/event-authority-20261104/DCO-search.json`. It is a new",
               "excerpt_sha256": "237f3f82d01c6c9da54a8afe00058da0fc50f627a20615c52637414dea73698d",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -100,11 +100,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-540",
-              "line_start": 27251,
-              "line_end": 27251,
+              "line_start": 27360,
+              "line_end": 27360,
               "quote": "**Producer and ordering.** `AgentCoordinator.record_abort(AgentAbortResolution)`: Only the component that resolves the abort: the parent run's orchestration path, the user command path or th",
               "excerpt_sha256": "740c5dedaf3254c22088c849d95960cd6e89c066c738d2d2672829f30955fe8a",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -123,11 +123,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-540",
-              "line_start": 27253,
-              "line_end": 27253,
+              "line_start": 27362,
+              "line_end": 27362,
               "quote": "**Payload and scope.** The closed definition `Plans/coordination_event_payloads.schema.json#/$defs/agent_aborted` (schema ID `pm.coordination_event.agent_aborted.schema.v1`, version 1.0.0) i",
               "excerpt_sha256": "160a8d5269b89ac5a04d134de854ef5b4ca14e764b82702d00ff97ba33e7ce80",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             },
             {
@@ -156,11 +156,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-540",
-              "line_start": 27255,
-              "line_end": 27255,
+              "line_start": 27364,
+              "line_end": 27364,
               "quote": "**Identity and retries.** This family explicitly adopts SP-320's `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}` idempotency key with event_type `coordi",
               "excerpt_sha256": "0caaff1a749c36c0364e00835bbb6ca1983b1af3506d75ed02614357c054b3ad",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -179,11 +179,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-540",
-              "line_start": 27255,
-              "line_end": 27255,
+              "line_start": 27364,
+              "line_end": 27364,
               "quote": "**Identity and retries.** This family explicitly adopts SP-320's `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}` idempotency key with event_type `coordi",
               "excerpt_sha256": "0caaff1a749c36c0364e00835bbb6ca1983b1af3506d75ed02614357c054b3ad",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -202,11 +202,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-540",
-              "line_start": 27261,
-              "line_end": 27261,
+              "line_start": 27370,
+              "line_end": 27370,
               "quote": "**Custody and retention.** This family explicitly adopts SP-320's canonical seglog and coherent mandatory backup/restore custody, source holds, no-secret/ref-only bounded payloads and curren",
               "excerpt_sha256": "833a8bc89788aa85dad4fba60bb2296294d2d47988e58fdc50fa9d2fd974a8b0",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             },
             {
@@ -216,7 +216,7 @@
               "line_end": 17416,
               "quote": "| Coordination | 180 days after run completion; 1,000,000/project | compact expired unheld rows |",
               "excerpt_sha256": "a3aad92a255adc65f89ce8a593f825d85911e9d886f4ad84527cb149cbbc12f6",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -235,11 +235,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-540",
-              "line_start": 27261,
-              "line_end": 27261,
+              "line_start": 27370,
+              "line_end": 27370,
               "quote": "**Custody and retention.** This family explicitly adopts SP-320's canonical seglog and coherent mandatory backup/restore custody, source holds, no-secret/ref-only bounded payloads and curren",
               "excerpt_sha256": "833a8bc89788aa85dad4fba60bb2296294d2d47988e58fdc50fa9d2fd974a8b0",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -258,11 +258,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-540",
-              "line_start": 27257,
-              "line_end": 27257,
+              "line_start": 27366,
+              "line_end": 27366,
               "quote": "**Transition.** Terminal, as coordination.agent_unregistered, with agent status cancelled. aborted_by_ref kind follows abort_reason: run and parent_run_id for parent, actor for user, compone",
               "excerpt_sha256": "e280d23e2b96caefd89e600c7b664ecf6e2321a4ddfc260af9721e0603fb43d2",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -281,11 +281,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-540",
-              "line_start": 27259,
-              "line_end": 27259,
+              "line_start": 27368,
+              "line_end": 27368,
               "quote": "**Consumer and checkpoint.** This family explicitly adopts `storage.coordination_projector.v1@1.0.0` and SP-278, with `projector.checkpoint.coordination:{project_id}`, closed `pm.storage_val",
               "excerpt_sha256": "2750758dfddf81a3a46cfcb14997aa3dc14b5623027e0b057ce453f79538c253",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -304,11 +304,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-540",
-              "line_start": 27263,
-              "line_end": 27263,
+              "line_start": 27372,
+              "line_end": 27372,
               "quote": "**Compatibility and withdrawal.** Only this family's closed 1.0.0 definition dispatches; unsupported versions and legacy sketch extensions refuse. Withdrawal first cuts off this family's wri",
               "excerpt_sha256": "e4a80b291a39eab2d884851259e0770498e34cb27e289e46e752761f836fe077",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -327,11 +327,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-540",
-              "line_start": 27265,
-              "line_end": 27265,
+              "line_start": 27374,
+              "line_end": 27374,
               "quote": "**Oracles.** ATS-058 and this family's own `validation_case_ids` in `Plans/coordination_event_admission.json` bind its positive/negative payloads, EventRecord joins, identity vector, transit",
               "excerpt_sha256": "6e0c9415b6b77e005f69c054c2f6ef0633462effc79ef7c82ce66556b845c3ca",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -381,11 +381,11 @@
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-541",
-          "line_start": 27323,
-          "line_end": 27323,
+          "line_start": 27432,
+          "line_end": 27432,
           "quote": "**Producer and ordering.** `AgentCoordinator.record_crash(AgentCrashResolution)`: Only the scheduler or the crash detector, once, on direct crash evidence (process_exit, heartbeat_expired, p",
           "excerpt_sha256": "7377fcee17c8eed6268e574b9357e85f75321f5a8517f0852110d0406b76cea4",
-          "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+          "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
           "quote_check": "exact"
         }
       ],
@@ -412,11 +412,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-541",
-              "line_start": 27337,
-              "line_end": 27337,
+              "line_start": 27446,
+              "line_end": 27446,
               "quote": "**Oracles.** ATS-058 and this family's own `validation_case_ids` in `Plans/coordination_event_admission.json` bind its positive/negative payloads, EventRecord joins, identity vector, transit",
               "excerpt_sha256": "6e0c9415b6b77e005f69c054c2f6ef0633462effc79ef7c82ce66556b845c3ca",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -435,11 +435,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-541",
-              "line_start": 27321,
-              "line_end": 27321,
+              "line_start": 27430,
+              "line_end": 27430,
               "quote": "This family's own prepared contract reuses OSI-438, CV-353 and SP-320 at payload 1.0.0, after the per-family current search in `reports/event-authority-20261104/DCO-search.json`. It is a new",
               "excerpt_sha256": "237f3f82d01c6c9da54a8afe00058da0fc50f627a20615c52637414dea73698d",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -458,11 +458,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-541",
-              "line_start": 27323,
-              "line_end": 27323,
+              "line_start": 27432,
+              "line_end": 27432,
               "quote": "**Producer and ordering.** `AgentCoordinator.record_crash(AgentCrashResolution)`: Only the scheduler or the crash detector, once, on direct crash evidence (process_exit, heartbeat_expired, p",
               "excerpt_sha256": "7377fcee17c8eed6268e574b9357e85f75321f5a8517f0852110d0406b76cea4",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             },
             {
@@ -470,9 +470,9 @@
               "unit": "OSI-650",
               "line_start": 3969,
               "line_end": 3969,
-              "quote": "For `coordination.agent_crashed`, the Orchestrator runtime policy value `coordination_heartbeat_expiry_ms` is **300000** under Jared's DL-095 answer (recorded on branch `plans/ea-s09-decisio",
-              "excerpt_sha256": "5a7da6e026f286abd145f13d3ace5fc4eedd7721e9ade4c36338ee7ca9ae5809",
-              "file_sha256": "b61da72a2ad907da2b438c037f75b441606c19c0a2f5bd88362d348476ebca3b",
+              "quote": "For `coordination.agent_crashed`, the Orchestrator runtime policy value `coordination_heartbeat_expiry_ms` is **300000** under Jared's DL-095 answer (recorded in the landed `Plans/Decision_L",
+              "excerpt_sha256": "2c2dcf6f05878c0ab0e0e143b447dcb8e94bbd47b5375e5e69a7475d04cdf3c0",
+              "file_sha256": "140b1f74bad84b24a260a115c7eeb2538a20ead99766104616b46d91837d03e4",
               "quote_check": "exact"
             }
           ],
@@ -491,11 +491,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-541",
-              "line_start": 27325,
-              "line_end": 27325,
+              "line_start": 27434,
+              "line_end": 27434,
               "quote": "**Payload and scope.** The closed definition `Plans/coordination_event_payloads.schema.json#/$defs/agent_crashed` (schema ID `pm.coordination_event.agent_crashed.schema.v1`, version 1.0.0) i",
               "excerpt_sha256": "f8c025e361131196c265944b191385ce544a8d41c8bfe97ebdff0abc2cd63a66",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             },
             {
@@ -524,11 +524,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-541",
-              "line_start": 27327,
-              "line_end": 27327,
+              "line_start": 27436,
+              "line_end": 27436,
               "quote": "**Identity and retries.** This family explicitly adopts SP-320's `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}` idempotency key with event_type `coordi",
               "excerpt_sha256": "0caaff1a749c36c0364e00835bbb6ca1983b1af3506d75ed02614357c054b3ad",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -547,11 +547,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-541",
-              "line_start": 27327,
-              "line_end": 27327,
+              "line_start": 27436,
+              "line_end": 27436,
               "quote": "**Identity and retries.** This family explicitly adopts SP-320's `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}` idempotency key with event_type `coordi",
               "excerpt_sha256": "0caaff1a749c36c0364e00835bbb6ca1983b1af3506d75ed02614357c054b3ad",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -570,11 +570,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-541",
-              "line_start": 27333,
-              "line_end": 27333,
+              "line_start": 27442,
+              "line_end": 27442,
               "quote": "**Custody and retention.** This family explicitly adopts SP-320's canonical seglog and coherent mandatory backup/restore custody, source holds, no-secret/ref-only bounded payloads and curren",
               "excerpt_sha256": "833a8bc89788aa85dad4fba60bb2296294d2d47988e58fdc50fa9d2fd974a8b0",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             },
             {
@@ -584,7 +584,7 @@
               "line_end": 17416,
               "quote": "| Coordination | 180 days after run completion; 1,000,000/project | compact expired unheld rows |",
               "excerpt_sha256": "a3aad92a255adc65f89ce8a593f825d85911e9d886f4ad84527cb149cbbc12f6",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -603,11 +603,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-541",
-              "line_start": 27333,
-              "line_end": 27333,
+              "line_start": 27442,
+              "line_end": 27442,
               "quote": "**Custody and retention.** This family explicitly adopts SP-320's canonical seglog and coherent mandatory backup/restore custody, source holds, no-secret/ref-only bounded payloads and curren",
               "excerpt_sha256": "833a8bc89788aa85dad4fba60bb2296294d2d47988e58fdc50fa9d2fd974a8b0",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -626,11 +626,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-541",
-              "line_start": 27329,
-              "line_end": 27329,
+              "line_start": 27438,
+              "line_end": 27438,
               "quote": "**Transition.** Terminal, as coordination.agent_unregistered, with agent status failed. The first terminal event to append wins; the other gets coordination_conflict and appends nothing. Hea",
               "excerpt_sha256": "bab22eb5d39afc3219db99845d262e17454f909a2400dad7850308022b2f666b",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -649,11 +649,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-541",
-              "line_start": 27331,
-              "line_end": 27331,
+              "line_start": 27440,
+              "line_end": 27440,
               "quote": "**Consumer and checkpoint.** This family explicitly adopts `storage.coordination_projector.v1@1.0.0` and SP-278, with `projector.checkpoint.coordination:{project_id}`, closed `pm.storage_val",
               "excerpt_sha256": "2750758dfddf81a3a46cfcb14997aa3dc14b5623027e0b057ce453f79538c253",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -672,11 +672,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-541",
-              "line_start": 27335,
-              "line_end": 27335,
+              "line_start": 27444,
+              "line_end": 27444,
               "quote": "**Compatibility and withdrawal.** Only this family's closed 1.0.0 definition dispatches; unsupported versions and legacy sketch extensions refuse. Withdrawal first cuts off this family's wri",
               "excerpt_sha256": "e4a80b291a39eab2d884851259e0770498e34cb27e289e46e752761f836fe077",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -695,11 +695,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-541",
-              "line_start": 27337,
-              "line_end": 27337,
+              "line_start": 27446,
+              "line_end": 27446,
               "quote": "**Oracles.** ATS-058 and this family's own `validation_case_ids` in `Plans/coordination_event_admission.json` bind its positive/negative payloads, EventRecord joins, identity vector, transit",
               "excerpt_sha256": "6e0c9415b6b77e005f69c054c2f6ef0633462effc79ef7c82ce66556b845c3ca",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -715,7 +715,7 @@
         "Central registry admission deliberately absent; later integration must admit this family individually.",
         "Native activation remains gated on all seven coordination admissions.",
         "Existing unittest helper pin subtest fails twice on origin/main and branch; requires a separately authorized test update.",
-        "DL-095 decision recording branch must integrate before/with OSI-650."
+        "DL-095 answer landed on `main` (`Plans/Decision_Log.md`#DL-095); OSI-650 lands with or after it and before this family's admission, as the entry requires."
       ],
       "static_checks_seen": [
         "scripts/pm_coordination_events.py: pass",
@@ -750,11 +750,11 @@
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-542",
-          "line_start": 27397,
-          "line_end": 27397,
+          "line_start": 27506,
+          "line_end": 27506,
           "quote": "**Producer and ordering.** `AgentCoordinator.update_file_ownership(AgentFileOwnershipUpdate); Gap #33's update_file_activity_claim is a sketch of the same append`: The same execution path, f",
           "excerpt_sha256": "d126f6218a1048e08120787e21cd44de0b050c4cbf14c5906379b751d3a9009e",
-          "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+          "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
           "quote_check": "exact"
         }
       ],
@@ -780,11 +780,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-542",
-              "line_start": 27411,
-              "line_end": 27411,
+              "line_start": 27520,
+              "line_end": 27520,
               "quote": "**Oracles.** ATS-058 and this family's own `validation_case_ids` in `Plans/coordination_event_admission.json` bind its positive/negative payloads, EventRecord joins, identity vector, transit",
               "excerpt_sha256": "6e0c9415b6b77e005f69c054c2f6ef0633462effc79ef7c82ce66556b845c3ca",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -803,11 +803,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-542",
-              "line_start": 27395,
-              "line_end": 27395,
+              "line_start": 27504,
+              "line_end": 27504,
               "quote": "This family's own prepared contract reuses OSI-438, CV-353 and SP-320 at payload 1.0.0, after the per-family current search in `reports/event-authority-20261104/DCO-search.json`. It is a new",
               "excerpt_sha256": "237f3f82d01c6c9da54a8afe00058da0fc50f627a20615c52637414dea73698d",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -826,11 +826,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-542",
-              "line_start": 27397,
-              "line_end": 27397,
+              "line_start": 27506,
+              "line_end": 27506,
               "quote": "**Producer and ordering.** `AgentCoordinator.update_file_ownership(AgentFileOwnershipUpdate); Gap #33's update_file_activity_claim is a sketch of the same append`: The same execution path, f",
               "excerpt_sha256": "d126f6218a1048e08120787e21cd44de0b050c4cbf14c5906379b751d3a9009e",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -849,11 +849,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-542",
-              "line_start": 27399,
-              "line_end": 27399,
+              "line_start": 27508,
+              "line_end": 27508,
               "quote": "**Payload and scope.** The closed definition `Plans/coordination_event_payloads.schema.json#/$defs/agent_file_ownership_updated` (schema ID `pm.coordination_event.agent_file_ownership_update",
               "excerpt_sha256": "e41438b0d6649c633211b8c59fc39b388b7b7efde259a37c97f28e470e9158e4",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             },
             {
@@ -882,11 +882,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-542",
-              "line_start": 27401,
-              "line_end": 27401,
+              "line_start": 27510,
+              "line_end": 27510,
               "quote": "**Identity and retries.** This family explicitly adopts SP-320's `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}` idempotency key with event_type `coordi",
               "excerpt_sha256": "0caaff1a749c36c0364e00835bbb6ca1983b1af3506d75ed02614357c054b3ad",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -905,11 +905,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-542",
-              "line_start": 27401,
-              "line_end": 27401,
+              "line_start": 27510,
+              "line_end": 27510,
               "quote": "**Identity and retries.** This family explicitly adopts SP-320's `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}` idempotency key with event_type `coordi",
               "excerpt_sha256": "0caaff1a749c36c0364e00835bbb6ca1983b1af3506d75ed02614357c054b3ad",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -928,11 +928,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-542",
-              "line_start": 27407,
-              "line_end": 27407,
+              "line_start": 27516,
+              "line_end": 27516,
               "quote": "**Custody and retention.** This family explicitly adopts SP-320's canonical seglog and coherent mandatory backup/restore custody, source holds, no-secret/ref-only bounded payloads and curren",
               "excerpt_sha256": "833a8bc89788aa85dad4fba60bb2296294d2d47988e58fdc50fa9d2fd974a8b0",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             },
             {
@@ -942,7 +942,7 @@
               "line_end": 17416,
               "quote": "| Coordination | 180 days after run completion; 1,000,000/project | compact expired unheld rows |",
               "excerpt_sha256": "a3aad92a255adc65f89ce8a593f825d85911e9d886f4ad84527cb149cbbc12f6",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -961,11 +961,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-542",
-              "line_start": 27407,
-              "line_end": 27407,
+              "line_start": 27516,
+              "line_end": 27516,
               "quote": "**Custody and retention.** This family explicitly adopts SP-320's canonical seglog and coherent mandatory backup/restore custody, source holds, no-secret/ref-only bounded payloads and curren",
               "excerpt_sha256": "833a8bc89788aa85dad4fba60bb2296294d2d47988e58fdc50fa9d2fd974a8b0",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -984,11 +984,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-542",
-              "line_start": 27403,
-              "line_end": 27403,
+              "line_start": 27512,
+              "line_end": 27512,
               "quote": "**Transition.** A registered, non-terminal agent only, at the agent's revision plus 1. A new claim, or a changed claim_kind, claim_confidence or operation_id for the same path_hash, replaces",
               "excerpt_sha256": "3150501f4fa4277b1c111fd5f7589e6ae10c42492fe2123bc7dc4ad48569f5fa",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -1007,11 +1007,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-542",
-              "line_start": 27405,
-              "line_end": 27405,
+              "line_start": 27514,
+              "line_end": 27514,
               "quote": "**Consumer and checkpoint.** This family explicitly adopts `storage.coordination_projector.v1@1.0.0` and SP-278, with `projector.checkpoint.coordination:{project_id}`, closed `pm.storage_val",
               "excerpt_sha256": "2750758dfddf81a3a46cfcb14997aa3dc14b5623027e0b057ce453f79538c253",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -1030,11 +1030,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-542",
-              "line_start": 27409,
-              "line_end": 27409,
+              "line_start": 27518,
+              "line_end": 27518,
               "quote": "**Compatibility and withdrawal.** Only this family's closed 1.0.0 definition dispatches; unsupported versions and legacy sketch extensions refuse. Withdrawal first cuts off this family's wri",
               "excerpt_sha256": "e4a80b291a39eab2d884851259e0770498e34cb27e289e46e752761f836fe077",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -1053,11 +1053,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-542",
-              "line_start": 27411,
-              "line_end": 27411,
+              "line_start": 27520,
+              "line_end": 27520,
               "quote": "**Oracles.** ATS-058 and this family's own `validation_case_ids` in `Plans/coordination_event_admission.json` bind its positive/negative payloads, EventRecord joins, identity vector, transit",
               "excerpt_sha256": "6e0c9415b6b77e005f69c054c2f6ef0633462effc79ef7c82ce66556b845c3ca",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -1107,11 +1107,11 @@
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-543",
-          "line_start": 27469,
-          "line_end": 27469,
+          "line_start": 27578,
+          "line_end": 27578,
           "quote": "**Producer and ordering.** `AgentCoordinator.update_operation(AgentOperationUpdate)`: The same execution path: once for the initial operation right after registration, then on a new operatio",
           "excerpt_sha256": "a2a7bfde7c3ad5377f24b2f60c30e8ec4c1a1c45551d4cd28ebffb53887c4ffe",
-          "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+          "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
           "quote_check": "exact"
         }
       ],
@@ -1137,11 +1137,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-543",
-              "line_start": 27483,
-              "line_end": 27483,
+              "line_start": 27592,
+              "line_end": 27592,
               "quote": "**Oracles.** ATS-058 and this family's own `validation_case_ids` in `Plans/coordination_event_admission.json` bind its positive/negative payloads, EventRecord joins, identity vector, transit",
               "excerpt_sha256": "6e0c9415b6b77e005f69c054c2f6ef0633462effc79ef7c82ce66556b845c3ca",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -1160,11 +1160,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-543",
-              "line_start": 27467,
-              "line_end": 27467,
+              "line_start": 27576,
+              "line_end": 27576,
               "quote": "This family's own prepared contract reuses OSI-438, CV-353 and SP-320 at payload 1.0.0, after the per-family current search in `reports/event-authority-20261104/DCO-search.json`. It is a new",
               "excerpt_sha256": "237f3f82d01c6c9da54a8afe00058da0fc50f627a20615c52637414dea73698d",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -1183,11 +1183,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-543",
-              "line_start": 27469,
-              "line_end": 27469,
+              "line_start": 27578,
+              "line_end": 27578,
               "quote": "**Producer and ordering.** `AgentCoordinator.update_operation(AgentOperationUpdate)`: The same execution path: once for the initial operation right after registration, then on a new operatio",
               "excerpt_sha256": "a2a7bfde7c3ad5377f24b2f60c30e8ec4c1a1c45551d4cd28ebffb53887c4ffe",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -1206,11 +1206,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-543",
-              "line_start": 27471,
-              "line_end": 27471,
+              "line_start": 27580,
+              "line_end": 27580,
               "quote": "**Payload and scope.** The closed definition `Plans/coordination_event_payloads.schema.json#/$defs/agent_operation_updated` (schema ID `pm.coordination_event.agent_operation_updated.schema.v",
               "excerpt_sha256": "3583d1f059c3458509c17c05a980beb2414ee1e8261f1df1fe31fb9e565eddca",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             },
             {
@@ -1239,11 +1239,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-543",
-              "line_start": 27473,
-              "line_end": 27473,
+              "line_start": 27582,
+              "line_end": 27582,
               "quote": "**Identity and retries.** This family explicitly adopts SP-320's `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}` idempotency key with event_type `coordi",
               "excerpt_sha256": "0caaff1a749c36c0364e00835bbb6ca1983b1af3506d75ed02614357c054b3ad",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -1262,11 +1262,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-543",
-              "line_start": 27473,
-              "line_end": 27473,
+              "line_start": 27582,
+              "line_end": 27582,
               "quote": "**Identity and retries.** This family explicitly adopts SP-320's `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}` idempotency key with event_type `coordi",
               "excerpt_sha256": "0caaff1a749c36c0364e00835bbb6ca1983b1af3506d75ed02614357c054b3ad",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -1285,11 +1285,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-543",
-              "line_start": 27479,
-              "line_end": 27479,
+              "line_start": 27588,
+              "line_end": 27588,
               "quote": "**Custody and retention.** This family explicitly adopts SP-320's canonical seglog and coherent mandatory backup/restore custody, source holds, no-secret/ref-only bounded payloads and curren",
               "excerpt_sha256": "833a8bc89788aa85dad4fba60bb2296294d2d47988e58fdc50fa9d2fd974a8b0",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             },
             {
@@ -1299,7 +1299,7 @@
               "line_end": 17416,
               "quote": "| Coordination | 180 days after run completion; 1,000,000/project | compact expired unheld rows |",
               "excerpt_sha256": "a3aad92a255adc65f89ce8a593f825d85911e9d886f4ad84527cb149cbbc12f6",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -1318,11 +1318,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-543",
-              "line_start": 27479,
-              "line_end": 27479,
+              "line_start": 27588,
+              "line_end": 27588,
               "quote": "**Custody and retention.** This family explicitly adopts SP-320's canonical seglog and coherent mandatory backup/restore custody, source holds, no-secret/ref-only bounded payloads and curren",
               "excerpt_sha256": "833a8bc89788aa85dad4fba60bb2296294d2d47988e58fdc50fa9d2fd974a8b0",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -1341,11 +1341,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-543",
-              "line_start": 27475,
-              "line_end": 27475,
+              "line_start": 27584,
+              "line_end": 27584,
               "quote": "**Transition.** A registered, non-terminal agent only, at the agent's revision plus 1. The latest event for an operation_id wins in coordination_operation_projection.v1 and sets the agent's ",
               "excerpt_sha256": "c8500a032e9b3e5518f92ffa5a35c677e6b0dc40ba8c2cde69916b1fc16a3451",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -1364,11 +1364,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-543",
-              "line_start": 27477,
-              "line_end": 27477,
+              "line_start": 27586,
+              "line_end": 27586,
               "quote": "**Consumer and checkpoint.** This family explicitly adopts `storage.coordination_projector.v1@1.0.0` and SP-278, with `projector.checkpoint.coordination:{project_id}`, closed `pm.storage_val",
               "excerpt_sha256": "2750758dfddf81a3a46cfcb14997aa3dc14b5623027e0b057ce453f79538c253",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -1387,11 +1387,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-543",
-              "line_start": 27481,
-              "line_end": 27481,
+              "line_start": 27590,
+              "line_end": 27590,
               "quote": "**Compatibility and withdrawal.** Only this family's closed 1.0.0 definition dispatches; unsupported versions and legacy sketch extensions refuse. Withdrawal first cuts off this family's wri",
               "excerpt_sha256": "e4a80b291a39eab2d884851259e0770498e34cb27e289e46e752761f836fe077",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -1410,11 +1410,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-543",
-              "line_start": 27483,
-              "line_end": 27483,
+              "line_start": 27592,
+              "line_end": 27592,
               "quote": "**Oracles.** ATS-058 and this family's own `validation_case_ids` in `Plans/coordination_event_admission.json` bind its positive/negative payloads, EventRecord joins, identity vector, transit",
               "excerpt_sha256": "6e0c9415b6b77e005f69c054c2f6ef0633462effc79ef7c82ce66556b845c3ca",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -1464,11 +1464,11 @@
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-544",
-          "line_start": 27541,
-          "line_end": 27541,
+          "line_start": 27650,
+          "line_end": 27650,
           "quote": "**Producer and ordering.** `AgentCoordinator.update_status(AgentStatusUpdate)`: The Orchestrator's execution path for the agent, on an actual change of status or status_reason. Only AgentCoo",
           "excerpt_sha256": "bbf02256d3e14c0a320e08bee08ee20a76d1ae65cd1280109701f689456825c9",
-          "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+          "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
           "quote_check": "exact"
         }
       ],
@@ -1494,11 +1494,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-544",
-              "line_start": 27555,
-              "line_end": 27555,
+              "line_start": 27664,
+              "line_end": 27664,
               "quote": "**Oracles.** ATS-058 and this family's own `validation_case_ids` in `Plans/coordination_event_admission.json` bind its positive/negative payloads, EventRecord joins, identity vector, transit",
               "excerpt_sha256": "6e0c9415b6b77e005f69c054c2f6ef0633462effc79ef7c82ce66556b845c3ca",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -1517,11 +1517,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-544",
-              "line_start": 27539,
-              "line_end": 27539,
+              "line_start": 27648,
+              "line_end": 27648,
               "quote": "This family's own prepared contract reuses OSI-438, CV-353 and SP-320 at payload 1.0.0, after the per-family current search in `reports/event-authority-20261104/DCO-search.json`. It is a new",
               "excerpt_sha256": "237f3f82d01c6c9da54a8afe00058da0fc50f627a20615c52637414dea73698d",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -1540,11 +1540,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-544",
-              "line_start": 27541,
-              "line_end": 27541,
+              "line_start": 27650,
+              "line_end": 27650,
               "quote": "**Producer and ordering.** `AgentCoordinator.update_status(AgentStatusUpdate)`: The Orchestrator's execution path for the agent, on an actual change of status or status_reason. Only AgentCoo",
               "excerpt_sha256": "bbf02256d3e14c0a320e08bee08ee20a76d1ae65cd1280109701f689456825c9",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -1563,11 +1563,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-544",
-              "line_start": 27543,
-              "line_end": 27543,
+              "line_start": 27652,
+              "line_end": 27652,
               "quote": "**Payload and scope.** The closed definition `Plans/coordination_event_payloads.schema.json#/$defs/agent_status_updated` (schema ID `pm.coordination_event.agent_status_updated.schema.v1`, ve",
               "excerpt_sha256": "70ec62a9827ee3117c85e57db416b4ac026a58af1ebbff6990cbc3411ba0e3de",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             },
             {
@@ -1596,11 +1596,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-544",
-              "line_start": 27545,
-              "line_end": 27545,
+              "line_start": 27654,
+              "line_end": 27654,
               "quote": "**Identity and retries.** This family explicitly adopts SP-320's `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}` idempotency key with event_type `coordi",
               "excerpt_sha256": "0caaff1a749c36c0364e00835bbb6ca1983b1af3506d75ed02614357c054b3ad",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -1619,11 +1619,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-544",
-              "line_start": 27545,
-              "line_end": 27545,
+              "line_start": 27654,
+              "line_end": 27654,
               "quote": "**Identity and retries.** This family explicitly adopts SP-320's `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}` idempotency key with event_type `coordi",
               "excerpt_sha256": "0caaff1a749c36c0364e00835bbb6ca1983b1af3506d75ed02614357c054b3ad",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -1642,11 +1642,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-544",
-              "line_start": 27551,
-              "line_end": 27551,
+              "line_start": 27660,
+              "line_end": 27660,
               "quote": "**Custody and retention.** This family explicitly adopts SP-320's canonical seglog and coherent mandatory backup/restore custody, source holds, no-secret/ref-only bounded payloads and curren",
               "excerpt_sha256": "833a8bc89788aa85dad4fba60bb2296294d2d47988e58fdc50fa9d2fd974a8b0",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             },
             {
@@ -1656,7 +1656,7 @@
               "line_end": 17416,
               "quote": "| Coordination | 180 days after run completion; 1,000,000/project | compact expired unheld rows |",
               "excerpt_sha256": "a3aad92a255adc65f89ce8a593f825d85911e9d886f4ad84527cb149cbbc12f6",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -1675,11 +1675,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-544",
-              "line_start": 27551,
-              "line_end": 27551,
+              "line_start": 27660,
+              "line_end": 27660,
               "quote": "**Custody and retention.** This family explicitly adopts SP-320's canonical seglog and coherent mandatory backup/restore custody, source holds, no-secret/ref-only bounded payloads and curren",
               "excerpt_sha256": "833a8bc89788aa85dad4fba60bb2296294d2d47988e58fdc50fa9d2fd974a8b0",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -1698,11 +1698,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-544",
-              "line_start": 27547,
-              "line_end": 27547,
+              "line_start": 27656,
+              "line_end": 27656,
               "quote": "**Transition.** A registered, non-terminal agent only, at the agent's revision plus 1. status takes queued, running, awaiting_parent or blocked; complete, failed and cancelled arise only fro",
               "excerpt_sha256": "1f2b86f96bccde154302472f43aefc35e72e2dee998ffa53033f600ab1eeb6f4",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -1721,11 +1721,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-544",
-              "line_start": 27549,
-              "line_end": 27549,
+              "line_start": 27658,
+              "line_end": 27658,
               "quote": "**Consumer and checkpoint.** This family explicitly adopts `storage.coordination_projector.v1@1.0.0` and SP-278, with `projector.checkpoint.coordination:{project_id}`, closed `pm.storage_val",
               "excerpt_sha256": "2750758dfddf81a3a46cfcb14997aa3dc14b5623027e0b057ce453f79538c253",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -1744,11 +1744,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-544",
-              "line_start": 27553,
-              "line_end": 27553,
+              "line_start": 27662,
+              "line_end": 27662,
               "quote": "**Compatibility and withdrawal.** Only this family's closed 1.0.0 definition dispatches; unsupported versions and legacy sketch extensions refuse. Withdrawal first cuts off this family's wri",
               "excerpt_sha256": "e4a80b291a39eab2d884851259e0770498e34cb27e289e46e752761f836fe077",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -1767,11 +1767,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-544",
-              "line_start": 27555,
-              "line_end": 27555,
+              "line_start": 27664,
+              "line_end": 27664,
               "quote": "**Oracles.** ATS-058 and this family's own `validation_case_ids` in `Plans/coordination_event_admission.json` bind its positive/negative payloads, EventRecord joins, identity vector, transit",
               "excerpt_sha256": "6e0c9415b6b77e005f69c054c2f6ef0633462effc79ef7c82ce66556b845c3ca",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -1821,11 +1821,11 @@
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-545",
-          "line_start": 27613,
-          "line_end": 27613,
+          "line_start": 27722,
+          "line_end": 27722,
           "quote": "**Producer and ordering.** `AgentCoordinator.unregister_agent(AgentTerminalUpdate)`: The Orchestrator's node completion path or the scheduler's cleanup, once, when the agent ends with a know",
           "excerpt_sha256": "0bd2484ab4f6b2178e81c9e3596239e2800a56e6ff7bcc3c9320ddb3dcb4c40f",
-          "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+          "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
           "quote_check": "exact"
         }
       ],
@@ -1851,11 +1851,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-545",
-              "line_start": 27627,
-              "line_end": 27627,
+              "line_start": 27736,
+              "line_end": 27736,
               "quote": "**Oracles.** ATS-058 and this family's own `validation_case_ids` in `Plans/coordination_event_admission.json` bind its positive/negative payloads, EventRecord joins, identity vector, transit",
               "excerpt_sha256": "6e0c9415b6b77e005f69c054c2f6ef0633462effc79ef7c82ce66556b845c3ca",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -1874,11 +1874,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-545",
-              "line_start": 27611,
-              "line_end": 27611,
+              "line_start": 27720,
+              "line_end": 27720,
               "quote": "This family's own prepared contract reuses OSI-438, CV-353 and SP-320 at payload 1.0.0, after the per-family current search in `reports/event-authority-20261104/DCO-search.json`. It is a new",
               "excerpt_sha256": "237f3f82d01c6c9da54a8afe00058da0fc50f627a20615c52637414dea73698d",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -1897,11 +1897,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-545",
-              "line_start": 27613,
-              "line_end": 27613,
+              "line_start": 27722,
+              "line_end": 27722,
               "quote": "**Producer and ordering.** `AgentCoordinator.unregister_agent(AgentTerminalUpdate)`: The Orchestrator's node completion path or the scheduler's cleanup, once, when the agent ends with a know",
               "excerpt_sha256": "0bd2484ab4f6b2178e81c9e3596239e2800a56e6ff7bcc3c9320ddb3dcb4c40f",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -1920,11 +1920,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-545",
-              "line_start": 27615,
-              "line_end": 27615,
+              "line_start": 27724,
+              "line_end": 27724,
               "quote": "**Payload and scope.** The closed definition `Plans/coordination_event_payloads.schema.json#/$defs/agent_unregistered` (schema ID `pm.coordination_event.agent_unregistered.schema.v1`, versio",
               "excerpt_sha256": "052bb8db5504749050845c72d9195bd273ec03860f88c0010c669e42579973f2",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             },
             {
@@ -1953,11 +1953,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-545",
-              "line_start": 27617,
-              "line_end": 27617,
+              "line_start": 27726,
+              "line_end": 27726,
               "quote": "**Identity and retries.** This family explicitly adopts SP-320's `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}` idempotency key with event_type `coordi",
               "excerpt_sha256": "0caaff1a749c36c0364e00835bbb6ca1983b1af3506d75ed02614357c054b3ad",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -1976,11 +1976,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-545",
-              "line_start": 27617,
-              "line_end": 27617,
+              "line_start": 27726,
+              "line_end": 27726,
               "quote": "**Identity and retries.** This family explicitly adopts SP-320's `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}` idempotency key with event_type `coordi",
               "excerpt_sha256": "0caaff1a749c36c0364e00835bbb6ca1983b1af3506d75ed02614357c054b3ad",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -1999,11 +1999,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-545",
-              "line_start": 27623,
-              "line_end": 27623,
+              "line_start": 27732,
+              "line_end": 27732,
               "quote": "**Custody and retention.** This family explicitly adopts SP-320's canonical seglog and coherent mandatory backup/restore custody, source holds, no-secret/ref-only bounded payloads and curren",
               "excerpt_sha256": "833a8bc89788aa85dad4fba60bb2296294d2d47988e58fdc50fa9d2fd974a8b0",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             },
             {
@@ -2013,7 +2013,7 @@
               "line_end": 17416,
               "quote": "| Coordination | 180 days after run completion; 1,000,000/project | compact expired unheld rows |",
               "excerpt_sha256": "a3aad92a255adc65f89ce8a593f825d85911e9d886f4ad84527cb149cbbc12f6",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -2032,11 +2032,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-545",
-              "line_start": 27623,
-              "line_end": 27623,
+              "line_start": 27732,
+              "line_end": 27732,
               "quote": "**Custody and retention.** This family explicitly adopts SP-320's canonical seglog and coherent mandatory backup/restore custody, source holds, no-secret/ref-only bounded payloads and curren",
               "excerpt_sha256": "833a8bc89788aa85dad4fba60bb2296294d2d47988e58fdc50fa9d2fd974a8b0",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -2055,11 +2055,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-545",
-              "line_start": 27619,
-              "line_end": 27619,
+              "line_start": 27728,
+              "line_end": 27728,
               "quote": "**Transition.** Terminal. A registered, non-terminal agent at the agent's revision plus 1. The agent row takes terminal_status, every claim of the agent is released in the same transaction a",
               "excerpt_sha256": "733f26649aafa697b431ac02d1ea0d446a7ffbf7db45b2de1adb5b5a9ce179cf",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -2078,11 +2078,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-545",
-              "line_start": 27621,
-              "line_end": 27621,
+              "line_start": 27730,
+              "line_end": 27730,
               "quote": "**Consumer and checkpoint.** This family explicitly adopts `storage.coordination_projector.v1@1.0.0` and SP-278, with `projector.checkpoint.coordination:{project_id}`, closed `pm.storage_val",
               "excerpt_sha256": "2750758dfddf81a3a46cfcb14997aa3dc14b5623027e0b057ce453f79538c253",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -2101,11 +2101,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-545",
-              "line_start": 27625,
-              "line_end": 27625,
+              "line_start": 27734,
+              "line_end": 27734,
               "quote": "**Compatibility and withdrawal.** Only this family's closed 1.0.0 definition dispatches; unsupported versions and legacy sketch extensions refuse. Withdrawal first cuts off this family's wri",
               "excerpt_sha256": "e4a80b291a39eab2d884851259e0770498e34cb27e289e46e752761f836fe077",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -2124,11 +2124,11 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-545",
-              "line_start": 27627,
-              "line_end": 27627,
+              "line_start": 27736,
+              "line_end": 27736,
               "quote": "**Oracles.** ATS-058 and this family's own `validation_case_ids` in `Plans/coordination_event_admission.json` bind its positive/negative payloads, EventRecord joins, identity vector, transit",
               "excerpt_sha256": "6e0c9415b6b77e005f69c054c2f6ef0633462effc79ef7c82ce66556b845c3ca",
-              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "file_sha256": "3acd7c449387f6787671dd95a6135259e38249e147551a36c1239a12b5114ac6",
               "quote_check": "exact"
             }
           ],
@@ -2170,7 +2170,7 @@
     }
   ],
   "review_round": 1,
-  "prior_assessed_tree": "58e68620d2dbad2dbd9554d396538f9577ea29d7",
+  "prior_assessed_tree": "21e4dede26ba23a8374f42cb7873c8d23111db7d",
   "round_1_verification": {
     "cells": 72,
     "exact_quotes_and_file_hashes": "pass",
