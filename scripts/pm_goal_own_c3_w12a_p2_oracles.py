@@ -41,6 +41,8 @@ def qualify():
     raw = (PACKET/'manifest.json').read_bytes()
     assert sha(raw) == PIN
     manifest = json.loads(raw)
+    expected_members = {row['path'] for row in manifest['files']} | {'manifest.json'}
+    assert {str(p.relative_to(PACKET)) for p in PACKET.rglob('*') if p.is_file()} == expected_members, 'exact selected source member set; no unlisted modules or bytecode caches'
     for row in manifest['files']:
         raw = (PACKET/row['path']).read_bytes()
         assert len(raw) == row['bytes'] and sha(raw) == row['sha256'], row['path']

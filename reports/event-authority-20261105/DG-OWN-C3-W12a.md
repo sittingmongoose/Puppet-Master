@@ -1,3 +1,5 @@
+> **Part 2 continuation:** [Physical successor and exact remaining items](DG-OWN-C3-W12a-part2.md). Item 1 is delivered as a bounded selected successor; W1 remains NOT_COMPLETE and items 2–5 remain open. The report below is preserved part-1 history.
+
 # C3-W12a — original `goal.updated` cases; W1 remains unfinished
 
 Branch `plans/ea-goal-own-c3-w12a-20261105`, based exactly on `109e3c26c4a19b466c73e0860da2bb27698fe2b7`. **Closure: NOT_COMPLETE.** This is an unfinished implementation delivery under the brief's final fallback, with the exact remaining work below. No blocker that the general successor rule cannot fix has been established. The selected source's finite limits are technical successor work, not an authorized blocker stop or a product question. Native execution is **NOT_RUN**.

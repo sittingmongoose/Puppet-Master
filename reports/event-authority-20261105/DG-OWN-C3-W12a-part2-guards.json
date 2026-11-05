@@ -2950,5 +2950,17 @@
   "raw_result": {
     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W12a/part2/v3-corpus-final.json",
     "sha256": "e1d8ee23117a5755b101fd39a17be0ac22ae50850c7ce208f01090cc2130cac1"
-  }
+  },
+  "source_qualification_guards": [
+    {
+      "id": "w12a-qualification:exact_member_set",
+      "source": "scripts/pm_goal_own_c3_w12a_p2_oracles.py",
+      "line": 45,
+      "predicate": "actual selected source files equal manifest member paths plus manifest.json",
+      "positive": "harness-qa.member_set_positive",
+      "negative": "harness-qa.unlisted_member_refused",
+      "scope": "PURE_PREREQUISITE_NO_OWNER_BIRTH",
+      "isolation": "SHARED_SWEEP_NOT_RUN"
+    }
+  ]
 }
