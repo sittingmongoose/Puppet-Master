@@ -109,15 +109,19 @@ Number-domain and retained-recipe selection, original format sweep and shared gu
 | index-generate | 0 |
 | shard-check | 0 |
 | index-validate | 1 |
+| current | NOT_RUN |
+| history | NOT_RUN |
+| stop-block | NOT_RUN |
+| lifecycle | NOT_RUN |
 
-**Long regressions still queued:** current, history, stop-block, lifecycle.
+**Long regressions NOT_RUN for this partial handoff:** current, history, stop-block, lifecycle. They remained unstarted behind the shared active-checker queue. The queue controller was stopped; no other worker process was signalled and no earlier audit is asserted as fresh. Exact commands and the observed queue are in `deferred-checks.json` and the remaining-work JSON.
 
-Index validation top-level status is **fail**, with **30 failures**; comparison with the part-2 complete failure set adds **7** and removes **0**. See `index-baseline-comparison.json` for every exact added/removed row and the origin/main used. No ledger, Decision Log, validation baseline or governance artifact was rewritten.
+Index validation top-level status is **fail**, with **30 failures**; comparison with the part-2 complete failure set adds **7** and removes **0**. See `index-baseline-comparison.json` for every exact added/removed row and the origin/main recorded at comparison. No ledger, Decision Log, validation baseline or governance artifact was rewritten.
 The seven new main-ahead IDs are DL-301/330/331/332, DP-064/066 and PWIZ-038. Each was absent at the exact continuation base; its complete document is byte-identical to that base and the unit exists on comparison origin/main. `index-attribution.json` records these checks and document hashes. These are not branch deletions; no failure or baseline is rewritten.
 
 All regenerated shard paths are confined to the four edited owner documents and edited Storage registry. Both JSONL index comparisons have zero removed rows and zero changed rows owned by other documents. The live fifteen-file currentness edition was copied coherently, byte-verified and frozen in `currentness-inputs.tar.gz` before generation; results refer to that copied edition. This does not claim the live share stayed unchanged during queued checks.
 
-Checks ran serially with `PM_GOAL_AUDIT_WORKERS=1`. Available RAM minimum across these commands was **14 GiB**; recorded resource/coordination pauses: **0**. The runner waited for other active heavy checkers and ignored paused processes; no other worker process was signalled. No aggregate run-gates/audit-governance/migration check, admission, native execution, reseal or main landing is claimed for this branch. The inherited DG guard audits retain their known shared-tool/number/format limitations and do not close CF/P.
+Checks ran serially with `PM_GOAL_AUDIT_WORKERS=1`. Available RAM minimum across these commands was **14 GiB**; recorded resource/coordination pauses: **0**. The runner waited for other active heavy checkers and ignored paused processes; no other worker process was signalled. No aggregate run-gates/audit-governance/migration check, admission, native execution, reseal or main landing is claimed for this branch. The four long inherited DG audits were NOT_RUN here; their previously reported shared-tool/number/format limitations remain sweep work, not fresh results. They do not close CF/P.
 
 **Units added; no existing unit amended:**
 
@@ -149,12 +153,15 @@ Only this family’s W5 metadata is changed. ATS-1118, every W1–W4 row and all
 | `currentness-copy.json` | `cdc8ba7f2b068f6c22f685b65b3cb1d939fdfe612b73a25187a5b6a6aa8a2b20` |
 | `currentness-inputs.tar.gz` | `35b100ddb68338778d3c667881e3d296721502536175a3d053dd58d8ca0da47a` |
 | `checks.json` | `d0ee25e5174f74e57f309f836a3fd3484e9bfcd6a7707793a3506d54d11e31cb` |
+| `deferred-checks.json` | `9698dbdffd7c93596876128d672e1129438ef34c4e345d8767d51127422e5368` |
 | `derived-scope.json` | `6e863a400d976ad52c8b7467ae6b596677135fde771ff48978b7e94469493bac` |
 | `index-baseline-comparison.json` | `a533597ca0ce5b8509beb55a5d04302084f8b7811bf3e876400a6bb0d4a7bfff` |
 | `index-attribution.json` | `a13d7ac77c0d70cd173789fb4361f04037d134d93ea083161fcb148396303835` |
 | `currentness-pre-generation-recheck.json` | `7823c730c1e1210543f3fa08ea671e7cc3dfb2035f5429922af3de027f5cb055` |
-| `citation-qa.json` | `0ce062f5a9ef536b2873addf79aa059377b17e776fe97dfe1b9c320226c0c883` |
+| `citation-qa.json` | `6619c5937fd743eff35eb7ce22666d2e9dfffe82425fe1f9c0c959f071c1f347` |
 | `own-c.json` | `e65caaa8e76ee1e85b556d6685b5548a45197c01b01d640318ff48c21075aba6` |
 | `own-c-source.json` | `112478ab319904486665ed703772b8438423149818f851cf6f4bccdb9877258a` |
 
 **Stopped question: none. Whole closure remains NOT_COMPLETE.** The exact 17-facet remainder is `DG-OWN-C3-W5-part3-remaining.json`, with zero complete original-path positives/negatives claimed.
+
+Final report QA: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W5/part3/final-qa.json`, SHA-256 `fdfce2ad9564288be79677f873a087dd67aa047caa7d0af10e5714ca479f3cd4`: 52 current citations and 15 retained evidence hashes checked; zero errors.

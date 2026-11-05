@@ -1465,5 +1465,35 @@
   ],
   "coordinator_tuple_map": "Plans/goal_certified_event_coordinator_contracts/methods.json",
   "all_original_lower_boundary_occurrences": "Plans/goal_certified_event_coordinator_contracts/participant-method-tuples.json",
-  "append_phase_tuples": "Plans/goal_certified_event_coordinator_contracts/phase-boundaries.json"
+  "append_phase_tuples": "Plans/goal_certified_event_coordinator_contracts/phase-boundaries.json",
+  "required_regressions_not_run": {
+    "status": "NOT_RUN",
+    "reason": "Long inherited DG audits remained unstarted behind other active checkers. Queue controller stopped for the brief-authorized partial handoff; no checker owned by another worker was signalled. No earlier result is asserted as fresh.",
+    "commands": [
+      [
+        "python3",
+        "scripts/pm_goal_current_writer_oracles.py",
+        "--guard-table",
+        "<output>/current-guards.json"
+      ],
+      [
+        "python3",
+        "scripts/pm_goal_history_reader_fixtures.py",
+        "--guard-table",
+        "<output>/history-guards.json"
+      ],
+      [
+        "python3",
+        "scripts/pm_goal_run_stop_block_oracles.py",
+        "--guard-table",
+        "<output>/stop-block-guards.json"
+      ],
+      [
+        "python3",
+        "scripts/pm_goal_lifecycle_successor_oracles.py",
+        "--guard-table",
+        "<output>/lifecycle-guards.json"
+      ]
+    ]
+  }
 }
