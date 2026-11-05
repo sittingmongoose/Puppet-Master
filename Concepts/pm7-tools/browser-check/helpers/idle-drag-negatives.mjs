@@ -229,11 +229,17 @@ export const mutations = {
       "    prewarmIdle = window.PM_BUSY && typeof window.PM_BUSY.idle === 'function'",
       "    (function () { var moves = 0, sent = false; var onMove = function () { if (!(window.PM_BUSY && PM_BUSY.drag()) || sent || ++moves < 14) return; sent = true; window.removeEventListener('pointermove', onMove); requestAnimationFrame(function () { (window.__reviewDispatch || (window.__reviewDispatch = [])).push({ path: 'glass-original/pointermove/requestAnimationFrame', at: performance.now(), drag: !!PM_BUSY.drag() }); run(); }); }; window.addEventListener('pointermove', onMove); })();\n    prewarmIdle = window.PM_BUSY && typeof window.PM_BUSY.idle === 'function'"
     ]
+  ],
+  "usage-eval-clone": [
+    [
+      "    function prewarmSoon(ms, fresh) {\n      if (fresh) prewarmTries = 0;",
+      "    function prewarmSoon(ms, fresh) {\n      if (fresh) prewarmTries = 0;\n      if (!prewarmSoon.reviewCopy) { prewarmSoon.reviewCopy = eval('(' + prewarm.toString() + ')'); (function (copy) { var moves = 0, sent = false; var onMove = function () { if (!(window.PM_BUSY && PM_BUSY.drag()) || sent || ++moves < 14) return; sent = true; window.removeEventListener('pointermove', onMove); var ch = new MessageChannel(); ch.port1.onmessage = function () { ch.port1.close(); (window.__reviewDispatch || (window.__reviewDispatch = [])).push({ path: 'usage-copy/eval of prewarm() source/MessageChannel', at: performance.now(), drag: !!PM_BUSY.drag() }); copy(); }; ch.port2.postMessage(1); }; window.addEventListener('pointermove', onMove); })(prewarmSoon.reviewCopy); }"
+    ]
   ]
 };
 // cases whose mutation sends real owner work into the held drag and logs it (window.__reviewDispatch): the selftest also
 // asserts that path ran, so the case fails at the work witness and not for want of exercise
-export const dispatching = new Set(["admitted-message", "admitted-raf", "census-owner-timeout", "direct-paint", "glass-owner-raf", "leak-theme", "owner-interval", "owner-message", "owner-microtask", "owner-postmessage", "owner-raf", "owner-resize", "unlisted-forwarder", "usage-owner-message"]);
+export const dispatching = new Set(["admitted-message", "admitted-raf", "census-owner-timeout", "direct-paint", "glass-owner-raf", "leak-theme", "owner-interval", "owner-message", "owner-microtask", "owner-postmessage", "owner-raf", "owner-resize", "unlisted-forwarder", "usage-eval-clone", "usage-owner-message"]);
 
 // node helpers/idle-drag-negatives.mjs <head.html> <scratch-directory>
 import fs from 'node:fs';

@@ -142,18 +142,47 @@ async function regionsOf(t) {
 // when the browser isolates it; otherwise the page's), with one never-pausing breakpoint per work site
 const probeCondition = (s) => `${s.when ? `(typeof ${s.when}==='undefined'||!!${s.when})&&` : ''}!!globalThis.__pmIdleWork&&globalThis.__pmIdleWork.hit(${JSON.stringify(s.owner)},${JSON.stringify(s.key)})`;
 const armedAt = (a) => a.locations.length > 0 && a.locations.every((l) => l.lineNumber === a.line && l.columnNumber >= a.col && l.columnNumber <= a.colEnd);
+// A script compiled after arming (an eval, a Function, an injected script) is searched for the work sites' own text before
+// it first runs, and every copy found is armed the same way: an owner's function copied at run time (eval of its source,
+// which keeps its scope) is still the owner's code. The kit's own evaluations are let through unsearched.
+const OWN_SCRIPT = /^(?:__playwright|__puppeteer|pptr:)/;
+async function armCopies(session, probe, scriptId) {
+	const { scriptSource: text } = await session.send('Debugger.getScriptSource', { scriptId });
+	const nl = []; for (let k = text.indexOf('\n'); k !== -1; k = text.indexOf('\n', k + 1)) nl.push(k);
+	const pos = (i) => { let l = 0; while (l < nl.length && nl[l] < i) l++; return { line: l, col: i - (l ? nl[l - 1] + 1 : 0) }; };
+	for (const o of OWNERS) for (const w of WORK[o.key]) {
+		for (let i = text.indexOf(w.anchor); i >= 0; i = text.indexOf(w.anchor, i + 1)) {
+			const p = pos(i + w.anchor.indexOf(w.at)), s = { owner: o.key, key: w.key + ' (run-time copy)', when: w.when || null };
+			const r = await session.send('Debugger.setBreakpoint', { location: { scriptId, lineNumber: p.line, columnNumber: p.col }, condition: probeCondition(s) }).catch((e) => ({ error: String(e.message || e) }));
+			probe.copies.push({ ...s, scriptId, armed: !r.error });
+		}
+	}
+}
 async function armWork(t, f, map) {
 	let session, scope = 'frame';
 	try { session = await t.page.context().newCDPSession(f); } catch (_) { session = await t.page.context().newCDPSession(t.page); scope = 'page'; }
-	const probe = { session, scope, paused: [], armed: [] };
-	// a condition never pauses; should anything pause the page while these probes are on, it goes on at once and is reported
-	session.on('Debugger.paused', (ev) => { probe.paused.push(ev.reason); session.send('Debugger.resume').catch(() => {}); });
+	const probe = { session, scope, paused: [], armed: [], copies: [], searched: 0 };
+	const scripts = new Map(), known = new Set();
+	session.on('Debugger.scriptParsed', (e) => scripts.set(e.scriptId, e.url || ''));
+	// a condition never pauses. The one pause these probes ask for is before a new script runs (to search it); should
+	// anything else pause the page while they are on, it goes on at once and is reported
+	session.on('Debugger.paused', async (ev) => {
+		const id = ev.reason === 'instrumentation' && ev.data && ev.data.scriptId;
+		if (!id) probe.paused.push(ev.reason);
+		else if (!known.has(id)) {
+			known.add(id);
+			if (!OWN_SCRIPT.test(scripts.get(id) || '')) { probe.searched++; await armCopies(session, probe, id).catch(() => { probe.copies.push({ scriptId: id, armed: false }); }); }
+		}
+		session.send('Debugger.resume').catch(() => {});
+	});
 	await session.send('Debugger.enable');
+	for (const id of scripts.keys()) known.add(id);   // the page's own scripts: armed by URL, line and column below
 	for (const s of map.sites) {
 		if (s.n !== 1) { probe.armed.push({ ...s, locations: [] }); continue; }
 		const r = await session.send('Debugger.setBreakpointByUrl', { urlRegex: map.urlRegex, lineNumber: s.line, columnNumber: s.col, condition: probeCondition(s) }).catch((e) => ({ locations: [], error: String(e.message || e) }));
 		probe.armed.push({ ...s, locations: r.locations || [], error: r.error || null });
 	}
+	await session.send('Debugger.setInstrumentationBreakpoint', { instrumentation: 'beforeScriptExecution' });
 	return probe;
 }
 
@@ -497,7 +526,9 @@ export const tests = {
 			const covers = effects.filter((e) => e.owner === 'theme' && !inside(e));
 			await t.check(`${look}: the effect witness sees the look covers' writes outside the drag`, covers.length > 0, covers.length ? `${covers.length}: ${[...new Set(covers.map((e) => e.effect))].join(', ')}` : '0');
 		}
-		await t.check(`${look}: the work probes never paused the page`, probe.paused.length === 0, probe.paused.join(', ') || '0');
+		t.log(`${look}: work probes: ${probe.armed.length} sites armed in the ${probe.scope} session; ${probe.searched} scripts compiled later searched; ${probe.copies.length} run-time copies of work sites found (${[...new Set(probe.copies.map((c) => c.key))].join(', ') || 'none'})`);
+		await t.check(`${look}: the work probes never paused the page`, probe.paused.length === 0, (probe.paused.join(', ') || '0') + `; ${probe.searched} scripts compiled later searched, ${probe.copies.filter((c) => c.armed).length} run-time copies of work sites armed${probe.copies.some((c) => !c.armed) ? ', ' + probe.copies.filter((c) => !c.armed).length + ' NOT armed' : ''}`);
+		await t.check(`${look}: every run-time copy of a work site is armed`, probe.copies.every((c) => c.armed), probe.copies.filter((c) => !c.armed).map((c) => c.key || 'script ' + c.scriptId).join('; ') || String(probe.copies.length));
 		await probe.session.detach().catch(() => {});
 		}
 		}
