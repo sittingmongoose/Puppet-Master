@@ -50,11 +50,8 @@ def run(name, standing, configure=None, source=None, selected=None):
     if CANONICAL_CASES is None:
         CANONICAL_CASES = causal_cases(canonical)
     m.guard_cases = lambda boundary, excluded=(): [c for c in CANONICAL_CASES if c[1] not in excluded]
-    output = io.StringIO()
     started = time.monotonic()
-    with contextlib.redirect_stdout(output):
-        code = int(m.main())
-    report = json.loads(output.getvalue())
+    code, report = ISOLATION.family_checkers(m)
     failed = {f: [x.split(':', 1)[1] for x in report['failures'] if x.startswith(f + ':')] for f in families}
     targets = selected or families
     return dict(case=name, standing_check=standing, exit_code=code, status=report['status'],

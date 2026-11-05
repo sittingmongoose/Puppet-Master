@@ -5,6 +5,7 @@ Install scripts/requirements-runtime-artifact-drafts.txt in a venv. No native
 storage, transaction, source authentication, receipt issuance or admission runs.
 """
 import copy
+import argparse
 import base64
 import hashlib
 import json
@@ -1021,7 +1022,12 @@ def observation_admissible(candidate, previous, row, packs, source):
         return False
     if candidate['correlation_id'] != grouping_identity(row['event_type'], payload):
         return False
-    if payload['type_payload'] != source['canonical_point']:
+    # The independently supplied owner snapshot must satisfy the same closed
+    # JSON types BEFORE a value join. Python equality aliases False/0/0.0 and
+    # True/1/1.0; encoded equality also keeps nested source copies exact.
+    source_payload = dict(payload, type_payload=source['canonical_point'])
+    if (not validator(load(row['payload_schema_ref'])).is_valid(source_payload)
+            or value_bytes(payload['type_payload']) != value_bytes(source['canonical_point'])):
         return False
     if previous is None:
         return candidate['producer_sequence_id'] == 0 and candidate['parent_event_id'] is None
@@ -1039,7 +1045,7 @@ def observation_admissible(candidate, previous, row, packs, source):
             and candidate['correlation_id'] == previous['correlation_id'])
 
 
-def main():
+def main(families=None):
     document = load('Plans/runtime_artifact_event_drafts.json')
     fixtures = load('Plans/runtime_artifact_event_drafts.fixtures.json')
     references = SchemaReferences()
@@ -1071,6 +1077,9 @@ def main():
     checkpoint_policy = next(f['retention_policy_ref'] for f in registry if f['family_id'] == 'event_record_index_checkpoint')
     for row in document['rows']:
         event = row['event_type']
+        if families is not None and event not in families:
+            unresolved_families.add(event)
+            continue
         ref_errors = references.errors([row['payload_schema_ref'], 'Plans/event_record.schema.json',
                                        'Plans/event_append_receipt_contracts.schema.json',
                                        CHECKPOINT_SCHEMA.split('#')[0]])
@@ -1296,4 +1305,7 @@ def main():
 
 
 if __name__ == '__main__':
-    sys.exit(main())
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--family', choices=[r['event_type'] for r in load('Plans/runtime_artifact_event_drafts.json')['rows']])
+    args = parser.parse_args()
+    sys.exit(main({args.family} if args.family else None))

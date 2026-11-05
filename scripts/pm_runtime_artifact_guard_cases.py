@@ -7,6 +7,7 @@ Mutations exist only in the separate standing-check driver, never here.
 import copy
 import hashlib
 from pm_runtime_artifact_round6_cases import cases as round6_cases
+from pm_runtime_artifact_round7_cases import cases as round7_cases
 
 
 def accepted(action):
@@ -230,6 +231,7 @@ def cases(m, excluded=()):
     restore_cases(m,fixtures,rows,add)
     shared_cases(m,rows,add)
     result.extend(round6_cases(m,rows,fixtures))
+    result.extend(round7_cases(m,rows,fixtures))
     return result
 
 

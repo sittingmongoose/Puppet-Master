@@ -15,6 +15,7 @@ import json
 import pickle
 from pathlib import Path
 import sys
+import subprocess
 import types
 
 from pm_runtime_artifact_guard_cases import accepted, cases
@@ -208,7 +209,8 @@ expr('C13','checkpoint_matches',"frontier['index_row_count'] == 1")
 expr('C14','checkpoint_matches',"frontier['index_row_set_sha256'] == binding_digest(dict(\n                    domain='pm.event_index.row_set.v1', entries=[dict(key=row_key, value=expected_row)]))")
 block('O01','observation_admissible',"source['proof_valid']")
 block('O02','observation_admissible',"candidate['correlation_id'] != grouping_identity")
-block('O03','observation_admissible',"payload['type_payload'] != source")
+block('O03','observation_admissible','is_valid(source_payload)',
+    label='source snapshot: adopted logical schema before exact encoded join (named duplicate type defenses)')
 expr('O04','observation_admissible',"candidate['producer_sequence_id'] == 0 and candidate['parent_event_id'] is None")
 block('O05','observation_admissible',"payload['artifact_id'] !=")
 block('O06','observation_admissible',"payload['type_payload'] == old['type_payload']")
@@ -251,13 +253,48 @@ expr('S07','validator',"return ExactValidator(schema, format_checker=FormatCheck
 
 
 def evaluate(suite,m):
-    return {(g,f,n):(accepted(lambda:good(m)),accepted(lambda:bad(m))) for g,f,n,good,bad in suite}
+    outcomes = {}
+    previous_family = None
+    for g,f,n,good,bad in suite:
+        if f != previous_family:
+            memory_check()
+            previous_family = f
+        outcomes[g,f,n] = (accepted(lambda:good(m)),accepted(lambda:bad(m)))
+    return outcomes
+
+
+def memory_check():
+    available = int(subprocess.check_output(['free', '-g'], text=True).splitlines()[1].split()[-1])
+    if available < 6:
+        raise RuntimeError(f'PAUSE: only {available} GB RAM available; need at least 6')
+    return available
+
+
+def family_checkers(m):
+    """Execute every full family checker sequentially, with a RAM gate per family."""
+    failures, counts, runs = [], {}, []
+    for row in m.load('Plans/runtime_artifact_event_drafts.json')['rows']:
+        family = row['event_type']
+        available = memory_check()
+        stream = io.StringIO()
+        with contextlib.redirect_stdout(stream):
+            code = int(m.main({family}))
+        report = json.loads(stream.getvalue())
+        failures.extend(report['failures'])
+        counts[family] = report['per_family'].get(family, 0)
+        runs.append(dict(family=family, exit_code=code, status=report['status'], available_ram_GB=available))
+        # Shared assertions are identical on every selected-family invocation.
+        counts['shared'] = report['per_family']['shared']
+    code = int(any(r['exit_code'] for r in runs))
+    return code, dict(status='fail' if code else 'pass', cases=sum(counts.values()),
+                      per_family=counts, failures=failures, family_runs=runs,
+                      native_execution='NOT_RUN', admission='NONE')
 
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output',type=Path)
     parser.add_argument('--case');parser.add_argument('--full-checker',action='store_true')
-    args=parser.parse_args();source=CHECKER.read_text();baseline=module(source);suite=cases(baseline)
+    args=parser.parse_args();memory_check();source=CHECKER.read_text();baseline=module(source);suite=cases(baseline)
     outcomes=evaluate(suite,baseline)
     baseline_bad=[list(k)+[list(v)] for k,v in outcomes.items() if v!=(True,False)]
     print('baseline pairs: '+str(len(outcomes))+', failures: '+str(len(baseline_bad)),file=sys.stderr,flush=True)
@@ -265,6 +302,7 @@ def main():
     rows=[]
     for guard,(label,mutate) in GUARDS.items():
         if args.case and args.case not in guard:continue
+        available = memory_check()
         altered=mutate(source);m=module(altered,None if guard=='S01' else baseline.SchemaReferences());actual=evaluate(suite,m)
         # These are the SAME rule/fault at a forwarded caller boundary, not an
         # unrelated negative: append uses full_value's schema precondition;
@@ -278,24 +316,27 @@ def main():
         stayed=[k for k in outcomes if k not in own and actual[k]==(True,False)]
         code=report=None
         if args.full_checker:
-            stream=io.StringIO()
             # Cache only clean inputs; every good/bad invocation still calls
             # this mutant's actual production boundary functions.
             m.guard_cases=lambda boundary,excluded=(): [c for c in suite if c[1] not in excluded]
-            with contextlib.redirect_stdout(stream):code=int(m.main())
-            report=json.loads(stream.getvalue())
+            code,report=family_checkers(m)
         passed=bool(own) and not masked and not cross and not baseline_bad
         if args.full_checker:passed=passed and code==1 and report['status']=='fail'
         linked_names=sorted(linked)+(['C06:shipped_wrong_custody_event'] if guard=='F11' else [])+(['B01:*_inline_decode','B01:*_packed_decode','B01:*_packed_append'] if guard=='D12' else [])
+        if guard == 'O03':
+            linked_names += ['O03:adopted_source_snapshot_schema', 'O03:exact_encoded_snapshot_join']
         row=dict(guard=guard,rule=label,pass_=passed,linked_same_rule_guards=linked_names,negatives_that_flip=flips,masked=masked,
             negatives_that_stay_rejected=stayed,cross_flips=cross,
             mutant_sha256=hashlib.sha256(altered.encode()).hexdigest(),
+            available_ram_GB=available,
+            full_checker_family_runs=report['family_runs'] if report else None,
             full_checker_exit=code,full_checker_failures=report['failures'] if report else None)
         rows.append(row);print(guard+': '+('pass' if passed else 'FAIL')+f' flips={len(flips)}/{len(own)} cross={len(cross)}',file=sys.stderr,flush=True)
     report=dict(status='pass' if rows and all(r['pass_'] for r in rows) else 'fail',
         checker_sha256=hashlib.sha256(source.encode()).hexdigest(),guard_count=len(GUARDS),
         witness_sha256=hashlib.sha256((ROOT/'scripts/pm_runtime_artifact_guard_cases.py').read_bytes()).hexdigest(),
         round6_witness_sha256=hashlib.sha256((ROOT/'scripts/pm_runtime_artifact_round6_cases.py').read_bytes()).hexdigest(),
+        round7_witness_sha256=hashlib.sha256((ROOT/'scripts/pm_runtime_artifact_round7_cases.py').read_bytes()).hexdigest(),
         driver_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         negative_pairs=len(outcomes),baseline_failures=baseline_bad,rows=rows,native_execution='NOT_RUN',admission='NONE')
     body=json.dumps(report,indent=2)+'\n'

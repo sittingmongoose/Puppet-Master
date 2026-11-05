@@ -8,7 +8,7 @@ def cases(m, rows, fixtures):
     result = []
     def add(guard, family, name, good, bad):
         result.append((guard, family, name, good, bad))
-    wrong_flags = ('false', '0', 0, 1, None, [], {}, {'nested': True})
+    wrong_flags = ('false', '0', 0, 1, None, [], {}, {'nested': True}, 0.0, 1.0)
     for row in rows:
         family = row['event_type']
         full = fixtures['positive_events'][family]
@@ -161,7 +161,10 @@ def cases(m, rows, fixtures):
         for index,value in enumerate(('0','false',None,[],{},True)):
             bad=copy.deepcopy(full);bad['sequence_id']=value
             add('S07',family,'event_number_type_'+str(index),lambda n,e=full:n.EVENT_VALIDATOR.is_valid(e),lambda n,e=bad:n.EVENT_VALIDATOR.is_valid(e))
-        for index,value in enumerate(wrong_flags):
+        # Integral floats also violate N01, independently of the primitive
+        # scalar type rule. They are covered on every actual flag adapter above
+        # and in O03's named schema/encoded duplicate set, not mislabeled S07.
+        for index,value in enumerate(wrong_flags[:8]):
             add('S07',family,'boolean_type_'+str(index),lambda n:n.validator({'type':'boolean'}).is_valid(False),
                 lambda n,v=value:n.validator({'type':'boolean'}).is_valid(v))
         if family.endswith('.restore_point'):
