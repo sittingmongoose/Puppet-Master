@@ -3,7 +3,7 @@ import { onboardingApp } from '../helpers/onboarding-fields.mjs';
 
 export default async function (t) {
   const A = onboardingApp(t);
-  await A.boot();
+  await A.boot({ look: String(t.args.look || 'basic-light').split('-') });
   await A.click('pick', 'connect');
   await A.click('next', undefined, 'c-route');
   await A.waitFor(() => !!document.querySelector('.o55-card[data-arg="pm:garage"]'), null, 10000);

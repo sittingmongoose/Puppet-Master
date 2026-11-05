@@ -1,6 +1,7 @@
 // SW-42: walk current rail panels; open every reachable historical PMMenu shelf trigger.
 export default async function (t) {
-  await t.viewport(1920,1080); const f = await t.app.open();
+  await t.viewport(Number(t.args.width || 1920),Number(t.args.height || 1080)); const f = await t.app.open();
+  if(t.args.look) await t.app.look(t.args.look);
   const targets = await f.locator('#activityBar .icon[data-target]').evaluateAll(es => es.filter(e => e.getBoundingClientRect().width).map(e=>e.dataset.target));
   const rows=[]; let reached=0;
   for (const target of targets) {

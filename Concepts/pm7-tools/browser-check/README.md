@@ -33,6 +33,7 @@ Parallel runs are safe: each gets its own browser and run folder. Give each its 
 | `plate-style` | FO-54: Glass and NieR, both modes, paint the Crew plate and schedule manager with their original ink and outline vocabulary. |
 | `performance-surfaces` | Composes the existing ten-look, width, Reduced Motion checks with plate-style and held-idle checks, for either normal or sandbox coverage. |
 | `identity` | R6 identity and completion guards: the frozen fields-lane generated matrix, kind/declared-part conflicts, admitted/AI/drive controls, stale-sign-in cleanup and keyless admitted completion. Owner-start matrices are synthetic; completion has separate checks. Defaults to T3 sandbox; run once with `--set sandbox=0` and `--set sandbox=1`. |
+| `followup-routes-matrix` | SW-42 bounded functional routes: empty Server, endpoint cheer, fallback/retry cheer, reachable shelf menus and denied pairing → code. Ten looks at 1280×900, 740×900 and 1280×500, both surfaces via sandbox switch. |
 | `empty-server` | SW-42 / p15: Connect to Garage Pi, which has no Projects; Ready says so, offers creating one, and does not offer a tour. Run on both `--set sandbox=0` and `--set sandbox=1`. |
 | `cheer-endpoint` | SW-42 / RV-16: GitLab's own-server address goes from refused HTTP to valid HTTPS, and Pip cheers that particular corrected fault. Run on both surfaces. |
 | `browser-fallback` | SW-42 / RV-15: Bitbucket's browser fallback offers the page and copy actions without the old browser-opened message or a premature sign-in cheer. Run on both surfaces. |

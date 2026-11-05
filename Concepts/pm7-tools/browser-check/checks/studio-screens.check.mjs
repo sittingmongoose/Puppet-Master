@@ -66,12 +66,13 @@ export default async function (t) {
 		for (const [id, tw, pre] of PATHS) if (!only || only.includes(id)) cases.push({ screen: id, twist: tw, pre });
 	}
 	const stuck = [];
-	for (const c of cases) {
+	for (const c of cases.filter(c => !t.args.codeOnly || c.pre?.some(([a]) => a === 'useCode'))) {
 		const name = c.screen + (c.twist ? ' (' + c.twist + ')' : '') + (c.pre && c.pre.length ? ' [' + c.pre.map((x) => x.filter(Boolean).join(' ')).join(', ') + ']' : '');
 		/* each case from a clean record: a walk that left a Project being created would otherwise send the next open to
 		   Creating (by design: a Project being made is never abandoned half-made) */
 		await f.evaluate(() => { try { localStorage.clear(); } catch (_) {} });
 		f = await t.app.open();
+		if (t.args.look) await t.app.look(t.args.look);
 		await f.evaluate(() => window.O55.studio.open('onboarding'));
 		await f.waitForSelector('#pmds-sheet [data-pmds-do="open-screen"]', { timeout: 15000 });
 		/* the situation, by its chips: Fresh computer, every twist off, then this case's twist */

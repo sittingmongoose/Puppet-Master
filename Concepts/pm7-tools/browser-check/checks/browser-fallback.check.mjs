@@ -2,7 +2,7 @@
 import { onboardingApp } from '../helpers/onboarding-fields.mjs';
 
 export default async function (t) {
-  const A = onboardingApp(t); await A.boot(); await A.toSafe();
+  const A = onboardingApp(t); await A.boot({ look: String(t.args.look || 'basic-light').split('-') }); await A.toSafe();
   await A.click('online', undefined, 'online-service');
   await A.service('bitbucket_cloud', 'cloud');
   await A.click('signIn');
@@ -21,7 +21,7 @@ export default async function (t) {
   await t.check('choosing fallback is not a completed sign-in cheer', view.cheers.length === 0, JSON.stringify(view.cheers));
 
   // A real failed sign-in followed by a successful retry must cheer the failed operation.
-  const B = onboardingApp(t); await B.boot({ scenario: 'fresh+githubSigninOnce' }); await B.toSafe();
+  const B = onboardingApp(t); await B.boot({ look: String(t.args.look || 'basic-light').split('-'), scenario: 'fresh+githubSigninOnce' }); await B.toSafe();
   await B.click('online', undefined, 'online-service'); await B.click('next', undefined, 'online-signin');
   await B.click('signIn'); await B.waitFor(() => O55.S.sess.signin.state === 'failed', null, 15000);
   const bf = B.frame();

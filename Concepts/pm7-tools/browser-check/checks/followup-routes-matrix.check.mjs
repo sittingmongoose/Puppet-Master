@@ -1,0 +1,15 @@
+// SW-42: bounded functional route matrix, reusing the original assertions.
+import empty from './empty-server.check.mjs';
+import cheer from './cheer-endpoint.check.mjs';
+import fallback from './browser-fallback.check.mjs';
+import shelf from './shelf-route.check.mjs';
+import studio from './studio-screens.check.mjs';
+const LOOKS = ['basic','friendly','retro','glass','nier'].flatMap(f=>['light','dark'].map(m=>f+'-'+m));
+export const tests = {};
+for(const look of LOOKS) for(const [width,height] of [[1280,900],[740,900],[1280,500]]) {
+ tests[`${look} ${width}x${height}`] = async t => {
+  Object.assign(t.args,{look,width,height,only:'c-pair',codeOnly:1,depth:1});
+  await t.viewport(width,height);
+  for(const [name,run] of Object.entries({empty,cheer,fallback,shelf,studio})) await t.step(name,()=>run(t));
+ };
+}

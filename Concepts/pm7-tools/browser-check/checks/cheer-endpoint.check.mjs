@@ -2,7 +2,7 @@
 import { onboardingApp } from '../helpers/onboarding-fields.mjs';
 
 export default async function (t) {
-  const A = onboardingApp(t); await A.boot(); await A.toSafe();
+  const A = onboardingApp(t); await A.boot({ look: String(t.args.look || 'basic-light').split('-') }); await A.toSafe();
   await A.click('online', undefined, 'online-service'); await A.click('others'); await A.click('pick', 'gitlab');
   await A.click('variant', 'self_managed');
   const f = A.frame();
