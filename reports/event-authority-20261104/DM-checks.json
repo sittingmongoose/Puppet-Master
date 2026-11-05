@@ -1,151 +1,170 @@
 {
-  "assessment_id": "EA-DM-FIX5-SELF-20261104",
-  "code_head": "7ec6476fbe1e2b6b50ba24c61dcd861219643ecc",
+  "assessment_id": "EA-DM-FIX6-20261104",
+  "code_head": "9468819e83943712135145fc7814e419d519d4a8",
   "native_execution": "NOT_RUN",
+  "status": "PASS",
   "checks": [
     {
-      "name": "complete eight-family checker",
+      "check": "full checker",
       "exit_code": 0,
-      "status": "PASS",
-      "detail": "9,735 assertions",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/full-checker.log",
-      "sha256": "373557794922c5b0ef4d52fd66fe773df424be082cb733caaed52d470173c215"
+      "assertions": 14519
     },
     {
-      "name": "whole-lane check 11",
+      "check": "whole guard table",
       "exit_code": 0,
-      "status": "PASS",
-      "detail": "445/445 mutants; 2,192 independent negatives; exact flip/complement sets; zero mutation errors",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/guard-removal.json",
-      "sha256": "fa19d7f1882b7ca90b0780b6a024edc4196d7eff3731383e71b5e43a9a71fa31"
+      "guards": 454,
+      "independent_negatives": 3508,
+      "mutants_caught": 454,
+      "mutation_errors": 0
     },
     {
-      "name": "narrow new retry guard proof",
+      "check": "C6-B1 differential",
       "exit_code": 0,
-      "status": "PASS",
-      "detail": "8/8/18 flips; 2184/2184/2174 still rejected",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/retry-guard-removal.json",
-      "sha256": "a44c80833c6b50802efa0f85ba085042470c333846310e15318bc31b557dfae0"
+      "old_splits": 40,
+      "new_refusals": 40
     },
     {
-      "name": "previous guard equivalence",
+      "check": "numeric identity/wire sweep",
       "exit_code": 0,
-      "status": "PASS",
-      "detail": "442 original rules have identical edits and flip sets",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/prior-guard-comparison.json",
-      "sha256": "33862461634ab7f33d5ce82462572c293ad82734c4774f8e9105b0fdd8d88185"
+      "observations": 16815,
+      "float_samples_per_family": 1027
     },
     {
-      "name": "existing witness equivalence",
+      "check": "earlier direct observations",
       "exit_code": 0,
-      "status": "PASS",
-      "detail": "2,174 existing positive/negative tuples and acceptance predicates unchanged; 18 witnesses added",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/catalogue-equivalence.json",
-      "sha256": "ac9e1b84ead7de326c5a9e6f0cd3f103633b5ce559bef67526fd278ee7cb11a9"
+      "observations": 1111,
+      "identical_to_cycle6": true
     },
     {
-      "name": "independent prior regressions",
+      "check": "earlier focused observations",
       "exit_code": 0,
-      "status": "PASS",
-      "detail": "1,111/1,111 assertions across all eight families",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/prior-regressions.json",
-      "sha256": "cd63f40d2778684299e611cffda8dec4fc96997bd00aee4e3c68b8d7a54e26b9"
+      "observations": 521,
+      "identical_to_cycle6": true,
+      "narrow_syntax_mutants_caught": 21
     },
     {
-      "name": "independent Astra classes 1 to 10",
+      "check": "DL-408 audit",
       "exit_code": 0,
-      "status": "PASS",
-      "detail": "212 observations; both context families; all 56 authentic foreign retry pairs refuse",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/context-probes.json",
-      "sha256": "bb0d16bfcfb0183d84a4b31629873bdfb80ccfce84a0283588e9a2ef2c97415a"
+      "checks": 111,
+      "application_unchanged": true
     },
     {
-      "name": "failure exit oracles",
+      "check": "failure exits",
       "exit_code": 0,
-      "status": "PASS",
-      "detail": "8 child exits 1; every matcher rejects supplied success exit 0",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/failure-oracles.json",
-      "sha256": "d1dc645a03c40a6fe721f0f7c413304a800566564e6d40013e60a836d777682e"
+      "children_exit_1": 8,
+      "success_exit_refusals": 8
     },
     {
-      "name": "Settings DL-408 audit",
+      "check": "scope and current citations",
       "exit_code": 0,
-      "status": "PASS",
-      "detail": "111 checks / 13 original application quotes; exact original application unchanged",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/settings-audit.json",
-      "sha256": "57d5fa4cfd9eca93979f9d2cadc563d1fa98d38e92bec0dd1acfc0c4e3695c53"
+      "checks": 816,
+      "citations": 292
     },
     {
-      "name": "current citations, historical captures and scope",
+      "check": "shard check / index validate",
       "exit_code": 0,
-      "status": "PASS",
-      "detail": "783 checks / 260 current citations / 22 explicit historical captures",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/source-scope-audit.json",
-      "sha256": "8f54a451b70921a0f4296484b35085e7a65cdfbb6f24ade87196193ae0b0bf4d"
+      "top_level_status": "pass",
+      "ignored_currentness_files_hash_matched": 15
     },
     {
-      "name": "shard check",
-      "exit_code": 0,
-      "status": "pass",
-      "detail": "99 documents / 3,092 shards; no prose or derived edits in round 5",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/shard-check.json",
+      "check": "targeted Settings/DRY/Storage recovery/whitespace",
+      "exit_code": 0
+    },
+    {
+      "check": "Storage profile",
+      "exit_code": 1,
+      "qualification": "Identical 41-error pre-existing baseline",
+      "output_sha256": "89d47858adcab797033a9feca549351641cfb6a2f6ee5da75a2c62082b3d450b"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix6/checker.log",
+      "sha256": "f879f9fb9c06abd019a3eee8a5a0ad414acce3cb47e29b0f63569efc72dc407b"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix6/guard-removal.json",
+      "sha256": "d9419f3a64d0437b297dded36108bf037389743b388e2a42de65deddd18aced0"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix6/guard-removal.log",
+      "sha256": "32569a5528d4c023ef19aede171fcfedefd6a3fe68fdb704f1e73d35f42d7157"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix6/guard-comparison.json",
+      "sha256": "d208ec8288f31f97dc744d81080512512f47d517044805300b1720809f3628b8"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix6/numeric-probes.py",
+      "sha256": "47239d4a605dfc7b8870816bda0f53f8dc2210154a13362d34469c8b44a9add5"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix6/numeric-probes.json",
+      "sha256": "abcd7c1c82140c2099cc8933fdef83f72286b59389c7b3d6a92fcc1eeecf0392"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix6/numeric-sweep.py",
+      "sha256": "f5a7eac644718ec939c9c066cf908267a134079a0f840b2afa1c6ce3afe7df61"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix6/numeric-sweep.json",
+      "sha256": "7dbf556c26dd67a4560bd34a5ff53ace13ad9964729e66db06dcf14ce5763c2c"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix6/regressions.py",
+      "sha256": "6f9cd9f080583090262539a2a62d7f23c7b4302c2aaf6c33cb2e037c63addc29"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix6/prior-regressions.json",
+      "sha256": "dbd70ccc12d561c5a844a1b0b26dc0fe73d5d00693161ab56b8c309859152916"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix6/focused-probes.py",
+      "sha256": "f0209e59b171f89d403aba995c73ab9464741ea3ac948e150f74ffad5fab9df9"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix6/focused-probes.json",
+      "sha256": "893b49f6b055bdf2038b42ef54a14366cc1652b40e56eb5031a112993a681f01"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix6/settings-audit.py",
+      "sha256": "4f4dc2e9d8e672741c42618b95bfe30f22243b5af931362aa8f67cdece66bc28"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix6/settings-audit.json",
+      "sha256": "339979758c8da1feb3fc649acc146025d199f8739a07cb65067538fefe3a2905"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix6/source-scope-audit.py",
+      "sha256": "cec9bd187c2c43c87e8cec5bfb8f8295362894a43876fa05bce3f976d9f1472d"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix6/source-scope-audit.json",
+      "sha256": "1f7997dccd20c35f8ab4b47d84498cff27bcd43b4be954c3e9e73911fb789474"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix6/failure-exits.py",
+      "sha256": "8bfdaab84ce7b254209eb7f9e42424bd500e4ae128814bbf2b1583e5358a6524"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix6/failure-exits.json",
+      "sha256": "0d30a31b17c0c22a3f175f916d3e42a8a2a072a6cca2ce786f7f943a87361a26"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix6/targeted-checks.json",
+      "sha256": "1fe0025df39fb6d6a5339b3b67b3824429ac307911b824c6f8ebd3bc25d5fc3a"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix6/shard-check.json",
       "sha256": "3df84afb0ff89f7052554bb9700a1bc3294714b9109ec8257ee2b7ab46a86b21"
     },
     {
-      "name": "initial index validation without currentness",
-      "exit_code": 1,
-      "status": "fail",
-      "detail": "missing ignored currentness input changes readiness expectation; corrected setup, not a product failure",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/index-validation.json",
-      "sha256": "f153b8e4fd24b5ceb1da05da2fa62119c8559e92d67f283df104b6ba6176bb8f"
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix6/index-validation.json",
+      "sha256": "6cd049c90247cc1d1ea874c3585f86aefb90194b35503ff1530be70c29a16a82"
     },
     {
-      "name": "index validation with currentness",
-      "exit_code": 0,
-      "status": "pass",
-      "detail": "15 copied currentness inputs hash-match; readiness remains blocked",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/index-validation-currentness.json",
-      "sha256": "9cbcebe67ad410c81730fc8fbc297b661702886fb30d328769f169ed8c25b35d"
-    },
-    {
-      "name": "Settings layering checker",
-      "exit_code": 0,
-      "status": "pass",
-      "detail": null,
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/settings-layering.json",
-      "sha256": "d38e86560c3cea1f45370aa1e8aa9564729b3f5f97bac6cde7f9c831e0106da7"
-    },
-    {
-      "name": "DRY consumer tests",
-      "exit_code": 0,
-      "status": "PASS",
-      "detail": "10 tests",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/dry-tests.log",
-      "sha256": "87f122ea0091227e3be5e12cd125e11f3ab0d955658f5e0238f155188ea74b13"
-    },
-    {
-      "name": "Storage recovery self-test",
-      "exit_code": 0,
-      "status": "pass",
-      "detail": null,
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/storage-recovery.json",
-      "sha256": "e56e543c18588569abd7a299f25004750f6954e919c5571c6a669b38668eca1a"
-    },
-    {
-      "name": "Storage profile checker",
-      "exit_code": 1,
-      "status": "fail",
-      "detail": "41 pre-existing errors; byte-identical comparison output",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/storage-profile.json",
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix6/storage-profile.log",
       "sha256": "89d47858adcab797033a9feca549351641cfb6a2f6ee5da75a2c62082b3d450b"
-    },
-    {
-      "name": "profile baseline comparison",
-      "exit_code": 0,
-      "status": "PASS",
-      "detail": "SHA-256 89d47858adcab797033a9feca549351641cfb6a2f6ee5da75a2c62082b3d450b",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/profile-comparison.json",
-      "sha256": "f8253618948fb962873d6f21a234d66fa00395ff8559d3854ca618a0d9df8bd5"
     }
   ]
 }

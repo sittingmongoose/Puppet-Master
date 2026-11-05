@@ -1,14 +1,14 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-DM-FIX5-SELF-20261104",
+  "assessment_id": "EA-DM-FIX6-SELF-20261104",
   "assessment_kind": "branch_local_self_grade",
   "assessed_tree": {
     "branch": "plans/ea-w2-small-owners-20261104",
-    "base": "9439444c222a8d63bfe44ad37397f1498a7ac9e4",
-    "input_head": "9439444c222a8d63bfe44ad37397f1498a7ac9e4",
-    "reviewed_head": "9439444c222a8d63bfe44ad37397f1498a7ac9e4",
-    "canonical_head": "7ec6476fbe1e2b6b50ba24c61dcd861219643ecc",
-    "method": "Round 5 C5-B1: exact event-family and payload-schema retry fences; reciprocal unchanged genuine context-family event/receipt negatives; complete shared-helper suite and whole-lane guard-removal proof. Historical reader, Storage semantic exclusions and DL-408 application preserved. Static only, native NOT_RUN."
+    "base": "bac541604c77d9d8f4855b32d7077f2091edd033",
+    "input_head": "bac541604c77d9d8f4855b32d7077f2091edd033",
+    "reviewed_head": "bac541604c77d9d8f4855b32d7077f2091edd033",
+    "canonical_head": "9468819e83943712135145fc7814e419d519d4a8",
+    "method": "Round 6 C6-B1: strict integer schema/model admission, canonical numeric hashes and preserved historical integer recipe. Every numeric state/receipt/checkpoint/payload descriptor swept. Whole-lane 454-guard/3508-negative proof, exact earlier observations and DL-408 application preserved. Static only; native NOT_RUN."
   },
   "rubric": {
     "criteria": [
@@ -57,11 +57,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -78,11 +78,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -99,11 +99,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -128,11 +128,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -157,11 +157,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -186,11 +186,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -207,11 +207,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -236,11 +236,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -257,11 +257,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -287,18 +287,18 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "checkpoint_matches_original",
-              "line_start": 461,
-              "line_end": 461,
+              "line_start": 564,
+              "line_end": 564,
               "quote": "def checkpoint_matches_original(state):",
-              "file_sha256": "f57abee2fb81da877e6144f494ea73834236e3287b292eeae2d68b4d8bb6806a"
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -315,16 +315,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All eleven standing checks exercised. Full checker: 9,735 assertions; prior independent regressions: 1,111/1,111. Exact retry event-family/schema fences refuse all 56 authentic foreign pairs; reciprocal context event/receipt vectors and isolated guard witnesses run through the complete checker. Whole-lane guard audit is recorded in DM-guard-removal.json. Historical reads/rebuild and Storage metadata exclusions preserved. Native NOT_RUN.",
+          "finding": "All eleven standing checks and all ten Astra classes rerun. Full checker: 14,519 assertions. Whole-lane proof: 454/454 guards over 3,508 independent negatives, including named integer-schema/MessagePack duplicates; no errors or unrelated flips. All 40 reviewed producer-sequence splits are refused and safe aliases hash identically. Numeric sweep: 16,815 observations, 1,027 integral-float values per family. Earlier 1,111 and 521 observations exactly unchanged. Original integer history (including u64), context retry fences and Settings retirement preserved. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Formatters_System.md",
@@ -337,10 +337,10 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "run_exact_family",
-              "line_start": 560,
-              "line_end": 560,
+              "line_start": 784,
+              "line_end": 784,
               "quote": "def run_exact_family(row):",
-              "file_sha256": "f57abee2fb81da877e6144f494ea73834236e3287b292eeae2d68b4d8bb6806a"
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
             },
             {
               "path": "Plans/Formatters_System.md",
@@ -361,18 +361,50 @@
             {
               "path": "scripts/pm-small-owner-guard-audit.py",
               "unit": "normal_checks",
-              "line_start": 492,
-              "line_end": 492,
+              "line_start": 601,
+              "line_end": 601,
               "quote": "def normal_checks(namespace, fixtures, guard_first=None):",
-              "file_sha256": "8cf28c8bb91921c52c6d5a737a65e9f146e62283a514c44ebb51baa93262c245"
+              "file_sha256": "399e8b19ab2179b20cfb09dec2b273db43ec3b494cc4b204b81498af7f182c72"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "integer_type",
+              "line_start": 36,
+              "line_end": 36,
+              "quote": "def integer_type(checker, instance):",
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "canonical_json_numbers",
+              "line_start": 72,
+              "line_end": 72,
+              "quote": "def canonical_json_numbers(value, *, retained=False):",
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "retained_producer_digest",
+              "line_start": 311,
+              "line_end": 311,
+              "quote": "def retained_producer_digest(event):",
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
+            },
+            {
+              "path": "scripts/pm-small-owner-guard-audit.py",
+              "unit": "numeric_catalogue",
+              "line_start": 445,
+              "line_end": 445,
+              "quote": "def numeric_catalogue(m, fixtures, add, change):",
+              "file_sha256": "399e8b19ab2179b20cfb09dec2b273db43ec3b494cc4b204b81498af7f182c72"
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
-            "status": "PASS"
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change": "improved",
+          "change_reason": "C6-B1 numeric admission/hash boundary now has independent negatives and complete guard proof."
         }
       },
       "remaining_gaps": [
@@ -381,11 +413,11 @@
       ],
       "static_checks_seen": [
         "python3 -B scripts/pm-small-owner-events.py",
-        "python3 -B scripts/pm-small-owner-guard-audit.py /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/guard-removal.json",
+        "python3 -B scripts/pm-small-owner-guard-audit.py /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix6/guard-removal.json",
         "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
         "python3 -B scripts/pm-plan-index.py validate"
       ],
-      "notes": "Prepared without admission. Self-graded after round-5 exact-family/schema retry repair against cycle-5 reviewed grades; native NOT_RUN. Membership and unresolved RT retention are intentional exceptions.",
+      "notes": "Prepared without admission; cycle-6 numeric oracle gap repaired. Membership and six RT retention cells remain intentional exceptions; Settings remains excluded. Native NOT_RUN.",
       "newly_authored_operating_reader": "reader.evidence.format_applied@1.0.0"
     },
     {
@@ -416,11 +448,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -437,11 +469,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -458,11 +490,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -487,11 +519,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -516,11 +548,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -545,11 +577,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -566,11 +598,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -595,11 +627,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -616,11 +648,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -646,18 +678,18 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "checkpoint_matches_original",
-              "line_start": 461,
-              "line_end": 461,
+              "line_start": 564,
+              "line_end": 564,
               "quote": "def checkpoint_matches_original(state):",
-              "file_sha256": "f57abee2fb81da877e6144f494ea73834236e3287b292eeae2d68b4d8bb6806a"
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -674,16 +706,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All eleven standing checks exercised. Full checker: 9,735 assertions; prior independent regressions: 1,111/1,111. Exact retry event-family/schema fences refuse all 56 authentic foreign pairs; reciprocal context event/receipt vectors and isolated guard witnesses run through the complete checker. Whole-lane guard audit is recorded in DM-guard-removal.json. Historical reads/rebuild and Storage metadata exclusions preserved. Native NOT_RUN.",
+          "finding": "All eleven standing checks and all ten Astra classes rerun. Full checker: 14,519 assertions. Whole-lane proof: 454/454 guards over 3,508 independent negatives, including named integer-schema/MessagePack duplicates; no errors or unrelated flips. All 40 reviewed producer-sequence splits are refused and safe aliases hash identically. Numeric sweep: 16,815 observations, 1,027 integral-float values per family. Earlier 1,111 and 521 observations exactly unchanged. Original integer history (including u64), context retry fences and Settings retirement preserved. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Source_Control_System.md",
@@ -696,10 +728,10 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "run_exact_family",
-              "line_start": 560,
-              "line_end": 560,
+              "line_start": 784,
+              "line_end": 784,
               "quote": "def run_exact_family(row):",
-              "file_sha256": "f57abee2fb81da877e6144f494ea73834236e3287b292eeae2d68b4d8bb6806a"
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
             },
             {
               "path": "Plans/Source_Control_System.md",
@@ -720,18 +752,50 @@
             {
               "path": "scripts/pm-small-owner-guard-audit.py",
               "unit": "normal_checks",
-              "line_start": 492,
-              "line_end": 492,
+              "line_start": 601,
+              "line_end": 601,
               "quote": "def normal_checks(namespace, fixtures, guard_first=None):",
-              "file_sha256": "8cf28c8bb91921c52c6d5a737a65e9f146e62283a514c44ebb51baa93262c245"
+              "file_sha256": "399e8b19ab2179b20cfb09dec2b273db43ec3b494cc4b204b81498af7f182c72"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "integer_type",
+              "line_start": 36,
+              "line_end": 36,
+              "quote": "def integer_type(checker, instance):",
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "canonical_json_numbers",
+              "line_start": 72,
+              "line_end": 72,
+              "quote": "def canonical_json_numbers(value, *, retained=False):",
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "retained_producer_digest",
+              "line_start": 311,
+              "line_end": 311,
+              "quote": "def retained_producer_digest(event):",
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
+            },
+            {
+              "path": "scripts/pm-small-owner-guard-audit.py",
+              "unit": "numeric_catalogue",
+              "line_start": 445,
+              "line_end": 445,
+              "quote": "def numeric_catalogue(m, fixtures, add, change):",
+              "file_sha256": "399e8b19ab2179b20cfb09dec2b273db43ec3b494cc4b204b81498af7f182c72"
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
-            "status": "PASS"
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change": "improved",
+          "change_reason": "C6-B1 numeric admission/hash boundary now has independent negatives and complete guard proof."
         }
       },
       "remaining_gaps": [
@@ -740,11 +804,11 @@
       ],
       "static_checks_seen": [
         "python3 -B scripts/pm-small-owner-events.py",
-        "python3 -B scripts/pm-small-owner-guard-audit.py /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/guard-removal.json",
+        "python3 -B scripts/pm-small-owner-guard-audit.py /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix6/guard-removal.json",
         "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
         "python3 -B scripts/pm-plan-index.py validate"
       ],
-      "notes": "Prepared without admission. Self-graded after round-5 exact-family/schema retry repair against cycle-5 reviewed grades; native NOT_RUN. Membership and unresolved RT retention are intentional exceptions.",
+      "notes": "Prepared without admission; cycle-6 numeric oracle gap repaired. Membership and six RT retention cells remain intentional exceptions; Settings remains excluded. Native NOT_RUN.",
       "newly_authored_operating_reader": "reader.scm.git_clone_completed@1.0.0"
     },
     {
@@ -775,11 +839,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -796,11 +860,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -817,11 +881,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -846,11 +910,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -875,11 +939,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -904,11 +968,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -925,11 +989,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -954,11 +1018,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -975,11 +1039,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1005,18 +1069,18 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "checkpoint_matches_original",
-              "line_start": 461,
-              "line_end": 461,
+              "line_start": 564,
+              "line_end": 564,
               "quote": "def checkpoint_matches_original(state):",
-              "file_sha256": "f57abee2fb81da877e6144f494ea73834236e3287b292eeae2d68b4d8bb6806a"
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1033,16 +1097,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All eleven standing checks exercised. Full checker: 9,735 assertions; prior independent regressions: 1,111/1,111. Exact retry event-family/schema fences refuse all 56 authentic foreign pairs; reciprocal context event/receipt vectors and isolated guard witnesses run through the complete checker. Whole-lane guard audit is recorded in DM-guard-removal.json. Historical reads/rebuild and Storage metadata exclusions preserved. Native NOT_RUN.",
+          "finding": "All eleven standing checks and all ten Astra classes rerun. Full checker: 14,519 assertions. Whole-lane proof: 454/454 guards over 3,508 independent negatives, including named integer-schema/MessagePack duplicates; no errors or unrelated flips. All 40 reviewed producer-sequence splits are refused and safe aliases hash identically. Numeric sweep: 16,815 observations, 1,027 integral-float values per family. Earlier 1,111 and 521 observations exactly unchanged. Original integer history (including u64), context retry fences and Settings retirement preserved. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/LSPSupport.md",
@@ -1055,10 +1119,10 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "run_exact_family",
-              "line_start": 560,
-              "line_end": 560,
+              "line_start": 784,
+              "line_end": 784,
               "quote": "def run_exact_family(row):",
-              "file_sha256": "f57abee2fb81da877e6144f494ea73834236e3287b292eeae2d68b4d8bb6806a"
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
             },
             {
               "path": "Plans/LSPSupport.md",
@@ -1079,18 +1143,50 @@
             {
               "path": "scripts/pm-small-owner-guard-audit.py",
               "unit": "normal_checks",
-              "line_start": 492,
-              "line_end": 492,
+              "line_start": 601,
+              "line_end": 601,
               "quote": "def normal_checks(namespace, fixtures, guard_first=None):",
-              "file_sha256": "8cf28c8bb91921c52c6d5a737a65e9f146e62283a514c44ebb51baa93262c245"
+              "file_sha256": "399e8b19ab2179b20cfb09dec2b273db43ec3b494cc4b204b81498af7f182c72"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "integer_type",
+              "line_start": 36,
+              "line_end": 36,
+              "quote": "def integer_type(checker, instance):",
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "canonical_json_numbers",
+              "line_start": 72,
+              "line_end": 72,
+              "quote": "def canonical_json_numbers(value, *, retained=False):",
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "retained_producer_digest",
+              "line_start": 311,
+              "line_end": 311,
+              "quote": "def retained_producer_digest(event):",
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
+            },
+            {
+              "path": "scripts/pm-small-owner-guard-audit.py",
+              "unit": "numeric_catalogue",
+              "line_start": 445,
+              "line_end": 445,
+              "quote": "def numeric_catalogue(m, fixtures, add, change):",
+              "file_sha256": "399e8b19ab2179b20cfb09dec2b273db43ec3b494cc4b204b81498af7f182c72"
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
-            "status": "PASS"
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change": "improved",
+          "change_reason": "C6-B1 numeric admission/hash boundary now has independent negatives and complete guard proof."
         }
       },
       "remaining_gaps": [
@@ -1099,11 +1195,11 @@
       ],
       "static_checks_seen": [
         "python3 -B scripts/pm-small-owner-events.py",
-        "python3 -B scripts/pm-small-owner-guard-audit.py /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/guard-removal.json",
+        "python3 -B scripts/pm-small-owner-guard-audit.py /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix6/guard-removal.json",
         "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
         "python3 -B scripts/pm-plan-index.py validate"
       ],
-      "notes": "Prepared without admission. Self-graded after round-5 exact-family/schema retry repair against cycle-5 reviewed grades; native NOT_RUN. Membership and unresolved RT retention are intentional exceptions.",
+      "notes": "Prepared without admission; cycle-6 numeric oracle gap repaired. Membership and six RT retention cells remain intentional exceptions; Settings remains excluded. Native NOT_RUN.",
       "newly_authored_operating_reader": "reader.lsp.lifecycle@1.0.0"
     },
     {
@@ -1134,11 +1230,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1155,11 +1251,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -1176,11 +1272,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1205,11 +1301,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1242,11 +1338,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1271,11 +1367,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1292,11 +1388,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1321,11 +1417,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -1342,11 +1438,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1372,18 +1468,18 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "checkpoint_matches_original",
-              "line_start": 461,
-              "line_end": 461,
+              "line_start": 564,
+              "line_end": 564,
               "quote": "def checkpoint_matches_original(state):",
-              "file_sha256": "f57abee2fb81da877e6144f494ea73834236e3287b292eeae2d68b4d8bb6806a"
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1400,16 +1496,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All eleven standing checks exercised. Full checker: 9,735 assertions; prior independent regressions: 1,111/1,111. Exact retry event-family/schema fences refuse all 56 authentic foreign pairs; reciprocal context event/receipt vectors and isolated guard witnesses run through the complete checker. Whole-lane guard audit is recorded in DM-guard-removal.json. Historical reads/rebuild and Storage metadata exclusions preserved. Native NOT_RUN.",
+          "finding": "All eleven standing checks and all ten Astra classes rerun. Full checker: 14,519 assertions. Whole-lane proof: 454/454 guards over 3,508 independent negatives, including named integer-schema/MessagePack duplicates; no errors or unrelated flips. All 40 reviewed producer-sequence splits are refused and safe aliases hash identically. Numeric sweep: 16,815 observations, 1,027 integral-float values per family. Earlier 1,111 and 521 observations exactly unchanged. Original integer history (including u64), context retry fences and Settings retirement preserved. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Models_System.md",
@@ -1422,10 +1518,10 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "run_exact_family",
-              "line_start": 560,
-              "line_end": 560,
+              "line_start": 784,
+              "line_end": 784,
               "quote": "def run_exact_family(row):",
-              "file_sha256": "f57abee2fb81da877e6144f494ea73834236e3287b292eeae2d68b4d8bb6806a"
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
             },
             {
               "path": "Plans/Models_System.md",
@@ -1454,18 +1550,50 @@
             {
               "path": "scripts/pm-small-owner-guard-audit.py",
               "unit": "normal_checks",
-              "line_start": 492,
-              "line_end": 492,
+              "line_start": 601,
+              "line_end": 601,
               "quote": "def normal_checks(namespace, fixtures, guard_first=None):",
-              "file_sha256": "8cf28c8bb91921c52c6d5a737a65e9f146e62283a514c44ebb51baa93262c245"
+              "file_sha256": "399e8b19ab2179b20cfb09dec2b273db43ec3b494cc4b204b81498af7f182c72"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "integer_type",
+              "line_start": 36,
+              "line_end": 36,
+              "quote": "def integer_type(checker, instance):",
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "canonical_json_numbers",
+              "line_start": 72,
+              "line_end": 72,
+              "quote": "def canonical_json_numbers(value, *, retained=False):",
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "retained_producer_digest",
+              "line_start": 311,
+              "line_end": 311,
+              "quote": "def retained_producer_digest(event):",
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
+            },
+            {
+              "path": "scripts/pm-small-owner-guard-audit.py",
+              "unit": "numeric_catalogue",
+              "line_start": 445,
+              "line_end": 445,
+              "quote": "def numeric_catalogue(m, fixtures, add, change):",
+              "file_sha256": "399e8b19ab2179b20cfb09dec2b273db43ec3b494cc4b204b81498af7f182c72"
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
-            "status": "PASS"
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change": "improved",
+          "change_reason": "C6-B1 numeric admission/hash boundary now has independent negatives and complete guard proof."
         }
       },
       "remaining_gaps": [
@@ -1474,11 +1602,11 @@
       ],
       "static_checks_seen": [
         "python3 -B scripts/pm-small-owner-events.py",
-        "python3 -B scripts/pm-small-owner-guard-audit.py /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/guard-removal.json",
+        "python3 -B scripts/pm-small-owner-guard-audit.py /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix6/guard-removal.json",
         "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
         "python3 -B scripts/pm-plan-index.py validate"
       ],
-      "notes": "Prepared without admission. Self-graded after round-5 exact-family/schema retry repair against cycle-5 reviewed grades; native NOT_RUN. Membership and unresolved RT retention are intentional exceptions.",
+      "notes": "Prepared without admission; cycle-6 numeric oracle gap repaired. Membership and six RT retention cells remain intentional exceptions; Settings remains excluded. Native NOT_RUN.",
       "newly_authored_operating_reader": "reader.models.catalog_refresh@1.0.0"
     },
     {
@@ -1509,11 +1637,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1530,11 +1658,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -1551,11 +1679,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1580,11 +1708,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1609,11 +1737,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1638,11 +1766,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1659,11 +1787,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1688,11 +1816,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -1709,11 +1837,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1739,18 +1867,18 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "checkpoint_matches_original",
-              "line_start": 461,
-              "line_end": 461,
+              "line_start": 564,
+              "line_end": 564,
               "quote": "def checkpoint_matches_original(state):",
-              "file_sha256": "f57abee2fb81da877e6144f494ea73834236e3287b292eeae2d68b4d8bb6806a"
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1767,16 +1895,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All eleven standing checks exercised. Full checker: 9,735 assertions; prior independent regressions: 1,111/1,111. Exact retry event-family/schema fences refuse all 56 authentic foreign pairs; reciprocal context event/receipt vectors and isolated guard witnesses run through the complete checker. Whole-lane guard audit is recorded in DM-guard-removal.json. Historical reads/rebuild and Storage metadata exclusions preserved. Native NOT_RUN.",
+          "finding": "All eleven standing checks and all ten Astra classes rerun. Full checker: 14,519 assertions. Whole-lane proof: 454/454 guards over 3,508 independent negatives, including named integer-schema/MessagePack duplicates; no errors or unrelated flips. All 40 reviewed producer-sequence splits are refused and safe aliases hash identically. Numeric sweep: 16,815 observations, 1,027 integral-float values per family. Earlier 1,111 and 521 observations exactly unchanged. Original integer history (including u64), context retry fences and Settings retirement preserved. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Project_System.md",
@@ -1789,10 +1917,10 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "run_exact_family",
-              "line_start": 560,
-              "line_end": 560,
+              "line_start": 784,
+              "line_end": 784,
               "quote": "def run_exact_family(row):",
-              "file_sha256": "f57abee2fb81da877e6144f494ea73834236e3287b292eeae2d68b4d8bb6806a"
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
             },
             {
               "path": "Plans/Project_System.md",
@@ -1813,18 +1941,50 @@
             {
               "path": "scripts/pm-small-owner-guard-audit.py",
               "unit": "normal_checks",
-              "line_start": 492,
-              "line_end": 492,
+              "line_start": 601,
+              "line_end": 601,
               "quote": "def normal_checks(namespace, fixtures, guard_first=None):",
-              "file_sha256": "8cf28c8bb91921c52c6d5a737a65e9f146e62283a514c44ebb51baa93262c245"
+              "file_sha256": "399e8b19ab2179b20cfb09dec2b273db43ec3b494cc4b204b81498af7f182c72"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "integer_type",
+              "line_start": 36,
+              "line_end": 36,
+              "quote": "def integer_type(checker, instance):",
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "canonical_json_numbers",
+              "line_start": 72,
+              "line_end": 72,
+              "quote": "def canonical_json_numbers(value, *, retained=False):",
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "retained_producer_digest",
+              "line_start": 311,
+              "line_end": 311,
+              "quote": "def retained_producer_digest(event):",
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
+            },
+            {
+              "path": "scripts/pm-small-owner-guard-audit.py",
+              "unit": "numeric_catalogue",
+              "line_start": 445,
+              "line_end": 445,
+              "quote": "def numeric_catalogue(m, fixtures, add, change):",
+              "file_sha256": "399e8b19ab2179b20cfb09dec2b273db43ec3b494cc4b204b81498af7f182c72"
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
-            "status": "PASS"
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change": "improved",
+          "change_reason": "C6-B1 numeric admission/hash boundary now has independent negatives and complete guard proof."
         }
       },
       "remaining_gaps": [
@@ -1833,11 +1993,11 @@
       ],
       "static_checks_seen": [
         "python3 -B scripts/pm-small-owner-events.py",
-        "python3 -B scripts/pm-small-owner-guard-audit.py /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/guard-removal.json",
+        "python3 -B scripts/pm-small-owner-guard-audit.py /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix6/guard-removal.json",
         "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
         "python3 -B scripts/pm-plan-index.py validate"
       ],
-      "notes": "Prepared without admission. Self-graded after round-5 exact-family/schema retry repair against cycle-5 reviewed grades; native NOT_RUN. Membership and unresolved RT retention are intentional exceptions.",
+      "notes": "Prepared without admission; cycle-6 numeric oracle gap repaired. Membership and six RT retention cells remain intentional exceptions; Settings remains excluded. Native NOT_RUN.",
       "newly_authored_operating_reader": "reader.project.added@1.0.0"
     },
     {
@@ -1868,11 +2028,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1889,11 +2049,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -1910,11 +2070,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1939,11 +2099,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1968,11 +2128,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1997,11 +2157,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2018,11 +2178,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2047,11 +2207,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -2068,11 +2228,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2098,18 +2258,18 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "checkpoint_matches_original",
-              "line_start": 461,
-              "line_end": 461,
+              "line_start": 564,
+              "line_end": 564,
               "quote": "def checkpoint_matches_original(state):",
-              "file_sha256": "f57abee2fb81da877e6144f494ea73834236e3287b292eeae2d68b4d8bb6806a"
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2126,16 +2286,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All eleven standing checks exercised. Full checker: 9,735 assertions; prior independent regressions: 1,111/1,111. Exact retry event-family/schema fences refuse all 56 authentic foreign pairs; reciprocal context event/receipt vectors and isolated guard witnesses run through the complete checker. Whole-lane guard audit is recorded in DM-guard-removal.json. Historical reads/rebuild and Storage metadata exclusions preserved. Native NOT_RUN.",
+          "finding": "All eleven standing checks and all ten Astra classes rerun. Full checker: 14,519 assertions. Whole-lane proof: 454/454 guards over 3,508 independent negatives, including named integer-schema/MessagePack duplicates; no errors or unrelated flips. All 40 reviewed producer-sequence splits are refused and safe aliases hash identically. Numeric sweep: 16,815 observations, 1,027 integral-float values per family. Earlier 1,111 and 521 observations exactly unchanged. Original integer history (including u64), context retry fences and Settings retirement preserved. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Project_System.md",
@@ -2148,10 +2308,10 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "run_exact_family",
-              "line_start": 560,
-              "line_end": 560,
+              "line_start": 784,
+              "line_end": 784,
               "quote": "def run_exact_family(row):",
-              "file_sha256": "f57abee2fb81da877e6144f494ea73834236e3287b292eeae2d68b4d8bb6806a"
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
             },
             {
               "path": "Plans/Project_System.md",
@@ -2172,18 +2332,50 @@
             {
               "path": "scripts/pm-small-owner-guard-audit.py",
               "unit": "normal_checks",
-              "line_start": 492,
-              "line_end": 492,
+              "line_start": 601,
+              "line_end": 601,
               "quote": "def normal_checks(namespace, fixtures, guard_first=None):",
-              "file_sha256": "8cf28c8bb91921c52c6d5a737a65e9f146e62283a514c44ebb51baa93262c245"
+              "file_sha256": "399e8b19ab2179b20cfb09dec2b273db43ec3b494cc4b204b81498af7f182c72"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "integer_type",
+              "line_start": 36,
+              "line_end": 36,
+              "quote": "def integer_type(checker, instance):",
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "canonical_json_numbers",
+              "line_start": 72,
+              "line_end": 72,
+              "quote": "def canonical_json_numbers(value, *, retained=False):",
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "retained_producer_digest",
+              "line_start": 311,
+              "line_end": 311,
+              "quote": "def retained_producer_digest(event):",
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
+            },
+            {
+              "path": "scripts/pm-small-owner-guard-audit.py",
+              "unit": "numeric_catalogue",
+              "line_start": 445,
+              "line_end": 445,
+              "quote": "def numeric_catalogue(m, fixtures, add, change):",
+              "file_sha256": "399e8b19ab2179b20cfb09dec2b273db43ec3b494cc4b204b81498af7f182c72"
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
-            "status": "PASS"
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change": "improved",
+          "change_reason": "C6-B1 numeric admission/hash boundary now has independent negatives and complete guard proof."
         }
       },
       "remaining_gaps": [
@@ -2192,11 +2384,11 @@
       ],
       "static_checks_seen": [
         "python3 -B scripts/pm-small-owner-events.py",
-        "python3 -B scripts/pm-small-owner-guard-audit.py /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/guard-removal.json",
+        "python3 -B scripts/pm-small-owner-guard-audit.py /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix6/guard-removal.json",
         "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
         "python3 -B scripts/pm-plan-index.py validate"
       ],
-      "notes": "Prepared without admission. Self-graded after round-5 exact-family/schema retry repair against cycle-5 reviewed grades; native NOT_RUN. Membership and unresolved RT retention are intentional exceptions.",
+      "notes": "Prepared without admission; cycle-6 numeric oracle gap repaired. Membership and six RT retention cells remain intentional exceptions; Settings remains excluded. Native NOT_RUN.",
       "newly_authored_operating_reader": "reader.project.created@1.0.0"
     },
     {
@@ -2241,11 +2433,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN.",
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "ABSENT"
@@ -2282,11 +2474,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN.",
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "PARTIAL"
@@ -2323,11 +2515,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN.",
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "PARTIAL"
@@ -2364,11 +2556,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN.",
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "ABSENT"
@@ -2405,11 +2597,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN.",
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "PARTIAL"
@@ -2446,11 +2638,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN.",
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "ABSENT"
@@ -2487,11 +2679,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN.",
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "PARTIAL"
@@ -2528,11 +2720,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN.",
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "PARTIAL"
@@ -2569,11 +2761,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN.",
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "PARTIAL"
@@ -2610,11 +2802,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN.",
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "ABSENT"
@@ -2659,11 +2851,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN.",
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "ABSENT"
@@ -2700,11 +2892,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN.",
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "ABSENT"
@@ -2718,7 +2910,7 @@
         "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
         "python3 -B scripts/pm-plan-index.py validate"
       ],
-      "notes": "No current writer, schema, retention class or event oracle is authored for these retired names. Historical dedicated DRY-guard records remain readable. The DRY guard remains disabled pending exact owner key/writer proof. Existing successor owner-adoption requirements stand.",
+      "notes": "Excluded under unchanged DL-408 application; no current writer or membership credit. Original history stays readable; no alias, byte rewrite or new admission.",
       "successor": "settings.layer.changed",
       "decision_ref": "DL-408 (pinned decision-branch dependency)",
       "application_record": "reports/event-authority-20261104/DM-settings-exclusions-application.json"
@@ -2765,11 +2957,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN.",
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "ABSENT"
@@ -2806,11 +2998,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN.",
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "PARTIAL"
@@ -2847,11 +3039,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN.",
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "PARTIAL"
@@ -2888,11 +3080,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN.",
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "ABSENT"
@@ -2929,11 +3121,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN.",
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "PARTIAL"
@@ -2970,11 +3162,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN.",
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "ABSENT"
@@ -3011,11 +3203,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN.",
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "PARTIAL"
@@ -3052,11 +3244,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN.",
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "PARTIAL"
@@ -3093,11 +3285,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN.",
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "PARTIAL"
@@ -3134,11 +3326,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN.",
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "ABSENT"
@@ -3183,11 +3375,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN.",
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "ABSENT"
@@ -3224,11 +3416,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN.",
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "ABSENT"
@@ -3242,7 +3434,7 @@
         "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
         "python3 -B scripts/pm-plan-index.py validate"
       ],
-      "notes": "No current writer, schema, retention class or event oracle is authored for these retired names. Historical dedicated DRY-guard records remain readable. The DRY guard remains disabled pending exact owner key/writer proof. Existing successor owner-adoption requirements stand.",
+      "notes": "Excluded under unchanged DL-408 application; no current writer or membership credit. Original history stays readable; no alias, byte rewrite or new admission.",
       "successor": "settings.layer.changed",
       "decision_ref": "DL-408 (pinned decision-branch dependency)",
       "application_record": "reports/event-authority-20261104/DM-settings-exclusions-application.json"
@@ -3275,11 +3467,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3296,11 +3488,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -3317,11 +3509,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3346,11 +3538,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3383,11 +3575,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3412,11 +3604,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "retention": {
           "status": "PASS",
@@ -3433,11 +3625,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3462,11 +3654,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -3483,11 +3675,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3513,18 +3705,18 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "checkpoint_matches_original",
-              "line_start": 461,
-              "line_end": 461,
+              "line_start": 564,
+              "line_end": 564,
               "quote": "def checkpoint_matches_original(state):",
-              "file_sha256": "f57abee2fb81da877e6144f494ea73834236e3287b292eeae2d68b4d8bb6806a"
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3541,16 +3733,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All eleven standing checks exercised. Full checker: 9,735 assertions; prior independent regressions: 1,111/1,111. Exact retry event-family/schema fences refuse all 56 authentic foreign pairs; reciprocal context event/receipt vectors and isolated guard witnesses run through the complete checker. Whole-lane guard audit is recorded in DM-guard-removal.json. Historical reads/rebuild and Storage metadata exclusions preserved. Native NOT_RUN.",
+          "finding": "All eleven standing checks and all ten Astra classes rerun. Full checker: 14,519 assertions. Whole-lane proof: 454/454 guards over 3,508 independent negatives, including named integer-schema/MessagePack duplicates; no errors or unrelated flips. All 40 reviewed producer-sequence splits are refused and safe aliases hash identically. Numeric sweep: 16,815 observations, 1,027 integral-float values per family. Earlier 1,111 and 521 observations exactly unchanged. Original integer history (including u64), context retry fences and Settings retirement preserved. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Prompt_Pipeline.md",
@@ -3563,10 +3755,10 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "run_exact_family",
-              "line_start": 560,
-              "line_end": 560,
+              "line_start": 784,
+              "line_end": 784,
               "quote": "def run_exact_family(row):",
-              "file_sha256": "f57abee2fb81da877e6144f494ea73834236e3287b292eeae2d68b4d8bb6806a"
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
             },
             {
               "path": "Plans/Prompt_Pipeline.md",
@@ -3595,34 +3787,66 @@
             {
               "path": "scripts/pm-small-owner-guard-audit.py",
               "unit": "normal_checks",
-              "line_start": 492,
-              "line_end": 492,
+              "line_start": 601,
+              "line_end": 601,
               "quote": "def normal_checks(namespace, fixtures, guard_first=None):",
-              "file_sha256": "8cf28c8bb91921c52c6d5a737a65e9f146e62283a514c44ebb51baa93262c245"
+              "file_sha256": "399e8b19ab2179b20cfb09dec2b273db43ec3b494cc4b204b81498af7f182c72"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "current_retry",
-              "line_start": 417,
-              "line_end": 417,
+              "line_start": 516,
+              "line_end": 516,
               "quote": "if incoming.get('event_type') != row['event_type']:",
-              "file_sha256": "f57abee2fb81da877e6144f494ea73834236e3287b292eeae2d68b4d8bb6806a"
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "current_retry",
-              "line_start": 420,
-              "line_end": 420,
+              "line_start": 519,
+              "line_end": 519,
               "quote": "if incoming.get('payload_schema_id') != expected_schema:",
-              "file_sha256": "f57abee2fb81da877e6144f494ea73834236e3287b292eeae2d68b4d8bb6806a"
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "integer_type",
+              "line_start": 36,
+              "line_end": 36,
+              "quote": "def integer_type(checker, instance):",
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "canonical_json_numbers",
+              "line_start": 72,
+              "line_end": 72,
+              "quote": "def canonical_json_numbers(value, *, retained=False):",
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "retained_producer_digest",
+              "line_start": 311,
+              "line_end": 311,
+              "quote": "def retained_producer_digest(event):",
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
+            },
+            {
+              "path": "scripts/pm-small-owner-guard-audit.py",
+              "unit": "numeric_catalogue",
+              "line_start": 445,
+              "line_end": 445,
+              "quote": "def numeric_catalogue(m, fixtures, add, change):",
+              "file_sha256": "399e8b19ab2179b20cfb09dec2b273db43ec3b494cc4b204b81498af7f182c72"
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PARTIAL"
           },
           "change": "improved",
-          "change_reason": "Round 5 C5-B1 exact retry-family/schema refusals now witnessed in both directions; full checker and check-11 proof. Native NOT_RUN."
+          "change_reason": "C6-B1 numeric admission/hash boundary now has independent negatives and complete guard proof."
         }
       },
       "remaining_gaps": [
@@ -3630,11 +3854,11 @@
       ],
       "static_checks_seen": [
         "python3 -B scripts/pm-small-owner-events.py",
-        "python3 -B scripts/pm-small-owner-guard-audit.py /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/guard-removal.json",
+        "python3 -B scripts/pm-small-owner-guard-audit.py /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix6/guard-removal.json",
         "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
         "python3 -B scripts/pm-plan-index.py validate"
       ],
-      "notes": "Prepared without admission. Self-graded after round-5 exact-family/schema retry repair against cycle-5 reviewed grades; native NOT_RUN. Membership and unresolved RT retention are intentional exceptions.",
+      "notes": "Prepared without admission; cycle-6 numeric oracle gap repaired. Membership and six RT retention cells remain intentional exceptions; Settings remains excluded. Native NOT_RUN.",
       "newly_authored_operating_reader": "reader.context.rehydrated@1.0.0"
     },
     {
@@ -3665,11 +3889,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3686,11 +3910,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -3707,11 +3931,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3736,11 +3960,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3773,11 +3997,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3802,11 +4026,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "retention": {
           "status": "PASS",
@@ -3823,11 +4047,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3852,11 +4076,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -3873,11 +4097,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3903,18 +4127,18 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "checkpoint_matches_original",
-              "line_start": 461,
-              "line_end": 461,
+              "line_start": 564,
+              "line_end": 564,
               "quote": "def checkpoint_matches_original(state):",
-              "file_sha256": "f57abee2fb81da877e6144f494ea73834236e3287b292eeae2d68b4d8bb6806a"
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3931,16 +4155,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the cycle-5 reviewed grade; shared-helper full suites rerun. Native NOT_RUN."
+          "change_reason": "Cycle-6 reviewed grade carried; previous family facts and observations are unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All eleven standing checks exercised. Full checker: 9,735 assertions; prior independent regressions: 1,111/1,111. Exact retry event-family/schema fences refuse all 56 authentic foreign pairs; reciprocal context event/receipt vectors and isolated guard witnesses run through the complete checker. Whole-lane guard audit is recorded in DM-guard-removal.json. Historical reads/rebuild and Storage metadata exclusions preserved. Native NOT_RUN.",
+          "finding": "All eleven standing checks and all ten Astra classes rerun. Full checker: 14,519 assertions. Whole-lane proof: 454/454 guards over 3,508 independent negatives, including named integer-schema/MessagePack duplicates; no errors or unrelated flips. All 40 reviewed producer-sequence splits are refused and safe aliases hash identically. Numeric sweep: 16,815 observations, 1,027 integral-float values per family. Earlier 1,111 and 521 observations exactly unchanged. Original integer history (including u64), context retry fences and Settings retirement preserved. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Prompt_Pipeline.md",
@@ -3953,10 +4177,10 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "run_exact_family",
-              "line_start": 560,
-              "line_end": 560,
+              "line_start": 784,
+              "line_end": 784,
               "quote": "def run_exact_family(row):",
-              "file_sha256": "f57abee2fb81da877e6144f494ea73834236e3287b292eeae2d68b4d8bb6806a"
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
             },
             {
               "path": "Plans/Prompt_Pipeline.md",
@@ -3985,34 +4209,66 @@
             {
               "path": "scripts/pm-small-owner-guard-audit.py",
               "unit": "normal_checks",
-              "line_start": 492,
-              "line_end": 492,
+              "line_start": 601,
+              "line_end": 601,
               "quote": "def normal_checks(namespace, fixtures, guard_first=None):",
-              "file_sha256": "8cf28c8bb91921c52c6d5a737a65e9f146e62283a514c44ebb51baa93262c245"
+              "file_sha256": "399e8b19ab2179b20cfb09dec2b273db43ec3b494cc4b204b81498af7f182c72"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "current_retry",
-              "line_start": 417,
-              "line_end": 417,
+              "line_start": 516,
+              "line_end": 516,
               "quote": "if incoming.get('event_type') != row['event_type']:",
-              "file_sha256": "f57abee2fb81da877e6144f494ea73834236e3287b292eeae2d68b4d8bb6806a"
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "current_retry",
-              "line_start": 420,
-              "line_end": 420,
+              "line_start": 519,
+              "line_end": 519,
               "quote": "if incoming.get('payload_schema_id') != expected_schema:",
-              "file_sha256": "f57abee2fb81da877e6144f494ea73834236e3287b292eeae2d68b4d8bb6806a"
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "integer_type",
+              "line_start": 36,
+              "line_end": 36,
+              "quote": "def integer_type(checker, instance):",
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "canonical_json_numbers",
+              "line_start": 72,
+              "line_end": 72,
+              "quote": "def canonical_json_numbers(value, *, retained=False):",
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "retained_producer_digest",
+              "line_start": 311,
+              "line_end": 311,
+              "quote": "def retained_producer_digest(event):",
+              "file_sha256": "940e5f7999d09b8ab845480cb840b21663033847afe088412117ad7b34e2c29c"
+            },
+            {
+              "path": "scripts/pm-small-owner-guard-audit.py",
+              "unit": "numeric_catalogue",
+              "line_start": 445,
+              "line_end": 445,
+              "quote": "def numeric_catalogue(m, fixtures, add, change):",
+              "file_sha256": "399e8b19ab2179b20cfb09dec2b273db43ec3b494cc4b204b81498af7f182c72"
             }
           ],
           "prior": {
-            "source": "REVIEW-cycle5.md@9439444c222a8d63bfe44ad37397f1498a7ac9e4",
+            "source": "REVIEW-cycle6.md@bac541604c77d9d8f4855b32d7077f2091edd033",
             "status": "PARTIAL"
           },
           "change": "improved",
-          "change_reason": "Round 5 C5-B1 exact retry-family/schema refusals now witnessed in both directions; full checker and check-11 proof. Native NOT_RUN."
+          "change_reason": "C6-B1 numeric admission/hash boundary now has independent negatives and complete guard proof."
         }
       },
       "remaining_gaps": [
@@ -4020,11 +4276,11 @@
       ],
       "static_checks_seen": [
         "python3 -B scripts/pm-small-owner-events.py",
-        "python3 -B scripts/pm-small-owner-guard-audit.py /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/guard-removal.json",
+        "python3 -B scripts/pm-small-owner-guard-audit.py /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix6/guard-removal.json",
         "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
         "python3 -B scripts/pm-plan-index.py validate"
       ],
-      "notes": "Prepared without admission. Self-graded after round-5 exact-family/schema retry repair against cycle-5 reviewed grades; native NOT_RUN. Membership and unresolved RT retention are intentional exceptions.",
+      "notes": "Prepared without admission; cycle-6 numeric oracle gap repaired. Membership and six RT retention cells remain intentional exceptions; Settings remains excluded. Native NOT_RUN.",
       "newly_authored_operating_reader": "reader.context.shrunk@1.0.0"
     }
   ],
@@ -4035,10 +4291,10 @@
     "PARTIAL": 6,
     "NOT_APPLICABLE": 18
   },
-  "review_round": 5,
-  "prior_review": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/REVIEW-cycle5.md",
+  "review_round": 6,
+  "prior_review": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/REVIEW-cycle6.md",
   "settings_decision": "DL-408 / 2d A applied; both names retired as superseded by settings.layer.changed, J248 RECLASSIFY_TO_EXCLUDED, no denominator removal; DRY guard disabled.",
-  "fix_worker": "DM-fix5",
+  "fix_worker": "DM-fix6",
   "decision_integration_dependency": {
     "branch": "origin/plans/ea-cards1-answers-20261104",
     "head": "b6332f391a7870bad5f01a29a7e9d080050dac27",
