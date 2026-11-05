@@ -1573,10 +1573,11 @@ def reaudit_record_shape_problems(record: Any) -> list[str]:
     evidence = record.get("evidence")
     if not isinstance(evidence, list) or not all(
         isinstance(item, dict) and isinstance(item.get("ref"), str)
+        and (("quote" in item) != ("absent" in item))
         and all(isinstance(item[k], str) for k in ("quote", "absent") if k in item)
         for item in evidence
     ):
-        out.append("record.evidence must be a list of objects with a string ref and string quote/absent")
+        out.append("record.evidence must be a list of objects with a string ref and exactly one string quote or absent")
     stale = record.get("stale_hashes_at_recheck")
     if not isinstance(stale, list) or not all(
         isinstance(item, dict) and all(isinstance(item.get(k), str) for k in ("group", "ref", "stored")) for item in stale
@@ -2054,11 +2055,16 @@ def validate_registry(registry_path: Path) -> dict[str, Any]:
     # superseded_by_later_closure must name a distinct later closure of the same finding that a
     # re-audit has itself confirmed (supported or resolved_differently); otherwise drop the edge.
     def confirmed(line_no: int) -> bool:
-        own = proposed.get(line_no)
-        if own and own["verdict"] in {"supported", "resolved_differently"}:
+        """A re-audit confirmed this row as a closure: a supported or resolved_differently re-audit
+        whose own row leaves the finding in a closed status (a supported re-audit of a blocked or
+        reopened row confirms only that it is still open)."""
+        def closing(re_line: int) -> bool:
+            return (proposed.get(re_line, {}).get("verdict") in {"supported", "resolved_differently"}
+                    and rows_by_line[re_line].get("closure_status") not in OPEN_STATUSES)
+        if line_no in proposed and closing(line_no):
             return True
         successor = superseded_by.get(line_no)
-        return bool(successor and proposed.get(successor, {}).get("verdict") in {"supported", "resolved_differently"})
+        return bool(successor and closing(successor))
 
     for s_line, edge in sorted(proposed.items()):
         if edge["verdict"] != "superseded_by_later_closure":
@@ -4350,6 +4356,20 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             check(name, not resolves("scripts/bind.py#pydef=f"))
         (tmp / "scripts/bind.py").write_text("def g():\n    if (f := 3):\n        pass\n\ndef f():\n    return 1\n", encoding="utf-8")
         check("pydef_walrus_in_nested_scope_ignored", "return 1" in AnchorResolver(tmp).content("scripts/bind.py#pydef=f")[1])
+
+        # Astra r2 regressions.
+        # ASTRA-6: an evidence item carries exactly one of quote or absent.
+        row = append_with(evidence=[{"ref": unit_ref, "quote": quote, "absent": "must stay present"}])
+        report = validate_rows([legacy_row(), row])
+        check("evidence_item_with_quote_and_absent_fails", has(report, "exactly one string quote or absent") and has(report, "is stale"), report["errors"])
+        # ASTRA-7: a later row a re-audit confirmed as still blocked is not a later closure.
+        blocked_later = legacy_row(closure_id="closure-fixture-later-blocked", closure_status="blocked_requires_user_decision",
+                                   closure_reason="Later row of the same finding, still blocked.")
+        still_blocked = append_with(rows_before=[legacy_row(), blocked_later], line=2)
+        pointer = append_with("superseded_by_later_closure", rows_before=[legacy_row(), blocked_later, still_blocked], line=1,
+                              later_closure_id="closure-fixture-later-blocked", keep_records=True)
+        report = validate_rows([legacy_row(), blocked_later, still_blocked, pointer])
+        check("later_closure_confirmed_still_blocked_fails", has(report, "distinct later closure"), report["errors"])
 
         # Astra r1 regressions.
         # ASTRA-1: false Markdown boundaries cannot cut text out of a section's hash.
