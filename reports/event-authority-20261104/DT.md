@@ -1,16 +1,31 @@
-# DT-FIX5 — Event Authority technical fix round 5
+# DT-FIX6 — Cap-free implementation checkpoint
 
-## Review round 6: implementation checkpoint — final guard proof pending
+## Review round 6: findings and responses
 
-F16/S1/S2 are implemented. Complete checker: **32630 assertions / PASS**. All **17** numeric/type sweeps pass, covering **543 numeric / 108 boolean schema declarations**. The full guard table is running serially and is not yet claimed complete; the current self-grade conservatively carries cycle-6's **165 PASS / 24 PARTIAL / 25 ABSENT / 2 CONFLICT**. All seventeen drafted oracle cells remain PARTIAL.
+Implementation `eee8f2ce4348ef7c880ad2ad0acfa2e99b7e871c`. **NOT READY: complete strict guard verification is still running.** Grades remain **165 PASS / 24 PARTIAL / 25 ABSENT / 2 CONFLICT**, unchanged from cycle 6. Membership is ABSENT; native execution is NOT_RUN. Original-owner, payload-pack, receipt and SP-278 authentication remain assumed adapters.
 
-Current writes use the I-JSON safe numeric range; retained originals keep the earlier exact-integer source and identity recipes. Authority flags, writer envelope joins, prior checkpoints, index-prefix rows, batch results, usage accounting and retry digest arguments now check exact types. The compatibility exception restores only numeric bounds and cannot remove other schema guards. Source schemas and exact Storage mirrors agree. Each SP-580..596 owner unit names the current numeric/type rule independently.
+| Finding | Current response |
+|---|---|
+| F16 — shared sweep item | Jared superseded the lane-cap request. Every new safe bound, recursive numeric schema and history-recipe selector was removed. Source/registry schemas and numeric recipes retain the reviewed owner-admitted domains, including u64. Exact reviewed location: `scripts/pm-dt-event-contracts.py:163–173`, producer digest over u64 `producer_sequence_id` and approval `blocked_sequence`. Close by adopting CV-1100/SP-1100/SP-1101 from `plans/ea-numrule-20261105` in the cross-lane sweep. No F16 closure is claimed. |
+| S1 — fixed in `eee8f2ce4348ef7c880ad2ad0acfa2e99b7e871c` | Exact Boolean authority/context checks replace truthiness. Prior checkpoints and prefix rows validate types before CAS/state/filter operations; accounting and batch flags also check exact types. |
+| S2 — fixed in `eee8f2ce4348ef7c880ad2ad0acfa2e99b7e871c` | Complete writer EventRecord validation and typed canonical joins refuse true/1 and false/0 aliases. Per-field duplicate proofs preserve peer rules; isolated witnesses start from valid numeric one and zero. |
+| F2–F15 — retained | No confirmed earlier repair is reverted. Numeric recipe controls remain at the reviewed owner domain; the superseded lane caps are removed. |
 
-Shards and index were regenerated with the fifteen hash-matched currentness files. Shard check passes. Index validation retains the same **22** unrelated Decision Log / old-ledger diagnostics described below; no stale generated artifact is reported. Generated shard changes are confined to the edited storage-plan and storage_value_registry owners.
+Complete checker: **27428 assertions / 17 families**, exit 0. Every final type sweep passes: **543 numeric and 132 Boolean schema clauses**, including 14 conditional selectors tested as reads. **4/17 current family guard tables** are complete; no full guard PASS is claimed yet. Guard workers are suspended during this serial regeneration/checkpoint step and resume afterward. The unchanged guard source remains under verification.
 
-F2–F15 remain in the source and complete checker. FileSafe's tool.denied facet and tool.custom_headless.skipped remain stopped for Jared; all existing retention exceptions remain fenced. No new PlanUnit IDs, admission, registry append, Decision Log entry, governance seal or main push. See DT-fix6-progress.json for the checkpoint; the sections below describe earlier rounds and do not supersede this pending status.
+Shard generation, index generation and shard check pass. Index validation retains the separately recorded baseline diagnostics. Current exact commands/results are in DT-checks.json; raw files have SHA-256 references. Previous capped-run tables are superseded and are not acceptance evidence.
+
+**FileSafe — STOPPED for Jared:** Should FileSafe blocks emit tool.denied, reconciling Tools.md:1496 (do not emit tool.denied for FileSafe blocks) with FileSafe.md:2839-2846 (Align tool.denied emission with filesafe_blocked)?
+
+**Doctor — STOPPED for Jared:** Is skipped eligible only on a Project's first-ever Doctor invocation, or on the first invocation that observes `tools.custom_headless` absent? If the first invocation has the key, may a later absence emit? What resets eligibility across a configuration revision, key removal/re-addition, Project import/clone or older restore?
+
+**IDs:** existing CV-600..616, SP-580..596, ATS-290..298; no new allocations. No admission, registry append, Decision Log edit, governance seal or main push.
 
 ---
+
+Earlier-round material below is superseded lineage.
+
+
 
 
 Branch: `plans/ea-w2-tools-gates-approvals-20261104`. Reviewed head: `34fa8b601872791c8fa292b8e862bc78fb923ca9`. Implementation head: `7b62f6ac834edab6875e09e413bb335f30fbe9ec`. Reports-only publication follows.

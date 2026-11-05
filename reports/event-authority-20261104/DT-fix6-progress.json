@@ -1,23 +1,17 @@
 {
-  "status": "pending_full_guard_table",
-  "base": "6a97cc07e83ff496c00dedbf90c98c6d558e23c6",
-  "findings": [
-    "F16",
-    "S1",
-    "S2"
-  ],
-  "checker_assertions": 32630,
-  "checker_status": "pass",
-  "type_sweep_families": 17,
-  "numeric_schema_leaves": 543,
-  "boolean_schema_leaves": 108,
-  "index_status": "fail",
-  "index_failures": 22,
-  "guard_state": "Serial run temporarily paused to save this implementation checkpoint. Final proof and grading publication follow.",
-  "new_ids": [],
-  "existing_ids": [
-    "CV-600..616",
-    "SP-580..596",
-    "ATS-290..298"
-  ]
+  "status": "validation_in_progress",
+  "implementation_head": "eee8f2ce4348ef7c880ad2ad0acfa2e99b7e871c",
+  "F16": "deferred to shared NUMRULE; all new numeric caps and recipe selectors removed",
+  "S1": "fixed",
+  "S2": "fixed",
+  "checker_assertions": 27428,
+  "completed_family_guard_tables": 4,
+  "grade_counts": {
+    "ABSENT": 25,
+    "PASS": 165,
+    "PARTIAL": 24,
+    "CONFLICT": 2
+  },
+  "quote_locations_checked": 1410,
+  "native_execution": "NOT_RUN"
 }
