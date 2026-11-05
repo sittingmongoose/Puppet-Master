@@ -54,6 +54,33 @@ export const tests = {
    await t.painted(f.locator('#pmRoot .activity-panel.cover'));
   }
  },
+ 'SW01 press builds no Activity preview, keyboard focus does': async t => {
+  // The focus a press gives an Activity bar button used to open its preview at once; the click then dropped it. Count
+  // every preview the overlay root gets during one real press held 150 ms, with no hover dwell before it.
+  const watch=()=>{window.__abCards=0;new MutationObserver(rs=>{for(const r of rs)for(const n of r.addedNodes)if(n.nodeType===1&&n.matches?.('.ab-card[data-overlay="hover"]'))window.__abCards++;}).observe(document.getElementById('pmOverlayRoot'),{childList:true,subtree:true});};
+  let f=await t.app.open();
+  await f.evaluate(watch);
+  const b=f.locator('#pmRoot [data-action="open-activity"]').first();
+  const box=await b.boundingBox();
+  await t.page.mouse.move(box.x+box.width/2,box.y+box.height/2);
+  await t.page.mouse.down();
+  await t.page.waitForTimeout(150);
+  const held=await f.evaluate(()=>({cards:window.__abCards,shown:!!document.querySelector('#pmOverlayRoot .ab-card[data-overlay="hover"]'),focused:document.activeElement?.dataset?.action}));
+  await t.page.mouse.up();
+  await t.page.waitForTimeout(400);
+  const opened=await f.evaluate(()=>({cards:window.__abCards,cover:!!document.querySelector('#pmRoot .activity-panel.cover, #pmRoot .activity-panel')}));
+  t.log('press '+JSON.stringify({held,opened}));
+  await t.check('a held press shows no Activity preview',held.cards===0&&!held.shown,JSON.stringify(held));
+  await t.check('the press still opens Activity Detail, with no preview built on the way',opened.cover&&opened.cards===0,JSON.stringify(opened));
+  f=await t.app.open();
+  await f.evaluate(watch);
+  await t.page.keyboard.press('Shift');
+  await f.locator('#pmRoot [data-action="open-activity"]').first().focus();
+  await t.page.waitForTimeout(300);
+  const kb=await f.evaluate(()=>({visible:document.activeElement?.matches(':focus-visible'),cards:window.__abCards,shown:!!document.querySelector('#pmOverlayRoot .ab-card[data-overlay="hover"]')}));
+  t.log('keyboard focus '+JSON.stringify(kb));
+  await t.check('keyboard focus opens the Activity preview at once',kb.visible&&kb.shown,JSON.stringify(kb));
+ },
  'SW11 duplicate titles select identity': async t => {
   const f=await t.app.open();
   const id=await f.evaluate(()=>{
