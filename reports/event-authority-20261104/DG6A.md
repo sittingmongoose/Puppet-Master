@@ -1,3 +1,108 @@
+# DG6A — review round 7
+
+Branch `plans/ea-w2-gui-concerns-20261104`; reviewed input `adda7279f8067637b109125f9524b0952f88f96b`. Technical repair **da37d7ac9d947f8a26b6b66f053dffb4eaa6f150**; navigation-proof refinement **f34fec9eb0c00754638a05e65b456e576b9d818a**. The final report commit is self-inclusive. Earlier round records and all nine held questions/recommendations remain below unchanged.
+
+This round began after all twelve Astra items were published; no cutoff exemption is claimed.
+
+Seven families are prepared without admission. Each changes from the cycle-7 review's **9 PASS / 2 PARTIAL / 1 ABSENT** to **10 PASS / 1 PARTIAL / 1 ABSENT**. Only C12 recovers. Membership remains ABSENT, retention PARTIAL / `PENDING_RETENTION_DECISION`, native execution NOT_RUN.
+
+## Review round 7: findings and responses
+
+| Finding | Where / why / fix | Verification |
+|---|---|---|
+| **B1 — fixed (da37d7ac9d947f8a26b6b66f053dffb4eaa6f150)** | CV-680..686, the seven payload schemas, their operation/shared-state/record schemas and mirrored registry schemas, and all three family checkers. JSON Schema's mathematical integer accepted `1.0`/`1e0` while MessagePack refused them. Embedded `$schema` also silently selected the permissive base validator. The exact validator now remains active throughout nested schemas. Current semantic revision numbers are exact JSON integer tokens in the I-JSON safe range, subject to field bounds. The same domain precedes request/producer hashing and retry. Raw negative zero and leading zeros refuse at parsing; integral/exponent floats, Boolean numbers and wrong containers refuse at the first validator. Storage-assigned u64 sequence/frontier values retain their existing exact physical domain. | Per-field type/number/range guards; standalone payload, all three operation states, checkpoint, protocol and current/v1 History sweeps; actual family CLI mutations for same-value `.0`/`e0`, `-0`, `-0.0`, `01`, 2^53 and 2^53+1. No new codec, integer coercion or retained-original normalization. |
+| **B2 — fixed (da37d7ac9d947f8a26b6b66f053dffb4eaa6f150)** | `scripts/pm-dg6a-domain.py` and all schema-validation entry points. The VM's optional `date-time` support was absent. Required date-time and UUID checkers are now registered locally and supplied on every validation, including panel operations/checkpoints and embedded payloads. Full-match RFC3339 grammar plus Gregorian calendar validation requires a zone and valid time/offset fields. Leap seconds, malformed fractions, separators, whitespace and trailing LF refuse. Arbitrarily long valid fractions are preserved; snooze compares their complete precision. | Every authored format leaf, including nullable/optional branches, receives malformed values. Standalone and composed validators and actual family CLI counterexamples refuse them. Valid leap-day, lower-case T/Z, offset and long-fraction positives pass. Hash preimages validate semantic timestamp fields too. |
+| **P1 — fixed (da37d7ac9d947f8a26b6b66f053dffb4eaa6f150)** | Shared `historical_guards` and schema dispatch. Navigation containers and required members are checked before indexing, `.get`, `.items` or hash-table lookup. Malformed History input returns modeled `HistoryUnavailable(['history_shape'])`; non-string schema selectors fail their owning payload guard. The sweep also repairs protocol navigation, malformed independent append evidence and non-string concern creator set membership. | All seven current readers and both panel-v1 readers receive wrong-container, missing-member and wrong-leaf-type mutations. Incidental exceptions fail the sweep. A one-change wrong-payload-container negative joins each reader's full guard-removal matrix. |
+
+**B1:** `scripts/pm-dg6a-domain.py:31`. **B2:** `scripts/pm-dg6a-domain.py:14`. **P1:** `scripts/pm-alert-event-contracts-check.py:400`. The final navigation guard and witness refinement is `f34fec9eb0c00754638a05e65b456e576b9d818a`.
+
+## Grades
+
+| Family | Cycle 7 | Round 7 |
+|---|---|---|
+| alert.acknowledged | 9 PASS / 2 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
+| alert.dismissed | same | same |
+| alert.rule_muted | same | same |
+| alert.snoozed | same | same |
+| concern.created | same | same |
+| panel.redocked | same | same |
+| panel.undocked | same | same |
+
+The nine held grade records are structurally identical to the reviewed head. The three bundle identities and six concern actor/confirmation choices remain STOPPED_FOR_JARED; no recommendation is applied. Event registry, Decision Log, immutable panel-v1 schemas, governance locks and frozen validators are unchanged.
+
+## Guard table and field sweep
+
+**509/509 full source/checkpoint/history rows**, **26 named duplicate matrices**, **1829 current negatives** and **522 historical negatives** pass. The separate input-domain matrix has **1620 passing rows** and **73,026 observations**, covering **1,160 family-specific schema field nodes** and **4,909 context-specific endpoints**. Another **35/35 parser/instant implementation rows** independently remove raw-number parsing, full-match grammar, Gregorian parsing and the named three-way leap-second duplicate set.
+
+The navigation refinement removes the owning `if` and continues every remaining protocol check. Prepared-state positive originals are schema-valid; deleting only the required navigation member produces the negative. `.get` occurs after the unchanged mandatory-member/type guard, preserving production validation. The reader’s malformed-payload witness likewise runs its actual page/typed-unavailable path. No early success replaces the remaining protocol checks.
+
+The [guard table](DG6A.guard-removal.md) distinguishes the full current/source/checkpoint/historical matrix from per-field domain-rule proofs. Every existing guard is retained; source guards and named duplicate sets are weakened only in memory, one at a time, with restoration in `finally`. Full matrices name flipping negatives, rejected complements, changed diagnostics and duplicate pairs. The generated foreign-token witness uses a valid foreign UUID so the Storage-identity guard alone rejects it; malformed UUID syntax has separate field-domain witnesses. No unrelated pair excuses a masked negative.
+
+Domain rows enumerate each authored schema's field rules, including optional, nullable and constant fields. Their scalar/container-type predicates have their own valid inputs and single-field negatives. Each exercised rule or named same-field duplicate set is removed and the same-field negative complement rerun. These are input-domain proofs; the separate full composed sweep and real CLI runs establish integration. Live state and the unused `append_family` annotation remain nonauthoritative. Schema-permitted null/union alternatives and full u64 physical values are positives, never mislabeled negative successes.
+
+## Twelve Astra classes
+
+| Item | How it is ruled out in all seven prepared families |
+|---|---|
+| **1 Forgery/contradiction** | Existing recomputed operation/event/request identities and per-field owner joins remain; source guard and full CLI mutations reject forged IDs, arbitrary digests and contradictory snapshots. |
+| **2 Assigned metadata** | Storage event/receipt/source values still compare to independently supplied originals with exact nested types. Caller retry equality excludes Storage-assigned metadata. |
+| **3 Historical direction** | Current and v1 retained-original/replay-only positives survive changed or absent live state; forged, foreign, withdrawn, deleted and access-denied originals refuse through composed readers. |
+| **4 Two interpretations** | Exact types and semantic safe integers precede schema/compare/hash/identity use. Instant grammar and complete-fraction comparison remove skipped formats and lexical/truncation disagreement. |
+| **5 Unresolved refs** | Eager unvisited `$ref` mutations still fail for payload, operation, checkpoint and registry-embedded schemas; optional referenced positives remain. |
+| **6 Partial size limits** | Existing complete operation/checkpoint/response byte caps and exact boundaries remain. SP-337 payload refs do not exempt mandatory metadata; no size guard changes. |
+| **7 Custody paths** | Prepared no-append, committed recovery and settled return retain their separate custody paths. Independent source/receipt/append-result and foreign-reference mutations still refuse. |
+| **8 Masked negatives** | Whole source/checkpoint/history matrices rerun, including earlier repaired one-change witnesses. New domain negatives have their own rule removals and explicitly named duplicate sets. |
+| **9 Overgrading** | Only the repaired C12 cell recovers; admission ABSENT, retention PARTIAL, native NOT_RUN and nine held records remain explicit. Input-domain proof is not represented as native authentication. |
+| **10 Number spellings** | Exact integer tokens, semantic safe bounds, raw JSON spelling failures, per-field schema checks and actual CLI/hash counterexamples cover `1.0`, `1e0`, `-0`, `-0.0`, leading zeros, 2^53 and beyond. Storage's declared physical u64 domain stays exact. |
+| **11 Types** | Every schema field and actual payload/operation/checkpoint/protocol/history endpoint receives string Boolean/number, null, array, nested-object, Boolean and numeric alternatives. Owning guards refuse invalid forms; accepted nullable or ignored fields are recorded explicitly. Wrong-container navigation returns modeled unavailability. |
+| **12 Formats** | All authored date-time/UUID leaves and actual timestamp fields are exercised, including optional and nullable leaves. Missing zones, bad separators/dates/times/offsets, trailing LF, leap seconds and malformed fractions refuse independently of optional installed packages. Valid fractional/calendar/offset forms remain positive. |
+
+All eleven standing checks are retained and rerun across the CLI suite and full guard matrices: replay-only current refusal; exact CV-366 app keys; encoded Project partitions; full-value/SP-337 limits; full-string identifiers; caller-only retry semantics; original checkpoint identities; actual failure exits; eager refs; retained History; guard isolation. Project-only families still refuse application writes.
+
+## Verification and scope
+
+| Check | Exit/result |
+|---|---|
+| Seven complete family checkers | 0 each; 3,353 cases/assertions at final code |
+| Seven complete source/history guard matrices | 0 each; 509/509 rows, 26 named matrices |
+| Seven field/input-domain sweeps | 0 each; 1,620 rows / 73,026 observations |
+| Parser/instant implementation removal proof | 0; 35/35 rows |
+| Full CLI regression, seven serial families at `da37d7ac9d` | 0 each; 1,016 observations, 719 actual CLI invocations, 297 composed History observations |
+| Final navigation refinement `f34fec9eb0` | Seven complete family/domain/guard reruns, unchanged production validation |
+| Fixture/input restoration | pass; 30 CLI-mutated input paths match their exact execution blobs, final inputs match final code head |
+| Grade/citation/held-record audit | 0; 591 current citations; nine held records unchanged |
+| Shard generate / index generate / shard check | 0 / 0 / 0; only Contracts_V0/storage_value_registry shard directories and six index paths changed |
+| Index validate | 1, top-level status=fail; exactly the same 22 cycle-7 failures |
+| Whitespace / boundary audit | pass; prior fixtures, profiles, holds, admissions, immutable v1 schemas and governance freeze preserved |
+
+The full CLI runs consume the committed technical repair, with source hashes checked before and after every family. The later navigation refinement changes only guarded dictionary access, the counterfactual removal, its prepared-state witnesses and grade metadata; exact numeric/date/hash/identity/size code and canonical docs/schemas remain the tested technical blobs. Final complete family/domain/source-guard runs cover that refinement. No earlier worktree run is represented as a CLI run at the later head.
+
+Index validation retains the 21 legacy-ledger record-shape failures and DL-302 comparison against newer origin/main. Its complete failure array equals the cycle-7 input byte-for-byte. No new index failure is introduced, and index pass is not claimed. Governance remains unsealed after canon changes; integration needs its assigned batch reseal. No Spec Lock, evidence, migration snapshot or baseline is refreshed. Unrelated profile/Assistant suite failures from the review are not reclassified as DG6A successes; this repair does not modify those checkers or the Assistant test file.
+
+Canonical owner prose changes are confined to the seven existing CV-680..686 contracts. Companion changes are the seven payloads, their operation/shared-state/record schemas, corresponding registry mirrors and fixtures/checkers. Derived changes are regenerated, never hand-edited. Existing profiles, group budgets and concern_record retention remain unchanged. No new binding, product feature, actor grant, admission, retention answer, Decision Log entry, reseal, main push, subagent or pm-mail.
+
+Existing IDs retained: **SP-660..666, CV-680..686, F3-700..705, ATS-330..334** (25 definitions). **No new IDs.** Initial resources: 20 GiB available RAM, 76 GiB root free; sparse detached worktree. All family and CLI gates require at least 6 GiB available RAM. The worktree is removed after push and evidence/report copies.
+
+| Evidence | Absolute path | SHA-256 |
+|---|---|---|
+| `guard-summary.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/guard-summary.json` | `927d6839683c16060e6a6ce1ba5373102d0168d3ab53a2a2b71e36f15e206790` |
+| `final-family-commands.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/final-family-commands.json` | `f4aea4f968bac90e270288606a6affaebb1c667eac147195e5ce81ab26b2439f` |
+| `final-cli-commands.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/final-cli-commands.json` | `ee5ce585097dd2ad5a73cc7d58a2a4021c3ba36cd7e5f9fcca58b7089087a88d` |
+| `cli-summary.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/cli-summary.json` | `dc7c0e1d3807a6d5e71abee97e570dd54d187df10036963e9ee20a26309f9108` |
+| `parser-format-guards.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/parser-format-guards.json` | `00cc18ec8c276aa0ba5b108e015400aa7ecfd47b23e59f7771b7eb378f954cb2` |
+| `parser-format-proof.py` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/parser-format-proof.py` | `2f6ac4402ecf280e51dfb00c78bff373502e4f7d73aa1d95c5c4e13a4cbd0734` |
+| `final-consumed-sources.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/final-consumed-sources.json` | `fda2a2680b92c46250d67162459bf2f04e97addb49ffbf981156b6094f17860e` |
+| `full-cli-consumed-sources.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/full-cli-consumed-sources.json` | `171fd917ebb732e1eaefcb71314fb712e18e8017cf24d5106cc6ada7be000c3b` |
+| `input-restoration.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/input-restoration.json` | `1ac26011993333bd064f5861d7506e23251f592b990cd8490235dfe79629fbf7` |
+| `boundary-audit.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/boundary-audit.json` | `ecfdb42715c233806de2b9909e06205226f23cce0f4140503b745a705cd80caf` |
+| `repository-checks.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/repository-checks.json` | `9608c653bbaa7b251a975c381753a372d6b5075cf7913e3048c397badfe4cc57` |
+| `index-validate.log` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/index-validate.log` | `f340efef803579c9b6904a6f02109875a331d12f9559a0bc51999aa8fa25f063` |
+| `index-baseline-comparison.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/index-baseline-comparison.json` | `aca7e40ef6da380a89ad1bcd649af24e17a449371b0af6e8e03b510cc217c9fb` |
+| `currentness-copy.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/currentness-copy.json` | `ca2d5e7006f07aa13dd0c118f82ffcb29c20a655a7145631160f9516461e7c3c` |
+| `grade-audit.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/grade-audit.json` | `a47c82da58fd275f143ac493b38d946042cfff0fe7f10e5c8281ab652b243c94` |
+
+## Earlier rounds (unchanged historical record)
+
 # DG6A — Astra 2 fix round 6
 
 Branch `plans/ea-w2-gui-concerns-20261104`; reviewed input `69776a6b88c79f5ad871d9b98304bc7ef89fcd83`; technical repair `387e5747032abe6376fd2792f01c4e2d9de81692`, boundary-positive follow-up `7a56f2132d`. This section supersedes earlier grade/proof claims; all earlier fixes and the nine stopped questions below are retained. The final report commit is self-inclusive.
