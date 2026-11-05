@@ -7,7 +7,7 @@ function owners(){
 }
 export default async function(t){
  await t.emulate({reducedMotion:'no-preference'});await t.viewport(1024,504);await t.window.context().addInitScript(owners);await t.window.context().addInitScript(installActivityInputProbe);
- let index=0;for(const opaque of[Number(t.args.sandbox||0)])for(const build of[t.args.build||'fix']){
+ let index=0;for(const opaque of(t.args.surfaces==='both'?[0,1]:[Number(t.args.sandbox||0)]))for(const build of(t.args.build==='both'?['predecessor','fix']:[t.args.build||'fix'])){
  const tag=build+'-s'+opaque,url=pathToFileURL(join(t.args.buildDir,build+'.html')).href;const[f]=await t.openSideBySide([{url:'about:blank',width:1024,height:480}],{height:480,settleMs:0});if(opaque)await(await f.frameElement()).evaluate(e=>e.setAttribute('sandbox','allow-scripts allow-forms allow-popups allow-downloads'));
  await f.goto(url+'?o55=off&ownerBootstrap=1');await f.waitForFunction(()=>window.__PM56_BOOT_OK&&window.PM56_PORT?.ready);await f.locator('#o55np-reboot').waitFor({state:'detached'});
  const button=await f.locator('#pmRoot [data-action="open-activity"]').first().boundingBox(),stage=await f.locator('#pmRoot .chat-stage').boundingBox();await t.mark(tag+' causal bootstrap ready');const clock=await beginActivityFrameClock(t.window);let resolve,clicking;const admitted=new Promise(r=>resolve=r);const listener=m=>{if(m.text()==='REVIEW_EDITOR_ADMITTED '+tag&&!clicking){clicking=t.page.mouse.click(button.x+button.width/2,button.y+button.height/2);resolve(true);}};t.window.on('console',listener);let got=false,input,meta,paint;
