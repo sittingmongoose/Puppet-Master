@@ -699,7 +699,7 @@ These commands manage repository-level worktree inventory, ownership, safe actio
 | `cmd.git.worktree.create` | Create Worktree | Creates a new git worktree at specified path | `git_available && !worktree_limit_reached` |
 | `cmd.git.worktree.remove` | Remove Worktree | Removes an existing live worktree after confirmation, lineage, safe-point, blocked-state, and cleanup gates pass | `git_available && worktree_selected && worktree_clean && prune_policy_allows && lineage_gate_passed` |
 | `cmd.git.worktree.prune` | Prune Worktree | Prunes eligible stale worktree metadata after active-run, blocked, safe-point, and lineage gates pass | `git_available && worktree_selected && prune_policy_allows && lineage_gate_passed` |
-| `cmd.git.worktree.request_prune` | Request Worktree Prune | Compatibility alias for approval-gated prune/remove request flows | `git_available && worktree_selected` |
+| `cmd.git.worktree.request_prune` | Request Worktree Prune | Requests an approval-gated prune of the selected worktree without mutating it; `cmd.git.worktree.prune` executes only an approved request (GI-041). Amended 2026-11-05 (DL-333): its own command, not a compatibility alias | `git_available && worktree_selected` |
 | `cmd.git.worktree.reuse` | Reuse Worktree | Rebinds a clean, lineage-compatible worktree to a new run/lane/package owner after reuse gates pass | `git_available && worktree_selected && ownership_resolvable && worktree_clean && lineage_gate_passed` |
 | `cmd.git.worktree.recover` | Recover Worktree | Reopens or rebinds a worktree from stored lineage; if ownership cannot be resolved after restart, marks `unknown ownership` rather than unlocking silently | `git_available && worktree_selected` |
 | `cmd.git.worktree.focus_lineage` | Focus Worktree Lineage | Focuses the selected worktree's owner run, branch lineage, receipt, or `/orphaned` tombstone context without mutating it | `git_available && worktree_selected` |
@@ -4378,8 +4378,9 @@ negative_constraints: []
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md'
 compatibility_only_notes:
-- cmd.git.worktree.open_files, request_prune, and switch are compatibility aliases.
-stale_retired_dispositions: []
+- cmd.git.worktree.open_files and switch are compatibility aliases.
+stale_retired_dispositions:
+- 'Amended 2026-11-05 (DL-333): cmd.git.worktree.request_prune is its own command, the non-mutating approval-request phase of the two-phase prune flow in GI-041; cmd.git.worktree.prune executes only an approved request. The earlier note that listed it with the compatibility aliases is withdrawn.'
 owner_hints:
 - Plans/UI_Command_Catalog.md
 ```
@@ -9777,15 +9778,7 @@ command_payload_definition_map:
       doc: Plans/UI_Command_Catalog.md
       unit: UCC-054
       field: compatibility_only_notes
-      quote: cmd.git.worktree.open_files, request_prune, and switch are compatibility aliases
-  - token: cmd.git.worktree.request_prune
-    disposition: compatibility_alias
-    evidence:
-      doc: Plans/UI_Command_Catalog.md
-      unit: UCC-054
-      field: compatibility_only_notes
-      quote: cmd.git.worktree.open_files, request_prune, and switch are compatibility aliases
-    note: Q5 resolution 5 makes it its own command; the UCC-054 note changes in a later commit.
+      quote: cmd.git.worktree.open_files
   - token: cmd.git.worktree.switch
     disposition: compatibility_alias
     targets:
@@ -9794,7 +9787,7 @@ command_payload_definition_map:
       doc: Plans/UI_Command_Catalog.md
       unit: UCC-054
       field: compatibility_only_notes
-      quote: cmd.git.worktree.open_files, request_prune, and switch are compatibility aliases
+      quote: and switch are compatibility aliases
     note: '2.5C: compatibility alias for select plus open until callers migrate.'
   - token: cmd.k8s.*
     disposition: compatibility_alias

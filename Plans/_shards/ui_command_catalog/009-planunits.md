@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L1269-L7084
+Source lines: L1269-L7085
 
-Source SHA256: `4e63072d696e548a13cfc5e00caf6c555470aa4715a2398bd944498cb5268d27`
+Source SHA256: `3a8a28f9c33b0923707842f58734c35a70fc12f1af19c595e04b08942d3b6b5c`
 
 ---
 
@@ -3119,8 +3119,9 @@ negative_constraints: []
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md'
 compatibility_only_notes:
-- cmd.git.worktree.open_files, request_prune, and switch are compatibility aliases.
-stale_retired_dispositions: []
+- cmd.git.worktree.open_files and switch are compatibility aliases.
+stale_retired_dispositions:
+- 'Amended 2026-11-05 (DL-333): cmd.git.worktree.request_prune is its own command, the non-mutating approval-request phase of the two-phase prune flow in GI-041; cmd.git.worktree.prune executes only an approved request. The earlier note that listed it with the compatibility aliases is withdrawn.'
 owner_hints:
 - Plans/UI_Command_Catalog.md
 ```
