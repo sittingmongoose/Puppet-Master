@@ -1,17 +1,21 @@
 {
-  "status": "validation_in_progress",
-  "implementation_head": "eee8f2ce4348ef7c880ad2ad0acfa2e99b7e871c",
-  "F16": "deferred to shared NUMRULE; all new numeric caps and recipe selectors removed",
-  "S1": "fixed",
-  "S2": "fixed",
-  "checker_assertions": 27428,
-  "completed_family_guard_tables": 4,
+  "status": "complete",
+  "implementation_head": "417200479ddff92213b905e9ecdbb3d6fea87692",
+  "findings": {
+    "F16": "shared_NUMRULE_sweep; all new caps/recipe selectors removed",
+    "S1": "fixed",
+    "S2": "fixed"
+  },
+  "guard_inventory": {
+    "predicates": 174,
+    "covered": 174,
+    "uncovered": []
+  },
   "grade_counts": {
     "ABSENT": 25,
-    "PASS": 165,
-    "PARTIAL": 24,
+    "PASS": 182,
+    "PARTIAL": 7,
     "CONFLICT": 2
   },
-  "quote_locations_checked": 1410,
   "native_execution": "NOT_RUN"
 }

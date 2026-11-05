@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-W2-DT-FIX6-CAP-FREE-CHECKPOINT",
+  "assessment_id": "EA-W2-DT-FIX6-FINAL-20261105",
   "assessment_kind": "worker_self_grade",
   "rubric": {
     "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md"
@@ -12,8 +12,8 @@
   "static_suites_run_by_grader": true,
   "assessed_tree": {
     "branch": "plans/ea-w2-tools-gates-approvals-20261104",
-    "commit": "eee8f2ce4348ef7c880ad2ad0acfa2e99b7e871c",
-    "read_method": "Cap-free implementation checkpoint; report-only checkpoint follows. Full guard verification remains in progress. No native execution or admission.",
+    "commit": "417200479ddff92213b905e9ecdbb3d6fea87692",
+    "read_method": "Final cap-free implementation commit; the following publication commit changes reports only. Current hashes and exact quotes are verified; native execution is NOT_RUN. F16 is a shared NUMRULE sweep item. Guard proof status is stated explicitly.",
     "contract_hashes": {
       "Plans/Contracts_V0.md": "543ab234acd8c7e1dafdd9374054f5cf1ff6e16e1adbc7eb36dd80383ab0ac2a",
       "Plans/storage-plan.md": "dd0f9cb61966d192ef03bd72232f65f8d7f5a6e4abcea18c5b09e549fd8946ec",
@@ -22,7 +22,7 @@
       "Plans/dt_event_contracts.schema.json": "0b2e82561b5c617707f7d1d86fb68cd890416271e3d9c56bc1db9ad3373e22b6",
       "Plans/dt_event_contract_fixtures.json": "1dc0053e8a917aeb4536486ed6cbdbbf4dea8231ddbb8b4b173ba5d599105f53",
       "Plans/storage_value_registry.json": "4e6e51f61a01c7e645bd9ed9b049faec16067f6271775d3b5b5c778fbee05958",
-      "scripts/pm-dt-event-contracts.py": "99724d14f622af8e2d2c50a0ad91948e032e95a4b44c2362ffb30990cfe572e7",
+      "scripts/pm-dt-event-contracts.py": "7df54a4aed0684b7e24e33c76b621f03bf5cf54751c3b25791d80bd842d2e242",
       "scripts/pm-dt-standing-checks.py": "17ecbfae29654ea2e19e3146ef81dc3b0b38749dca72407334cd22dfabb83010",
       "scripts/pm-dt-guard-isolation.py": "9cdaa363b92580ab96993ef6f3d74abc24e228f929d65d53ab8969df8fa62d84",
       "scripts/pm-dt-number-type-sweep.py": "5900d64a07071555d95889ac5dcc40b3f15046b1e75eae44d7432d922f5f58c2"
@@ -30,8 +30,8 @@
   },
   "status_counts": {
     "ABSENT": 25,
-    "PASS": 165,
-    "PARTIAL": 24,
+    "PASS": 182,
+    "PARTIAL": 7,
     "CONFLICT": 2
   },
   "rows": [
@@ -50,8 +50,8 @@
           "quote": "Newly authored owner contract under DL-045 for approval.requested@1.0.0 only"
         }
       ],
-      "outcome": "NOT_READY_CHECK11",
-      "pass_count": 10,
+      "outcome": "prepared_without_admission",
+      "pass_count": 11,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -78,7 +78,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -98,7 +98,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "producer": {
           "status": "PASS",
@@ -118,7 +118,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -138,7 +138,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -165,7 +165,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -192,7 +192,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "retention": {
           "status": "PASS",
@@ -212,7 +212,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -232,7 +232,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "transitions": {
           "status": "PASS",
@@ -252,7 +252,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -279,7 +279,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -299,12 +299,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "S1/S2 fixes pass 27428 complete-checker assertions and all final field sweeps. Full serial strict guard verification remains in progress. F16 is deferred to shared CV-1100/SP-1100/SP-1101 NUMRULE adoption; every new safe bound, recursive domain schema and recipe selector was removed. Native NOT_RUN.",
+          "finding": "S1/S2 exact-type fixes pass the complete 27435-assertion checker and final numeric/boolean type sweeps. All new numeric caps and history recipe selectors were removed. F16 is a nonblocking shared NUMRULE sweep item by Jared's superseding instruction; adopt CV-1100/SP-1100/SP-1101 there. Final check-11 status: pass; uncovered predicates: []. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -316,8 +316,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 1353,
-              "line_end": 1353,
+              "line_start": 1383,
+              "line_end": 1383,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
@@ -330,8 +330,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 1331,
-              "line_end": 1331,
+              "line_start": 1361,
+              "line_end": 1361,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
@@ -358,8 +358,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round6_numeric_types",
-              "line_start": 1151,
-              "line_end": 1151,
+              "line_start": 1178,
+              "line_end": 1178,
               "quote": "def round6_checks(c, f, schemas, check):"
             },
             {
@@ -381,22 +381,24 @@
             "source": "DT-sol cycle-6@6a97cc07e83ff496c00dedbf90c98c6d558e23c6",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change": "upgraded",
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         }
       },
       "remaining_gaps": [
         "ADMISSION: membership_version remains ABSENT until individual batch integration."
       ],
       "static_checks_seen": [
-        "cap-free complete checker: 27428 assertions",
-        "all seventeen expanded numeric/boolean type sweeps pass",
-        "strict guard run continues serially"
+        "cap-free complete checker: 27435 assertions",
+        "final serial per-family type sweeps and strict guard tables",
+        "reference-preflight removal controls",
+        "uncapped Storage uint64 positive and F16 diagnostic",
+        "shard/index checks with baseline diagnostics disclosed"
       ],
       "notes": "Cycle-5 findings F10\u2013F15 fixed with precise controls. Membership ABSENT, native NOT_RUN; original-owner, pack-reader and SP-278 authentication remain assumed adapters. Existing retention exceptions and both Jared stops remain unchanged.",
-      "grading_batch": "round6_cap_free_checkpoint",
+      "grading_batch": "round6_final_cap_free",
       "prior_pass_count": 10,
-      "technical_depth_complete": false
+      "technical_depth_complete": true
     },
     {
       "event_type": "approval.granted",
@@ -413,8 +415,8 @@
           "quote": "Newly authored owner contract under DL-045 for approval.granted@1.0.0 only"
         }
       ],
-      "outcome": "NOT_READY_CHECK11",
-      "pass_count": 10,
+      "outcome": "prepared_without_admission",
+      "pass_count": 11,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -441,7 +443,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -461,7 +463,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "producer": {
           "status": "PASS",
@@ -481,7 +483,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -501,7 +503,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -528,7 +530,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -555,7 +557,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "retention": {
           "status": "PASS",
@@ -575,7 +577,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -595,7 +597,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "transitions": {
           "status": "PASS",
@@ -615,7 +617,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -642,7 +644,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -662,12 +664,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "S1/S2 fixes pass 27428 complete-checker assertions and all final field sweeps. Full serial strict guard verification remains in progress. F16 is deferred to shared CV-1100/SP-1100/SP-1101 NUMRULE adoption; every new safe bound, recursive domain schema and recipe selector was removed. Native NOT_RUN.",
+          "finding": "S1/S2 exact-type fixes pass the complete 27435-assertion checker and final numeric/boolean type sweeps. All new numeric caps and history recipe selectors were removed. F16 is a nonblocking shared NUMRULE sweep item by Jared's superseding instruction; adopt CV-1100/SP-1100/SP-1101 there. Final check-11 status: pass; uncovered predicates: []. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -679,8 +681,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 1353,
-              "line_end": 1353,
+              "line_start": 1383,
+              "line_end": 1383,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
@@ -693,8 +695,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 1331,
-              "line_end": 1331,
+              "line_start": 1361,
+              "line_end": 1361,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
@@ -721,8 +723,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round6_numeric_types",
-              "line_start": 1151,
-              "line_end": 1151,
+              "line_start": 1178,
+              "line_end": 1178,
               "quote": "def round6_checks(c, f, schemas, check):"
             },
             {
@@ -744,22 +746,24 @@
             "source": "DT-sol cycle-6@6a97cc07e83ff496c00dedbf90c98c6d558e23c6",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change": "upgraded",
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         }
       },
       "remaining_gaps": [
         "ADMISSION: membership_version remains ABSENT until individual batch integration."
       ],
       "static_checks_seen": [
-        "cap-free complete checker: 27428 assertions",
-        "all seventeen expanded numeric/boolean type sweeps pass",
-        "strict guard run continues serially"
+        "cap-free complete checker: 27435 assertions",
+        "final serial per-family type sweeps and strict guard tables",
+        "reference-preflight removal controls",
+        "uncapped Storage uint64 positive and F16 diagnostic",
+        "shard/index checks with baseline diagnostics disclosed"
       ],
       "notes": "Cycle-5 findings F10\u2013F15 fixed with precise controls. Membership ABSENT, native NOT_RUN; original-owner, pack-reader and SP-278 authentication remain assumed adapters. Existing retention exceptions and both Jared stops remain unchanged.",
-      "grading_batch": "round6_cap_free_checkpoint",
+      "grading_batch": "round6_final_cap_free",
       "prior_pass_count": 10,
-      "technical_depth_complete": false
+      "technical_depth_complete": true
     },
     {
       "event_type": "approval.denied",
@@ -776,8 +780,8 @@
           "quote": "Newly authored owner contract under DL-045 for approval.denied@1.0.0 only"
         }
       ],
-      "outcome": "NOT_READY_CHECK11",
-      "pass_count": 10,
+      "outcome": "prepared_without_admission",
+      "pass_count": 11,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -804,7 +808,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -824,7 +828,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "producer": {
           "status": "PASS",
@@ -844,7 +848,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -864,7 +868,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -891,7 +895,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -918,7 +922,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "retention": {
           "status": "PASS",
@@ -938,7 +942,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -958,7 +962,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "transitions": {
           "status": "PASS",
@@ -978,7 +982,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1005,7 +1009,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1025,12 +1029,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "S1/S2 fixes pass 27428 complete-checker assertions and all final field sweeps. Full serial strict guard verification remains in progress. F16 is deferred to shared CV-1100/SP-1100/SP-1101 NUMRULE adoption; every new safe bound, recursive domain schema and recipe selector was removed. Native NOT_RUN.",
+          "finding": "S1/S2 exact-type fixes pass the complete 27435-assertion checker and final numeric/boolean type sweeps. All new numeric caps and history recipe selectors were removed. F16 is a nonblocking shared NUMRULE sweep item by Jared's superseding instruction; adopt CV-1100/SP-1100/SP-1101 there. Final check-11 status: pass; uncovered predicates: []. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -1042,8 +1046,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 1353,
-              "line_end": 1353,
+              "line_start": 1383,
+              "line_end": 1383,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
@@ -1056,8 +1060,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 1331,
-              "line_end": 1331,
+              "line_start": 1361,
+              "line_end": 1361,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
@@ -1084,8 +1088,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round6_numeric_types",
-              "line_start": 1151,
-              "line_end": 1151,
+              "line_start": 1178,
+              "line_end": 1178,
               "quote": "def round6_checks(c, f, schemas, check):"
             },
             {
@@ -1107,22 +1111,24 @@
             "source": "DT-sol cycle-6@6a97cc07e83ff496c00dedbf90c98c6d558e23c6",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change": "upgraded",
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         }
       },
       "remaining_gaps": [
         "ADMISSION: membership_version remains ABSENT until individual batch integration."
       ],
       "static_checks_seen": [
-        "cap-free complete checker: 27428 assertions",
-        "all seventeen expanded numeric/boolean type sweeps pass",
-        "strict guard run continues serially"
+        "cap-free complete checker: 27435 assertions",
+        "final serial per-family type sweeps and strict guard tables",
+        "reference-preflight removal controls",
+        "uncapped Storage uint64 positive and F16 diagnostic",
+        "shard/index checks with baseline diagnostics disclosed"
       ],
       "notes": "Cycle-5 findings F10\u2013F15 fixed with precise controls. Membership ABSENT, native NOT_RUN; original-owner, pack-reader and SP-278 authentication remain assumed adapters. Existing retention exceptions and both Jared stops remain unchanged.",
-      "grading_batch": "round6_cap_free_checkpoint",
+      "grading_batch": "round6_final_cap_free",
       "prior_pass_count": 10,
-      "technical_depth_complete": false
+      "technical_depth_complete": true
     },
     {
       "event_type": "approval.timeout",
@@ -1139,8 +1145,8 @@
           "quote": "Newly authored owner contract under DL-045 for approval.timeout@1.0.0 only"
         }
       ],
-      "outcome": "NOT_READY_CHECK11",
-      "pass_count": 10,
+      "outcome": "prepared_without_admission",
+      "pass_count": 11,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -1167,7 +1173,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1187,7 +1193,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "producer": {
           "status": "PASS",
@@ -1207,7 +1213,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1227,7 +1233,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1254,7 +1260,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1281,7 +1287,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "retention": {
           "status": "PASS",
@@ -1301,7 +1307,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1321,7 +1327,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "transitions": {
           "status": "PASS",
@@ -1341,7 +1347,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1368,7 +1374,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1388,12 +1394,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "S1/S2 fixes pass 27428 complete-checker assertions and all final field sweeps. Full serial strict guard verification remains in progress. F16 is deferred to shared CV-1100/SP-1100/SP-1101 NUMRULE adoption; every new safe bound, recursive domain schema and recipe selector was removed. Native NOT_RUN.",
+          "finding": "S1/S2 exact-type fixes pass the complete 27435-assertion checker and final numeric/boolean type sweeps. All new numeric caps and history recipe selectors were removed. F16 is a nonblocking shared NUMRULE sweep item by Jared's superseding instruction; adopt CV-1100/SP-1100/SP-1101 there. Final check-11 status: pass; uncovered predicates: []. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -1405,8 +1411,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 1353,
-              "line_end": 1353,
+              "line_start": 1383,
+              "line_end": 1383,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
@@ -1419,8 +1425,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 1331,
-              "line_end": 1331,
+              "line_start": 1361,
+              "line_end": 1361,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
@@ -1447,8 +1453,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round6_numeric_types",
-              "line_start": 1151,
-              "line_end": 1151,
+              "line_start": 1178,
+              "line_end": 1178,
               "quote": "def round6_checks(c, f, schemas, check):"
             },
             {
@@ -1470,22 +1476,24 @@
             "source": "DT-sol cycle-6@6a97cc07e83ff496c00dedbf90c98c6d558e23c6",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change": "upgraded",
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         }
       },
       "remaining_gaps": [
         "ADMISSION: membership_version remains ABSENT until individual batch integration."
       ],
       "static_checks_seen": [
-        "cap-free complete checker: 27428 assertions",
-        "all seventeen expanded numeric/boolean type sweeps pass",
-        "strict guard run continues serially"
+        "cap-free complete checker: 27435 assertions",
+        "final serial per-family type sweeps and strict guard tables",
+        "reference-preflight removal controls",
+        "uncapped Storage uint64 positive and F16 diagnostic",
+        "shard/index checks with baseline diagnostics disclosed"
       ],
       "notes": "Cycle-5 findings F10\u2013F15 fixed with precise controls. Membership ABSENT, native NOT_RUN; original-owner, pack-reader and SP-278 authentication remain assumed adapters. Existing retention exceptions and both Jared stops remain unchanged.",
-      "grading_batch": "round6_cap_free_checkpoint",
+      "grading_batch": "round6_final_cap_free",
       "prior_pass_count": 10,
-      "technical_depth_complete": false
+      "technical_depth_complete": true
     },
     {
       "event_type": "config.migrated",
@@ -1502,8 +1510,8 @@
           "quote": "Newly authored owner contract under DL-045 for config.migrated@1.0.0 only"
         }
       ],
-      "outcome": "NOT_READY_CHECK11",
-      "pass_count": 10,
+      "outcome": "prepared_without_admission",
+      "pass_count": 11,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -1530,7 +1538,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1550,7 +1558,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "producer": {
           "status": "PASS",
@@ -1570,7 +1578,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1590,7 +1598,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1610,7 +1618,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1630,7 +1638,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "retention": {
           "status": "PASS",
@@ -1650,7 +1658,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1670,7 +1678,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "transitions": {
           "status": "PASS",
@@ -1690,7 +1698,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1717,7 +1725,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1737,12 +1745,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "S1/S2 fixes pass 27428 complete-checker assertions and all final field sweeps. Full serial strict guard verification remains in progress. F16 is deferred to shared CV-1100/SP-1100/SP-1101 NUMRULE adoption; every new safe bound, recursive domain schema and recipe selector was removed. Native NOT_RUN.",
+          "finding": "S1/S2 exact-type fixes pass the complete 27435-assertion checker and final numeric/boolean type sweeps. All new numeric caps and history recipe selectors were removed. F16 is a nonblocking shared NUMRULE sweep item by Jared's superseding instruction; adopt CV-1100/SP-1100/SP-1101 there. Final check-11 status: pass; uncovered predicates: []. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -1754,8 +1762,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 1353,
-              "line_end": 1353,
+              "line_start": 1383,
+              "line_end": 1383,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
@@ -1768,8 +1776,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 1331,
-              "line_end": 1331,
+              "line_start": 1361,
+              "line_end": 1361,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
@@ -1796,8 +1804,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round6_numeric_types",
-              "line_start": 1151,
-              "line_end": 1151,
+              "line_start": 1178,
+              "line_end": 1178,
               "quote": "def round6_checks(c, f, schemas, check):"
             },
             {
@@ -1819,8 +1827,8 @@
             "source": "DT-sol cycle-6@6a97cc07e83ff496c00dedbf90c98c6d558e23c6",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change": "upgraded",
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         }
       },
       "remaining_gaps": [
@@ -1828,14 +1836,16 @@
         "RETENTION: PENDING_RETENTION_DECISION; RT must bind the event and co-retained source policy."
       ],
       "static_checks_seen": [
-        "cap-free complete checker: 27428 assertions",
-        "all seventeen expanded numeric/boolean type sweeps pass",
-        "strict guard run continues serially"
+        "cap-free complete checker: 27435 assertions",
+        "final serial per-family type sweeps and strict guard tables",
+        "reference-preflight removal controls",
+        "uncapped Storage uint64 positive and F16 diagnostic",
+        "shard/index checks with baseline diagnostics disclosed"
       ],
       "notes": "Cycle-5 findings F10\u2013F15 fixed with precise controls. Membership ABSENT, native NOT_RUN; original-owner, pack-reader and SP-278 authentication remain assumed adapters. Existing retention exceptions and both Jared stops remain unchanged.",
-      "grading_batch": "round6_cap_free_checkpoint",
+      "grading_batch": "round6_final_cap_free",
       "prior_pass_count": 10,
-      "technical_depth_complete": false
+      "technical_depth_complete": true
     },
     {
       "event_type": "gate.evaluation_started",
@@ -1852,8 +1862,8 @@
           "quote": "Newly authored owner contract under DL-045 for gate.evaluation_started@1.0.0 only"
         }
       ],
-      "outcome": "NOT_READY_CHECK11",
-      "pass_count": 10,
+      "outcome": "prepared_without_admission",
+      "pass_count": 11,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -1880,7 +1890,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1900,7 +1910,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "producer": {
           "status": "PASS",
@@ -1920,7 +1930,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1947,7 +1957,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1967,7 +1977,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1987,7 +1997,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "retention": {
           "status": "PASS",
@@ -2007,7 +2017,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2027,7 +2037,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "transitions": {
           "status": "PASS",
@@ -2047,7 +2057,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2074,7 +2084,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2094,12 +2104,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "S1/S2 fixes pass 27428 complete-checker assertions and all final field sweeps. Full serial strict guard verification remains in progress. F16 is deferred to shared CV-1100/SP-1100/SP-1101 NUMRULE adoption; every new safe bound, recursive domain schema and recipe selector was removed. Native NOT_RUN.",
+          "finding": "S1/S2 exact-type fixes pass the complete 27435-assertion checker and final numeric/boolean type sweeps. All new numeric caps and history recipe selectors were removed. F16 is a nonblocking shared NUMRULE sweep item by Jared's superseding instruction; adopt CV-1100/SP-1100/SP-1101 there. Final check-11 status: pass; uncovered predicates: []. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -2111,8 +2121,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 1353,
-              "line_end": 1353,
+              "line_start": 1383,
+              "line_end": 1383,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
@@ -2125,8 +2135,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 1331,
-              "line_end": 1331,
+              "line_start": 1361,
+              "line_end": 1361,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
@@ -2153,8 +2163,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round6_numeric_types",
-              "line_start": 1151,
-              "line_end": 1151,
+              "line_start": 1178,
+              "line_end": 1178,
               "quote": "def round6_checks(c, f, schemas, check):"
             },
             {
@@ -2176,22 +2186,24 @@
             "source": "DT-sol cycle-6@6a97cc07e83ff496c00dedbf90c98c6d558e23c6",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change": "upgraded",
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         }
       },
       "remaining_gaps": [
         "ADMISSION: membership_version remains ABSENT until individual batch integration."
       ],
       "static_checks_seen": [
-        "cap-free complete checker: 27428 assertions",
-        "all seventeen expanded numeric/boolean type sweeps pass",
-        "strict guard run continues serially"
+        "cap-free complete checker: 27435 assertions",
+        "final serial per-family type sweeps and strict guard tables",
+        "reference-preflight removal controls",
+        "uncapped Storage uint64 positive and F16 diagnostic",
+        "shard/index checks with baseline diagnostics disclosed"
       ],
       "notes": "Cycle-5 findings F10\u2013F15 fixed with precise controls. Membership ABSENT, native NOT_RUN; original-owner, pack-reader and SP-278 authentication remain assumed adapters. Existing retention exceptions and both Jared stops remain unchanged.",
-      "grading_batch": "round6_cap_free_checkpoint",
+      "grading_batch": "round6_final_cap_free",
       "prior_pass_count": 10,
-      "technical_depth_complete": false
+      "technical_depth_complete": true
     },
     {
       "event_type": "gate.failed",
@@ -2208,8 +2220,8 @@
           "quote": "Newly authored owner contract under DL-045 for gate.failed@1.0.0 only"
         }
       ],
-      "outcome": "NOT_READY_CHECK11",
-      "pass_count": 10,
+      "outcome": "prepared_without_admission",
+      "pass_count": 11,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -2236,7 +2248,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2256,7 +2268,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "producer": {
           "status": "PASS",
@@ -2276,7 +2288,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2303,7 +2315,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2323,7 +2335,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2343,7 +2355,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "retention": {
           "status": "PASS",
@@ -2363,7 +2375,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2383,7 +2395,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "transitions": {
           "status": "PASS",
@@ -2403,7 +2415,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2430,7 +2442,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2450,12 +2462,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "S1/S2 fixes pass 27428 complete-checker assertions and all final field sweeps. Full serial strict guard verification remains in progress. F16 is deferred to shared CV-1100/SP-1100/SP-1101 NUMRULE adoption; every new safe bound, recursive domain schema and recipe selector was removed. Native NOT_RUN.",
+          "finding": "S1/S2 exact-type fixes pass the complete 27435-assertion checker and final numeric/boolean type sweeps. All new numeric caps and history recipe selectors were removed. F16 is a nonblocking shared NUMRULE sweep item by Jared's superseding instruction; adopt CV-1100/SP-1100/SP-1101 there. Final check-11 status: pass; uncovered predicates: []. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -2467,8 +2479,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 1353,
-              "line_end": 1353,
+              "line_start": 1383,
+              "line_end": 1383,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
@@ -2481,8 +2493,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 1331,
-              "line_end": 1331,
+              "line_start": 1361,
+              "line_end": 1361,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
@@ -2509,8 +2521,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round6_numeric_types",
-              "line_start": 1151,
-              "line_end": 1151,
+              "line_start": 1178,
+              "line_end": 1178,
               "quote": "def round6_checks(c, f, schemas, check):"
             },
             {
@@ -2532,22 +2544,24 @@
             "source": "DT-sol cycle-6@6a97cc07e83ff496c00dedbf90c98c6d558e23c6",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change": "upgraded",
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         }
       },
       "remaining_gaps": [
         "ADMISSION: membership_version remains ABSENT until individual batch integration."
       ],
       "static_checks_seen": [
-        "cap-free complete checker: 27428 assertions",
-        "all seventeen expanded numeric/boolean type sweeps pass",
-        "strict guard run continues serially"
+        "cap-free complete checker: 27435 assertions",
+        "final serial per-family type sweeps and strict guard tables",
+        "reference-preflight removal controls",
+        "uncapped Storage uint64 positive and F16 diagnostic",
+        "shard/index checks with baseline diagnostics disclosed"
       ],
       "notes": "Cycle-5 findings F10\u2013F15 fixed with precise controls. Membership ABSENT, native NOT_RUN; original-owner, pack-reader and SP-278 authentication remain assumed adapters. Existing retention exceptions and both Jared stops remain unchanged.",
-      "grading_batch": "round6_cap_free_checkpoint",
+      "grading_batch": "round6_final_cap_free",
       "prior_pass_count": 10,
-      "technical_depth_complete": false
+      "technical_depth_complete": true
     },
     {
       "event_type": "gate.passed",
@@ -2564,8 +2578,8 @@
           "quote": "Newly authored owner contract under DL-045 for gate.passed@1.0.0 only"
         }
       ],
-      "outcome": "NOT_READY_CHECK11",
-      "pass_count": 10,
+      "outcome": "prepared_without_admission",
+      "pass_count": 11,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -2592,7 +2606,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2612,7 +2626,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "producer": {
           "status": "PASS",
@@ -2632,7 +2646,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2659,7 +2673,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2679,7 +2693,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2699,7 +2713,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "retention": {
           "status": "PASS",
@@ -2719,7 +2733,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2739,7 +2753,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "transitions": {
           "status": "PASS",
@@ -2759,7 +2773,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2786,7 +2800,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2806,12 +2820,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "S1/S2 fixes pass 27428 complete-checker assertions and all final field sweeps. Full serial strict guard verification remains in progress. F16 is deferred to shared CV-1100/SP-1100/SP-1101 NUMRULE adoption; every new safe bound, recursive domain schema and recipe selector was removed. Native NOT_RUN.",
+          "finding": "S1/S2 exact-type fixes pass the complete 27435-assertion checker and final numeric/boolean type sweeps. All new numeric caps and history recipe selectors were removed. F16 is a nonblocking shared NUMRULE sweep item by Jared's superseding instruction; adopt CV-1100/SP-1100/SP-1101 there. Final check-11 status: pass; uncovered predicates: []. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -2823,8 +2837,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 1353,
-              "line_end": 1353,
+              "line_start": 1383,
+              "line_end": 1383,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
@@ -2837,8 +2851,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 1331,
-              "line_end": 1331,
+              "line_start": 1361,
+              "line_end": 1361,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
@@ -2865,8 +2879,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round6_numeric_types",
-              "line_start": 1151,
-              "line_end": 1151,
+              "line_start": 1178,
+              "line_end": 1178,
               "quote": "def round6_checks(c, f, schemas, check):"
             },
             {
@@ -2888,22 +2902,24 @@
             "source": "DT-sol cycle-6@6a97cc07e83ff496c00dedbf90c98c6d558e23c6",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change": "upgraded",
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         }
       },
       "remaining_gaps": [
         "ADMISSION: membership_version remains ABSENT until individual batch integration."
       ],
       "static_checks_seen": [
-        "cap-free complete checker: 27428 assertions",
-        "all seventeen expanded numeric/boolean type sweeps pass",
-        "strict guard run continues serially"
+        "cap-free complete checker: 27435 assertions",
+        "final serial per-family type sweeps and strict guard tables",
+        "reference-preflight removal controls",
+        "uncapped Storage uint64 positive and F16 diagnostic",
+        "shard/index checks with baseline diagnostics disclosed"
       ],
       "notes": "Cycle-5 findings F10\u2013F15 fixed with precise controls. Membership ABSENT, native NOT_RUN; original-owner, pack-reader and SP-278 authentication remain assumed adapters. Existing retention exceptions and both Jared stops remain unchanged.",
-      "grading_batch": "round6_cap_free_checkpoint",
+      "grading_batch": "round6_final_cap_free",
       "prior_pass_count": 10,
-      "technical_depth_complete": false
+      "technical_depth_complete": true
     },
     {
       "event_type": "requirements.clarification_requested",
@@ -2920,8 +2936,8 @@
           "quote": "Newly authored owner contract under DL-045 for requirements.clarification_requested@1.0.0 only"
         }
       ],
-      "outcome": "NOT_READY_CHECK11",
-      "pass_count": 9,
+      "outcome": "prepared_without_admission",
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -2948,7 +2964,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2968,7 +2984,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "producer": {
           "status": "PASS",
@@ -2988,7 +3004,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3008,7 +3024,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3028,7 +3044,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3048,7 +3064,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3068,7 +3084,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3088,7 +3104,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "transitions": {
           "status": "PASS",
@@ -3108,7 +3124,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3135,7 +3151,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3155,12 +3171,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "S1/S2 fixes pass 27428 complete-checker assertions and all final field sweeps. Full serial strict guard verification remains in progress. F16 is deferred to shared CV-1100/SP-1100/SP-1101 NUMRULE adoption; every new safe bound, recursive domain schema and recipe selector was removed. Native NOT_RUN.",
+          "finding": "S1/S2 exact-type fixes pass the complete 27435-assertion checker and final numeric/boolean type sweeps. All new numeric caps and history recipe selectors were removed. F16 is a nonblocking shared NUMRULE sweep item by Jared's superseding instruction; adopt CV-1100/SP-1100/SP-1101 there. Final check-11 status: pass; uncovered predicates: []. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -3172,8 +3188,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 1353,
-              "line_end": 1353,
+              "line_start": 1383,
+              "line_end": 1383,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
@@ -3186,8 +3202,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 1331,
-              "line_end": 1331,
+              "line_start": 1361,
+              "line_end": 1361,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
@@ -3214,8 +3230,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round6_numeric_types",
-              "line_start": 1151,
-              "line_end": 1151,
+              "line_start": 1178,
+              "line_end": 1178,
               "quote": "def round6_checks(c, f, schemas, check):"
             },
             {
@@ -3237,8 +3253,8 @@
             "source": "DT-sol cycle-6@6a97cc07e83ff496c00dedbf90c98c6d558e23c6",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change": "upgraded",
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         }
       },
       "remaining_gaps": [
@@ -3246,14 +3262,16 @@
         "RETENTION: PENDING_RETENTION_DECISION; RT must bind the event and co-retained source policy."
       ],
       "static_checks_seen": [
-        "cap-free complete checker: 27428 assertions",
-        "all seventeen expanded numeric/boolean type sweeps pass",
-        "strict guard run continues serially"
+        "cap-free complete checker: 27435 assertions",
+        "final serial per-family type sweeps and strict guard tables",
+        "reference-preflight removal controls",
+        "uncapped Storage uint64 positive and F16 diagnostic",
+        "shard/index checks with baseline diagnostics disclosed"
       ],
       "notes": "Cycle-5 findings F10\u2013F15 fixed with precise controls. Membership ABSENT, native NOT_RUN; original-owner, pack-reader and SP-278 authentication remain assumed adapters. Existing retention exceptions and both Jared stops remain unchanged.",
-      "grading_batch": "round6_cap_free_checkpoint",
+      "grading_batch": "round6_final_cap_free",
       "prior_pass_count": 9,
-      "technical_depth_complete": false
+      "technical_depth_complete": true
     },
     {
       "event_type": "run.background_enqueued",
@@ -3270,8 +3288,8 @@
           "quote": "Newly authored owner contract under DL-045 for run.background_enqueued@1.0.0 only"
         }
       ],
-      "outcome": "NOT_READY_CHECK11",
-      "pass_count": 10,
+      "outcome": "prepared_without_admission",
+      "pass_count": 11,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -3298,7 +3316,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3318,7 +3336,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "producer": {
           "status": "PASS",
@@ -3338,7 +3356,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3358,7 +3376,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3378,7 +3396,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3398,7 +3416,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "retention": {
           "status": "PASS",
@@ -3418,7 +3436,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3438,7 +3456,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "transitions": {
           "status": "PASS",
@@ -3458,7 +3476,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3485,7 +3503,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3505,12 +3523,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "S1/S2 fixes pass 27428 complete-checker assertions and all final field sweeps. Full serial strict guard verification remains in progress. F16 is deferred to shared CV-1100/SP-1100/SP-1101 NUMRULE adoption; every new safe bound, recursive domain schema and recipe selector was removed. Native NOT_RUN.",
+          "finding": "S1/S2 exact-type fixes pass the complete 27435-assertion checker and final numeric/boolean type sweeps. All new numeric caps and history recipe selectors were removed. F16 is a nonblocking shared NUMRULE sweep item by Jared's superseding instruction; adopt CV-1100/SP-1100/SP-1101 there. Final check-11 status: pass; uncovered predicates: []. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -3522,8 +3540,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 1353,
-              "line_end": 1353,
+              "line_start": 1383,
+              "line_end": 1383,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
@@ -3536,8 +3554,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 1331,
-              "line_end": 1331,
+              "line_start": 1361,
+              "line_end": 1361,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
@@ -3564,8 +3582,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round6_numeric_types",
-              "line_start": 1151,
-              "line_end": 1151,
+              "line_start": 1178,
+              "line_end": 1178,
               "quote": "def round6_checks(c, f, schemas, check):"
             },
             {
@@ -3587,22 +3605,24 @@
             "source": "DT-sol cycle-6@6a97cc07e83ff496c00dedbf90c98c6d558e23c6",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change": "upgraded",
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         }
       },
       "remaining_gaps": [
         "ADMISSION: membership_version remains ABSENT until individual batch integration."
       ],
       "static_checks_seen": [
-        "cap-free complete checker: 27428 assertions",
-        "all seventeen expanded numeric/boolean type sweeps pass",
-        "strict guard run continues serially"
+        "cap-free complete checker: 27435 assertions",
+        "final serial per-family type sweeps and strict guard tables",
+        "reference-preflight removal controls",
+        "uncapped Storage uint64 positive and F16 diagnostic",
+        "shard/index checks with baseline diagnostics disclosed"
       ],
       "notes": "Cycle-5 findings F10\u2013F15 fixed with precise controls. Membership ABSENT, native NOT_RUN; original-owner, pack-reader and SP-278 authentication remain assumed adapters. Existing retention exceptions and both Jared stops remain unchanged.",
-      "grading_batch": "round6_cap_free_checkpoint",
+      "grading_batch": "round6_final_cap_free",
       "prior_pass_count": 10,
-      "technical_depth_complete": false
+      "technical_depth_complete": true
     },
     {
       "event_type": "tool.denied",
@@ -3619,8 +3639,8 @@
           "quote": "Newly authored owner contract under DL-045 for tool.denied@1.0.0 only"
         }
       ],
-      "outcome": "NOT_READY_CHECK11",
-      "pass_count": 8,
+      "outcome": "prepared_policy_user_path_FileSafe_facet_stopped",
+      "pass_count": 9,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -3647,7 +3667,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3667,7 +3687,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "producer": {
           "status": "CONFLICT",
@@ -3701,7 +3721,7 @@
             "status": "CONFLICT"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3728,7 +3748,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3748,7 +3768,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3768,7 +3788,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "retention": {
           "status": "PASS",
@@ -3788,7 +3808,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3808,7 +3828,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "transitions": {
           "status": "CONFLICT",
@@ -3842,7 +3862,7 @@
             "status": "CONFLICT"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3869,7 +3889,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3889,12 +3909,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "S1/S2 fixes pass 27428 complete-checker assertions and all final field sweeps. Full serial strict guard verification remains in progress. F16 is deferred to shared CV-1100/SP-1100/SP-1101 NUMRULE adoption; every new safe bound, recursive domain schema and recipe selector was removed. Native NOT_RUN.",
+          "finding": "S1/S2 exact-type fixes pass the complete 27435-assertion checker and final numeric/boolean type sweeps. All new numeric caps and history recipe selectors were removed. F16 is a nonblocking shared NUMRULE sweep item by Jared's superseding instruction; adopt CV-1100/SP-1100/SP-1101 there. Final check-11 status: pass; uncovered predicates: []. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -3906,8 +3926,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 1353,
-              "line_end": 1353,
+              "line_start": 1383,
+              "line_end": 1383,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
@@ -3920,8 +3940,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 1331,
-              "line_end": 1331,
+              "line_start": 1361,
+              "line_end": 1361,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
@@ -3948,8 +3968,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round6_numeric_types",
-              "line_start": 1151,
-              "line_end": 1151,
+              "line_start": 1178,
+              "line_end": 1178,
               "quote": "def round6_checks(c, f, schemas, check):"
             },
             {
@@ -3971,8 +3991,8 @@
             "source": "DT-sol cycle-6@6a97cc07e83ff496c00dedbf90c98c6d558e23c6",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change": "upgraded",
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         }
       },
       "remaining_gaps": [
@@ -3980,12 +4000,14 @@
         "RETENTION: PENDING_RETENTION_DECISION; RT must bind the event and co-retained source policy."
       ],
       "static_checks_seen": [
-        "cap-free complete checker: 27428 assertions",
-        "all seventeen expanded numeric/boolean type sweeps pass",
-        "strict guard run continues serially"
+        "cap-free complete checker: 27435 assertions",
+        "final serial per-family type sweeps and strict guard tables",
+        "reference-preflight removal controls",
+        "uncapped Storage uint64 positive and F16 diagnostic",
+        "shard/index checks with baseline diagnostics disclosed"
       ],
       "notes": "Cycle-5 findings F10\u2013F15 fixed with precise controls. Membership ABSENT, native NOT_RUN; original-owner, pack-reader and SP-278 authentication remain assumed adapters. Existing retention exceptions and both Jared stops remain unchanged.",
-      "grading_batch": "round6_cap_free_checkpoint",
+      "grading_batch": "round6_final_cap_free",
       "prior_pass_count": 8,
       "technical_depth_complete": false
     },
@@ -4004,8 +4026,8 @@
           "quote": "Newly authored owner contract under DL-045 for tool.execution_completed@1.0.0 only"
         }
       ],
-      "outcome": "NOT_READY_CHECK11",
-      "pass_count": 10,
+      "outcome": "prepared_without_admission",
+      "pass_count": 11,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -4032,7 +4054,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -4052,7 +4074,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "producer": {
           "status": "PASS",
@@ -4072,7 +4094,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -4092,7 +4114,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -4112,7 +4134,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -4132,7 +4154,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "retention": {
           "status": "PASS",
@@ -4152,7 +4174,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -4172,7 +4194,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "transitions": {
           "status": "PASS",
@@ -4192,7 +4214,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -4219,7 +4241,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4239,12 +4261,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "S1/S2 fixes pass 27428 complete-checker assertions and all final field sweeps. Full serial strict guard verification remains in progress. F16 is deferred to shared CV-1100/SP-1100/SP-1101 NUMRULE adoption; every new safe bound, recursive domain schema and recipe selector was removed. Native NOT_RUN.",
+          "finding": "S1/S2 exact-type fixes pass the complete 27435-assertion checker and final numeric/boolean type sweeps. All new numeric caps and history recipe selectors were removed. F16 is a nonblocking shared NUMRULE sweep item by Jared's superseding instruction; adopt CV-1100/SP-1100/SP-1101 there. Final check-11 status: pass; uncovered predicates: []. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -4256,8 +4278,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 1353,
-              "line_end": 1353,
+              "line_start": 1383,
+              "line_end": 1383,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
@@ -4270,8 +4292,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 1331,
-              "line_end": 1331,
+              "line_start": 1361,
+              "line_end": 1361,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
@@ -4298,8 +4320,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round6_numeric_types",
-              "line_start": 1151,
-              "line_end": 1151,
+              "line_start": 1178,
+              "line_end": 1178,
               "quote": "def round6_checks(c, f, schemas, check):"
             },
             {
@@ -4321,22 +4343,24 @@
             "source": "DT-sol cycle-6@6a97cc07e83ff496c00dedbf90c98c6d558e23c6",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change": "upgraded",
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         }
       },
       "remaining_gaps": [
         "ADMISSION: membership_version remains ABSENT until individual batch integration."
       ],
       "static_checks_seen": [
-        "cap-free complete checker: 27428 assertions",
-        "all seventeen expanded numeric/boolean type sweeps pass",
-        "strict guard run continues serially"
+        "cap-free complete checker: 27435 assertions",
+        "final serial per-family type sweeps and strict guard tables",
+        "reference-preflight removal controls",
+        "uncapped Storage uint64 positive and F16 diagnostic",
+        "shard/index checks with baseline diagnostics disclosed"
       ],
       "notes": "Cycle-5 findings F10\u2013F15 fixed with precise controls. Membership ABSENT, native NOT_RUN; original-owner, pack-reader and SP-278 authentication remain assumed adapters. Existing retention exceptions and both Jared stops remain unchanged.",
-      "grading_batch": "round6_cap_free_checkpoint",
+      "grading_batch": "round6_final_cap_free",
       "prior_pass_count": 10,
-      "technical_depth_complete": false
+      "technical_depth_complete": true
     },
     {
       "event_type": "tool.execution_started",
@@ -4353,8 +4377,8 @@
           "quote": "Newly authored owner contract under DL-045 for tool.execution_started@1.0.0 only"
         }
       ],
-      "outcome": "NOT_READY_CHECK11",
-      "pass_count": 10,
+      "outcome": "prepared_without_admission",
+      "pass_count": 11,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -4381,7 +4405,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -4401,7 +4425,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "producer": {
           "status": "PASS",
@@ -4421,7 +4445,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -4441,7 +4465,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -4461,7 +4485,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -4481,7 +4505,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "retention": {
           "status": "PASS",
@@ -4501,7 +4525,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -4521,7 +4545,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "transitions": {
           "status": "PASS",
@@ -4541,7 +4565,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -4568,7 +4592,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4588,12 +4612,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "S1/S2 fixes pass 27428 complete-checker assertions and all final field sweeps. Full serial strict guard verification remains in progress. F16 is deferred to shared CV-1100/SP-1100/SP-1101 NUMRULE adoption; every new safe bound, recursive domain schema and recipe selector was removed. Native NOT_RUN.",
+          "finding": "S1/S2 exact-type fixes pass the complete 27435-assertion checker and final numeric/boolean type sweeps. All new numeric caps and history recipe selectors were removed. F16 is a nonblocking shared NUMRULE sweep item by Jared's superseding instruction; adopt CV-1100/SP-1100/SP-1101 there. Final check-11 status: pass; uncovered predicates: []. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -4605,8 +4629,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 1353,
-              "line_end": 1353,
+              "line_start": 1383,
+              "line_end": 1383,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
@@ -4619,8 +4643,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 1331,
-              "line_end": 1331,
+              "line_start": 1361,
+              "line_end": 1361,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
@@ -4647,8 +4671,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round6_numeric_types",
-              "line_start": 1151,
-              "line_end": 1151,
+              "line_start": 1178,
+              "line_end": 1178,
               "quote": "def round6_checks(c, f, schemas, check):"
             },
             {
@@ -4670,22 +4694,24 @@
             "source": "DT-sol cycle-6@6a97cc07e83ff496c00dedbf90c98c6d558e23c6",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change": "upgraded",
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         }
       },
       "remaining_gaps": [
         "ADMISSION: membership_version remains ABSENT until individual batch integration."
       ],
       "static_checks_seen": [
-        "cap-free complete checker: 27428 assertions",
-        "all seventeen expanded numeric/boolean type sweeps pass",
-        "strict guard run continues serially"
+        "cap-free complete checker: 27435 assertions",
+        "final serial per-family type sweeps and strict guard tables",
+        "reference-preflight removal controls",
+        "uncapped Storage uint64 positive and F16 diagnostic",
+        "shard/index checks with baseline diagnostics disclosed"
       ],
       "notes": "Cycle-5 findings F10\u2013F15 fixed with precise controls. Membership ABSENT, native NOT_RUN; original-owner, pack-reader and SP-278 authentication remain assumed adapters. Existing retention exceptions and both Jared stops remain unchanged.",
-      "grading_batch": "round6_cap_free_checkpoint",
+      "grading_batch": "round6_final_cap_free",
       "prior_pass_count": 10,
-      "technical_depth_complete": false
+      "technical_depth_complete": true
     },
     {
       "event_type": "tool.invoked",
@@ -4702,8 +4728,8 @@
           "quote": "Newly authored owner contract under DL-045 for tool.invoked@1.0.0 only"
         }
       ],
-      "outcome": "NOT_READY_CHECK11",
-      "pass_count": 10,
+      "outcome": "prepared_without_admission",
+      "pass_count": 11,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -4730,7 +4756,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -4750,7 +4776,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "producer": {
           "status": "PASS",
@@ -4770,7 +4796,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -4797,7 +4823,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -4817,7 +4843,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -4837,7 +4863,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "retention": {
           "status": "PASS",
@@ -4857,7 +4883,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -4877,7 +4903,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "transitions": {
           "status": "PASS",
@@ -4897,7 +4923,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -4924,7 +4950,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4944,12 +4970,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "S1/S2 fixes pass 27428 complete-checker assertions and all final field sweeps. Full serial strict guard verification remains in progress. F16 is deferred to shared CV-1100/SP-1100/SP-1101 NUMRULE adoption; every new safe bound, recursive domain schema and recipe selector was removed. Native NOT_RUN.",
+          "finding": "S1/S2 exact-type fixes pass the complete 27435-assertion checker and final numeric/boolean type sweeps. All new numeric caps and history recipe selectors were removed. F16 is a nonblocking shared NUMRULE sweep item by Jared's superseding instruction; adopt CV-1100/SP-1100/SP-1101 there. Final check-11 status: pass; uncovered predicates: []. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -4961,8 +4987,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 1353,
-              "line_end": 1353,
+              "line_start": 1383,
+              "line_end": 1383,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
@@ -4975,8 +5001,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 1331,
-              "line_end": 1331,
+              "line_start": 1361,
+              "line_end": 1361,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
@@ -5003,8 +5029,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round6_numeric_types",
-              "line_start": 1151,
-              "line_end": 1151,
+              "line_start": 1178,
+              "line_end": 1178,
               "quote": "def round6_checks(c, f, schemas, check):"
             },
             {
@@ -5026,8 +5052,8 @@
             "source": "DT-sol cycle-6@6a97cc07e83ff496c00dedbf90c98c6d558e23c6",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change": "upgraded",
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         }
       },
       "remaining_gaps": [
@@ -5035,14 +5061,16 @@
         "RETENTION: PENDING_RETENTION_DECISION; RT must bind the event and co-retained source policy."
       ],
       "static_checks_seen": [
-        "cap-free complete checker: 27428 assertions",
-        "all seventeen expanded numeric/boolean type sweeps pass",
-        "strict guard run continues serially"
+        "cap-free complete checker: 27435 assertions",
+        "final serial per-family type sweeps and strict guard tables",
+        "reference-preflight removal controls",
+        "uncapped Storage uint64 positive and F16 diagnostic",
+        "shard/index checks with baseline diagnostics disclosed"
       ],
       "notes": "Cycle-5 findings F10\u2013F15 fixed with precise controls. Membership ABSENT, native NOT_RUN; original-owner, pack-reader and SP-278 authentication remain assumed adapters. Existing retention exceptions and both Jared stops remain unchanged.",
-      "grading_batch": "round6_cap_free_checkpoint",
+      "grading_batch": "round6_final_cap_free",
       "prior_pass_count": 10,
-      "technical_depth_complete": false
+      "technical_depth_complete": true
     },
     {
       "event_type": "usage.event",
@@ -5059,8 +5087,8 @@
           "quote": "Newly authored owner contract under DL-045 for usage.event@1.0.0 only"
         }
       ],
-      "outcome": "NOT_READY_CHECK11",
-      "pass_count": 9,
+      "outcome": "prepared_without_admission",
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -5087,7 +5115,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -5107,7 +5135,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "producer": {
           "status": "PASS",
@@ -5127,7 +5155,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -5147,7 +5175,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -5167,7 +5195,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -5187,7 +5215,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "retention": {
           "status": "PARTIAL",
@@ -5207,7 +5235,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -5227,7 +5255,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "transitions": {
           "status": "PASS",
@@ -5247,7 +5275,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -5274,7 +5302,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -5294,12 +5322,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "S1/S2 fixes pass 27428 complete-checker assertions and all final field sweeps. Full serial strict guard verification remains in progress. F16 is deferred to shared CV-1100/SP-1100/SP-1101 NUMRULE adoption; every new safe bound, recursive domain schema and recipe selector was removed. Native NOT_RUN.",
+          "finding": "S1/S2 exact-type fixes pass the complete 27435-assertion checker and final numeric/boolean type sweeps. All new numeric caps and history recipe selectors were removed. F16 is a nonblocking shared NUMRULE sweep item by Jared's superseding instruction; adopt CV-1100/SP-1100/SP-1101 there. Final check-11 status: pass; uncovered predicates: []. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -5311,8 +5339,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 1353,
-              "line_end": 1353,
+              "line_start": 1383,
+              "line_end": 1383,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
@@ -5325,8 +5353,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 1331,
-              "line_end": 1331,
+              "line_start": 1361,
+              "line_end": 1361,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
@@ -5353,8 +5381,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round6_numeric_types",
-              "line_start": 1151,
-              "line_end": 1151,
+              "line_start": 1178,
+              "line_end": 1178,
               "quote": "def round6_checks(c, f, schemas, check):"
             },
             {
@@ -5376,8 +5404,8 @@
             "source": "DT-sol cycle-6@6a97cc07e83ff496c00dedbf90c98c6d558e23c6",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change": "upgraded",
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         }
       },
       "remaining_gaps": [
@@ -5385,12 +5413,14 @@
         "RETENTION: PENDING_RETENTION_DECISION; RT must bind the event and co-retained source policy."
       ],
       "static_checks_seen": [
-        "cap-free complete checker: 27428 assertions",
-        "all seventeen expanded numeric/boolean type sweeps pass",
-        "strict guard run continues serially"
+        "cap-free complete checker: 27435 assertions",
+        "final serial per-family type sweeps and strict guard tables",
+        "reference-preflight removal controls",
+        "uncapped Storage uint64 positive and F16 diagnostic",
+        "shard/index checks with baseline diagnostics disclosed"
       ],
       "notes": "Cycle-5 findings F10\u2013F15 fixed with precise controls. Membership ABSENT, native NOT_RUN; original-owner, pack-reader and SP-278 authentication remain assumed adapters. Existing retention exceptions and both Jared stops remain unchanged.",
-      "grading_batch": "round6_cap_free_checkpoint",
+      "grading_batch": "round6_final_cap_free",
       "prior_pass_count": 9,
       "technical_depth_complete": false
     },
@@ -5409,8 +5439,8 @@
           "quote": "Newly authored owner contract under DL-045 for worktree.created@1.0.0 only"
         }
       ],
-      "outcome": "NOT_READY_CHECK11",
-      "pass_count": 9,
+      "outcome": "prepared_without_admission",
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -5437,7 +5467,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -5457,7 +5487,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "producer": {
           "status": "PASS",
@@ -5477,7 +5507,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -5497,7 +5527,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -5517,7 +5547,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -5537,7 +5567,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "retention": {
           "status": "PARTIAL",
@@ -5557,7 +5587,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -5577,7 +5607,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "transitions": {
           "status": "PASS",
@@ -5597,7 +5627,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -5624,7 +5654,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -5644,12 +5674,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "S1/S2 fixes pass 27428 complete-checker assertions and all final field sweeps. Full serial strict guard verification remains in progress. F16 is deferred to shared CV-1100/SP-1100/SP-1101 NUMRULE adoption; every new safe bound, recursive domain schema and recipe selector was removed. Native NOT_RUN.",
+          "finding": "S1/S2 exact-type fixes pass the complete 27435-assertion checker and final numeric/boolean type sweeps. All new numeric caps and history recipe selectors were removed. F16 is a nonblocking shared NUMRULE sweep item by Jared's superseding instruction; adopt CV-1100/SP-1100/SP-1101 there. Final check-11 status: pass; uncovered predicates: []. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -5661,8 +5691,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 1353,
-              "line_end": 1353,
+              "line_start": 1383,
+              "line_end": 1383,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
@@ -5675,8 +5705,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 1331,
-              "line_end": 1331,
+              "line_start": 1361,
+              "line_end": 1361,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
@@ -5703,8 +5733,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round6_numeric_types",
-              "line_start": 1151,
-              "line_end": 1151,
+              "line_start": 1178,
+              "line_end": 1178,
               "quote": "def round6_checks(c, f, schemas, check):"
             },
             {
@@ -5726,8 +5756,8 @@
             "source": "DT-sol cycle-6@6a97cc07e83ff496c00dedbf90c98c6d558e23c6",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change": "upgraded",
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         }
       },
       "remaining_gaps": [
@@ -5735,14 +5765,16 @@
         "RETENTION: PENDING_RETENTION_DECISION; RT must bind the event and co-retained source policy."
       ],
       "static_checks_seen": [
-        "cap-free complete checker: 27428 assertions",
-        "all seventeen expanded numeric/boolean type sweeps pass",
-        "strict guard run continues serially"
+        "cap-free complete checker: 27435 assertions",
+        "final serial per-family type sweeps and strict guard tables",
+        "reference-preflight removal controls",
+        "uncapped Storage uint64 positive and F16 diagnostic",
+        "shard/index checks with baseline diagnostics disclosed"
       ],
       "notes": "Cycle-5 findings F10\u2013F15 fixed with precise controls. Membership ABSENT, native NOT_RUN; original-owner, pack-reader and SP-278 authentication remain assumed adapters. Existing retention exceptions and both Jared stops remain unchanged.",
-      "grading_batch": "round6_cap_free_checkpoint",
+      "grading_batch": "round6_final_cap_free",
       "prior_pass_count": 9,
-      "technical_depth_complete": false
+      "technical_depth_complete": true
     },
     {
       "event_type": "worktree.deleted",
@@ -5759,8 +5791,8 @@
           "quote": "Newly authored owner contract under DL-045 for worktree.deleted@1.0.0 only"
         }
       ],
-      "outcome": "NOT_READY_CHECK11",
-      "pass_count": 9,
+      "outcome": "prepared_without_admission",
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -5787,7 +5819,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -5807,7 +5839,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "producer": {
           "status": "PASS",
@@ -5827,7 +5859,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -5847,7 +5879,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -5867,7 +5899,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -5887,7 +5919,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "retention": {
           "status": "PARTIAL",
@@ -5907,7 +5939,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -5927,7 +5959,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "transitions": {
           "status": "PASS",
@@ -5947,7 +5979,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -5974,7 +6006,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -5994,12 +6026,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "S1/S2 fixes pass 27428 complete-checker assertions and all final field sweeps. Full serial strict guard verification remains in progress. F16 is deferred to shared CV-1100/SP-1100/SP-1101 NUMRULE adoption; every new safe bound, recursive domain schema and recipe selector was removed. Native NOT_RUN.",
+          "finding": "S1/S2 exact-type fixes pass the complete 27435-assertion checker and final numeric/boolean type sweeps. All new numeric caps and history recipe selectors were removed. F16 is a nonblocking shared NUMRULE sweep item by Jared's superseding instruction; adopt CV-1100/SP-1100/SP-1101 there. Final check-11 status: pass; uncovered predicates: []. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -6011,8 +6043,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 1353,
-              "line_end": 1353,
+              "line_start": 1383,
+              "line_end": 1383,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
@@ -6025,8 +6057,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 1331,
-              "line_end": 1331,
+              "line_start": 1361,
+              "line_end": 1361,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
@@ -6053,8 +6085,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round6_numeric_types",
-              "line_start": 1151,
-              "line_end": 1151,
+              "line_start": 1178,
+              "line_end": 1178,
               "quote": "def round6_checks(c, f, schemas, check):"
             },
             {
@@ -6076,8 +6108,8 @@
             "source": "DT-sol cycle-6@6a97cc07e83ff496c00dedbf90c98c6d558e23c6",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change": "upgraded",
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         }
       },
       "remaining_gaps": [
@@ -6085,14 +6117,16 @@
         "RETENTION: PENDING_RETENTION_DECISION; RT must bind the event and co-retained source policy."
       ],
       "static_checks_seen": [
-        "cap-free complete checker: 27428 assertions",
-        "all seventeen expanded numeric/boolean type sweeps pass",
-        "strict guard run continues serially"
+        "cap-free complete checker: 27435 assertions",
+        "final serial per-family type sweeps and strict guard tables",
+        "reference-preflight removal controls",
+        "uncapped Storage uint64 positive and F16 diagnostic",
+        "shard/index checks with baseline diagnostics disclosed"
       ],
       "notes": "Cycle-5 findings F10\u2013F15 fixed with precise controls. Membership ABSENT, native NOT_RUN; original-owner, pack-reader and SP-278 authentication remain assumed adapters. Existing retention exceptions and both Jared stops remain unchanged.",
-      "grading_batch": "round6_cap_free_checkpoint",
+      "grading_batch": "round6_final_cap_free",
       "prior_pass_count": 9,
-      "technical_depth_complete": false
+      "technical_depth_complete": true
     },
     {
       "event_type": "tool.custom_headless.skipped",
@@ -6135,7 +6169,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -6155,7 +6189,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "producer": {
           "status": "PARTIAL",
@@ -6175,7 +6209,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "closed_payload_schema": {
           "status": "ABSENT",
@@ -6195,7 +6229,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "scope_identity": {
           "status": "ABSENT",
@@ -6215,7 +6249,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "replay_idempotency": {
           "status": "PARTIAL",
@@ -6235,7 +6269,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "retention": {
           "status": "ABSENT",
@@ -6255,7 +6289,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "redaction_custody": {
           "status": "ABSENT",
@@ -6275,7 +6309,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "transitions": {
           "status": "PARTIAL",
@@ -6295,7 +6329,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "consumers_checkpoints": {
           "status": "ABSENT",
@@ -6315,7 +6349,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "compatibility_withdrawal": {
           "status": "ABSENT",
@@ -6335,7 +6369,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         },
         "positive_negative_oracles": {
           "status": "ABSENT",
@@ -6355,7 +6389,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "No upgrade while complete strict guard coverage is pending. Numeric direction superseded by Jared; both product stops remain."
+          "change_reason": "Cycle-6 grades retained unless the final, cap-free complete checker, all type sweeps and strict whole-lane guard coverage justify improvement. F16 is deferred to shared NUMRULE; both product stops remain."
         }
       },
       "remaining_gaps": [
@@ -6364,12 +6398,14 @@
         "RETENTION: PENDING_RETENTION_DECISION remains with RT."
       ],
       "static_checks_seen": [
-        "cap-free complete checker: 27428 assertions",
-        "all seventeen expanded numeric/boolean type sweeps pass",
-        "strict guard run continues serially"
+        "cap-free complete checker: 27435 assertions",
+        "final serial per-family type sweeps and strict guard tables",
+        "reference-preflight removal controls",
+        "uncapped Storage uint64 positive and F16 diagnostic",
+        "shard/index checks with baseline diagnostics disclosed"
       ],
       "notes": "STOPPED for Jared: exact Doctor eligibility/reset question unchanged. No schema, writer, reset rule, admission or product answer is added.",
-      "grading_batch": "round6_cap_free_checkpoint",
+      "grading_batch": "round6_final_cap_free",
       "prior_pass_count": 1,
       "technical_depth_complete": false
     }
@@ -6378,8 +6414,8 @@
     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DT-sol/REVIEW-cycle6.md",
     "head": "6a97cc07e83ff496c00dedbf90c98c6d558e23c6"
   },
-  "prepared_pass_count": 0,
-  "prepared_count_basis": "No preparation claim while the complete strict guard table is pending. F16 is a shared NUMRULE sweep item. FileSafe and Doctor remain stopped.",
+  "prepared_pass_count": 16,
+  "prepared_count_basis": "16/17 drafted (16/18 assigned) only if the strict guard inventory passes, under the existing retention exception; otherwise 0 prepared. No admission or native readiness. FileSafe and Doctor stay stopped.",
   "round5_proof": {
     "before": {
       "ABSENT": 25,
@@ -6401,9 +6437,16 @@
     "evidence_directory": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix5"
   },
   "round6_proof": {
-    "status": "in_progress",
-    "complete_checker_assertions": 27428,
-    "completed_family_guard_tables": 4,
-    "number_domain_disposition": "shared NUMRULE sweep; all new caps and recipe selectors removed"
+    "guard_inventory": {
+      "predicates": 174,
+      "covered": 174,
+      "uncovered": []
+    },
+    "checker_assertions": 27435,
+    "model_guard_rows": 1210,
+    "schema_guard_rows": 1571,
+    "type_guard_rows": 1620,
+    "number_domain_disposition": "F16 shared CV-1100/SP-1100/SP-1101 NUMRULE adoption; no lane-local cap/serializer/recipe selector",
+    "raw_manifest": "DT-evidence-sha256.json"
   }
 }
