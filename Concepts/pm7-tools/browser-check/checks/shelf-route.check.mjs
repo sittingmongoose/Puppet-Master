@@ -22,6 +22,7 @@ export default async function (t) {
       await trigger.click();
       await t.check(target+' shelf '+id+' opens its menu',await trigger.getAttribute('aria-expanded')==='true','',{hard:true});
       const menu=f.locator(`[data-shelf-menu-case="${menuKey}"]`);
+      t.log('menu state '+JSON.stringify(await f.evaluate(()=>[...document.querySelectorAll('[role=menu],.pmw-menu')].map(e=>({id:e.id,cls:e.className,display:getComputedStyle(e).display,visible:e.checkVisibility({visibilityProperty:true}),parent:e.parentElement?.className})))));
       await menu.waitFor({state:'visible',timeout:5000});
       await t.check(target+' shelf '+id+' has menu items',await menu.locator('[role="menuitem"]').count()>0,'',{hard:true});
       await t.page.keyboard.press('Escape');

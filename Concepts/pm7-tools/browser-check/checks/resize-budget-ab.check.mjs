@@ -3,7 +3,8 @@
 import fs from 'node:fs';
 const py = fs.readFileSync(new URL('../../../onboarding/opus-5.5/tools/perf/resize_perf.py',import.meta.url),'utf8');
 const sampler=py.match(/SAMPLER = r"""([\s\S]*?)"""/)[1];
-const target=Function('return '+py.match(/TARGET = r"""([\s\S]*?)"""/)[1])();
+const target=Function('return '+py.match(/TARGET = r"""([\s\S]*?)"""/)[1].trim())();
+if(typeof target!=='function')throw Error('Resize target extraction did not yield a function');
 const q=a=>a.sort((x,y)=>x-y)[Math.min(a.length-1,Math.floor(a.length*.95))]||0;
 const gaps=a=>a.slice(1).map((x,i)=>x[0]-a[i][0]);
 export default async function(t){
