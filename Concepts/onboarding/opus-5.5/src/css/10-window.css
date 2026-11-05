@@ -616,3 +616,7 @@ html[data-motion="reduced"] #pm-o55-onboarding :is(.o55-card, .o55-tile) { --o55
 @media (prefers-reduced-motion: reduce) {
   #pm-o55-onboarding :is(.o55-card, .o55-tile) { --o55-hover-y: 0px !important; }
 }
+/* The page's NieR reset removes native outlines; choices still need a keyboard ring. */
+#pm-o55-onboarding#pm-o55-onboarding :is(.o55-card, .o55-tile):focus-visible {
+  outline: 2px solid var(--o55-accent) !important; outline-offset: 2px !important;
+}
