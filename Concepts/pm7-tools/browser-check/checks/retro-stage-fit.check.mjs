@@ -355,6 +355,112 @@ async function noReplay(t, mode) {
 	await t.viewport(1920, 1080);
 }
 
+// FO-50 awake (sol-review-retro-1): the resting-box assertion above judges the resting head; this judges the moments
+// of life it leaves out. Every frame for 14 s on a screen with props beside Pip (Name, c-ready, online-details), from the
+// screen's entrance on: Pip woken by the pointer's arrival (its wake hop), a name typed and a suggestion picked on Name
+// (its nods, its line, a cheer), c-ready's finishing cheer, and whatever idle wiggle, swing or glance comes. Overlap is
+// the painted shapes', not their boxes: where the head's and a prop's boxes meet, every 2 px point is tested against the
+// visible fills and strokes of both (isPointInFill / isPointInStroke in the GPU browser's own geometry), so a
+// transparent box corner is not overlap. Normal motion must stay on all the while (no Reduced Motion, no adaptive
+// low-resource mode, sway and idle life on), and each cell must show Pip moving. A failure crops the stage.
+const MOTION = async (ms) => {
+	const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage'));
+	if (!st) return { err: 'no stage' };
+	const PH = O55.pipStage.h;
+	const shown = (e, top) => { for (let a = e; a && a !== top.parentElement; a = a.parentElement) { const c = getComputedStyle(a); if (c.display === 'none' || c.visibility === 'hidden' || +c.opacity < .05) return false; } return true; };
+	const shapes = (g) => [...g.querySelectorAll('path,circle,ellipse,rect,polygon,polyline,line')].filter((e) => shown(e, g)).map((e) => {
+		const c = getComputedStyle(e), m = e.getScreenCTM();
+		return { e, m: m && m.inverse(), fill: c.fill !== 'none' && +c.fillOpacity > .05, stroke: c.stroke !== 'none' && parseFloat(c.strokeWidth) > 0 && +c.strokeOpacity > .05 };
+	}).filter((k) => k.m && (k.fill || k.stroke));
+	const ink = (list, x, y) => list.some((k) => { const p = new DOMPoint(x, y).matrixTransform(k.m); return (k.fill && k.e.isPointInFill(p)) || (k.stroke && k.e.isPointInStroke(p)); });
+	const R = (e) => e.getBoundingClientRect();
+	const out = { n: 0, off: 0, offWhy: '', moving: 0, boxFrames: 0, worstBox: 0, worst: 0, at: null, kinds: { tilt: 0, swing: 0, hop: 0, cheer: 0, propKick: 0 } };
+	const was = { tilt: false, swing: false, hop: false, cheer: false, kick: false };
+	const t0 = performance.now();
+	while (performance.now() - t0 < ms) {
+		await new Promise((r) => requestAnimationFrame(() => r()));
+		out.n++;
+		const s2 = O55.pipStage.of(O55.S.root.querySelector('.o55-stage'));
+		if (!s2 || !s2.ps) continue;
+		const ps = s2.ps;
+		const nominal = !s2.reduced && !O55.motion.lowResource && PH.part('sway-and-physics') && PH.part('idle-life');
+		if (!nominal) { out.off++; out.offWhy = s2.reduced ? 'reduced' : O55.motion.lowResource ? 'low-resource' : 'a Pip part off'; }
+		const props = [...s2.props.values()].filter((p) => p.state !== 'out' && p.op > .95);
+		const now = { tilt: Math.abs(ps.tiltv) > 1.5, swing: Math.abs(ps.thv) > .25, hop: ps.dyv < -80, cheer: s2.moodOverride === 'happy' && s2.moodUntil > s2.t, kick: props.some((p) => Math.abs(p.av) > .12) };
+		for (const k of Object.keys(now)) { if (now[k] && !was[k]) out.kinds[k === 'kick' ? 'propKick' : k]++; was[k] = now[k]; }
+		if (Math.abs(ps.tilt - ps.tiltT) > .02 || Math.abs(ps.th) > .02 || Math.abs(ps.dy) > 1 || props.some((p) => Math.abs(p.a) > .02)) out.moving++;
+		const hb = R(s2.gHead);
+		let hs = null;
+		for (const p of props) {
+			const q = R(p.el), x0 = Math.max(hb.left, q.left), x1 = Math.min(hb.right, q.right), y0 = Math.max(hb.top, q.top), y1 = Math.min(hb.bottom, q.bottom);
+			if (x1 <= x0 || y1 <= y0) continue;
+			out.boxFrames++; out.worstBox = Math.max(out.worstBox, Math.min(x1 - x0, y1 - y0));
+			hs = hs || shapes(s2.gHead);
+			let ps2 = null, hit = 0;
+			for (let y = y0 + 1; y < y1; y += 2) for (let x = x0 + 1; x < x1; x += 2) {
+				if (!ink(hs, x, y)) continue;
+				ps2 = ps2 || shapes(p.el);
+				if (ink(ps2, x, y)) hit++;
+			}
+			const area = hit * 4;
+			if (area > out.worst) out.worst = area, out.at = { prop: `${p.spec.kind}:${p.spec.slot || ''}`, t: Math.round(performance.now() - t0), tilt: Math.round(ps.tilt * 100) / 100, th: Math.round(ps.th * 100) / 100, dy: Math.round(ps.dy), propA: Math.round(p.a * 100) / 100 };
+		}
+	}
+	return out;
+};
+const MOTION_SCREENS = ['name', 'c-ready', 'online-details'];
+const MOTION_SIZES = [[860, 768], [740, 768], [1280, 500]];
+async function awakeMotion(t, mode) {
+	if (t.args.motion === 'reduce') return t.check('not run: this case is about normal motion', true);
+	const looks = t.args.looks ? String(t.args.looks).split(',') : ALL_LOOKS, total = { tilt: 0, swing: 0, hop: 0, cheer: 0, propKick: 0, boxFrames: 0 };
+	for (const look of looks) {
+		for (const [w, h] of sizesArg(t) || MOTION_SIZES) {
+			await t.viewport(w, h);
+			const f = await frameFor(t, mode);
+			await t.emulate({ reducedMotion: 'no-preference' });
+			await stageLook(t, f, look);
+			for (const scr of t.args.screens ? String(t.args.screens).split(',') : MOTION_SCREENS) {
+				await f.evaluate((x) => window.O55.ui.open({ fresh: true, screen: x }), scr);
+				const ok = await f.waitForFunction(() => !!O55.pipStage.of(O55.S.root.querySelector('.o55-stage')), null, { timeout: 15000 }).then(() => true, () => false);
+				const tag = `${mode} ${look} ${scr} ${w}x${h} awake`;
+				if (!ok) { await t.check(`${tag}: the screen opens on a stage`, false, 'no stage within 15 s'); continue; }
+				// watched from the screen's entrance on, through the wake, the person's input and the idle that follows
+				const watch = f.evaluate(`(${MOTION.toString()})(14000)`);
+				await f.waitForTimeout(250);
+				await t.check(`${tag}: Pip wakes on the pointer's arrival`, await arrive(t, f), 'still asleep after 4 s');
+				if (scr === 'name') {
+					const fld = f.locator('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-bind="name"]').first();
+					await fld.click().catch(() => {});
+					await t.page.keyboard.press('Control+A');
+					await t.page.keyboard.type('Garden notes', { delay: 40 });
+					await f.waitForTimeout(1800);
+					const chip = f.locator('#pm-o55-onboarding .o55-layer:not(.o55-out) button', { hasText: 'Book club website' }).first();
+					if (await chip.count()) await chip.click().catch(() => {});
+				}
+				const r = await watch;
+				if (r.err) { await t.check(`${tag}: the stage`, false, r.err); continue; }
+				for (const k of Object.keys(r.kinds)) total[k] += r.kinds[k];
+				total.boxFrames += r.boxFrames;
+				const why = JSON.stringify({ frames: r.n, moving: r.moving, kinds: r.kinds, boxFrames: r.boxFrames, worstBox: Math.round(r.worstBox), at: r.at });
+				await t.check(`${tag}: normal motion stayed on`, r.off === 0, `${r.off}/${r.n} frames without it (${r.offWhy})`);
+				await t.check(`${tag}: Pip was seen moving`, r.moving >= 20, why);
+				const okInk = r.worst <= 4;
+				await t.check(`${tag}: no painted overlap of Pip's head and a prop`, okInk, `${r.worst} px² painted; ${why}`);
+				if (!okInk) await t.crop(`awake-${mode}-${look}-${scr}-${w}x${h}`, '#pm-o55-onboarding .o55-stage', `${tag}: painted overlap ${r.worst} px²`);
+				else t.log(`${tag}: ${why}`);
+			}
+		}
+	}
+	// the moments it was meant to cover did happen, over the case
+	t.log(`awake motion totals: ${JSON.stringify(total)}`);
+	await t.check(`${mode}: nods or wiggles seen`, total.tilt > 0, JSON.stringify(total));
+	await t.check(`${mode}: hops (wake, cheer) seen`, total.hop > 0, JSON.stringify(total));
+	await t.check(`${mode}: cheers seen`, total.cheer > 0, JSON.stringify(total));
+	await t.check(`${mode}: props kicked swinging seen`, total.propKick > 0, JSON.stringify(total));
+	await t.check(`${mode}: head and prop boxes met (the painted test ran)`, total.boxFrames > 0, JSON.stringify(total));
+	await t.viewport(1920, 1080);
+}
+
 // --set film=1: for a recording (which refuses viewport changes), the page in one frame of the window, resized by its
 // frame: Name in each Retro look (--set look=retro-light for one), down through the layouts and back up, each size marked
 // and held, the same measures judged once it settles. Normal surface only.
@@ -389,5 +495,7 @@ export const tests = {
 	'pip clear of the stage words every look normal': (t) => (t.args.film ? t.check('not run under film', true) : on('normal', clearOfWords)(t)),
 	'pip clear of the stage words every look sandbox': (t) => (t.args.film ? t.check('not run under film', true) : on('sandbox', clearOfWords)(t)),
 	'layout change replays nothing normal': (t) => (t.args.film ? t.check('not run under film', true) : on('normal', noReplay)(t)),
-	'layout change replays nothing sandbox': (t) => (t.args.film ? t.check('not run under film', true) : on('sandbox', noReplay)(t))
+	'layout change replays nothing sandbox': (t) => (t.args.film ? t.check('not run under film', true) : on('sandbox', noReplay)(t)),
+	'awake motion over props normal': (t) => (t.args.film ? t.check('not run under film', true) : on('normal', awakeMotion)(t)),
+	'awake motion over props sandbox': (t) => (t.args.film ? t.check('not run under film', true) : on('sandbox', awakeMotion)(t))
 };
