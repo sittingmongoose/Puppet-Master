@@ -1519,7 +1519,13 @@
           "text": "| Question budget exhausted | owner result/record; optional admitted `planning.question_budget_exhausted` | no failed run, no extra QuestionItem |"
         }
       ],
-      "negative_evidence": "No exact family-specific active event registry row, closed event payload schema, named family operating reader, checkpoint or withdrawal contract found in current semantic owners. Existing envelope/receipt/generic index/source-owner definitions are reused; new bindings are explicitly labelled newly authored."
+      "negative_evidence": "No exact family-specific active event registry row, closed event payload schema, named family operating reader, checkpoint or withdrawal contract found in current semantic owners. Existing envelope/receipt/generic index/source-owner definitions are reused; new bindings are explicitly labelled newly authored.",
+      "fix_round_1_search": {
+        "revision": "e397921e858f9b2195c4c7e8f785525495b256d9",
+        "scope": "Existing per-name exhaustive base search plus current QMAX-005..016, Contracts Additive Correction v4 Effect dispositions, ATS at-ceiling result and all three backend owners.",
+        "negative_evidence": "No existing saved exhaustion-result identity preserving the attempted-refusal/continuation fact found. Charged-record sets and a mutable current projection are insufficient. No existing exact payload, producer, reader or withdrawal definition found beyond the unsupported CV-1459 exclusion.",
+        "outcome": "Reverse exclusion; newly author CV-1459/SP-1459 and closed schema without admission. Retention remains an evidence question, not a chosen policy."
+      }
     },
     {
       "event_type": "run.graph_canonical_locked",

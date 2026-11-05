@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L7239-L7287
+Source lines: L7239-L7286
 
-Source SHA256: `396ebf00ee308bb868851f7bd59b9f4484895f4d5bae96a879aa8b480eab96bb`
+Source SHA256: `6bb651862d2e534f7c148cdaf6c1c23a567038a30c88f872fc6608532b51ffcd`
 
 ---
 
@@ -20,12 +20,11 @@ unit_type: interface_contract
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
 canonical_text: |-
-  The exact fourteen prepared W3F families each own a separate predicate inventory in Plans/w3f_event_oracle_plan.json. It is an oracle plan, not fixtures or executable evidence. Every record names its positive baseline, one-defect negative construction and future shared proof obligation. Criteria 1 and 12 stay ABSENT and PARTIAL respectively; four session-prompt retention cells stay PARTIAL. Planning question-budget exclusion has its own positive proof from CV-323/QMAX records and negatives: no extra QuestionItem; no run failure; no automatic Grill confirmation; budget zero alone never disables Build; no duplicate budget event emitted. The three readiness spellings remain investigation questions; no new contracts or oracles admit them.
+  The exact fifteen prepared W3F families each own a separate predicate inventory in Plans/w3f_event_oracle_plan.json. It is an oracle plan, not fixtures or executable evidence. Every record names its positive baseline, one-defect negative construction and future shared proof obligation. Criteria 1 and 12 stay ABSENT and PARTIAL respectively; four session-prompt retention cells and the question-budget retention cell stay PARTIAL. Planning question-budget now has its own CV-1459/SP-1459 contract and oracle plan: the existing saved-result equivalence was not proved, so the exclusion is reversed. The three readiness spellings remain investigation questions; no new contracts or oracles admit them.
 
   Phase 2 starts only after the lead rebases onto both reviewed shared foundations. Adopt the shared number/time helper for every identity/preimage/schema/ref/physical-byte route, including uint64 above 2^53, signed zero and historical authenticated recipe dispatch. Use shared pm_guard_isolation.py for each field/predicate/site inventory, including all branches and outputs. Schema/runtime duplicate sites prove the same field and predicate; one site removed still rejects, all exact duplicates removed accepts. Sharing a refusal code or allOf does not merge predicates. Every compound rule is cut per field/clause with peers enabled. Recompute dependencies for each single-defect fixture and compare independently captured actual originals at the last pure guard. Missing guards, unisolated negatives, unresolved refs, failure oracles accepting exit zero and misleading PASS grades block review. No mutation of checker machinery, fixtures or phase-2 code is performed in phase 1. Static structural checks do not establish contract execution, native behavior, event admission, readiness, governance or PNC-019 certification.
 gui_related: false
-gui_classification_reason: Event storage, identity and custody contract; visual presentation belongs to existing
-  owners.
+gui_classification_reason: Event storage, identity and custody contract; visual presentation belongs to existing owners.
 depends_on:
 - CV-1450
 - SP-1450

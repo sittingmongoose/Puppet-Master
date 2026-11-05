@@ -1,0 +1,174 @@
+{
+  "operation": "REVERSE_UNPROVED_EXCLUSION_TO_PREPARED",
+  "event_type": "planning.question_budget_exhausted",
+  "reviewed_head": "e397921e858f9b2195c4c7e8f785525495b256d9",
+  "reason": "Existing QMAX records and current derived exhaustion do not prove a saved exhaustion result/continuation. WAVE3 requires drafting the family. CV-323 is Home, not the effect-disposition heading.",
+  "owner_evidence": [
+    "Plans/Contracts_V0.md#effect-dispositions",
+    "Plans/Assistant_Plan_Runtime.md#qmax-006--one-counter-per-run-shared-by-every-participant",
+    "Plans/Assistant_Plan_Runtime.md#qmax-014015--exhaustion-is-typed-and-it-does-not-fail-the-run",
+    "Plans/Assistant_Plan_Runtime.md#qmax-016--planningquestionbudgetprojection",
+    "Plans/Automated_Testing_System.md:4291"
+  ],
+  "source_row_and_cohort_pins": "unchanged",
+  "registry_membership": "ABSENT",
+  "denominator_removal_claimed": false,
+  "records": {
+    "W3F-row-outcomes.jsonl": {
+      "before": {
+        "denominator_removal_claimed": false,
+        "event_type": "planning.question_budget_exhausted",
+        "ledger_disposition": "RECLASSIFY_TO_EXCLUDED",
+        "outcome": "excluded",
+        "owner_units": [
+          "CV-1459"
+        ],
+        "question": null,
+        "registry_membership": "ABSENT",
+        "retention_policy_ref": null,
+        "source_row": {
+          "bucket": "e",
+          "citations": [
+            "Plans/Contracts_V0.md:21402-21408"
+          ],
+          "classification": "persisted_event_candidate",
+          "closest_card1_retention_group": "G17",
+          "closest_card1_retention_rule": "No age or count expiry; project-data deletion only; no count limit; refuse new records under storage pressure.",
+          "in_august_ledger": false,
+          "in_live_registry": false,
+          "name": "planning.question_budget_exhausted",
+          "owner_document": "Plans/Contracts_V0.md",
+          "owner_section": "Typed results added to existing error enumerations",
+          "recommendation": {
+            "action": "exclude",
+            "reason": "CV-323 makes this event optional and already requires the owner result/record. Prefer that mandatory durable result over a second event; Jared must accept the exclusion.",
+            "status": "recommendation only; Jared has not excluded the name; remains counted"
+          },
+          "records": "Optionally records exhaustion of the planning question allowance while the run continues to synthesis.",
+          "retention_citation": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md:81-81",
+          "retention_status": "Analogy/proposal only; exact counting scope and any real-run anchor still require owner/Jared adjudication",
+          "technical_authority": "Returns to Jared under DL-411; no extension of technical authority or retention inferred"
+        },
+        "source_row_sha256": "31cf12e4ab46a65f0fb02fc46f489224b6992e356d0e9dc5f8fd533f3650464a"
+      },
+      "after": {
+        "denominator_removal_claimed": false,
+        "event_type": "planning.question_budget_exhausted",
+        "ledger_disposition": "UNDISPOSITIONED",
+        "outcome": "prepared",
+        "owner_units": [
+          "CV-1459",
+          "SP-1459"
+        ],
+        "question": "Which existing policy covers planning.question_budget_exhausted for Plan/Deep Plan and QuestionBank backends, with what genuine run-completion or application counting boundary?",
+        "registry_membership": "ABSENT",
+        "retention_policy_ref": "PENDING_RETENTION_DECISION",
+        "source_row": {
+          "bucket": "e",
+          "citations": [
+            "Plans/Contracts_V0.md:21402-21408"
+          ],
+          "classification": "persisted_event_candidate",
+          "closest_card1_retention_group": "G17",
+          "closest_card1_retention_rule": "No age or count expiry; project-data deletion only; no count limit; refuse new records under storage pressure.",
+          "in_august_ledger": false,
+          "in_live_registry": false,
+          "name": "planning.question_budget_exhausted",
+          "owner_document": "Plans/Contracts_V0.md",
+          "owner_section": "Typed results added to existing error enumerations",
+          "recommendation": {
+            "action": "exclude",
+            "reason": "CV-323 makes this event optional and already requires the owner result/record. Prefer that mandatory durable result over a second event; Jared must accept the exclusion.",
+            "status": "recommendation only; Jared has not excluded the name; remains counted"
+          },
+          "records": "Optionally records exhaustion of the planning question allowance while the run continues to synthesis.",
+          "retention_citation": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md:81-81",
+          "retention_status": "Analogy/proposal only; exact counting scope and any real-run anchor still require owner/Jared adjudication",
+          "technical_authority": "Returns to Jared under DL-411; no extension of technical authority or retention inferred"
+        },
+        "source_row_sha256": "31cf12e4ab46a65f0fb02fc46f489224b6992e356d0e9dc5f8fd533f3650464a"
+      },
+      "before_row_sha256": "1f733125392a7ece1bcaa8faa768a78c63dbeb587a1832d6e3eddeec35fddb84",
+      "after_row_sha256": "0eb4e3b75fe9618afccf73527fbb80d55d2376c4a240323dfa18e8d4691a2834",
+      "output_file_sha256": "488dea884b736ec2a7428f4611b643ff1aad95d401d181a602d6ed86fe63c175"
+    },
+    "W3F-census-adjudication.jsonl": {
+      "before": {
+        "denominator_removal_claimed": false,
+        "event_type": "planning.question_budget_exhausted",
+        "ledger_disposition": "RECLASSIFY_TO_EXCLUDED",
+        "outcome": "excluded",
+        "owner_units": [
+          "CV-1459"
+        ],
+        "question": null,
+        "registry_membership": "ABSENT",
+        "retention_policy_ref": null,
+        "source_row": {
+          "bucket": "e",
+          "citations": [
+            "Plans/Contracts_V0.md:21402-21408"
+          ],
+          "classification": "persisted_event_candidate",
+          "closest_card1_retention_group": "G17",
+          "closest_card1_retention_rule": "No age or count expiry; project-data deletion only; no count limit; refuse new records under storage pressure.",
+          "in_august_ledger": false,
+          "in_live_registry": false,
+          "name": "planning.question_budget_exhausted",
+          "owner_document": "Plans/Contracts_V0.md",
+          "owner_section": "Typed results added to existing error enumerations",
+          "recommendation": {
+            "action": "exclude",
+            "reason": "CV-323 makes this event optional and already requires the owner result/record. Prefer that mandatory durable result over a second event; Jared must accept the exclusion.",
+            "status": "recommendation only; Jared has not excluded the name; remains counted"
+          },
+          "records": "Optionally records exhaustion of the planning question allowance while the run continues to synthesis.",
+          "retention_citation": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md:81-81",
+          "retention_status": "Analogy/proposal only; exact counting scope and any real-run anchor still require owner/Jared adjudication",
+          "technical_authority": "Returns to Jared under DL-411; no extension of technical authority or retention inferred"
+        },
+        "source_row_sha256": "31cf12e4ab46a65f0fb02fc46f489224b6992e356d0e9dc5f8fd533f3650464a"
+      },
+      "after": {
+        "denominator_removal_claimed": false,
+        "event_type": "planning.question_budget_exhausted",
+        "ledger_disposition": "UNDISPOSITIONED",
+        "outcome": "prepared",
+        "owner_units": [
+          "CV-1459",
+          "SP-1459"
+        ],
+        "question": "Which existing policy covers planning.question_budget_exhausted for Plan/Deep Plan and QuestionBank backends, with what genuine run-completion or application counting boundary?",
+        "registry_membership": "ABSENT",
+        "retention_policy_ref": "PENDING_RETENTION_DECISION",
+        "source_row": {
+          "bucket": "e",
+          "citations": [
+            "Plans/Contracts_V0.md:21402-21408"
+          ],
+          "classification": "persisted_event_candidate",
+          "closest_card1_retention_group": "G17",
+          "closest_card1_retention_rule": "No age or count expiry; project-data deletion only; no count limit; refuse new records under storage pressure.",
+          "in_august_ledger": false,
+          "in_live_registry": false,
+          "name": "planning.question_budget_exhausted",
+          "owner_document": "Plans/Contracts_V0.md",
+          "owner_section": "Typed results added to existing error enumerations",
+          "recommendation": {
+            "action": "exclude",
+            "reason": "CV-323 makes this event optional and already requires the owner result/record. Prefer that mandatory durable result over a second event; Jared must accept the exclusion.",
+            "status": "recommendation only; Jared has not excluded the name; remains counted"
+          },
+          "records": "Optionally records exhaustion of the planning question allowance while the run continues to synthesis.",
+          "retention_citation": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md:81-81",
+          "retention_status": "Analogy/proposal only; exact counting scope and any real-run anchor still require owner/Jared adjudication",
+          "technical_authority": "Returns to Jared under DL-411; no extension of technical authority or retention inferred"
+        },
+        "source_row_sha256": "31cf12e4ab46a65f0fb02fc46f489224b6992e356d0e9dc5f8fd533f3650464a"
+      },
+      "before_row_sha256": "1f733125392a7ece1bcaa8faa768a78c63dbeb587a1832d6e3eddeec35fddb84",
+      "after_row_sha256": "0eb4e3b75fe9618afccf73527fbb80d55d2376c4a240323dfa18e8d4691a2834",
+      "output_file_sha256": "488dea884b736ec2a7428f4611b643ff1aad95d401d181a602d6ed86fe63c175"
+    }
+  }
+}

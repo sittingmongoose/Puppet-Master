@@ -6369,7 +6369,6 @@
     "SP-274",
     "SP-275",
     "F2-209",
-    "CV-1459",
     "F-080",
     "UIW-010",
     "DL-070",
@@ -6806,6 +6805,7 @@
     "CV-1456",
     "CV-1457",
     "CV-1458",
+    "CV-1459",
     "CV-1460",
     "CV-1461",
     "CV-1462",
@@ -6832,6 +6832,7 @@
     "SP-1456",
     "SP-1457",
     "SP-1458",
+    "SP-1459",
     "EP-1460",
     "SP-1460",
     "SP-1461",
@@ -23903,7 +23904,17 @@
     {
       "edge_type": "depends_on",
       "from": "CV-1459",
-      "to": "CV-323"
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1459",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1459",
+      "to": "CV-366"
     },
     {
       "edge_type": "depends_on",
@@ -78367,6 +78378,21 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-1459",
+      "to": "CV-1459"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1459",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1459",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SP-146",
       "to": "PDS-003"
     },
@@ -117706,7 +117732,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-05T05:32:58Z",
+  "generated_at_utc": "2026-11-05T06:19:54Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -141363,7 +141389,7 @@
       "reasoning_tier": "high",
       "risk_class": "event_authority_original_custody_and_scope",
       "source_location": {
-        "heading": "CV-1459 - Planning Question Budget Optional History Exclusion",
+        "heading": "CV-1459 - planning.question_budget_exhausted Resolved Payload And Owner Contract",
         "heading_level": 3,
         "heading_line": 25717,
         "line": 25719,
@@ -225583,8 +225609,8 @@
       "source_location": {
         "heading": "SP-1451 - discovery.backpressure Reader And Storage Adoption",
         "heading_level": 3,
-        "heading_line": 29557,
-        "line": 29559,
+        "heading_line": 29566,
+        "line": 29568,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -225600,8 +225626,8 @@
       "source_location": {
         "heading": "SP-1452 - discovery.candidates_returned Reader And Storage Adoption",
         "heading_level": 3,
-        "heading_line": 29620,
-        "line": 29622,
+        "heading_line": 29629,
+        "line": 29631,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -225617,8 +225643,8 @@
       "source_location": {
         "heading": "SP-1453 - discovery.disabled Reader And Storage Adoption",
         "heading_level": 3,
-        "heading_line": 29683,
-        "line": 29685,
+        "heading_line": 29692,
+        "line": 29694,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -225634,8 +225660,8 @@
       "source_location": {
         "heading": "SP-1454 - discovery.fallback Reader And Storage Adoption",
         "heading_level": 3,
-        "heading_line": 29746,
-        "line": 29748,
+        "heading_line": 29755,
+        "line": 29757,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -225651,8 +225677,8 @@
       "source_location": {
         "heading": "SP-1455 - discovery.invoked Reader And Storage Adoption",
         "heading_level": 3,
-        "heading_line": 29809,
-        "line": 29811,
+        "heading_line": 29818,
+        "line": 29820,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -225668,8 +225694,8 @@
       "source_location": {
         "heading": "SP-1456 - discovery.selected Reader And Storage Adoption",
         "heading_level": 3,
-        "heading_line": 29872,
-        "line": 29874,
+        "heading_line": 29881,
+        "line": 29883,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -225685,8 +225711,8 @@
       "source_location": {
         "heading": "SP-1457 - discovery.unsupported Reader And Storage Adoption",
         "heading_level": 3,
-        "heading_line": 29935,
-        "line": 29937,
+        "heading_line": 29944,
+        "line": 29946,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -225702,8 +225728,25 @@
       "source_location": {
         "heading": "SP-1458 - discovery.verified Reader And Storage Adoption",
         "heading_level": 3,
-        "heading_line": 29998,
-        "line": 30000,
+        "heading_line": 30007,
+        "line": 30009,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3f_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1459",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_original_custody_and_scope",
+      "source_location": {
+        "heading": "SP-1459 - planning.question_budget_exhausted Operating Reader And Storage Contract",
+        "heading_level": 3,
+        "heading_line": 30386,
+        "line": 30388,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -225736,8 +225779,8 @@
       "source_location": {
         "heading": "SP-1460 - run.graph_canonical_locked Reader And Storage Adoption",
         "heading_level": 3,
-        "heading_line": 30061,
-        "line": 30063,
+        "heading_line": 30070,
+        "line": 30072,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -225753,8 +225796,8 @@
       "source_location": {
         "heading": "SP-1461 - session_prompt.admitted Reader And Storage Adoption",
         "heading_level": 3,
-        "heading_line": 30124,
-        "line": 30126,
+        "heading_line": 30133,
+        "line": 30135,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -225770,8 +225813,8 @@
       "source_location": {
         "heading": "SP-1462 - session_prompt.cancelled Reader And Storage Adoption",
         "heading_level": 3,
-        "heading_line": 30187,
-        "line": 30189,
+        "heading_line": 30196,
+        "line": 30198,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -225787,8 +225830,8 @@
       "source_location": {
         "heading": "SP-1463 - session_prompt.expired Reader And Storage Adoption",
         "heading_level": 3,
-        "heading_line": 30250,
-        "line": 30252,
+        "heading_line": 30259,
+        "line": 30261,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -225804,8 +225847,8 @@
       "source_location": {
         "heading": "SP-1464 - session_prompt.rejected Reader And Storage Adoption",
         "heading_level": 3,
-        "heading_line": 30313,
-        "line": 30315,
+        "heading_line": 30322,
+        "line": 30324,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -244433,10 +244476,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18841,
+    "depends_on_edge_count": 18846,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22049,
-    "node_count": 7454,
+    "edge_count": 22054,
+    "node_count": 7455,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0

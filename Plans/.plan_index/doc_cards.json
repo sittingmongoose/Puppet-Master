@@ -1993,7 +1993,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 7287,
+      "line_count": 7286,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 78,
       "plan_unit_ids": [
@@ -2146,7 +2146,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "396ebf00ee308bb868851f7bd59b9f4484895f4d5bae96a879aa8b480eab96bb",
+      "sha256": "6bb651862d2e534f7c148cdaf6c1c23a567038a30c88f872fc6608532b51ffcd",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 77,
@@ -4590,7 +4590,7 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 25760,
+      "line_count": 25786,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 376,
       "plan_unit_ids": [
@@ -5331,7 +5331,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "f42ad037aa967d9801ac8ac8a0c543416cad811283749d942957e99d4b97ebc2",
+      "sha256": "a70da8970e221f85ed6f202735eb6fe27d4ef796b525b45615e809925071f82f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 376
@@ -18621,10 +18621,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 245,
+        "False": 246,
         "True": 110
       },
-      "heading_count": 832,
+      "heading_count": 833,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -18719,9 +18719,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 30374,
+      "line_count": 30445,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 355,
+      "plan_unit_count": 356,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -19077,7 +19077,8 @@
         "SP-1461",
         "SP-1462",
         "SP-1463",
-        "SP-1464"
+        "SP-1464",
+        "SP-1459"
       ],
       "reasoning_tiers": [
         "high",
@@ -19201,10 +19202,10 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "cb6791fabd9690505f7516928d05835b2a19b5c1d99cc213a4e2d491ee65f9dd",
+      "sha256": "93a5a045eaff53a34a7144e77a67761c0ccdae4484fa58826a3b0dd5e7b85ac9",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 351,
+        "accepted": 352,
         "retired": 3,
         "superseded": 1
       },
@@ -19212,7 +19213,7 @@
       "unit_type_counts": {
         "compatibility_disposition": 3,
         "constraint": 4,
-        "interface_contract": 14,
+        "interface_contract": 15,
         "migration": 1,
         "migration_contract": 2,
         "owner_boundary": 2,
@@ -21583,7 +21584,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-05T05:32:58Z",
+  "generated_at_utc": "2026-11-05T06:19:54Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -21591,13 +21592,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3658,
+      "False": 3659,
       "True": 3796
     },
-    "plan_unit_count": 7454,
+    "plan_unit_count": 7455,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 7236,
+      "accepted": 7237,
       "retired": 195,
       "superseded": 23
     },
@@ -21647,7 +21648,7 @@
       "implementation_reference": 1,
       "integration_contract": 130,
       "interaction_contract": 6,
-      "interface_contract": 38,
+      "interface_contract": 39,
       "invariant": 33,
       "migration": 1,
       "migration_contract": 2,

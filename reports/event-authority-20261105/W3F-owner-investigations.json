@@ -6,7 +6,7 @@
       "event_type": "executor.intake_report.recorded",
       "outcome": "STOPPED_OWNER_QUESTION",
       "finding": "Current hidden non-executable readiness registry lists the spelling and a payload-contract pointer; no exact direct semantic owner definition, admitted alias relation or separate persisted-family decision was found. Existing canonical results/normalized stream semantics do not prove this additional family. No contract drafted.",
-      "question": "Does `executor.intake_report.recorded` require a separate persisted EventRecord family, denote an alias of an existing admitted family, or remain only a readiness/receipt/transport label on the existing owner result? If separate history is required, authorize this exact name and its complete contract and retention scope.",
+      "question": "Does this readiness spelling label the existing ExecutorIntakeReport result, alias an identified existing EventRecord family, or require a separate saved EventRecord fact? Identify the exact existing mapping/result; escalate only if the answer requires new history or an actual owner conflict.",
       "evidence_refs": [
         "Plans/.implementation_readiness/non_executable_closure_evidence.json#/event_payload_contract_registry",
         "Plans/Executor_Protocol.md#canonical-executor-intakereceipt-recovery-propagation",
@@ -25,7 +25,7 @@
       "event_type": "plan_compile.stage_receipt.recorded",
       "outcome": "STOPPED_OWNER_QUESTION",
       "finding": "Current hidden non-executable readiness registry lists the spelling and a payload-contract pointer; no exact direct semantic owner definition, admitted alias relation or separate persisted-family decision was found. Existing canonical results/normalized stream semantics do not prove this additional family. No contract drafted.",
-      "question": "Does `plan_compile.stage_receipt.recorded` require a separate persisted EventRecord family, denote an alias of an existing admitted family, or remain only a readiness/receipt/transport label on the existing owner result? If separate history is required, authorize this exact name and its complete contract and retention scope.",
+      "question": "Does this readiness spelling label the existing stage PlanCompileReceipt, alias an identified EventRecord family, or require a separate saved EventRecord fact? Identify the existing receipt/history mapping; escalate only a demonstrated new-history or competing-owner choice.",
       "evidence_refs": [
         "Plans/.implementation_readiness/non_executable_closure_evidence.json#/event_payload_contract_registry",
         "Plans/Plan_To_Node_Compilation.md#PNC-010",
@@ -44,11 +44,12 @@
       "event_type": "provider.stream.event_recorded",
       "outcome": "STOPPED_OWNER_QUESTION",
       "finding": "Current hidden non-executable readiness registry lists the spelling and a payload-contract pointer; no exact direct semantic owner definition, admitted alias relation or separate persisted-family decision was found. Existing canonical results/normalized stream semantics do not prove this additional family. No contract drafted.",
-      "question": "Does `provider.stream.event_recorded` require a separate persisted EventRecord family, denote an alias of an existing admitted family, or remain only a readiness/receipt/transport label on the existing owner result? If separate history is required, authorize this exact name and its complete contract and retention scope.",
+      "question": "Does this dotted readiness label refer to the existing normalized-kind-to-EventRecord persistence mapping, alias a specific admitted type, or require another saved semantic fact? Name that mapping/type or the additional fact before requesting any new-history authorization.",
       "evidence_refs": [
         "Plans/.implementation_readiness/non_executable_closure_evidence.json#/event_payload_contract_registry",
         "Plans/CLI_Bridged_Providers.md#CBP-015",
-        "reports/event-authority-20261105/W3F-search.json"
+        "reports/event-authority-20261105/W3F-search.json",
+        "Plans/Contracts_V0.md:1252-1264"
       ],
       "current_exact_spelling_evidence": {
         "path": "Plans/.implementation_readiness/non_executable_closure_evidence.json",
@@ -57,7 +58,7 @@
         "quote": "\"event_type\": \"provider.stream.event_recorded\",",
         "file_sha256": "75f093349681f59267347deef7ed0c9c8048ee0476406376ddc20965356a85ee"
       },
-      "owner_finding": "CLI_Bridged_Providers.md CBP-015/CBP-023 preserves normalized stream ordering and structured malformed-tool-call error events; hidden provider_stream_contract names normalized kinds and refs. Neither binds this exact readiness spelling to a separate family or proves it is only transport."
+      "owner_finding": "CLI_Bridged_Providers.md CBP-015/CBP-023 preserves normalized stream ordering and structured malformed-tool-call error events; hidden provider_stream_contract names normalized kinds and refs. Neither binds this exact readiness spelling to a separate family or proves it is only transport. Contracts_V0.md:1252-1264 explicitly separates non-persisted transport-normalized messages from persistence-facing EventRecords; a normalized-kind persistence mapping does not identify this dotted spelling as another saved fact."
     }
   ]
 }
