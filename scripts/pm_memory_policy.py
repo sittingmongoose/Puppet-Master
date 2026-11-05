@@ -26,6 +26,11 @@ def same(left, right):
     return left == right
 
 
+def string_list(value):
+    """An exact list of exact strings; a string, object or Boolean/number alias is not one."""
+    return type(value) is list and all(type(item) is str for item in value)
+
+
 def instant(core, value):
     """Exact rational seconds for policy ordering only; retain the original spelling.
 
@@ -54,15 +59,15 @@ def selection_checks(core, snapshot, job):
     selected = [snapshot['memories'][key] for key in snapshot['selected_ids']
                 if key in snapshot['memories'] and snapshot['memories'][key]['pinned'] is not True]
     yield 'selection_scope', (type(snapshot['project_id']) is str and bool(snapshot['project_id'])
-                              and all(m['project_id'] == snapshot['project_id'] for m in selected))
+                              and all(m.get('project_id') == snapshot['project_id'] for m in selected))
     # Exact flag type belongs to archive.memory_flags; this predicate owns active vs archived.
     yield 'selection_active', all(not m['archived'] for m in selected if type(m['archived']) is bool)
     captured = instant(core, snapshot['captured_at'])
-    starts = [max(instant(core, m['created_at'] if m.get('updated_at') is None else m['updated_at']),
-                  instant(core, m['created_at'] if m.get('last_access_at') is None else m['last_access_at']))
+    starts = [max(instant(core, m.get('created_at') if m.get('updated_at') is None else m['updated_at']),
+                  instant(core, m.get('created_at') if m.get('last_access_at') is None else m['last_access_at']))
               for m in selected]
     yield 'selection_age', all(captured - start >= days * 86400 for start in starts)
-    values = [m['usefulness_score'] for m in selected]
+    values = [m.get('usefulness_score') for m in selected]
     valid = all(type(v) in (int, float, Decimal) and
                 (v.is_finite() if type(v) is Decimal else math.isfinite(v) if type(v) is float else True)
                 for v in values)
@@ -75,23 +80,33 @@ def dedup_candidate(core, before):
 
     Selection always uses the oldest original then stable note ID.
     """
-    memories = before['memories']; ids = before['eligible_ids']
+    memories = before.get('memories'); ids = before.get('eligible_ids')
+    core.require(type(memories) is dict and type(before.get('merge_records')) is list
+                 and all(type(m) is dict and 'evidence_refs' in m and 'versions' in m for m in memories.values()),
+                 'dedup_input_shape')
+    # Exact type before any value test: a string would otherwise read as a group of characters.
+    core.require(type(ids) is list, 'dedup_eligible_group')
     core.require(len(ids) >= 2, 'dedup_eligible_group')
+    # Object keys are strings, so the type test keeps a wrong-type ID out of the lookup and the set below.
+    core.require(all(type(k) is str and k in memories for k in ids), 'dedup_eligible_group')
     core.require(len(ids) == len(set(ids)), 'dedup_eligible_group')
-    core.require(all(k in memories for k in ids), 'dedup_eligible_group')
     # Work on resolved originals after validating the complete requested group.
     # The caller's eligible_ids remain untouched; existence is owned by the guard above.
     ids = [key for key in ids if key in memories]
     group = [memories[k] for k in ids]
-    core.require(all(type(m['pinned']) is bool and type(m['archived']) is bool
+    core.require(all(type(m.get('pinned')) is bool and type(m.get('archived')) is bool
                      for m in memories.values()), 'dedup_flags')
     # A pin cannot enter this group, even if its hash matches. No pin is scored or changed.
-    core.require(all(not m['pinned'] and not m['archived'] for m in group
-                     if type(m['pinned']) is bool and type(m['archived']) is bool), 'dedup_protected')
-    core.require(type(before['project_id']) is str and bool(before['project_id'])
-                 and all(m['project_id'] == before['project_id'] for m in group), 'dedup_scope')
+    core.require(all(not m.get('pinned') and not m.get('archived') for m in group
+                     if type(m.get('pinned')) is bool and type(m.get('archived')) is bool), 'dedup_protected')
+    core.require(type(before.get('project_id')) is str and bool(before['project_id'])
+                 and all(m.get('project_id') == before['project_id'] for m in group), 'dedup_scope')
+    # Exact type before the set test: 1, True and 1.0 hash alike, and would read as one identical group.
+    core.require(all(type(m.get('embed_text_hash')) is str for m in group), 'dedup_identical')
     core.require(len({m['embed_text_hash'] for m in group}) == 1, 'dedup_identical')
-    oldest = min(ids, key=lambda key: (instant(core, memories[key]['created_at']), key))
+    # Exact type before the union: 1 and True collapse there, and a string would iterate as characters.
+    core.require(all(string_list(m['evidence_refs']) for m in group), 'dedup_evidence_type')
+    oldest = min(ids, key=lambda key: (instant(core, memories[key].get('created_at')), key))
     survivor = oldest
     after = deepcopy(before)
     refs = sorted({ref for m in group for ref in m['evidence_refs']})
@@ -105,11 +120,29 @@ def dedup_candidate(core, before):
     return after
 
 
+def dedup_output_shape(after):
+    result = after.get('memories'); records = after.get('merge_records')
+    return (type(result) is dict
+            and all(type(m) is dict and {'evidence_refs', 'versions', 'archived'} <= set(m) for m in result.values())
+            and type(records) is list and bool(records) and type(records[-1]) is dict
+            and set(records[-1]) == {'original_ids', 'survivor_id', 'original_evidence_refs'})
+
+
 def dedup_checks(core, before, after):
     """Independent postconditions; a malformed outcome can violate more than one."""
-    source, result = before['memories'], after['memories']
-    core.require(all(type(m['pinned']) is bool and type(m['archived']) is bool
+    source = before['memories']
+    core.require(all(type(m.get('pinned')) is bool and type(m.get('archived')) is bool
                      for m in source.values()), 'dedup_flags')
+    # A malformed output owns this one refusal; the predicates below read its fields by name.
+    shape = dedup_output_shape(after)
+    yield 'dedup_output_shape', shape
+    if not shape:
+        return
+    result = after['memories']
+    # The job writes only memories and merge_records; every other snapshot field stays exact.
+    state = ('memories', 'merge_records')
+    yield 'dedup_snapshot', same({k: v for k, v in after.items() if k not in state},
+                                 {k: v for k, v in before.items() if k not in state})
     # Output flags compare to these exact Booleans through same(), or `is` for
     # the selected archived flag. This enforces their types without coercion.
     ids = before['eligible_ids']; common = set(source) & set(result)
@@ -125,7 +158,9 @@ def dedup_checks(core, before, after):
                                  if k == survivor else source[k]['evidence_refs'])) for k in common)
     yield 'dedup_versions', all(same(result[k]['versions'], source[k]['versions']) for k in common)
     yield 'dedup_disposition', all(result[k]['archived'] is (k != survivor) for k in set(ids) & common)
-    yield 'dedup_links', all(result[k].get('survivor_id') == survivor for k in set(ids) & common - {survivor})
+    yield 'dedup_links', (all(result[k].get('survivor_id') == survivor for k in set(ids) & common - {survivor})
+                          and same({f: v for f, v in result.get(survivor, {}).items() if f == 'survivor_id'},
+                                   {f: v for f, v in source.get(survivor, {}).items() if f == 'survivor_id'}))
     yield 'dedup_original_fields', all(same(
         {f: v for f, v in result[k].items() if f not in ('evidence_refs', 'versions', 'archived', 'survivor_id')},
         {f: v for f, v in source[k].items() if f not in ('evidence_refs', 'versions', 'archived', 'survivor_id')})
@@ -134,12 +169,15 @@ def dedup_checks(core, before, after):
 
 
 def typed_edits(value, edits):
-    """Fixture-only literals preserve deliberate float/Boolean type errors."""
+    """Fixture-only literals preserve deliberate float/Boolean type errors; delete removes a field."""
     for edit in edits:
         parent = value
         for key in edit['path'][:-1]:
             parent = parent[key]
-        parent[edit['path'][-1]] = json.loads(edit['json'])
+        if edit.get('delete') is True:
+            del parent[edit['path'][-1]]
+        else:
+            parent[edit['path'][-1]] = json.loads(edit['json'])
     return value
 
 
@@ -185,10 +223,22 @@ def run(core, families, archive=None):
                         assert same(after, case['expected']), case['name']
             else:
                 assert archive is not None
+                if case.get('candidate_refusal'):
+                    try:
+                        archive.archive_candidate(before, job)
+                    except core.Refusal as error:
+                        assert str(error) == case['candidate_refusal'], case['name']
+                    else:
+                        raise AssertionError((case['name'], 'accepted invalid selection'))
+                    assert same(before, frozen), (case['name'], 'mutated caller input')
+                    assert case['refusal'] == case['candidate_refusal'], case['name']
+                    counts['negatives'] += 1
+                    counts['one_defect_negatives'].append(case['name'])
+                    continue
                 errors = []
                 if any(before['memories'][key]['pinned'] for key in before['selected_ids']):
                     errors.append('selection_pinned')
-                if job == 'monthly_summary' and any(before['memories'][key]['kind'] != 'Note'
+                if job == 'monthly_summary' and any(before['memories'][key].get('kind') != 'Note'
                                                     for key in before['selected_ids']):
                     errors.append('selection_kind')
                 try:

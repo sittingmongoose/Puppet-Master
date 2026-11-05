@@ -124,15 +124,26 @@ def memory_flags(memories):
         for field in ('pinned', 'archived')) for memory in memories.values())
 
 
+def memory_fields(memories):
+    """The two retained fields the preservation predicates read by name."""
+    return all('evidence_refs' in memory and 'version_ref' in memory for memory in memories.values())
+
+
 def archive_candidate(before, job):
-    guard('memory_flags', memory_flags(before['memories']))
+    guard('memory_flags', memory_flags(before.get('memories')))
+    guard('memory_fields', memory_fields(before['memories']))
     after = deepcopy(before)
-    selected = before['selected_ids']
+    selected = before.get('selected_ids')
+    # Exact type before any value test; an array ID would otherwise raise inside the set below.
+    guard('selection_ids_type', POLICY.string_list(selected))
     guard('selection_unique', selected == sorted(set(selected)))
     guard('selection_exists', all(k in before['memories'] for k in selected))
     guard('selection_pinned', all(before['memories'][k]['pinned'] is not True for k in selected if k in before['memories']))
     guard('selection_kind', job != 'monthly_summary'
-          or all(before['memories'][k]['kind'] == 'Note' for k in selected if k in before['memories']))
+          or all(before['memories'][k].get('kind') == 'Note' for k in selected if k in before['memories']))
+    # Exact type before the summary union: 1 and True collapse there, and a string would iterate as characters.
+    guard('selection_evidence_type', all(POLICY.string_list(before['memories'][k]['evidence_refs'])
+                                         for k in selected if k in before['memories']))
     for name, valid in POLICY.selection_checks(core, before, job):
         guard(name, valid)
     for key in selected:
@@ -146,7 +157,19 @@ def archive_candidate(before, job):
 
 
 def archive_checks(before, after, job):
-    yield 'memory_flags', memory_flags(before['memories']) and memory_flags(after['memories'])
+    flags = memory_flags(before['memories']) and memory_flags(after.get('memories'))
+    yield 'memory_flags', flags
+    if not flags:
+        return
+    # A malformed output owns this one refusal; the predicates below read these fields by name.
+    fields = memory_fields(after['memories'])
+    yield 'memory_fields', fields
+    if not fields:
+        return
+    # The job writes only memories and the summary; every other snapshot field stays exact.
+    state = ('memories', 'summary')
+    yield 'snapshot_preserved', POLICY.same({k: v for k, v in after.items() if k not in state},
+                                            {k: v for k, v in before.items() if k not in state})
     source = before['memories']; result = after['memories']; selected = set(before['selected_ids'])
     yield 'originals_preserved', set(source) <= set(result)
     # Each check owns a distinct defect; absent originals are checked above, not misreported as lost refs.
@@ -168,7 +191,8 @@ def archive_checks(before, after, job):
                     'evidence_refs': sorted({r for k in selected for r in source[k]['evidence_refs']})}
         yield 'summary_provenance', POLICY.same(after.get('summary'), expected)
     else:
-        yield 'no_prune_summary', POLICY.same(after.get('summary'), before.get('summary'))
+        yield 'no_prune_summary', (('summary' in after) == ('summary' in before)
+                                   and POLICY.same(after.get('summary'), before.get('summary')))
 
 
 def archive_validate(before, after, job):
