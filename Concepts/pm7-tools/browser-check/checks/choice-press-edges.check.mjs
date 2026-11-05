@@ -8,7 +8,7 @@
 // there, so a press measures the browser's target and never re-renders or switches look.
 import { LOOKS } from '../browser-check.config.mjs';
 const L='.o55-pane > .o55-layer:not(.o55-out) ';
-export default async function(t) {
+async function run(t) {
  const f=await t.app.open({onboarding:true,query:'o55=fresh'});
  await f.waitForFunction(()=>window.O55?.S?.open);
  if(t.args.width)await t.viewport(Number(t.args.width),Number(t.args.height||1080));
@@ -34,6 +34,7 @@ export default async function(t) {
     await f.evaluate(()=>{window.__press.clicks=[];window.__press.downs=[];});
     const misses=[],moved=[],scaled=[],flat=[];let presses=0,feedback=0;
     for(let i=0;i<count;i++) {
+     if(t.args.first&&i>0)break;
      const c=f.locator(sel).nth(i);await c.scrollIntoViewIfNeeded();await t.page.mouse.move(2,2);
      const rest=await f.evaluate(async({sel,i})=>{
       const e=document.querySelectorAll(sel)[i];e.__pressId=i;getComputedStyle(e).transform;
@@ -80,4 +81,16 @@ export default async function(t) {
  }
  await f.evaluate(()=>document.documentElement.setAttribute('data-motion','full'));
  await t.emulate({reducedMotion:'no-preference'});
+}
+
+export default async function(t) {
+ await run(t);
+ if(!t.args.width&&!t.args.screen&&!t.args.look) {
+  const saved={...t.args};
+  for(const [width,height] of [[740,1000],[1280,500]]) {
+   Object.assign(t.args,{width,height,look:'glass-light',screen:'look',first:1});
+   await run(t);
+  }
+  Object.keys(t.args).forEach(k=>delete t.args[k]);Object.assign(t.args,saved);
+ }
 }

@@ -22,6 +22,11 @@ browser-check run $K/checks --set sandbox=1                    # every check in 
 Parallel runs are safe: each gets its own browser and run folder. Give each its own copy of the build (a rebuild during a run mixes builds) and its own `--out`. The page loads as `file://`, so `--host` can't open it: to use another machine, ssh there with a checkout of the branch (`~/.local/bin/browser-check`). Motion claims need the VM, Windows or Nas1, because the Mac records about 36 fps and refuses pixel checks while recording.
 
 | Check file | What it asserts |
+| `button-anchor-face` | FO-73: actual generated Caddyfile Download anchor, all ten looks and three motion paths, native held edges and stationary bounds. |
+| `button-checkbox-producers` | FO-73: consent, Server self and guest producers in both states, all looks and motion paths, twelve native holds and painted inner cues. |
+| `button-server-self-face` / `button-server-guest-face` | FO-73: both Server checkbox producers retain unchecked ring and checked paint. |
+| `button-editor-face` | FO-73: both Friendly editor controls retain inner press feedback; paired native crops and optional film marks. |
+| `diagnostics/button-covered-negative` | Synthetic 2.5 px footer cover must fail the press guard. |
 |---|---|
 | `diagnostics/choice-hit-bounds` | Runs the existing boundary assertions unchanged; `probeOut=<file>` retains native event targets, trusted flags and contemporaneous boxes for an unexpected outside activation. |
 | `look-menu-targets` | FO-75: every look-option pixel avoids other controls; help keeps its usable expanded target; real held right-edge presses in ten looks and three motion paths. |
