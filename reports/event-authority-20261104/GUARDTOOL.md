@@ -676,3 +676,55 @@ Resource preflight passed at **120 GB disk / 15 GiB available RAM**. Fresh tool/
 **Scope:** only tool scripts, the worked example, trap data, adoption guide and report companions change. No owner Markdown, registry, Decision Log, Spec Lock, generated shard/index/evidence, `.gitignore`, admission, PlanUnit IDs, main push, pm-mail or subagents.
 
 **Method B verification manifest:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B/verification-manifest.json`, SHA-256 `ea6e2021604afc510b5e1e6fe4750a9361f33156b0f7e56f34eb7c2ec372a853`. The manifest excludes this report and post-push completion/cleanup receipts to avoid circular hashes.
+
+
+## Method B, review round 1: findings and responses
+
+**B1–B5 fixed; none disputed.** Reviewed base: `034c1fd9f7b9bf3c5c006dfd5585db599f87447d`. Core fixes: `457d32baa8caa4d75ae3209523430a0d7b99d762`; source-backed purity instrumentation and actual builtin binding verification: `afdf917fa0f5bbd703b06786d7abf8ed858d0a7c`. Capability remains **PARTIAL**. This section supersedes the original Method B automatic freshness, purity, import-closure and exception-exemption claims where the review found gaps. No independent clearance or event-family grade is inferred.
+
+| Finding | Location / cause / fix | Specific regressions and result |
+|---|---|---|
+| **B1 — fixed (`457d32baa8`)** | `scripts/pm_guard_isolation.py:1449, :1777`. A static exception declaration previously became a whole-line runtime allowance. The census now records the precise source span and exception operation; runtime disassembly matches that instruction. Exception objects retain their origin/traceback disposition through verified propagation. Another statement, assertion-test/payload error, or undeclared new raise is not exempt. Unknown positions fail closed. | **4 additions:** same-line and separate-line translations each require `runtime_untracked_site` with an actual `ValueError` and zero credit. Exact plumbing propagation is a positive proof control. An undeclared re-raise of the same exception object fails at runtime. Both exact reviewer translations now fail with their required runtime reason while retaining their truthful readiness assertion allowance. |
+| **B2 — fixed (`457d32baa8`)** | `scripts/pm_guard_isolation.py:1492`. Freshness skipped classes and builtin bound-method receivers. It now follows class attributes, bases and descriptors, and builtin `__self__`; classes themselves are mutable state. Uncertifiable external, opaque/slotted or custom-access/metaclass graphs raise `state_shared_across_cases`. No state is cloned. | **3 additions:** shared class log and shared bound-list append both require `state_shared_across_cases` on two successive complete runs, with zero credit. An uncertifiable slotted object also fails closed. The exact reviewer sources no longer execute their shared logging checkers. |
+| **B3 — fixed (`457d32baa8`)** | `scripts/pm_guard_isolation.py:1186, :1292`. Guessed roots and final-identifier matching missed real imports and loader aliases. Resolve actual loaded origins against Python search/package paths, follow package initializers and from-import bindings, and reject missing, ambiguous or unscannable origins/bindings. Importlib, builtin import and runpy loader provenance survives import and assignment aliases, including predicate bodies. Static scanning runs before freshness rejection so the static obligation remains visible. | **11 additions:** nonstandard `sys.path` helper and ordinary-path control require the dormant imported raise in the static census. Origin/search disagreement, package-relative imports and seven loader-alias forms require static closure/dynamic-import failure. The exact `root/lib/lane_helper.py` is scanned; the review's aliased predicate loader fails statically. No visited branch or runtime catch is needed. |
+| **B4 — fixed (`457d32baa8`, `afdf917fa0`)** | `scripts/pm_guard_isolation.py:78, :1041, :1413, :1717`. Sorted value hashes erased dictionary order and alias topology. A separate purity snapshot retains order, aliases/cycles, typed bits and identities, with strong references against recycled IDs. Factory and selector comparisons use it too. Mutation syntax and uncertified predicate calls fail statically; runtime instruction checkpoints catch writes through helpers and temporary writes. Pure builtin calls require their actual original bindings. Unknown data/effects fail closed. | **8 additions:** both review order/alias observations are retained. Their proof suites require purity/protocol failure and zero credit; the uncut raw observations remain `b,a` versus cut `a,b`, and detached versus retained aliases. Context mutation, a mutating helper, temporary restoration, dormant writes, factory order repair and a dormant noncanonical builtin binding also fail for their named reasons. Product number/identity/storage serializers are unchanged. |
+| **B5 — fixed (`457d32baa8`)** | `scripts/pm_guard_isolation.py:1041, :1777`. `_in_predicate` only covered nested table calls. Runtime entry now checks the registered function/code/global identities and bound receiver against the authorized engine evaluation frame. Aliases/raw bound calls remain the same known predicate. Direct/internal `_test` entry and nested predicates fail even if lane code catches the exception. | **7 additions:** the exact independent-field and same-field duplicate direct calls require their own `table_protocol_error`; no duplicate or row receives credit. Existing nested-table behavior is retained as a control. Alias, bound-alias, checker-direct and private `_test` calls fail with specific provenance/protocol errors. |
+
+### Serial scratch verification
+
+Four committed checker inputs were extracted from `afdf917fa0f5bbd703b06786d7abf8ed858d0a7c` into `/home/sittingmongoose/pm-scratch/guardtool-bfix1-runtime`; no repository clone, code clone or rewritten checker was used in the proof path. `run-checks.py <scratch>` and `audit-fix1.py <scratch>` in the evidence directory reproduce the run. The input manifest pins every extracted blob by SHA-256.
+
+| Check | Exit / result |
+|---|---|
+| **CLI self-test** | **0; 104/104 caught**, comprising all **71 unchanged** existing trap records and **33 additions** (B1: 4, B2: 3, B3: 11, B4: 8, B5: 7). Every failing suite has zero credited rows. |
+| **DG6B extracted example, normal / `-O`** | **0 / 0; each 7/7 guards, 49 matrix cells, 176 evaluations, 177 factories**. This is the extracted phase, not a complete-family grade. |
+| **Review `probe.py`, `probe-more.py`, `probe-purity.py`** | **0 / 0 / 0; all 17 original suites retained**. Sixteen safety/control suites fail with zero credit. The intentionally dishonest single-row predicate remains the documented review/honesty limit and passes its sample, as before. |
+| **Evidence auditor** | **0; 467 assertions PASS**: exact review sources and non-guard declarations, all required failure kinds, static closure, runtime failures, repeated-state failures, both state observations, zero credit, unchanged old traps and pinned inputs. |
+| **Schema cut preservation** | All five retained segments (`SchemaCatalog`, `SchemaView`, `children`, `schema_copy`, `joined`) are text-identical to the reviewed base. Existing schema traps pass. The separate 768-cell campaign was not rerun. |
+| **Syntax / whitespace** | Python parsing and `git diff --check` pass. |
+
+The three probe sources are copied byte-for-byte except for one explicit driver adaptation: `probe-purity.py` catches the newly enforced `IsolationError` around its independent original/cut executions so both observations are recorded instead of aborting the driver. It does not change a checker, fixture, cut or suite result. `probe-purity-adaptation.diff` records the change. Its uncut observations now refuse with the purity error, while the cut accepts; the old sorted value digests remain equal and therefore are not used as purity witnesses.
+
+The review's `runtime-unscanned-helper-control` now fails statically because B3 includes its helper in the closure; its passing input no longer calls unscanned code. The evidence auditor initially expected the old runtime diagnostic and was corrected to require the actual non-exempt static raise. `audit-correction.json` records that expectation correction. The first scratch example exposed synthetic dataclass snapshot methods; `afdf917fa0` replaced them with source-backed methods, preserving the runtime census. The final full scratch run uses that corrected pin.
+
+### Scope, limits and evidence
+
+No owner Markdown, registry, Decision Log, Spec Lock, generated shard/index/evidence or `.gitignore` change. No PlanUnit IDs, event-family grades, governance reseal, main push, pm-mail or subagents. Repository-wide governance/index/shard checks and complete lane adoption were not rerun for this tool-only fix. Unsupported imports, mutable graphs and predicate effects receive no automatic credit; the lane must supply an explicit reviewed supported seam. Predicate honesty, non-guard reasons, complete boundaries, semantic duplicate equivalence and external/native service semantics remain reviewer obligations.
+
+Preflight: **118 GB root disk / 11 GiB available RAM**. Heavy checks ran one at a time in fresh children with **1 GiB address-space caps**, the **1,536 MiB RSS gate** and the **6 GiB available-memory floor**. Final recorded command-boundary memory remained above **12.85 GiB**. The self-test's low-memory message is an injected resource regression. The inherited high-water RSS setup refusal from the first direct harness invocation was avoided by fresh subprocesses with the gate still enabled. Temporary runtime inputs and uncited development outputs are deleted; the detached worktree is removed after the final branch push.
+
+Evidence directory: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix1/`. Raw results remain external; repository companions contain compact summaries only.
+
+| Evidence path (relative to that directory) | SHA-256 |
+|---|---|
+| `self-test.json` | `47b155cf874982d90accff2f96fdb167a9cccc14510407da0f439b41643c24ba` |
+| `audit-results.json` | `1b79296b27d0d96c47a2611d9a9d2d66ca3e64fdc154777fd040ba39febbe2ad` |
+| `probes.json` | `ad769703a7d33fe873d282092a4b89c2ee52c59fb442f3573b8f4c220f214b06` |
+| `probes-more.json` | `7cdb5166d0ba44fdc580d65a6ddb16432171a73ab55e1c4c8f475a4510fc450e` |
+| `probes-purity.json` | `755d42b8ef400d9ed4529b855b3ce034d6636a83ffdc92402a303ce958b9c8db` |
+| `dg6b-example.json` | `a3eb267a4775f0a3809760e78ee08a60d9fb742296eaf6d488a8e2610b94e28d` |
+| `dg6b-example-optimized.json` | `a3eb267a4775f0a3809760e78ee08a60d9fb742296eaf6d488a8e2610b94e28d` |
+| `input-manifest.json` | `35bfedc2745cfbab52c21963501f41adfe921fdf7271f8335e423742f3c8479d` |
+| `commands.json` | `a2aebda76479dc99f401cad9de54f3e735adf02a4c9ad47fe7cdeea85fbf86bb` |
+
+The verification manifest additionally fingerprints the reproduction drivers, adaptation/correction receipts, report companions and copied response section. Cleanup and final-push receipts are recorded after delivery preparation.

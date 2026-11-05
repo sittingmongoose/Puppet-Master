@@ -1,18 +1,35 @@
 {
   "method": "B: guard tables",
-  "base": "e8c4658f1ce2b733aa78d5b33dab0a1324d6362c",
+  "review": "Method B round 1",
+  "base": "034c1fd9f7b9bf3c5c006dfd5585db599f87447d",
+  "implementation": "afdf917fa0f5bbd703b06786d7abf8ed858d0a7c",
   "status": "PARTIAL",
   "tool_validation": "PASS",
   "traps": {
-    "caught": 71,
-    "total": 71
+    "caught": 104,
+    "total": 104,
+    "unchanged_existing": 71,
+    "added": 33
   },
-  "schema_vocabulary": {
-    "atomic_cuts": 139,
-    "fails_closed": 530,
-    "zero_predicates": 99
+  "review_probes": {
+    "suites": 17,
+    "safety_failures_with_zero_credit": 16,
+    "documented_honesty_limit_pass": 1,
+    "drivers_exit": [
+      0,
+      0,
+      0
+    ]
   },
-  "assertions": 1638,
+  "assertions": 467,
+  "dg6b_example": {
+    "normal": "PASS",
+    "optimized": "PASS",
+    "guards": 7,
+    "matrix_cells": 49,
+    "evaluations": 176
+  },
+  "schema_cut_segments_unchanged": 5,
   "commands": [
     {
       "name": "self-test",
@@ -22,9 +39,9 @@
         "scripts/pm_guard_isolation.py",
         "--self-test",
         "--json",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B/self-test.json",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix1/self-test.json",
         "--markdown",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B/self-test.md",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix1/self-test.md",
         "--max-rss",
         "1536",
         "--pause-when-low",
@@ -35,10 +52,11 @@
         "30"
       ],
       "exit": 0,
-      "expected": 0,
-      "seconds": 3.214,
-      "available_after_bytes": 19435073536,
-      "child_peak_rss_kib": 43648
+      "seconds": 18.2,
+      "available_before_bytes": 15786827776,
+      "available_after_bytes": 14590402560,
+      "stdout": "",
+      "stderr": "guard-isolation paused: 5 GiB available; resume at 7\n"
     },
     {
       "name": "dg6b-example",
@@ -49,9 +67,9 @@
         "--adapter",
         "scripts/pm_guard_isolation_dg6b_example.py:factory",
         "--json",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B/dg6b-example.json",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix1/dg6b-example.json",
         "--markdown",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B/dg6b-example.md",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix1/dg6b-example.md",
         "--max-rss",
         "1536",
         "--pause-when-low",
@@ -62,10 +80,11 @@
         "30"
       ],
       "exit": 0,
-      "expected": 0,
-      "seconds": 0.885,
-      "available_after_bytes": 19371311104,
-      "child_peak_rss_kib": 43648
+      "seconds": 30.538,
+      "available_before_bytes": 14585446400,
+      "available_after_bytes": 15895392256,
+      "stdout": "",
+      "stderr": ""
     },
     {
       "name": "dg6b-example-optimized",
@@ -77,7 +96,7 @@
         "--adapter",
         "scripts/pm_guard_isolation_dg6b_example.py:factory",
         "--json",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B/dg6b-example-optimized.json",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix1/dg6b-example-optimized.json",
         "--max-rss",
         "1536",
         "--pause-when-low",
@@ -88,190 +107,97 @@
         "30"
       ],
       "exit": 0,
-      "expected": 0,
-      "seconds": 2.182,
-      "available_after_bytes": 18989641728,
-      "child_peak_rss_kib": 43648
+      "seconds": 36.043,
+      "available_before_bytes": 15895162880,
+      "available_after_bytes": 14138986496,
+      "stdout": "",
+      "stderr": ""
     },
     {
-      "name": "dg6b-real-fixtures",
+      "name": "review-probe",
       "argv": [
         "/usr/bin/python3",
         "-B",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B/dg6b-worked-example.py",
-        "/home/sittingmongoose/pm-worktrees/guardtool-b"
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix1/probe.py",
+        "/home/sittingmongoose/pm-scratch/guardtool-bfix1-runtime"
       ],
       "exit": 0,
-      "expected": 0,
-      "seconds": 11.402,
-      "available_after_bytes": 17775685632,
-      "child_peak_rss_kib": 146516
+      "seconds": 0.907,
+      "available_before_bytes": 14138503168,
+      "available_after_bytes": 13941981184,
+      "stdout": "shared-class-state FAIL proved 0 failures ['state_shared_across_cases']\nshared-bound-builtin-state FAIL proved 0 failures ['state_shared_across_cases']\nimport-outside-guessed-roots FAIL proved 0 failures ['hidden_static_sites']\nimport-detected-ordinary-path-control FAIL proved 0 failures ['hidden_static_sites']\ndirect-other-predicate-call FAIL proved 0 failures ['control_refused', 'hidden_static_sites', 'table_protocol_error', 'untracked_refusal', 'wrong_baseline_guard']\ndocumented-predicate-honesty-boundary PASS proved 1 failures []\npredicate-reorders-frozen-mapping FAIL proved 0 failures ['control_refused', 'hidden_static_sites', 'table_protocol_error', 'untracked_refusal', 'wrong_baseline_guard']\nwrote /mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix1/probes.json\n",
+      "stderr": ""
     },
     {
-      "name": "schema-vocabulary",
+      "name": "review-probe-more",
       "argv": [
         "/usr/bin/python3",
         "-B",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B/schema-vocabulary-replay.py",
-        "/home/sittingmongoose/pm-worktrees/guardtool-b"
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix1/probe-more.py",
+        "/home/sittingmongoose/pm-scratch/guardtool-bfix1-runtime"
       ],
       "exit": 0,
-      "expected": 0,
-      "seconds": 1.136,
-      "available_after_bytes": 18023583744,
-      "child_peak_rss_kib": 146516
+      "seconds": 0.641,
+      "available_before_bytes": 13940011008,
+      "available_after_bytes": 14099120128,
+      "stdout": "exception-translation-same-line FAIL proved 0 failures ['runtime_untracked_site']\nexception-translation-separate-line-control FAIL proved 0 failures ['runtime_untracked_site']\ndormant-property-refusal-control FAIL proved 0 failures ['hidden_static_sites', 'state_shared_across_cases']\ndormant-decorator-refusal-control FAIL proved 0 failures ['hidden_static_sites']\nnested-table-require-control FAIL proved 0 failures ['control_refused', 'hidden_static_sites', 'runtime_untracked_site', 'table_protocol_error', 'untracked_refusal', 'wrong_baseline_guard']\nruntime-unscanned-helper-control FAIL proved 0 failures ['hidden_static_sites']\naliased-dynamic-import FAIL proved 0 failures ['hidden_static_sites', 'state_shared_across_cases']\n",
+      "stderr": ""
     },
     {
-      "name": "audit",
+      "name": "review-probe-purity",
       "argv": [
         "/usr/bin/python3",
         "-B",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B/audit-results.py",
-        "/home/sittingmongoose/pm-worktrees/guardtool-b"
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix1/probe-purity.py",
+        "/home/sittingmongoose/pm-scratch/guardtool-bfix1-runtime"
       ],
       "exit": 0,
-      "expected": 0,
-      "seconds": 0.317,
-      "available_after_bytes": 17943199744,
-      "child_peak_rss_kib": 146516
-    },
-    {
-      "name": "shards",
-      "argv": [
-        "/usr/bin/python3",
-        "-B",
-        "scripts/pm-shard-plans.py",
-        "--check",
-        "--config",
-        "Plans/sharding_config.json"
-      ],
-      "exit": 0,
-      "expected": 0,
-      "seconds": 21.137,
-      "available_after_bytes": 18922725376,
-      "child_peak_rss_kib": 146516
-    },
-    {
-      "name": "plan-index",
-      "argv": [
-        "/usr/bin/python3",
-        "-B",
-        "scripts/pm-plan-index.py",
-        "validate"
-      ],
-      "exit": 1,
-      "expected": null,
-      "seconds": 49.764,
-      "available_after_bytes": 14595145728,
-      "child_peak_rss_kib": 472740
-    },
-    {
-      "name": "whitespace",
-      "argv": [
-        "git",
-        "diff",
-        "--check"
-      ],
-      "exit": 0,
-      "expected": 0,
-      "seconds": 0.042,
-      "available_after_bytes": 14565933056,
-      "child_peak_rss_kib": 472740
-    },
-    {
-      "name": "rss-refusal",
-      "argv": [
-        "/usr/bin/python3",
-        "-B",
-        "scripts/pm_guard_isolation.py",
-        "--self-test",
-        "--json",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B/rss-refusal.json",
-        "--max-rss",
-        "1"
-      ],
-      "exit": 1,
-      "expected": 1,
-      "seconds": 0.344,
-      "available_after_bytes": 14531489792,
-      "child_peak_rss_kib": 472740
-    },
-    {
-      "name": "missing-adapter",
-      "argv": [
-        "/usr/bin/python3",
-        "-B",
-        "scripts/pm_guard_isolation.py",
-        "--adapter",
-        "/nonexistent/guardtool-b-adapter.py:factory",
-        "--json",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B/missing-adapter.json",
-        "--max-rss",
-        "1536",
-        "--pause-when-low",
-        "6",
-        "--resume-at",
-        "6",
-        "--pause-poll",
-        "30"
-      ],
-      "exit": 1,
-      "expected": 1,
-      "seconds": 0.317,
-      "available_after_bytes": 14418927616,
-      "child_peak_rss_kib": 472740
+      "seconds": 0.457,
+      "available_before_bytes": 14090948608,
+      "available_after_bytes": 13803933696,
+      "stdout": "order-mutation-uncut-vs-cut FAIL proved 0 failures ['control_refused', 'hidden_static_sites', 'table_protocol_error', 'untracked_refusal', 'wrong_baseline_guard']\nalias-mutation-uncut-vs-cut FAIL proved 0 failures ['control_refused', 'hidden_static_sites', 'table_protocol_error', 'untracked_refusal', 'wrong_baseline_guard']\ndirect-independent-predicate-call FAIL proved 0 failures ['control_refused', 'hidden_static_sites', 'table_protocol_error', 'untracked_refusal', 'wrong_baseline_guard']\n",
+      "stderr": ""
     }
   ],
-  "index": {
-    "status": "fail",
-    "failures": 86,
-    "counts": {
-      "plan_unit_removal_ledger_invalid": 21,
-      "plan_unit_removed_without_ledger_decision": 65
+  "evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix1",
+  "findings": {
+    "B1": {
+      "status": "fixed",
+      "commits": [
+        "457d32baa8"
+      ]
     },
-    "unchanged_inputs": 32
-  },
-  "dg6b": [
-    {
-      "family": "plugin.loaded",
-      "original_complete_control": "accept",
-      "scope": "extracted flag phase, synthetic proof boundary",
-      "status": "PASS",
-      "proved": 7,
-      "matrix_cells": 49
+    "B2": {
+      "status": "fixed",
+      "commits": [
+        "457d32baa8"
+      ]
     },
-    {
-      "family": "plugin.hook.invoked",
-      "original_complete_control": "accept",
-      "scope": "extracted flag phase, synthetic proof boundary",
-      "status": "PASS",
-      "proved": 7,
-      "matrix_cells": 49
+    "B3": {
+      "status": "fixed",
+      "commits": [
+        "457d32baa8"
+      ]
     },
-    {
-      "family": "auth.github.authenticated",
-      "original_complete_control": "accept",
-      "scope": "extracted flag phase, synthetic proof boundary",
-      "status": "PASS",
-      "proved": 7,
-      "matrix_cells": 49
+    "B4": {
+      "status": "fixed",
+      "commits": [
+        "457d32baa8",
+        "afdf917fa0"
+      ]
     },
-    {
-      "scope": "original complete retained path, unported",
-      "status": "FAIL",
-      "proved": 0,
-      "untracked_static_sites": 1132,
-      "failure_kinds": [
-        "hidden_static_sites",
-        "state_shared_across_cases"
+    "B5": {
+      "status": "fixed",
+      "commits": [
+        "457d32baa8"
       ]
     }
+  },
+  "not_rerun": [
+    "full lane adoption",
+    "768-cell schema campaign",
+    "plan governance",
+    "shards/index"
   ],
-  "evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B",
-  "scope": "Tool, traps, example, adoption guide and report companions only; no owner/governance changes.",
-  "open": [
-    "Independent review of predicate honesty, non-guard reasons, complete paths and duplicate semantic equivalence.",
-    "Full DG6B/lane adoption requires porting remaining inline refusals and shared state; zero complete-path credit.",
-    "86 index findings inherited from unchanged owner/ledger/index inputs at the pinned base."
-  ]
+  "protected_paths_changed": []
 }

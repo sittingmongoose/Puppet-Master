@@ -2,7 +2,7 @@
   "version": 2,
   "method": "B: guard tables",
   "status": "PASS",
-  "caught": 71,
+  "caught": 104,
   "traps": [
     {
       "id": "table-single-swaps",
@@ -357,6 +357,171 @@
     {
       "id": "rewrite-clone-backend-retired",
       "expected": "AstGuards and CodeSite no longer exist in the credit path",
+      "caught": true
+    },
+    {
+      "id": "B1-same-line",
+      "expected": "B1-same-line fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B1-separate-line",
+      "expected": "B1-separate-line fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B2-class-state",
+      "expected": "B2-class-state fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B2-bound-builtin-receiver",
+      "expected": "B2-bound-builtin-receiver fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B3-actual-sys-path",
+      "expected": "B3-actual-sys-path fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B3-ordinary-path-control",
+      "expected": "B3-ordinary-path-control fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B3-cached-origin-conflict",
+      "expected": "B3-cached-origin-conflict fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B3-aliased-importlib-predicate",
+      "expected": "B3-aliased-importlib-predicate fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B3-module-assignment-alias",
+      "expected": "B3-module-assignment-alias fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B3-builtin-alias",
+      "expected": "B3-builtin-alias fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B3-builtin-assignment-alias",
+      "expected": "B3-builtin-assignment-alias fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B3-runpy-module-alias",
+      "expected": "B3-runpy-module-alias fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B3-runpy-from-alias",
+      "expected": "B3-runpy-from-alias fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B3-predicate-local-alias",
+      "expected": "B3-predicate-local-alias fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B3-package-relative-context",
+      "expected": "B3-package-relative-context fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B4-dict-order",
+      "expected": "B4-dict-order fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B4-alias-topology",
+      "expected": "B4-alias-topology fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B4-context-order",
+      "expected": "B4-context-order fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B4-temporary-restored-input",
+      "expected": "B4-temporary-restored-input fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B4-mutating-helper",
+      "expected": "B4-mutating-helper fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B4-dormant-mutation",
+      "expected": "B4-dormant-mutation fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B5-direct-independent",
+      "expected": "B5-direct-independent fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B5-direct-duplicate",
+      "expected": "B5-direct-duplicate fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B5-nested-table-control",
+      "expected": "B5-nested-table-control fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B5-alias-call",
+      "expected": "B5-alias-call fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B5-checker-direct-entry",
+      "expected": "B5-checker-direct-entry fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B5-bound-alias-call",
+      "expected": "B5-bound-alias-call fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B1-exact-exception-propagation",
+      "expected": "B1-exact-exception-propagation enforces its own named boundary",
+      "caught": true
+    },
+    {
+      "id": "B1-exception-object-reraise",
+      "expected": "B1-exception-object-reraise enforces its own named boundary",
+      "caught": true
+    },
+    {
+      "id": "B2-uncertifiable-slotted-state",
+      "expected": "B2-uncertifiable-slotted-state enforces its own named boundary",
+      "caught": true
+    },
+    {
+      "id": "B5-private-test-entry",
+      "expected": "B5-private-test-entry enforces its own named boundary",
+      "caught": true
+    },
+    {
+      "id": "B4-factory-order-repair",
+      "expected": "B4-factory-order-repair enforces its own named boundary",
+      "caught": true
+    },
+    {
+      "id": "B4-uncertified-builtin-binding",
+      "expected": "A noncanonical builtin binding in a dormant predicate path fails purity certification, with zero credit",
       "caught": true
     }
   ]

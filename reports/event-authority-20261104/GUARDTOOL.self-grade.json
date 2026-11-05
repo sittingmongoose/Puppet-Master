@@ -1,7 +1,7 @@
 {
   "method": "B: guard tables",
   "overall": "PARTIAL",
-  "base": "e8c4658f1ce2b733aa78d5b33dab0a1324d6362c",
+  "base": "034c1fd9f7b9bf3c5c006dfd5585db599f87447d",
   "criteria": [
     {
       "criterion": "guard_table_api",
@@ -16,12 +16,12 @@
     {
       "criterion": "runtime_no_hidden_guards",
       "grade": "PASS",
-      "basis": "Strict runtime results, issuance identity, swallowed-refusal detection, handled-exception tracing and source-closure tracing demonstrated."
+      "basis": "Targeted PASS: exact operation/span exception allowances and verified propagation; registered predicate entry by known identity. B1/B5 probes fail with their specific runtime/protocol failures and zero credit."
     },
     {
       "criterion": "static_no_hidden_guards",
       "grade": "PARTIAL",
-      "basis": "Conservative import-closure census fails closed; exact non-guard declarations and each predicate body still require review."
+      "basis": "PARTIAL capability: real module origins/search/package paths, alias bindings and dynamic loaders fail closed. B3 dormant probes are caught statically. Predicate honesty and every non-guard reason still require review."
     },
     {
       "criterion": "guard_negative_matrix",
@@ -36,22 +36,22 @@
     {
       "criterion": "state_reset",
       "grade": "PARTIAL",
-      "basis": "Reachable repository mutable-state reuse fails, with no state copies; external/native services and store reset remain reviewer obligations."
+      "basis": "PARTIAL capability: reachable class state and builtin receivers are traversed; uncertifiable graphs fail state_shared_across_cases. Both B2 sources fail on two complete runs with zero credit. External service seams remain explicit review obligations."
     },
     {
       "criterion": "schema_inventory_and_cuts",
       "grade": "PARTIAL",
-      "basis": "Reviewed implementation unchanged except SchemaGuard metadata rename. 768-cell audit unchanged: 139 supported, 530 fail closed, 99 zero-predicate."
+      "basis": "PARTIAL: five retained schema cut segments are unchanged and existing schema traps pass. The separate 768-cell campaign was not rerun this round."
     },
     {
       "criterion": "corpus",
       "grade": "PASS",
-      "basis": "71/71 Method B expected observations caught, including original code/set/default observations and retained schema regressions."
+      "basis": "104/104 expected observations caught; all 71 prior records unchanged plus 33 B1-B5 regressions/controls. 467 evidence assertions pass."
     },
     {
       "criterion": "dg6b_example",
       "grade": "PARTIAL",
-      "basis": "7/7 flags in normal and optimized examples; 21/21 on original fixture phases. Unported complete original FAIL with zero credit."
+      "basis": "PARTIAL: checked-in extracted flag phase passes 7/7 guards and 49 cells in normal and optimized Python. Complete DG6B/lane adoption was not rerun or graded."
     },
     {
       "criterion": "adoption",
@@ -61,16 +61,23 @@
     {
       "criterion": "resources_and_scope",
       "grade": "PASS",
-      "basis": "Serial checks; 1 GiB address-space cap for tool/replay checks; 1536 MiB RSS and 6 GiB available-memory gates; protected paths unchanged."
+      "basis": "PASS: serial scratch runs with 1 GiB address-space cap, 1536 MiB RSS gate and 6 GiB available-memory floor. Only tool/traps/guide/report companions change."
+    },
+    {
+      "criterion": "input_purity",
+      "grade": "PASS",
+      "basis": "Bounded supported data graph: order/alias/identity-aware witnesses plus static mutation/uncertified-call refusal and runtime instruction checkpoints. Both B4 state observations preserved with purity/protocol failure and zero credit."
     }
   ],
   "checks": "reports/event-authority-20261104/GUARDTOOL.checks.json",
   "family_grades": "NOT_APPLICABLE",
   "ids_used": [],
-  "evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B",
+  "evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix1",
   "open_soundness_boundary": [
-    "Independent review of predicate honesty, non-guard reasons, complete paths and duplicate semantic equivalence.",
-    "Full DG6B/lane adoption requires porting remaining inline refusals and shared state; zero complete-path credit.",
-    "86 index findings inherited from unchanged owner/ledger/index inputs at the pinned base."
-  ]
+    "Independent review remains required for predicate honesty, complete paths/consumer bindings, every non-guard reason and duplicate semantic equality.",
+    "Unknown imports, state graphs and predicate effects require explicit reviewed supported seams; they receive no automatic credit.",
+    "No complete DG6B/lane adoption, event-family grade, independent review clearance or governance reseal is claimed."
+  ],
+  "review": "Method B round 1",
+  "implementation": "afdf917fa0f5bbd703b06786d7abf8ed858d0a7c"
 }
