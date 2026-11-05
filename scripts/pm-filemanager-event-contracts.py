@@ -156,7 +156,9 @@ def resolve_value(definition, physical, payload_rows):
 
 
 def event_body(event, payload_rows):
-    if type(event["payload"]) is not dict or len(canonical_msgpack(event["payload"])) > INLINE_LIMIT:
+    if type(event["payload"]) is not dict:
+        raise ValueError("event inline body exceeds 16 KiB")
+    if type(event["payload"]) is dict and len(canonical_msgpack(event["payload"])) > INLINE_LIMIT:
         raise ValueError("event inline body exceeds 16 KiB")
     if event["payload_ref"] is None:
         return event["payload"]
@@ -356,6 +358,45 @@ def boundary_case(row, case):
         # A boundary probe carries its accepting control and changes one invariant.
         validator(*copy.deepcopy(case["valid_args"]), **copy.deepcopy(case.get("valid_kwargs", {})))
         return validator(*copy.deepcopy(case["args"]), **copy.deepcopy(case.get("kwargs", {})))
+    if scenario == "original-location":
+        # Retain the complete original EventRecord, commitments and custody. Only
+        # the represented destination location changes, in both captured copies.
+        validate_case(name, p, t, historical=case.get("historical", False))
+        operation = m["operation_rows"][m["operation_key"]]
+        for entries in (operation["accepted_path_snapshots"], operation["settlement"]["path_snapshots"]):
+            source = next(x for x in entries if x["path_ref"] == p["source_path_ref"])
+            destination = next(x for x in entries if x["path_ref"] == p["destination_path_ref"])
+            for field in ("computer_id", "root_identity_ref", "relative_components"):
+                if field != case.get("distinct_coordinate"):
+                    destination[field] = copy.deepcopy(source[field])
+                elif field == "computer_id":
+                    destination[field] = "othercomputer"
+                elif field == "root_identity_ref":
+                    destination[field] = "pmref:root:other"
+        fixture_copies(t)
+        # Today's live placement is not an operand of original-location checks.
+        t["current_live_state"] = {"exists": False, "root_identity_ref": "pmref:root:relocated"}
+        return validate_case(name, p, t, historical=case.get("historical", False))
+    if scenario == "coverage":
+        operation = m["operation_rows"][m["operation_key"]]
+        # Add a non-subject affected path to the accepting control so required
+        # coverage can fail independently of every source/result/container join.
+        extra = copy.deepcopy(operation["accepted_path_snapshots"][0])
+        extra["path_ref"] = "pm-path-ref:v1:project:coverage1"
+        extra["relative_components"] = ["coverage", "original"]
+        p["affected_path_refs"].append(extra["path_ref"])
+        operation["accepted_path_snapshots"].append(copy.deepcopy(extra))
+        operation["settlement"]["path_snapshots"].append(copy.deepcopy(extra))
+        synchronize_fixture(name, p, t)
+        validate_case(name, p, t)
+        operation = m["operation_rows"][m["operation_key"]]
+        entries = operation["settlement"]["path_snapshots"]
+        if case["mode"] == "cardinality":
+            entries.append(copy.deepcopy(entries[0]))
+        else:
+            entries[-1] = copy.deepcopy(entries[0])
+        fixture_copies(t)
+        return validate_case(name, p, t)
     if scenario == "schema-reference":
         documents = schema_documents()
         path = "event_payloads/file_manager/" + name.replace(".", "_") + ".schema.json"
@@ -407,7 +448,7 @@ def boundary_case(row, case):
             model["operation_rows"][model["operation_key"]]["revision"] += 1
         elif scenario == "terminal-already-published-original":
             model = proof["custody_model"]
-            model["operation_rows"][model["operation_key"]] = copy.deepcopy(after)
+            model["operation_rows"][model["operation_key"]]["revision"] += 1
         else:
             raise AssertionError("unknown terminal case")
         if proof is not None:
@@ -478,11 +519,12 @@ def boundary_case(row, case):
                             external_operation=scenario != "operation-oversized-inline")
         m = t["custody_model"]
         if scenario == "pack-missing":
-            m["payload_rows"] = {}
-            # One missing source, observed consistently at final read and backup.
-            # Keep the references and independently retained logical originals.
-            m["final_payload_rows"] = {}
-            m["backup_binding"]["payload_rows"] = {}
+            reference = m["operation_rows"][m["operation_key"]]["value_ref"]
+            del m["payload_rows"][reference]
+            # Exactly one missing referent, consistently observed at final read
+            # and backup. Other required body/value referents stay available.
+            m["final_payload_rows"] = copy.deepcopy(m["payload_rows"])
+            m["backup_binding"]["payload_rows"] = copy.deepcopy(m["payload_rows"])
         elif scenario in {"pack-changed", "pack-wrong-size"}:
             physical = m["operation_rows"][m["operation_key"]]
             ref = physical["value_ref"]
@@ -677,6 +719,13 @@ def validate_snapshot_subjects(event_type, payload, operation):
         subject(settled[payload["destination_path_ref"]], result_ref, "result")
     elif action == "exported" and settled[payload["destination_path_ref"]]["node_kind"] != kind:
         raise ValueError("export destination kind")
+    if action in {"copied", "moved", "exported"}:
+        destination = settled[payload["destination_path_ref"]]
+        # These are captured original locations, authenticated above against the
+        # accepted snapshots. Opaque handle inequality does not prove a mutation.
+        location_fields = ("computer_id", "root_identity_ref", "relative_components")
+        if tuple(source[k] for k in location_fields) == tuple(destination[k] for k in location_fields):
+            raise ValueError("unchanged represented original location")
     if action == "renamed":
         destination = settled[payload["destination_path_ref"]]
         if (source["computer_id"] != destination["computer_id"] or
@@ -721,6 +770,27 @@ def validate_transition_storage(storage):
         raise ValueError("invalid physical storage input")
 
 
+def validate_family_identity(event_type, payload):
+    kind, action = event_type.split(".")
+    noun = "node" if kind == "file" else "folder"
+    if action == "copied" and payload["result_" + noun + "_ref"] == payload["source_" + noun + "_ref"]:
+        raise ValueError("copy result equals source")
+    if action == "created" and payload["result_" + noun + "_ref"] == payload["destination_container_ref"]:
+        raise ValueError("create result equals destination container")
+
+
+def validate_settlement_inputs(payload, row, command_label="original command join"):
+    """The effect boundary and retained reader enforce the same frozen joins."""
+    for k in ("command_id", "handler_target", "correlation_id", "origin"):
+        if row["accepted_command"][k] != payload[k]:
+            raise ValueError(command_label)
+    for k in ("source_path_ref", "destination_path_ref", "destination_container_ref", "deletion_mode"):
+        if row["accepted_command"][k] != payload.get(k):
+            raise ValueError("original accepted input join")
+    if row["settlement"]["settled_at_utc"] != payload["ts"]:
+        raise ValueError("original completion time")
+
+
 def validate_operation_transition(before, after, proof=None, storage=None):
     validate_transition_storage(storage)
     storage = storage or {}
@@ -735,10 +805,10 @@ def validate_operation_transition(before, after, proof=None, storage=None):
     payload = after["settlement"]["payload"]
     if (payload["schema_id"] != "pm.file_manager_event." + after["event_type"].replace(".", "_") + ".schema.v1" or
             payload["project_id"] != after["project_id"] or payload["operation_id"] != after["operation_id"] or
-            payload["receipt_ref"] != receipt_ref(after) or
-            any(payload[k] != after["accepted_command"][k]
-                for k in ("command_id", "handler_target", "correlation_id", "origin"))):
+            payload["receipt_ref"] != receipt_ref(after)):
         raise ValueError("settlement acceptance join")
+    validate_settlement_inputs(payload, after, "settlement acceptance join")
+    validate_family_identity(after["event_type"], payload)
     validate_path_custody(payload, after)
     validate_snapshot_subjects(after["event_type"], payload, after)
     if after["phase"] == "history_settled":
@@ -755,6 +825,15 @@ def validate_operation_transition(before, after, proof=None, storage=None):
 
 
 def validate_control_transition(before, after, issued_sequence, drain_keys, storage=None):
+    # Validate the API input before truthiness or membership can interpret it.
+    if type(drain_keys) is not list:
+        raise ValueError("drain keys must be an exact list")
+    if type(drain_keys) is list:
+        for key in drain_keys:
+            if type(key) is not str:
+                raise ValueError("invalid drain operation reference")
+            if type(key) is str and not re.fullmatch(r"filemanager_operation_custody\.v1:[0-9a-f]{64}", key):
+                raise ValueError("invalid drain operation reference")
     validate_transition_storage(storage)
     storage = storage or {}
     for label, row in (("before", before), ("after", after)):
@@ -770,7 +849,9 @@ def validate_control_transition(before, after, issued_sequence, drain_keys, stor
         raise ValueError("control transition")
     if before["admission_revision"] is not None and before["admission_revision"] != after["admission_revision"]:
         raise ValueError("changed original admission")
-    if (type(issued_sequence) is not int or issued_sequence < 0 or
+    if type(issued_sequence) is not int:
+        raise ValueError("control issued boundary")
+    if type(issued_sequence) is int and (issued_sequence < 0 or
             after["last_admitted_sequence"] != issued_sequence or
             issued_sequence < before["last_admitted_sequence"]):
         raise ValueError("control issued boundary")
@@ -778,9 +859,11 @@ def validate_control_transition(before, after, issued_sequence, drain_keys, stor
             after["reader_enabled"] != before["reader_enabled"] or
             after["drain_operation_keys"] != before["drain_operation_keys"]):
         raise ValueError("issuance changed control authority")
-    if edge == ("active", "draining") and after["drain_operation_keys"] != drain_keys:
+    if type(drain_keys) is list and edge == ("active", "draining") and after["drain_operation_keys"] != drain_keys:
         raise ValueError("drain membership")
-    if after["state"] == "withdrawn" and (drain_keys or
+    if edge == ("active", "draining") and after["reader_enabled"] != before["reader_enabled"]:
+        raise ValueError("drain changed reader authority")
+    if after["state"] == "withdrawn" and ((type(drain_keys) is list and drain_keys) or
             after["writer_cutoff_sequence"] != issued_sequence):
         raise ValueError("cutoff before original drain")
     if edge == ("withdrawn", "withdrawn") and (
@@ -828,14 +911,7 @@ def validate_original_models(event_type, payload, trace, *, operation_candidate=
 def validate_historical_operation(event_type, payload, trace, model, row,
                                   physical_operation, selected_operation):
     validate_original_payload(payload, row["settlement"]["payload"], "unsettled or changed original payload")
-    for k in ("command_id", "handler_target", "correlation_id", "origin"):
-        if row["accepted_command"][k] != payload[k]:
-            raise ValueError("original command join")
-    for k in ("source_path_ref", "destination_path_ref", "destination_container_ref", "deletion_mode"):
-        if row["accepted_command"][k] != payload.get(k):
-            raise ValueError("original accepted input join")
-    if row["settlement"]["settled_at_utc"] != payload["ts"]:
-        raise ValueError("original completion time")
+    validate_settlement_inputs(payload, row)
     validate_path_custody(payload, row)
     validate_snapshot_subjects(event_type, payload, row)
     event = row["complete_event"]
@@ -905,7 +981,9 @@ def validate_historical_operation(event_type, payload, trace, model, row,
 def identity(event_type, payload, context):
     # These fixtures contain ASCII strings only; JSON compact encoding equals RFC8785 here.
     # Production MUST use RFC8785, not this bounded oracle encoding, for arbitrary Unicode.
-    if type(context["recovery_epoch"]) is not int or context["recovery_epoch"] < 0:
+    if type(context["recovery_epoch"]) is not int:
+        raise ValueError("noncanonical recovery epoch")
+    if type(context["recovery_epoch"]) is int and context["recovery_epoch"] < 0:
         raise ValueError("noncanonical recovery epoch")
     kind, action = event_type.split(".")
     subject = {
@@ -930,10 +1008,7 @@ def validate_case(event_type, payload, trace, *, operation_candidate=None,
     validate_project_scope(payload["project_id"], trace["project_id"], "scope mismatch")
     kind, action = event_type.split(".")
     root = "node" if kind == "file" else "folder"
-    if action == "copied" and payload["result_" + root + "_ref"] == payload["source_" + root + "_ref"]:
-        raise ValueError("copy result equals source")
-    if action == "created" and payload["result_" + root + "_ref"] == payload["destination_container_ref"]:
-        raise ValueError("create result equals destination container")
+    validate_family_identity(event_type, payload)
     for key in ("source_path_ref", "destination_path_ref"):
         if key in payload and not payload[key].startswith("pm-path-ref:v1:project:"):
             raise ValueError("foreign path scope")
@@ -955,8 +1030,12 @@ def validate_case(event_type, payload, trace, *, operation_candidate=None,
         raise ValueError("unsupported revision")
     if trace["reader_enabled"] is not True:
         raise ValueError("reader withdrawn")
-    if (any(type(trace[k]) is not int or trace[k] < 0
-            for k in ("event_sequence", "writer_cutoff_sequence")) or
+    for k in ("event_sequence", "writer_cutoff_sequence"):
+        if type(trace[k]) is not int:
+            raise ValueError("past writer cutoff")
+        if type(trace[k]) is int and trace[k] < 0:
+            raise ValueError("past writer cutoff")
+    if (type(trace["event_sequence"]) is int and type(trace["writer_cutoff_sequence"]) is int and
             trace["event_sequence"] > trace["writer_cutoff_sequence"]):
         raise ValueError("past writer cutoff")
     if event_type.endswith((".copied", ".moved", ".renamed", ".exported")):
@@ -977,7 +1056,9 @@ def validate_case(event_type, payload, trace, *, operation_candidate=None,
         if not same_value(payload["descendant_count"], trace["original_descendant_count"]):
             raise ValueError("descendant receipt mismatch")
     expected = identity(event_type, payload, trace)
-    if type(trace["retry_identity"]) is not list or tuple(trace["retry_identity"]) != expected:
+    if type(trace["retry_identity"]) is not list:
+        raise ValueError("retry identity changed")
+    if type(trace["retry_identity"]) is list and tuple(trace["retry_identity"]) != expected:
         raise ValueError("retry identity changed")
     validate_original_models(event_type, payload, trace, operation_candidate=operation_candidate,
                              transition_before=transition_before, historical=historical)
@@ -985,6 +1066,8 @@ def validate_case(event_type, payload, trace, *, operation_candidate=None,
 
 
 def negative_case(row, case):
+    if case.get("scenario") == "coverage":
+        return boundary_case(row, case)
     p, t = copy.deepcopy(row["payload"]), copy.deepcopy(row["trace"])
     for k, v in case.get("payload_set", {}).items():
         p[k] = v
@@ -1029,6 +1112,8 @@ def transition_case(row, case):
                               case.get("schema_definition", "operation_custody" if case["kind"] == "operation"
                                        else "family_control"), value)
     validator = validate_operation_transition if case["kind"] == "operation" else validate_control_transition
+    if "control_args" in case:
+        validator(*copy.deepcopy(case["control_args"]))
     if case.get("proof_source") == "original_trace":
         return validator(*args, proof=terminal_fixture_proof(row["trace"], args[0]))
     return validator(*args)

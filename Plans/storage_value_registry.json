@@ -18190,7 +18190,7 @@
               },
               "proxy_tls": {
                 "type": "null",
-                "description": "DL-259 CERT-1 / srv C1: certificates remain on the person’s own systems; onboarding collects no TLS/certificate choice."
+                "description": "DL-259 CERT-1 / srv C1: certificates remain on the person\u2019s own systems; onboarding collects no TLS/certificate choice."
               },
               "source_more": {
                 "type": "boolean"
@@ -81808,7 +81808,7 @@
             ]
           },
           "existing_index_root": {
-            "title": "Generic EventRecord index checkpoint custody — external proposal",
+            "title": "Generic EventRecord index checkpoint custody \u2014 external proposal",
             "description": "NEW derived checkpoint; typed source-selection binding is a verified reader projection of existing CURRENT/manifest owners, not a replacement on-disk control format. Native parsing/auth/durability remain separate proof obligations."
           },
           "existing_index_root__source_selection": {
@@ -123876,13 +123876,11 @@
         "$defs": {
           "safe_id": {
             "type": "string",
-            "minLength": 1,
             "maxLength": 160,
             "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*(?![\\s\\S])"
           },
           "non_secret_ref": {
             "type": "string",
-            "minLength": 8,
             "maxLength": 320,
             "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*(?![\\s\\S])",
             "description": "Opaque typed original-owner reference. Resolve under the referenced owner with current authorization, deletion and retention checks; spelling alone proves neither existence nor access."
@@ -124442,8 +124440,6 @@
                 "uniqueItems": true,
                 "items": {
                   "type": "string",
-                  "minLength": 97,
-                  "maxLength": 97,
                   "pattern": "^filemanager_operation_custody\\.v1:[0-9a-f]{64}(?![\\s\\S])"
                 }
               },
@@ -125058,13 +125054,11 @@
         "$defs": {
           "safe_id": {
             "type": "string",
-            "minLength": 1,
             "maxLength": 160,
             "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*(?![\\s\\S])"
           },
           "non_secret_ref": {
             "type": "string",
-            "minLength": 8,
             "maxLength": 320,
             "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*(?![\\s\\S])",
             "description": "Opaque typed original-owner reference. Resolve under the referenced owner with current authorization, deletion and retention checks; spelling alone proves neither existence nor access."
@@ -125624,8 +125618,6 @@
                 "uniqueItems": true,
                 "items": {
                   "type": "string",
-                  "minLength": 97,
-                  "maxLength": 97,
                   "pattern": "^filemanager_operation_custody\\.v1:[0-9a-f]{64}(?![\\s\\S])"
                 }
               },
