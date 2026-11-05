@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L19639-L21152
+Source lines: L19639-L21213
 
-Source SHA256: `31bd8137c7ae377b7271f6d563b812be84eae55c1fed0e0a4db9c4e89afb4f31`
+Source SHA256: `40e3bc68ccc64e7ebfa750606e40dd0c763e79a38fd38a315beb37629d3c87fc`
 
 ---
 
@@ -1521,4 +1521,65 @@ preserved_exact_tokens:
   - "concept-only demo controls"
 owner_hints:
   - Plans/usage-feature.md
+```
+
+
+### DL-330 - Planning Wizard Owns Wizard Status And The Blocked States; Decision Policy Keeps The Clarification Limits
+
+```yaml
+plan_unit_id: DL-330
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-330 records Jared's answer of 2026-11-05 ("approve all") to closure question 2 on wizard ownership.
+  Plans/Planning_Wizard.md owns wizard_status and the wizard attention_required and blocked states, their
+  transitions, the blocked record and the blocked clear rule (PWIZ-038), migrated from retired
+  Plans/chain-wizard-flexibility.md with only names updated to current canon. Plans/Decision_Policy.md keeps the clarification-round limits (section 6.5,
+  DP-064) and points them at the Planning Wizard, and keeps the requirements-quality check (section 6.4), whose
+  blocking rules are already there. Plans/DRY_Rules.md section 2.1 (DR-009) and the other live references that
+  named the retired document as the owner of these items now route to the new owners, and the retired document's
+  Owner / Consumer Map says where each item went. The approved removal of section 6.4's pointer to the retired
+  section 12 is not applied by this record: moving that loop definition showed it needs the Requirements Completion
+  Contract (retired section 14) and the report shaping rules (sections 14.1-14.2), which Decision Policy does not
+  hold, so the answer said to stop and return that question to Jared rather than invent a home for them.
+gui_related: false
+gui_classification_reason: Records an owner-routing decision; the GUI behavior it moves is defined by PWIZ-038.
+split_recommended: false
+depends_on: [PWIZ-038, DP-064]
+unblocks: []
+acceptance_criteria:
+  - "No live Plans unit or routing table names Plans/chain-wizard-flexibility.md as the owner of wizard_status, the wizard blocked states and transitions, or the clarification-round limits."
+  - "PWIZ-038 and DP-064 carry the migrated semantics, and the retired document's Owner / Consumer Map names both."
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+risk_class: owner_routing_to_retired_document
+reasoning_tier: high
+context_scope: closure_owner_answers_20261105
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Planning_Wizard.md
+  - Plans/Decision_Policy.md
+  - Plans/DRY_Rules.md
+  - Plans/Progression_Gates.md
+  - Plans/FinalGUISpec.md
+  - Plans/Wiring_Matrix.md
+  - Plans/chain-wizard-flexibility.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T02:48:03Z: Jared's answer \"approve all\" to the closure questions; question 2 (closure rows B06 106, 112, 117, 118, 119, 125) is this entry"
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/source-records.md (the closure records and the fix each asked for)"
+preserved_exact_tokens:
+  - "DL-330"
+  - "wizard_status"
+  - "clarification-round limits"
+  - "PWIZ-038"
+  - "DP-064"
+owner_hints:
+  - Plans/Planning_Wizard.md
+  - Plans/Decision_Policy.md
+  - Plans/DRY_Rules.md
 ```

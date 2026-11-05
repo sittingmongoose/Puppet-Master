@@ -610,7 +610,7 @@ After applying the runtime scheduler packet, perform an explicit verification sw
 
 Required verification checks:
 - `Executor_Protocol.md` no longer canonically defines pure lexicographic ready-node dispatch
-- `chain-wizard-flexibility.md` canonical `wizard_status` enum includes `blocked`
+- `Planning_Wizard.md` canonical `wizard_status` enum (PWIZ-038, DL-330; retired `chain-wizard-flexibility.md` is lineage only) includes `blocked`
 - `assistant-chat-design.md` formally models `blocked` thread state instead of punting it out of scope
 - `FinalGUISpec.md` includes `wizard_blocked` UI/card parity with recovery behavior
 - `Contracts_V0.md`, `storage-plan.md`, `Run_Graph_View.md`, and `Orchestrator_Page.md` all expose the same scheduler/remediation field vocabulary

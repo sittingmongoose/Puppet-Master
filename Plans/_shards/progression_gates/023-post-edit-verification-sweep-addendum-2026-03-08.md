@@ -4,7 +4,7 @@ Source: `Plans/Progression_Gates.md`
 
 Source lines: L607-L623
 
-Source SHA256: `8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33`
+Source SHA256: `28b32843c89be43a1e730dae715652ef22f99c911144c83f89b42fd938ba22b9`
 
 ---
 
@@ -14,7 +14,7 @@ After applying the runtime scheduler packet, perform an explicit verification sw
 
 Required verification checks:
 - `Executor_Protocol.md` no longer canonically defines pure lexicographic ready-node dispatch
-- `chain-wizard-flexibility.md` canonical `wizard_status` enum includes `blocked`
+- `Planning_Wizard.md` canonical `wizard_status` enum (PWIZ-038, DL-330; retired `chain-wizard-flexibility.md` is lineage only) includes `blocked`
 - `assistant-chat-design.md` formally models `blocked` thread state instead of punting it out of scope
 - `FinalGUISpec.md` includes `wizard_blocked` UI/card parity with recovery behavior
 - `Contracts_V0.md`, `storage-plan.md`, `Run_Graph_View.md`, and `Orchestrator_Page.md` all expose the same scheduler/remediation field vocabulary

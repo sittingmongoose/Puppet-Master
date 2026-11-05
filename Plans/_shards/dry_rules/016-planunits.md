@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L265-L2087
+Source lines: L265-L2093
 
-Source SHA256: `1e82eb3fe72cf40ae8d0e33431c20ebf4cac99b09fefa82aa7d05d544c23c68d`
+Source SHA256: `ec31e72135a20b97f0cf6eb893d2b7ddfedd51dcbc640599df316eb2a454ab3e`
 
 ---
 
@@ -384,7 +384,7 @@ plan_unit_id: DR-009
 unit_type: requirement
 status: accepted
 owner_doc: Plans/DRY_Rules.md
-canonical_text: Executor owns ready-set/backoff/remediation scheduling, Contracts owns runtime event and payload vocabulary, chain-wizard-flexibility owns wizard_status, and legacy NEEDS/RECONCILIATION are transfer-state dispositions, not live enum values.
+canonical_text: Executor owns ready-set/backoff/remediation scheduling, Contracts owns runtime event and payload vocabulary, Planning_Wizard (PWIZ-038) owns wizard_status and the wizard attention_required/blocked states and transitions, Decision_Policy (DP-064) owns the clarification-round limits, and legacy NEEDS/RECONCILIATION are transfer-state dispositions, not live enum values. Amended 2026-11-05 by DL-330; retired chain-wizard-flexibility is source lineage only for wizard_status.
 gui_related: false
 gui_classification_reason: This unit defines backend/governance DRY behavior, not GUI presentation.
 split_recommended: false
@@ -408,6 +408,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:DRY_Rules-S0005
+- Plans/Decision_Log.md#DL-330
 preserved_exact_tokens:
 - Plans/Executor_Protocol.md
 - /backoff
@@ -428,13 +429,18 @@ preserved_exact_tokens:
 - wizard_status
 - NEEDS
 - RECONCILIATION
+- Plans/Planning_Wizard.md
 negative_constraints: []
 compatibility_only_notes:
 - Legacy NEEDS / RECONCILIATION audit flags are transfer-state dispositions, not live enum values.
-stale_retired_dispositions: []
-owner_boundary_notes: []
+stale_retired_dispositions:
+- The route "chain-wizard-flexibility owns wizard_status" is retired by DL-330 (Jared, 2026-11-05); Plans/chain-wizard-flexibility.md is retired source lineage and owns no active wizard state.
+owner_boundary_notes:
+- Plans/Planning_Wizard.md#PWIZ-038 owns wizard_status and the wizard attention_required/blocked lifecycle; Plans/Decision_Policy.md#DP-064 owns the clarification-round limits; Plans/Contracts_V0.md keeps the wizard.blocked / wizard.unblocked event payloads.
 owner_hints:
 - Plans/DRY_Rules.md
+- Plans/Planning_Wizard.md
+- Plans/Decision_Policy.md
 ```
 
 ### DR-010 - Graph Record Storage Owner Route

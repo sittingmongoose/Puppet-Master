@@ -296,9 +296,9 @@ Clarification questions under §6.2 are generated **prior to execution**, during
 
 **Timing:** Clarification questions surface during Planning Wizard finalization or a legacy Chain Wizard / Interview compatibility flow, before any orchestrator run begins.
 
-**Blocking rule:** If a clarification question cannot be resolved before an orchestrator run begins, the run MUST NOT start. The wizard state transitions to `attention_required` and blocks the "Start Run" action.
+**Blocking rule:** If a clarification question cannot be resolved before an orchestrator run begins, the run MUST NOT start. The wizard state transitions to `attention_required` and blocks the "Start Run" action. `wizard_status` and the `attention_required` / `blocked` states are owned by `Plans/Planning_Wizard.md` (PWIZ-038, DL-330).
 
-ContractRef: `PolicyRule:Decision_Policy.md§4`, `ContractName:Plans/chain-wizard-flexibility.md`
+ContractRef: `PolicyRule:Decision_Policy.md§4`, `ContractName:Plans/Planning_Wizard.md#PWIZ-038`
 
 ---
 
@@ -326,9 +326,29 @@ Persistence safety rule:
 ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, PolicyRule:no_secrets_in_storage
 
 Lifecycle note:
-- Clarification-round limits and `blocked` transition semantics are owned by `Plans/chain-wizard-flexibility.md §15`; this section defines the pre-execution boundary and severity rules only.
+- Clarification-round limits are owned by §6.5 below and apply to the Planning Wizard's clarification cycles. `wizard_status`, the `attention_required` and `blocked` states and their transitions are owned by `Plans/Planning_Wizard.md` (PWIZ-038). This section defines the pre-execution boundary and severity rules (DL-330).
 
 ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, PolicyRule:Decision_Policy.md§4, PolicyRule:no_secrets_in_storage, Invariant:INV-002, ContractName:Plans/chain-wizard-flexibility.md#12-auditor-invariant-loop-mandatory-invariant-sweep
+
+---
+
+### 6.5 Clarification-round limits (Planning Wizard)
+
+Decision Policy owns the clarification-round limits; they apply to the Planning Wizard's clarification cycles (DL-330, Jared 2026-11-05). They moved here from retired `Plans/chain-wizard-flexibility.md §15.5` unchanged.
+
+A clarification cycle is one complete sequence of:
+1. a `requirements_quality_report` with non-empty `needs_user_clarification[]`,
+2. user answer submission,
+3. automatic re-run of the requirements-quality Auditor loop of §6.4 with the answers injected.
+
+Limits:
+- One Planning Wizard instance allows at most 3 clarification cycles, counted in `clarification_round_count`.
+- Cycles 1-2: the wizard stays in the active clarification path (`attention_required`) while follow-up questions remain.
+- When cycle 3 still produces non-empty `needs_user_clarification[]`, the Planning Wizard moves to `blocked` as `Plans/Planning_Wizard.md` (PWIZ-038) defines; that unit owns the blocked state, its record and its clear rule, and reopening the same blocked wizard does not reset `clarification_round_count`.
+- After the cap, Puppet Master MUST preserve the latest canonical quality report and MUST NOT auto-rewrite requirements further without new explicit user input.
+- User override: the UI MUST offer an explicit override to continue with a manual user decision only when the user acknowledges the remaining risk and the downstream gate permits override for that category. That override MUST be recorded as evidence.
+
+ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, ContractName:Plans/Planning_Wizard.md#PWIZ-038, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md, PolicyRule:Decision_Policy.md§4
 
 ## Runtime Decision Rules Addendum (2026-03-08)
 
@@ -1916,12 +1936,13 @@ reasoning_tier: high
 context_scope: clarification_start_run_block
 implementation_surfaces:
   - Plans/Decision_Policy.md
-  - Plans/chain-wizard-flexibility.md
+  - Plans/Planning_Wizard.md
 node_compile_hint:
   mode: pre_execution_clarification_start_run_block
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0020
+  - Plans/Decision_Log.md#DL-330
 preserved_exact_tokens:
   - "`Chain Wizard`"
   - "`Interview phase`"
@@ -1931,10 +1952,11 @@ preserved_exact_tokens:
 negative_constraints:
   - "If clarification cannot be resolved before run start, the run MUST NOT start."
   - "Do not use Chain Wizard or Interview as current product terminology outside compatibility/source-lineage contexts."
+owner_boundary_notes:
+  - "wizard_status and the attention_required state are owned by Plans/Planning_Wizard.md#PWIZ-038 (DL-330); retired Plans/chain-wizard-flexibility.md is source lineage only."
 owner_hints:
   - Plans/Decision_Policy.md
   - Plans/Planning_Wizard.md
-  - Plans/chain-wizard-flexibility.md
 ```
 
 ### DP-034 - Requirements Quality Report Boundary Severity Persistence
@@ -3365,6 +3387,67 @@ owner_hints:
   - Plans/Decision_Policy.md
   - Plans/DRY_Rules.md
   - Plans/Permissions_System.md
+```
+
+### DP-064 - Planning Wizard Clarification-Round Limits
+
+```yaml
+plan_unit_id: DP-064
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Policy.md
+canonical_text: >-
+  Decision Policy owns the clarification-round limits for the Planning Wizard. A clarification cycle is one
+  requirements_quality_report with non-empty needs_user_clarification[], the user's answer submission, and the
+  automatic re-run of the requirements-quality Auditor loop of section 6.4 with those answers injected. One Planning
+  Wizard instance allows at most 3 clarification cycles, counted in clarification_round_count. In cycles 1-2 the
+  wizard stays in attention_required while follow-up questions remain; when cycle 3 still leaves
+  needs_user_clarification[] non-empty, the Planning Wizard moves to blocked as Plans/Planning_Wizard.md#PWIZ-038
+  defines, and reopening the same blocked wizard does not reset clarification_round_count. After the cap the latest
+  canonical quality report is preserved and requirements are not auto-rewritten without new explicit user input. An
+  explicit user override to continue with a manual decision is offered only when the user acknowledges the remaining
+  risk and the downstream gate permits override for that category, and the override is recorded as evidence.
+gui_related: true
+gui_classification_reason: Defines when the user-visible override to continue past the clarification cap is offered.
+split_recommended: false
+depends_on: [DP-033, DP-034]
+unblocks: [PWIZ-038]
+acceptance_criteria:
+  - No fourth clarification cycle starts automatically; when the third leaves questions open, the Planning Wizard is blocked as PWIZ-038 defines.
+  - Reopening a blocked wizard does not reset clarification_round_count.
+  - An override past the cap requires risk acknowledgement, gate permission for the category, and recorded evidence.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+risk_class: clarification_round_limit_drift
+reasoning_tier: high
+context_scope: clarification_round_limits
+implementation_surfaces:
+  - Plans/Decision_Policy.md
+  - Plans/Planning_Wizard.md
+node_compile_hint:
+  mode: clarification_round_limits
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-330
+  - Plans/chain-wizard-flexibility.md#CWF-107 (retired source lineage, section 15.5 clarification round cap)
+  - Plans/chain-wizard-flexibility.md#CWF-108 (retired source lineage, blocked clarification override evidence)
+  - Plans/chain-wizard-flexibility.md#CWF-136 (retired source lineage, block escalation thresholds)
+preserved_exact_tokens:
+  - "clarification cycle"
+  - "at most 3 clarification cycles"
+  - "clarification_round_count"
+  - "needs_user_clarification[]"
+  - "attention_required"
+  - "blocked"
+  - "DL-330"
+negative_constraints:
+  - Do not start a fourth automatic clarification cycle.
+  - Do not auto-rewrite requirements after the cap without new explicit user input.
+  - Do not offer the override without risk acknowledgement, gate permission for the category, and recorded evidence.
+owner_hints:
+  - Plans/Decision_Policy.md
+  - Plans/Planning_Wizard.md
 ```
 
 ## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08

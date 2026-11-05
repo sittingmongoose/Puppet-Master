@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Policy.md`
 
-Source lines: L464-L3295
+Source lines: L484-L3317
 
-Source SHA256: `b6f1362ed05b4bcee76fb6d1326d496a23d2214f5ddab53b8b7d0e0dc3c479f1`
+Source SHA256: `4fc6bb43b48d4e1ed4adb85852353988adf67bc11e56dd8849471ac113eb0d95`
 
 ---
 
@@ -1463,12 +1463,13 @@ reasoning_tier: high
 context_scope: clarification_start_run_block
 implementation_surfaces:
   - Plans/Decision_Policy.md
-  - Plans/chain-wizard-flexibility.md
+  - Plans/Planning_Wizard.md
 node_compile_hint:
   mode: pre_execution_clarification_start_run_block
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0020
+  - Plans/Decision_Log.md#DL-330
 preserved_exact_tokens:
   - "`Chain Wizard`"
   - "`Interview phase`"
@@ -1478,10 +1479,11 @@ preserved_exact_tokens:
 negative_constraints:
   - "If clarification cannot be resolved before run start, the run MUST NOT start."
   - "Do not use Chain Wizard or Interview as current product terminology outside compatibility/source-lineage contexts."
+owner_boundary_notes:
+  - "wizard_status and the attention_required state are owned by Plans/Planning_Wizard.md#PWIZ-038 (DL-330); retired Plans/chain-wizard-flexibility.md is source lineage only."
 owner_hints:
   - Plans/Decision_Policy.md
   - Plans/Planning_Wizard.md
-  - Plans/chain-wizard-flexibility.md
 ```
 
 ### DP-034 - Requirements Quality Report Boundary Severity Persistence
