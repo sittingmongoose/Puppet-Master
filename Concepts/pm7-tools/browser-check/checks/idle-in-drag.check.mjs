@@ -125,7 +125,8 @@ const OMIT = (key) => {
 	} });
 };
 
-const top = (stack) => stack.split('\n').slice(2, 6).map((l) => l.trim().replace(/^at /, '').replace(/\s*\(.*$/, '')).filter((l) => !/^(?:stackOf|window\.requestIdleCallback|job\.ask|busy\.idleWhenStill)/.test(l)).join(' < ');
+// the first page frames that asked, past the recorder's and the admission's own: "name:line" (line in the built page)
+const top = (stack) => stack.split('\n').slice(1).map((l) => /^\s*at (?:(.+?) \()?(.+?):(\d+):\d+\)?\s*$/.exec(l)).filter((m) => m && m[2] !== '<anonymous>' && !/(?:^|\.)(?:ask|idleWhenStill)(?: \[as \w+\])?$/.test(m[1] || '')).slice(0, 3).map((m) => `${m[1] || '(anonymous)'}:${m[3]}`).join(' < ');
 const brief = (jobs) => JSON.stringify(jobs.map((j) => ({ id: j.id, owner: j.owner, at: top(j.stack) })));
 
 async function holdDrag(t, f, sel, label) {
