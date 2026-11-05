@@ -1,7 +1,8 @@
 // SW-26: native page code rehearses before activation. Playwright evaluate()
 // grants activation, so neither setup nor polling may use it for this check.
 const probe=()=>{
- const R=window.__soundNativeProbe={events:0,starts:[],done:false};
+ const R=window.__soundNativeProbe={events:0,starts:[],done:false,framed:window!==window.top};
+ try{localStorage.getItem('native-sound-surface');R.storageBlocked=false;}catch(e){R.storageBlocked=e.name==='SecurityError';}
  for(const type of ['pointerdown','keydown','touchstart'])document.addEventListener(type,e=>{if(e.isTrusted)R.events++;},true);
  for(const proto of [AudioScheduledSourceNode.prototype,AudioBufferSourceNode.prototype]){
   if(!Object.hasOwn(proto,'start'))continue;
@@ -36,7 +37,12 @@ export default async function(t){
  await cdp.send('Page.addScriptToEvaluateOnNewDocument',{source:'('+probe.toString()+')()'});
  // Navigate the app target only; the approved wrapper and its flags stay.
  const {frameTree}=await cdp.send('Page.getFrameTree');
- await cdp.send('Page.navigate',{url:target.href,frameId:frameTree.frame.id});
+ // In-process iframes share their parent's CDP target; choose the actual app
+ // frame in that tree too, never navigate the wrapper in its place.
+ const findApp=tree=>(tree.childFrames||[]).map(findApp).find(Boolean)||(new URL(tree.frame.url,'file://').pathname===target.pathname?tree.frame:null);
+ const app=findApp(frameTree);
+ if(!app)throw new Error('native sound probe cannot find the requested app frame');
+ await cdp.send('Page.navigate',{url:target.href,frameId:app.id});
  let R=null;const deadline=Date.now()+60000;
  while(Date.now()<deadline&&!R){
   for(const contextId of contexts){
@@ -47,6 +53,7 @@ export default async function(t){
  t.log('native sound rehearsal probe: '+JSON.stringify(R));
  await t.check('native rehearsal setup completed',!!R,JSON.stringify(R));
  if(R){
+  await t.check('native observation kept the requested surface',sandbox?R.framed&&R.storageBlocked:!R.framed&&!R.storageBlocked,JSON.stringify(R));
   await t.check('setup stayed free of trusted input and activation',R.events===0&&!R.beforeActive&&!R.afterActive,JSON.stringify(R));
   await t.check('offline prime scheduled a source before the first gesture',R.starts.length>0&&R.starts.every(x=>x.offline&&!x.active&&x.events===0),JSON.stringify(R));
   await t.check('offline rehearsal emitted no live callout',!R.liveCallout,JSON.stringify(R));
