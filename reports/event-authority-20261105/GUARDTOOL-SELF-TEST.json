@@ -1,12 +1,12 @@
 {
   "status": "PASS",
-  "caught": 210,
-  "trap_count": 210,
-  "old": 204,
-  "new": 6,
-  "implementation_commit": "ec841e41cf272c43c829d6a8996a101b735dec4b",
-  "core_fix_commit": "ff7fb58db46861b403abce778960b91301d2a83c",
-  "meaning": "Bounded complete-path input-atom cuts; unknown paths and grammar stay unclassified.",
+  "caught": 268,
+  "trap_count": 268,
+  "old": 210,
+  "new": 58,
+  "implementation_commit": "55506a823b423672978136732e82e6010af2608d",
+  "core_fix_commit": "da85f7f5a1ea355dfde9486293624a1f75467c4f",
+  "meaning": "Verified full-state clones and byte-local input-atom cuts; unsupported observations and state changes fail closed.",
   "python_census": {
     "cells": 410,
     "errors": [],
@@ -1132,43 +1132,315 @@
       "id": "C8-matching-original-runs",
       "expected": "the exact optimize=0 original is accepted and its baseline runs",
       "caught": true
+    },
+    {
+      "id": "C9-different-defaults-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-different-defaults-aggregate",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-different-kwdefaults-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-different-kwdefaults-aggregate",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-different-function-globals-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-different-function-globals-aggregate",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-post-construction-rebind-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-post-construction-rebind-aggregate",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-post-construction-code-replace-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-post-construction-code-replace-aggregate",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-post-construction-optimize-1-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-post-construction-optimize-1-aggregate",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-post-construction-optimize-2-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-post-construction-optimize-2-aggregate",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-observable-co_filename-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-observable-co_filename-aggregate",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-nonreflective-co_filename-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-observable-co_firstlineno-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-observable-co_firstlineno-aggregate",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-nonreflective-co_firstlineno-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-observable-co_linetable-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-observable-co_linetable-aggregate",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-nonreflective-co_linetable-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-observable-co_qualname-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-observable-co_qualname-aggregate",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-nonreflective-co_qualname-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-sibling-refusal-function-attributes-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-decorated-refusal-function-attributes-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-decorated-direct-cut-refused-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-ordinary-sibling-rebind-control-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-ordinary-sibling-rebind-control-aggregate",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-decorated-wrapper-refusal-control-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-decorated-code-mismatch-keeps-refusal-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-sibling-original-alias-control-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-tuple-int-versus-bool-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-frozenset-int-versus-bool-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-negative-zero-versus-positive-zero-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-scalar-float-versus-bool-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-nan-sign-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-nan-sign-aggregate",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-nan-payload-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-nan-payload-aggregate",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-nan-sign-and-payload-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-nan-sign-and-payload-aggregate",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-equal-tuple-distinct-identity-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-equal-tuple-distinct-identity-aggregate",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-equal-frozenset-distinct-identity-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-equal-frozenset-distinct-identity-aggregate",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-equal-nan-bits-distinct-identity-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-equal-nan-bits-distinct-identity-aggregate",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-undecorated-closure-original-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-decorated-refusing-closure-cell-single",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-decorated-refusing-closure-cell-aggregate",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "caught": true
+    },
+    {
+      "id": "C9-state-boundaries",
+      "expected": "changes to every supported function state are refused before cloning",
+      "caught": true
+    },
+    {
+      "id": "C9-full-state-locality",
+      "expected": "cut and uncut functions preserve runtime state, original constants, peer instructions and line tables",
+      "caught": true
+    },
+    {
+      "id": "C9-source-subset",
+      "expected": "reflection and identity observations poison every dependent candidate before registration",
+      "caught": true
+    },
+    {
+      "id": "C9-original-baseline-gate",
+      "expected": "an injected state-losing uncut clone is rejected before any credit",
+      "caught": true
+    },
+    {
+      "id": "C9-physical-complex",
+      "expected": "recursive float and complex fingerprints preserve sign and NaN payloads and reject unknown constants",
+      "caught": true
     }
   ],
-  "C6_B1": {
-    "attempts": 48,
-    "broad_cuts": 0,
-    "broad_proved_rows": 0,
-    "minimal": 2
-  },
-  "sol_cycle5_assertions": 435,
-  "sol_cycle6_assertions": 5145,
-  "sol_blocker_assertions": 515,
-  "final_audit_assertions": 4010,
-  "evidence": {
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix6/verification-manifest.json",
-    "sha256": "e2188a82208af05e831c8b65038549c8790cf93f0db44cd6deeb8abfccc9c33e"
-  },
-  "C7_B1": {
-    "finding": "reviews/GUARDTOOL-sol/REVIEW-cycle7.md C7-B1: cut clones recompiled with the process optimize level, so under python -O an optimize=0 original lost its untouched assertion",
-    "fix": "AstGuards refuses sys.flags.optimize != 0; refuses an original whose bytecode is not the optimize=0 compilation of its source when optimization changes that bytecode; clones compile with optimize=0",
-    "traps": [
-      "C7-optimized-original",
-      "C7-optimized-process",
-      "C7-clone-keeps-assertions"
+  "C9": {
+    "findings_fixed": [
+      "C9-B1",
+      "C9-B2",
+      "C9-B3",
+      "C9-B4",
+      "C9-B5",
+      "C9-B6"
     ],
-    "fixed_by": "stream E lead (small review fix), round 7"
+    "exact_review_probes": 53,
+    "refused": 42,
+    "peer_preserving_cuts": 10,
+    "masked_alias_controls": 1,
+    "credited_broad_cuts": 0,
+    "state_mutation_classes": 18,
+    "cycle8_replay_refusals": 22,
+    "result_audit_assertions": 619
   },
-  "C8": {
-    "findings": "reviews/GUARDTOOL-sol/REVIEW-cycle8.md C8-B1 (fingerprint ignored constants) and C8-B2 (module __getattr__ export bypassed the absent-original skip)",
-    "fix": "semantic code fingerprint (instructions, typed constants, names, locals, free/cell vars, arg counts, flags, exception table); every undecorated original must equal the optimize=0 compilation of the supplied source with its own future flags; module __getattr__ refused; clone refuses absent originals; clones compile optimize=0, dont_inherit, source future flags",
-    "traps": [
-      "C8-same-source-debug",
-      "C8-nested-constant",
-      "C8-mismatched-operand",
-      "C8-dynamic-export",
-      "C8-absent-original",
-      "C8-matching-original-runs"
-    ],
-    "fixed_by": "stream E lead (small review fix), round 8"
-  }
+  "evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix9"
 }

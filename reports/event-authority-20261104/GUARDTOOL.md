@@ -477,3 +477,57 @@ Sol cycle 8 (`reviews/GUARDTOOL-sol/REVIEW-cycle8.md`) showed the round-7 equali
   - `C8-absent-original`: `clone()` refuses a source function absent from the namespace.
   - `C8-matching-original-runs`: the exact original is accepted and its baseline runs.
 - **Self-test:** `python3 scripts/pm_guard_isolation.py --self-test` gives **PASS, 210/210**. The census, coverage and cross-product gates are unchanged at 945 cells and 72 credited.
+
+## Review round 9: findings and responses
+
+**C9-B1..B6 — fixed.** Reviewed base: `a342adbe7376692129a750a772a1b2032e898692`. Core implementation: `da85f7f5a1ea355dfde9486293624a1f75467c4f`; annotation-cache/builtin-context completion: `55506a823b423672978136732e82e6010af2608d`. Automatic isolation remains a bounded capability, not a general Python equivalence proof or complete lane adoption. No owner Markdown, IDs, family grades, admission, registry, Decision Log or governance artifacts change.
+
+| Finding | Where, cause and fix | Verification |
+|---|---|---|
+| **C9-B1 — fixed, both commits** | `scripts/pm_guard_isolation.py:1085, :1633`. Recompilation reevaluated defaults and rebound a foreign global context. Every cut/uncut sibling now uses one `FunctionType` builder with the verified original's defaults, keyword defaults, closure and complete supported metadata/attribute state. Originals must use the declared globals and builtin binding context. | Exact positional/keyword runtime-default cases stay narrow in both proof modes. Both foreign-global cases refuse. Full-state controls verify cached annotations, annotation evaluator, runtime attributes, metadata and default identities. |
+| **C9-B2 — fixed, both commits** | `scripts/pm_guard_isolation.py:1075, :1291`. Verification only at construction let later bindings/state diverge. Immutable state snapshots cover every bound Python function, including aliases and declared external helpers. Registration and every clone recheck binding identity, code, defaults, nested state, metadata, annotations, closure cells, AST and supported binding context. | All eight exact post-construction attacks refuse. Eighteen additional mutation classes cover baseline and cut boundaries, including aliases, builtin context, nested defaults, closure cells and cached annotations. |
+| **C9-B3 — fixed, core commit** | `scripts/pm_guard_isolation.py:1225, :1722`. Recompiled metadata was observable by untouched guards. A transitive source-subset barrier refuses observing functions and their callers before registration. Local cuts retain every original code field and line table except instructions within the selected atom and an optional Boolean constant append. | All eight reflective metadata cases refuse. Four nonreflective patched-metadata controls retain narrow cuts; the byte-locality control checks the exact changed-byte set and all other code fields. |
+| **C9-B4 — fixed, core commit** | `scripts/pm_guard_isolation.py:1024`. `repr(nan)` collapsed physical sign/payload differences. Typed recursive fingerprints now use `struct` bytes for float/complex values, including nested containers/code and interpreter-produced slices; unsupported constants refuse. | All six physical-NaN attacks now have unequal fingerprints and refuse construction. Existing typed int/bool, float/bool and signed-zero cases still refuse. Recursive complex/NaN controls distinguish all four bit patterns. |
+| **C9-B5 — fixed, core commit** | `scripts/pm_guard_isolation.py:1633, :1722`. Recompiled equal constants had new identities. Compiled proposal constants are mapped back to original objects; the emitted local cut retains the entire original constant prefix by identity and index. Non-singleton identity observations also poison every dependent candidate. | All six exact tuple/frozenset/NaN-identity cases refuse registration. The full-state control retains tuple, frozenset, NaN and scalar constant objects while its x cut still rejects y. |
+| **C9-B6 — fixed, core commit** | `scripts/pm_guard_isolation.py:1085, :1858, :2042`. Sibling rebinding discarded function attributes, and no original/uncut comparison exposed it. Siblings now get full supported state; decorated/stateful dependencies become unclassified. Before any proof row, originals and uncut clones execute the same declared controls and negatives and must return identical complete outcomes. | Both exact `__dict__`-reading sibling cases refuse. Ordinary siblings stay narrow. A separate ordinary attribute-state control retains the flag; injecting an attribute-losing uncut clone aborts before any row. Decorated wrapper/closure controls now refuse conservatively. |
+
+### Code locality and supported subset
+
+The whole cut AST is compiled at original positions with original filename, `optimize=0`, `dont_inherit=True` and source future flags; it is never executed. Its function metadata is restored and equal constants are reused from the original. Compiler-wide branch folding and relocation are not accepted as an excuse to change peers. The backend lifts the verified Boolean edit into the original straight-line expression slots, with NOP padding. Stack balance, branch targets, overlapping spans, code fields and original constant identities are checked. A span that cannot be isolated refuses. Jumps, exception ranges and line tables remain byte-for-byte unchanged. This is stricter than allowing relocated peer instructions in the compiled proposal.
+
+Supported automatic sources are verified, directly bound, undecorated top-level functions with the existing scalar-atom/composition/path restrictions. Refusals apply transitively through sibling/alias dependencies:
+
+- **Refused internal-state reads:** `__code__`, `__defaults__`, `__kwdefaults__`, `__globals__`, `__dict__`, `__closure__`, `__builtins__`, dynamic attribute reflection and traceback/frame internals.
+- **Refused reflection:** `inspect`, `traceback`, `sys` reflection, reflective imports/aliases, `_getframe`, and frame/line access.
+- **Refused identity/namespaces:** `id`, `globals`, `locals`, `vars`, reflective builtins/aliases, `eval`/`exec`/`compile`, function-object escape and every `is`/`is not` except comparisons against literal `None`, `True` or `False`.
+- **Refused callable/state seams:** decorators and dependent callers, callable instances/classes outside the supported interface, external Python functions outside explicitly declared predicate/refusal helpers, opaque function state and generic internals. Declared helpers retain the documented source/atomic-semantics reviewer trust boundary.
+- **Annotations:** Python 3.14 lazy evaluators must match the source compilation and contain only literals or unshadowed builtin-type annotations. Original cache entries and evaluator are both preserved; later cache changes refuse. Arbitrary annotation callbacks/expressions and opaque values refuse. CPython wordcode is required; verification used CPython 3.14.4.
+
+The complete guide is `reports/event-authority-20261105/GUARDTOOL-ADOPTION.md`, “Supported Python source and clone fidelity”. Full state does not mean deep-copying defaults or closure cells: those objects and attribute values intentionally remain shared with the original. Mutating verified function state prevents a subsequent clone. Sampled original/uncut controls supplement these static boundaries and do not certify untested helper semantics.
+
+### Regressions and Sol cycle-9 replay
+
+**268/268 traps caught: 210 old + 58 new.** Every old corpus record and `(id, expected, caught)` result is unchanged. The new traps include each of the review's **53 exact case/source/mode combinations**, plus five structural regressions. The older injected constant-cut trap is now caught by the earlier locality verifier; it still cannot receive credit. Syntax and whitespace checks pass.
+
+The generated census remains **82 classes × 5 positions: 47 bounded supported / 363 fail closed**. Coverage passes. The generated matrix remains **945 cells / 72 credited cells / 144 verified per-atom cuts / 873 unclassified cells**. No complete lane or family grade is claimed.
+
+Sol's scripts ran serially from fresh copies of the final implementation's three checker inputs. `fix9/cycle9-adaptation.diff` records changes to revision/path pins, corrected expected observations and registration-refusal handling. Sources, inputs, callbacks, proof modes and independent x-only witnesses are unchanged. Historical broad-cut assertions are replaced by refusal or correct narrow-cut assertions; decorated dependencies now refuse, including previous safe controls. The independent result audit verifies those preserved sources/inputs against the original evidence and matches every probe to a committed trap.
+
+| Check | Exit / result |
+|---|---|
+| Full CLI self-test, 1 GiB address-space limit and 1,536 MiB RSS gate | **0; PASS, 268/268** |
+| Sol cycle-9 design probes | **0; 34/34 safe: 23 refusals, 10 narrow cuts, one masked alias; zero broad credited cuts** |
+| Sol cycle-9 constants/closures probes | **0; 19/19 refuse; zero broad credited cuts** |
+| Exact cycle-8 replay from Sol's cycle-9 script | **0; all 18 C8-B1 + four C8-B2 cases refuse** |
+| Independent source/corpus/outcome audit | **0; 619 assertions PASS** |
+| Python syntax and `git diff --check` | **0** |
+
+Only scripts, trap JSON, adoption guide, compact self-test and this report change. No plan owner or derived shard/index edit, governance refresh or main push occurs. No subagents or pm-mail were used. Plan-wide governance and older independent campaigns were not rerun in this targeted round.
+
+### Evidence and resources
+
+Evidence lives at `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix9/`. Its verification manifest fingerprints the scripts, adaptation diff, exact results, source/input hashes, resource/command receipts, reports and cleanup records. `input-manifest.json` identifies the three source files at `55506a823b423672978136732e82e6010af2608d`; restore them into its named scratch path to rerun the copied cycle-9 scripts. The result auditor accepts `GUARDTOOL_FIX9_ROOT` when reproducing from a different checkout.
+
+Preflight had **108 GB free disk / 21 GiB available RAM**. Heavy checks ran one at a time. Final full self-test peak checker RSS was **76,896 KiB**, under the 1,536 MiB gate. The final checked command boundaries stayed above **21 GiB available RAM**. Synthetic low-memory regression messages are expected. A fresh subprocess launcher avoids inheriting the harness's unrelated RSS high-water mark. Runtime scratch is hash-verified and deleted; the worktree is removed after the final branch push. Only cited/reproducible evidence remains.
+
+**Round-9 evidence manifest:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix9/verification-manifest.json`, SHA-256 `c6d23c71ef7bdf8c25c98a5eec1a3fe60981920ea105365cd344ac2de3a6d95f`.
