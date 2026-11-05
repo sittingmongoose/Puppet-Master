@@ -831,8 +831,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -873,6 +886,61 @@
                 "scope_kind": {
                   "const": "project"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -1352,8 +1420,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -1394,6 +1475,61 @@
                 "scope_kind": {
                   "const": "project"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -1868,8 +2004,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -1910,6 +2059,61 @@
                 "scope_kind": {
                   "const": "project"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -2380,8 +2584,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -2422,6 +2639,61 @@
                 "scope_kind": {
                   "const": "project"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -2900,8 +3172,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -2942,6 +3227,61 @@
                 "scope_kind": {
                   "const": "project"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -3412,8 +3752,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -3454,6 +3807,61 @@
                 "scope_kind": {
                   "const": "project"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -3924,8 +4332,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -3966,6 +4387,61 @@
                 "scope_kind": {
                   "const": "project"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -4436,8 +4912,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -4478,6 +4967,61 @@
                 "scope_kind": {
                   "const": "project"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -4952,8 +5496,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -4994,6 +5551,61 @@
                 "scope_kind": {
                   "const": "project"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -5464,8 +6076,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -5506,6 +6131,61 @@
                 "scope_kind": {
                   "const": "project"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -5976,8 +6656,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -6018,6 +6711,61 @@
                 "scope_kind": {
                   "const": "project"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -6492,8 +7240,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -6534,6 +7295,61 @@
                 "scope_kind": {
                   "const": "project"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -7008,8 +7824,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -7050,6 +7879,61 @@
                 "scope_kind": {
                   "const": "project"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -7520,8 +8404,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -7562,6 +8459,61 @@
                 "scope_kind": {
                   "const": "project"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -8032,8 +8984,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -8074,6 +9039,61 @@
                 "scope_kind": {
                   "const": "project"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -8544,8 +9564,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -8586,6 +9619,61 @@
                 "scope_kind": {
                   "const": "project"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -9060,8 +10148,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -9102,6 +10203,61 @@
                 "scope_kind": {
                   "const": "project"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -9572,8 +10728,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -9614,6 +10783,61 @@
                 "scope_kind": {
                   "const": "project"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -10084,8 +11308,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -10126,6 +11363,61 @@
                 "scope_kind": {
                   "const": "project"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -10596,8 +11888,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -10638,6 +11943,61 @@
                 "scope_kind": {
                   "const": "project"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -11135,8 +12495,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -11177,6 +12550,61 @@
                 "scope_kind": {
                   "const": "project"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -11651,8 +13079,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -11693,6 +13134,61 @@
                 "scope_kind": {
                   "const": "application"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -12172,8 +13668,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -12214,6 +13723,61 @@
                 "scope_kind": {
                   "const": "application"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -12688,8 +14252,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -12730,6 +14307,61 @@
                 "scope_kind": {
                   "const": "application"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -13200,8 +14832,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -13242,6 +14887,61 @@
                 "scope_kind": {
                   "const": "application"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -13720,8 +15420,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -13762,6 +15475,61 @@
                 "scope_kind": {
                   "const": "application"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -14232,8 +16000,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -14274,6 +16055,61 @@
                 "scope_kind": {
                   "const": "application"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -14744,8 +16580,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -14786,6 +16635,61 @@
                 "scope_kind": {
                   "const": "application"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -15256,8 +17160,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -15298,6 +17215,61 @@
                 "scope_kind": {
                   "const": "application"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -15772,8 +17744,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -15814,6 +17799,61 @@
                 "scope_kind": {
                   "const": "application"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -16284,8 +18324,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -16326,6 +18379,61 @@
                 "scope_kind": {
                   "const": "application"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -16796,8 +18904,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -16838,6 +18959,61 @@
                 "scope_kind": {
                   "const": "application"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -17312,8 +19488,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -17354,6 +19543,61 @@
                 "scope_kind": {
                   "const": "application"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -17828,8 +20072,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -17870,6 +20127,61 @@
                 "scope_kind": {
                   "const": "application"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -18340,8 +20652,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -18382,6 +20707,61 @@
                 "scope_kind": {
                   "const": "application"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -18852,8 +21232,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -18894,6 +21287,61 @@
                 "scope_kind": {
                   "const": "application"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -19364,8 +21812,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -19406,6 +21867,61 @@
                 "scope_kind": {
                   "const": "application"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -19880,8 +22396,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -19922,6 +22451,61 @@
                 "scope_kind": {
                   "const": "application"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -20392,8 +22976,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -20434,6 +23031,61 @@
                 "scope_kind": {
                   "const": "application"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -20904,8 +23556,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -20946,6 +23611,61 @@
                 "scope_kind": {
                   "const": "application"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }
@@ -21416,8 +24136,21 @@
                   "$ref": "#/$defs/payload_reference"
                 }
               }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "empty"
+                }
+              }
             }
-          ]
+          ],
+          "description": "mode=empty has no body and is valid only with both cursors null after authenticated complete filtered coverage. Inline/external modes require a genuine selected-family source-backed payload and nonnull matching original last-event cursors. Coverage and source joins require the SP-278 owner verifier; schema alone does not authenticate absence."
         },
         "generation_id": {
           "$ref": "#/$defs/id"
@@ -21458,6 +24191,61 @@
                 "scope_kind": {
                   "const": "application"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_event_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "projection": {
+                "properties": {
+                  "mode": {
+                    "const": "empty"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "last_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "last_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
               }
             }
           }

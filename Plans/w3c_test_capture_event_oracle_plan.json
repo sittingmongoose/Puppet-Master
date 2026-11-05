@@ -136,7 +136,7 @@
         },
         {
           "guard_id": "artifacts_capture_provenance_inspected.checkpoint",
-          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden.",
+          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden. Empty projection is exactly {mode: empty} with both last-event cursors null; each nonempty cursor and the inline/external body joins the same genuine last matching event.",
           "positive_plan": "Use independently source-backed valid original artifacts.capture_provenance.inspected at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -222,8 +222,29 @@
           "guard_id": "artifacts_capture_provenance_inspected.phase_cas_publication",
           "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
           "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
-          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; one withdrawal predecessor-binding mismatch using a fully schema-valid, internally source-backed candidate; only its equality edge to the authenticated frozen predecessor is wrong. Do not clear one field into an invalid phase tuple, and do not combine a custody-binding mismatch with a CAS or publication defect. Cut each schema null/type implication independently, never the entire phase keyword.",
           "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "artifacts_capture_provenance_inspected.empty_cursor_shape",
+          "predicate": "Projection empty mode is paired independently with null last_event_id and null last_sequence_id; nonempty modes require each cursor nonnull.",
+          "positive_plan": "For every applicable scope, a complete authenticated scan with zero matches stores {mode: empty} and paired null cursors, including an index containing only nonmatching events. Independently use nonempty inline and external body controls with matching Storage cursors.",
+          "negative_plan": "From each valid empty control set only last_event_id, or only last_sequence_id (separate cases). From valid inline/external controls null only last_event_id, or only last_sequence_id (separate cases). These isolate the exact field implication; keep the body and other cursor unchanged. Separately remove the projection or add one forbidden property to empty mode. Semantic joins are conditional on the branch shape and are same-invariant duplicate sites only where they repeat that exact field predicate.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "artifacts_capture_provenance_inspected.empty_coverage",
+          "predicate": "An empty projection is accepted only after authenticated complete retained-source coverage at the exact current SP-278 same-Storage token boundary, on every reader path.",
+          "positive_plan": "Verify genuine complete empty coverage independently for read, advance, replay and rebuild with a real matching Storage token, actual live transaction and unchanged original query/key. Empty initial history and scanned nonmatching history are both valid.",
+          "negative_plan": "For each reader path, omit exactly one required source range from an otherwise genuine coverage proof while keeping projection/cursors/token/key valid. Separately supply one internally valid same-shape token from a different Storage instance with its own coherent source proof, making only the binding to this checkpoint wrong. Do not combine a token mismatch with a damaged scan or stale CAS.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "artifacts_capture_provenance_inspected.nonempty_last_event",
+          "predicate": "Each nonempty inline/external projection is the actual completed family payload of the last matching authenticated original event and joins its source/full-value receipt and Storage cursors.",
+          "positive_plan": "Read the genuine matching final event with nonnull paired cursors, source bytes and original full-value custody; resolve an oversized body through its exact completed schema. Repeat in each capture scope and the Project-only readiness scope.",
+          "negative_plan": "Use two independently valid same-family/scope/subject histories in the same Storage; bind one checkpoint to a source-backed body from the other valid event, keeping that body, its source and hashes internally coherent. Only the checkpoint-to-last-event relation is wrong. Separately test a foreign family or scope using internally valid source worlds, one relation per case; never leave copied source fields stale.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
         }
       ],
       "additional_positive_plans": [
@@ -232,7 +253,7 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Empty filtered result uses explicit {mode: empty}, paired null cursors and complete authenticated same-Storage coverage at the exact original query/token boundary; checkpoint CAS retry retains original custody.",
         "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
         "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
@@ -385,7 +406,7 @@
         },
         {
           "guard_id": "artifacts_demonstration_video_created.checkpoint",
-          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden.",
+          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden. Empty projection is exactly {mode: empty} with both last-event cursors null; each nonempty cursor and the inline/external body joins the same genuine last matching event.",
           "positive_plan": "Use independently source-backed valid original artifacts.demonstration_video.created at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -478,8 +499,29 @@
           "guard_id": "artifacts_demonstration_video_created.phase_cas_publication",
           "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
           "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
-          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; one withdrawal predecessor-binding mismatch using a fully schema-valid, internally source-backed candidate; only its equality edge to the authenticated frozen predecessor is wrong. Do not clear one field into an invalid phase tuple, and do not combine a custody-binding mismatch with a CAS or publication defect. Cut each schema null/type implication independently, never the entire phase keyword.",
           "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "artifacts_demonstration_video_created.empty_cursor_shape",
+          "predicate": "Projection empty mode is paired independently with null last_event_id and null last_sequence_id; nonempty modes require each cursor nonnull.",
+          "positive_plan": "For every applicable scope, a complete authenticated scan with zero matches stores {mode: empty} and paired null cursors, including an index containing only nonmatching events. Independently use nonempty inline and external body controls with matching Storage cursors.",
+          "negative_plan": "From each valid empty control set only last_event_id, or only last_sequence_id (separate cases). From valid inline/external controls null only last_event_id, or only last_sequence_id (separate cases). These isolate the exact field implication; keep the body and other cursor unchanged. Separately remove the projection or add one forbidden property to empty mode. Semantic joins are conditional on the branch shape and are same-invariant duplicate sites only where they repeat that exact field predicate.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "artifacts_demonstration_video_created.empty_coverage",
+          "predicate": "An empty projection is accepted only after authenticated complete retained-source coverage at the exact current SP-278 same-Storage token boundary, on every reader path.",
+          "positive_plan": "Verify genuine complete empty coverage independently for read, advance, replay and rebuild with a real matching Storage token, actual live transaction and unchanged original query/key. Empty initial history and scanned nonmatching history are both valid.",
+          "negative_plan": "For each reader path, omit exactly one required source range from an otherwise genuine coverage proof while keeping projection/cursors/token/key valid. Separately supply one internally valid same-shape token from a different Storage instance with its own coherent source proof, making only the binding to this checkpoint wrong. Do not combine a token mismatch with a damaged scan or stale CAS.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "artifacts_demonstration_video_created.nonempty_last_event",
+          "predicate": "Each nonempty inline/external projection is the actual completed family payload of the last matching authenticated original event and joins its source/full-value receipt and Storage cursors.",
+          "positive_plan": "Read the genuine matching final event with nonnull paired cursors, source bytes and original full-value custody; resolve an oversized body through its exact completed schema. Repeat in each capture scope and the Project-only readiness scope.",
+          "negative_plan": "Use two independently valid same-family/scope/subject histories in the same Storage; bind one checkpoint to a source-backed body from the other valid event, keeping that body, its source and hashes internally coherent. Only the checkpoint-to-last-event relation is wrong. Separately test a foreign family or scope using internally valid source worlds, one relation per case; never leave copied source fields stale.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
         }
       ],
       "additional_positive_plans": [
@@ -488,7 +530,7 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Empty filtered result uses explicit {mode: empty}, paired null cursors and complete authenticated same-Storage coverage at the exact original query/token boundary; checkpoint CAS retry retains original custody.",
         "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
         "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
@@ -641,7 +683,7 @@
         },
         {
           "guard_id": "artifacts_demonstration_video_failed.checkpoint",
-          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden.",
+          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden. Empty projection is exactly {mode: empty} with both last-event cursors null; each nonempty cursor and the inline/external body joins the same genuine last matching event.",
           "positive_plan": "Use independently source-backed valid original artifacts.demonstration_video.failed at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -734,8 +776,29 @@
           "guard_id": "artifacts_demonstration_video_failed.phase_cas_publication",
           "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
           "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
-          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; one withdrawal predecessor-binding mismatch using a fully schema-valid, internally source-backed candidate; only its equality edge to the authenticated frozen predecessor is wrong. Do not clear one field into an invalid phase tuple, and do not combine a custody-binding mismatch with a CAS or publication defect. Cut each schema null/type implication independently, never the entire phase keyword.",
           "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "artifacts_demonstration_video_failed.empty_cursor_shape",
+          "predicate": "Projection empty mode is paired independently with null last_event_id and null last_sequence_id; nonempty modes require each cursor nonnull.",
+          "positive_plan": "For every applicable scope, a complete authenticated scan with zero matches stores {mode: empty} and paired null cursors, including an index containing only nonmatching events. Independently use nonempty inline and external body controls with matching Storage cursors.",
+          "negative_plan": "From each valid empty control set only last_event_id, or only last_sequence_id (separate cases). From valid inline/external controls null only last_event_id, or only last_sequence_id (separate cases). These isolate the exact field implication; keep the body and other cursor unchanged. Separately remove the projection or add one forbidden property to empty mode. Semantic joins are conditional on the branch shape and are same-invariant duplicate sites only where they repeat that exact field predicate.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "artifacts_demonstration_video_failed.empty_coverage",
+          "predicate": "An empty projection is accepted only after authenticated complete retained-source coverage at the exact current SP-278 same-Storage token boundary, on every reader path.",
+          "positive_plan": "Verify genuine complete empty coverage independently for read, advance, replay and rebuild with a real matching Storage token, actual live transaction and unchanged original query/key. Empty initial history and scanned nonmatching history are both valid.",
+          "negative_plan": "For each reader path, omit exactly one required source range from an otherwise genuine coverage proof while keeping projection/cursors/token/key valid. Separately supply one internally valid same-shape token from a different Storage instance with its own coherent source proof, making only the binding to this checkpoint wrong. Do not combine a token mismatch with a damaged scan or stale CAS.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "artifacts_demonstration_video_failed.nonempty_last_event",
+          "predicate": "Each nonempty inline/external projection is the actual completed family payload of the last matching authenticated original event and joins its source/full-value receipt and Storage cursors.",
+          "positive_plan": "Read the genuine matching final event with nonnull paired cursors, source bytes and original full-value custody; resolve an oversized body through its exact completed schema. Repeat in each capture scope and the Project-only readiness scope.",
+          "negative_plan": "Use two independently valid same-family/scope/subject histories in the same Storage; bind one checkpoint to a source-backed body from the other valid event, keeping that body, its source and hashes internally coherent. Only the checkpoint-to-last-event relation is wrong. Separately test a foreign family or scope using internally valid source worlds, one relation per case; never leave copied source fields stale.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
         }
       ],
       "additional_positive_plans": [
@@ -744,7 +807,7 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Empty filtered result uses explicit {mode: empty}, paired null cursors and complete authenticated same-Storage coverage at the exact original query/token boundary; checkpoint CAS retry retains original custody.",
         "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
         "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
@@ -897,7 +960,7 @@
         },
         {
           "guard_id": "testing_capture_bookmarked.checkpoint",
-          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden.",
+          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden. Empty projection is exactly {mode: empty} with both last-event cursors null; each nonempty cursor and the inline/external body joins the same genuine last matching event.",
           "positive_plan": "Use independently source-backed valid original testing.capture.bookmarked at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -983,8 +1046,29 @@
           "guard_id": "testing_capture_bookmarked.phase_cas_publication",
           "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
           "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
-          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; one withdrawal predecessor-binding mismatch using a fully schema-valid, internally source-backed candidate; only its equality edge to the authenticated frozen predecessor is wrong. Do not clear one field into an invalid phase tuple, and do not combine a custody-binding mismatch with a CAS or publication defect. Cut each schema null/type implication independently, never the entire phase keyword.",
           "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_bookmarked.empty_cursor_shape",
+          "predicate": "Projection empty mode is paired independently with null last_event_id and null last_sequence_id; nonempty modes require each cursor nonnull.",
+          "positive_plan": "For every applicable scope, a complete authenticated scan with zero matches stores {mode: empty} and paired null cursors, including an index containing only nonmatching events. Independently use nonempty inline and external body controls with matching Storage cursors.",
+          "negative_plan": "From each valid empty control set only last_event_id, or only last_sequence_id (separate cases). From valid inline/external controls null only last_event_id, or only last_sequence_id (separate cases). These isolate the exact field implication; keep the body and other cursor unchanged. Separately remove the projection or add one forbidden property to empty mode. Semantic joins are conditional on the branch shape and are same-invariant duplicate sites only where they repeat that exact field predicate.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_bookmarked.empty_coverage",
+          "predicate": "An empty projection is accepted only after authenticated complete retained-source coverage at the exact current SP-278 same-Storage token boundary, on every reader path.",
+          "positive_plan": "Verify genuine complete empty coverage independently for read, advance, replay and rebuild with a real matching Storage token, actual live transaction and unchanged original query/key. Empty initial history and scanned nonmatching history are both valid.",
+          "negative_plan": "For each reader path, omit exactly one required source range from an otherwise genuine coverage proof while keeping projection/cursors/token/key valid. Separately supply one internally valid same-shape token from a different Storage instance with its own coherent source proof, making only the binding to this checkpoint wrong. Do not combine a token mismatch with a damaged scan or stale CAS.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_bookmarked.nonempty_last_event",
+          "predicate": "Each nonempty inline/external projection is the actual completed family payload of the last matching authenticated original event and joins its source/full-value receipt and Storage cursors.",
+          "positive_plan": "Read the genuine matching final event with nonnull paired cursors, source bytes and original full-value custody; resolve an oversized body through its exact completed schema. Repeat in each capture scope and the Project-only readiness scope.",
+          "negative_plan": "Use two independently valid same-family/scope/subject histories in the same Storage; bind one checkpoint to a source-backed body from the other valid event, keeping that body, its source and hashes internally coherent. Only the checkpoint-to-last-event relation is wrong. Separately test a foreign family or scope using internally valid source worlds, one relation per case; never leave copied source fields stale.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
         }
       ],
       "additional_positive_plans": [
@@ -993,7 +1077,7 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Empty filtered result uses explicit {mode: empty}, paired null cursors and complete authenticated same-Storage coverage at the exact original query/token boundary; checkpoint CAS retry retains original custody.",
         "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
         "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
@@ -1146,7 +1230,7 @@
         },
         {
           "guard_id": "testing_capture_clip_saved.checkpoint",
-          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden.",
+          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden. Empty projection is exactly {mode: empty} with both last-event cursors null; each nonempty cursor and the inline/external body joins the same genuine last matching event.",
           "positive_plan": "Use independently source-backed valid original testing.capture.clip_saved at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -1232,8 +1316,29 @@
           "guard_id": "testing_capture_clip_saved.phase_cas_publication",
           "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
           "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
-          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; one withdrawal predecessor-binding mismatch using a fully schema-valid, internally source-backed candidate; only its equality edge to the authenticated frozen predecessor is wrong. Do not clear one field into an invalid phase tuple, and do not combine a custody-binding mismatch with a CAS or publication defect. Cut each schema null/type implication independently, never the entire phase keyword.",
           "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_clip_saved.empty_cursor_shape",
+          "predicate": "Projection empty mode is paired independently with null last_event_id and null last_sequence_id; nonempty modes require each cursor nonnull.",
+          "positive_plan": "For every applicable scope, a complete authenticated scan with zero matches stores {mode: empty} and paired null cursors, including an index containing only nonmatching events. Independently use nonempty inline and external body controls with matching Storage cursors.",
+          "negative_plan": "From each valid empty control set only last_event_id, or only last_sequence_id (separate cases). From valid inline/external controls null only last_event_id, or only last_sequence_id (separate cases). These isolate the exact field implication; keep the body and other cursor unchanged. Separately remove the projection or add one forbidden property to empty mode. Semantic joins are conditional on the branch shape and are same-invariant duplicate sites only where they repeat that exact field predicate.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_clip_saved.empty_coverage",
+          "predicate": "An empty projection is accepted only after authenticated complete retained-source coverage at the exact current SP-278 same-Storage token boundary, on every reader path.",
+          "positive_plan": "Verify genuine complete empty coverage independently for read, advance, replay and rebuild with a real matching Storage token, actual live transaction and unchanged original query/key. Empty initial history and scanned nonmatching history are both valid.",
+          "negative_plan": "For each reader path, omit exactly one required source range from an otherwise genuine coverage proof while keeping projection/cursors/token/key valid. Separately supply one internally valid same-shape token from a different Storage instance with its own coherent source proof, making only the binding to this checkpoint wrong. Do not combine a token mismatch with a damaged scan or stale CAS.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_clip_saved.nonempty_last_event",
+          "predicate": "Each nonempty inline/external projection is the actual completed family payload of the last matching authenticated original event and joins its source/full-value receipt and Storage cursors.",
+          "positive_plan": "Read the genuine matching final event with nonnull paired cursors, source bytes and original full-value custody; resolve an oversized body through its exact completed schema. Repeat in each capture scope and the Project-only readiness scope.",
+          "negative_plan": "Use two independently valid same-family/scope/subject histories in the same Storage; bind one checkpoint to a source-backed body from the other valid event, keeping that body, its source and hashes internally coherent. Only the checkpoint-to-last-event relation is wrong. Separately test a foreign family or scope using internally valid source worlds, one relation per case; never leave copied source fields stale.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
         }
       ],
       "additional_positive_plans": [
@@ -1242,7 +1347,7 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Empty filtered result uses explicit {mode: empty}, paired null cursors and complete authenticated same-Storage coverage at the exact original query/token boundary; checkpoint CAS retry retains original custody.",
         "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
         "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
@@ -1395,7 +1500,7 @@
         },
         {
           "guard_id": "testing_capture_effective_quality_changed.checkpoint",
-          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden.",
+          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden. Empty projection is exactly {mode: empty} with both last-event cursors null; each nonempty cursor and the inline/external body joins the same genuine last matching event.",
           "positive_plan": "Use independently source-backed valid original testing.capture.effective_quality_changed at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -1481,8 +1586,29 @@
           "guard_id": "testing_capture_effective_quality_changed.phase_cas_publication",
           "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
           "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
-          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; one withdrawal predecessor-binding mismatch using a fully schema-valid, internally source-backed candidate; only its equality edge to the authenticated frozen predecessor is wrong. Do not clear one field into an invalid phase tuple, and do not combine a custody-binding mismatch with a CAS or publication defect. Cut each schema null/type implication independently, never the entire phase keyword.",
           "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_effective_quality_changed.empty_cursor_shape",
+          "predicate": "Projection empty mode is paired independently with null last_event_id and null last_sequence_id; nonempty modes require each cursor nonnull.",
+          "positive_plan": "For every applicable scope, a complete authenticated scan with zero matches stores {mode: empty} and paired null cursors, including an index containing only nonmatching events. Independently use nonempty inline and external body controls with matching Storage cursors.",
+          "negative_plan": "From each valid empty control set only last_event_id, or only last_sequence_id (separate cases). From valid inline/external controls null only last_event_id, or only last_sequence_id (separate cases). These isolate the exact field implication; keep the body and other cursor unchanged. Separately remove the projection or add one forbidden property to empty mode. Semantic joins are conditional on the branch shape and are same-invariant duplicate sites only where they repeat that exact field predicate.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_effective_quality_changed.empty_coverage",
+          "predicate": "An empty projection is accepted only after authenticated complete retained-source coverage at the exact current SP-278 same-Storage token boundary, on every reader path.",
+          "positive_plan": "Verify genuine complete empty coverage independently for read, advance, replay and rebuild with a real matching Storage token, actual live transaction and unchanged original query/key. Empty initial history and scanned nonmatching history are both valid.",
+          "negative_plan": "For each reader path, omit exactly one required source range from an otherwise genuine coverage proof while keeping projection/cursors/token/key valid. Separately supply one internally valid same-shape token from a different Storage instance with its own coherent source proof, making only the binding to this checkpoint wrong. Do not combine a token mismatch with a damaged scan or stale CAS.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_effective_quality_changed.nonempty_last_event",
+          "predicate": "Each nonempty inline/external projection is the actual completed family payload of the last matching authenticated original event and joins its source/full-value receipt and Storage cursors.",
+          "positive_plan": "Read the genuine matching final event with nonnull paired cursors, source bytes and original full-value custody; resolve an oversized body through its exact completed schema. Repeat in each capture scope and the Project-only readiness scope.",
+          "negative_plan": "Use two independently valid same-family/scope/subject histories in the same Storage; bind one checkpoint to a source-backed body from the other valid event, keeping that body, its source and hashes internally coherent. Only the checkpoint-to-last-event relation is wrong. Separately test a foreign family or scope using internally valid source worlds, one relation per case; never leave copied source fields stale.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
         }
       ],
       "additional_positive_plans": [
@@ -1491,7 +1617,7 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Empty filtered result uses explicit {mode: empty}, paired null cursors and complete authenticated same-Storage coverage at the exact original query/token boundary; checkpoint CAS retry retains original custody.",
         "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
         "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
@@ -1644,7 +1770,7 @@
         },
         {
           "guard_id": "testing_capture_health_degraded.checkpoint",
-          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden.",
+          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden. Empty projection is exactly {mode: empty} with both last-event cursors null; each nonempty cursor and the inline/external body joins the same genuine last matching event.",
           "positive_plan": "Use independently source-backed valid original testing.capture.health_degraded at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -1730,8 +1856,29 @@
           "guard_id": "testing_capture_health_degraded.phase_cas_publication",
           "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
           "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
-          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; one withdrawal predecessor-binding mismatch using a fully schema-valid, internally source-backed candidate; only its equality edge to the authenticated frozen predecessor is wrong. Do not clear one field into an invalid phase tuple, and do not combine a custody-binding mismatch with a CAS or publication defect. Cut each schema null/type implication independently, never the entire phase keyword.",
           "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_health_degraded.empty_cursor_shape",
+          "predicate": "Projection empty mode is paired independently with null last_event_id and null last_sequence_id; nonempty modes require each cursor nonnull.",
+          "positive_plan": "For every applicable scope, a complete authenticated scan with zero matches stores {mode: empty} and paired null cursors, including an index containing only nonmatching events. Independently use nonempty inline and external body controls with matching Storage cursors.",
+          "negative_plan": "From each valid empty control set only last_event_id, or only last_sequence_id (separate cases). From valid inline/external controls null only last_event_id, or only last_sequence_id (separate cases). These isolate the exact field implication; keep the body and other cursor unchanged. Separately remove the projection or add one forbidden property to empty mode. Semantic joins are conditional on the branch shape and are same-invariant duplicate sites only where they repeat that exact field predicate.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_health_degraded.empty_coverage",
+          "predicate": "An empty projection is accepted only after authenticated complete retained-source coverage at the exact current SP-278 same-Storage token boundary, on every reader path.",
+          "positive_plan": "Verify genuine complete empty coverage independently for read, advance, replay and rebuild with a real matching Storage token, actual live transaction and unchanged original query/key. Empty initial history and scanned nonmatching history are both valid.",
+          "negative_plan": "For each reader path, omit exactly one required source range from an otherwise genuine coverage proof while keeping projection/cursors/token/key valid. Separately supply one internally valid same-shape token from a different Storage instance with its own coherent source proof, making only the binding to this checkpoint wrong. Do not combine a token mismatch with a damaged scan or stale CAS.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_health_degraded.nonempty_last_event",
+          "predicate": "Each nonempty inline/external projection is the actual completed family payload of the last matching authenticated original event and joins its source/full-value receipt and Storage cursors.",
+          "positive_plan": "Read the genuine matching final event with nonnull paired cursors, source bytes and original full-value custody; resolve an oversized body through its exact completed schema. Repeat in each capture scope and the Project-only readiness scope.",
+          "negative_plan": "Use two independently valid same-family/scope/subject histories in the same Storage; bind one checkpoint to a source-backed body from the other valid event, keeping that body, its source and hashes internally coherent. Only the checkpoint-to-last-event relation is wrong. Separately test a foreign family or scope using internally valid source worlds, one relation per case; never leave copied source fields stale.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
         }
       ],
       "additional_positive_plans": [
@@ -1740,7 +1887,7 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Empty filtered result uses explicit {mode: empty}, paired null cursors and complete authenticated same-Storage coverage at the exact original query/token boundary; checkpoint CAS retry retains original custody.",
         "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
         "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
@@ -1893,7 +2040,7 @@
         },
         {
           "guard_id": "testing_capture_health_recovered.checkpoint",
-          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden.",
+          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden. Empty projection is exactly {mode: empty} with both last-event cursors null; each nonempty cursor and the inline/external body joins the same genuine last matching event.",
           "positive_plan": "Use independently source-backed valid original testing.capture.health_recovered at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -1979,8 +2126,29 @@
           "guard_id": "testing_capture_health_recovered.phase_cas_publication",
           "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
           "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
-          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; one withdrawal predecessor-binding mismatch using a fully schema-valid, internally source-backed candidate; only its equality edge to the authenticated frozen predecessor is wrong. Do not clear one field into an invalid phase tuple, and do not combine a custody-binding mismatch with a CAS or publication defect. Cut each schema null/type implication independently, never the entire phase keyword.",
           "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_health_recovered.empty_cursor_shape",
+          "predicate": "Projection empty mode is paired independently with null last_event_id and null last_sequence_id; nonempty modes require each cursor nonnull.",
+          "positive_plan": "For every applicable scope, a complete authenticated scan with zero matches stores {mode: empty} and paired null cursors, including an index containing only nonmatching events. Independently use nonempty inline and external body controls with matching Storage cursors.",
+          "negative_plan": "From each valid empty control set only last_event_id, or only last_sequence_id (separate cases). From valid inline/external controls null only last_event_id, or only last_sequence_id (separate cases). These isolate the exact field implication; keep the body and other cursor unchanged. Separately remove the projection or add one forbidden property to empty mode. Semantic joins are conditional on the branch shape and are same-invariant duplicate sites only where they repeat that exact field predicate.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_health_recovered.empty_coverage",
+          "predicate": "An empty projection is accepted only after authenticated complete retained-source coverage at the exact current SP-278 same-Storage token boundary, on every reader path.",
+          "positive_plan": "Verify genuine complete empty coverage independently for read, advance, replay and rebuild with a real matching Storage token, actual live transaction and unchanged original query/key. Empty initial history and scanned nonmatching history are both valid.",
+          "negative_plan": "For each reader path, omit exactly one required source range from an otherwise genuine coverage proof while keeping projection/cursors/token/key valid. Separately supply one internally valid same-shape token from a different Storage instance with its own coherent source proof, making only the binding to this checkpoint wrong. Do not combine a token mismatch with a damaged scan or stale CAS.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_health_recovered.nonempty_last_event",
+          "predicate": "Each nonempty inline/external projection is the actual completed family payload of the last matching authenticated original event and joins its source/full-value receipt and Storage cursors.",
+          "positive_plan": "Read the genuine matching final event with nonnull paired cursors, source bytes and original full-value custody; resolve an oversized body through its exact completed schema. Repeat in each capture scope and the Project-only readiness scope.",
+          "negative_plan": "Use two independently valid same-family/scope/subject histories in the same Storage; bind one checkpoint to a source-backed body from the other valid event, keeping that body, its source and hashes internally coherent. Only the checkpoint-to-last-event relation is wrong. Separately test a foreign family or scope using internally valid source worlds, one relation per case; never leave copied source fields stale.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
         }
       ],
       "additional_positive_plans": [
@@ -1989,7 +2157,7 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Empty filtered result uses explicit {mode: empty}, paired null cursors and complete authenticated same-Storage coverage at the exact original query/token boundary; checkpoint CAS retry retains original custody.",
         "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
         "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
@@ -2142,7 +2310,7 @@
         },
         {
           "guard_id": "testing_capture_interrupted.checkpoint",
-          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden.",
+          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden. Empty projection is exactly {mode: empty} with both last-event cursors null; each nonempty cursor and the inline/external body joins the same genuine last matching event.",
           "positive_plan": "Use independently source-backed valid original testing.capture.interrupted at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -2228,8 +2396,29 @@
           "guard_id": "testing_capture_interrupted.phase_cas_publication",
           "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
           "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
-          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; one withdrawal predecessor-binding mismatch using a fully schema-valid, internally source-backed candidate; only its equality edge to the authenticated frozen predecessor is wrong. Do not clear one field into an invalid phase tuple, and do not combine a custody-binding mismatch with a CAS or publication defect. Cut each schema null/type implication independently, never the entire phase keyword.",
           "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_interrupted.empty_cursor_shape",
+          "predicate": "Projection empty mode is paired independently with null last_event_id and null last_sequence_id; nonempty modes require each cursor nonnull.",
+          "positive_plan": "For every applicable scope, a complete authenticated scan with zero matches stores {mode: empty} and paired null cursors, including an index containing only nonmatching events. Independently use nonempty inline and external body controls with matching Storage cursors.",
+          "negative_plan": "From each valid empty control set only last_event_id, or only last_sequence_id (separate cases). From valid inline/external controls null only last_event_id, or only last_sequence_id (separate cases). These isolate the exact field implication; keep the body and other cursor unchanged. Separately remove the projection or add one forbidden property to empty mode. Semantic joins are conditional on the branch shape and are same-invariant duplicate sites only where they repeat that exact field predicate.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_interrupted.empty_coverage",
+          "predicate": "An empty projection is accepted only after authenticated complete retained-source coverage at the exact current SP-278 same-Storage token boundary, on every reader path.",
+          "positive_plan": "Verify genuine complete empty coverage independently for read, advance, replay and rebuild with a real matching Storage token, actual live transaction and unchanged original query/key. Empty initial history and scanned nonmatching history are both valid.",
+          "negative_plan": "For each reader path, omit exactly one required source range from an otherwise genuine coverage proof while keeping projection/cursors/token/key valid. Separately supply one internally valid same-shape token from a different Storage instance with its own coherent source proof, making only the binding to this checkpoint wrong. Do not combine a token mismatch with a damaged scan or stale CAS.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_interrupted.nonempty_last_event",
+          "predicate": "Each nonempty inline/external projection is the actual completed family payload of the last matching authenticated original event and joins its source/full-value receipt and Storage cursors.",
+          "positive_plan": "Read the genuine matching final event with nonnull paired cursors, source bytes and original full-value custody; resolve an oversized body through its exact completed schema. Repeat in each capture scope and the Project-only readiness scope.",
+          "negative_plan": "Use two independently valid same-family/scope/subject histories in the same Storage; bind one checkpoint to a source-backed body from the other valid event, keeping that body, its source and hashes internally coherent. Only the checkpoint-to-last-event relation is wrong. Separately test a foreign family or scope using internally valid source worlds, one relation per case; never leave copied source fields stale.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
         }
       ],
       "additional_positive_plans": [
@@ -2238,7 +2427,7 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Empty filtered result uses explicit {mode: empty}, paired null cursors and complete authenticated same-Storage coverage at the exact original query/token boundary; checkpoint CAS retry retains original custody.",
         "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
         "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
@@ -2391,7 +2580,7 @@
         },
         {
           "guard_id": "testing_capture_paused.checkpoint",
-          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden.",
+          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden. Empty projection is exactly {mode: empty} with both last-event cursors null; each nonempty cursor and the inline/external body joins the same genuine last matching event.",
           "positive_plan": "Use independently source-backed valid original testing.capture.paused at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -2477,8 +2666,29 @@
           "guard_id": "testing_capture_paused.phase_cas_publication",
           "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
           "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
-          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; one withdrawal predecessor-binding mismatch using a fully schema-valid, internally source-backed candidate; only its equality edge to the authenticated frozen predecessor is wrong. Do not clear one field into an invalid phase tuple, and do not combine a custody-binding mismatch with a CAS or publication defect. Cut each schema null/type implication independently, never the entire phase keyword.",
           "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_paused.empty_cursor_shape",
+          "predicate": "Projection empty mode is paired independently with null last_event_id and null last_sequence_id; nonempty modes require each cursor nonnull.",
+          "positive_plan": "For every applicable scope, a complete authenticated scan with zero matches stores {mode: empty} and paired null cursors, including an index containing only nonmatching events. Independently use nonempty inline and external body controls with matching Storage cursors.",
+          "negative_plan": "From each valid empty control set only last_event_id, or only last_sequence_id (separate cases). From valid inline/external controls null only last_event_id, or only last_sequence_id (separate cases). These isolate the exact field implication; keep the body and other cursor unchanged. Separately remove the projection or add one forbidden property to empty mode. Semantic joins are conditional on the branch shape and are same-invariant duplicate sites only where they repeat that exact field predicate.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_paused.empty_coverage",
+          "predicate": "An empty projection is accepted only after authenticated complete retained-source coverage at the exact current SP-278 same-Storage token boundary, on every reader path.",
+          "positive_plan": "Verify genuine complete empty coverage independently for read, advance, replay and rebuild with a real matching Storage token, actual live transaction and unchanged original query/key. Empty initial history and scanned nonmatching history are both valid.",
+          "negative_plan": "For each reader path, omit exactly one required source range from an otherwise genuine coverage proof while keeping projection/cursors/token/key valid. Separately supply one internally valid same-shape token from a different Storage instance with its own coherent source proof, making only the binding to this checkpoint wrong. Do not combine a token mismatch with a damaged scan or stale CAS.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_paused.nonempty_last_event",
+          "predicate": "Each nonempty inline/external projection is the actual completed family payload of the last matching authenticated original event and joins its source/full-value receipt and Storage cursors.",
+          "positive_plan": "Read the genuine matching final event with nonnull paired cursors, source bytes and original full-value custody; resolve an oversized body through its exact completed schema. Repeat in each capture scope and the Project-only readiness scope.",
+          "negative_plan": "Use two independently valid same-family/scope/subject histories in the same Storage; bind one checkpoint to a source-backed body from the other valid event, keeping that body, its source and hashes internally coherent. Only the checkpoint-to-last-event relation is wrong. Separately test a foreign family or scope using internally valid source worlds, one relation per case; never leave copied source fields stale.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
         }
       ],
       "additional_positive_plans": [
@@ -2487,7 +2697,7 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Empty filtered result uses explicit {mode: empty}, paired null cursors and complete authenticated same-Storage coverage at the exact original query/token boundary; checkpoint CAS retry retains original custody.",
         "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
         "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
@@ -2640,7 +2850,7 @@
         },
         {
           "guard_id": "testing_capture_provenance_rejected.checkpoint",
-          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden.",
+          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden. Empty projection is exactly {mode: empty} with both last-event cursors null; each nonempty cursor and the inline/external body joins the same genuine last matching event.",
           "positive_plan": "Use independently source-backed valid original testing.capture.provenance_rejected at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -2726,8 +2936,29 @@
           "guard_id": "testing_capture_provenance_rejected.phase_cas_publication",
           "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
           "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
-          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; one withdrawal predecessor-binding mismatch using a fully schema-valid, internally source-backed candidate; only its equality edge to the authenticated frozen predecessor is wrong. Do not clear one field into an invalid phase tuple, and do not combine a custody-binding mismatch with a CAS or publication defect. Cut each schema null/type implication independently, never the entire phase keyword.",
           "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_provenance_rejected.empty_cursor_shape",
+          "predicate": "Projection empty mode is paired independently with null last_event_id and null last_sequence_id; nonempty modes require each cursor nonnull.",
+          "positive_plan": "For every applicable scope, a complete authenticated scan with zero matches stores {mode: empty} and paired null cursors, including an index containing only nonmatching events. Independently use nonempty inline and external body controls with matching Storage cursors.",
+          "negative_plan": "From each valid empty control set only last_event_id, or only last_sequence_id (separate cases). From valid inline/external controls null only last_event_id, or only last_sequence_id (separate cases). These isolate the exact field implication; keep the body and other cursor unchanged. Separately remove the projection or add one forbidden property to empty mode. Semantic joins are conditional on the branch shape and are same-invariant duplicate sites only where they repeat that exact field predicate.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_provenance_rejected.empty_coverage",
+          "predicate": "An empty projection is accepted only after authenticated complete retained-source coverage at the exact current SP-278 same-Storage token boundary, on every reader path.",
+          "positive_plan": "Verify genuine complete empty coverage independently for read, advance, replay and rebuild with a real matching Storage token, actual live transaction and unchanged original query/key. Empty initial history and scanned nonmatching history are both valid.",
+          "negative_plan": "For each reader path, omit exactly one required source range from an otherwise genuine coverage proof while keeping projection/cursors/token/key valid. Separately supply one internally valid same-shape token from a different Storage instance with its own coherent source proof, making only the binding to this checkpoint wrong. Do not combine a token mismatch with a damaged scan or stale CAS.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_provenance_rejected.nonempty_last_event",
+          "predicate": "Each nonempty inline/external projection is the actual completed family payload of the last matching authenticated original event and joins its source/full-value receipt and Storage cursors.",
+          "positive_plan": "Read the genuine matching final event with nonnull paired cursors, source bytes and original full-value custody; resolve an oversized body through its exact completed schema. Repeat in each capture scope and the Project-only readiness scope.",
+          "negative_plan": "Use two independently valid same-family/scope/subject histories in the same Storage; bind one checkpoint to a source-backed body from the other valid event, keeping that body, its source and hashes internally coherent. Only the checkpoint-to-last-event relation is wrong. Separately test a foreign family or scope using internally valid source worlds, one relation per case; never leave copied source fields stale.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
         }
       ],
       "additional_positive_plans": [
@@ -2736,7 +2967,7 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Empty filtered result uses explicit {mode: empty}, paired null cursors and complete authenticated same-Storage coverage at the exact original query/token boundary; checkpoint CAS retry retains original custody.",
         "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
         "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
@@ -2889,7 +3120,7 @@
         },
         {
           "guard_id": "testing_capture_provenance_verified.checkpoint",
-          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden.",
+          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden. Empty projection is exactly {mode: empty} with both last-event cursors null; each nonempty cursor and the inline/external body joins the same genuine last matching event.",
           "positive_plan": "Use independently source-backed valid original testing.capture.provenance_verified at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -2975,8 +3206,29 @@
           "guard_id": "testing_capture_provenance_verified.phase_cas_publication",
           "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
           "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
-          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; one withdrawal predecessor-binding mismatch using a fully schema-valid, internally source-backed candidate; only its equality edge to the authenticated frozen predecessor is wrong. Do not clear one field into an invalid phase tuple, and do not combine a custody-binding mismatch with a CAS or publication defect. Cut each schema null/type implication independently, never the entire phase keyword.",
           "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_provenance_verified.empty_cursor_shape",
+          "predicate": "Projection empty mode is paired independently with null last_event_id and null last_sequence_id; nonempty modes require each cursor nonnull.",
+          "positive_plan": "For every applicable scope, a complete authenticated scan with zero matches stores {mode: empty} and paired null cursors, including an index containing only nonmatching events. Independently use nonempty inline and external body controls with matching Storage cursors.",
+          "negative_plan": "From each valid empty control set only last_event_id, or only last_sequence_id (separate cases). From valid inline/external controls null only last_event_id, or only last_sequence_id (separate cases). These isolate the exact field implication; keep the body and other cursor unchanged. Separately remove the projection or add one forbidden property to empty mode. Semantic joins are conditional on the branch shape and are same-invariant duplicate sites only where they repeat that exact field predicate.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_provenance_verified.empty_coverage",
+          "predicate": "An empty projection is accepted only after authenticated complete retained-source coverage at the exact current SP-278 same-Storage token boundary, on every reader path.",
+          "positive_plan": "Verify genuine complete empty coverage independently for read, advance, replay and rebuild with a real matching Storage token, actual live transaction and unchanged original query/key. Empty initial history and scanned nonmatching history are both valid.",
+          "negative_plan": "For each reader path, omit exactly one required source range from an otherwise genuine coverage proof while keeping projection/cursors/token/key valid. Separately supply one internally valid same-shape token from a different Storage instance with its own coherent source proof, making only the binding to this checkpoint wrong. Do not combine a token mismatch with a damaged scan or stale CAS.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_provenance_verified.nonempty_last_event",
+          "predicate": "Each nonempty inline/external projection is the actual completed family payload of the last matching authenticated original event and joins its source/full-value receipt and Storage cursors.",
+          "positive_plan": "Read the genuine matching final event with nonnull paired cursors, source bytes and original full-value custody; resolve an oversized body through its exact completed schema. Repeat in each capture scope and the Project-only readiness scope.",
+          "negative_plan": "Use two independently valid same-family/scope/subject histories in the same Storage; bind one checkpoint to a source-backed body from the other valid event, keeping that body, its source and hashes internally coherent. Only the checkpoint-to-last-event relation is wrong. Separately test a foreign family or scope using internally valid source worlds, one relation per case; never leave copied source fields stale.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
         }
       ],
       "additional_positive_plans": [
@@ -2985,7 +3237,7 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Empty filtered result uses explicit {mode: empty}, paired null cursors and complete authenticated same-Storage coverage at the exact original query/token boundary; checkpoint CAS retry retains original custody.",
         "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
         "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
@@ -3138,7 +3390,7 @@
         },
         {
           "guard_id": "testing_capture_redaction_applied.checkpoint",
-          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden.",
+          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden. Empty projection is exactly {mode: empty} with both last-event cursors null; each nonempty cursor and the inline/external body joins the same genuine last matching event.",
           "positive_plan": "Use independently source-backed valid original testing.capture.redaction_applied at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -3231,8 +3483,29 @@
           "guard_id": "testing_capture_redaction_applied.phase_cas_publication",
           "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
           "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
-          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; one withdrawal predecessor-binding mismatch using a fully schema-valid, internally source-backed candidate; only its equality edge to the authenticated frozen predecessor is wrong. Do not clear one field into an invalid phase tuple, and do not combine a custody-binding mismatch with a CAS or publication defect. Cut each schema null/type implication independently, never the entire phase keyword.",
           "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_redaction_applied.empty_cursor_shape",
+          "predicate": "Projection empty mode is paired independently with null last_event_id and null last_sequence_id; nonempty modes require each cursor nonnull.",
+          "positive_plan": "For every applicable scope, a complete authenticated scan with zero matches stores {mode: empty} and paired null cursors, including an index containing only nonmatching events. Independently use nonempty inline and external body controls with matching Storage cursors.",
+          "negative_plan": "From each valid empty control set only last_event_id, or only last_sequence_id (separate cases). From valid inline/external controls null only last_event_id, or only last_sequence_id (separate cases). These isolate the exact field implication; keep the body and other cursor unchanged. Separately remove the projection or add one forbidden property to empty mode. Semantic joins are conditional on the branch shape and are same-invariant duplicate sites only where they repeat that exact field predicate.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_redaction_applied.empty_coverage",
+          "predicate": "An empty projection is accepted only after authenticated complete retained-source coverage at the exact current SP-278 same-Storage token boundary, on every reader path.",
+          "positive_plan": "Verify genuine complete empty coverage independently for read, advance, replay and rebuild with a real matching Storage token, actual live transaction and unchanged original query/key. Empty initial history and scanned nonmatching history are both valid.",
+          "negative_plan": "For each reader path, omit exactly one required source range from an otherwise genuine coverage proof while keeping projection/cursors/token/key valid. Separately supply one internally valid same-shape token from a different Storage instance with its own coherent source proof, making only the binding to this checkpoint wrong. Do not combine a token mismatch with a damaged scan or stale CAS.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_redaction_applied.nonempty_last_event",
+          "predicate": "Each nonempty inline/external projection is the actual completed family payload of the last matching authenticated original event and joins its source/full-value receipt and Storage cursors.",
+          "positive_plan": "Read the genuine matching final event with nonnull paired cursors, source bytes and original full-value custody; resolve an oversized body through its exact completed schema. Repeat in each capture scope and the Project-only readiness scope.",
+          "negative_plan": "Use two independently valid same-family/scope/subject histories in the same Storage; bind one checkpoint to a source-backed body from the other valid event, keeping that body, its source and hashes internally coherent. Only the checkpoint-to-last-event relation is wrong. Separately test a foreign family or scope using internally valid source worlds, one relation per case; never leave copied source fields stale.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
         }
       ],
       "additional_positive_plans": [
@@ -3241,7 +3514,7 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Empty filtered result uses explicit {mode: empty}, paired null cursors and complete authenticated same-Storage coverage at the exact original query/token boundary; checkpoint CAS retry retains original custody.",
         "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
         "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
@@ -3394,7 +3667,7 @@
         },
         {
           "guard_id": "testing_capture_resumed.checkpoint",
-          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden.",
+          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden. Empty projection is exactly {mode: empty} with both last-event cursors null; each nonempty cursor and the inline/external body joins the same genuine last matching event.",
           "positive_plan": "Use independently source-backed valid original testing.capture.resumed at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -3480,8 +3753,29 @@
           "guard_id": "testing_capture_resumed.phase_cas_publication",
           "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
           "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
-          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; one withdrawal predecessor-binding mismatch using a fully schema-valid, internally source-backed candidate; only its equality edge to the authenticated frozen predecessor is wrong. Do not clear one field into an invalid phase tuple, and do not combine a custody-binding mismatch with a CAS or publication defect. Cut each schema null/type implication independently, never the entire phase keyword.",
           "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_resumed.empty_cursor_shape",
+          "predicate": "Projection empty mode is paired independently with null last_event_id and null last_sequence_id; nonempty modes require each cursor nonnull.",
+          "positive_plan": "For every applicable scope, a complete authenticated scan with zero matches stores {mode: empty} and paired null cursors, including an index containing only nonmatching events. Independently use nonempty inline and external body controls with matching Storage cursors.",
+          "negative_plan": "From each valid empty control set only last_event_id, or only last_sequence_id (separate cases). From valid inline/external controls null only last_event_id, or only last_sequence_id (separate cases). These isolate the exact field implication; keep the body and other cursor unchanged. Separately remove the projection or add one forbidden property to empty mode. Semantic joins are conditional on the branch shape and are same-invariant duplicate sites only where they repeat that exact field predicate.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_resumed.empty_coverage",
+          "predicate": "An empty projection is accepted only after authenticated complete retained-source coverage at the exact current SP-278 same-Storage token boundary, on every reader path.",
+          "positive_plan": "Verify genuine complete empty coverage independently for read, advance, replay and rebuild with a real matching Storage token, actual live transaction and unchanged original query/key. Empty initial history and scanned nonmatching history are both valid.",
+          "negative_plan": "For each reader path, omit exactly one required source range from an otherwise genuine coverage proof while keeping projection/cursors/token/key valid. Separately supply one internally valid same-shape token from a different Storage instance with its own coherent source proof, making only the binding to this checkpoint wrong. Do not combine a token mismatch with a damaged scan or stale CAS.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_resumed.nonempty_last_event",
+          "predicate": "Each nonempty inline/external projection is the actual completed family payload of the last matching authenticated original event and joins its source/full-value receipt and Storage cursors.",
+          "positive_plan": "Read the genuine matching final event with nonnull paired cursors, source bytes and original full-value custody; resolve an oversized body through its exact completed schema. Repeat in each capture scope and the Project-only readiness scope.",
+          "negative_plan": "Use two independently valid same-family/scope/subject histories in the same Storage; bind one checkpoint to a source-backed body from the other valid event, keeping that body, its source and hashes internally coherent. Only the checkpoint-to-last-event relation is wrong. Separately test a foreign family or scope using internally valid source worlds, one relation per case; never leave copied source fields stale.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
         }
       ],
       "additional_positive_plans": [
@@ -3490,7 +3784,7 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Empty filtered result uses explicit {mode: empty}, paired null cursors and complete authenticated same-Storage coverage at the exact original query/token boundary; checkpoint CAS retry retains original custody.",
         "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
         "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
@@ -3643,7 +3937,7 @@
         },
         {
           "guard_id": "testing_capture_segment_corrupt.checkpoint",
-          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden.",
+          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden. Empty projection is exactly {mode: empty} with both last-event cursors null; each nonempty cursor and the inline/external body joins the same genuine last matching event.",
           "positive_plan": "Use independently source-backed valid original testing.capture.segment_corrupt at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -3729,8 +4023,29 @@
           "guard_id": "testing_capture_segment_corrupt.phase_cas_publication",
           "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
           "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
-          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; one withdrawal predecessor-binding mismatch using a fully schema-valid, internally source-backed candidate; only its equality edge to the authenticated frozen predecessor is wrong. Do not clear one field into an invalid phase tuple, and do not combine a custody-binding mismatch with a CAS or publication defect. Cut each schema null/type implication independently, never the entire phase keyword.",
           "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_segment_corrupt.empty_cursor_shape",
+          "predicate": "Projection empty mode is paired independently with null last_event_id and null last_sequence_id; nonempty modes require each cursor nonnull.",
+          "positive_plan": "For every applicable scope, a complete authenticated scan with zero matches stores {mode: empty} and paired null cursors, including an index containing only nonmatching events. Independently use nonempty inline and external body controls with matching Storage cursors.",
+          "negative_plan": "From each valid empty control set only last_event_id, or only last_sequence_id (separate cases). From valid inline/external controls null only last_event_id, or only last_sequence_id (separate cases). These isolate the exact field implication; keep the body and other cursor unchanged. Separately remove the projection or add one forbidden property to empty mode. Semantic joins are conditional on the branch shape and are same-invariant duplicate sites only where they repeat that exact field predicate.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_segment_corrupt.empty_coverage",
+          "predicate": "An empty projection is accepted only after authenticated complete retained-source coverage at the exact current SP-278 same-Storage token boundary, on every reader path.",
+          "positive_plan": "Verify genuine complete empty coverage independently for read, advance, replay and rebuild with a real matching Storage token, actual live transaction and unchanged original query/key. Empty initial history and scanned nonmatching history are both valid.",
+          "negative_plan": "For each reader path, omit exactly one required source range from an otherwise genuine coverage proof while keeping projection/cursors/token/key valid. Separately supply one internally valid same-shape token from a different Storage instance with its own coherent source proof, making only the binding to this checkpoint wrong. Do not combine a token mismatch with a damaged scan or stale CAS.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_segment_corrupt.nonempty_last_event",
+          "predicate": "Each nonempty inline/external projection is the actual completed family payload of the last matching authenticated original event and joins its source/full-value receipt and Storage cursors.",
+          "positive_plan": "Read the genuine matching final event with nonnull paired cursors, source bytes and original full-value custody; resolve an oversized body through its exact completed schema. Repeat in each capture scope and the Project-only readiness scope.",
+          "negative_plan": "Use two independently valid same-family/scope/subject histories in the same Storage; bind one checkpoint to a source-backed body from the other valid event, keeping that body, its source and hashes internally coherent. Only the checkpoint-to-last-event relation is wrong. Separately test a foreign family or scope using internally valid source worlds, one relation per case; never leave copied source fields stale.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
         }
       ],
       "additional_positive_plans": [
@@ -3739,7 +4054,7 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Empty filtered result uses explicit {mode: empty}, paired null cursors and complete authenticated same-Storage coverage at the exact original query/token boundary; checkpoint CAS retry retains original custody.",
         "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
         "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
@@ -3892,7 +4207,7 @@
         },
         {
           "guard_id": "testing_capture_segment_finalized.checkpoint",
-          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden.",
+          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden. Empty projection is exactly {mode: empty} with both last-event cursors null; each nonempty cursor and the inline/external body joins the same genuine last matching event.",
           "positive_plan": "Use independently source-backed valid original testing.capture.segment_finalized at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -3978,8 +4293,29 @@
           "guard_id": "testing_capture_segment_finalized.phase_cas_publication",
           "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
           "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
-          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; one withdrawal predecessor-binding mismatch using a fully schema-valid, internally source-backed candidate; only its equality edge to the authenticated frozen predecessor is wrong. Do not clear one field into an invalid phase tuple, and do not combine a custody-binding mismatch with a CAS or publication defect. Cut each schema null/type implication independently, never the entire phase keyword.",
           "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_segment_finalized.empty_cursor_shape",
+          "predicate": "Projection empty mode is paired independently with null last_event_id and null last_sequence_id; nonempty modes require each cursor nonnull.",
+          "positive_plan": "For every applicable scope, a complete authenticated scan with zero matches stores {mode: empty} and paired null cursors, including an index containing only nonmatching events. Independently use nonempty inline and external body controls with matching Storage cursors.",
+          "negative_plan": "From each valid empty control set only last_event_id, or only last_sequence_id (separate cases). From valid inline/external controls null only last_event_id, or only last_sequence_id (separate cases). These isolate the exact field implication; keep the body and other cursor unchanged. Separately remove the projection or add one forbidden property to empty mode. Semantic joins are conditional on the branch shape and are same-invariant duplicate sites only where they repeat that exact field predicate.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_segment_finalized.empty_coverage",
+          "predicate": "An empty projection is accepted only after authenticated complete retained-source coverage at the exact current SP-278 same-Storage token boundary, on every reader path.",
+          "positive_plan": "Verify genuine complete empty coverage independently for read, advance, replay and rebuild with a real matching Storage token, actual live transaction and unchanged original query/key. Empty initial history and scanned nonmatching history are both valid.",
+          "negative_plan": "For each reader path, omit exactly one required source range from an otherwise genuine coverage proof while keeping projection/cursors/token/key valid. Separately supply one internally valid same-shape token from a different Storage instance with its own coherent source proof, making only the binding to this checkpoint wrong. Do not combine a token mismatch with a damaged scan or stale CAS.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_segment_finalized.nonempty_last_event",
+          "predicate": "Each nonempty inline/external projection is the actual completed family payload of the last matching authenticated original event and joins its source/full-value receipt and Storage cursors.",
+          "positive_plan": "Read the genuine matching final event with nonnull paired cursors, source bytes and original full-value custody; resolve an oversized body through its exact completed schema. Repeat in each capture scope and the Project-only readiness scope.",
+          "negative_plan": "Use two independently valid same-family/scope/subject histories in the same Storage; bind one checkpoint to a source-backed body from the other valid event, keeping that body, its source and hashes internally coherent. Only the checkpoint-to-last-event relation is wrong. Separately test a foreign family or scope using internally valid source worlds, one relation per case; never leave copied source fields stale.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
         }
       ],
       "additional_positive_plans": [
@@ -3988,7 +4324,7 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Empty filtered result uses explicit {mode: empty}, paired null cursors and complete authenticated same-Storage coverage at the exact original query/token boundary; checkpoint CAS retry retains original custody.",
         "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
         "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
@@ -4141,7 +4477,7 @@
         },
         {
           "guard_id": "testing_capture_segment_recovered.checkpoint",
-          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden.",
+          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden. Empty projection is exactly {mode: empty} with both last-event cursors null; each nonempty cursor and the inline/external body joins the same genuine last matching event.",
           "positive_plan": "Use independently source-backed valid original testing.capture.segment_recovered at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -4227,8 +4563,29 @@
           "guard_id": "testing_capture_segment_recovered.phase_cas_publication",
           "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
           "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
-          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; one withdrawal predecessor-binding mismatch using a fully schema-valid, internally source-backed candidate; only its equality edge to the authenticated frozen predecessor is wrong. Do not clear one field into an invalid phase tuple, and do not combine a custody-binding mismatch with a CAS or publication defect. Cut each schema null/type implication independently, never the entire phase keyword.",
           "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_segment_recovered.empty_cursor_shape",
+          "predicate": "Projection empty mode is paired independently with null last_event_id and null last_sequence_id; nonempty modes require each cursor nonnull.",
+          "positive_plan": "For every applicable scope, a complete authenticated scan with zero matches stores {mode: empty} and paired null cursors, including an index containing only nonmatching events. Independently use nonempty inline and external body controls with matching Storage cursors.",
+          "negative_plan": "From each valid empty control set only last_event_id, or only last_sequence_id (separate cases). From valid inline/external controls null only last_event_id, or only last_sequence_id (separate cases). These isolate the exact field implication; keep the body and other cursor unchanged. Separately remove the projection or add one forbidden property to empty mode. Semantic joins are conditional on the branch shape and are same-invariant duplicate sites only where they repeat that exact field predicate.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_segment_recovered.empty_coverage",
+          "predicate": "An empty projection is accepted only after authenticated complete retained-source coverage at the exact current SP-278 same-Storage token boundary, on every reader path.",
+          "positive_plan": "Verify genuine complete empty coverage independently for read, advance, replay and rebuild with a real matching Storage token, actual live transaction and unchanged original query/key. Empty initial history and scanned nonmatching history are both valid.",
+          "negative_plan": "For each reader path, omit exactly one required source range from an otherwise genuine coverage proof while keeping projection/cursors/token/key valid. Separately supply one internally valid same-shape token from a different Storage instance with its own coherent source proof, making only the binding to this checkpoint wrong. Do not combine a token mismatch with a damaged scan or stale CAS.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_segment_recovered.nonempty_last_event",
+          "predicate": "Each nonempty inline/external projection is the actual completed family payload of the last matching authenticated original event and joins its source/full-value receipt and Storage cursors.",
+          "positive_plan": "Read the genuine matching final event with nonnull paired cursors, source bytes and original full-value custody; resolve an oversized body through its exact completed schema. Repeat in each capture scope and the Project-only readiness scope.",
+          "negative_plan": "Use two independently valid same-family/scope/subject histories in the same Storage; bind one checkpoint to a source-backed body from the other valid event, keeping that body, its source and hashes internally coherent. Only the checkpoint-to-last-event relation is wrong. Separately test a foreign family or scope using internally valid source worlds, one relation per case; never leave copied source fields stale.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
         }
       ],
       "additional_positive_plans": [
@@ -4237,7 +4594,7 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Empty filtered result uses explicit {mode: empty}, paired null cursors and complete authenticated same-Storage coverage at the exact original query/token boundary; checkpoint CAS retry retains original custody.",
         "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
         "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
@@ -4390,7 +4747,7 @@
         },
         {
           "guard_id": "testing_capture_started.checkpoint",
-          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden.",
+          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden. Empty projection is exactly {mode: empty} with both last-event cursors null; each nonempty cursor and the inline/external body joins the same genuine last matching event.",
           "positive_plan": "Use independently source-backed valid original testing.capture.started at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -4483,8 +4840,29 @@
           "guard_id": "testing_capture_started.phase_cas_publication",
           "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
           "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
-          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; one withdrawal predecessor-binding mismatch using a fully schema-valid, internally source-backed candidate; only its equality edge to the authenticated frozen predecessor is wrong. Do not clear one field into an invalid phase tuple, and do not combine a custody-binding mismatch with a CAS or publication defect. Cut each schema null/type implication independently, never the entire phase keyword.",
           "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_started.empty_cursor_shape",
+          "predicate": "Projection empty mode is paired independently with null last_event_id and null last_sequence_id; nonempty modes require each cursor nonnull.",
+          "positive_plan": "For every applicable scope, a complete authenticated scan with zero matches stores {mode: empty} and paired null cursors, including an index containing only nonmatching events. Independently use nonempty inline and external body controls with matching Storage cursors.",
+          "negative_plan": "From each valid empty control set only last_event_id, or only last_sequence_id (separate cases). From valid inline/external controls null only last_event_id, or only last_sequence_id (separate cases). These isolate the exact field implication; keep the body and other cursor unchanged. Separately remove the projection or add one forbidden property to empty mode. Semantic joins are conditional on the branch shape and are same-invariant duplicate sites only where they repeat that exact field predicate.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_started.empty_coverage",
+          "predicate": "An empty projection is accepted only after authenticated complete retained-source coverage at the exact current SP-278 same-Storage token boundary, on every reader path.",
+          "positive_plan": "Verify genuine complete empty coverage independently for read, advance, replay and rebuild with a real matching Storage token, actual live transaction and unchanged original query/key. Empty initial history and scanned nonmatching history are both valid.",
+          "negative_plan": "For each reader path, omit exactly one required source range from an otherwise genuine coverage proof while keeping projection/cursors/token/key valid. Separately supply one internally valid same-shape token from a different Storage instance with its own coherent source proof, making only the binding to this checkpoint wrong. Do not combine a token mismatch with a damaged scan or stale CAS.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_started.nonempty_last_event",
+          "predicate": "Each nonempty inline/external projection is the actual completed family payload of the last matching authenticated original event and joins its source/full-value receipt and Storage cursors.",
+          "positive_plan": "Read the genuine matching final event with nonnull paired cursors, source bytes and original full-value custody; resolve an oversized body through its exact completed schema. Repeat in each capture scope and the Project-only readiness scope.",
+          "negative_plan": "Use two independently valid same-family/scope/subject histories in the same Storage; bind one checkpoint to a source-backed body from the other valid event, keeping that body, its source and hashes internally coherent. Only the checkpoint-to-last-event relation is wrong. Separately test a foreign family or scope using internally valid source worlds, one relation per case; never leave copied source fields stale.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
         }
       ],
       "additional_positive_plans": [
@@ -4493,7 +4871,7 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Empty filtered result uses explicit {mode: empty}, paired null cursors and complete authenticated same-Storage coverage at the exact original query/token boundary; checkpoint CAS retry retains original custody.",
         "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
         "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
@@ -4646,7 +5024,7 @@
         },
         {
           "guard_id": "testing_capture_stopped.checkpoint",
-          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden.",
+          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden. Empty projection is exactly {mode: empty} with both last-event cursors null; each nonempty cursor and the inline/external body joins the same genuine last matching event.",
           "positive_plan": "Use independently source-backed valid original testing.capture.stopped at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -4739,8 +5117,29 @@
           "guard_id": "testing_capture_stopped.phase_cas_publication",
           "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
           "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
-          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; one withdrawal predecessor-binding mismatch using a fully schema-valid, internally source-backed candidate; only its equality edge to the authenticated frozen predecessor is wrong. Do not clear one field into an invalid phase tuple, and do not combine a custody-binding mismatch with a CAS or publication defect. Cut each schema null/type implication independently, never the entire phase keyword.",
           "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_stopped.empty_cursor_shape",
+          "predicate": "Projection empty mode is paired independently with null last_event_id and null last_sequence_id; nonempty modes require each cursor nonnull.",
+          "positive_plan": "For every applicable scope, a complete authenticated scan with zero matches stores {mode: empty} and paired null cursors, including an index containing only nonmatching events. Independently use nonempty inline and external body controls with matching Storage cursors.",
+          "negative_plan": "From each valid empty control set only last_event_id, or only last_sequence_id (separate cases). From valid inline/external controls null only last_event_id, or only last_sequence_id (separate cases). These isolate the exact field implication; keep the body and other cursor unchanged. Separately remove the projection or add one forbidden property to empty mode. Semantic joins are conditional on the branch shape and are same-invariant duplicate sites only where they repeat that exact field predicate.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_stopped.empty_coverage",
+          "predicate": "An empty projection is accepted only after authenticated complete retained-source coverage at the exact current SP-278 same-Storage token boundary, on every reader path.",
+          "positive_plan": "Verify genuine complete empty coverage independently for read, advance, replay and rebuild with a real matching Storage token, actual live transaction and unchanged original query/key. Empty initial history and scanned nonmatching history are both valid.",
+          "negative_plan": "For each reader path, omit exactly one required source range from an otherwise genuine coverage proof while keeping projection/cursors/token/key valid. Separately supply one internally valid same-shape token from a different Storage instance with its own coherent source proof, making only the binding to this checkpoint wrong. Do not combine a token mismatch with a damaged scan or stale CAS.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_stopped.nonempty_last_event",
+          "predicate": "Each nonempty inline/external projection is the actual completed family payload of the last matching authenticated original event and joins its source/full-value receipt and Storage cursors.",
+          "positive_plan": "Read the genuine matching final event with nonnull paired cursors, source bytes and original full-value custody; resolve an oversized body through its exact completed schema. Repeat in each capture scope and the Project-only readiness scope.",
+          "negative_plan": "Use two independently valid same-family/scope/subject histories in the same Storage; bind one checkpoint to a source-backed body from the other valid event, keeping that body, its source and hashes internally coherent. Only the checkpoint-to-last-event relation is wrong. Separately test a foreign family or scope using internally valid source worlds, one relation per case; never leave copied source fields stale.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
         }
       ],
       "additional_positive_plans": [
@@ -4749,7 +5148,7 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Empty filtered result uses explicit {mode: empty}, paired null cursors and complete authenticated same-Storage coverage at the exact original query/token boundary; checkpoint CAS retry retains original custody.",
         "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
         "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
@@ -4902,7 +5301,7 @@
         },
         {
           "guard_id": "testing_capture_target_changed.checkpoint",
-          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden.",
+          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden. Empty projection is exactly {mode: empty} with both last-event cursors null; each nonempty cursor and the inline/external body joins the same genuine last matching event.",
           "positive_plan": "Use independently source-backed valid original testing.capture.target_changed at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -4995,8 +5394,29 @@
           "guard_id": "testing_capture_target_changed.phase_cas_publication",
           "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
           "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
-          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; one withdrawal predecessor-binding mismatch using a fully schema-valid, internally source-backed candidate; only its equality edge to the authenticated frozen predecessor is wrong. Do not clear one field into an invalid phase tuple, and do not combine a custody-binding mismatch with a CAS or publication defect. Cut each schema null/type implication independently, never the entire phase keyword.",
           "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_target_changed.empty_cursor_shape",
+          "predicate": "Projection empty mode is paired independently with null last_event_id and null last_sequence_id; nonempty modes require each cursor nonnull.",
+          "positive_plan": "For every applicable scope, a complete authenticated scan with zero matches stores {mode: empty} and paired null cursors, including an index containing only nonmatching events. Independently use nonempty inline and external body controls with matching Storage cursors.",
+          "negative_plan": "From each valid empty control set only last_event_id, or only last_sequence_id (separate cases). From valid inline/external controls null only last_event_id, or only last_sequence_id (separate cases). These isolate the exact field implication; keep the body and other cursor unchanged. Separately remove the projection or add one forbidden property to empty mode. Semantic joins are conditional on the branch shape and are same-invariant duplicate sites only where they repeat that exact field predicate.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_target_changed.empty_coverage",
+          "predicate": "An empty projection is accepted only after authenticated complete retained-source coverage at the exact current SP-278 same-Storage token boundary, on every reader path.",
+          "positive_plan": "Verify genuine complete empty coverage independently for read, advance, replay and rebuild with a real matching Storage token, actual live transaction and unchanged original query/key. Empty initial history and scanned nonmatching history are both valid.",
+          "negative_plan": "For each reader path, omit exactly one required source range from an otherwise genuine coverage proof while keeping projection/cursors/token/key valid. Separately supply one internally valid same-shape token from a different Storage instance with its own coherent source proof, making only the binding to this checkpoint wrong. Do not combine a token mismatch with a damaged scan or stale CAS.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_capture_target_changed.nonempty_last_event",
+          "predicate": "Each nonempty inline/external projection is the actual completed family payload of the last matching authenticated original event and joins its source/full-value receipt and Storage cursors.",
+          "positive_plan": "Read the genuine matching final event with nonnull paired cursors, source bytes and original full-value custody; resolve an oversized body through its exact completed schema. Repeat in each capture scope and the Project-only readiness scope.",
+          "negative_plan": "Use two independently valid same-family/scope/subject histories in the same Storage; bind one checkpoint to a source-backed body from the other valid event, keeping that body, its source and hashes internally coherent. Only the checkpoint-to-last-event relation is wrong. Separately test a foreign family or scope using internally valid source worlds, one relation per case; never leave copied source fields stale.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
         }
       ],
       "additional_positive_plans": [
@@ -5005,7 +5425,7 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Empty filtered result uses explicit {mode: empty}, paired null cursors and complete authenticated same-Storage coverage at the exact original query/token boundary; checkpoint CAS retry retains original custody.",
         "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
         "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
@@ -5158,7 +5578,7 @@
         },
         {
           "guard_id": "testing_runtime_enabled_for_adapter.checkpoint",
-          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden.",
+          "predicate": "Filtered cursor, exact family/subject/scope, generic nine-field durable token and Storage identity agree; persisted redb_snapshot_id is forbidden. Empty projection is exactly {mode: empty} with both last-event cursors null; each nonempty cursor and the inline/external body joins the same genuine last matching event.",
           "positive_plan": "Use independently source-backed valid original testing.runtime_enabled_for_adapter at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -5265,8 +5685,29 @@
           "guard_id": "testing_runtime_enabled_for_adapter.phase_cas_publication",
           "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
           "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
-          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; one withdrawal predecessor-binding mismatch using a fully schema-valid, internally source-backed candidate; only its equality edge to the authenticated frozen predecessor is wrong. Do not clear one field into an invalid phase tuple, and do not combine a custody-binding mismatch with a CAS or publication defect. Cut each schema null/type implication independently, never the entire phase keyword.",
           "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_runtime_enabled_for_adapter.empty_cursor_shape",
+          "predicate": "Projection empty mode is paired independently with null last_event_id and null last_sequence_id; nonempty modes require each cursor nonnull.",
+          "positive_plan": "For every applicable scope, a complete authenticated scan with zero matches stores {mode: empty} and paired null cursors, including an index containing only nonmatching events. Independently use nonempty inline and external body controls with matching Storage cursors.",
+          "negative_plan": "From each valid empty control set only last_event_id, or only last_sequence_id (separate cases). From valid inline/external controls null only last_event_id, or only last_sequence_id (separate cases). These isolate the exact field implication; keep the body and other cursor unchanged. Separately remove the projection or add one forbidden property to empty mode. Semantic joins are conditional on the branch shape and are same-invariant duplicate sites only where they repeat that exact field predicate.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_runtime_enabled_for_adapter.empty_coverage",
+          "predicate": "An empty projection is accepted only after authenticated complete retained-source coverage at the exact current SP-278 same-Storage token boundary, on every reader path.",
+          "positive_plan": "Verify genuine complete empty coverage independently for read, advance, replay and rebuild with a real matching Storage token, actual live transaction and unchanged original query/key. Empty initial history and scanned nonmatching history are both valid.",
+          "negative_plan": "For each reader path, omit exactly one required source range from an otherwise genuine coverage proof while keeping projection/cursors/token/key valid. Separately supply one internally valid same-shape token from a different Storage instance with its own coherent source proof, making only the binding to this checkpoint wrong. Do not combine a token mismatch with a damaged scan or stale CAS.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
+        },
+        {
+          "guard_id": "testing_runtime_enabled_for_adapter.nonempty_last_event",
+          "predicate": "Each nonempty inline/external projection is the actual completed family payload of the last matching authenticated original event and joins its source/full-value receipt and Storage cursors.",
+          "positive_plan": "Read the genuine matching final event with nonnull paired cursors, source bytes and original full-value custody; resolve an oversized body through its exact completed schema. Repeat in each capture scope and the Project-only readiness scope.",
+          "negative_plan": "Use two independently valid same-family/scope/subject histories in the same Storage; bind one checkpoint to a source-backed body from the other valid event, keeping that body, its source and hashes internally coherent. Only the checkpoint-to-last-event relation is wrong. Separately test a foreign family or scope using internally valid source worlds, one relation per case; never leave copied source fields stale.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site isolation. Schema/runtime duplicates must enforce exactly the same field/predicate, proved singly and together. Keep all unrelated guards enabled; no whole-keyword cuts or product proof is claimed in phase 1."
         }
       ],
       "additional_positive_plans": [
@@ -5275,7 +5716,7 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Empty filtered result uses explicit {mode: empty}, paired null cursors and complete authenticated same-Storage coverage at the exact original query/token boundary; checkpoint CAS retry retains original custody.",
         "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
         "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],

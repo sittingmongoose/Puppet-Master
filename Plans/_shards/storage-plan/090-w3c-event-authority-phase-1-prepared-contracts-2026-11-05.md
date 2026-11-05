@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L29479-L32481
+Source lines: L29479-L32733
 
-Source SHA256: `02630d153841f966286ae69a84d2c224090e78d963c366cba61b5ad7c25d9c1a`
+Source SHA256: `0e06da463253cb707544ccee5f0286de6b78b84f50912448b0a3f01e3c9967ed`
 
 ---
 
@@ -50,10 +50,22 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `artifacts.capture_pr
   storage_instance_id, scope and subject over the complete CURRENT-selected verified retained EventRecord-index
   coverage; ignored nonmatching events still count toward cursor completeness. Verify actual payload/source/full-value
   receipt and present read authorization. Publish the projection and cursor in one derived redb transaction
-  with predecessor CAS only after all source proof is complete. Null last_event_id/last_sequence_id means proven
-  empty coverage, never missing data. A compaction translation is accepted only by semantic identity and matching
-  survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals. No source
-  mutation or external effect occurs on replay.
+  with predecessor CAS only after all source proof is complete. Empty filtered history uses exactly projection={mode:
+  empty}, with both last_event_id and last_sequence_id null and no body or payload_ref. The subject/key comes
+  from the explicit original reader query, never a fabricated payload. Before publishing or accepting this
+  empty branch, authenticate CURRENT and the same-Storage nine-field index_read_token, form its actual live
+  snapshot field and verify complete retained source coverage through that exact boundary for this family/version/scope/subject.
+  Scan nonmatching events too; no missing page, lag, unresolved pack/custody, damaged source range or unavailable
+  proof may become absence. This same complete-coverage verification is required on read, advance, replay and
+  rebuild, and projection/cursors publish atomically under predecessor CAS. For a nonempty result, projection
+  is the inline or independently SP-337-resolved actual family payload. Both cursors are nonnull and equal
+  the last matching authenticated original EventRecord identity and Storage sequence; the payload, source_record,
+  receipt, subject/scope, operation and Storage instance must join that same original. Validate the external
+  body by the selected completed payload schema, never by the empty branch. A body with null cursors, an empty
+  projection with either cursor, mixed-null cursors or a cursor/body mismatch refuses. A structural schema
+  pass alone proves neither coverage nor custody. A compaction translation is accepted only by semantic identity
+  and matching survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals.
+  No source mutation or external effect occurs on replay.
 
 
   Operation/source-result values are canonical and require coherent BRS-031 backup with SP-337 packs and original
@@ -194,10 +206,22 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `artifacts.demonstrat
   storage_instance_id, scope and subject over the complete CURRENT-selected verified retained EventRecord-index
   coverage; ignored nonmatching events still count toward cursor completeness. Verify actual payload/source/full-value
   receipt and present read authorization. Publish the projection and cursor in one derived redb transaction
-  with predecessor CAS only after all source proof is complete. Null last_event_id/last_sequence_id means proven
-  empty coverage, never missing data. A compaction translation is accepted only by semantic identity and matching
-  survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals. No source
-  mutation or external effect occurs on replay.
+  with predecessor CAS only after all source proof is complete. Empty filtered history uses exactly projection={mode:
+  empty}, with both last_event_id and last_sequence_id null and no body or payload_ref. The subject/key comes
+  from the explicit original reader query, never a fabricated payload. Before publishing or accepting this
+  empty branch, authenticate CURRENT and the same-Storage nine-field index_read_token, form its actual live
+  snapshot field and verify complete retained source coverage through that exact boundary for this family/version/scope/subject.
+  Scan nonmatching events too; no missing page, lag, unresolved pack/custody, damaged source range or unavailable
+  proof may become absence. This same complete-coverage verification is required on read, advance, replay and
+  rebuild, and projection/cursors publish atomically under predecessor CAS. For a nonempty result, projection
+  is the inline or independently SP-337-resolved actual family payload. Both cursors are nonnull and equal
+  the last matching authenticated original EventRecord identity and Storage sequence; the payload, source_record,
+  receipt, subject/scope, operation and Storage instance must join that same original. Validate the external
+  body by the selected completed payload schema, never by the empty branch. A body with null cursors, an empty
+  projection with either cursor, mixed-null cursors or a cursor/body mismatch refuses. A structural schema
+  pass alone proves neither coverage nor custody. A compaction translation is accepted only by semantic identity
+  and matching survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals.
+  No source mutation or external effect occurs on replay.
 
 
   Operation/source-result values are canonical and require coherent BRS-031 backup with SP-337 packs and original
@@ -336,10 +360,22 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `artifacts.demonstrat
   storage_instance_id, scope and subject over the complete CURRENT-selected verified retained EventRecord-index
   coverage; ignored nonmatching events still count toward cursor completeness. Verify actual payload/source/full-value
   receipt and present read authorization. Publish the projection and cursor in one derived redb transaction
-  with predecessor CAS only after all source proof is complete. Null last_event_id/last_sequence_id means proven
-  empty coverage, never missing data. A compaction translation is accepted only by semantic identity and matching
-  survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals. No source
-  mutation or external effect occurs on replay.
+  with predecessor CAS only after all source proof is complete. Empty filtered history uses exactly projection={mode:
+  empty}, with both last_event_id and last_sequence_id null and no body or payload_ref. The subject/key comes
+  from the explicit original reader query, never a fabricated payload. Before publishing or accepting this
+  empty branch, authenticate CURRENT and the same-Storage nine-field index_read_token, form its actual live
+  snapshot field and verify complete retained source coverage through that exact boundary for this family/version/scope/subject.
+  Scan nonmatching events too; no missing page, lag, unresolved pack/custody, damaged source range or unavailable
+  proof may become absence. This same complete-coverage verification is required on read, advance, replay and
+  rebuild, and projection/cursors publish atomically under predecessor CAS. For a nonempty result, projection
+  is the inline or independently SP-337-resolved actual family payload. Both cursors are nonnull and equal
+  the last matching authenticated original EventRecord identity and Storage sequence; the payload, source_record,
+  receipt, subject/scope, operation and Storage instance must join that same original. Validate the external
+  body by the selected completed payload schema, never by the empty branch. A body with null cursors, an empty
+  projection with either cursor, mixed-null cursors or a cursor/body mismatch refuses. A structural schema
+  pass alone proves neither coverage nor custody. A compaction translation is accepted only by semantic identity
+  and matching survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals.
+  No source mutation or external effect occurs on replay.
 
 
   Operation/source-result values are canonical and require coherent BRS-031 backup with SP-337 packs and original
@@ -480,10 +516,22 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `testing.capture.book
   storage_instance_id, scope and subject over the complete CURRENT-selected verified retained EventRecord-index
   coverage; ignored nonmatching events still count toward cursor completeness. Verify actual payload/source/full-value
   receipt and present read authorization. Publish the projection and cursor in one derived redb transaction
-  with predecessor CAS only after all source proof is complete. Null last_event_id/last_sequence_id means proven
-  empty coverage, never missing data. A compaction translation is accepted only by semantic identity and matching
-  survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals. No source
-  mutation or external effect occurs on replay.
+  with predecessor CAS only after all source proof is complete. Empty filtered history uses exactly projection={mode:
+  empty}, with both last_event_id and last_sequence_id null and no body or payload_ref. The subject/key comes
+  from the explicit original reader query, never a fabricated payload. Before publishing or accepting this
+  empty branch, authenticate CURRENT and the same-Storage nine-field index_read_token, form its actual live
+  snapshot field and verify complete retained source coverage through that exact boundary for this family/version/scope/subject.
+  Scan nonmatching events too; no missing page, lag, unresolved pack/custody, damaged source range or unavailable
+  proof may become absence. This same complete-coverage verification is required on read, advance, replay and
+  rebuild, and projection/cursors publish atomically under predecessor CAS. For a nonempty result, projection
+  is the inline or independently SP-337-resolved actual family payload. Both cursors are nonnull and equal
+  the last matching authenticated original EventRecord identity and Storage sequence; the payload, source_record,
+  receipt, subject/scope, operation and Storage instance must join that same original. Validate the external
+  body by the selected completed payload schema, never by the empty branch. A body with null cursors, an empty
+  projection with either cursor, mixed-null cursors or a cursor/body mismatch refuses. A structural schema
+  pass alone proves neither coverage nor custody. A compaction translation is accepted only by semantic identity
+  and matching survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals.
+  No source mutation or external effect occurs on replay.
 
 
   Operation/source-result values are canonical and require coherent BRS-031 backup with SP-337 packs and original
@@ -624,10 +672,22 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `testing.capture.clip
   storage_instance_id, scope and subject over the complete CURRENT-selected verified retained EventRecord-index
   coverage; ignored nonmatching events still count toward cursor completeness. Verify actual payload/source/full-value
   receipt and present read authorization. Publish the projection and cursor in one derived redb transaction
-  with predecessor CAS only after all source proof is complete. Null last_event_id/last_sequence_id means proven
-  empty coverage, never missing data. A compaction translation is accepted only by semantic identity and matching
-  survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals. No source
-  mutation or external effect occurs on replay.
+  with predecessor CAS only after all source proof is complete. Empty filtered history uses exactly projection={mode:
+  empty}, with both last_event_id and last_sequence_id null and no body or payload_ref. The subject/key comes
+  from the explicit original reader query, never a fabricated payload. Before publishing or accepting this
+  empty branch, authenticate CURRENT and the same-Storage nine-field index_read_token, form its actual live
+  snapshot field and verify complete retained source coverage through that exact boundary for this family/version/scope/subject.
+  Scan nonmatching events too; no missing page, lag, unresolved pack/custody, damaged source range or unavailable
+  proof may become absence. This same complete-coverage verification is required on read, advance, replay and
+  rebuild, and projection/cursors publish atomically under predecessor CAS. For a nonempty result, projection
+  is the inline or independently SP-337-resolved actual family payload. Both cursors are nonnull and equal
+  the last matching authenticated original EventRecord identity and Storage sequence; the payload, source_record,
+  receipt, subject/scope, operation and Storage instance must join that same original. Validate the external
+  body by the selected completed payload schema, never by the empty branch. A body with null cursors, an empty
+  projection with either cursor, mixed-null cursors or a cursor/body mismatch refuses. A structural schema
+  pass alone proves neither coverage nor custody. A compaction translation is accepted only by semantic identity
+  and matching survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals.
+  No source mutation or external effect occurs on replay.
 
 
   Operation/source-result values are canonical and require coherent BRS-031 backup with SP-337 packs and original
@@ -766,10 +826,22 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `testing.capture.effe
   storage_instance_id, scope and subject over the complete CURRENT-selected verified retained EventRecord-index
   coverage; ignored nonmatching events still count toward cursor completeness. Verify actual payload/source/full-value
   receipt and present read authorization. Publish the projection and cursor in one derived redb transaction
-  with predecessor CAS only after all source proof is complete. Null last_event_id/last_sequence_id means proven
-  empty coverage, never missing data. A compaction translation is accepted only by semantic identity and matching
-  survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals. No source
-  mutation or external effect occurs on replay.
+  with predecessor CAS only after all source proof is complete. Empty filtered history uses exactly projection={mode:
+  empty}, with both last_event_id and last_sequence_id null and no body or payload_ref. The subject/key comes
+  from the explicit original reader query, never a fabricated payload. Before publishing or accepting this
+  empty branch, authenticate CURRENT and the same-Storage nine-field index_read_token, form its actual live
+  snapshot field and verify complete retained source coverage through that exact boundary for this family/version/scope/subject.
+  Scan nonmatching events too; no missing page, lag, unresolved pack/custody, damaged source range or unavailable
+  proof may become absence. This same complete-coverage verification is required on read, advance, replay and
+  rebuild, and projection/cursors publish atomically under predecessor CAS. For a nonempty result, projection
+  is the inline or independently SP-337-resolved actual family payload. Both cursors are nonnull and equal
+  the last matching authenticated original EventRecord identity and Storage sequence; the payload, source_record,
+  receipt, subject/scope, operation and Storage instance must join that same original. Validate the external
+  body by the selected completed payload schema, never by the empty branch. A body with null cursors, an empty
+  projection with either cursor, mixed-null cursors or a cursor/body mismatch refuses. A structural schema
+  pass alone proves neither coverage nor custody. A compaction translation is accepted only by semantic identity
+  and matching survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals.
+  No source mutation or external effect occurs on replay.
 
 
   Operation/source-result values are canonical and require coherent BRS-031 backup with SP-337 packs and original
@@ -910,10 +982,22 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `testing.capture.heal
   storage_instance_id, scope and subject over the complete CURRENT-selected verified retained EventRecord-index
   coverage; ignored nonmatching events still count toward cursor completeness. Verify actual payload/source/full-value
   receipt and present read authorization. Publish the projection and cursor in one derived redb transaction
-  with predecessor CAS only after all source proof is complete. Null last_event_id/last_sequence_id means proven
-  empty coverage, never missing data. A compaction translation is accepted only by semantic identity and matching
-  survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals. No source
-  mutation or external effect occurs on replay.
+  with predecessor CAS only after all source proof is complete. Empty filtered history uses exactly projection={mode:
+  empty}, with both last_event_id and last_sequence_id null and no body or payload_ref. The subject/key comes
+  from the explicit original reader query, never a fabricated payload. Before publishing or accepting this
+  empty branch, authenticate CURRENT and the same-Storage nine-field index_read_token, form its actual live
+  snapshot field and verify complete retained source coverage through that exact boundary for this family/version/scope/subject.
+  Scan nonmatching events too; no missing page, lag, unresolved pack/custody, damaged source range or unavailable
+  proof may become absence. This same complete-coverage verification is required on read, advance, replay and
+  rebuild, and projection/cursors publish atomically under predecessor CAS. For a nonempty result, projection
+  is the inline or independently SP-337-resolved actual family payload. Both cursors are nonnull and equal
+  the last matching authenticated original EventRecord identity and Storage sequence; the payload, source_record,
+  receipt, subject/scope, operation and Storage instance must join that same original. Validate the external
+  body by the selected completed payload schema, never by the empty branch. A body with null cursors, an empty
+  projection with either cursor, mixed-null cursors or a cursor/body mismatch refuses. A structural schema
+  pass alone proves neither coverage nor custody. A compaction translation is accepted only by semantic identity
+  and matching survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals.
+  No source mutation or external effect occurs on replay.
 
 
   Operation/source-result values are canonical and require coherent BRS-031 backup with SP-337 packs and original
@@ -1054,10 +1138,22 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `testing.capture.heal
   storage_instance_id, scope and subject over the complete CURRENT-selected verified retained EventRecord-index
   coverage; ignored nonmatching events still count toward cursor completeness. Verify actual payload/source/full-value
   receipt and present read authorization. Publish the projection and cursor in one derived redb transaction
-  with predecessor CAS only after all source proof is complete. Null last_event_id/last_sequence_id means proven
-  empty coverage, never missing data. A compaction translation is accepted only by semantic identity and matching
-  survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals. No source
-  mutation or external effect occurs on replay.
+  with predecessor CAS only after all source proof is complete. Empty filtered history uses exactly projection={mode:
+  empty}, with both last_event_id and last_sequence_id null and no body or payload_ref. The subject/key comes
+  from the explicit original reader query, never a fabricated payload. Before publishing or accepting this
+  empty branch, authenticate CURRENT and the same-Storage nine-field index_read_token, form its actual live
+  snapshot field and verify complete retained source coverage through that exact boundary for this family/version/scope/subject.
+  Scan nonmatching events too; no missing page, lag, unresolved pack/custody, damaged source range or unavailable
+  proof may become absence. This same complete-coverage verification is required on read, advance, replay and
+  rebuild, and projection/cursors publish atomically under predecessor CAS. For a nonempty result, projection
+  is the inline or independently SP-337-resolved actual family payload. Both cursors are nonnull and equal
+  the last matching authenticated original EventRecord identity and Storage sequence; the payload, source_record,
+  receipt, subject/scope, operation and Storage instance must join that same original. Validate the external
+  body by the selected completed payload schema, never by the empty branch. A body with null cursors, an empty
+  projection with either cursor, mixed-null cursors or a cursor/body mismatch refuses. A structural schema
+  pass alone proves neither coverage nor custody. A compaction translation is accepted only by semantic identity
+  and matching survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals.
+  No source mutation or external effect occurs on replay.
 
 
   Operation/source-result values are canonical and require coherent BRS-031 backup with SP-337 packs and original
@@ -1198,10 +1294,22 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `testing.capture.inte
   storage_instance_id, scope and subject over the complete CURRENT-selected verified retained EventRecord-index
   coverage; ignored nonmatching events still count toward cursor completeness. Verify actual payload/source/full-value
   receipt and present read authorization. Publish the projection and cursor in one derived redb transaction
-  with predecessor CAS only after all source proof is complete. Null last_event_id/last_sequence_id means proven
-  empty coverage, never missing data. A compaction translation is accepted only by semantic identity and matching
-  survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals. No source
-  mutation or external effect occurs on replay.
+  with predecessor CAS only after all source proof is complete. Empty filtered history uses exactly projection={mode:
+  empty}, with both last_event_id and last_sequence_id null and no body or payload_ref. The subject/key comes
+  from the explicit original reader query, never a fabricated payload. Before publishing or accepting this
+  empty branch, authenticate CURRENT and the same-Storage nine-field index_read_token, form its actual live
+  snapshot field and verify complete retained source coverage through that exact boundary for this family/version/scope/subject.
+  Scan nonmatching events too; no missing page, lag, unresolved pack/custody, damaged source range or unavailable
+  proof may become absence. This same complete-coverage verification is required on read, advance, replay and
+  rebuild, and projection/cursors publish atomically under predecessor CAS. For a nonempty result, projection
+  is the inline or independently SP-337-resolved actual family payload. Both cursors are nonnull and equal
+  the last matching authenticated original EventRecord identity and Storage sequence; the payload, source_record,
+  receipt, subject/scope, operation and Storage instance must join that same original. Validate the external
+  body by the selected completed payload schema, never by the empty branch. A body with null cursors, an empty
+  projection with either cursor, mixed-null cursors or a cursor/body mismatch refuses. A structural schema
+  pass alone proves neither coverage nor custody. A compaction translation is accepted only by semantic identity
+  and matching survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals.
+  No source mutation or external effect occurs on replay.
 
 
   Operation/source-result values are canonical and require coherent BRS-031 backup with SP-337 packs and original
@@ -1342,10 +1450,22 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `testing.capture.paus
   storage_instance_id, scope and subject over the complete CURRENT-selected verified retained EventRecord-index
   coverage; ignored nonmatching events still count toward cursor completeness. Verify actual payload/source/full-value
   receipt and present read authorization. Publish the projection and cursor in one derived redb transaction
-  with predecessor CAS only after all source proof is complete. Null last_event_id/last_sequence_id means proven
-  empty coverage, never missing data. A compaction translation is accepted only by semantic identity and matching
-  survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals. No source
-  mutation or external effect occurs on replay.
+  with predecessor CAS only after all source proof is complete. Empty filtered history uses exactly projection={mode:
+  empty}, with both last_event_id and last_sequence_id null and no body or payload_ref. The subject/key comes
+  from the explicit original reader query, never a fabricated payload. Before publishing or accepting this
+  empty branch, authenticate CURRENT and the same-Storage nine-field index_read_token, form its actual live
+  snapshot field and verify complete retained source coverage through that exact boundary for this family/version/scope/subject.
+  Scan nonmatching events too; no missing page, lag, unresolved pack/custody, damaged source range or unavailable
+  proof may become absence. This same complete-coverage verification is required on read, advance, replay and
+  rebuild, and projection/cursors publish atomically under predecessor CAS. For a nonempty result, projection
+  is the inline or independently SP-337-resolved actual family payload. Both cursors are nonnull and equal
+  the last matching authenticated original EventRecord identity and Storage sequence; the payload, source_record,
+  receipt, subject/scope, operation and Storage instance must join that same original. Validate the external
+  body by the selected completed payload schema, never by the empty branch. A body with null cursors, an empty
+  projection with either cursor, mixed-null cursors or a cursor/body mismatch refuses. A structural schema
+  pass alone proves neither coverage nor custody. A compaction translation is accepted only by semantic identity
+  and matching survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals.
+  No source mutation or external effect occurs on replay.
 
 
   Operation/source-result values are canonical and require coherent BRS-031 backup with SP-337 packs and original
@@ -1486,10 +1606,22 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `testing.capture.prov
   storage_instance_id, scope and subject over the complete CURRENT-selected verified retained EventRecord-index
   coverage; ignored nonmatching events still count toward cursor completeness. Verify actual payload/source/full-value
   receipt and present read authorization. Publish the projection and cursor in one derived redb transaction
-  with predecessor CAS only after all source proof is complete. Null last_event_id/last_sequence_id means proven
-  empty coverage, never missing data. A compaction translation is accepted only by semantic identity and matching
-  survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals. No source
-  mutation or external effect occurs on replay.
+  with predecessor CAS only after all source proof is complete. Empty filtered history uses exactly projection={mode:
+  empty}, with both last_event_id and last_sequence_id null and no body or payload_ref. The subject/key comes
+  from the explicit original reader query, never a fabricated payload. Before publishing or accepting this
+  empty branch, authenticate CURRENT and the same-Storage nine-field index_read_token, form its actual live
+  snapshot field and verify complete retained source coverage through that exact boundary for this family/version/scope/subject.
+  Scan nonmatching events too; no missing page, lag, unresolved pack/custody, damaged source range or unavailable
+  proof may become absence. This same complete-coverage verification is required on read, advance, replay and
+  rebuild, and projection/cursors publish atomically under predecessor CAS. For a nonempty result, projection
+  is the inline or independently SP-337-resolved actual family payload. Both cursors are nonnull and equal
+  the last matching authenticated original EventRecord identity and Storage sequence; the payload, source_record,
+  receipt, subject/scope, operation and Storage instance must join that same original. Validate the external
+  body by the selected completed payload schema, never by the empty branch. A body with null cursors, an empty
+  projection with either cursor, mixed-null cursors or a cursor/body mismatch refuses. A structural schema
+  pass alone proves neither coverage nor custody. A compaction translation is accepted only by semantic identity
+  and matching survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals.
+  No source mutation or external effect occurs on replay.
 
 
   Operation/source-result values are canonical and require coherent BRS-031 backup with SP-337 packs and original
@@ -1628,10 +1760,22 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `testing.capture.prov
   storage_instance_id, scope and subject over the complete CURRENT-selected verified retained EventRecord-index
   coverage; ignored nonmatching events still count toward cursor completeness. Verify actual payload/source/full-value
   receipt and present read authorization. Publish the projection and cursor in one derived redb transaction
-  with predecessor CAS only after all source proof is complete. Null last_event_id/last_sequence_id means proven
-  empty coverage, never missing data. A compaction translation is accepted only by semantic identity and matching
-  survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals. No source
-  mutation or external effect occurs on replay.
+  with predecessor CAS only after all source proof is complete. Empty filtered history uses exactly projection={mode:
+  empty}, with both last_event_id and last_sequence_id null and no body or payload_ref. The subject/key comes
+  from the explicit original reader query, never a fabricated payload. Before publishing or accepting this
+  empty branch, authenticate CURRENT and the same-Storage nine-field index_read_token, form its actual live
+  snapshot field and verify complete retained source coverage through that exact boundary for this family/version/scope/subject.
+  Scan nonmatching events too; no missing page, lag, unresolved pack/custody, damaged source range or unavailable
+  proof may become absence. This same complete-coverage verification is required on read, advance, replay and
+  rebuild, and projection/cursors publish atomically under predecessor CAS. For a nonempty result, projection
+  is the inline or independently SP-337-resolved actual family payload. Both cursors are nonnull and equal
+  the last matching authenticated original EventRecord identity and Storage sequence; the payload, source_record,
+  receipt, subject/scope, operation and Storage instance must join that same original. Validate the external
+  body by the selected completed payload schema, never by the empty branch. A body with null cursors, an empty
+  projection with either cursor, mixed-null cursors or a cursor/body mismatch refuses. A structural schema
+  pass alone proves neither coverage nor custody. A compaction translation is accepted only by semantic identity
+  and matching survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals.
+  No source mutation or external effect occurs on replay.
 
 
   Operation/source-result values are canonical and require coherent BRS-031 backup with SP-337 packs and original
@@ -1770,10 +1914,22 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `testing.capture.reda
   storage_instance_id, scope and subject over the complete CURRENT-selected verified retained EventRecord-index
   coverage; ignored nonmatching events still count toward cursor completeness. Verify actual payload/source/full-value
   receipt and present read authorization. Publish the projection and cursor in one derived redb transaction
-  with predecessor CAS only after all source proof is complete. Null last_event_id/last_sequence_id means proven
-  empty coverage, never missing data. A compaction translation is accepted only by semantic identity and matching
-  survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals. No source
-  mutation or external effect occurs on replay.
+  with predecessor CAS only after all source proof is complete. Empty filtered history uses exactly projection={mode:
+  empty}, with both last_event_id and last_sequence_id null and no body or payload_ref. The subject/key comes
+  from the explicit original reader query, never a fabricated payload. Before publishing or accepting this
+  empty branch, authenticate CURRENT and the same-Storage nine-field index_read_token, form its actual live
+  snapshot field and verify complete retained source coverage through that exact boundary for this family/version/scope/subject.
+  Scan nonmatching events too; no missing page, lag, unresolved pack/custody, damaged source range or unavailable
+  proof may become absence. This same complete-coverage verification is required on read, advance, replay and
+  rebuild, and projection/cursors publish atomically under predecessor CAS. For a nonempty result, projection
+  is the inline or independently SP-337-resolved actual family payload. Both cursors are nonnull and equal
+  the last matching authenticated original EventRecord identity and Storage sequence; the payload, source_record,
+  receipt, subject/scope, operation and Storage instance must join that same original. Validate the external
+  body by the selected completed payload schema, never by the empty branch. A body with null cursors, an empty
+  projection with either cursor, mixed-null cursors or a cursor/body mismatch refuses. A structural schema
+  pass alone proves neither coverage nor custody. A compaction translation is accepted only by semantic identity
+  and matching survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals.
+  No source mutation or external effect occurs on replay.
 
 
   Operation/source-result values are canonical and require coherent BRS-031 backup with SP-337 packs and original
@@ -1912,10 +2068,22 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `testing.capture.resu
   storage_instance_id, scope and subject over the complete CURRENT-selected verified retained EventRecord-index
   coverage; ignored nonmatching events still count toward cursor completeness. Verify actual payload/source/full-value
   receipt and present read authorization. Publish the projection and cursor in one derived redb transaction
-  with predecessor CAS only after all source proof is complete. Null last_event_id/last_sequence_id means proven
-  empty coverage, never missing data. A compaction translation is accepted only by semantic identity and matching
-  survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals. No source
-  mutation or external effect occurs on replay.
+  with predecessor CAS only after all source proof is complete. Empty filtered history uses exactly projection={mode:
+  empty}, with both last_event_id and last_sequence_id null and no body or payload_ref. The subject/key comes
+  from the explicit original reader query, never a fabricated payload. Before publishing or accepting this
+  empty branch, authenticate CURRENT and the same-Storage nine-field index_read_token, form its actual live
+  snapshot field and verify complete retained source coverage through that exact boundary for this family/version/scope/subject.
+  Scan nonmatching events too; no missing page, lag, unresolved pack/custody, damaged source range or unavailable
+  proof may become absence. This same complete-coverage verification is required on read, advance, replay and
+  rebuild, and projection/cursors publish atomically under predecessor CAS. For a nonempty result, projection
+  is the inline or independently SP-337-resolved actual family payload. Both cursors are nonnull and equal
+  the last matching authenticated original EventRecord identity and Storage sequence; the payload, source_record,
+  receipt, subject/scope, operation and Storage instance must join that same original. Validate the external
+  body by the selected completed payload schema, never by the empty branch. A body with null cursors, an empty
+  projection with either cursor, mixed-null cursors or a cursor/body mismatch refuses. A structural schema
+  pass alone proves neither coverage nor custody. A compaction translation is accepted only by semantic identity
+  and matching survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals.
+  No source mutation or external effect occurs on replay.
 
 
   Operation/source-result values are canonical and require coherent BRS-031 backup with SP-337 packs and original
@@ -2056,10 +2224,22 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `testing.capture.segm
   storage_instance_id, scope and subject over the complete CURRENT-selected verified retained EventRecord-index
   coverage; ignored nonmatching events still count toward cursor completeness. Verify actual payload/source/full-value
   receipt and present read authorization. Publish the projection and cursor in one derived redb transaction
-  with predecessor CAS only after all source proof is complete. Null last_event_id/last_sequence_id means proven
-  empty coverage, never missing data. A compaction translation is accepted only by semantic identity and matching
-  survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals. No source
-  mutation or external effect occurs on replay.
+  with predecessor CAS only after all source proof is complete. Empty filtered history uses exactly projection={mode:
+  empty}, with both last_event_id and last_sequence_id null and no body or payload_ref. The subject/key comes
+  from the explicit original reader query, never a fabricated payload. Before publishing or accepting this
+  empty branch, authenticate CURRENT and the same-Storage nine-field index_read_token, form its actual live
+  snapshot field and verify complete retained source coverage through that exact boundary for this family/version/scope/subject.
+  Scan nonmatching events too; no missing page, lag, unresolved pack/custody, damaged source range or unavailable
+  proof may become absence. This same complete-coverage verification is required on read, advance, replay and
+  rebuild, and projection/cursors publish atomically under predecessor CAS. For a nonempty result, projection
+  is the inline or independently SP-337-resolved actual family payload. Both cursors are nonnull and equal
+  the last matching authenticated original EventRecord identity and Storage sequence; the payload, source_record,
+  receipt, subject/scope, operation and Storage instance must join that same original. Validate the external
+  body by the selected completed payload schema, never by the empty branch. A body with null cursors, an empty
+  projection with either cursor, mixed-null cursors or a cursor/body mismatch refuses. A structural schema
+  pass alone proves neither coverage nor custody. A compaction translation is accepted only by semantic identity
+  and matching survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals.
+  No source mutation or external effect occurs on replay.
 
 
   Operation/source-result values are canonical and require coherent BRS-031 backup with SP-337 packs and original
@@ -2200,10 +2380,22 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `testing.capture.segm
   storage_instance_id, scope and subject over the complete CURRENT-selected verified retained EventRecord-index
   coverage; ignored nonmatching events still count toward cursor completeness. Verify actual payload/source/full-value
   receipt and present read authorization. Publish the projection and cursor in one derived redb transaction
-  with predecessor CAS only after all source proof is complete. Null last_event_id/last_sequence_id means proven
-  empty coverage, never missing data. A compaction translation is accepted only by semantic identity and matching
-  survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals. No source
-  mutation or external effect occurs on replay.
+  with predecessor CAS only after all source proof is complete. Empty filtered history uses exactly projection={mode:
+  empty}, with both last_event_id and last_sequence_id null and no body or payload_ref. The subject/key comes
+  from the explicit original reader query, never a fabricated payload. Before publishing or accepting this
+  empty branch, authenticate CURRENT and the same-Storage nine-field index_read_token, form its actual live
+  snapshot field and verify complete retained source coverage through that exact boundary for this family/version/scope/subject.
+  Scan nonmatching events too; no missing page, lag, unresolved pack/custody, damaged source range or unavailable
+  proof may become absence. This same complete-coverage verification is required on read, advance, replay and
+  rebuild, and projection/cursors publish atomically under predecessor CAS. For a nonempty result, projection
+  is the inline or independently SP-337-resolved actual family payload. Both cursors are nonnull and equal
+  the last matching authenticated original EventRecord identity and Storage sequence; the payload, source_record,
+  receipt, subject/scope, operation and Storage instance must join that same original. Validate the external
+  body by the selected completed payload schema, never by the empty branch. A body with null cursors, an empty
+  projection with either cursor, mixed-null cursors or a cursor/body mismatch refuses. A structural schema
+  pass alone proves neither coverage nor custody. A compaction translation is accepted only by semantic identity
+  and matching survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals.
+  No source mutation or external effect occurs on replay.
 
 
   Operation/source-result values are canonical and require coherent BRS-031 backup with SP-337 packs and original
@@ -2342,10 +2534,22 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `testing.capture.segm
   storage_instance_id, scope and subject over the complete CURRENT-selected verified retained EventRecord-index
   coverage; ignored nonmatching events still count toward cursor completeness. Verify actual payload/source/full-value
   receipt and present read authorization. Publish the projection and cursor in one derived redb transaction
-  with predecessor CAS only after all source proof is complete. Null last_event_id/last_sequence_id means proven
-  empty coverage, never missing data. A compaction translation is accepted only by semantic identity and matching
-  survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals. No source
-  mutation or external effect occurs on replay.
+  with predecessor CAS only after all source proof is complete. Empty filtered history uses exactly projection={mode:
+  empty}, with both last_event_id and last_sequence_id null and no body or payload_ref. The subject/key comes
+  from the explicit original reader query, never a fabricated payload. Before publishing or accepting this
+  empty branch, authenticate CURRENT and the same-Storage nine-field index_read_token, form its actual live
+  snapshot field and verify complete retained source coverage through that exact boundary for this family/version/scope/subject.
+  Scan nonmatching events too; no missing page, lag, unresolved pack/custody, damaged source range or unavailable
+  proof may become absence. This same complete-coverage verification is required on read, advance, replay and
+  rebuild, and projection/cursors publish atomically under predecessor CAS. For a nonempty result, projection
+  is the inline or independently SP-337-resolved actual family payload. Both cursors are nonnull and equal
+  the last matching authenticated original EventRecord identity and Storage sequence; the payload, source_record,
+  receipt, subject/scope, operation and Storage instance must join that same original. Validate the external
+  body by the selected completed payload schema, never by the empty branch. A body with null cursors, an empty
+  projection with either cursor, mixed-null cursors or a cursor/body mismatch refuses. A structural schema
+  pass alone proves neither coverage nor custody. A compaction translation is accepted only by semantic identity
+  and matching survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals.
+  No source mutation or external effect occurs on replay.
 
 
   Operation/source-result values are canonical and require coherent BRS-031 backup with SP-337 packs and original
@@ -2484,10 +2688,22 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `testing.capture.star
   storage_instance_id, scope and subject over the complete CURRENT-selected verified retained EventRecord-index
   coverage; ignored nonmatching events still count toward cursor completeness. Verify actual payload/source/full-value
   receipt and present read authorization. Publish the projection and cursor in one derived redb transaction
-  with predecessor CAS only after all source proof is complete. Null last_event_id/last_sequence_id means proven
-  empty coverage, never missing data. A compaction translation is accepted only by semantic identity and matching
-  survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals. No source
-  mutation or external effect occurs on replay.
+  with predecessor CAS only after all source proof is complete. Empty filtered history uses exactly projection={mode:
+  empty}, with both last_event_id and last_sequence_id null and no body or payload_ref. The subject/key comes
+  from the explicit original reader query, never a fabricated payload. Before publishing or accepting this
+  empty branch, authenticate CURRENT and the same-Storage nine-field index_read_token, form its actual live
+  snapshot field and verify complete retained source coverage through that exact boundary for this family/version/scope/subject.
+  Scan nonmatching events too; no missing page, lag, unresolved pack/custody, damaged source range or unavailable
+  proof may become absence. This same complete-coverage verification is required on read, advance, replay and
+  rebuild, and projection/cursors publish atomically under predecessor CAS. For a nonempty result, projection
+  is the inline or independently SP-337-resolved actual family payload. Both cursors are nonnull and equal
+  the last matching authenticated original EventRecord identity and Storage sequence; the payload, source_record,
+  receipt, subject/scope, operation and Storage instance must join that same original. Validate the external
+  body by the selected completed payload schema, never by the empty branch. A body with null cursors, an empty
+  projection with either cursor, mixed-null cursors or a cursor/body mismatch refuses. A structural schema
+  pass alone proves neither coverage nor custody. A compaction translation is accepted only by semantic identity
+  and matching survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals.
+  No source mutation or external effect occurs on replay.
 
 
   Operation/source-result values are canonical and require coherent BRS-031 backup with SP-337 packs and original
@@ -2628,10 +2844,22 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `testing.capture.stop
   storage_instance_id, scope and subject over the complete CURRENT-selected verified retained EventRecord-index
   coverage; ignored nonmatching events still count toward cursor completeness. Verify actual payload/source/full-value
   receipt and present read authorization. Publish the projection and cursor in one derived redb transaction
-  with predecessor CAS only after all source proof is complete. Null last_event_id/last_sequence_id means proven
-  empty coverage, never missing data. A compaction translation is accepted only by semantic identity and matching
-  survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals. No source
-  mutation or external effect occurs on replay.
+  with predecessor CAS only after all source proof is complete. Empty filtered history uses exactly projection={mode:
+  empty}, with both last_event_id and last_sequence_id null and no body or payload_ref. The subject/key comes
+  from the explicit original reader query, never a fabricated payload. Before publishing or accepting this
+  empty branch, authenticate CURRENT and the same-Storage nine-field index_read_token, form its actual live
+  snapshot field and verify complete retained source coverage through that exact boundary for this family/version/scope/subject.
+  Scan nonmatching events too; no missing page, lag, unresolved pack/custody, damaged source range or unavailable
+  proof may become absence. This same complete-coverage verification is required on read, advance, replay and
+  rebuild, and projection/cursors publish atomically under predecessor CAS. For a nonempty result, projection
+  is the inline or independently SP-337-resolved actual family payload. Both cursors are nonnull and equal
+  the last matching authenticated original EventRecord identity and Storage sequence; the payload, source_record,
+  receipt, subject/scope, operation and Storage instance must join that same original. Validate the external
+  body by the selected completed payload schema, never by the empty branch. A body with null cursors, an empty
+  projection with either cursor, mixed-null cursors or a cursor/body mismatch refuses. A structural schema
+  pass alone proves neither coverage nor custody. A compaction translation is accepted only by semantic identity
+  and matching survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals.
+  No source mutation or external effect occurs on replay.
 
 
   Operation/source-result values are canonical and require coherent BRS-031 backup with SP-337 packs and original
@@ -2772,10 +3000,22 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `testing.capture.targ
   storage_instance_id, scope and subject over the complete CURRENT-selected verified retained EventRecord-index
   coverage; ignored nonmatching events still count toward cursor completeness. Verify actual payload/source/full-value
   receipt and present read authorization. Publish the projection and cursor in one derived redb transaction
-  with predecessor CAS only after all source proof is complete. Null last_event_id/last_sequence_id means proven
-  empty coverage, never missing data. A compaction translation is accepted only by semantic identity and matching
-  survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals. No source
-  mutation or external effect occurs on replay.
+  with predecessor CAS only after all source proof is complete. Empty filtered history uses exactly projection={mode:
+  empty}, with both last_event_id and last_sequence_id null and no body or payload_ref. The subject/key comes
+  from the explicit original reader query, never a fabricated payload. Before publishing or accepting this
+  empty branch, authenticate CURRENT and the same-Storage nine-field index_read_token, form its actual live
+  snapshot field and verify complete retained source coverage through that exact boundary for this family/version/scope/subject.
+  Scan nonmatching events too; no missing page, lag, unresolved pack/custody, damaged source range or unavailable
+  proof may become absence. This same complete-coverage verification is required on read, advance, replay and
+  rebuild, and projection/cursors publish atomically under predecessor CAS. For a nonempty result, projection
+  is the inline or independently SP-337-resolved actual family payload. Both cursors are nonnull and equal
+  the last matching authenticated original EventRecord identity and Storage sequence; the payload, source_record,
+  receipt, subject/scope, operation and Storage instance must join that same original. Validate the external
+  body by the selected completed payload schema, never by the empty branch. A body with null cursors, an empty
+  projection with either cursor, mixed-null cursors or a cursor/body mismatch refuses. A structural schema
+  pass alone proves neither coverage nor custody. A compaction translation is accepted only by semantic identity
+  and matching survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals.
+  No source mutation or external effect occurs on replay.
 
 
   Operation/source-result values are canonical and require coherent BRS-031 backup with SP-337 packs and original
@@ -2916,10 +3156,22 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `testing.runtime_enab
   storage_instance_id, scope and subject over the complete CURRENT-selected verified retained EventRecord-index
   coverage; ignored nonmatching events still count toward cursor completeness. Verify actual payload/source/full-value
   receipt and present read authorization. Publish the projection and cursor in one derived redb transaction
-  with predecessor CAS only after all source proof is complete. Null last_event_id/last_sequence_id means proven
-  empty coverage, never missing data. A compaction translation is accepted only by semantic identity and matching
-  survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals. No source
-  mutation or external effect occurs on replay.
+  with predecessor CAS only after all source proof is complete. Empty filtered history uses exactly projection={mode:
+  empty}, with both last_event_id and last_sequence_id null and no body or payload_ref. The subject/key comes
+  from the explicit original reader query, never a fabricated payload. Before publishing or accepting this
+  empty branch, authenticate CURRENT and the same-Storage nine-field index_read_token, form its actual live
+  snapshot field and verify complete retained source coverage through that exact boundary for this family/version/scope/subject.
+  Scan nonmatching events too; no missing page, lag, unresolved pack/custody, damaged source range or unavailable
+  proof may become absence. This same complete-coverage verification is required on read, advance, replay and
+  rebuild, and projection/cursors publish atomically under predecessor CAS. For a nonempty result, projection
+  is the inline or independently SP-337-resolved actual family payload. Both cursors are nonnull and equal
+  the last matching authenticated original EventRecord identity and Storage sequence; the payload, source_record,
+  receipt, subject/scope, operation and Storage instance must join that same original. Validate the external
+  body by the selected completed payload schema, never by the empty branch. A body with null cursors, an empty
+  projection with either cursor, mixed-null cursors or a cursor/body mismatch refuses. A structural schema
+  pass alone proves neither coverage nor custody. A compaction translation is accepted only by semantic identity
+  and matching survivor/source coverage; otherwise invalidate and rebuild from surviving canonical originals.
+  No source mutation or external effect occurs on replay.
 
 
   Operation/source-result values are canonical and require coherent BRS-031 backup with SP-337 packs and original

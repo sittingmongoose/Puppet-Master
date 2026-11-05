@@ -7379,7 +7379,15 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.runtime_enabled_for_
   uses original receipt resolution before publication. Competing attempts use complete-row/head CAS. For demonstration
   created/failed, both potential family components refer to the same original encoder command/action fence;
   reservation of a possible outcome is not permission for a second encoding. Only the genuinely committed selected
-  outcome can append its family event.'
+  outcome can append its family event.
+
+
+  Empty-history checkpoint: use only the explicit {mode: empty} projection and paired null last-event cursors
+  after authenticated complete same-Storage coverage at the SP-278 token boundary. Missing, lagging or unverifiable
+  source coverage returns unavailable, never absence. Nonempty inline/external projections resolve the genuine
+  completed payload and match the last original EventRecord identity/sequence and full-value custody in this
+  scope. Verify that relation on every reader path; projection and cursor commit by predecessor CAS as one
+  transaction.'
 gui_related: false
 gui_classification_reason: Owns persisted event/receipt and validation semantics; visible surfaces consume
   existing projections.
@@ -7460,7 +7468,15 @@ canonical_text: 'NEWLY AUTHORED per-family criterion-12 oracle PLAN for the exac
   Pending request comparison is separate from the later frozen EventRecord producer preimage. Each missing
   phase obligation, changed original request, premature publication, uncertain repeated action and altered
   frozen outcome is a separate one-defect negative; preserve all peer copies and proofs. No executable oracle
-  or guard-isolation result is claimed.'
+  or guard-isolation result is claimed.
+
+
+  Phase-1 review round 1 also plans empty, nonempty inline and nonempty external checkpoints in each applicable
+  scope. Empty uses only {mode: empty} and paired null cursors with independently authenticated complete coverage.
+  Each cursor/projection shape mismatch, omitted source range, mismatched token identity and otherwise valid
+  foreign last-event body is a separate one-defect negative. Keep source worlds, hashes, copied fields and
+  keys coherent apart from that one relation; isolate cursor predicates separately and never weaken the entire
+  conditional. Read/advance/replay/rebuild coverage verification remains a phase-2 oracle obligation.'
 gui_related: false
 gui_classification_reason: Owns persisted event/receipt and validation semantics; visible surfaces consume
   existing projections.

@@ -678,7 +678,15 @@ canonical_text: 'NEWLY AUTHORED owner contract for `artifacts.capture_provenance
   uses original receipt resolution before publication. Competing attempts use complete-row/head CAS. For demonstration
   created/failed, both potential family components refer to the same original encoder command/action fence;
   reservation of a possible outcome is not permission for a second encoding. Only the genuinely committed selected
-  outcome can append its family event.'
+  outcome can append its family event.
+
+
+  Empty-history checkpoint: use only the explicit {mode: empty} projection and paired null last-event cursors
+  after authenticated complete same-Storage coverage at the SP-278 token boundary. Missing, lagging or unverifiable
+  source coverage returns unavailable, never absence. Nonempty inline/external projections resolve the genuine
+  completed payload and match the last original EventRecord identity/sequence and full-value custody in this
+  scope. Verify that relation on every reader path; projection and cursor commit by predecessor CAS as one
+  transaction.'
 gui_related: false
 gui_classification_reason: Owns persisted event/receipt and validation semantics; visible surfaces consume
   existing projections.
@@ -866,7 +874,15 @@ canonical_text: 'NEWLY AUTHORED owner contract for `artifacts.demonstration_vide
   uses original receipt resolution before publication. Competing attempts use complete-row/head CAS. For demonstration
   created/failed, both potential family components refer to the same original encoder command/action fence;
   reservation of a possible outcome is not permission for a second encoding. Only the genuinely committed selected
-  outcome can append its family event.'
+  outcome can append its family event.
+
+
+  Empty-history checkpoint: use only the explicit {mode: empty} projection and paired null last-event cursors
+  after authenticated complete same-Storage coverage at the SP-278 token boundary. Missing, lagging or unverifiable
+  source coverage returns unavailable, never absence. Nonempty inline/external projections resolve the genuine
+  completed payload and match the last original EventRecord identity/sequence and full-value custody in this
+  scope. Verify that relation on every reader path; projection and cursor commit by predecessor CAS as one
+  transaction.'
 gui_related: false
 gui_classification_reason: Owns persisted event/receipt and validation semantics; visible surfaces consume
   existing projections.
@@ -1055,7 +1071,15 @@ canonical_text: 'NEWLY AUTHORED owner contract for `artifacts.demonstration_vide
   uses original receipt resolution before publication. Competing attempts use complete-row/head CAS. For demonstration
   created/failed, both potential family components refer to the same original encoder command/action fence;
   reservation of a possible outcome is not permission for a second encoding. Only the genuinely committed selected
-  outcome can append its family event.'
+  outcome can append its family event.
+
+
+  Empty-history checkpoint: use only the explicit {mode: empty} projection and paired null last-event cursors
+  after authenticated complete same-Storage coverage at the SP-278 token boundary. Missing, lagging or unverifiable
+  source coverage returns unavailable, never absence. Nonempty inline/external projections resolve the genuine
+  completed payload and match the last original EventRecord identity/sequence and full-value custody in this
+  scope. Verify that relation on every reader path; projection and cursor commit by predecessor CAS as one
+  transaction.'
 gui_related: false
 gui_classification_reason: Owns persisted event/receipt and validation semantics; visible surfaces consume
   existing projections.
@@ -1242,7 +1266,15 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.bookmarked@1
   uses original receipt resolution before publication. Competing attempts use complete-row/head CAS. For demonstration
   created/failed, both potential family components refer to the same original encoder command/action fence;
   reservation of a possible outcome is not permission for a second encoding. Only the genuinely committed selected
-  outcome can append its family event.'
+  outcome can append its family event.
+
+
+  Empty-history checkpoint: use only the explicit {mode: empty} projection and paired null last-event cursors
+  after authenticated complete same-Storage coverage at the SP-278 token boundary. Missing, lagging or unverifiable
+  source coverage returns unavailable, never absence. Nonempty inline/external projections resolve the genuine
+  completed payload and match the last original EventRecord identity/sequence and full-value custody in this
+  scope. Verify that relation on every reader path; projection and cursor commit by predecessor CAS as one
+  transaction.'
 gui_related: false
 gui_classification_reason: Owns persisted event/receipt and validation semantics; visible surfaces consume
   existing projections.
@@ -1428,7 +1460,15 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.clip_saved@1
   uses original receipt resolution before publication. Competing attempts use complete-row/head CAS. For demonstration
   created/failed, both potential family components refer to the same original encoder command/action fence;
   reservation of a possible outcome is not permission for a second encoding. Only the genuinely committed selected
-  outcome can append its family event.'
+  outcome can append its family event.
+
+
+  Empty-history checkpoint: use only the explicit {mode: empty} projection and paired null last-event cursors
+  after authenticated complete same-Storage coverage at the SP-278 token boundary. Missing, lagging or unverifiable
+  source coverage returns unavailable, never absence. Nonempty inline/external projections resolve the genuine
+  completed payload and match the last original EventRecord identity/sequence and full-value custody in this
+  scope. Verify that relation on every reader path; projection and cursor commit by predecessor CAS as one
+  transaction.'
 gui_related: false
 gui_classification_reason: Owns persisted event/receipt and validation semantics; visible surfaces consume
   existing projections.
@@ -1616,7 +1656,15 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.effective_qu
   uses original receipt resolution before publication. Competing attempts use complete-row/head CAS. For demonstration
   created/failed, both potential family components refer to the same original encoder command/action fence;
   reservation of a possible outcome is not permission for a second encoding. Only the genuinely committed selected
-  outcome can append its family event.'
+  outcome can append its family event.
+
+
+  Empty-history checkpoint: use only the explicit {mode: empty} projection and paired null last-event cursors
+  after authenticated complete same-Storage coverage at the SP-278 token boundary. Missing, lagging or unverifiable
+  source coverage returns unavailable, never absence. Nonempty inline/external projections resolve the genuine
+  completed payload and match the last original EventRecord identity/sequence and full-value custody in this
+  scope. Verify that relation on every reader path; projection and cursor commit by predecessor CAS as one
+  transaction.'
 gui_related: false
 gui_classification_reason: Owns persisted event/receipt and validation semantics; visible surfaces consume
   existing projections.
@@ -1804,7 +1852,15 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.health_degra
   uses original receipt resolution before publication. Competing attempts use complete-row/head CAS. For demonstration
   created/failed, both potential family components refer to the same original encoder command/action fence;
   reservation of a possible outcome is not permission for a second encoding. Only the genuinely committed selected
-  outcome can append its family event.'
+  outcome can append its family event.
+
+
+  Empty-history checkpoint: use only the explicit {mode: empty} projection and paired null last-event cursors
+  after authenticated complete same-Storage coverage at the SP-278 token boundary. Missing, lagging or unverifiable
+  source coverage returns unavailable, never absence. Nonempty inline/external projections resolve the genuine
+  completed payload and match the last original EventRecord identity/sequence and full-value custody in this
+  scope. Verify that relation on every reader path; projection and cursor commit by predecessor CAS as one
+  transaction.'
 gui_related: false
 gui_classification_reason: Owns persisted event/receipt and validation semantics; visible surfaces consume
   existing projections.
@@ -1991,7 +2047,15 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.health_recov
   uses original receipt resolution before publication. Competing attempts use complete-row/head CAS. For demonstration
   created/failed, both potential family components refer to the same original encoder command/action fence;
   reservation of a possible outcome is not permission for a second encoding. Only the genuinely committed selected
-  outcome can append its family event.'
+  outcome can append its family event.
+
+
+  Empty-history checkpoint: use only the explicit {mode: empty} projection and paired null last-event cursors
+  after authenticated complete same-Storage coverage at the SP-278 token boundary. Missing, lagging or unverifiable
+  source coverage returns unavailable, never absence. Nonempty inline/external projections resolve the genuine
+  completed payload and match the last original EventRecord identity/sequence and full-value custody in this
+  scope. Verify that relation on every reader path; projection and cursor commit by predecessor CAS as one
+  transaction.'
 gui_related: false
 gui_classification_reason: Owns persisted event/receipt and validation semantics; visible surfaces consume
   existing projections.
@@ -2178,7 +2242,15 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.interrupted@
   uses original receipt resolution before publication. Competing attempts use complete-row/head CAS. For demonstration
   created/failed, both potential family components refer to the same original encoder command/action fence;
   reservation of a possible outcome is not permission for a second encoding. Only the genuinely committed selected
-  outcome can append its family event.'
+  outcome can append its family event.
+
+
+  Empty-history checkpoint: use only the explicit {mode: empty} projection and paired null last-event cursors
+  after authenticated complete same-Storage coverage at the SP-278 token boundary. Missing, lagging or unverifiable
+  source coverage returns unavailable, never absence. Nonempty inline/external projections resolve the genuine
+  completed payload and match the last original EventRecord identity/sequence and full-value custody in this
+  scope. Verify that relation on every reader path; projection and cursor commit by predecessor CAS as one
+  transaction.'
 gui_related: false
 gui_classification_reason: Owns persisted event/receipt and validation semantics; visible surfaces consume
   existing projections.
@@ -2364,7 +2436,15 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.paused@1.0.0
   uses original receipt resolution before publication. Competing attempts use complete-row/head CAS. For demonstration
   created/failed, both potential family components refer to the same original encoder command/action fence;
   reservation of a possible outcome is not permission for a second encoding. Only the genuinely committed selected
-  outcome can append its family event.'
+  outcome can append its family event.
+
+
+  Empty-history checkpoint: use only the explicit {mode: empty} projection and paired null last-event cursors
+  after authenticated complete same-Storage coverage at the SP-278 token boundary. Missing, lagging or unverifiable
+  source coverage returns unavailable, never absence. Nonempty inline/external projections resolve the genuine
+  completed payload and match the last original EventRecord identity/sequence and full-value custody in this
+  scope. Verify that relation on every reader path; projection and cursor commit by predecessor CAS as one
+  transaction.'
 gui_related: false
 gui_classification_reason: Owns persisted event/receipt and validation semantics; visible surfaces consume
   existing projections.
@@ -2551,7 +2631,15 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.provenance_r
   uses original receipt resolution before publication. Competing attempts use complete-row/head CAS. For demonstration
   created/failed, both potential family components refer to the same original encoder command/action fence;
   reservation of a possible outcome is not permission for a second encoding. Only the genuinely committed selected
-  outcome can append its family event.'
+  outcome can append its family event.
+
+
+  Empty-history checkpoint: use only the explicit {mode: empty} projection and paired null last-event cursors
+  after authenticated complete same-Storage coverage at the SP-278 token boundary. Missing, lagging or unverifiable
+  source coverage returns unavailable, never absence. Nonempty inline/external projections resolve the genuine
+  completed payload and match the last original EventRecord identity/sequence and full-value custody in this
+  scope. Verify that relation on every reader path; projection and cursor commit by predecessor CAS as one
+  transaction.'
 gui_related: false
 gui_classification_reason: Owns persisted event/receipt and validation semantics; visible surfaces consume
   existing projections.
@@ -2738,7 +2826,15 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.provenance_v
   uses original receipt resolution before publication. Competing attempts use complete-row/head CAS. For demonstration
   created/failed, both potential family components refer to the same original encoder command/action fence;
   reservation of a possible outcome is not permission for a second encoding. Only the genuinely committed selected
-  outcome can append its family event.'
+  outcome can append its family event.
+
+
+  Empty-history checkpoint: use only the explicit {mode: empty} projection and paired null last-event cursors
+  after authenticated complete same-Storage coverage at the SP-278 token boundary. Missing, lagging or unverifiable
+  source coverage returns unavailable, never absence. Nonempty inline/external projections resolve the genuine
+  completed payload and match the last original EventRecord identity/sequence and full-value custody in this
+  scope. Verify that relation on every reader path; projection and cursor commit by predecessor CAS as one
+  transaction.'
 gui_related: false
 gui_classification_reason: Owns persisted event/receipt and validation semantics; visible surfaces consume
   existing projections.
@@ -2925,7 +3021,15 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.redaction_ap
   uses original receipt resolution before publication. Competing attempts use complete-row/head CAS. For demonstration
   created/failed, both potential family components refer to the same original encoder command/action fence;
   reservation of a possible outcome is not permission for a second encoding. Only the genuinely committed selected
-  outcome can append its family event.'
+  outcome can append its family event.
+
+
+  Empty-history checkpoint: use only the explicit {mode: empty} projection and paired null last-event cursors
+  after authenticated complete same-Storage coverage at the SP-278 token boundary. Missing, lagging or unverifiable
+  source coverage returns unavailable, never absence. Nonempty inline/external projections resolve the genuine
+  completed payload and match the last original EventRecord identity/sequence and full-value custody in this
+  scope. Verify that relation on every reader path; projection and cursor commit by predecessor CAS as one
+  transaction.'
 gui_related: false
 gui_classification_reason: Owns persisted event/receipt and validation semantics; visible surfaces consume
   existing projections.
@@ -3112,7 +3216,15 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.resumed@1.0.
   uses original receipt resolution before publication. Competing attempts use complete-row/head CAS. For demonstration
   created/failed, both potential family components refer to the same original encoder command/action fence;
   reservation of a possible outcome is not permission for a second encoding. Only the genuinely committed selected
-  outcome can append its family event.'
+  outcome can append its family event.
+
+
+  Empty-history checkpoint: use only the explicit {mode: empty} projection and paired null last-event cursors
+  after authenticated complete same-Storage coverage at the SP-278 token boundary. Missing, lagging or unverifiable
+  source coverage returns unavailable, never absence. Nonempty inline/external projections resolve the genuine
+  completed payload and match the last original EventRecord identity/sequence and full-value custody in this
+  scope. Verify that relation on every reader path; projection and cursor commit by predecessor CAS as one
+  transaction.'
 gui_related: false
 gui_classification_reason: Owns persisted event/receipt and validation semantics; visible surfaces consume
   existing projections.
@@ -3299,7 +3411,15 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.segment_corr
   uses original receipt resolution before publication. Competing attempts use complete-row/head CAS. For demonstration
   created/failed, both potential family components refer to the same original encoder command/action fence;
   reservation of a possible outcome is not permission for a second encoding. Only the genuinely committed selected
-  outcome can append its family event.'
+  outcome can append its family event.
+
+
+  Empty-history checkpoint: use only the explicit {mode: empty} projection and paired null last-event cursors
+  after authenticated complete same-Storage coverage at the SP-278 token boundary. Missing, lagging or unverifiable
+  source coverage returns unavailable, never absence. Nonempty inline/external projections resolve the genuine
+  completed payload and match the last original EventRecord identity/sequence and full-value custody in this
+  scope. Verify that relation on every reader path; projection and cursor commit by predecessor CAS as one
+  transaction.'
 gui_related: false
 gui_classification_reason: Owns persisted event/receipt and validation semantics; visible surfaces consume
   existing projections.
@@ -3485,7 +3605,15 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.segment_fina
   uses original receipt resolution before publication. Competing attempts use complete-row/head CAS. For demonstration
   created/failed, both potential family components refer to the same original encoder command/action fence;
   reservation of a possible outcome is not permission for a second encoding. Only the genuinely committed selected
-  outcome can append its family event.'
+  outcome can append its family event.
+
+
+  Empty-history checkpoint: use only the explicit {mode: empty} projection and paired null last-event cursors
+  after authenticated complete same-Storage coverage at the SP-278 token boundary. Missing, lagging or unverifiable
+  source coverage returns unavailable, never absence. Nonempty inline/external projections resolve the genuine
+  completed payload and match the last original EventRecord identity/sequence and full-value custody in this
+  scope. Verify that relation on every reader path; projection and cursor commit by predecessor CAS as one
+  transaction.'
 gui_related: false
 gui_classification_reason: Owns persisted event/receipt and validation semantics; visible surfaces consume
   existing projections.
@@ -3671,7 +3799,15 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.segment_reco
   uses original receipt resolution before publication. Competing attempts use complete-row/head CAS. For demonstration
   created/failed, both potential family components refer to the same original encoder command/action fence;
   reservation of a possible outcome is not permission for a second encoding. Only the genuinely committed selected
-  outcome can append its family event.'
+  outcome can append its family event.
+
+
+  Empty-history checkpoint: use only the explicit {mode: empty} projection and paired null last-event cursors
+  after authenticated complete same-Storage coverage at the SP-278 token boundary. Missing, lagging or unverifiable
+  source coverage returns unavailable, never absence. Nonempty inline/external projections resolve the genuine
+  completed payload and match the last original EventRecord identity/sequence and full-value custody in this
+  scope. Verify that relation on every reader path; projection and cursor commit by predecessor CAS as one
+  transaction.'
 gui_related: false
 gui_classification_reason: Owns persisted event/receipt and validation semantics; visible surfaces consume
   existing projections.
@@ -3859,7 +3995,15 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.started@1.0.
   uses original receipt resolution before publication. Competing attempts use complete-row/head CAS. For demonstration
   created/failed, both potential family components refer to the same original encoder command/action fence;
   reservation of a possible outcome is not permission for a second encoding. Only the genuinely committed selected
-  outcome can append its family event.'
+  outcome can append its family event.
+
+
+  Empty-history checkpoint: use only the explicit {mode: empty} projection and paired null last-event cursors
+  after authenticated complete same-Storage coverage at the SP-278 token boundary. Missing, lagging or unverifiable
+  source coverage returns unavailable, never absence. Nonempty inline/external projections resolve the genuine
+  completed payload and match the last original EventRecord identity/sequence and full-value custody in this
+  scope. Verify that relation on every reader path; projection and cursor commit by predecessor CAS as one
+  transaction.'
 gui_related: false
 gui_classification_reason: Owns persisted event/receipt and validation semantics; visible surfaces consume
   existing projections.
@@ -4047,7 +4191,15 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.stopped@1.0.
   uses original receipt resolution before publication. Competing attempts use complete-row/head CAS. For demonstration
   created/failed, both potential family components refer to the same original encoder command/action fence;
   reservation of a possible outcome is not permission for a second encoding. Only the genuinely committed selected
-  outcome can append its family event.'
+  outcome can append its family event.
+
+
+  Empty-history checkpoint: use only the explicit {mode: empty} projection and paired null last-event cursors
+  after authenticated complete same-Storage coverage at the SP-278 token boundary. Missing, lagging or unverifiable
+  source coverage returns unavailable, never absence. Nonempty inline/external projections resolve the genuine
+  completed payload and match the last original EventRecord identity/sequence and full-value custody in this
+  scope. Verify that relation on every reader path; projection and cursor commit by predecessor CAS as one
+  transaction.'
 gui_related: false
 gui_classification_reason: Owns persisted event/receipt and validation semantics; visible surfaces consume
   existing projections.
@@ -4235,7 +4387,15 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.target_chang
   uses original receipt resolution before publication. Competing attempts use complete-row/head CAS. For demonstration
   created/failed, both potential family components refer to the same original encoder command/action fence;
   reservation of a possible outcome is not permission for a second encoding. Only the genuinely committed selected
-  outcome can append its family event.'
+  outcome can append its family event.
+
+
+  Empty-history checkpoint: use only the explicit {mode: empty} projection and paired null last-event cursors
+  after authenticated complete same-Storage coverage at the SP-278 token boundary. Missing, lagging or unverifiable
+  source coverage returns unavailable, never absence. Nonempty inline/external projections resolve the genuine
+  completed payload and match the last original EventRecord identity/sequence and full-value custody in this
+  scope. Verify that relation on every reader path; projection and cursor commit by predecessor CAS as one
+  transaction.'
 gui_related: false
 gui_classification_reason: Owns persisted event/receipt and validation semantics; visible surfaces consume
   existing projections.
