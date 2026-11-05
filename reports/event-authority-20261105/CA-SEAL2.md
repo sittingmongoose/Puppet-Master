@@ -634,7 +634,7 @@ Astra 4 (`reviews/CA-SEAL2-sol/REVIEW-astra-4.md`) found one blocking item, CA2-
 
 Astra noted that its blocking verdict followed the lead's review instruction, and that the general brief sends inventory-machinery defects to the shared-tool sweep.
 
-**Lead classification (not Jared's; pm7-build informed):** under pm7-build's binding 04:45Z rule, an incomplete inventory is proof machinery and a sweep item closed by the shared guard-isolation tool. Only a guard with no effective negative, a fixture defect, or a product guard that accepts bad input blocks. None of those was found. The lead's Astra 4 brief stated the criterion too broadly ("missing from the rules and reachable"); the binding rule governs.
+**Status: NOT READY, pending a neutral Astra review (correction, 2026-11-05 14:05Z).** An earlier version of this section classified CA2-A4-B01 as a sweep item under a "pm7-build 04:45Z rule". That attribution was wrong: no such rule of pm7-build's exists, and treating proof-machinery findings as sweep items was the lead's own briefing choice. Under Jared's rule an item is done only when Astra passes, and an Astra NOT_READY is not downgraded on anyone's reading. Whether completeness over the walker's supported forms is acceptable for this gate is open, pending a neutral Astra review.
 
 Records updated, with no change to tests or the validator:
 - the coverage table records the completion gate under `outside_walker_sites`, with its two killing negatives and Astra's evidence;
@@ -642,4 +642,4 @@ Records updated, with no change to tests or the validator:
 - sites 183 and 184 are killed by `negative_outcome_unknown_outcome` (Sol cycle 7 note);
 - wrapper sites 20 and 179 carry the mixed-child scope note.
 
-The totals are now 197 killed, 57 structural, 20 implied, 3 duplicate and 50 frozen-input only, with 0 unclassified. Completing the walker is carried as a shared-tool sweep item for CA-SEAL2.
+The totals are now 197 killed, 57 structural, 20 implied, 3 duplicate and 50 frozen-input only, with 0 unclassified. Whether the walker must be completed before landing is decided by that review.

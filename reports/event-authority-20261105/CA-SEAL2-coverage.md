@@ -29,4 +29,4 @@ Astra round 4 (record update by the lead):
 - Sites 183 and 184 (`recount_outcomes`, `outcome == 'registered'`) are killed by `negative_outcome_unknown_outcome`, per Sol cycle 7.
 - Wrapper sites 20 and 179 carry a mixed-child scope note.
 - `outside_walker_sites` records the completion gate `state["complete"] = not issues` (`V:1074`), which Astra 4 showed the walker does not enumerate. It is killed by `negative_aggregate_input_issue` and `negative_aggregate_receipt_issue`.
-- `walker_limits` lists the predicate forms the walker does not enumerate. **The regenerated site list is complete only over the walker's supported forms, not over every possible predicate.** Under pm7-build's 04:45Z rule, completing that inventory is shared guard-tool sweep work.
+- `walker_limits` lists the predicate forms the walker does not enumerate. **The regenerated site list is complete only over the walker's supported forms, not over every possible predicate.** Whether that is acceptable for this gate is pending a neutral Astra review.
