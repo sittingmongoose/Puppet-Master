@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/memory_maintenance/event_record.v1.schema.json",
+  "description": "DMEM integer domains; both retained reader editions inherit every original envelope constraint.",
+  "$defs": {
+    "current": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+        },
+        {
+          "properties": {
+            "sequence_id": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "producer_sequence_id": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "compatibility": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/event_record_1_0_0_compatibility_reader"
+        },
+        {
+          "properties": {
+            "sequence_id": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "producer_sequence_id": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

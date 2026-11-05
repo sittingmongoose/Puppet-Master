@@ -24957,7 +24957,13 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.p
   negatives, unavailable buttons and guard-removal proof. Native execution is NOT_RUN. Membership is ABSENT; no
   admission or readiness follows from this unit. The started and completed payloads also require cutoff_ref and
   cutoff_sha256 exactly equal to the immutable operation fields, so start custody freezes the selected approval
-  across recovery and retries.'
+  across recovery and retries.
+
+  Every numeric leaf in this exact contract, including retained Storage sequence metadata and rebuild artifact byte_length, is an integer in the I-JSON safe range -9007199254740991 through 9007199254740991; existing nonnegative domains keep their lower bound. Decode decimal/exponent tokens losslessly before validation. All identity, idempotency, result, target and full-value digest recipes use sorted-key compact UTF-8 JSON after recursive exact integer normalization: 1, 1.0 and 1e0 encode as 1; -0 encodes as 0. Fractions, nonfinite values and integers outside that range refuse before hashing, appending or disclosure. Plans/memory_maintenance_event_record.schema.json bounds both inherited current and compatibility envelopes; the operation/target schemas and registry mirrors use the same bounds. This narrows only this lane''s numeric contract, without changing generic Storage metadata ownership.
+
+  Permission/admission and withdrawal fields, and every Boolean boundary receipt/source/acceptance fence, require the exact Boolean type before their value is evaluated; strings, numeric 0/1, null, arrays and objects never grant authority or clear a fence. Historical reads still use current typed permission/withdrawal only, not current admission or cutoffs.
+
+  Before archive selection and post-state validation, every resolved memory''s pinned and archived fields in both input and output must have the exact Boolean type. A malformed flag refuses the whole settlement without state change or output; correctly typed pins and all original versions/EvidenceRefs retain the existing DL-402 preservation rules.'
 gui_related: true
 gui_classification_reason: Binds unavailable Memory-panel buttons as well as typed maintenance events.
 depends_on:
@@ -25101,7 +25107,13 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.p
   negatives, unavailable buttons and guard-removal proof. Native execution is NOT_RUN. Membership is ABSENT; no
   admission or readiness follows from this unit. The started and completed payloads also require cutoff_ref and
   cutoff_sha256 exactly equal to the immutable operation fields, so start custody freezes the selected approval
-  across recovery and retries.'
+  across recovery and retries.
+
+  Every numeric leaf in this exact contract, including retained Storage sequence metadata and rebuild artifact byte_length, is an integer in the I-JSON safe range -9007199254740991 through 9007199254740991; existing nonnegative domains keep their lower bound. Decode decimal/exponent tokens losslessly before validation. All identity, idempotency, result, target and full-value digest recipes use sorted-key compact UTF-8 JSON after recursive exact integer normalization: 1, 1.0 and 1e0 encode as 1; -0 encodes as 0. Fractions, nonfinite values and integers outside that range refuse before hashing, appending or disclosure. Plans/memory_maintenance_event_record.schema.json bounds both inherited current and compatibility envelopes; the operation/target schemas and registry mirrors use the same bounds. This narrows only this lane''s numeric contract, without changing generic Storage metadata ownership.
+
+  Permission/admission and withdrawal fields, and every Boolean boundary receipt/source/acceptance fence, require the exact Boolean type before their value is evaluated; strings, numeric 0/1, null, arrays and objects never grant authority or clear a fence. Historical reads still use current typed permission/withdrawal only, not current admission or cutoffs.
+
+  Before archive selection and post-state validation, every resolved memory''s pinned and archived fields in both input and output must have the exact Boolean type. A malformed flag refuses the whole settlement without state change or output; correctly typed pins and all original versions/EvidenceRefs retain the existing DL-402 preservation rules.'
 gui_related: true
 gui_classification_reason: Binds unavailable Memory-panel buttons as well as typed maintenance events.
 depends_on:

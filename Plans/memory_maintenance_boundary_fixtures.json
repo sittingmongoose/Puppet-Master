@@ -1,0 +1,330 @@
+{
+  "schema_id": "pm.memory.maintenance.boundary_fixtures.v1",
+  "synthetic": true,
+  "families": [
+    "memory.dedup_sweep.completed",
+    "memory.dedup_sweep.started",
+    "memory.index.lexical.rebuild.completed",
+    "memory.index.lexical.rebuild.started",
+    "memory.index.semantic.rebuild.completed",
+    "memory.index.semantic.rebuild.started",
+    "memory.monthly_summary.completed",
+    "memory.monthly_summary.started",
+    "memory.prune_archive.completed",
+    "memory.prune_archive.started",
+    "memory.verification_sweep.completed",
+    "memory.verification_sweep.started"
+  ],
+  "numeric_cases": [
+    {
+      "literal": "0",
+      "valid_json": true,
+      "commitment_valid": true,
+      "sequence_valid": true,
+      "canonical": 0
+    },
+    {
+      "literal": "-0",
+      "valid_json": true,
+      "commitment_valid": true,
+      "sequence_valid": true,
+      "canonical": 0
+    },
+    {
+      "literal": "-0.0",
+      "valid_json": true,
+      "commitment_valid": true,
+      "sequence_valid": true,
+      "canonical": 0
+    },
+    {
+      "literal": "-0e9",
+      "valid_json": true,
+      "commitment_valid": true,
+      "sequence_valid": true,
+      "canonical": 0
+    },
+    {
+      "literal": "1",
+      "valid_json": true,
+      "commitment_valid": true,
+      "sequence_valid": true,
+      "canonical": 1
+    },
+    {
+      "literal": "1.0",
+      "valid_json": true,
+      "commitment_valid": true,
+      "sequence_valid": true,
+      "canonical": 1
+    },
+    {
+      "literal": "1e0",
+      "valid_json": true,
+      "commitment_valid": true,
+      "sequence_valid": true,
+      "canonical": 1
+    },
+    {
+      "literal": "1.000",
+      "valid_json": true,
+      "commitment_valid": true,
+      "sequence_valid": true,
+      "canonical": 1
+    },
+    {
+      "literal": "10e-1",
+      "valid_json": true,
+      "commitment_valid": true,
+      "sequence_valid": true,
+      "canonical": 1
+    },
+    {
+      "literal": "0.1e1",
+      "valid_json": true,
+      "commitment_valid": true,
+      "sequence_valid": true,
+      "canonical": 1
+    },
+    {
+      "literal": "9007199254740991",
+      "valid_json": true,
+      "commitment_valid": true,
+      "sequence_valid": true,
+      "canonical": 9007199254740991
+    },
+    {
+      "literal": "9007199254740991.0",
+      "valid_json": true,
+      "commitment_valid": true,
+      "sequence_valid": true,
+      "canonical": 9007199254740991
+    },
+    {
+      "literal": "9.007199254740991e15",
+      "valid_json": true,
+      "commitment_valid": true,
+      "sequence_valid": true,
+      "canonical": 9007199254740991
+    },
+    {
+      "literal": "-9007199254740991",
+      "valid_json": true,
+      "commitment_valid": true,
+      "sequence_valid": false,
+      "canonical": -9007199254740991
+    },
+    {
+      "literal": "-9007199254740991.0",
+      "valid_json": true,
+      "commitment_valid": true,
+      "sequence_valid": false,
+      "canonical": -9007199254740991
+    },
+    {
+      "literal": "9007199254740992",
+      "valid_json": true,
+      "commitment_valid": false,
+      "sequence_valid": false
+    },
+    {
+      "literal": "9007199254740992.0",
+      "valid_json": true,
+      "commitment_valid": false,
+      "sequence_valid": false
+    },
+    {
+      "literal": "9.007199254740992e15",
+      "valid_json": true,
+      "commitment_valid": false,
+      "sequence_valid": false
+    },
+    {
+      "literal": "-9007199254740992",
+      "valid_json": true,
+      "commitment_valid": false,
+      "sequence_valid": false
+    },
+    {
+      "literal": "-9007199254740992.0",
+      "valid_json": true,
+      "commitment_valid": false,
+      "sequence_valid": false
+    },
+    {
+      "literal": "9007199254740993",
+      "valid_json": true,
+      "commitment_valid": false,
+      "sequence_valid": false
+    },
+    {
+      "literal": "9007199254740993.0",
+      "valid_json": true,
+      "commitment_valid": false,
+      "sequence_valid": false
+    },
+    {
+      "literal": "9.007199254740993e15",
+      "valid_json": true,
+      "commitment_valid": false,
+      "sequence_valid": false
+    },
+    {
+      "literal": "9007199254740993e0",
+      "valid_json": true,
+      "commitment_valid": false,
+      "sequence_valid": false
+    },
+    {
+      "literal": "1152921504606846976",
+      "valid_json": true,
+      "commitment_valid": false,
+      "sequence_valid": false
+    },
+    {
+      "literal": "1152921504606846976.0",
+      "valid_json": true,
+      "commitment_valid": false,
+      "sequence_valid": false
+    },
+    {
+      "literal": "1.152921504606846976e18",
+      "valid_json": true,
+      "commitment_valid": false,
+      "sequence_valid": false
+    },
+    {
+      "literal": "-1152921504606846976",
+      "valid_json": true,
+      "commitment_valid": false,
+      "sequence_valid": false
+    },
+    {
+      "literal": "1.0000000000000001",
+      "valid_json": true,
+      "commitment_valid": false,
+      "sequence_valid": false
+    },
+    {
+      "literal": "9007199254740990.9999999999999999",
+      "valid_json": true,
+      "commitment_valid": false,
+      "sequence_valid": false
+    },
+    {
+      "literal": "1.5",
+      "valid_json": true,
+      "commitment_valid": false,
+      "sequence_valid": false
+    },
+    {
+      "literal": "NaN",
+      "valid_json": true,
+      "commitment_valid": false,
+      "sequence_valid": false
+    },
+    {
+      "literal": "Infinity",
+      "valid_json": true,
+      "commitment_valid": false,
+      "sequence_valid": false
+    },
+    {
+      "literal": "01",
+      "valid_json": false,
+      "commitment_valid": false,
+      "sequence_valid": false
+    },
+    {
+      "literal": "+1",
+      "valid_json": false,
+      "commitment_valid": false,
+      "sequence_valid": false
+    },
+    {
+      "literal": "00",
+      "valid_json": false,
+      "commitment_valid": false,
+      "sequence_valid": false
+    }
+  ],
+  "wrong_boolean_values": [
+    {
+      "name": "0",
+      "value": "true"
+    },
+    {
+      "name": "1",
+      "value": "false"
+    },
+    {
+      "name": "2",
+      "value": "0"
+    },
+    {
+      "name": "3",
+      "value": "1"
+    },
+    {
+      "name": "4",
+      "value": 0
+    },
+    {
+      "name": "5",
+      "value": 1
+    },
+    {
+      "name": "6",
+      "value": null
+    },
+    {
+      "name": "7",
+      "value": []
+    },
+    {
+      "name": "8",
+      "value": [
+        true
+      ]
+    },
+    {
+      "name": "9",
+      "value": {}
+    },
+    {
+      "name": "10",
+      "value": {
+        "nested": false
+      }
+    }
+  ],
+  "writer_flags": [
+    "permission",
+    "admitted",
+    "withdrawn"
+  ],
+  "reader_flags": [
+    "permission",
+    "withdrawn"
+  ],
+  "boundary_flags": [
+    "permission",
+    "admitted",
+    "withdrawn",
+    "request_matches",
+    "current_source",
+    "started_receipt",
+    "effect_settled",
+    "original_full_value",
+    "acceptance_durable"
+  ],
+  "memory_flags": [
+    "pinned",
+    "archived"
+  ],
+  "memory_ids": [
+    "old-note",
+    "recent-note",
+    "pinned-note"
+  ]
+}

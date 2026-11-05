@@ -1,59 +1,59 @@
 # Shard Index: Plans/Automated_Testing_System.md
 
-Generated: 2026-11-04T23:29:58Z
+Generated: 2026-11-05T01:23:44Z
 
-Source SHA256: `3fddecb16039e3e415e5df572f1c06061cd506890c79c17ce1251a1a8303bf94`
+Source SHA256: `58c91700da23cfbb74129383f136ff739fbb9abdfe2849973ec782c9745a1397`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L5 `4cd7d6744508e9b349144a9c4d947bec4196f52b2d739a358f086f1a8cb78ecd`
-- [002 - 0. Scope](002-0.-scope.md) L7-L11 `44cdba19ef0facdbe3e5d035d35578edff37418035cbbbf6749898502179692a`
-- [003 - 1. Ownership And Consumers](003-1.-ownership-and-consumers.md) L13-L26 `a3334fd05e91b7612eadbd1d00a4df9fec1f0106219c9710fb9d7c15d1490910`
-- [004 - 2. Canonical PlanUnits](004-2.-canonical-planunits.md) L28-L92 `16ccfbeb28d2ae4ec2ab5c806cd7f256f38afe260c7f36c857f77432e1a904f6`
-- [005 - GUI visible testing repair addendum (2026-07-02)](005-gui-visible-testing-repair-addendum-2026-07-02.md) L94-L109 `0bd9fd3dc6e5adc75b0aab291711dc799af5bd1b79b8432c58c2b27838dc27c3`
-- [006 - GUI web development and smoke-test workflow addendum (2026-07-07)](006-gui-web-development-and-smoke-test-workflow-addendum-2026-07-07.md) L111-L335 `dfa385d9030abf287e30f4fe52bda49b2324209bb8959e24ea861d970c9e77f1`
-- [007 - 3. Contracts, Schemas, Events, Or Data Shapes](007-3.-contracts-schemas-events-or-data-shapes.md) L337-L343 `9573296a498f181000c19d4e2b0254f7ffab85fc0c00bf8876c6be5482329f6f`
-- [008 - 4. Integration Surfaces](008-4.-integration-surfaces.md) L345-L352 `1d93e57e30264eada7cb56e7efb32d5cb401f76198e8a950f4929bbe27466ddd`
-- [009 - 5. Validation And Acceptance](009-5.-validation-and-acceptance.md) L354-L365 `d3d6430f843843008fea977e68128748fb217ead11794459166164ee047c5dee`
-- [010 - 6. Plan-To-Node Readiness](010-6.-plan-to-node-readiness.md) L367-L369 `35e36bf7d7def45aaf5e27f69f0e6c9ef809a6453c43d0d2d0d4ad20c5678e34`
-- [011 - 7. Deferred, Retired, Compatibility, And Non-Goals](011-7.-deferred-retired-compatibility-and-non-goals.md) L371-L380 `0818f4583d9777ab6f81123a3a071154245c4cc7563e3d6ccc409dd252c21fcc`
-- [012 - 8. Source Lineage And Governance](012-8.-source-lineage-and-governance.md) L382-L399 `7eee7ca4a3aa4a739f4aaad1fb71a14b05c54be4b1044fb2fe0f2981cd7566ff`
-- [013 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](013-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L402-L817 `9dd73ebf46e2f1848b5a0db190f1177d6a8d1a53563987ee216c3955070d8490`
-- [014 - Ledger Compile Addendum - pldg-20260622-001-fff](014-ledger-compile-addendum-pldg-20260622-001-fff.md) L819-L891 `0bd77a42592056f44a30cf0a917a5cc872c1d1be19939e908a090336e2b5940a`
-- [015 - Ledger Compile Addendum - pldg-20260626-001-feature-name](015-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L894-L1242 `281b4e3a356f08a4c4ed16a1ab4a75ca90fe21f2cbefcba5d01ed64b215c31e0`
-- [016 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](016-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L1244-L1551 `40c71442b3dd48355a762ba7573fe1c2994482c1c03be6e4853c5ff925417060`
-- [017 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](017-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L1553-L1640 `35a7c0fecf7c616df7d9ac13d98a69b54cc5799056240c4c5cb3968562d01f44`
-- [018 - Ledger Compile Addendum - pldg-20260701-001-feature-intake](018-ledger-compile-addendum-pldg-20260701-001-feature-intake.md) L1642-L2038 `b29129f94ebee24e7c236c90779c75730c4531b97f582f04de826a772a478453`
-- [019 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](019-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L2040-L2187 `8872080870043f5dd6303d81e034ca5d9a8da44701059e1c81aff5f021c3e089`
-- [020 - Case L Durable-State Acceptance Fixture Contract - 2026-07-17](020-case-l-durable-state-acceptance-fixture-contract-2026-07-17.md) L2189-L2562 `8b76228fdc5cb8847f97eb7c4cab1073bcefc83676bd9acdfaf774436ad6a191`
-- [021 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](021-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L2564-L2592 `f0cc457c113dcea0e2a8f62b51ae884993f623b22838ed2a55b84d987da64c90`
-- [022 - FABLE Remaining Action Plan Repair Notes (2026-07-08)](022-fable-remaining-action-plan-repair-notes-2026-07-08.md) L2593-L2601 `0136bf6960c773d527d0d6393ef9688d9234d88b02ac8d3419b1dc3448510641`
-- [023 - Known-37 owner-oracle materialization and execution-status ledger - 2026-07-18](023-known-37-owner-oracle-materialization-and-execution-status-ledge.md) L2603-L2874 `c17ea22050fb38b541c9156dc7cdef7be3aa2718b9f38c19739f8b496093b5b1`
-- [024 - Cozy Shelves Panel Reconciliation Addendum - 2026-07-27](024-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md) L2876-L3191 `984f1bce307f23ba6f995c7001e4746f2d7879f1c7b55ca447cffd655f725020`
-- [025 - PMConcept7 Home Workspace test contract — 2026-08-04](025-pmconcept7-home-workspace-test-contract-2026-08-04.md) L3193-L3305 `b1b0f11dfe130548c497636ae8429cb4a3fac2a316f9bf1fc27b5226dce15ea0`
-- [026 - Runtime Integration Acceptance Matrices - 2026-08-13](026-runtime-integration-acceptance-matrices-2026-08-13.md) L3307-L3592 `643f742d160c8a4d6d53d4b246e44229ff6694602a1eeeb9239328e6e81923fe`
-- [027 - PMConcept7 User-Polished Acceptance Addendum - 2026-08-27](027-pmconcept7-user-polished-acceptance-addendum-2026-08-27.md) L3594-L4273 `a21da835892649a32651f77afb292343a76cf5e0492e3bc7618900956d9ff62e`
-- [028 - Additive Correction v4 — Correction Test Obligations (2026-09-03)](028-additive-correction-v4-correction-test-obligations-2026-09-03.md) L4275-L4319 `1d93f1d4e565fb96f4630612e1ae1a8bd7d251d3467e7b2432ecb5172ab28aaa`
-- [029 - Working Notebook Contract Validation Registration (2026-09-05)](029-working-notebook-contract-validation-registration-2026-09-05.md) L4321-L4381 `0a7a9775c8d08dcdb9cd8ce27fc88fce8552958f4140e1004916758ef28cd5e7`
-- [030 - DL-035 terminal research acceptance obligations - 2026-09-09](030-dl-035-terminal-research-acceptance-obligations-2026-09-09.md) L4384-L4513 `03904caa85ea051b4381f58d0e8ec4db2aa23d58a05123aa4148500e49ac0107`
-- [031 - ATS-048 — Existing Session and Bundle Command Bindings](031-ats-048-existing-session-and-bundle-command-bindings.md) L4515-L4600 `93caf8e73d6e4a6f4af2e75b37b95713b371382862f31ed4dfe36239e6ed0265`
-- [032 - External Packet Custody and Completion Integrity — 2026-09-10](032-external-packet-custody-and-completion-integrity-2026-09-10.md) L4602-L4632 `61bbb0b3400dabb512ed9f103e00bc287d08f940495fc7775687d0c13eebad21`
-- [033 - ATS-049 — Existing Session Event Obligations and Non-Admission](033-ats-049-existing-session-event-obligations-and-non-admission.md) L4634-L5055 `0b70f8c5a6f64863d25e014f277648373ba89fe477b7d734141a9bdea47262d7`
-- [034 - External Research Contract Validation Registration (2026-09-17)](034-external-research-contract-validation-registration-2026-09-17.md) L5057-L5126 `b1168421c7cd87c9ccedf8be6dae3cabdaa5c2dda2e4f7fd06ee588a6fa259ad`
-- [035 - ATS-055 — Successful native source contract preservation and acceptance obligations (2026-09-20)](035-ats-055-successful-native-source-contract-preservation-and-accep.md) L5129-L5220 `d5bc0c389276dea8fb9ab1e1d285c3a9153a7f896cf95a5eb357dd6607bc12c4`
-- [036 - ATS-056 — Certified producer source validation and native proof separation (2026-09-21)](036-ats-056-certified-producer-source-validation-and-native-proof-se.md) L5223-L5280 `f70c0febf279428c411cb31234350fa4f2ef21a87c0e78b78b2b0aac3ceb2b42`
-- [037 - ATS-057 — Twelve complete source-to-native acceptance facets with truthful NOT_RUN boundaries (2026-09-21)](037-ats-057-twelve-complete-source-to-native-acceptance-facets-with-.md) L5283-L5412 `1cbb7490420c95ea96a14b196314f4278cc495172f8b75758dab711b08abbd7b`
-- [038 - ATS-058 — Coordination event oracles for the seven agent families (DL-045, 2026-09-25)](038-ats-058-coordination-event-oracles-for-the-seven-agent-families-.md) L5415-L5543 `01a30404083a3f0f28d976cae35095d3b4718bb2d87e4d5060a7928dee86e7ae`
-- [039 - Platform assurance and Apple-native proof — 2026-09-27](039-platform-assurance-and-apple-native-proof-2026-09-27.md) L5545-L5585 `c9ab353600ae9ef2be2d1ab2a3e9ac3ff5bd10e5b6fed0f897a69e3f3b9295df`
-- [040 - Chat presentation acceptance checks — 2026-09-27](040-chat-presentation-acceptance-checks-2026-09-27.md) L5587-L5647 `127fc48d6d1bf1380729e8063c409a6cd5522ce37ebfa255d3f58f705ab94de5`
-- [041 - Collaborative Workflows static contract family — 2026-09-27](041-collaborative-workflows-static-contract-family-2026-09-27.md) L5649-L5750 `ba1dd29b4691a9e6cb999db66705fd57a79a1b9f8cf4f4316263d38206bd1104`
-- [042 - Live helper text acceptance checks — 2026-09-27](042-live-helper-text-acceptance-checks-2026-09-27.md) L5752-L5818 `8c4d1c71eb759cebbefc5473e8b799a4eb25cd04d7ea99e1a9b6e7bdc04f6e76`
-- [043 - Project-wide automation pause acceptance checks — 2026-09-27](043-project-wide-automation-pause-acceptance-checks-2026-09-27.md) L5820-L5902 `9097b4aba733c1a638adb1ef154e7fea0f6a803a7141453929ebd0173c894259`
-- [044 - ELI5 in chat acceptance checks — 2026-09-27](044-eli5-in-chat-acceptance-checks-2026-09-27.md) L5904-L5967 `b6f663f2c7ab2ba578428f4c60a367416bf9868ece4e07c432ff7f0629461f05`
-- [045 - Wand module closure command checks — 2026-09-27](045-wand-module-closure-command-checks-2026-09-27.md) L5969-L6038 `abee29d90cfc57c644b9c6d331d7b373faff766820ce75725f147aa845110b8a`
-- [046 - GUI test-build observability — 2026-10-02 (DL-139)](046-gui-test-build-observability-2026-10-02-dl-139.md) L6040-L6097 `38dc8eeab65976860b6f349a5f772985bf8c0747c7bcbcdad42b1a0ce239fad8`
-- [047 - DL-180 to DL-185 — Home Panels And Terminal Tab Certification (2026-10-09)](047-dl-180-to-dl-185-home-panels-and-terminal-tab-certification-2026.md) L6099-L6594 `162697109f8ec2ccb3b629f7342f4106b43f11e0770e88a79820099b61ae38f4`
-- [048 - DL-218 Wonderer and grilling test obligations](048-dl-218-wonderer-and-grilling-test-obligations.md) L6596-L6713 `7b62ed825458f7f8397f629b709cf6210348aa0718425603e8956c383189961d`
-- [049 - DL-231 Chat Room automatic round test obligations](049-dl-231-chat-room-automatic-round-test-obligations.md) L6715-L7349 `65a29d833b2fba49b2b328c5dbfbe311a4321b208a6e752e708a5f6881cabe4e`
+- [001 - Preamble](001-preamble.md) L1-L5 `5e4f6171a79c3fda11c31499d1fd797c07b158421907b249bae58d6b2d470381`
+- [002 - 0. Scope](002-0.-scope.md) L7-L11 `7eff2936506c6d92caa587759dc60a8d4051b04abe5745cf50d43c639732c839`
+- [003 - 1. Ownership And Consumers](003-1.-ownership-and-consumers.md) L13-L26 `b180cfe79666dde4546010b123f94a88cb109d198d689d7d3a9e2409920fd04d`
+- [004 - 2. Canonical PlanUnits](004-2.-canonical-planunits.md) L28-L92 `b96f99c9f8c14d96d71d2037c52d32b301d8badde269be2d42e2dc1396f0da98`
+- [005 - GUI visible testing repair addendum (2026-07-02)](005-gui-visible-testing-repair-addendum-2026-07-02.md) L94-L109 `4ae61dfbb0e1ec8e1e48278823f8d57831fb26aa721dce99d7b56207cb75fac3`
+- [006 - GUI web development and smoke-test workflow addendum (2026-07-07)](006-gui-web-development-and-smoke-test-workflow-addendum-2026-07-07.md) L111-L335 `bee312b5700dc89f01374d2584cb651a854671f4b001a05a8382fabe0567a00d`
+- [007 - 3. Contracts, Schemas, Events, Or Data Shapes](007-3.-contracts-schemas-events-or-data-shapes.md) L337-L343 `dcdfe92bf773794140c321754080df4d2ba33bfe620c47e2a742d46e5dc8e8a3`
+- [008 - 4. Integration Surfaces](008-4.-integration-surfaces.md) L345-L352 `72da9afad667890fc9ec55131898fd1305522e91955c09f1559d2cfa819865aa`
+- [009 - 5. Validation And Acceptance](009-5.-validation-and-acceptance.md) L354-L365 `5618dfbeeb2f6d94df2ceacc8e54b3f1b688114bcab4b6155121cd6153a62943`
+- [010 - 6. Plan-To-Node Readiness](010-6.-plan-to-node-readiness.md) L367-L369 `354f7e160be6dd8a3b0a6abe89d825c23a7152a9990c20782ad94fabde03de90`
+- [011 - 7. Deferred, Retired, Compatibility, And Non-Goals](011-7.-deferred-retired-compatibility-and-non-goals.md) L371-L380 `e1d0e42ceebe6581fa2340ec3d2f6abdddc8a48f22a26dd794ffcc8f5085c976`
+- [012 - 8. Source Lineage And Governance](012-8.-source-lineage-and-governance.md) L382-L399 `9fe8305634ec6948dc50eefb952d5c441e88cbe6335fbafd28a1cf353ec5fbcf`
+- [013 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](013-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L402-L817 `0b0ab0a57fac0deffb453b82978bf0069271fa4b78b5a40a0ad8e8b81036a02f`
+- [014 - Ledger Compile Addendum - pldg-20260622-001-fff](014-ledger-compile-addendum-pldg-20260622-001-fff.md) L819-L891 `5ead3adf10910e660bc9fdf6ff11ed945abc0dea7b4454b578e565f486465aa0`
+- [015 - Ledger Compile Addendum - pldg-20260626-001-feature-name](015-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L894-L1242 `62cf58a36f94a12e68e3d9fc5e838b842976b99aeba5a940207e3db11fea2be3`
+- [016 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](016-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L1244-L1551 `a670539f51a08514d8ff435b503331ed2208389c7ff11d4c65c2e595338d17db`
+- [017 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](017-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L1553-L1640 `b0a4b5582f102963ede485e68ea858a7cba102a496ff827e03e0b779af79e5da`
+- [018 - Ledger Compile Addendum - pldg-20260701-001-feature-intake](018-ledger-compile-addendum-pldg-20260701-001-feature-intake.md) L1642-L2038 `0910bce1262cc421f29430bceee2e8fb7ee33ab59c95b7d91ec014fc14136590`
+- [019 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](019-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L2040-L2187 `167d0d6cc4a3caac9760e25e09ac9a5971e23202969d3da5892f70491899182a`
+- [020 - Case L Durable-State Acceptance Fixture Contract - 2026-07-17](020-case-l-durable-state-acceptance-fixture-contract-2026-07-17.md) L2189-L2562 `d3ba6d92b762e4e33ddb2386993fa4ce9ba4645101e4d064756dd2fdc659f653`
+- [021 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](021-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L2564-L2592 `5b6b35187088acdfb86cadaa23d35d9c7176f835d48a2becfe47d78365695296`
+- [022 - FABLE Remaining Action Plan Repair Notes (2026-07-08)](022-fable-remaining-action-plan-repair-notes-2026-07-08.md) L2593-L2601 `d0a0550566ff0343180309f51ef7a75b112b77d18acf45307979cc34feb411c0`
+- [023 - Known-37 owner-oracle materialization and execution-status ledger - 2026-07-18](023-known-37-owner-oracle-materialization-and-execution-status-ledge.md) L2603-L2874 `2189e38a40ae418b68129693b7df8e2c9e5a0ea18bdfaf158ea77bae0d99a83f`
+- [024 - Cozy Shelves Panel Reconciliation Addendum - 2026-07-27](024-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md) L2876-L3191 `760f33051dc3d2bafc1fb8b5e8b636c80825aaee5d1410a0aca47db0b932e055`
+- [025 - PMConcept7 Home Workspace test contract — 2026-08-04](025-pmconcept7-home-workspace-test-contract-2026-08-04.md) L3193-L3305 `262fe0440478ecb539e52e9f770d21e1eade8f16cfdb445803e033c0e7f5a751`
+- [026 - Runtime Integration Acceptance Matrices - 2026-08-13](026-runtime-integration-acceptance-matrices-2026-08-13.md) L3307-L3592 `dc12874faf771ea8cdcbe6d36fd6e32090513d9aadb125e91509dac209337685`
+- [027 - PMConcept7 User-Polished Acceptance Addendum - 2026-08-27](027-pmconcept7-user-polished-acceptance-addendum-2026-08-27.md) L3594-L4273 `280df2e5281493f8c7e9c4b64caf5b5871ca6d02c49756f9093bb24672aab838`
+- [028 - Additive Correction v4 — Correction Test Obligations (2026-09-03)](028-additive-correction-v4-correction-test-obligations-2026-09-03.md) L4275-L4319 `09f40d1cd082ed960d1b86bd159e26422305eafd0da6a9a413f3d8f7129ac2c9`
+- [029 - Working Notebook Contract Validation Registration (2026-09-05)](029-working-notebook-contract-validation-registration-2026-09-05.md) L4321-L4381 `b794f7d9915689682465ecfc83ffd94a8facf94d5ea0b83c7b5c758bc381d4cf`
+- [030 - DL-035 terminal research acceptance obligations - 2026-09-09](030-dl-035-terminal-research-acceptance-obligations-2026-09-09.md) L4384-L4513 `854abaa5ae475b7c8a51c0034d03f13238b70832b7f8b9928eefca92a9eecbfd`
+- [031 - ATS-048 — Existing Session and Bundle Command Bindings](031-ats-048-existing-session-and-bundle-command-bindings.md) L4515-L4600 `3a6857d0a490aa34f1c1490930a994850ce731b69acd8d2b8bf266a7b0be138a`
+- [032 - External Packet Custody and Completion Integrity — 2026-09-10](032-external-packet-custody-and-completion-integrity-2026-09-10.md) L4602-L4632 `e0c930d628f11a71a4754f09c90227c5808992c92ca74a7505a2e90a0565afcb`
+- [033 - ATS-049 — Existing Session Event Obligations and Non-Admission](033-ats-049-existing-session-event-obligations-and-non-admission.md) L4634-L5055 `540a1061da26665a14005d5142c33fc7ff39d286b5c9fff5fe21f43e4f650acf`
+- [034 - External Research Contract Validation Registration (2026-09-17)](034-external-research-contract-validation-registration-2026-09-17.md) L5057-L5126 `a093b9af888b02715ae47ef71ac67164d5089a1950b44ce2f1c05305954c94ad`
+- [035 - ATS-055 — Successful native source contract preservation and acceptance obligations (2026-09-20)](035-ats-055-successful-native-source-contract-preservation-and-accep.md) L5129-L5220 `3d5c49e71d4fd7057c18899c8ff17fdd22ba043b5cd6968c46283b9439d94ce3`
+- [036 - ATS-056 — Certified producer source validation and native proof separation (2026-09-21)](036-ats-056-certified-producer-source-validation-and-native-proof-se.md) L5223-L5280 `de4bd2c27f8af36ae62642e75b0b43e50866edfc1a75647c12ccaf0d0a0e7eeb`
+- [037 - ATS-057 — Twelve complete source-to-native acceptance facets with truthful NOT_RUN boundaries (2026-09-21)](037-ats-057-twelve-complete-source-to-native-acceptance-facets-with-.md) L5283-L5412 `7722c7ce77654e8beea19d6c097427475105ba801654e7ecf7f237f80ae29a88`
+- [038 - ATS-058 — Coordination event oracles for the seven agent families (DL-045, 2026-09-25)](038-ats-058-coordination-event-oracles-for-the-seven-agent-families-.md) L5415-L5543 `7d702e537a1fae7f68ada52a84761a2f6861c98b820b8431881ed0daa8ba5313`
+- [039 - Platform assurance and Apple-native proof — 2026-09-27](039-platform-assurance-and-apple-native-proof-2026-09-27.md) L5545-L5585 `93f67bf9e60be8ffe974398fbd8db9799bebf4db59811e80f5fd2a185a32c6cd`
+- [040 - Chat presentation acceptance checks — 2026-09-27](040-chat-presentation-acceptance-checks-2026-09-27.md) L5587-L5647 `3fe7f24707ccca780fcb4796b5b1d22ef641ca35b1aac901937db424b6abb9c1`
+- [041 - Collaborative Workflows static contract family — 2026-09-27](041-collaborative-workflows-static-contract-family-2026-09-27.md) L5649-L5750 `33efdb70db15ed690d55204eb968ae89cb14613af67a37bde607f8b16b1d92a8`
+- [042 - Live helper text acceptance checks — 2026-09-27](042-live-helper-text-acceptance-checks-2026-09-27.md) L5752-L5818 `66b3e77e5fe5ec56ac1412e9035cdcd5aed8c6344b0bdc6d85248f223c823c1f`
+- [043 - Project-wide automation pause acceptance checks — 2026-09-27](043-project-wide-automation-pause-acceptance-checks-2026-09-27.md) L5820-L5902 `ea7c9659a6ae398349d369d35a6a58b086a200934c691ac9ed44b02cb8763e3a`
+- [044 - ELI5 in chat acceptance checks — 2026-09-27](044-eli5-in-chat-acceptance-checks-2026-09-27.md) L5904-L5967 `acd8a7f3530f62594315af5c31a9eaef41a46a41c203b9b5a7f57ad82582e0a8`
+- [045 - Wand module closure command checks — 2026-09-27](045-wand-module-closure-command-checks-2026-09-27.md) L5969-L6038 `2494cba752009fe87943901bb3531d48547b3771157af9c6acdc62335f8acd0c`
+- [046 - GUI test-build observability — 2026-10-02 (DL-139)](046-gui-test-build-observability-2026-10-02-dl-139.md) L6040-L6097 `58293618b042b47c6064e550c6f2ab992d19d925e2dfb5b1e374e27fce6387a5`
+- [047 - DL-180 to DL-185 — Home Panels And Terminal Tab Certification (2026-10-09)](047-dl-180-to-dl-185-home-panels-and-terminal-tab-certification-2026.md) L6099-L6594 `59356b4a3ed2f8ea6c6fe5d80547a80356bde602cd9ec4db26759c8e3f081309`
+- [048 - DL-218 Wonderer and grilling test obligations](048-dl-218-wonderer-and-grilling-test-obligations.md) L6596-L6713 `38e3a7cc77cd0af3deb6d3adf84b6d414d2e938783c15387ecb3fcf2273bbb87`
+- [049 - DL-231 Chat Room automatic round test obligations](049-dl-231-chat-room-automatic-round-test-obligations.md) L6715-L7349 `a70287bc20326abd011498c64db27f9658870a8e0320ae6fa010c186a2af82d8`

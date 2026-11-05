@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Static DMEM contract model. Synthetic custody/transactions; native NOT_RUN."""
 from copy import deepcopy
+from decimal import Decimal
 from functools import lru_cache
 from pathlib import Path
 import base64
@@ -8,6 +9,7 @@ import hashlib
 import importlib.util
 import json
 import math
+import argparse
 from urllib.parse import urljoin
 from jsonschema import Draft202012Validator, FormatChecker
 from referencing import Registry
@@ -19,7 +21,8 @@ OP_NAMES = ('dedup_sweep', 'index_lexical_rebuild', 'index_semantic_rebuild', 'v
 # Every schema document this checker validates against; each is reference-checked before any instance validation.
 SCHEMA_DOCUMENTS = ('Plans/memory_maintenance_event_payloads.schema.json', 'Plans/memory_maintenance_operation.schema.json',
                     'Plans/memory_maintenance_rebuild_target.schema.json', 'Plans/event_record.schema.json',
-                    'Plans/event_record_index_checkpoint.schema.json')
+                    'Plans/event_record_index_checkpoint.schema.json', 'Plans/memory_maintenance_event_record.schema.json')
+SAFE_INTEGER = 2**53 - 1
 REGISTRY_DOCUMENT = 'Plans/storage_value_registry.json'
 _CODEC_SPEC = importlib.util.spec_from_file_location('_dmem_binding_codec', ROOT / 'scripts/pm_event_index_binding.py')
 _CODEC = importlib.util.module_from_spec(_CODEC_SPEC)
@@ -45,12 +48,24 @@ def pure(function):
 
 @pure
 def within_value_cap(value):
-    return len(_CODEC.binding_bytes(value)) <= 16384
+    return len(_CODEC.binding_bytes(canonical_numbers(value))) <= 16384
 
 
 
 def load(path):
-    return json.loads((ROOT / path).read_text())
+    return json_numbers((ROOT / path).read_text())
+
+
+def json_numbers(text):
+    """Decode decimal/exponent tokens exactly, before any binary64 conversion.
+
+    Preserve invalid fractions as Decimal so validators/hash guards can refuse them. Schema bounds
+    and negative fixtures may themselves contain out-of-domain integers; loading is not admission.
+    """
+    def exact(token):
+        value = Decimal(token)
+        return int(value) if value.is_finite() and abs(value) <= SAFE_INTEGER and value == value.to_integral_value() else value
+    return json.loads(text, parse_float=exact, parse_constant=exact)
 
 
 def canonical_numbers(value):
@@ -59,10 +74,11 @@ def canonical_numbers(value):
     JSON Schema's integer accepts 1.0. Normalize that mathematical integer before every hash;
     nonintegral/nonfinite numbers have no representation in these maintenance recipes.
     """
-    if isinstance(value, float):
-        if math.isfinite(value) and value.is_integer():
-            return int(value)
-        raise ValueError('non_integer_commitment_number')
+    if type(value) in (int, float, Decimal):
+        finite = value.is_finite() if isinstance(value, Decimal) else (True if type(value) is int else math.isfinite(value))
+        if not finite or abs(value) > SAFE_INTEGER or value != int(value):
+            raise ValueError('non_integer_commitment_number')
+        return int(value) if finite else float(value)
     if isinstance(value, dict):
         return {key: canonical_numbers(item) for key, item in value.items()}
     if isinstance(value, (list, tuple)):
@@ -70,13 +86,30 @@ def canonical_numbers(value):
     return value
 
 
+def numbers_supported(value):
+    try:
+        canonical_numbers(value)
+    except ValueError:
+        return False
+    return True
+
+
 def digest(value):
     return hashlib.sha256(json.dumps(canonical_numbers(value), ensure_ascii=False, sort_keys=True,
                                     separators=(',', ':')).encode('utf-8')).hexdigest()
 
 
+def decode_json_number(literal):
+    return json_numbers(literal)
+
+
 def parse_json_number(literal):
-    return json.loads(literal)
+    return canonical_numbers(decode_json_number(literal))
+
+
+def flag(value, expected):
+    """Authority/fence fields accept the exact Boolean type before evaluating its value."""
+    return type(value) is bool and value is expected
 
 
 def identity(event_type, instance, project, operation):
@@ -362,7 +395,7 @@ def canonical_value(row, suffix):
 
 @lru_cache(maxsize=1)
 def envelope_validator():
-    return Draft202012Validator(load('Plans/event_record.schema.json'), format_checker=FormatChecker())
+    return validator('Plans/memory_maintenance_event_record.schema.json', 'current')
 
 
 STORAGE_FIELDS = frozenset({'sequence_id', 'observed_at_utc', 'persisted_at_utc'})
@@ -383,7 +416,7 @@ def start_custody_gate(state, first_start=False, writer_event=None, canonical_hi
     any record that is present is verified even there. Refusal is start_receipt_missing, or
     permission_or_withdrawal under a withdrawal fence; the caller publishes nothing.
     """
-    require(not state['withdrawn'], 'permission_or_withdrawal')
+    require(flag(state['withdrawn'], False), 'permission_or_withdrawal')
     row = state['operation']
     started = event_type(row, 'started'); completed = event_type(row, 'completed')
     expected = (canonical_value if canonical_history else full_value)(row, 'started'); start_id = expected['event_id']
@@ -431,11 +464,12 @@ def append_current(before, value, event):
 
 def _append_current(before, value, event):
     state = deepcopy(before); row = state['operation']
+    require(numbers_supported(value), 'invalid_number')
     require(envelope_validator().is_valid(value), 'invalid_event_record')
     require(value['replay_policy'] != 'projector_replay_only', 'replay_only_not_appendable')
     require(value['replay_policy'] == 'dedupe_by_idempotency_key', 'replay_policy_mismatch')
-    require(state['admitted'], 'not_admitted')
-    require(state['permission'] and not state['withdrawn'], 'permission_or_withdrawal')
+    require(flag(state['admitted'], True), 'not_admitted')
+    require(flag(state['permission'], True) and flag(state['withdrawn'], False), 'permission_or_withdrawal')
     require(valid_operation(row, operation_name(event)), 'invalid_operation')
     suffix = event.rsplit('.', 1)[1]
     expected = canonical_value(row, suffix)
@@ -446,7 +480,7 @@ def _append_current(before, value, event):
             'idempotency_conflict' if state['original'] is not None and same_identity else 'envelope_join')
     require(validator('Plans/memory_maintenance_event_payloads.schema.json',
                       event.replace('.', '_')).is_valid(value['payload']), 'invalid_payload')
-    require(len(_CODEC.binding_bytes(value['payload'])) <= 16384, 'inline_payload_too_large')
+    require(len(_CODEC.binding_bytes(canonical_numbers(value['payload']))) <= 16384, 'inline_payload_too_large')
     key = [scope_partition(row['project_id']), event, value['idempotency_key']]
     require(state['dedupe_key'] == key, 'scope_partition_mismatch')
     # The one start custody gate; terminal and start retries disclose an original, so it precedes that return.
@@ -498,11 +532,11 @@ def accept(payload, contract, context):
             return False
         if not payload['occurred_at_utc'].endswith('Z'):
             return False
-        if not context['admitted'] or context['withdrawn'] or not context['permission']:
+        if not flag(context['admitted'], True) or not flag(context['withdrawn'], False) or not flag(context['permission'], True):
             return False
         if any(payload[k] != context[k] for k in ('project_id', 'operation_id', 'source_revision_sha256')):
             return False
-        if not context['request_matches'] or not context['current_source']:
+        if not flag(context['request_matches'], True) or not flag(context['current_source'], True):
             return False
         row = context['operation']
         if not valid_operation(row, name) or row['request_sha256'] != context['request_sha256']:
@@ -512,11 +546,11 @@ def accept(payload, contract, context):
             return False
         originals = context['originals']
         if suffix == 'completed':
-            if not (context['started_receipt'] and context['effect_settled'] and context['original_full_value']):
+            if not (flag(context['started_receipt'], True) and flag(context['effect_settled'], True) and flag(context['original_full_value'], True)):
                 return False
             if row['phase'] not in ('effect_committed', 'completed') or payload['started_event_id'] != context['started_event_id']:
                 return False
-        elif not context['acceptance_durable']:
+        elif not flag(context['acceptance_durable'], True):
             return False
         # The same start custody gate as every writer, recovery, retry, replay and history path.
         start_custody_gate({'operation': row, 'originals': originals, 'withdrawn': context['withdrawn']},
@@ -555,7 +589,7 @@ def custody(state, suffix):
 
 def effect_fences(state):
     row = state['operation']
-    require(state['permission'] and not state['withdrawn'], 'permission_or_withdrawal')
+    require(flag(state['permission'], True) and flag(state['withdrawn'], False), 'permission_or_withdrawal')
     require(row['source_revision_sha256'] == state['current_source_revision_sha256'], 'source_changed')
     start_custody_gate(state)
 
@@ -581,6 +615,8 @@ def transition(before, action):
 def _transition(before, action):
     state = deepcopy(before); row = state['operation']; op = action['op']; output = None
     name = operation_name(event_type(row, 'started'))
+    if op != 'crash':
+        require(flag(state['permission'], True) and flag(state['withdrawn'], False), 'permission_or_withdrawal')
     require(valid_operation(row, name), 'invalid_operation')
     require(row['request_sha256'] == state['request_sha256'], 'request_changed')
     if name.startswith('index_'):
@@ -589,7 +625,7 @@ def _transition(before, action):
         require(action['expected_operation'] == row, 'operation_cas_conflict')
     if op in ('append_started', 'append_completed'):
         suffix = op.removeprefix('append_')
-        require(state['permission'] and not state['withdrawn'], 'permission_or_withdrawal')
+        require(flag(state['permission'], True) and flag(state['withdrawn'], False), 'permission_or_withdrawal')
         require(row['phase'] == ('accepted' if suffix == 'started' else 'effect_committed'), 'wrong_phase')
         start_custody_gate(state, first_start=suffix == 'started')
         value = full_value(row, suffix)
@@ -646,7 +682,7 @@ def _transition(before, action):
         start_custody_gate(state)
         row.update(phase='completed', completed_event_id=full_value(row, 'completed')['event_id'])
     elif op in ('retry', 'replay'):
-        require(state['permission'] and not state['withdrawn'], 'permission_or_withdrawal')
+        require(flag(state['permission'], True) and flag(state['withdrawn'], False), 'permission_or_withdrawal')
         suffix = action['event_type'].rsplit('.', 1)[1]
         require(action['event_type'] == event_type(row, suffix) and custody(state, suffix), 'original_missing')
         start_custody_gate(state)
@@ -656,7 +692,7 @@ def _transition(before, action):
         state['volatile'] = None
     elif op == 'recover':
         # Restart uses only durable originals and the frozen selected target, never a replacement candidate.
-        require(state['permission'] and not state['withdrawn'], 'permission_or_withdrawal')
+        require(flag(state['permission'], True) and flag(state['withdrawn'], False), 'permission_or_withdrawal')
         start_custody_gate(state)
         if row['phase'] == 'accepted':
             state, _ = transition(state, {'op': 'advance_started', 'expected_operation': deepcopy(row)})
@@ -684,7 +720,7 @@ def read_history(before, event):
     current live state (later phase, source revision, selector, counters, request); it still refuses a withdrawal
     fence, revoked access, a forged or missing original and missing start custody. It changes no state."""
     state = before; row = state['operation']
-    require(state['permission'] and not state['withdrawn'], 'permission_or_withdrawal')
+    require(flag(state['permission'], True) and flag(state['withdrawn'], False), 'permission_or_withdrawal')
     require(valid_operation(row, operation_name(event_type(row, 'started'))), 'invalid_operation')
     suffix = event.rsplit('.', 1)[1] if event.count('.') >= 2 else ''
     require(suffix in ('started', 'completed') and event == event_type(row, suffix), 'unknown_event')
@@ -694,9 +730,11 @@ def read_history(before, event):
 
 
 def historical_envelope_matches(value):
+    if not numbers_supported(value):
+        return False
     # The frozen 1.0.0 reader is an explicit envelope-owner definition; never a writer option.
     if isinstance(value, dict) and value.get('schema_version') == '1.0.0':
-        return validator('Plans/event_record.schema.json', 'event_record_1_0_0_compatibility_reader').is_valid(value)
+        return validator('Plans/memory_maintenance_event_record.schema.json', 'compatibility').is_valid(value)
     return envelope_validator().is_valid(value)
 
 
@@ -740,7 +778,7 @@ def read_canonical_history(before, event):
     Storage full-flush records. Their physical authentication remains native NOT_RUN. Current access
     and the withdrawal fence still apply; current admission, cutoffs, writer policy and live state do not.
     """
-    require(before['permission'] and not before['withdrawn'], 'permission_or_withdrawal')
+    require(flag(before['permission'], True) and flag(before['withdrawn'], False), 'permission_or_withdrawal')
     row = before['written_operation']
     require(valid_operation(row, operation_name(event_type(row, 'started'))), 'invalid_operation')
     suffix = event.rsplit('.', 1)[1] if event.count('.') >= 2 else ''
@@ -1116,16 +1154,53 @@ def run_checkpoint_joins(fixtures, families):
     return counts
 
 
+def check_resources():
+    available = next(int(line.split()[1]) for line in Path('/proc/meminfo').read_text().splitlines()
+                     if line.startswith('MemAvailable:')) // (1024**2)
+    if available < 6:
+        raise RuntimeError('PAUSED: free -g available below 6 GiB; do not continue checks')
+
+
+def select_family(fixtures, event):
+    value = dict(fixtures)
+    for key, rows in fixtures.items():
+        if isinstance(rows, list) and rows and isinstance(rows[0], dict) and 'event_type' in rows[0]:
+            value[key] = [row for row in rows if row['event_type'] == event]
+    if 'start_custody_matrix' in value:
+        value['start_custody_matrix'] = {**value['start_custody_matrix'], 'families':
+            [row for row in value['start_custody_matrix']['families'] if row['event_type'] == event]}
+    if 'operation_cases' in value:
+        value['operation_cases'] = [row for row in value['operation_cases'] if row['definition'] == operation_name(event)]
+    if 'identifier_cases' in value:
+        definitions = {event.replace('.', '_'), operation_name(event)}
+        if '.index.' in event:
+            kind = 'lexical' if '.lexical.' in event else 'semantic'
+            definitions |= {kind+'_target', kind+'_selector'}
+        value['identifier_cases'] = [row for row in value['identifier_cases'] if row['definition'] in definitions]
+    return value
+
+
+def boundary_domains():
+    spec = importlib.util.spec_from_file_location('_dmem_boundary_domains', ROOT / 'scripts/pm_memory_boundary_domains.py')
+    result = importlib.util.module_from_spec(spec); spec.loader.exec_module(result)
+    return result
+
+
 def main():
+    parser = argparse.ArgumentParser(); parser.add_argument('--family'); args = parser.parse_args()
+    check_resources()
     contracts = load('Plans/memory_maintenance_contracts.json'); fixtures = load('Plans/memory_maintenance_event_fixtures.json')
     registered = {x['event_type'] for x in load('Plans/event_family_registry.json')['families']}
     assert len(contracts['families']) == 8 and len(contracts['blocked_rows']) == 0
     assert not registered.intersection(x['event_type'] for x in contracts['families'])
-    for filename in ('event_payloads', 'operation', 'rebuild_target'):
+    for filename in ('event_payloads', 'operation', 'rebuild_target', 'event_record'):
         Draft202012Validator.check_schema(load('Plans/memory_maintenance_' + filename + '.schema.json'))
     # Standing check 9 before any instance validation: dormant branches cannot hide an unresolved reference.
     mirrors = require_resolved_references()
     families = {x['event_type']: x for x in contracts['families']}; counts = {}
+    if args.family:
+        assert args.family in families
+        families = {args.family: families[args.family]}; fixtures = select_family(fixtures, args.family)
     references = run_reference_cases(fixtures, families)
     for case in fixtures['cases']:
         event = case['event_type']; result = accept(case['payload'], families[event], case['context'])
@@ -1144,6 +1219,8 @@ def main():
     history = run_history(fixtures, families)
     canonical_history = run_canonical_history(load('Plans/memory_canonical_history_fixtures.json'), families)
     numeric_writers = run_numeric_writers(fixtures['writer_families'])
+    contexts = {f['event_type']: {**f, 'writer_states': next(w['states'] for w in fixtures['writer_families'] if w['event_type']==f['event_type'])} for f in fixtures['stateful_families']}
+    domains = boundary_domains().run(__import__('sys').modules[__name__], contexts, fixtures['cases'])
     identifier_names = [case['name'] for case in fixtures['identifier_cases']]
     assert len(identifier_names) == len(set(identifier_names))
     assert {event.replace('.', '_') + ':' + name for event in families
@@ -1187,7 +1264,7 @@ def main():
                       'generic_checkpoint_identity_cases': checkpoints,
                       'start_custody_matrix': matrix, 'history_cases': history,
                       'canonical_history_cases': canonical_history,
-                      'numeric_writer_cases': numeric_writers,
+                      'numeric_writer_cases': numeric_writers, 'boundary_domains': domains,
                       'schema_reference_cases': references, 'registry_mirrors_reference_checked': mirrors,
                       'native': 'NOT_RUN', 'admission': 'ABSENT', 'retention': 'PENDING_RETENTION_DECISION'}, indent=2))
 

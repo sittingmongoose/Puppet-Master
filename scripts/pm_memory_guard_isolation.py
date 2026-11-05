@@ -7,12 +7,15 @@ repaired during a probe. The custody corpus is read from the fixtures, including
 from contextlib import contextmanager
 from copy import deepcopy
 from pathlib import Path
+from functools import lru_cache
 import argparse
 import ast
 import importlib.util
 import inspect
 import json
 import textwrap
+import subprocess
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -420,12 +423,12 @@ class RemoveExpressions(ast.NodeTransformer):
 
 
 BOUNDARY_GUARDS={
- 'admission':{"not context['admitted'] or context['withdrawn'] or not context['permission']":False},
- 'permission_or_withdrawal':{"not context['admitted'] or context['withdrawn'] or not context['permission']":False},
+ 'admission':{"not flag(context['admitted'], True) or not flag(context['withdrawn'], False) or not flag(context['permission'], True)":False},
+ 'permission_or_withdrawal':{"not flag(context['admitted'], True) or not flag(context['withdrawn'], False) or not flag(context['permission'], True)":False},
  'boundary_scope':{"any((payload[k] != context[k] for k in ('project_id', 'operation_id', 'source_revision_sha256')))":False},
- 'boundary_snapshot':{"not context['request_matches'] or not context['current_source']":False},
- 'boundary_receipts':{"not (context['started_receipt'] and context['effect_settled'] and context['original_full_value'])":False},
- 'boundary_acceptance':{"not context['acceptance_durable']":False},
+ 'boundary_snapshot':{"not flag(context['request_matches'], True) or not flag(context['current_source'], True)":False},
+ 'boundary_receipts':{"not (flag(context['started_receipt'], True) and flag(context['effect_settled'], True) and flag(context['original_full_value'], True))":False},
+ 'boundary_acceptance':{"not flag(context['acceptance_durable'], True)":False},
  'boundary_request':{"row['request_sha256'] != context['request_sha256']":False},
  'boundary_payload':{"payload != payload_from(row, suffix)":False},
  'boundary_terminal':{"row['phase'] == 'completed' and suffix == 'completed' and (original is None)":False},
@@ -483,6 +486,32 @@ REASONS={'outcome':{'outcome_invalid'},'admission':{'not_admitted'},'permission_
          'selector_cas':{'selector_cas_conflict'},'history_event':{'unknown_event'}}
 
 
+def numeric_schema_mutant(m):
+    """Named duplicate: integer integrality/safe upper bounds in schemas and hash normalization.
+
+    Keep schema lower bounds, required fields, other types and every structural constraint enabled.
+    """
+    documents=deepcopy(m.checked_documents())
+    def remove(node):
+        if isinstance(node,dict):
+            if node.get('type')=='integer':
+                node['type']='number'
+                if node.get('maximum')==m.SAFE_INTEGER:del node['maximum']
+            for key,value in node.items():
+                if key not in m.DATA_KEYWORDS:remove(value)
+        elif isinstance(node,list):
+            for value in node:remove(value)
+    for doc in documents.values():remove(doc)
+    registry=m.schema_registry(documents)
+    @lru_cache(maxsize=None)
+    def validator(path,definition):
+        doc=documents[path]
+        new=m.Draft202012Validator({'$ref':m.document_uri(path,doc)+'#/$defs/'+definition},
+            registry=registry,format_checker=m.FormatChecker())
+        return new
+    return validator
+
+
 @contextmanager
 def semantic_mutant(m,name):
     saved={}
@@ -502,12 +531,17 @@ def semantic_mutant(m,name):
         if name=='envelope_schema':
             change('envelope_validator',lambda:AlwaysValid())
             real=m.validator
-            change('validator',lambda path,definition:AlwaysValid() if path=='Plans/event_record.schema.json' else real(path,definition))
+            change('validator',lambda path,definition:AlwaysValid() if path in ('Plans/event_record.schema.json','Plans/memory_maintenance_event_record.schema.json') else real(path,definition))
         if name=='payload_schema':
             real=m.validator
             change('validator',lambda path,definition:AlwaysValid() if 'event_payloads' in path else real(path,definition))
         if name=='references_resolve':change('unresolved_references',lambda *args,**kwargs:[])
-        if name=='json_number_grammar':change('parse_json_number',lambda literal:1)
+        if name=='json_number_grammar':
+            real_decoder=m.decode_json_number
+            def unchecked_grammar(literal):
+                try:return real_decoder(literal)
+                except json.JSONDecodeError:return 1
+            change('decode_json_number',unchecked_grammar)
         if name in ('producer_join','replay_policy'):
             real=m.retained_binding;field='actor_ref' if name=='producer_join' else 'replay_policy'
             def binding(value,expected):
@@ -522,13 +556,17 @@ def semantic_mutant(m,name):
         if name in BOUNDARY_GUARDS:
             replacements=BOUNDARY_GUARDS[name]
             # Admission and permission are separate terms of one early boundary condition.
-            if name=='admission':replacements={"not context['admitted']":False}
-            if name=='permission_or_withdrawal':replacements={"context['withdrawn']":False,"not context['permission']":False}
+            if name=='admission':replacements={"not flag(context['admitted'], True)":False}
+            if name=='permission_or_withdrawal':replacements={"not flag(context['withdrawn'], False)":False,"not flag(context['permission'], True)":False}
             change('accept',replaced_function(m,'accept',RemoveExpressions(replacements)))
         if name in CHECKPOINT_GUARDS:
             change('checkpoint_identity_matches',replaced_function(m,'checkpoint_identity_matches',RemoveExpressions(CHECKPOINT_GUARDS[name])))
         if name=='action':change('_transition',replaced_function(m,'_transition',RemoveUnknownAction()))
-        if name=='commitment_numbers':change('canonical_numbers',replaced_function(m,'canonical_numbers',RemoveUnsupportedNumber()))
+        if name=='commitment_numbers':
+            numeric_validator=numeric_schema_mutant(m)
+            change('validator',numeric_validator)
+            change('envelope_validator',lambda:numeric_validator('Plans/memory_maintenance_event_record.schema.json','current'))
+            change('canonical_numbers',replaced_function(m,'canonical_numbers',RemoveUnsupportedNumber()))
         if name=='original_input':
             change('_transition',replaced_function(m,'_transition',RemoveExpressions({"action['value'] == value":True})))
         if name=='replay_policy':change('_append_current',replaced_function(m,'_append_current',DropReplayField()))
@@ -574,8 +612,8 @@ def archive_mutant(archive, name):
             try:
                 if name in BOUNDARY_GUARDS:
                     replacements=BOUNDARY_GUARDS[name]
-                    if name=='admission':replacements={"not context['admitted']":False}
-                    if name=='permission_or_withdrawal':replacements={"context['withdrawn']":False,"not context['permission']":False}
+                    if name=='admission':replacements={"not flag(context['admitted'], True)":False}
+                    if name=='permission_or_withdrawal':replacements={"not flag(context['withdrawn'], False)":False,"not flag(context['permission'], True)":False}
                     archive._original_accept=replaced_function(archive,'_original_accept',RemoveExpressions(replacements))
                     archive.core.accept=archive.accept
                 yield
@@ -583,7 +621,7 @@ def archive_mutant(archive, name):
                 archive._original_accept=original
 
 
-def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None):
+def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):
     corpus=[]
     for case in semantic:
         corpus.append({'name':case['name'],'guard':case['guard'],'positive':case['positive'],'negative':case['negative']})
@@ -593,13 +631,16 @@ def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None):
                        'negative':lambda c=case:matrix_probe(m,fixtures,contracts,c)})
     names = [case['name'] for case in corpus]
     assert len(names) == len(set(names)), ('duplicate_guard_case_ids', sorted({name for name in names if names.count(name)>1}))
+    m.check_resources()
+    assert {c['guard'] for c in corpus} <= set(guards or {c['guard'] for c in corpus}), 'unlisted guard'
     baseline={}
     for case in corpus:
         assert case['positive']()[0]=='ok',(case['name'],'invalid control')
         result=case['negative']();assert result[0]=='refused',(case['name'],'negative accepted',result)
         baseline[case['name']]=result
     rows=[]
-    for guard in sorted({c['guard'] for c in corpus}):
+    for guard in sorted(guards or {c['guard'] for c in corpus}):
+        m.check_resources()
         flips=[];stayed=[]
         if guard.startswith('custody_'):
             context=custody_mutant(m,guard,archive)
@@ -622,19 +663,66 @@ def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None):
     return rows,len(corpus)
 
 
+def sequential(out):
+    contracts = []
+    for path in ('memory_maintenance_contracts.json','memory_archive_contracts.json'):
+        contracts += json.loads((ROOT/'Plans'/path).read_text())['families']
+    results=[]
+    for contract in contracts:
+        family=contract['event_type']; target=out.with_name(out.stem+'-'+family+'.json')
+        subprocess.run([sys.executable,__file__,'--family',family,'--out',str(target)],check=True)
+        results.append(json.loads(target.read_text()))
+    merged={'status':'pass','families':sorted(c['event_type'] for c in contracts),
+            'custody_matrix_cases':sum(r['custody_matrix_cases'] for r in results),
+            'maintenance_cases':sum(r['maintenance_cases'] for r in results),
+            'archive_cases':sum(r['archive_cases'] for r in results),
+            'execution':'one family and one named guard/duplicate set at a time; no parallel jobs',
+            'native':'NOT_RUN','admission':'ABSENT'}
+    for key in ('maintenance_guard_table','archive_guard_table'):
+        groups={}
+        for result in results:
+            for row in result[key]:
+                merged_row=groups.setdefault(row['guard'],{'guard':row['guard'],'negatives_that_flip':[],
+                    'negatives_that_stay_rejected':[],'restored':True})
+                for field in ('negatives_that_flip','negatives_that_stay_rejected'):
+                    merged_row[field]+=row[field]
+        for row in groups.values():
+            assert row['negatives_that_flip'], ('unproved guard',row['guard'])
+            assert len(set(row['negatives_that_flip']+row['negatives_that_stay_rejected']))==len(row['negatives_that_flip']+row['negatives_that_stay_rejected'])
+        merged[key]=[groups[k] for k in sorted(groups)]
+    out.write_text(json.dumps(merged,indent=2)+'\n')
+    print(json.dumps({'status':'pass','cases':merged['maintenance_cases']+merged['archive_cases'],
+                      'guards':len(merged['maintenance_guard_table'])+len(merged['archive_guard_table'])}))
+
+
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--out',type=Path,required=True);args=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('--out',type=Path,required=True);parser.add_argument('--family');args=parser.parse_args()
+    if not args.family:
+        return sequential(args.out)
     m=module('_check11_maintenance','pm_memory_maintenance_events.py')
     f=m.load('Plans/memory_maintenance_event_fixtures.json');contracts={c['event_type']:c for c in m.load('Plans/memory_maintenance_contracts.json')['families']}
     contexts={c['event_type']:{'event_type':c['event_type'],'states':c['states'],
               'writer_states':next(w['states'] for w in f['writer_families'] if w['event_type']==c['event_type'])}
               for c in f['stateful_families']}
+    prior=json.loads((ROOT/'reports/event-authority-20261104/DMEM-check11-guards.json').read_text())
+    mg=set(row['guard'] for row in prior['guard_tables']['maintenance'])
+    ag=set(row['guard'] for row in prior['guard_tables']['archive'])|{'memory_flags'}
+    if args.family in contexts:
+        contexts={args.family:contexts[args.family]};f=m.select_family(f,args.family);contracts={args.family:contracts[args.family]}
+    else:
+        contexts={};contracts={}
+        f=m.select_family(f,args.family)
     semantic=semantic_cases(m,f,contexts)+canonical_history_cases(m,contexts)
+    semantic+=m.boundary_domains().domain_cases(m,contexts,f['cases'])
     matrix=cases_for_matrix(m,f,contracts,f['start_custody_matrix']['families'],contexts)
-    rows,n=prove_complete(m,semantic,matrix,f,contracts)
+    rows,n=prove_complete(m,semantic,matrix,f,contracts,guards=mg) if contexts else ([],0)
     archive=module('_check11_archive','pm_memory_archive_events.py');am=archive.core
     af=am.load('Plans/memory_archive_event_fixtures.json')
     ac={c['event_type']:c for c in am.load('Plans/memory_archive_contracts.json')['families']}
+    if args.family in ac:
+        af=am.select_family(af,args.family);ac={args.family:ac[args.family]}
+    else:
+        af=am.select_family(af,args.family);ac={}
     adapted={'cases':[c for family in af['families'] for c in family['boundary_cases']]}
     actx={family['event_type']:{'event_type':family['event_type'],'states':family['states'],
            'writer_states':family['writer_states']} for family in af['families']}
@@ -676,13 +764,15 @@ def main():
     for case in extra:
         if case['guard']=='producer_join':case['guard']='semantic_binding'
     asemantic+=extra+canonical_history_cases(am,actx,archive=True)
-    ar,an=prove_complete(am,asemantic,amatrix,adapted,ac,archive)
+    asemantic+=am.boundary_domains().domain_cases(am,actx,adapted['cases'],archive)
+    ar,an=prove_complete(am,asemantic,amatrix,adapted,ac,archive,guards=ag) if actx else ([],0)
     result={'status':'pass','families':sorted(set(contracts)|set(ac)),
             'custody_matrix_cases':len(matrix)+len(amatrix),'maintenance_cases':n,'archive_cases':an,
             'maintenance_guard_table':rows,'archive_guard_table':ar,
             'absence_and_withdrawal_endpoint':'actual start_custody_gate; no fabricated missing bytes',
             'other_custody_endpoints':'complete phase/writer/boundary/reader entry points',
             'native':'NOT_RUN','admission':'ABSENT'}
+    assert result['families'] == [args.family], ('unknown or empty family', args.family)
     args.out.write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps({'status':'pass','cases':n+an,'guards':len(rows)+len(ar)}))
 

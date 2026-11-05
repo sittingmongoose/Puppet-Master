@@ -2153,7 +2153,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "3fddecb16039e3e415e5df572f1c06061cd506890c79c17ce1251a1a8303bf94",
+      "sha256": "58c91700da23cfbb74129383f136ff739fbb9abdfe2849973ec782c9745a1397",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 78,
@@ -4591,7 +4591,7 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 25121,
+      "line_count": 25133,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 371,
       "plan_unit_ids": [
@@ -5327,7 +5327,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "82d259913f8d96d5797b559d4eccbfe148519f39bdff0d05657ecf3bda1cad90",
+      "sha256": "58d9febf41970c4d3cada256bdbd95cd563979c9f4157f5203c392f971f8e7c1",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 371
@@ -18695,7 +18695,7 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 30228,
+      "line_count": 30272,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 351,
       "plan_unit_ids": [
@@ -19173,7 +19173,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "fccbc20b8a361ac2d3b7b7cd2a87831e6bc5919fa9b9393d9222e5e66b4c4b05",
+      "sha256": "20cb01ff4fdc89952a1db4830c9d7af2cd9d28f599c9776a0336519484634e0b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 347,
@@ -21550,7 +21550,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-04T23:47:33Z",
+  "generated_at_utc": "2026-11-05T01:26:35Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

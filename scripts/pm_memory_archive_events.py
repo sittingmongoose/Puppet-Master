@@ -9,6 +9,7 @@ from contextlib import contextmanager
 from pathlib import Path
 import importlib.util
 import json
+import argparse
 
 ROOT = Path(__file__).resolve().parents[1]
 _spec = importlib.util.spec_from_file_location('_card1b_custody', ROOT / 'scripts/pm_memory_maintenance_events.py')
@@ -53,7 +54,7 @@ def start_custody_gate(state, first_start=False, writer_event=None, canonical_hi
 
     These are the original predicates; no retained value is repaired, substituted or reconstructed as proof.
     """
-    core.require(not state['withdrawn'], 'permission_or_withdrawal')
+    core.require(core.flag(state['withdrawn'], False), 'permission_or_withdrawal')
     row = state['operation']; started = event_type(row, 'started'); completed = event_type(row, 'completed')
     expected = (core.canonical_value if canonical_history else core.full_value)(row, 'started'); start_id = expected['event_id']
     record = state['originals'].get(started)
@@ -117,12 +118,18 @@ def panel(state):
     return {'available': True, 'reason': None}
 
 
+def memory_flags(memories):
+    return type(memories) is dict and all(type(memory) is dict and all(type(memory.get(field)) is bool
+        for field in ('pinned', 'archived')) for memory in memories.values())
+
+
 def archive_candidate(before, job):
+    guard('memory_flags', memory_flags(before['memories']))
     after = deepcopy(before)
     selected = before['selected_ids']
     guard('selection_unique', selected == sorted(set(selected)))
     guard('selection_exists', all(k in before['memories'] for k in selected))
-    guard('selection_pinned', all(not before['memories'][k]['pinned'] for k in selected if k in before['memories']))
+    guard('selection_pinned', all(before['memories'][k]['pinned'] is not True for k in selected if k in before['memories']))
     guard('selection_kind', job != 'monthly_summary'
           or all(before['memories'][k]['kind'] == 'Note' for k in selected if k in before['memories']))
     for key in selected:
@@ -136,6 +143,7 @@ def archive_candidate(before, job):
 
 
 def archive_validate(before, after, job):
+    guard('memory_flags', memory_flags(before['memories']) and memory_flags(after['memories']))
     source = before['memories']; result = after['memories']; selected = set(before['selected_ids'])
     guard('originals_preserved', set(source) <= set(result))
     # Each check owns a distinct defect; absent originals are checked above, not misreported as lost refs.
@@ -147,10 +155,10 @@ def archive_validate(before, after, job):
     guard('selected_fields_preserved', all(
         {field: value for field, value in source[k].items() if field not in ('archived', 'evidence_refs', 'version_ref')}
         == {field: value for field, value in result[k].items() if field not in ('archived', 'evidence_refs', 'version_ref')}
-        for k in common & selected if not source[k]['pinned']))
-    guard('pins_preserved', all(source[k] == result[k] for k in common if source[k]['pinned']))
-    guard('selected_archived', all(result[k]['archived'] for k in common & selected if not source[k]['pinned']))
-    guard('unselected_preserved', all(source[k] == result[k] for k in common - selected if not source[k]['pinned']))
+        for k in common & selected if source[k]['pinned'] is not True))
+    guard('pins_preserved', all(source[k] == result[k] for k in common if source[k]['pinned'] is True))
+    guard('selected_archived', all(result[k]['archived'] for k in common & selected if source[k]['pinned'] is not True))
+    guard('unselected_preserved', all(source[k] == result[k] for k in common - selected if source[k]['pinned'] is not True))
     guard('no_extra_memories', set(result) <= set(source))
     if job == 'monthly_summary':
         expected = {'original_ids': before['selected_ids'],
@@ -187,12 +195,13 @@ def append_current(before, value, event):
     """The adopted boundary with invariant-specific checks (no blanket equality hiding a schema defect)."""
     cutoff_gate(before)
     state = deepcopy(before); row = state['operation']; suffix = event.rsplit('.', 1)[1]
+    guard('commitment_numbers', core.numbers_supported(value), 'invalid_number')
     guard('envelope_schema', core.envelope_validator().is_valid(value))
     if value['replay_policy'] == 'projector_replay_only' and _REMOVED != 'replay_policy':
         raise core.Refusal('replay_only_not_appendable')
     guard('replay_policy', value['replay_policy'] == 'dedupe_by_idempotency_key')
-    guard('admission', state['admitted'])
-    guard('permission_or_withdrawal', state['permission'] and not state['withdrawn'])
+    guard('admission', core.flag(state['admitted'], True))
+    guard('permission_or_withdrawal', core.flag(state['permission'], True) and core.flag(state['withdrawn'], False))
     guard('operation_valid', core.valid_operation(row, core.operation_name(event)))
     expected = core.canonical_value(row, suffix)
     producer_fields = set(expected) - core.STORAGE_FIELDS - {'payload', 'replay_policy'}
@@ -460,12 +469,17 @@ def payload_upper_bounds(families):
 
 
 def main():
+    parser = argparse.ArgumentParser(); parser.add_argument('--family'); args = parser.parse_args()
+    core.check_resources()
     contracts = core.load('Plans/memory_archive_contracts.json')
     fixtures = core.load('Plans/memory_archive_event_fixtures.json')
     families = {f['event_type']: f for f in contracts['families']}
     assert len(families) == 4 and {f['event_type'] for f in fixtures['families']} == set(families)
     registered = {x['event_type'] for x in core.load('Plans/event_family_registry.json')['families']}
     assert not set(families) & registered
+    if args.family:
+        assert args.family in families
+        families = {args.family: families[args.family]}; fixtures = core.select_family(fixtures, args.family)
     core.require_resolved_references()
     values = core.load('Plans/storage_value_registry.json')['families']
     operations = core.load('Plans/memory_maintenance_operation.schema.json')['$defs']
@@ -487,9 +501,11 @@ def main():
     guards = run_guards(fixtures, families)
     canonical_history = core.run_canonical_history(core.load('Plans/memory_canonical_history_fixtures.json'), families)
     numeric_writers = core.run_numeric_writers(fixtures['families'])
+    contexts = {f['event_type']: f for f in fixtures['families']}
+    domains = core.boundary_domains().run(core, contexts, [c for f in fixtures['families'] for c in f['boundary_cases']], __import__('sys').modules[__name__])
     print(json.dumps({'status':'pass','families':paths,'guard_cases':len(fixtures['guard_cases']),
                       'guard_removal_table':guards,'canonical_history_cases':canonical_history,
-                      'numeric_writer_cases':numeric_writers,
+                      'numeric_writer_cases':numeric_writers,'boundary_domains':domains,
                       'payload_messagepack_upper_bounds':bounds,'native':'NOT_RUN','admission':'ABSENT',
                       'real_cutoffs':'ABSENT; numeric proposals in report only'},indent=2))
 
