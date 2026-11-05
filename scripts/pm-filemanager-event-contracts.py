@@ -78,7 +78,8 @@ SCHEMAS = schema_registry()
 
 
 def validate_shape(path, definition, value):
-    uri = SCHEMA_BASE + path + ("#/$defs/" + definition if definition else "")
+    fragment = definition if definition.startswith("#") else ("#/$defs/" + definition if definition else "")
+    uri = SCHEMA_BASE + path + fragment
     jsonschema.Draft202012Validator({"$ref": uri}, registry=SCHEMAS,
                                    format_checker=jsonschema.FormatChecker()).validate(value)
 
@@ -155,7 +156,7 @@ def resolve_value(definition, physical, payload_rows):
 
 
 def event_body(event, payload_rows):
-    if len(canonical_msgpack(event["payload"])) > INLINE_LIMIT:
+    if type(event["payload"]) is not dict or len(canonical_msgpack(event["payload"])) > INLINE_LIMIT:
         raise ValueError("event inline body exceeds 16 KiB")
     if event["payload_ref"] is None:
         return event["payload"]
@@ -181,10 +182,10 @@ def validate_writer(event):
 def validate_profile(registry, family):
     profile = registry["storage_profile"]["family_profiles"][family]
     if (profile["redb_file"] != "canonical" or profile["storage_group"] != "coordination_and_storage" or
-            profile["max_value_bytes"] != INLINE_LIMIT or profile["encoding_target"] != "messagepack_canonical"):
+            not same_value(profile["max_value_bytes"], INLINE_LIMIT) or profile["encoding_target"] != "messagepack_canonical"):
         raise ValueError("wrong SP-340 profile")
     group = next(g for g in registry["storage_profile"]["groups"] if g["group_id"] == profile["storage_group"])
-    if group["canonical_budget_bytes"] != 2147483648:
+    if not same_value(group["canonical_budget_bytes"], 2147483648):
         raise ValueError("wrong existing advisory canonical budget")
     entry = next(f for f in registry["families"] if f["family_id"] == family)
     if entry["value_schema"]["properties"]["schema_id"].get("const") != entry["value_schema_id"]:
@@ -324,12 +325,33 @@ def boundary_case(row, case):
     name, scenario = row["event_type"], case["scenario"]
     p, t = copy.deepcopy(row["payload"]), copy.deepcopy(row["trace"])
     m = t["custody_model"]
+    if scenario == "schema-rule":
+        # A schema-only proof deliberately avoids unrelated custody joins. Its
+        # accepting control and single JSON edit are authored in the fixture.
+        value = (json.loads((ROOT / case["control_file"]).read_text()) if "control_file" in case
+                 else copy.deepcopy(case.get("control", row)))
+        for key in case.get("control_path", []):
+            value = value[key]
+        validate_shape(case["document"], case["definition"], value)
+        mutation = case["mutation"]
+        if not mutation["path"]:
+            value = copy.deepcopy(mutation["value"])
+        else:
+            target = value
+            for key in mutation["path"][:-1]:
+                target = target[key]
+            if mutation.get("delete"):
+                del target[mutation["path"][-1]]
+            else:
+                target[mutation["path"][-1]] = copy.deepcopy(mutation["value"])
+        return validate_shape(case["document"], case["definition"], value)
     if scenario == "api":
         validators = {fn.__name__: fn for fn in (
             validate_payload_reference, resolve_payload, resolve_value, event_body,
             validate_writer, validate_profile, validate_operation_transition,
             validate_control_transition, validate_original_models, validate_case,
-            validate_snapshot_subjects, validate_complete_event, identity)}
+            validate_snapshot_subjects, validate_complete_event, identity,
+            validate_transition_storage)}
         validator = validators[case["validator"]]
         # A boundary probe carries its accepting control and changes one invariant.
         validator(*copy.deepcopy(case["valid_args"]), **copy.deepcopy(case.get("valid_kwargs", {})))
@@ -347,7 +369,7 @@ def boundary_case(row, case):
         if scenario == "profile-budget":
             profile = profiles[case["family"]]
             next(g for g in registry["storage_profile"]["groups"]
-                 if g["group_id"] == profile["storage_group"])["canonical_budget_bytes"] = 1
+                 if g["group_id"] == profile["storage_group"])["canonical_budget_bytes"] = case.get("value", 1)
         elif scenario == "profile-schema-header":
             entry = next(f for f in registry["families"] if f["family_id"] == case["family"])
             entry["value_schema"]["properties"]["schema_id"] = {"enum": [entry["value_schema_id"]]}
@@ -666,6 +688,8 @@ def validate_snapshot_subjects(event_type, payload, operation):
 
 def validate_complete_event(event_type, payload, context, event, payload_rows, *,
                             include_body=True, label="original complete event join"):
+    if type(include_body) is not bool:
+        raise ValueError("invalid body-validation mode")
     if ((include_body and not same_value(event_body(event, payload_rows), payload)) or event["event_type"] != event_type or
             event["project_id"] != payload["project_id"] or event["scope_kind"] != "project" or
             event["correlation_id"] != payload["correlation_id"] or
@@ -692,7 +716,13 @@ def validate_operation_immutables(before, after):
         raise ValueError("changed settled original")
 
 
+def validate_transition_storage(storage):
+    if storage is not None and type(storage) is not dict:
+        raise ValueError("invalid physical storage input")
+
+
 def validate_operation_transition(before, after, proof=None, storage=None):
+    validate_transition_storage(storage)
     storage = storage or {}
     for label, row in (("before", before), ("after", after)):
         resolved = resolve_value("operation_custody", storage.get(label, row), storage.get("payload_rows", {}))
@@ -725,6 +755,7 @@ def validate_operation_transition(before, after, proof=None, storage=None):
 
 
 def validate_control_transition(before, after, issued_sequence, drain_keys, storage=None):
+    validate_transition_storage(storage)
     storage = storage or {}
     for label, row in (("before", before), ("after", after)):
         resolved = resolve_value("family_control", storage.get(label, row), storage.get("payload_rows", {}))
@@ -739,7 +770,8 @@ def validate_control_transition(before, after, issued_sequence, drain_keys, stor
         raise ValueError("control transition")
     if before["admission_revision"] is not None and before["admission_revision"] != after["admission_revision"]:
         raise ValueError("changed original admission")
-    if (after["last_admitted_sequence"] != issued_sequence or
+    if (type(issued_sequence) is not int or issued_sequence < 0 or
+            after["last_admitted_sequence"] != issued_sequence or
             issued_sequence < before["last_admitted_sequence"]):
         raise ValueError("control issued boundary")
     if edge in {("active", "active"), ("draining", "draining")} and (
@@ -760,6 +792,8 @@ def validate_control_transition(before, after, issued_sequence, drain_keys, stor
 
 def validate_original_models(event_type, payload, trace, *, operation_candidate=None,
                              transition_before=None, historical=False):
+    if type(historical) is not bool:
+        raise ValueError("invalid historical mode")
     model = trace["custody_model"]  # Synthetic canonical tables; native origin remains NOT_RUN.
     physical_operation = model["operation_rows"][model["operation_key"]]
     selected_operation = resolve_value("operation_custody", physical_operation, model["payload_rows"])
@@ -884,6 +918,8 @@ def identity(event_type, payload, context):
     }[action]
     fields = [context["storage_instance_id"], str(context["recovery_epoch"]),
               payload["project_id"], event_type, payload["operation_id"], payload[subject]]
+    if any(type(value) is not str for value in fields):
+        raise ValueError("noncanonical identity tuple")
     digest = hashlib.sha256(json.dumps(fields, separators=(",", ":"), ensure_ascii=False).encode()).hexdigest()
     return "evt_" + event_type.replace(".", "_") + "_" + digest, event_type + ":" + digest
 
@@ -906,19 +942,22 @@ def validate_case(event_type, payload, trace, *, operation_candidate=None,
     validate_original_payload(payload, trace["original_payload"], "unequal original custody")
     if trace["stages"] != ["effect_settled", "receipt_settled", "append", "first_ack", "terminal"]:
         raise ValueError("invalid ordering")
-    if not trace["original_first_receipt_resolved"]:
+    if trace["original_first_receipt_resolved"] is not True:
         raise ValueError("unresolved first receipt")
-    if trace["replay_effect_count"] != 0 or trace["retry_append_count"] != 0:
+    if (not same_value(trace["replay_effect_count"], 0) or
+            not same_value(trace["retry_append_count"], 0)):
         raise ValueError("replay/duplicate effect")
 
 
-    if not trace["current_source_verified"] or not trace["access_allowed"] or not trace["restore_coherent"]:
+    if any(trace[k] is not True for k in ("current_source_verified", "access_allowed", "restore_coherent")):
         raise ValueError("source/access/restore fence")
     if trace["reader_revision"] != "1.0.0" or trace["event_revision"] != "1.0.0":
         raise ValueError("unsupported revision")
-    if not trace["reader_enabled"]:
+    if trace["reader_enabled"] is not True:
         raise ValueError("reader withdrawn")
-    if trace["event_sequence"] > trace["writer_cutoff_sequence"]:
+    if (any(type(trace[k]) is not int or trace[k] < 0
+            for k in ("event_sequence", "writer_cutoff_sequence")) or
+            trace["event_sequence"] > trace["writer_cutoff_sequence"]):
         raise ValueError("past writer cutoff")
     if event_type.endswith((".copied", ".moved", ".renamed", ".exported")):
         if payload["source_path_ref"] == payload["destination_path_ref"]:
@@ -932,13 +971,13 @@ def validate_case(event_type, payload, trace, *, operation_candidate=None,
         "moved": {"destination_committed": True, "source_removed": True, "identity_preserved": True},
         "renamed": {"valid_name": True, "same_parent": True, "identity_preserved": True},
     }[action]
-    if trace["semantic_checks"] != expected_semantics:
+    if not same_value(trace["semantic_checks"], expected_semantics):
         raise ValueError("family semantic boundary")
     if event_type.startswith("folder.") and "descendant_count" in payload:
-        if payload["descendant_count"] != trace["original_descendant_count"]:
+        if not same_value(payload["descendant_count"], trace["original_descendant_count"]):
             raise ValueError("descendant receipt mismatch")
     expected = identity(event_type, payload, trace)
-    if tuple(trace["retry_identity"]) != expected:
+    if type(trace["retry_identity"]) is not list or tuple(trace["retry_identity"]) != expected:
         raise ValueError("retry identity changed")
     validate_original_models(event_type, payload, trace, operation_candidate=operation_candidate,
                              transition_before=transition_before, historical=historical)
@@ -995,17 +1034,21 @@ def transition_case(row, case):
     return validator(*args)
 
 
-def main():
+def main(family=None):
     global SCHEMAS
     SCHEMAS = schema_registry()  # Fail before instances, even if no fixture visits a broken ref.
     fixtures = json.loads((ROOT / "Plans/filemanager_event_contract_fixtures.json").read_text())
     expected_families = {kind + "." + action for kind in ("file", "folder")
                          for action in ("copied", "created", "deleted", "exported", "moved", "renamed")}
-    if (len(fixtures["rows"]) != 12 or
+    if ((family is not None and family not in expected_families) or len(fixtures["rows"]) != 12 or
             {r["event_type"] for r in fixtures["rows"]} != expected_families):
         raise AssertionError("incomplete twelve-family fixture set")
     count = 0
+    assessed_families = 0
     for row in fixtures["rows"]:
+        if family is not None and row["event_type"] != family:
+            continue
+        assessed_families += 1
         name, payload, trace = row["event_type"], row["payload"], row["trace"]
         validate_case(name, payload, trace)
         count += 1
@@ -1074,10 +1117,15 @@ def main():
         if f.get("family_id") in {"filemanager_operation_custody", "filemanager_family_control"}]
     if dfm_registry_failures:
         raise AssertionError("FileManager registry contract failures: " + json.dumps(dfm_registry_failures))
-    print(json.dumps({"status": "pass", "families": len(fixtures["rows"]),
+    print(json.dumps({"status": "pass", "families": assessed_families,
                       "oracle_cases": count, "native_execution": "NOT_RUN"}))
     return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--family", choices=[k + "." + a for k in ("file", "folder")
+                        for a in ("copied", "created", "deleted", "exported", "moved", "renamed")],
+                        help="Run one complete family, including the shared registry gates.")
+    sys.exit(main(parser.parse_args().family))
