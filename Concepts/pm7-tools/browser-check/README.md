@@ -106,3 +106,9 @@ browser-check diff $OUT/base $OUT/tip            # opens nothing; lists CHANGED 
 ```
 
 The concept demo is live: clocks, usage numbers and toasts move between runs. A changed frame whose box sits only on a live widget is expected. Look at the diff image before reporting it.
+
+## GPU tool retirements (SW-43)
+
+`tools/perf/perf.py`, `verify/home_workspace_matrix.mjs` and chat `tests/record-motion.mjs` are retired and exit unsuccessfully. Their historical implementations remain in git history. Use this kit's `performance-stalls`, Home/width checks and GPU `--record` workflow. The old provenance launcher is also retired: `launchChromium()` refuses execution, so callers cannot issue new certification receipts using its CPU launch contract. Historical receipts are historical evidence, not current GPU verification. A replacement provenance contract requires separate ownership.
+
+Chat `tests/pmx-verify.mjs` now uses the shared GPU launcher. Its loop census fails when PMLogo is absent; Pip lifecycle still requires `tools/pip_loops.mjs` against the integrated page. `resize_perf.py` keeps GPU enabled and samples a local idle floor around each drag; that budget remains experimental until loaded and quiet interleaved A/B verification is recorded.
