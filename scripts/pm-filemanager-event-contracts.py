@@ -1193,11 +1193,10 @@ def main(family=None):
         if entry["value_schema"]["$defs"] != schema["$defs"]:
             raise AssertionError(family + ": embedded logical schema drift")
         validate_profile(registry, family)
-    dfm_registry_failures = [f for f in _codec.storage_value_registry_data_failures(
+    registry_failures = _codec.storage_value_registry_data_failures(
         registry, path_label="Plans/storage_value_registry.json")
-        if f.get("family_id") in {"filemanager_operation_custody", "filemanager_family_control"}]
-    if dfm_registry_failures:
-        raise AssertionError("FileManager registry contract failures: " + json.dumps(dfm_registry_failures))
+    if registry_failures:
+        raise AssertionError("Storage registry contract failures: " + json.dumps(registry_failures))
     print(json.dumps({"status": "pass", "families": assessed_families,
                       "oracle_cases": count, "native_execution": "NOT_RUN"}))
     return 0

@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L6713-L7236
+Source lines: L6713-L7284
 
-Source SHA256: `76ba098f914899db177bae3445d45612d22b6b60c5e3f02f84a3a3bd2f7a0647`
+Source SHA256: `21ba4c52cc0153b5587a7a18cdf9c154a85336c8f78b7ec01b2acb7c0b33ea24`
 
 ---
 
@@ -532,3 +532,51 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/UI_Wiring_Rules.md#UIW-052, ContractName:Plans/Test_Capture_and_Motion_Evidence.md#TCME-007, ContractName:Plans/FinalGUISpec.md#F3-668, ContractName:Plans/FinalGUISpec.md#F3-674
+
+### ATS-280 - FileManager per-family event oracles
+
+Plans/filemanager_event_contract_fixtures.json contains separately named positive and negative cases for each of the twelve exact FileManager families. Run python3 scripts/pm-filemanager-event-contracts.py. The checker validates closed payloads and rejects kind/scope/extra-field and original identity, recovery ordering or replay-effect violations. Added independent negatives keep claimed semantic booleans true while copy result equals source
+or create result equals the existing container. Closed operation/control shapes, physical key/raw
+identity, frozen epoch/payload/path coverage, original full-value request/result and strict v2 witness,
+final selected-row equality, cutoff CAS/revision/reader fences and restore coherence have explicit
+positive/negative model cases. Every added checker rule runs through this full checker; mutation
+cases include internally consistent changed payloads so earlier equality guards cannot mask identity
+failures. Native filesystem, original receipt, crash/restore and shared Storage execution obligations remain NOT_RUN. No admission or retention policy is inferred from a static pass.
+
+Each family's own boundary_cases additionally runs coherent current-writer and retry
+projector_replay_only negatives; 16383/16384/16385-byte canonical MessagePack event-body and both
+physical companion boundaries; packed positive payload/operation/control cases; oversized-inline,
+missing/changed/hash/size/backup/late-referent refusals; exact-original terminal CAS substitutions and
+missing/semantic/wrong full-value proof; trailing-LF identifiers; encoded Project partitions; semantic
+retry changes versus accepted Storage-metadata-only retry changes; and matching versus foreign
+transient SP-278 delivery identities. Failure-oracle verification injects a false success and requires
+the complete checker to fail. These remain static model checks, not native pack/CAS/filesystem proof.
+
+```yaml
+plan_unit_id: ATS-280
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  FileManager per-family event oracles: the preceding per-family routes and obligations are prepared without admission.
+  Each family retains its own semantic contract; retention is PENDING_RETENTION_DECISION.
+gui_related: false
+gui_classification_reason: Internal event contract routing and static assurance.
+split_recommended: false
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - No registry append, policy selection or native readiness claim.
+validation_surfaces:
+  - python3 scripts/pm-filemanager-event-contracts.py
+risk_class: file_event_contract_routing
+reasoning_tier: high
+context_scope: filemanager_event_authority
+implementation_surfaces: [Plans/Automated_Testing_System.md, Plans/filemanager_event_contract_fixtures.json, scripts/pm-filemanager-event-contracts.py]
+node_compile_hint: {mode: prepared_without_admission, create_worknodes: false}
+source_lineage: [Plans/FileManager.md, Plans/Decision_Log.md#DL-045]
+preserved_exact_tokens: ["PENDING_RETENTION_DECISION"]
+negative_constraints:
+  - Do not treat prepared contracts as event admission.
+owner_hints: [Plans/Automated_Testing_System.md]
+```

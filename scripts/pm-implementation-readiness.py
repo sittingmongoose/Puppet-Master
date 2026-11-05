@@ -790,18 +790,20 @@ STORAGE_VALUE_REGISTRY_SCHEMA_URI = (
 # DL-092): the Storage owner's reuse check did not reuse RP-GOAL-THREAD-LIFETIME and materialized the Chat content
 # class as RP-CHAT-THREAD-LIFETIME@1.0.0, so the retention-policy count moves from 27 to 28. The family, status
 # and tier counts are unchanged.
-STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 344
+# Re-pinned for SP-560's two prepared FileManager original-custody/control companions:
+# both are materialized later_gui_or_feature_projection values. No event admission follows.
+STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 346
 # Re-pinned 2026-11-05 (DL-401, DL-415..DL-421): telemetry plus six independent no-project
 # policies are materialized; existing policies and every family/status/tier count remain unchanged.
 STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 35
 STORAGE_VALUE_REGISTRY_EXPECTED_STATUS_COUNTS = {
-    "materialized": 320,
+    "materialized": 322,
     "deferred_not_build_blocking": 23,
     "compatibility_alias": 1,
 }
 STORAGE_VALUE_REGISTRY_EXPECTED_TIER_COUNTS = {
     "tier_0_launch_critical": 61,
-    "later_gui_or_feature_projection": 273,
+    "later_gui_or_feature_projection": 275,
     "migration_only": 10,
 }
 STORAGE_VALUE_REQUIRED_LAUNCH_FAMILIES = [

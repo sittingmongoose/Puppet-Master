@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L23966-L24482
+Source lines: L23966-L24553
 
-Source SHA256: `078ea0299d9a8cbba000a9e5b550f2c95ca1f02c7d8a4525dc53c6427bdad8c5`
+Source SHA256: `e7b7549dd4592a05f4e481fef7a7d69c21d8f9b56db8fc2cc9e10ed72f95bc5b`
 
 ---
 
@@ -525,3 +525,74 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Contracts_V0
 | app eligibility error additions | application_automation_paused, app_automation_pause_unavailable; existing Project error tokens and codecs remain untouched. No alias equates the two scopes. |
 
 The selected app request union accepts only an authenticated user actor. A malformed or non-user request still returns the owner’s refusal without fabricating a structurally valid user input. Changed canonical pause record, its epoch and original result custody commit under one internal whole-value CAS/write/readback; retries that observe the already desired value return the current unchanged record with no new epoch. An unavailable result may not reconstruct pause from an event, Setting or absence. The physical wrapper/key/retention and never-born birth proof are defined only in SP-352.
+
+### CV-560 - FileManager exact payload routes
+
+- file.copied@1.0.0: Plans/event_payloads/file_manager/file_copied.schema.json; semantic owner F-150.
+- file.created@1.0.0: Plans/event_payloads/file_manager/file_created.schema.json; semantic owner F-151.
+- file.deleted@1.0.0: Plans/event_payloads/file_manager/file_deleted.schema.json; semantic owner F-152.
+- file.exported@1.0.0: Plans/event_payloads/file_manager/file_exported.schema.json; semantic owner F-153.
+- file.moved@1.0.0: Plans/event_payloads/file_manager/file_moved.schema.json; semantic owner F-154.
+- file.renamed@1.0.0: Plans/event_payloads/file_manager/file_renamed.schema.json; semantic owner F-155.
+- folder.copied@1.0.0: Plans/event_payloads/file_manager/folder_copied.schema.json; semantic owner F-156.
+- folder.created@1.0.0: Plans/event_payloads/file_manager/folder_created.schema.json; semantic owner F-157.
+- folder.deleted@1.0.0: Plans/event_payloads/file_manager/folder_deleted.schema.json; semantic owner F-158.
+- folder.exported@1.0.0: Plans/event_payloads/file_manager/folder_exported.schema.json; semantic owner F-159.
+- folder.moved@1.0.0: Plans/event_payloads/file_manager/folder_moved.schema.json; semantic owner F-160.
+- folder.renamed@1.0.0: Plans/event_payloads/file_manager/folder_renamed.schema.json; semantic owner F-161.
+Each closed root is adopted independently under its own schema_id and schema_version. Opaque references resolve original owner receipt entries, never raw filesystem paths. No family is admitted.
+
+The newly authored closed Plans/filemanager_operation_contracts.schema.json types operation_custody,
+accepted_command, settlement, path_snapshot_entry and family_control are adopted by each own F unit
+through SP-560. Accepted descriptor/store/epoch and settled payload/path originals are immutable;
+only accepted -> effect_settled -> history_settled or accepted -> no_event_settled revision CAS
+transitions are permitted; the latter has a closed noncompletion receipt and no completed event. Exact
+receipt_ref/key, family/payload discriminator, command/envelope/scope, path coverage and source/
+result/container joins are semantic requirements in addition to closed shape validation. Copy result
+identity differs from source; create result differs from destination container, including native aliases.
+Unknown schemas, unequal retries, unavailable originals, bad joins or late changes fence. The separate
+SP-286/CV-339 full_value_request/full_value_result and strict v2 witness remain their original shapes;
+resolve.v2 is semantic replay only and cannot establish full-value equality. SP-560 supplies literal
+physical keys, resolvers, transaction fences, activation and coherent backup/restore; the generic
+receipt_record_baseline supplies none of this authority. No admission is granted.
+
+SP-560 also owns the closed physical operation_custody_value/family_control_value union and its
+SP-337 whole-value reference branches; operation_custody/family_control remain resolved logical
+contracts. Both physical profiles use canonical redb, coordination_and_storage and max_value_bytes=16384.
+The BLAKE3/size/media reference spelling and canonical MessagePack boundary are explicit in SP-560.
+A large event uses payload={} and payload_ref, resolving the complete closed family payload before
+settlement joins while strict full-value proof keeps the original stored representation. Missing or
+changed original pack bytes refuse reading, CAS and terminal publication. Terminal history_settled
+binds the exact immutable settlement, original complete EventRecord, original receipt and strict
+resolve_full_value.v1 request/result/v2 witness, not merely individually valid shapes. Current writer
+and retry reject projector_replay_only with replay_only_not_appendable. CV-339 semantic retry equality
+excludes Storage-assigned sequence_id/observed_at_utc/persisted_at_utc; original-value recovery does not.
+
+```yaml
+plan_unit_id: CV-560
+unit_type: contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  FileManager exact payload routes: the preceding per-family routes and obligations are prepared without admission.
+  Each family retains its own semantic contract; retention is PENDING_RETENTION_DECISION.
+gui_related: false
+gui_classification_reason: Internal event contract routing and static assurance.
+split_recommended: false
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - No registry append, policy selection or native readiness claim.
+validation_surfaces:
+  - python3 scripts/pm-filemanager-event-contracts.py
+risk_class: file_event_contract_routing
+reasoning_tier: high
+context_scope: filemanager_event_authority
+implementation_surfaces: [Plans/Contracts_V0.md, Plans/filemanager_operation_contracts.schema.json]
+node_compile_hint: {mode: prepared_without_admission, create_worknodes: false}
+source_lineage: [Plans/FileManager.md, Plans/Decision_Log.md#DL-045]
+preserved_exact_tokens: ["PENDING_RETENTION_DECISION"]
+negative_constraints:
+  - Do not treat prepared contracts as event admission.
+owner_hints: [Plans/Contracts_V0.md]
+```

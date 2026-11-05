@@ -3128,7 +3128,9 @@
     "DL-010",
     "DL-011",
     "DL-012",
+    "ATS-280",
     "CV-334",
+    "CV-560",
     "DL-047",
     "DL-048",
     "DL-049",
@@ -3148,6 +3150,7 @@
     "DL-401",
     "DL-411",
     "GRS-060",
+    "SP-560",
     "DL-076",
     "DL-077",
     "DL-078",
@@ -6233,6 +6236,18 @@
     "OP-028",
     "OSI-431",
     "CV-341",
+    "F-150",
+    "F-151",
+    "F-152",
+    "F-153",
+    "F-154",
+    "F-155",
+    "F-156",
+    "F-157",
+    "F-158",
+    "F-159",
+    "F-160",
+    "F-161",
     "SIR-046",
     "SP-270",
     "SP-279",
@@ -15592,6 +15607,11 @@
       "edge_type": "depends_on",
       "from": "ATS-085",
       "to": "UIW-052"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-280",
+      "to": "DL-045"
     },
     {
       "edge_type": "depends_on",
@@ -26000,6 +26020,11 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CV-560",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CW-003",
       "to": "CW-002"
     },
@@ -32052,6 +32077,426 @@
       "edge_type": "depends_on",
       "from": "F-090",
       "to": "F3-634"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-150",
+      "to": "ATS-280"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-150",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-150",
+      "to": "CV-560"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-150",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-150",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-150",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-150",
+      "to": "SP-560"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-151",
+      "to": "ATS-280"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-151",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-151",
+      "to": "CV-560"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-151",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-151",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-151",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-151",
+      "to": "SP-560"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-152",
+      "to": "ATS-280"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-152",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-152",
+      "to": "CV-560"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-152",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-152",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-152",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-152",
+      "to": "SP-560"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-153",
+      "to": "ATS-280"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-153",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-153",
+      "to": "CV-560"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-153",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-153",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-153",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-153",
+      "to": "SP-560"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-154",
+      "to": "ATS-280"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-154",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-154",
+      "to": "CV-560"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-154",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-154",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-154",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-154",
+      "to": "SP-560"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-155",
+      "to": "ATS-280"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-155",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-155",
+      "to": "CV-560"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-155",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-155",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-155",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-155",
+      "to": "SP-560"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-156",
+      "to": "ATS-280"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-156",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-156",
+      "to": "CV-560"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-156",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-156",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-156",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-156",
+      "to": "SP-560"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-157",
+      "to": "ATS-280"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-157",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-157",
+      "to": "CV-560"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-157",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-157",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-157",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-157",
+      "to": "SP-560"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-158",
+      "to": "ATS-280"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-158",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-158",
+      "to": "CV-560"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-158",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-158",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-158",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-158",
+      "to": "SP-560"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-159",
+      "to": "ATS-280"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-159",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-159",
+      "to": "CV-560"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-159",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-159",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-159",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-159",
+      "to": "SP-560"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-160",
+      "to": "ATS-280"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-160",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-160",
+      "to": "CV-560"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-160",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-160",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-160",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-160",
+      "to": "SP-560"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-161",
+      "to": "ATS-280"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-161",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-161",
+      "to": "CV-560"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-161",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-161",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-161",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-161",
+      "to": "SP-560"
     },
     {
       "edge_type": "depends_on",
@@ -82565,6 +83010,11 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-560",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SQR-002",
       "to": "SQR-001"
     },
@@ -117789,7 +118239,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-05T13:57:35Z",
+  "generated_at_utc": "2026-11-05T16:32:00Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -131902,6 +132352,23 @@
       "unit_type": "acceptance_gate"
     },
     {
+      "context_scope": "filemanager_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-280",
+      "reasoning_tier": "high",
+      "risk_class": "file_event_contract_routing",
+      "source_location": {
+        "heading": "ATS-280 - FileManager per-family event oracles",
+        "heading_level": 3,
+        "heading_line": 7238,
+        "line": 7257,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
       "context_scope": "bitbucket_provider_identity",
       "gui_related": true,
       "owner_doc": "Plans/Bitbucket_Integration.md",
@@ -144939,6 +145406,23 @@
       },
       "status": "accepted",
       "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "filemanager_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-560",
+      "reasoning_tier": "high",
+      "risk_class": "file_event_contract_routing",
+      "source_location": {
+        "heading": "CV-560 - FileManager exact payload routes",
+        "heading_level": 3,
+        "heading_line": 24484,
+        "line": 24526,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
     },
     {
       "context_scope": "plan_standardization",
@@ -160817,6 +161301,210 @@
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "file_copied_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/FileManager.md",
+      "plan_unit_id": "F-150",
+      "reasoning_tier": "high",
+      "risk_class": "file_event_original_custody",
+      "source_location": {
+        "heading": "F-150 - file.copied prepared Event Authority contract",
+        "heading_level": 3,
+        "heading_line": 5490,
+        "line": 5633,
+        "path": "Plans/FileManager.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "file_created_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/FileManager.md",
+      "plan_unit_id": "F-151",
+      "reasoning_tier": "high",
+      "risk_class": "file_event_original_custody",
+      "source_location": {
+        "heading": "F-151 - file.created prepared Event Authority contract",
+        "heading_level": 3,
+        "heading_line": 5666,
+        "line": 5809,
+        "path": "Plans/FileManager.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "file_deleted_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/FileManager.md",
+      "plan_unit_id": "F-152",
+      "reasoning_tier": "high",
+      "risk_class": "file_event_original_custody",
+      "source_location": {
+        "heading": "F-152 - file.deleted prepared Event Authority contract",
+        "heading_level": 3,
+        "heading_line": 5842,
+        "line": 5983,
+        "path": "Plans/FileManager.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "file_exported_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/FileManager.md",
+      "plan_unit_id": "F-153",
+      "reasoning_tier": "high",
+      "risk_class": "file_event_original_custody",
+      "source_location": {
+        "heading": "F-153 - file.exported prepared Event Authority contract",
+        "heading_level": 3,
+        "heading_line": 6016,
+        "line": 6157,
+        "path": "Plans/FileManager.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "file_moved_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/FileManager.md",
+      "plan_unit_id": "F-154",
+      "reasoning_tier": "high",
+      "risk_class": "file_event_original_custody",
+      "source_location": {
+        "heading": "F-154 - file.moved prepared Event Authority contract",
+        "heading_level": 3,
+        "heading_line": 6190,
+        "line": 6331,
+        "path": "Plans/FileManager.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "file_renamed_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/FileManager.md",
+      "plan_unit_id": "F-155",
+      "reasoning_tier": "high",
+      "risk_class": "file_event_original_custody",
+      "source_location": {
+        "heading": "F-155 - file.renamed prepared Event Authority contract",
+        "heading_level": 3,
+        "heading_line": 6364,
+        "line": 6505,
+        "path": "Plans/FileManager.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "folder_copied_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/FileManager.md",
+      "plan_unit_id": "F-156",
+      "reasoning_tier": "high",
+      "risk_class": "file_event_original_custody",
+      "source_location": {
+        "heading": "F-156 - folder.copied prepared Event Authority contract",
+        "heading_level": 3,
+        "heading_line": 6538,
+        "line": 6681,
+        "path": "Plans/FileManager.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "folder_created_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/FileManager.md",
+      "plan_unit_id": "F-157",
+      "reasoning_tier": "high",
+      "risk_class": "file_event_original_custody",
+      "source_location": {
+        "heading": "F-157 - folder.created prepared Event Authority contract",
+        "heading_level": 3,
+        "heading_line": 6714,
+        "line": 6857,
+        "path": "Plans/FileManager.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "folder_deleted_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/FileManager.md",
+      "plan_unit_id": "F-158",
+      "reasoning_tier": "high",
+      "risk_class": "file_event_original_custody",
+      "source_location": {
+        "heading": "F-158 - folder.deleted prepared Event Authority contract",
+        "heading_level": 3,
+        "heading_line": 6890,
+        "line": 7031,
+        "path": "Plans/FileManager.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "folder_exported_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/FileManager.md",
+      "plan_unit_id": "F-159",
+      "reasoning_tier": "high",
+      "risk_class": "file_event_original_custody",
+      "source_location": {
+        "heading": "F-159 - folder.exported prepared Event Authority contract",
+        "heading_level": 3,
+        "heading_line": 7064,
+        "line": 7205,
+        "path": "Plans/FileManager.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "folder_moved_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/FileManager.md",
+      "plan_unit_id": "F-160",
+      "reasoning_tier": "high",
+      "risk_class": "file_event_original_custody",
+      "source_location": {
+        "heading": "F-160 - folder.moved prepared Event Authority contract",
+        "heading_level": 3,
+        "heading_line": 7238,
+        "line": 7379,
+        "path": "Plans/FileManager.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "folder_renamed_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/FileManager.md",
+      "plan_unit_id": "F-161",
+      "reasoning_tier": "high",
+      "risk_class": "file_event_original_custody",
+      "source_location": {
+        "heading": "F-161 - folder.renamed prepared Event Authority contract",
+        "heading_level": 3,
+        "heading_line": 7412,
+        "line": 7553,
+        "path": "Plans/FileManager.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
     },
     {
       "context_scope": "residual_plan_standardization",
@@ -229771,6 +230459,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "filemanager_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-560",
+      "reasoning_tier": "high",
+      "risk_class": "file_event_contract_routing",
+      "source_location": {
+        "heading": "SP-560 - FileManager prepared persistence routing",
+        "heading_level": 3,
+        "heading_line": 29589,
+        "line": 29794,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
       "context_scope": "scheduling_precedence",
       "gui_related": true,
       "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
@@ -245077,10 +245782,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18849,
+    "depends_on_edge_count": 18936,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22059,
-    "node_count": 7487,
+    "edge_count": 22146,
+    "node_count": 7502,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3210,
     "unresolved_reference_count": 0

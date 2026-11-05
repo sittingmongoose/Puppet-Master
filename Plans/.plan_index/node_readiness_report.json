@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18849,
+    "depends_on_edge_count": 18936,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22059,
-    "node_count": 7487,
+    "edge_count": 22146,
+    "node_count": 7502,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3210,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-05T13:57:36Z",
+  "generated_at_utc": "2026-11-05T16:32:01Z",
   "gui_related_units": {
     "count": 3813,
     "units": [
@@ -41967,10 +41967,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 7487,
+  "plan_unit_count": 7502,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2806,
+      "high": 2821,
       "low": 9,
       "medium": 32,
       "standard": 4640
@@ -43347,6 +43347,8 @@
       "file_corruption_recovery_gap_opening": 1,
       "file_corruption_recovery_mitigations": 1,
       "file_enumeration_nondeterminism": 1,
+      "file_event_contract_routing": 3,
+      "file_event_original_custody": 12,
       "file_manager_command_catalog_gap": 1,
       "file_manager_drift": 69,
       "file_manager_editor_owner_posture": 1,
@@ -46116,7 +46118,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 7268,
+      "accepted": 7283,
       "retired": 196,
       "superseded": 23
     },
@@ -46146,7 +46148,7 @@
       "consumer_alignment": 1,
       "consumer_contract": 1,
       "consumer_requirement": 1,
-      "contract": 5,
+      "contract": 20,
       "contract_requirement": 3,
       "data_contract": 8,
       "decision": 232,
@@ -46271,13 +46273,13 @@
       {
         "actual": "1b3e76591e97de119c9f73bd7ae4d23c01cb07ab3251bbb90b9de27bbabc0e4a",
         "error": "pnc019_source_hash_stale",
-        "expected": "fcdba4ad964e664a688d05a79846acaec01affd7893f6bb273c670614ac70f1d",
+        "expected": "44247285353ed0909cf0b553a81f33a4e4c8760f80e88fb30512a25ae1de2eb6",
         "source_path": "Plans/storage_value_registry.schema.json"
       },
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "00df41ae4fdb88f0465f95d87bff92ed9e47be104b78ca9d839f5a7b3f4520bc",
+        "expected": "773c2b06cee8a0acc06f03bfe16ddc48bb66210a3ea67dba48782494356444ae",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -46313,7 +46315,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "76ba098f914899db177bae3445d45612d22b6b60c5e3f02f84a3a3bd2f7a0647",
+        "expected": "21ba4c52cc0153b5587a7a18cdf9c154a85336c8f78b7ec01b2acb7c0b33ea24",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {
@@ -46364,6 +46366,10 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Automated_Testing_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Contracts_V0.md"
       },
       {
@@ -46377,6 +46383,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Decision_Policy.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/FileManager.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
@@ -46473,6 +46483,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/storage_value_registry.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/storage_value_registry.schema.json"
       },
       {
         "error": "event_authority_currentness_source_drift",
