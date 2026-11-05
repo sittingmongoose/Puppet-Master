@@ -6184,6 +6184,15 @@
     "OP-028",
     "OSI-431",
     "CV-341",
+    "F3-706",
+    "F3-707",
+    "F3-708",
+    "F3-709",
+    "F3-710",
+    "F3-711",
+    "F3-712",
+    "F3-713",
+    "F3-714",
     "SIR-046",
     "SP-270",
     "SP-279",
@@ -37996,6 +38005,141 @@
       "edge_type": "depends_on",
       "from": "F3-705",
       "to": "SP-665"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-706",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-706",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-706",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-707",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-707",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-707",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-708",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-708",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-708",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-709",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-709",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-709",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-710",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-710",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-710",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-711",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-711",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-711",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-712",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-712",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-712",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-713",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-713",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-713",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-714",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-714",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-714",
+      "to": "SP-286"
     },
     {
       "edge_type": "depends_on",
@@ -117388,7 +117532,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-05T02:45:55Z",
+  "generated_at_utc": "2026-11-05T05:37:47Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -174526,6 +174670,159 @@
       },
       "status": "accepted",
       "unit_type": "contract"
+    },
+    {
+      "context_scope": "bundle_note_created",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-706",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "F3-706 - bundle.note_created Card 5 exact-family contract",
+        "heading_level": 3,
+        "heading_line": 50868,
+        "line": 50870,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "interaction_contract"
+    },
+    {
+      "context_scope": "bundle_note_status_changed",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-707",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "F3-707 - bundle.note_status_changed Card 5 exact-family contract",
+        "heading_level": 3,
+        "heading_line": 50936,
+        "line": 50938,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "interaction_contract"
+    },
+    {
+      "context_scope": "bundle_annotation_state_changed",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-708",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "F3-708 - bundle.annotation_state_changed Card 5 exact-family contract",
+        "heading_level": 3,
+        "heading_line": 51004,
+        "line": 51006,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "interaction_contract"
+    },
+    {
+      "context_scope": "concern_assigned",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-709",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "F3-709 - concern.assigned Card 5 exact-family contract",
+        "heading_level": 3,
+        "heading_line": 51066,
+        "line": 51068,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "interaction_contract"
+    },
+    {
+      "context_scope": "concern_evidence_linked",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-710",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "F3-710 - concern.evidence_linked Card 5 exact-family contract",
+        "heading_level": 3,
+        "heading_line": 51134,
+        "line": 51136,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "interaction_contract"
+    },
+    {
+      "context_scope": "concern_promoted",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-711",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "F3-711 - concern.promoted Card 5 exact-family contract",
+        "heading_level": 3,
+        "heading_line": 51202,
+        "line": 51204,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "interaction_contract"
+    },
+    {
+      "context_scope": "concern_reopened",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-712",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "F3-712 - concern.reopened Card 5 exact-family contract",
+        "heading_level": 3,
+        "heading_line": 51270,
+        "line": 51272,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "interaction_contract"
+    },
+    {
+      "context_scope": "concern_resolved",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-713",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "F3-713 - concern.resolved Card 5 exact-family contract",
+        "heading_level": 3,
+        "heading_line": 51338,
+        "line": 51340,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "interaction_contract"
+    },
+    {
+      "context_scope": "concern_updated",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-714",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "F3-714 - concern.updated Card 5 exact-family contract",
+        "heading_level": 3,
+        "heading_line": 51406,
+        "line": 51408,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "interaction_contract"
     },
     {
       "context_scope": "common_forge_owner",
@@ -243979,10 +244276,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18779,
+    "depends_on_edge_count": 18806,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21987,
-    "node_count": 7446,
+    "edge_count": 22014,
+    "node_count": 7455,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0

@@ -1,3 +1,123 @@
+# DG6A — Round 9: deck-2 Card 5 applied
+
+Branch `plans/ea-w2-gui-concerns-20261104`; input `4b8147737ca4674db837e95bb3cbee548e8be7e0`. This is application of Jared’s deck-2 answers, not a review-fix round. The final report commit is self-inclusive; `r9/consumed-source-hashes.json` pins the verified source bytes.
+
+Jared’s verbatim answer is **“i approve all of it”**. The as-presented deck’s fast-reply rule selects option A on every item. Card 5’s exact options and definitions are copied into each new owner unit and `Plans/card5_event_contracts/manifest.json`; they are the card’s wording, not quotations attributed to Jared. DL-437 (5.a) and DL-438..443 (5.b..5.g) are cited as companion entries being written on `plans/ea-cards2-answers-20261105`; this lane authors no Decision Log entry. The deck SHA-256 is `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`.
+
+All nine holds below are superseded by this section. Older stopped questions/recommendations remain source history only. **No family remains stopped for a new Jared question.** The separate creator proposal remains unapplied and `concern.created` is unchanged.
+
+## Outcomes and twelve-criterion self-grade
+
+A = ABSENT; P = PASS; p = PARTIAL. C1 membership, C2 owner, C3 producer, C4 closed payload, C5 scope/identity, C6 replay/idempotency, C7 retention, C8 custody/redaction, C9 transitions, C10 consumer/checkpoint, C11 compatibility/withdrawal, C12 positive/negative oracles. Every row is **9 PASS / 2 PARTIAL / 1 ABSENT**: C1 admission absent, C7 exact event/value retention pending, C12 shared guard-isolation/number-domain sweep pending. Native execution is NOT_RUN. All seven existing family grade records are structurally identical to round 8.
+
+| Family | Outcome | Owner / answer | C1 | C2 | C3 | C4 | C5 | C6 | C7 | C8 | C9 | C10 | C11 | C12 | Cases / exit |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| `alert.acknowledged` | prepared, unchanged | pre-round contract | A | P | P | P | P | P | p | P | P | P | P | p | 460 / 0 |
+| `alert.dismissed` | prepared, unchanged | pre-round contract | A | P | P | P | P | P | p | P | P | P | P | p | 463 / 0 |
+| `alert.rule_muted` | prepared, unchanged | pre-round contract | A | P | P | P | P | P | p | P | P | P | P | p | 463 / 0 |
+| `alert.snoozed` | prepared, unchanged | pre-round contract | A | P | P | P | P | P | p | P | P | P | P | p | 476 / 0 |
+| `bundle.annotation_state_changed` | historical-only, prepared | F3-708 / DL-437 | A | P | P | P | P | P | p | P | P | P | P | p | 328 / 0 |
+| `bundle.note_created` | prepared | F3-706 / DL-437 | A | P | P | P | P | P | p | P | P | P | P | p | 929 / 0 |
+| `bundle.note_status_changed` | prepared | F3-707 / DL-437 | A | P | P | P | P | P | p | P | P | P | P | p | 936 / 0 |
+| `concern.assigned` | prepared | F3-709 / DL-438 | A | P | P | P | P | P | p | P | P | P | P | p | 963 / 0 |
+| `concern.created` | prepared, unchanged | pre-round contract | A | P | P | P | P | P | p | P | P | P | P | p | 621 / 0 |
+| `concern.evidence_linked` | prepared | F3-710 / DL-439 | A | P | P | P | P | P | p | P | P | P | P | p | 942 / 0 |
+| `concern.promoted` | prepared | F3-711 / DL-440 | A | P | P | P | P | P | p | P | P | P | P | p | 964 / 0 |
+| `concern.reopened` | prepared | F3-712 / DL-441 | A | P | P | P | P | P | p | P | P | P | P | p | 943 / 0 |
+| `concern.resolved` | prepared | F3-713 / DL-442 | A | P | P | P | P | P | p | P | P | P | P | p | 989 / 0 |
+| `concern.updated` | prepared | F3-714 / DL-443 | A | P | P | P | P | P | p | P | P | P | P | p | 943 / 0 |
+| `panel.redocked` | prepared, unchanged | pre-round contract | A | P | P | P | P | P | p | P | P | P | P | p | 516 / 0 |
+| `panel.undocked` | prepared, unchanged | pre-round contract | A | P | P | P | P | P | p | P | P | P | P | p | 516 / 0 |
+
+All sixteen complete family entry points ran **one family at a time**, all exit 0, **11,452 static observations/cases** in total. New family totals include standalone schema-field/domain cases and five complete-response byte-boundary cases per family; these are not native executions or a guard-removal proof. Exact commands, UTC starts, available-memory readings and exits are in `r9/family-commands.json`. The minimum available RAM recorded before a family is 7 GiB; no under-6-GiB pause was required in the final run. Initial disk/RAM were 54 GB / 20 GiB, satisfying the 50-GB/6-GiB worktree gate.
+
+## Exact decisions applied
+
+- **5.a / F3-706..708 / DL-437:** one creation event and one event per later real status change. No generic co-emission or new generic writes. Preserve all five statuses and original note/provenance identity. Generic originals use authenticated original-event/view/snapshot joins, owner-proved and approved creation/status mapping, and a read-only inspection quarantine for ambiguous originals. No synthesized split append, guessed alias or history rewrite. Actual inventory proof and owner approval remain a required release gate (NOT_RUN), not an unanswered product choice or a falsely claimed completed migration.
+- **5.b / F3-709 / DL-438:** only the scoped authorized controller records; users/workers request. Same-area transfer adds no confirmation. Cross-area transfer requires outgoing authorized-human approval and explicit receiving-owner acceptance, separately evidenced and action-bound. Recording is neither confirmation; a controller receiving ownership must separately accept. No outgoing-owner veto from assignment. Lateral transfer does not invent a promotion prompt; wider transfer also satisfies 5.d.
+- **5.c / F3-710 / DL-439:** authorized user/controller may add links after source access and latest-revision checks. No ordinary extra prompt. Preserve who linked what; replacement/removal requires a separate authorized action. Workers propose only.
+- **5.d / F3-711 / DL-440:** scoped controller records wider-scope promotion after evidence/gate/approval checks. Ordinary automation stays automatic; required critical/security/governance/HITL approvals remain. A simultaneous owner transfer also satisfies 5.b.
+- **5.e / F3-712 / DL-441:** currently responsible, independently authorized owner records evidence-backed resolved/dismissed -> active; user/worker requests confer no recording permission. Preserve new evidence, reason and prior closure. Extra confirmation only under existing policy.
+- **5.f / F3-713 / DL-442:** controller chooses/records all seven named non-risk outcomes. Authorized human alone chooses accepted_risk; controller records that explicit decision, evidence and remaining risk. Guided audited supersession/merge/split preserve links/history and do not prove a fix. Acknowledge/dismiss cannot clear a live blocker; transfer/promotion follow their own contracts.
+- **5.g / F3-714 / DL-443:** controller records only permitted severity/category/authority assessment changes, with current evidence, exact revision and reason. Authority assessment grants no permission. Assessment cannot substitute for transfer, promotion, evidence linking, reopening, resolution or a canonical record action through display edits.
+
+## New technical bindings and owner placement
+
+Each family has its own full owner unit in `Plans/FinalGUISpec.md#F3-706` through `#F3-714`, its own closed payload/operation/checkpoint route and fixtures under `Plans/card5_event_contracts/`, and its own complete checker selection. Concern current payload editions are **2.0.0**; all six existing **1.0.0** schemas stay byte-identical and historical-only. Generic compatibility uses a closed decoded view with retained original byte/receipt custody. No new generic operation value exists.
+
+Per family, newly authored bindings are the exact private handler/operation key (for the eight current-writer preparations), identity/full-request commitment, `projector.<family_slug>.history@1.0.0`, `reader.<family_slug>.history@1.0.0`, and `<family_slug>_checkpoint.v1:{project_id}:{storage_instance_id}`. Newly named note handlers bind already specified note actions; they add no public feature. Existing concern handlers/public command signatures, canonical record keys, SP-278/DL-076 tokens, SP-286/CV-339 full-value receipt custody, CV-315/SP-233 owner records, Storage’s physical budgets and SP-337 payload-ref route are reused by exact name.
+
+**Per-family search evidence:** `r9/binding-search.json` records the input-head top-level live owner Markdown searches and each new projector/reader/operation/checkpoint identifier search across those docs, top-level scripts and existing alert/panel/concern schema packages. Existing exact event minima/roles are reused; no prior binding with any newly selected technical identifier was found. Each new unit is labeled a newly authored owner contract. No sibling’s contract serves as another family’s contract. Card definitions and current OP-002/OP-004/UCC-147, SP-095/CV-077, the existing annotation lifecycle and immutable legacy schema premises still hold. No old retention answer was extended, and no premise check failed.
+
+**Shared-file hunks:** append nine new F3 units only; append seventeen new stored-value rows and their physical profiles (eight canonical operations and nine derived checkpoints) to `Plans/storage_value_registry.json`. All 360 existing value rows, existing profiles, groups/budgets, retention policies and registry top-level metadata are unchanged. No edits to existing seven contracts, their schemas/fixtures/checkers, `Contracts_V0`, `storage-plan`, Orchestrator, Executor, ATS, event registry, Decision Log, locks/evidence, auto_decisions, frozen validators or immutable panel v1 schemas.
+
+**Retention:** existing concern_record RP-AUTHORITY-INDEFINITE and existing source/blocked-episode holds stay bound to those same records. Each new event, original operation/mapping/action custody and History checkpoint explicitly remains PENDING_RETENTION_DECISION. Case L-3/SP-026 audit/telemetry and RP-PROJECTION-3GEN are candidates only, not selected policies.
+
+## Guard inventory and standing checks
+
+Each new fixture’s **`guard_inventory`** lists every authored runtime/schema site and its named negatives; schema-field cases also record the exact schema path. The complete cross-family inventory is copied to `r9/new-guard-inventory.json`. `r9/runtime-guard-coverage.json` records every exercised operation predicate with no uncovered predicate. Each semantic negative starts from a valid named base and carries explicit coherent payload/command/digest/key/post-state patches. Standalone field/domain negatives test isolated values, not a fabricated full canonical record. The shared tool must still perform field/predicate cuts, classify true same-field/same-predicate duplicates site by site, and run the full composed isolation proof. No compound-keyword removal, merged unrelated predicate set or old proof count is offered as proof. The old lane guard-proof scripts are byte-identical; **C12 stays PARTIAL**.
+
+| Astra item / standing issue | Evidence in the new exact-family checkers |
+|---|---|
+| 1 forged/contradictory inputs | Recompute event/operation/full original-request commitments; join command and each snapshot field/effect; independent original action/before/after/commit/result/dispatch and append evidence. Generic mapping joins every snapshot fact and original Event ref to its retained decoded source. |
+| 2 Storage metadata | Resolver output must equal independent retained Storage Event, complete source selection, eleven-field first receipt and four-field original result. Caller metadata is not authoritative. |
+| 3 history both directions | Valid retained originals survive live changes/admission closure; six immutable concern-v1 editions retain large revision originals. Forged/foreign/withdrawn data refuses; current writer predicates never validate a retained original. |
+| 4 representations | Exact type-aware recursive joins and recomputed digests; current Boolean authority facts require actual Boolean values, not strings/numbers/containers. |
+| 5 dangling refs | Eager whole-schema closure, including an unused-definition dangling-ref negative for each family. |
+| 6 complete byte limits | Complete operation/checkpoint and complete History response limits, exact 16384-byte response/checkpoint boundaries, unpageable ref/metadata refusals; 1000 retained matches remain reachable. SP-337 externalization never waives a mandatory operation bound. |
+| 7 every custody path | Prepared/committed/settled shapes, independent commit/result/dispatch joins, changed-body retry refusal and original first/full-value receipt recovery. Current and historical paths authenticate exact family/scope/source. |
+| 8 isolated negatives | Coherent valid-base mutations, explicit expected refusal sets; no source-guard-removal proof claimed. Shared-tool isolation remains a sweep item. |
+| 9 grading | Every exact row stays 9 P / 2 p / 1 A; all native obligations NOT_RUN. Seven prior grade records unchanged; all current citations re-resolve. |
+| 10 and 10a numbers/history | No new cap, serializer, normalization or physical float rule. Reuse existing MessagePack; old concern editions are authenticated from original admission, not the caller’s version selector. Shared CV-1100/SP-1100/SP-1101 adoption, physical-number bytes/ranges and general recipe dispatch remain sweep work, including the seven unchanged families’ prior locations. |
+| 11 types | Standalone per-schema-node type/constant/enum/required/union/array checks plus full runtime wrong-role, false Boolean, string Boolean/number, null and wrong-container negatives. |
+| 12 formats | Existing enforced date-time/UUID checker reused; missing zone, separators, invalid date/time, trailing LF, leap second and malformed fraction refuse. No new lane format grammar/serializer. |
+| Other standing checks | Project encoded partition; replay-only writer/retry refusal for all current families and unconditional no-new-write refusal for generic history; failure-oracle subprocess rejects exit zero; CP Storage identity/publication joins; no persisted redb_snapshot_id; post-helper disclosure fences; no application writer invented. |
+
+## Regeneration and verification
+
+| Command/check | Exit / result |
+|---|---|
+| Sixteen family selections, serial | 0 each; 11452 total static cases/observations. |
+| `pm-shard-plans.py --generate --config Plans/sharding_config.json` | 0 / top-level pass. |
+| `pm-plan-index.py generate` | 0 / top-level pass; contract_only hints added to all nine new units after the initial metadata rejection. No WorkNodes/NodeSeeds created. |
+| `pm-shard-plans.py --check --config Plans/sharding_config.json` | 0 / pass. |
+| `pm-plan-index.py validate` | 1 / parsed top-level fail; exactly 22 pre-existing failures: 21 legacy removal-ledger shapes and the input branch’s older DL-302 vs current origin/main. All seven stale-index/live-unit mismatch failures from the pre-generation 29-row result are gone; no new failure. |
+| `pm-storage-profile-check.py` | 1 / exactly 41 pre-existing missing profiles, equal to the input registry’s missing-profile set. All seventeen new value/profile bindings match their declared schemas. |
+| Currentness copy | Fifteen ignored edition files copied immediately before each index generation and SHA-256 matched. |
+| Citation / scope / source / boundary audit | 0; 369 citations; old family rows and source bytes unchanged; all new runtime guards have named negatives. |
+| `git diff --check` | 0. |
+
+Generated shard changes are confined to **finalguispec** and **storage_value_registry**, the two edited owner sources; no unrelated document body changes. Indexes are generated normally, including the existing generated_at_utc timestamp behavior; nothing is hand-restamped or resealed. Governance staleness remains for later integration/reseal. Standard aggregate landing gates are not run by this drafting worker, and no main landing is attempted.
+
+## IDs and remaining items
+
+**New IDs:** F3-706..714, checked free against 529 origin refs / 64 unique FinalGUISpec blobs before minting (`r9/id-audit.json`). **Retained IDs:** SP-660..666, CV-680..686, F3-700..705, ATS-330..334. **Decision references only:** DL-437..443; no entries authored. Remaining items are admission by integration, exact retention binding, the shared number/guard sweep, required actual mapping proof/owner approval, and native NOT_RUN. **Stopped questions: none.**
+
+No pm-mail, subagents, main push, admission, event-family registry append, governance refresh or browser/server. The sparse detached worktree is removed with its literal path after the branch push.
+
+## Evidence
+
+| File | Absolute path | SHA-256 |
+|---|---|---|
+| `family-commands.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/r9/family-commands.json` | `5d8f3530bb641cd6e9dd0aaeeecd07be25976c1a52dea57df9c69b0876caf36f` |
+| `boundary-audit.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/r9/boundary-audit.json` | `33c1d112a5cebf28ee571581219dae91b3e688b97f1139dd05cc0bfcbf845404` |
+| `consumed-source-hashes.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/r9/consumed-source-hashes.json` | `8c1f709ea3c141e920874c5e081510775084954a254245d8894e25f7db84868c` |
+| `binding-search.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/r9/binding-search.json` | `5d0a710f45eb0afcc4df7df270b433b61e96ebc9d4a945c88750eb5a6d3449a5` |
+| `id-audit.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/r9/id-audit.json` | `d305a423c5b2cca4bdd20c676a8e1370ec5cab53f90345c58941e6e478a04b6c` |
+| `new-guard-inventory.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/r9/new-guard-inventory.json` | `7a598d658f0e92f90ec0eaf4b2e491bfe36f02325243131b24732e925eaab550` |
+| `runtime-guard-coverage.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/r9/runtime-guard-coverage.json` | `3d91769f2e40da63f24110aad236174bef769cd3e6743e5ce3ff0b4c257b8996` |
+| `schema-field-inventory.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/r9/schema-field-inventory.json` | `24066a336d496a16dc6457d99fd2d64ade29fb7fb91c87ee633ad17968299bc8` |
+| `currentness-copy.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/r9/currentness-copy.json` | `b72623c6887c9cb3b53eb0da0baf1e1b8c0b5d46fe116d4f25746361bbe73b8b` |
+| `shard-generate.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/r9/shard-generate.json` | `098ed9163523553e30f3242db80c22163707ab886d71462c8c02183ded96d458` |
+| `shard-check.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/r9/shard-check.json` | `73cbf558e2f1234bfb549029fef2b1a654d976fae979ea456a5ff6eafd5ce9f6` |
+| `index-generate.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/r9/index-generate.json` | `b1b0b7e35ff98822892b610134614ef0f44b11c91317b6c67e77c4f7ed3fd7a3` |
+| `index-generate.initial.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/r9/index-generate.initial.json` | `24ae17b5b2ed521318d12f363ed8a0acbf05f89c216d713137305f016303b885` |
+| `index-before.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/r9/index-before.json` | `944486167aac5d811160d5510ccd8f941d475c8564d1ca164755b9eec3630f8f` |
+| `index-validate.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/r9/index-validate.json` | `38d0963c1c2e992e813b4b35d03075a6345d26979ca929a53ddc974f177ec516` |
+| `storage-profile.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/r9/storage-profile.json` | `3406135c62dfbac183307f939f9d86cb9c8d79c7c394872198bc208c48d10406` |
+
+## Earlier rounds — preserved historical record
+
 # DG6A — review round 8
 
 Branch `plans/ea-w2-gui-concerns-20261104`; reviewed input `ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f`. B1 repair **7298ede10ed9e3aae621419af8e77cd4ea893474**; coherent admission-negative follow-up **da26fea8ad8ce783a0f842e933ed3744f33bbee8**. The final report commit is self-inclusive and changes reporting only. All seven complete family checkers ran serially at `da26fea8ad8ce783a0f842e933ed3744f33bbee8` and passed **3,515 cases**. Source SHA-256 pins match that commit.

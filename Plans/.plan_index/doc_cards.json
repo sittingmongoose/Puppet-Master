@@ -7862,9 +7862,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 36,
-        "True": 632
+        "True": 641
       },
-      "heading_count": 1049,
+      "heading_count": 1058,
       "implementation_surfaces": [
         "Concepts/pm7-tools/home_workspace_source.py",
         "Plans/00-plans-index.md",
@@ -7914,6 +7914,7 @@
         "Plans/WorktreeGitImprovement.md",
         "Plans/assistant-chat-design.md",
         "Plans/assistant-memory-subsystem.md",
+        "Plans/card5_event_contracts/",
         "Plans/chain-wizard-flexibility.md",
         "Plans/event_family_registry.json",
         "Plans/event_payloads/attention/alert_acknowledged.schema.json",
@@ -7974,9 +7975,9 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 50866,
+      "line_count": 51472,
       "path": "Plans/FinalGUISpec.md",
-      "plan_unit_count": 668,
+      "plan_unit_count": 677,
       "plan_unit_ids": [
         "F3-501",
         "F3-502",
@@ -8645,7 +8646,16 @@
         "F3-702",
         "F3-703",
         "F3-704",
-        "F3-705"
+        "F3-705",
+        "F3-706",
+        "F3-707",
+        "F3-708",
+        "F3-709",
+        "F3-710",
+        "F3-711",
+        "F3-712",
+        "F3-713",
+        "F3-714"
       ],
       "reasoning_tiers": [
         "high",
@@ -8792,10 +8802,10 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "040254e1377d7396a51ec803636efe554f78f0178b3655b5a8626fe4b086bb47",
+      "sha256": "c3f78470f0dde5a848c8b432436feef1acd3c259fc8c7d5bb3ae279b060f8a6a",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 660,
+        "accepted": 669,
         "retired": 2,
         "superseded": 6
       },
@@ -8808,7 +8818,7 @@
         "decision": 6,
         "gui_requirement": 29,
         "integration_contract": 13,
-        "interaction_contract": 9,
+        "interaction_contract": 18,
         "requirement": 529,
         "retirement_record": 1,
         "security_constraint": 1,
@@ -8955,6 +8965,15 @@
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
+        "python3 scripts/pm-card5-event-contracts-check.py --family bundle.annotation_state_changed",
+        "python3 scripts/pm-card5-event-contracts-check.py --family bundle.note_created",
+        "python3 scripts/pm-card5-event-contracts-check.py --family bundle.note_status_changed",
+        "python3 scripts/pm-card5-event-contracts-check.py --family concern.assigned",
+        "python3 scripts/pm-card5-event-contracts-check.py --family concern.evidence_linked",
+        "python3 scripts/pm-card5-event-contracts-check.py --family concern.promoted",
+        "python3 scripts/pm-card5-event-contracts-check.py --family concern.reopened",
+        "python3 scripts/pm-card5-event-contracts-check.py --family concern.resolved",
+        "python3 scripts/pm-card5-event-contracts-check.py --family concern.updated",
         "python3 scripts/pm-gui-asset-policy.py",
         "python3 scripts/pm-new-contracts-verify.py",
         "python3 scripts/pm-panel-event-contracts-check.py",
@@ -21586,7 +21605,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-05T02:45:55Z",
+  "generated_at_utc": "2026-11-05T05:37:47Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -21595,12 +21614,12 @@
     "docs_without_plan_units": 0,
     "gui_related_counts": {
       "False": 3649,
-      "True": 3797
+      "True": 3806
     },
-    "plan_unit_count": 7446,
+    "plan_unit_count": 7455,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 7229,
+      "accepted": 7238,
       "retired": 194,
       "superseded": 23
     },
@@ -21649,7 +21668,7 @@
       "gui_wiring_rule": 1,
       "implementation_reference": 1,
       "integration_contract": 130,
-      "interaction_contract": 10,
+      "interaction_contract": 19,
       "interface_contract": 6,
       "invariant": 33,
       "migration": 1,
