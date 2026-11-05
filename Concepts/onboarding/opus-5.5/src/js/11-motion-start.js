@@ -398,7 +398,7 @@
     warmD1 = warmD2; warmD2 = d;
     warmDeltas.push(d); if (warmDeltas.length > 30) warmDeltas.shift();
   };
-  const pending = () => { try { const s = navigator.scheduling; return !!(s && s.isInputPending && s.isInputPending({ includeContinuous: true })); } catch (_) { return false; } };
+  const pending = () => { try { const s = navigator.scheduling; return !!(s && s.isInputPending && s.isInputPending()); } catch (_) { return false; } };
   /* the gates that read nothing of style or layout, so they may be looked at inside a frame: '' when all hold, else
      the first that does not (state().waiting) */
   const blocked = () => {
