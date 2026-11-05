@@ -2,7 +2,7 @@
   "version": 2,
   "method": "B: guard tables",
   "status": "PASS",
-  "caught": 104,
+  "caught": 130,
   "traps": [
     {
       "id": "table-single-swaps",
@@ -522,6 +522,136 @@
     {
       "id": "B4-uncertified-builtin-binding",
       "expected": "A noncanonical builtin binding in a dormant predicate path fails purity certification, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "C3-shared-global-scalar-binding",
+      "expected": "State certification refuses shared-global-scalar-binding with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C3-shared-nonlocal-scalar-binding",
+      "expected": "State certification refuses shared-nonlocal-scalar-binding with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C3-shared-factory-list",
+      "expected": "State certification refuses shared-factory-list with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C3-shared-factory-changes-enforcement",
+      "expected": "State certification refuses shared-factory-changes-enforcement with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C3-predicate-global-scalar-mutation",
+      "expected": "State certification refuses predicate-global-scalar-mutation with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C3-shared-slotted-closure",
+      "expected": "State certification refuses shared-slotted-closure with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C3-shared-slotted-global-control",
+      "expected": "State certification refuses shared-slotted-global-control with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C3-inline-conversion",
+      "expected": "Dormant operation fails the static allowlist without a hidden-path witness.",
+      "caught": true
+    },
+    {
+      "id": "C3-inline-lookup",
+      "expected": "Dormant operation fails the static allowlist without a hidden-path witness.",
+      "caught": true
+    },
+    {
+      "id": "C3-inline-unpacking",
+      "expected": "Dormant operation fails the static allowlist without a hidden-path witness.",
+      "caught": true
+    },
+    {
+      "id": "C3-dormant-missing-table-entry",
+      "expected": "Dormant operation fails the static allowlist without a hidden-path witness.",
+      "caught": true
+    },
+    {
+      "id": "C3-readonly-scalar-constant",
+      "expected": "readonly-scalar-constant enforces its specified certification boundary.",
+      "caught": true
+    },
+    {
+      "id": "C3-external-function-global",
+      "expected": "external-function-global enforces its specified certification boundary.",
+      "caught": true
+    },
+    {
+      "id": "C3-external-function-closure",
+      "expected": "external-function-closure enforces its specified certification boundary.",
+      "caught": true
+    },
+    {
+      "id": "C3-factory-output-equivalence",
+      "expected": "factory-output-equivalence enforces its specified certification boundary.",
+      "caught": true
+    },
+    {
+      "id": "C3-dormant-attribute",
+      "expected": "dormant-attribute enforces its specified certification boundary.",
+      "caught": true
+    },
+    {
+      "id": "C3-dormant-comparison",
+      "expected": "dormant-comparison enforces its specified certification boundary.",
+      "caught": true
+    },
+    {
+      "id": "C3-dormant-unlisted-call",
+      "expected": "dormant-unlisted-call enforces its specified certification boundary.",
+      "caught": true
+    },
+    {
+      "id": "C3-dynamic-table-name",
+      "expected": "dynamic-table-name enforces its specified certification boundary.",
+      "caught": true
+    },
+    {
+      "id": "C3-reviewed-reset-control",
+      "expected": "reviewed-reset-control enforces its specified certification boundary.",
+      "caught": true
+    },
+    {
+      "id": "C3-ineffective-reset",
+      "expected": "ineffective-reset enforces its specified certification boundary.",
+      "caught": true
+    },
+    {
+      "id": "C3-os-temp-scratch",
+      "expected": "Default self-test scratch uses the operating system temporary directory.",
+      "caught": true
+    },
+    {
+      "id": "C3-dormant-unbound-local",
+      "expected": "Unproven operation remains a static obligation even on an unvisited path.",
+      "caught": true
+    },
+    {
+      "id": "C3-dormant-dict-key",
+      "expected": "Unproven operation remains a static obligation even on an unvisited path.",
+      "caught": true
+    },
+    {
+      "id": "C3-dormant-invalid-construction",
+      "expected": "Unproven operation remains a static obligation even on an unvisited path.",
+      "caught": true
+    },
+    {
+      "id": "C3-snapshot-scalar-topology",
+      "expected": "Snapshots retain scalar alias topology and detect equal-value shared rebinding, while erasing fresh identities.",
       "caught": true
     }
   ]

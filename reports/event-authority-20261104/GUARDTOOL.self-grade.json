@@ -1,7 +1,7 @@
 {
   "method": "B: guard tables",
   "overall": "PARTIAL",
-  "base": "034c1fd9f7b9bf3c5c006dfd5585db599f87447d",
+  "base": "a9f87e04b0d9e839b039cb04a7ed72a35577ab07",
   "criteria": [
     {
       "criterion": "guard_table_api",
@@ -21,32 +21,32 @@
     {
       "criterion": "static_no_hidden_guards",
       "grade": "PARTIAL",
-      "basis": "PARTIAL capability: real module origins/search/package paths, alias bindings and dynamic loaders fail closed. B3 dormant probes are caught statically. Predicate honesty and every non-guard reason still require review."
+      "basis": "PARTIAL capability: allowlist-based obligations cover dormant data exceptions, unknown expression forms and table names. Exact plumbing reasons and predicate honesty still require independent review."
     },
     {
       "criterion": "guard_negative_matrix",
       "grade": "PASS",
-      "basis": "Every guard/negative and guard/control pair is independently executed in fresh state; diagonal/off-diagonal failures withhold all credit."
+      "basis": "Bounded PASS: direct pair enumeration with independently rebuilt equal case graphs and original state snapshots; all tested diagonal/off-diagonal regressions withhold credit correctly."
     },
     {
       "criterion": "per_guard_and_duplicates",
       "grade": "PASS",
-      "basis": "Own flip, exact peer tags/codes and complete restoration; duplicate single-cut and each-remaining-site/joint proofs."
+      "basis": "Bounded PASS: table swaps, peer preservation and restoration operate on certified initial state; scalar/container/cell aliases are preserved in factory-equivalence comparisons."
     },
     {
       "criterion": "state_reset",
       "grade": "PARTIAL",
-      "basis": "PARTIAL capability: reachable class state and builtin receivers are traversed; uncertifiable graphs fail state_shared_across_cases. Both B2 sources fail on two complete runs with zero credit. External service seams remain explicit review obligations."
+      "basis": "PARTIAL capability: factory/adapter namespaces, function metadata, closure cells and classes are fingerprinted. Shared writes require exact reviewed reset seams and matching snapshots. Unsupported/lazy/external/native graphs fail closed."
     },
     {
       "criterion": "schema_inventory_and_cuts",
       "grade": "PARTIAL",
-      "basis": "PARTIAL: five retained schema cut segments are unchanged and existing schema traps pass. The separate 768-cell campaign was not rerun this round."
+      "basis": "PARTIAL: five schema segments are text-identical to the reviewed base; schema traps pass. The separate 768-cell campaign was not rerun."
     },
     {
       "criterion": "corpus",
       "grade": "PASS",
-      "basis": "104/104 expected observations caught; all 71 prior records unchanged plus 33 B1-B5 regressions/controls. 467 evidence assertions pass."
+      "basis": "130/130 expected observations; all 104 prior cases retain their source bodies and required causes, plus 26 round-2 regressions/controls. 1603 evidence assertions pass."
     },
     {
       "criterion": "dg6b_example",
@@ -61,7 +61,7 @@
     {
       "criterion": "resources_and_scope",
       "grade": "PASS",
-      "basis": "PASS: serial scratch runs with 1 GiB address-space cap, 1536 MiB RSS gate and 6 GiB available-memory floor. Only tool/traps/guide/report companions change."
+      "basis": "PASS: serial bounded scratch runs, 1 GiB address-space caps, 1536 MiB RSS gates and fresh 6 GiB available-memory checks. Only tool/traps/example/README/guide/report paths change."
     },
     {
       "criterion": "input_purity",
@@ -72,12 +72,12 @@
   "checks": "reports/event-authority-20261104/GUARDTOOL.checks.json",
   "family_grades": "NOT_APPLICABLE",
   "ids_used": [],
-  "evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix1",
+  "evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix2",
   "open_soundness_boundary": [
     "Independent review remains required for predicate honesty, complete paths/consumer bindings, every non-guard reason and duplicate semantic equality.",
     "Unknown imports, state graphs and predicate effects require explicit reviewed supported seams; they receive no automatic credit.",
     "No complete DG6B/lane adoption, event-family grade, independent review clearance or governance reseal is claimed."
   ],
-  "review": "Method B round 1",
-  "implementation": "afdf917fa0f5bbd703b06786d7abf8ed858d0a7c"
+  "review": "Method B round 2 / tool batch 1",
+  "implementation": "3ddf4a255afd7f90438338e1d0f1ebf56ded2a81"
 }
