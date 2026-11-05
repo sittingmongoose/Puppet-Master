@@ -152,32 +152,24 @@
       ]
     },
     "prepared_event": {
-      "allOf": [
+      "description": "Exclusive inline logical or SP-337 physical representation. Both materialize the same frozen original logical EventRecord; physical descriptor objects never enter the logical envelope validator or the full-value commitment preimage.",
+      "oneOf": [
         {
-          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
-        },
-        {
-          "properties": {
-            "event_type": {
-              "const": "todo.dependency_changed"
+          "allOf": [
+            {
+              "$ref": "#/$defs/logical_event"
             },
-            "payload_schema_id": {
-              "enum": [
-                "pm.event_payload.todo_dependency_changed.v1",
-                "pm.event_payload.todo_dependency_changed.application.v1"
-              ]
-            },
-            "payload": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/payload"
-                },
-                {
+            {
+              "properties": {
+                "payload_ref": {
                   "type": "null"
                 }
-              ]
+              }
             }
-          }
+          ]
+        },
+        {
+          "$ref": "#/$defs/external_prepared_event"
         }
       ]
     },
@@ -309,6 +301,230 @@
           }
         }
       ]
+    },
+    "logical_event": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+        },
+        {
+          "properties": {
+            "event_type": {
+              "const": "todo.dependency_changed"
+            },
+            "payload_schema_id": {
+              "enum": [
+                "pm.event_payload.todo_dependency_changed.v1",
+                "pm.event_payload.todo_dependency_changed.application.v1"
+              ]
+            },
+            "payload": {
+              "$ref": "#/$defs/payload"
+            }
+          }
+        }
+      ],
+      "description": "Resolved logical EventRecord, validated against the unchanged envelope and this exact family payload. Storage materializes this map before all source, identity and CV-339 full-value checks."
+    },
+    "payload_reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ref",
+        "blake3_id",
+        "byte_size",
+        "media_type"
+      ],
+      "properties": {
+        "ref": {
+          "type": "string",
+          "pattern": "^payload:v1:[0-9a-f]{64}$",
+          "minLength": 75,
+          "maxLength": 75
+        },
+        "blake3_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "byte_size": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "media_type": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f]"
+          }
+        }
+      },
+      "description": "SP-337 physical descriptor. The existing payload:v1:{blake3_hex} route, independently recomputed BLAKE3 of exact uncompressed encoded payload bytes, exact byte count and actual media type must agree with authenticated pack/index custody. No descriptor field is authority by itself."
+    },
+    "external_prepared_event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope_kind",
+        "event_id",
+        "event_type",
+        "project_id",
+        "thread_id",
+        "run_id",
+        "node_id",
+        "attempt_id",
+        "actor_ref",
+        "requested_account_ref",
+        "effective_account_ref",
+        "occurred_at_utc",
+        "observed_at_utc",
+        "persisted_at_utc",
+        "sequence_id",
+        "producer_sequence_id",
+        "correlation_id",
+        "causation_event_id",
+        "parent_event_id",
+        "idempotency_key",
+        "payload_schema_id",
+        "payload",
+        "payload_ref",
+        "redaction_profile",
+        "replay_policy",
+        "migration"
+      ],
+      "properties": {
+        "schema_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+        },
+        "schema_version": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_version"
+        },
+        "scope_kind": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/scope_kind"
+        },
+        "event_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/event_id"
+        },
+        "event_type": {
+          "const": "todo.dependency_changed"
+        },
+        "project_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/project_id"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/thread_id"
+        },
+        "run_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/run_id"
+        },
+        "node_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/node_id"
+        },
+        "attempt_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/attempt_id"
+        },
+        "actor_ref": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/actor_ref"
+        },
+        "requested_account_ref": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/requested_account_ref"
+        },
+        "effective_account_ref": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/effective_account_ref"
+        },
+        "occurred_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
+        },
+        "observed_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/observed_at_utc"
+        },
+        "persisted_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/persisted_at_utc"
+        },
+        "sequence_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
+        },
+        "producer_sequence_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/producer_sequence_id"
+        },
+        "correlation_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/correlation_id"
+        },
+        "causation_event_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/causation_event_id"
+        },
+        "parent_event_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/parent_event_id"
+        },
+        "idempotency_key": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/idempotency_key"
+        },
+        "payload_schema_id": {
+          "enum": [
+            "pm.event_payload.todo_dependency_changed.v1",
+            "pm.event_payload.todo_dependency_changed.application.v1"
+          ]
+        },
+        "payload": {
+          "type": "null"
+        },
+        "payload_ref": {
+          "$ref": "#/$defs/payload_reference"
+        },
+        "redaction_profile": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/redaction_profile"
+        },
+        "replay_policy": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/replay_policy"
+        },
+        "migration": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/migration"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "application"
+              }
+            },
+            "required": [
+              "scope_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "project"
+              }
+            },
+            "required": [
+              "scope_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/non_empty_string"
+              }
+            }
+          }
+        }
+      ],
+      "description": "Physical SP-337 journal representation, not a relaxed logical EventRecord. All non-body envelope fields retain their original schema and value; payload is null and payload_ref is a closed physical descriptor. Authenticate and resolve the descriptor, then validate logical_event with payload replaced by the resolved object and payload_ref replaced by descriptor.ref."
     }
   },
   "type": "object",

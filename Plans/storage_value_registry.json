@@ -18062,7 +18062,7 @@
               },
               "proxy_tls": {
                 "type": "null",
-                "description": "DL-259 CERT-1 / srv C1: certificates remain on the person’s own systems; onboarding collects no TLS/certificate choice."
+                "description": "DL-259 CERT-1 / srv C1: certificates remain on the person\u2019s own systems; onboarding collects no TLS/certificate choice."
               },
               "source_more": {
                 "type": "boolean"
@@ -81680,7 +81680,7 @@
             ]
           },
           "existing_index_root": {
-            "title": "Generic EventRecord index checkpoint custody — external proposal",
+            "title": "Generic EventRecord index checkpoint custody \u2014 external proposal",
             "description": "NEW derived checkpoint; typed source-selection binding is a verified reader projection of existing CURRENT/manifest owners, not a replacement on-disk control format. Native parsing/auth/durability remain separate proof obligations."
           },
           "existing_index_root__source_selection": {
@@ -123576,8 +123576,8 @@
       ],
       "replay_behavior": "SP-1550: resolve only the exact authentic original source/event/full-value receipt; same scoped identity/digest returns first result, different digest conflicts; no source effect, timer or command is replayed.",
       "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
-      "retention_compaction": "SP-1550: source-coupled to exactly assistant_plan.schedule_invalidated and its RP-AUTHORITY-INDEFINITE@1.0.0 assignment. Required pending/result/backup/recovery/legal dependencies fence cleanup; no independent clock or content lifetime.",
-      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "retention_compaction": "SP-1550: canonical non-rebuildable original publication custody under RP-AUTHORITY-INDEFINITE@1.0.0 (Card 1 G18), exactly the event lifetime and owner deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only eligible settled closure may be removed; never disposable-index eviction/rebuild or body reconstruction. Event plus journal are one logical audit fact for Chat counting; SP-286 receipt lifetime remains independently authoritative. The approved G20 object remains an integration prerequisite where absent.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
       "legacy_canonical_crosswalk_status": "Newly authored prepared publication custody; no event admission, native installation, aliases or grandfathered writes.",
       "value_schema": {
@@ -123780,8 +123780,8 @@
       ],
       "replay_behavior": "SP-1551: resolve only the exact authentic original source/event/full-value receipt; same scoped identity/digest returns first result, different digest conflicts; no source effect, timer or command is replayed.",
       "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
-      "retention_compaction": "SP-1551: source-coupled to exactly docker.compose.scenario.deleted and its RP-AUTHORITY-INDEFINITE@1.0.0 assignment. Required pending/result/backup/recovery/legal dependencies fence cleanup; no independent clock or content lifetime.",
-      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "retention_compaction": "SP-1551: canonical non-rebuildable original publication custody under RP-AUTHORITY-INDEFINITE@1.0.0 (Card 1 G21), exactly the event lifetime and owner deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only eligible settled closure may be removed; never disposable-index eviction/rebuild or body reconstruction. Event plus journal are one logical audit fact for Chat counting; SP-286 receipt lifetime remains independently authoritative. The approved G20 object remains an integration prerequisite where absent.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
       "legacy_canonical_crosswalk_status": "Newly authored prepared publication custody; no event admission, native installation, aliases or grandfathered writes.",
       "value_schema": {
@@ -123984,8 +123984,8 @@
       ],
       "replay_behavior": "SP-1552: resolve only the exact authentic original source/event/full-value receipt; same scoped identity/digest returns first result, different digest conflicts; no source effect, timer or command is replayed.",
       "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
-      "retention_compaction": "SP-1552: source-coupled to exactly docker.compose.scenario.edited and its RP-AUTHORITY-INDEFINITE@1.0.0 assignment. Required pending/result/backup/recovery/legal dependencies fence cleanup; no independent clock or content lifetime.",
-      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "retention_compaction": "SP-1552: canonical non-rebuildable original publication custody under RP-AUTHORITY-INDEFINITE@1.0.0 (Card 1 G21), exactly the event lifetime and owner deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only eligible settled closure may be removed; never disposable-index eviction/rebuild or body reconstruction. Event plus journal are one logical audit fact for Chat counting; SP-286 receipt lifetime remains independently authoritative. The approved G20 object remains an integration prerequisite where absent.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
       "legacy_canonical_crosswalk_status": "Newly authored prepared publication custody; no event admission, native installation, aliases or grandfathered writes.",
       "value_schema": {
@@ -124188,8 +124188,8 @@
       ],
       "replay_behavior": "SP-1553: resolve only the exact authentic original source/event/full-value receipt; same scoped identity/digest returns first result, different digest conflicts; no source effect, timer or command is replayed.",
       "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
-      "retention_compaction": "SP-1553: source-coupled to exactly docker.compose.scenario.run and its RP-AUTHORITY-INDEFINITE@1.0.0 assignment. Required pending/result/backup/recovery/legal dependencies fence cleanup; no independent clock or content lifetime.",
-      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "retention_compaction": "SP-1553: canonical non-rebuildable original publication custody under RP-AUTHORITY-INDEFINITE@1.0.0 (Card 1 G21), exactly the event lifetime and owner deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only eligible settled closure may be removed; never disposable-index eviction/rebuild or body reconstruction. Event plus journal are one logical audit fact for Chat counting; SP-286 receipt lifetime remains independently authoritative. The approved G20 object remains an integration prerequisite where absent.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
       "legacy_canonical_crosswalk_status": "Newly authored prepared publication custody; no event admission, native installation, aliases or grandfathered writes.",
       "value_schema": {
@@ -124392,8 +124392,8 @@
       ],
       "replay_behavior": "SP-1554: resolve only the exact authentic original source/event/full-value receipt; same scoped identity/digest returns first result, different digest conflicts; no source effect, timer or command is replayed.",
       "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
-      "retention_compaction": "SP-1554: source-coupled to exactly docker.compose.scenario.saved and its RP-AUTHORITY-INDEFINITE@1.0.0 assignment. Required pending/result/backup/recovery/legal dependencies fence cleanup; no independent clock or content lifetime.",
-      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "retention_compaction": "SP-1554: canonical non-rebuildable original publication custody under RP-AUTHORITY-INDEFINITE@1.0.0 (Card 1 G21), exactly the event lifetime and owner deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only eligible settled closure may be removed; never disposable-index eviction/rebuild or body reconstruction. Event plus journal are one logical audit fact for Chat counting; SP-286 receipt lifetime remains independently authoritative. The approved G20 object remains an integration prerequisite where absent.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
       "legacy_canonical_crosswalk_status": "Newly authored prepared publication custody; no event admission, native installation, aliases or grandfathered writes.",
       "value_schema": {
@@ -124596,8 +124596,8 @@
       ],
       "replay_behavior": "SP-1555: resolve only the exact authentic original source/event/full-value receipt; same scoped identity/digest returns first result, different digest conflicts; no source effect, timer or command is replayed.",
       "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
-      "retention_compaction": "SP-1555: source-coupled to exactly execution_window.created and its RP-AUTHORITY-INDEFINITE@1.0.0 assignment. Required pending/result/backup/recovery/legal dependencies fence cleanup; no independent clock or content lifetime.",
-      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "retention_compaction": "SP-1555: canonical non-rebuildable original publication custody under RP-AUTHORITY-INDEFINITE@1.0.0 (Card 1 G18), exactly the event lifetime and owner deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only eligible settled closure may be removed; never disposable-index eviction/rebuild or body reconstruction. Event plus journal are one logical audit fact for Chat counting; SP-286 receipt lifetime remains independently authoritative. The approved G20 object remains an integration prerequisite where absent.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
       "legacy_canonical_crosswalk_status": "Newly authored prepared publication custody; no event admission, native installation, aliases or grandfathered writes.",
       "value_schema": {
@@ -124800,8 +124800,8 @@
       ],
       "replay_behavior": "SP-1556: resolve only the exact authentic original source/event/full-value receipt; same scoped identity/digest returns first result, different digest conflicts; no source effect, timer or command is replayed.",
       "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
-      "retention_compaction": "SP-1556: source-coupled to exactly execution_window.invalidated and its RP-AUTHORITY-INDEFINITE@1.0.0 assignment. Required pending/result/backup/recovery/legal dependencies fence cleanup; no independent clock or content lifetime.",
-      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "retention_compaction": "SP-1556: canonical non-rebuildable original publication custody under RP-AUTHORITY-INDEFINITE@1.0.0 (Card 1 G18), exactly the event lifetime and owner deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only eligible settled closure may be removed; never disposable-index eviction/rebuild or body reconstruction. Event plus journal are one logical audit fact for Chat counting; SP-286 receipt lifetime remains independently authoritative. The approved G20 object remains an integration prerequisite where absent.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
       "legacy_canonical_crosswalk_status": "Newly authored prepared publication custody; no event admission, native installation, aliases or grandfathered writes.",
       "value_schema": {
@@ -125004,8 +125004,8 @@
       ],
       "replay_behavior": "SP-1557: resolve only the exact authentic original source/event/full-value receipt; same scoped identity/digest returns first result, different digest conflicts; no source effect, timer or command is replayed.",
       "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
-      "retention_compaction": "SP-1557: source-coupled to exactly execution_window.updated and its RP-AUTHORITY-INDEFINITE@1.0.0 assignment. Required pending/result/backup/recovery/legal dependencies fence cleanup; no independent clock or content lifetime.",
-      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "retention_compaction": "SP-1557: canonical non-rebuildable original publication custody under RP-AUTHORITY-INDEFINITE@1.0.0 (Card 1 G18), exactly the event lifetime and owner deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only eligible settled closure may be removed; never disposable-index eviction/rebuild or body reconstruction. Event plus journal are one logical audit fact for Chat counting; SP-286 receipt lifetime remains independently authoritative. The approved G20 object remains an integration prerequisite where absent.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
       "legacy_canonical_crosswalk_status": "Newly authored prepared publication custody; no event admission, native installation, aliases or grandfathered writes.",
       "value_schema": {
@@ -125208,8 +125208,8 @@
       ],
       "replay_behavior": "SP-1558: resolve only the exact authentic original source/event/full-value receipt; same scoped identity/digest returns first result, different digest conflicts; no source effect, timer or command is replayed.",
       "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
-      "retention_compaction": "SP-1558: source-coupled to exactly goal.continuation_evaluated and its RP-GOAL-THREAD-LIFETIME@1.0.0 assignment. Required pending/result/backup/recovery/legal dependencies fence cleanup; no independent clock or content lifetime.",
-      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "retention_compaction": "SP-1558: canonical non-rebuildable original publication custody under RP-GOAL-THREAD-LIFETIME@1.0.0 (Card 1 G29), exactly the event lifetime and owner deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only eligible settled closure may be removed; never disposable-index eviction/rebuild or body reconstruction. Event plus journal are one logical audit fact for Chat counting; SP-286 receipt lifetime remains independently authoritative. The approved G20 object remains an integration prerequisite where absent.",
+      "retention_policy_ref": "RP-GOAL-THREAD-LIFETIME",
       "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
       "legacy_canonical_crosswalk_status": "Newly authored prepared publication custody; no event admission, native installation, aliases or grandfathered writes.",
       "value_schema": {
@@ -125412,8 +125412,8 @@
       ],
       "replay_behavior": "SP-1559: resolve only the exact authentic original source/event/full-value receipt; same scoped identity/digest returns first result, different digest conflicts; no source effect, timer or command is replayed.",
       "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
-      "retention_compaction": "SP-1559: source-coupled to exactly named_plan.archived and its RP-AUTHORITY-INDEFINITE@1.0.0 assignment. Required pending/result/backup/recovery/legal dependencies fence cleanup; no independent clock or content lifetime.",
-      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "retention_compaction": "SP-1559: canonical non-rebuildable original publication custody under RP-AUTHORITY-INDEFINITE@1.0.0 (Card 1 G19), exactly the event lifetime and owner deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only eligible settled closure may be removed; never disposable-index eviction/rebuild or body reconstruction. Event plus journal are one logical audit fact for Chat counting; SP-286 receipt lifetime remains independently authoritative. The approved G20 object remains an integration prerequisite where absent.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
       "legacy_canonical_crosswalk_status": "Newly authored prepared publication custody; no event admission, native installation, aliases or grandfathered writes.",
       "value_schema": {
@@ -125616,8 +125616,8 @@
       ],
       "replay_behavior": "SP-1560: resolve only the exact authentic original source/event/full-value receipt; same scoped identity/digest returns first result, different digest conflicts; no source effect, timer or command is replayed.",
       "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
-      "retention_compaction": "SP-1560: source-coupled to exactly named_plan.child_refs_changed and its RP-AUTHORITY-INDEFINITE@1.0.0 assignment. Required pending/result/backup/recovery/legal dependencies fence cleanup; no independent clock or content lifetime.",
-      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "retention_compaction": "SP-1560: canonical non-rebuildable original publication custody under RP-AUTHORITY-INDEFINITE@1.0.0 (Card 1 G19), exactly the event lifetime and owner deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only eligible settled closure may be removed; never disposable-index eviction/rebuild or body reconstruction. Event plus journal are one logical audit fact for Chat counting; SP-286 receipt lifetime remains independently authoritative. The approved G20 object remains an integration prerequisite where absent.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
       "legacy_canonical_crosswalk_status": "Newly authored prepared publication custody; no event admission, native installation, aliases or grandfathered writes.",
       "value_schema": {
@@ -125820,8 +125820,8 @@
       ],
       "replay_behavior": "SP-1561: resolve only the exact authentic original source/event/full-value receipt; same scoped identity/digest returns first result, different digest conflicts; no source effect, timer or command is replayed.",
       "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
-      "retention_compaction": "SP-1561: source-coupled to exactly named_plan.created and its RP-AUTHORITY-INDEFINITE@1.0.0 assignment. Required pending/result/backup/recovery/legal dependencies fence cleanup; no independent clock or content lifetime.",
-      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "retention_compaction": "SP-1561: canonical non-rebuildable original publication custody under RP-AUTHORITY-INDEFINITE@1.0.0 (Card 1 G19), exactly the event lifetime and owner deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only eligible settled closure may be removed; never disposable-index eviction/rebuild or body reconstruction. Event plus journal are one logical audit fact for Chat counting; SP-286 receipt lifetime remains independently authoritative. The approved G20 object remains an integration prerequisite where absent.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
       "legacy_canonical_crosswalk_status": "Newly authored prepared publication custody; no event admission, native installation, aliases or grandfathered writes.",
       "value_schema": {
@@ -126024,8 +126024,8 @@
       ],
       "replay_behavior": "SP-1562: resolve only the exact authentic original source/event/full-value receipt; same scoped identity/digest returns first result, different digest conflicts; no source effect, timer or command is replayed.",
       "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
-      "retention_compaction": "SP-1562: source-coupled to exactly named_plan.priority_changed and its RP-AUTHORITY-INDEFINITE@1.0.0 assignment. Required pending/result/backup/recovery/legal dependencies fence cleanup; no independent clock or content lifetime.",
-      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "retention_compaction": "SP-1562: canonical non-rebuildable original publication custody under RP-AUTHORITY-INDEFINITE@1.0.0 (Card 1 G19), exactly the event lifetime and owner deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only eligible settled closure may be removed; never disposable-index eviction/rebuild or body reconstruction. Event plus journal are one logical audit fact for Chat counting; SP-286 receipt lifetime remains independently authoritative. The approved G20 object remains an integration prerequisite where absent.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
       "legacy_canonical_crosswalk_status": "Newly authored prepared publication custody; no event admission, native installation, aliases or grandfathered writes.",
       "value_schema": {
@@ -126228,8 +126228,8 @@
       ],
       "replay_behavior": "SP-1563: resolve only the exact authentic original source/event/full-value receipt; same scoped identity/digest returns first result, different digest conflicts; no source effect, timer or command is replayed.",
       "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
-      "retention_compaction": "SP-1563: source-coupled to exactly named_plan.renamed and its RP-AUTHORITY-INDEFINITE@1.0.0 assignment. Required pending/result/backup/recovery/legal dependencies fence cleanup; no independent clock or content lifetime.",
-      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "retention_compaction": "SP-1563: canonical non-rebuildable original publication custody under RP-AUTHORITY-INDEFINITE@1.0.0 (Card 1 G19), exactly the event lifetime and owner deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only eligible settled closure may be removed; never disposable-index eviction/rebuild or body reconstruction. Event plus journal are one logical audit fact for Chat counting; SP-286 receipt lifetime remains independently authoritative. The approved G20 object remains an integration prerequisite where absent.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
       "legacy_canonical_crosswalk_status": "Newly authored prepared publication custody; no event admission, native installation, aliases or grandfathered writes.",
       "value_schema": {
@@ -126432,8 +126432,8 @@
       ],
       "replay_behavior": "SP-1564: resolve only the exact authentic original source/event/full-value receipt; same scoped identity/digest returns first result, different digest conflicts; no source effect, timer or command is replayed.",
       "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
-      "retention_compaction": "SP-1564: source-coupled to exactly named_plan.restored and its RP-AUTHORITY-INDEFINITE@1.0.0 assignment. Required pending/result/backup/recovery/legal dependencies fence cleanup; no independent clock or content lifetime.",
-      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "retention_compaction": "SP-1564: canonical non-rebuildable original publication custody under RP-AUTHORITY-INDEFINITE@1.0.0 (Card 1 G19), exactly the event lifetime and owner deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only eligible settled closure may be removed; never disposable-index eviction/rebuild or body reconstruction. Event plus journal are one logical audit fact for Chat counting; SP-286 receipt lifetime remains independently authoritative. The approved G20 object remains an integration prerequisite where absent.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
       "legacy_canonical_crosswalk_status": "Newly authored prepared publication custody; no event admission, native installation, aliases or grandfathered writes.",
       "value_schema": {
@@ -126636,8 +126636,8 @@
       ],
       "replay_behavior": "SP-1565: resolve only the exact authentic original source/event/full-value receipt; same scoped identity/digest returns first result, different digest conflicts; no source effect, timer or command is replayed.",
       "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
-      "retention_compaction": "SP-1565: source-coupled to exactly runtime.automation_pause_changed and its RP-AUTHORITY-INDEFINITE@1.0.0 assignment. Required pending/result/backup/recovery/legal dependencies fence cleanup; no independent clock or content lifetime.",
-      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "retention_compaction": "SP-1565: canonical non-rebuildable original publication custody under RP-AUTHORITY-INDEFINITE@1.0.0 (Card 1 G18), exactly the event lifetime and owner deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only eligible settled closure may be removed; never disposable-index eviction/rebuild or body reconstruction. Event plus journal are one logical audit fact for Chat counting; SP-286 receipt lifetime remains independently authoritative. The approved G20 object remains an integration prerequisite where absent.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
       "legacy_canonical_crosswalk_status": "Newly authored prepared publication custody; no event admission, native installation, aliases or grandfathered writes.",
       "value_schema": {
@@ -126840,8 +126840,8 @@
       ],
       "replay_behavior": "SP-1566: resolve only the exact authentic original source/event/full-value receipt; same scoped identity/digest returns first result, different digest conflicts; no source effect, timer or command is replayed.",
       "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
-      "retention_compaction": "SP-1566: source-coupled to exactly runtime.quota_resume_attempted and its RP-AUTHORITY-INDEFINITE@1.0.0 assignment. Required pending/result/backup/recovery/legal dependencies fence cleanup; no independent clock or content lifetime.",
-      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "retention_compaction": "SP-1566: canonical non-rebuildable original publication custody under RP-AUTHORITY-INDEFINITE@1.0.0 (Card 1 G18), exactly the event lifetime and owner deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only eligible settled closure may be removed; never disposable-index eviction/rebuild or body reconstruction. Event plus journal are one logical audit fact for Chat counting; SP-286 receipt lifetime remains independently authoritative. The approved G20 object remains an integration prerequisite where absent.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
       "legacy_canonical_crosswalk_status": "Newly authored prepared publication custody; no event admission, native installation, aliases or grandfathered writes.",
       "value_schema": {
@@ -127044,8 +127044,8 @@
       ],
       "replay_behavior": "SP-1567: resolve only the exact authentic original source/event/full-value receipt; same scoped identity/digest returns first result, different digest conflicts; no source effect, timer or command is replayed.",
       "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
-      "retention_compaction": "SP-1567: source-coupled to exactly runtime.quota_resume_consent_changed and its RP-AUTHORITY-INDEFINITE@1.0.0 assignment. Required pending/result/backup/recovery/legal dependencies fence cleanup; no independent clock or content lifetime.",
-      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "retention_compaction": "SP-1567: canonical non-rebuildable original publication custody under RP-AUTHORITY-INDEFINITE@1.0.0 (Card 1 G18), exactly the event lifetime and owner deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only eligible settled closure may be removed; never disposable-index eviction/rebuild or body reconstruction. Event plus journal are one logical audit fact for Chat counting; SP-286 receipt lifetime remains independently authoritative. The approved G20 object remains an integration prerequisite where absent.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
       "legacy_canonical_crosswalk_status": "Newly authored prepared publication custody; no event admission, native installation, aliases or grandfathered writes.",
       "value_schema": {
@@ -127248,8 +127248,8 @@
       ],
       "replay_behavior": "SP-1568: resolve only the exact authentic original source/event/full-value receipt; same scoped identity/digest returns first result, different digest conflicts; no source effect, timer or command is replayed.",
       "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
-      "retention_compaction": "SP-1568: source-coupled to exactly runtime.quota_wait_started and its RP-AUTHORITY-INDEFINITE@1.0.0 assignment. Required pending/result/backup/recovery/legal dependencies fence cleanup; no independent clock or content lifetime.",
-      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "retention_compaction": "SP-1568: canonical non-rebuildable original publication custody under RP-AUTHORITY-INDEFINITE@1.0.0 (Card 1 G18), exactly the event lifetime and owner deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only eligible settled closure may be removed; never disposable-index eviction/rebuild or body reconstruction. Event plus journal are one logical audit fact for Chat counting; SP-286 receipt lifetime remains independently authoritative. The approved G20 object remains an integration prerequisite where absent.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
       "legacy_canonical_crosswalk_status": "Newly authored prepared publication custody; no event admission, native installation, aliases or grandfathered writes.",
       "value_schema": {
@@ -127452,8 +127452,8 @@
       ],
       "replay_behavior": "SP-1569: resolve only the exact authentic original source/event/full-value receipt; same scoped identity/digest returns first result, different digest conflicts; no source effect, timer or command is replayed.",
       "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
-      "retention_compaction": "SP-1569: source-coupled to exactly scheduled_dispatch.cancelled and its RP-AUTHORITY-INDEFINITE@1.0.0 assignment. Required pending/result/backup/recovery/legal dependencies fence cleanup; no independent clock or content lifetime.",
-      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "retention_compaction": "SP-1569: canonical non-rebuildable original publication custody under RP-AUTHORITY-INDEFINITE@1.0.0 (Card 1 G18), exactly the event lifetime and owner deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only eligible settled closure may be removed; never disposable-index eviction/rebuild or body reconstruction. Event plus journal are one logical audit fact for Chat counting; SP-286 receipt lifetime remains independently authoritative. The approved G20 object remains an integration prerequisite where absent.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
       "legacy_canonical_crosswalk_status": "Newly authored prepared publication custody; no event admission, native installation, aliases or grandfathered writes.",
       "value_schema": {
@@ -127656,8 +127656,8 @@
       ],
       "replay_behavior": "SP-1570: resolve only the exact authentic original source/event/full-value receipt; same scoped identity/digest returns first result, different digest conflicts; no source effect, timer or command is replayed.",
       "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
-      "retention_compaction": "SP-1570: source-coupled to exactly scheduled_dispatch.created and its RP-AUTHORITY-INDEFINITE@1.0.0 assignment. Required pending/result/backup/recovery/legal dependencies fence cleanup; no independent clock or content lifetime.",
-      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "retention_compaction": "SP-1570: canonical non-rebuildable original publication custody under RP-AUTHORITY-INDEFINITE@1.0.0 (Card 1 G18), exactly the event lifetime and owner deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only eligible settled closure may be removed; never disposable-index eviction/rebuild or body reconstruction. Event plus journal are one logical audit fact for Chat counting; SP-286 receipt lifetime remains independently authoritative. The approved G20 object remains an integration prerequisite where absent.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
       "legacy_canonical_crosswalk_status": "Newly authored prepared publication custody; no event admission, native installation, aliases or grandfathered writes.",
       "value_schema": {
@@ -127860,8 +127860,8 @@
       ],
       "replay_behavior": "SP-1571: resolve only the exact authentic original source/event/full-value receipt; same scoped identity/digest returns first result, different digest conflicts; no source effect, timer or command is replayed.",
       "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
-      "retention_compaction": "SP-1571: source-coupled to exactly scheduled_dispatch.dispatched and its RP-AUTHORITY-INDEFINITE@1.0.0 assignment. Required pending/result/backup/recovery/legal dependencies fence cleanup; no independent clock or content lifetime.",
-      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "retention_compaction": "SP-1571: canonical non-rebuildable original publication custody under RP-AUTHORITY-INDEFINITE@1.0.0 (Card 1 G18), exactly the event lifetime and owner deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only eligible settled closure may be removed; never disposable-index eviction/rebuild or body reconstruction. Event plus journal are one logical audit fact for Chat counting; SP-286 receipt lifetime remains independently authoritative. The approved G20 object remains an integration prerequisite where absent.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
       "legacy_canonical_crosswalk_status": "Newly authored prepared publication custody; no event admission, native installation, aliases or grandfathered writes.",
       "value_schema": {
@@ -128064,8 +128064,8 @@
       ],
       "replay_behavior": "SP-1572: resolve only the exact authentic original source/event/full-value receipt; same scoped identity/digest returns first result, different digest conflicts; no source effect, timer or command is replayed.",
       "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
-      "retention_compaction": "SP-1572: source-coupled to exactly scheduled_dispatch.failed and its RP-AUTHORITY-INDEFINITE@1.0.0 assignment. Required pending/result/backup/recovery/legal dependencies fence cleanup; no independent clock or content lifetime.",
-      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "retention_compaction": "SP-1572: canonical non-rebuildable original publication custody under RP-AUTHORITY-INDEFINITE@1.0.0 (Card 1 G18), exactly the event lifetime and owner deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only eligible settled closure may be removed; never disposable-index eviction/rebuild or body reconstruction. Event plus journal are one logical audit fact for Chat counting; SP-286 receipt lifetime remains independently authoritative. The approved G20 object remains an integration prerequisite where absent.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
       "legacy_canonical_crosswalk_status": "Newly authored prepared publication custody; no event admission, native installation, aliases or grandfathered writes.",
       "value_schema": {
@@ -128268,8 +128268,8 @@
       ],
       "replay_behavior": "SP-1573: resolve only the exact authentic original source/event/full-value receipt; same scoped identity/digest returns first result, different digest conflicts; no source effect, timer or command is replayed.",
       "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
-      "retention_compaction": "SP-1573: source-coupled to exactly scheduled_dispatch.held and its RP-AUTHORITY-INDEFINITE@1.0.0 assignment. Required pending/result/backup/recovery/legal dependencies fence cleanup; no independent clock or content lifetime.",
-      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "retention_compaction": "SP-1573: canonical non-rebuildable original publication custody under RP-AUTHORITY-INDEFINITE@1.0.0 (Card 1 G18), exactly the event lifetime and owner deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only eligible settled closure may be removed; never disposable-index eviction/rebuild or body reconstruction. Event plus journal are one logical audit fact for Chat counting; SP-286 receipt lifetime remains independently authoritative. The approved G20 object remains an integration prerequisite where absent.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
       "legacy_canonical_crosswalk_status": "Newly authored prepared publication custody; no event admission, native installation, aliases or grandfathered writes.",
       "value_schema": {
@@ -128472,8 +128472,8 @@
       ],
       "replay_behavior": "SP-1574: resolve only the exact authentic original source/event/full-value receipt; same scoped identity/digest returns first result, different digest conflicts; no source effect, timer or command is replayed.",
       "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
-      "retention_compaction": "SP-1574: source-coupled to exactly scheduled_dispatch.updated and its RP-AUTHORITY-INDEFINITE@1.0.0 assignment. Required pending/result/backup/recovery/legal dependencies fence cleanup; no independent clock or content lifetime.",
-      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "retention_compaction": "SP-1574: canonical non-rebuildable original publication custody under RP-AUTHORITY-INDEFINITE@1.0.0 (Card 1 G18), exactly the event lifetime and owner deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only eligible settled closure may be removed; never disposable-index eviction/rebuild or body reconstruction. Event plus journal are one logical audit fact for Chat counting; SP-286 receipt lifetime remains independently authoritative. The approved G20 object remains an integration prerequisite where absent.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
       "legacy_canonical_crosswalk_status": "Newly authored prepared publication custody; no event admission, native installation, aliases or grandfathered writes.",
       "value_schema": {
@@ -128676,8 +128676,8 @@
       ],
       "replay_behavior": "SP-1575: resolve only the exact authentic original source/event/full-value receipt; same scoped identity/digest returns first result, different digest conflicts; no source effect, timer or command is replayed.",
       "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
-      "retention_compaction": "SP-1575: source-coupled to exactly todo.created and its RP-CHAT-THREAD-LIFETIME@1.0.0 assignment. Required pending/result/backup/recovery/legal dependencies fence cleanup; no independent clock or content lifetime.",
-      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "retention_compaction": "SP-1575: canonical non-rebuildable original publication custody under RP-CHAT-THREAD-LIFETIME@1.0.0 (Card 1 G20), exactly the event lifetime and owner deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only eligible settled closure may be removed; never disposable-index eviction/rebuild or body reconstruction. Event plus journal are one logical audit fact for Chat counting; SP-286 receipt lifetime remains independently authoritative. The approved G20 object remains an integration prerequisite where absent.",
+      "retention_policy_ref": "RP-CHAT-THREAD-LIFETIME",
       "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
       "legacy_canonical_crosswalk_status": "Newly authored prepared publication custody; no event admission, native installation, aliases or grandfathered writes.",
       "value_schema": {
@@ -128880,8 +128880,8 @@
       ],
       "replay_behavior": "SP-1576: resolve only the exact authentic original source/event/full-value receipt; same scoped identity/digest returns first result, different digest conflicts; no source effect, timer or command is replayed.",
       "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
-      "retention_compaction": "SP-1576: source-coupled to exactly todo.dependency_changed and its RP-CHAT-THREAD-LIFETIME@1.0.0 assignment. Required pending/result/backup/recovery/legal dependencies fence cleanup; no independent clock or content lifetime.",
-      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "retention_compaction": "SP-1576: canonical non-rebuildable original publication custody under RP-CHAT-THREAD-LIFETIME@1.0.0 (Card 1 G20), exactly the event lifetime and owner deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only eligible settled closure may be removed; never disposable-index eviction/rebuild or body reconstruction. Event plus journal are one logical audit fact for Chat counting; SP-286 receipt lifetime remains independently authoritative. The approved G20 object remains an integration prerequisite where absent.",
+      "retention_policy_ref": "RP-CHAT-THREAD-LIFETIME",
       "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
       "legacy_canonical_crosswalk_status": "Newly authored prepared publication custody; no event admission, native installation, aliases or grandfathered writes.",
       "value_schema": {
@@ -129084,8 +129084,8 @@
       ],
       "replay_behavior": "SP-1577: resolve only the exact authentic original source/event/full-value receipt; same scoped identity/digest returns first result, different digest conflicts; no source effect, timer or command is replayed.",
       "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
-      "retention_compaction": "SP-1577: source-coupled to exactly todo.removed_from_current_list and its RP-CHAT-THREAD-LIFETIME@1.0.0 assignment. Required pending/result/backup/recovery/legal dependencies fence cleanup; no independent clock or content lifetime.",
-      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "retention_compaction": "SP-1577: canonical non-rebuildable original publication custody under RP-CHAT-THREAD-LIFETIME@1.0.0 (Card 1 G20), exactly the event lifetime and owner deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only eligible settled closure may be removed; never disposable-index eviction/rebuild or body reconstruction. Event plus journal are one logical audit fact for Chat counting; SP-286 receipt lifetime remains independently authoritative. The approved G20 object remains an integration prerequisite where absent.",
+      "retention_policy_ref": "RP-CHAT-THREAD-LIFETIME",
       "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
       "legacy_canonical_crosswalk_status": "Newly authored prepared publication custody; no event admission, native installation, aliases or grandfathered writes.",
       "value_schema": {
@@ -129288,8 +129288,8 @@
       ],
       "replay_behavior": "SP-1578: resolve only the exact authentic original source/event/full-value receipt; same scoped identity/digest returns first result, different digest conflicts; no source effect, timer or command is replayed.",
       "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
-      "retention_compaction": "SP-1578: source-coupled to exactly todo.reordered and its RP-CHAT-THREAD-LIFETIME@1.0.0 assignment. Required pending/result/backup/recovery/legal dependencies fence cleanup; no independent clock or content lifetime.",
-      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "retention_compaction": "SP-1578: canonical non-rebuildable original publication custody under RP-CHAT-THREAD-LIFETIME@1.0.0 (Card 1 G20), exactly the event lifetime and owner deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only eligible settled closure may be removed; never disposable-index eviction/rebuild or body reconstruction. Event plus journal are one logical audit fact for Chat counting; SP-286 receipt lifetime remains independently authoritative. The approved G20 object remains an integration prerequisite where absent.",
+      "retention_policy_ref": "RP-CHAT-THREAD-LIFETIME",
       "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
       "legacy_canonical_crosswalk_status": "Newly authored prepared publication custody; no event admission, native installation, aliases or grandfathered writes.",
       "value_schema": {
@@ -129492,8 +129492,8 @@
       ],
       "replay_behavior": "SP-1579: resolve only the exact authentic original source/event/full-value receipt; same scoped identity/digest returns first result, different digest conflicts; no source effect, timer or command is replayed.",
       "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
-      "retention_compaction": "SP-1579: source-coupled to exactly todo.status_changed and its RP-CHAT-THREAD-LIFETIME@1.0.0 assignment. Required pending/result/backup/recovery/legal dependencies fence cleanup; no independent clock or content lifetime.",
-      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "retention_compaction": "SP-1579: canonical non-rebuildable original publication custody under RP-CHAT-THREAD-LIFETIME@1.0.0 (Card 1 G20), exactly the event lifetime and owner deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only eligible settled closure may be removed; never disposable-index eviction/rebuild or body reconstruction. Event plus journal are one logical audit fact for Chat counting; SP-286 receipt lifetime remains independently authoritative. The approved G20 object remains an integration prerequisite where absent.",
+      "retention_policy_ref": "RP-CHAT-THREAD-LIFETIME",
       "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
       "legacy_canonical_crosswalk_status": "Newly authored prepared publication custody; no event admission, native installation, aliases or grandfathered writes.",
       "value_schema": {
@@ -129696,8 +129696,8 @@
       ],
       "replay_behavior": "SP-1580: resolve only the exact authentic original source/event/full-value receipt; same scoped identity/digest returns first result, different digest conflicts; no source effect, timer or command is replayed.",
       "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
-      "retention_compaction": "SP-1580: source-coupled to exactly todo.updated and its RP-CHAT-THREAD-LIFETIME@1.0.0 assignment. Required pending/result/backup/recovery/legal dependencies fence cleanup; no independent clock or content lifetime.",
-      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "retention_compaction": "SP-1580: canonical non-rebuildable original publication custody under RP-CHAT-THREAD-LIFETIME@1.0.0 (Card 1 G20), exactly the event lifetime and owner deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only eligible settled closure may be removed; never disposable-index eviction/rebuild or body reconstruction. Event plus journal are one logical audit fact for Chat counting; SP-286 receipt lifetime remains independently authoritative. The approved G20 object remains an integration prerequisite where absent.",
+      "retention_policy_ref": "RP-CHAT-THREAD-LIFETIME",
       "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
       "legacy_canonical_crosswalk_status": "Newly authored prepared publication custody; no event admission, native installation, aliases or grandfathered writes.",
       "value_schema": {
@@ -129900,8 +129900,8 @@
       ],
       "replay_behavior": "SP-1581: resolve only the exact authentic original source/event/full-value receipt; same scoped identity/digest returns first result, different digest conflicts; no source effect, timer or command is replayed.",
       "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
-      "retention_compaction": "SP-1581: source-coupled to exactly todo.work_bound and its RP-CHAT-THREAD-LIFETIME@1.0.0 assignment. Required pending/result/backup/recovery/legal dependencies fence cleanup; no independent clock or content lifetime.",
-      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "retention_compaction": "SP-1581: canonical non-rebuildable original publication custody under RP-CHAT-THREAD-LIFETIME@1.0.0 (Card 1 G20), exactly the event lifetime and owner deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only eligible settled closure may be removed; never disposable-index eviction/rebuild or body reconstruction. Event plus journal are one logical audit fact for Chat counting; SP-286 receipt lifetime remains independently authoritative. The approved G20 object remains an integration prerequisite where absent.",
+      "retention_policy_ref": "RP-CHAT-THREAD-LIFETIME",
       "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
       "legacy_canonical_crosswalk_status": "Newly authored prepared publication custody; no event admission, native installation, aliases or grandfathered writes.",
       "value_schema": {

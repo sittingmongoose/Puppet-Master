@@ -4,7 +4,7 @@ Source: `Plans/Contracts_V0.md`
 
 Source lines: L20490-L20640
 
-Source SHA256: `d2a7b5c28626ca4f584932cb11f028e677537f1ec52264e3e843a13af5142af2`
+Source SHA256: `67663bc57c0a767a2900ab15187553143b4e89cf15b13821b056dde0c8e0224a`
 
 ---
 
