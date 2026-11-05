@@ -91,14 +91,17 @@ const RECORDER = (cfg) => {
 		window.cancelIdleCallback = function (id) {
 			const j = pending.get(id); if (!j) return cic.call(window, id);
 			if (j.native) cic.call(window, j.native);
-			j.pending = false; j.cancelled = true; pending.delete(id);
+			// who took it back: the scheduler for a drag (inside one), or the owner itself (outside any drag)
+			j.pending = false; j.cancelled = true; j.cancelDrag = inDrag(); j.cancelAt = performance.now(); pending.delete(id);
 		};
 	}
 	R.release = () => { R.gated = false; for (const j of pending.values()) if (!j.native) ask(j);
 		// Independent native deadline proves this hold actually offered idle delivery.
 		ric.call(window, () => { R.opportunity = { at: performance.now(), drag: inDrag() }; }, { timeout: 500 });
 	};
-	R.pending = () => R.jobs.filter(j => j.pending).map(({ id, owner, stack }) => ({ id, owner, stack }));
+	R.pending = () => R.jobs.filter(j => j.pending).map(({ id, handle, owner, stack }) => ({ id, handle, owner, stack }));
+	// jobs an owner withdrew itself, outside any drag (a census torn down, a scan superseded): not the drag's doing
+	R.withdrawn = (handles) => R.jobs.filter((j) => handles.includes(j.handle) && j.cancelled && !j.cancelDrag).map((j) => j.handle);
 	// a timer set by an owner's idle callback carries that idle work on: it belongs to the owner (the drag's own
 	// responses to the moving divider, a width change for one, are not idle work and are not judged here)
 	window.setTimeout = function (fn, ms, ...a) {
@@ -129,7 +132,7 @@ const OMIT = (key) => {
 const top = (stack) => stack.split('\n').slice(1).map((l) => /^\s*at (?:(.+?) \()?(.+?):(\d+):\d+\)?\s*$/.exec(l)).filter((m) => m && m[2] !== '<anonymous>' && !/(?:^|\.)(?:ask|idleWhenStill)(?: \[as \w+\])?$/.test(m[1] || '')).slice(0, 3).map((m) => `${m[1] || '(anonymous)'}:${m[3]}`).join(' < ');
 const brief = (jobs) => JSON.stringify(jobs.map((j) => ({ id: j.id, owner: j.owner, at: top(j.stack) })));
 
-async function holdDrag(t, f, sel, label) {
+async function holdDrag(t, f, sel, label, keys) {
 	const box = await f.evaluate((s) => {
 		const vis = (e) => { if (!e) return false; const r = e.getBoundingClientRect(); return r.width > 0 && r.height > 0 && getComputedStyle(e).display !== 'none'; };
 		const e = s.split('|').map((q) => [...document.querySelectorAll(q)].find(vis)).find(Boolean);
@@ -140,8 +143,15 @@ async function holdDrag(t, f, sel, label) {
 	if (!(await t.check(`${label}: a divider to hold`, !!box, sel))) return null;
 	const axisX = box.h >= box.w;   // a tall bar moves sideways
 	const at = (d) => (axisX ? [box.x + d, box.y] : [box.x, box.y + d]);
-	const queued = await f.evaluate(() => window.__pmIdleRec.pending());
 	await t.page.mouse.move(...at(0)); await t.page.waitForTimeout(120);
+	// the witness is what is pending at the press itself: an owner may withdraw and re-ask its own job during setup,
+	// so wait (bounded) until every owner of this look has one queued, then press at once
+	const full = (p) => keys.every((k) => p.some((j) => j.owner === k));
+	let queued = await f.evaluate(() => window.__pmIdleRec.pending());
+	for (let tries = 0; tries < 3 && !full(queued); tries++) {
+		await f.waitForFunction((ks) => { const p = window.__pmIdleRec.pending(); return ks.every((k) => p.some((j) => j.owner === k)); }, keys, { timeout: 5000 }).catch(() => {});
+		queued = await f.evaluate(() => window.__pmIdleRec.pending());
+	}
 	await t.page.mouse.down();
 	for (let i = 1; i <= 8; i++) { await t.page.mouse.move(...at(-i * 4)); await t.page.waitForTimeout(16); }
 	const began = await f.evaluate(() => performance.now());
@@ -213,18 +223,22 @@ export const tests = {
 		});
 		const keys = owners.map((o) => o.key);
 		await f.waitForFunction((ks) => { const p = window.__pmIdleRec.pending(); return ks.every((k) => p.some((j) => j.owner === k)); }, keys, { timeout: 15000 }).catch(() => {});
-		const pending = await f.evaluate(() => window.__pmIdleRec.pending());
 		if (omit) {
 			const n = await f.evaluate(() => window.__pmIdleOmit?.count || 0);
 			t.log(`SELFTEST ${look}: ${n} real ${nameOf(omit)} requests suppressed at the shared admission`);
 			await t.check(`selftest ${look}: the ${nameOf(omit)} omission actually suppressed real requests`, n > 0, String(n));
 		}
-		for (const o of owners) {
-			const mine = pending.filter((j) => j.owner === o.key);
-			await t.check(`${look}: ${o.name} has a real idle job pending before the hold`, mine.length > 0, mine.length ? brief(mine) : `none; pending ${brief(pending)}`);
-		}
-		const usage = await holdDrag(t, f, '#leftPanelResizer|#chatResizer', `${look} Usage`);
+		const usage = await holdDrag(t, f, '#leftPanelResizer|#chatResizer', `${look} Usage`, keys);
 		if (usage) {
+			// an owner's own withdrawal outside the drag (after the press snapshot, before the drag class) is not judged;
+			// every owner still needs at least one witnessed job the drag itself had to hold back
+			const gone = await f.evaluate((hs) => window.__pmIdleRec.withdrawn(hs), usage.queued.map((j) => j.handle));
+			if (gone.length) t.log(`${look}: withdrawn by their owners outside the drag: ${brief(usage.queued.filter((j) => gone.includes(j.handle)))}`);
+			usage.queued = usage.queued.filter((j) => !gone.includes(j.handle));
+			for (const o of owners) {
+				const mine = usage.queued.filter((j) => j.owner === o.key);
+				await t.check(`${look}: ${o.name} has a real idle job pending at the press`, mine.length > 0, mine.length ? brief(mine) : `none; pending ${brief(usage.queued)}`);
+			}
 			await judge(t, f, `${look} Usage`, usage, owners);
 			await t.page.waitForTimeout(6000);
 			const fired = await f.evaluate(() => window.__pmIdleRec.fired);
