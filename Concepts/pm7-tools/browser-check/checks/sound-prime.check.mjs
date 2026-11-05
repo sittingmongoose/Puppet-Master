@@ -29,7 +29,11 @@ export default async function(t){
  if(sandbox)await t.openInSandbox(target.href);
  // Opaque app frames can be separate Chrome targets (OOPIFs). Observe the
  // actual app target so Runtime contexts and fresh-document hooks reach it.
- const cdp=await t.page.context().newCDPSession(sandbox?t.root:t.page),contexts=new Set();
+ const context=t.page.context();
+ const cdp=await context.newCDPSession(sandbox?t.root:t.page).catch(e=>{
+  if(sandbox&&String(e.message).includes('part of the parent frame'))return context.newCDPSession(t.page);
+  throw e;
+ }),contexts=new Set();
  cdp.on('Runtime.executionContextCreated',({context})=>{if(context.auxData?.isDefault)contexts.add(context.id);});
  cdp.on('Runtime.executionContextDestroyed',({executionContextId})=>contexts.delete(executionContextId));
  cdp.on('Runtime.executionContextsCleared',()=>contexts.clear());
