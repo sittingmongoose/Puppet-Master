@@ -16,6 +16,8 @@ export default async function(t) {
   await t.check('intact own text gives a valid opaque sample', valid && !valid.invalid && valid.share <= .002, JSON.stringify(valid));
   const invalid = await readThrough(t, f, '#exclusion-fixture', { loseOwnInk: true });
   await t.check('lost own ink is invalid, never a backing verdict', invalid?.invalid === true && invalid.share === undefined, JSON.stringify(invalid));
+  const drift = await readThrough(t, f, '#exclusion-fixture', { resizeAfterMeasure: true });
+  await t.check('clip geometry cannot be replaced by a later setup read', drift?.invalid === true && drift.share === undefined && drift.reason.includes('geometry stable=false'), JSON.stringify(drift));
   await f.evaluate(() => document.getElementById('exclusion-fixture').style.background = 'transparent');
   const leaking = await readThrough(t, f, '#exclusion-fixture');
   await t.check('real outside ink still fails the backing limit', leaking && !leaking.invalid && leaking.share > .002, JSON.stringify(leaking));
