@@ -812,9 +812,46 @@ def resolve_ref(ctx: Context, ref: Any, results: dict[str, Any]) -> bool:
     return False
 
 
-def literal_ok(spec: dict[str, Any], value: Any) -> bool:
+CONSTRAINT_NUMBER_KEYS = ("minimum", "maximum")
+CONSTRAINT_COUNT_KEYS = ("min_length", "max_length", "min_items", "max_items")
+
+
+def constraint_value_ok(key: str, value: Any) -> bool:
+    """A constraint value is well-formed enough to apply: numeric bounds are numbers, lengths
+    and counts are non-negative integers, booleans are booleans, and a pattern compiles."""
+    if key in CONSTRAINT_NUMBER_KEYS:
+        return isinstance(value, (int, float)) and not isinstance(value, bool)
+    if key in CONSTRAINT_COUNT_KEYS:
+        return isinstance(value, int) and not isinstance(value, bool) and value >= 0
+    if key == "unique_items":
+        return isinstance(value, bool)
+    if key == "pattern":
+        if not isinstance(value, str):
+            return False
+        try:
+            re.compile(value)
+        except re.error:
+            return False
+        return True
+    return True
+
+
+def literal_ok(spec: dict[str, Any], value: Any, inherited: dict[str, Any] | None = None) -> bool:
+    """A literal default is valid against its spec, recursively: list item specs, required
+    object children, primitive semantics of DESIGN 4.2, and applicable constraints, merged
+    with the constraints a common optional field inherits from UCC-230. Malformed constraint
+    values are skipped here (C05 reports them), so this never compares against invalid bounds."""
     kind = spec.get("type")
-    constraints = spec.get("constraints") if isinstance(spec.get("constraints"), dict) else {}
+    constraints: dict[str, Any] = {}
+    if isinstance(inherited, dict) and isinstance(inherited.get("constraints"), dict):
+        constraints.update(inherited["constraints"])
+    if isinstance(spec.get("constraints"), dict):
+        constraints.update(spec["constraints"])
+
+    def bound(key: str) -> Any | None:
+        candidate = constraints.get(key)
+        return candidate if constraint_value_ok(key, candidate) else None
+
     if kind == "enum":
         return value in as_list(spec.get("values"))
     if kind == "const":
@@ -824,25 +861,68 @@ def literal_ok(spec: dict[str, Any], value: Any) -> bool:
     if kind == "integer":
         if not isinstance(value, int) or isinstance(value, bool):
             return False
-        if "minimum" in constraints and value < constraints["minimum"]:
+        minimum, maximum = bound("minimum"), bound("maximum")
+        if minimum is not None and value < minimum:
             return False
-        if "maximum" in constraints and value > constraints["maximum"]:
+        if maximum is not None and value > maximum:
             return False
         return True
     if kind in ("string", "id", "ref", "secret_ref", "sha256", "timestamp", "url", "path"):
         if not isinstance(value, str):
             return False
-        if "max_length" in constraints and len(value) > constraints["max_length"]:
+        min_length, max_length = bound("min_length"), bound("max_length")
+        if min_length is not None and len(value) < min_length:
             return False
-        if "min_length" in constraints and len(value) < constraints["min_length"]:
+        if max_length is not None and len(value) > max_length:
             return False
-        if kind == "sha256":
-            return re.fullmatch(r"[0-9a-f]{64}", value) is not None
+        pattern = constraints.get("pattern")
+        if isinstance(pattern, str):
+            try:
+                if re.fullmatch(pattern, value) is None:
+                    return False
+            except re.error:
+                pass  # malformed pattern: C05 reports it; never raise here
+        if kind == "id":
+            # DESIGN 4.2: string, 1..256 characters, no whitespace.
+            if not value or len(value) > 256 or re.search(r"\s", value):
+                return False
+        elif kind == "ref":
+            # DESIGN 4.2: string, 1..256 characters.
+            if not value or len(value) > 256:
+                return False
+        elif kind == "sha256":
+            if re.fullmatch(r"[0-9a-f]{64}", value) is None:
+                return False
         return True
     if kind == "list":
-        return isinstance(value, list)
+        if not isinstance(value, list):
+            return False
+        min_items, max_items = bound("min_items"), bound("max_items")
+        if min_items is not None and len(value) < min_items:
+            return False
+        if max_items is not None and len(value) > max_items:
+            return False
+        if constraints.get("unique_items") is True:
+            fingerprints = [json.dumps(entry, sort_keys=True, default=str) for entry in value]
+            if len(set(fingerprints)) != len(fingerprints):
+                return False
+        item_spec = spec.get("item")
+        if isinstance(item_spec, dict):
+            return all(literal_ok(item_spec, entry) for entry in value)
+        return True
     if kind == "object":
-        return isinstance(value, dict)
+        if not isinstance(value, dict):
+            return False
+        fields = spec.get("fields")
+        if isinstance(fields, dict):
+            for child_name, child_spec in fields.items():
+                if isinstance(child_spec, dict) and child_spec.get("required") is True and child_name not in value:
+                    return False
+            for child_name, child_value in value.items():
+                child_spec = fields.get(child_name)
+                if not isinstance(child_spec, dict) or not literal_ok(child_spec, child_value):
+                    return False
+        return True
     return False
 
 
@@ -887,6 +967,9 @@ def check_type_spec(ctx: Context, spec: Any, where: dict[str, str], name: str, r
         else:
             for key in sorted(set(constraints) - set(CONSTRAINT_KEYS)):
                 rep.add("C05", "unknown_constraint_key", field=name, detail=key, **where)
+            for key in sorted(set(constraints) & set(CONSTRAINT_KEYS)):
+                if not constraint_value_ok(key, constraints[key]):
+                    rep.add("C05", "constraint_value_invalid", field=name, detail=f"{key}={constraints[key]!r}", **where)
     if not item:
         for key in CONDITIONAL_KEYS:
             if key not in spec:
@@ -898,7 +981,8 @@ def check_type_spec(ctx: Context, spec: Any, where: dict[str, str], name: str, r
                 rep.add("C05", "conditional_field_unknown", field=name, detail=f"{key}.field={cond['field']}", **where)
 
 
-def check_fields(ctx: Context, fields: dict[str, Any], where: dict[str, str], results: dict[str, Any], *, prefix: str = "") -> None:
+def check_fields(ctx: Context, fields: dict[str, Any], where: dict[str, str], results: dict[str, Any], *, prefix: str = "",
+                 inherited_common: bool = False) -> None:
     rep = ctx.report
     siblings = {str(k) for k in fields}
     for raw_name in sorted(fields, key=str):
@@ -916,8 +1000,11 @@ def check_fields(ctx: Context, fields: dict[str, Any], where: dict[str, str], re
             default = spec["default"]
             if spec.get("required") is True and default != "none":
                 rep.add("C06", "required_field_has_literal_default", field=name, detail=repr(default), **where)
-            elif default != "none" and spec.get("type") in TYPE_VOCABULARY and not literal_ok(spec, default):
-                rep.add("C06", "literal_default_type_mismatch", field=name, detail=repr(default), **where)
+            elif default != "none" and spec.get("type") in TYPE_VOCABULARY:
+                # A restated common optional field keeps the constraints UCC-230 gives it.
+                inherited = ctx.common_optional.get(str(raw_name)) if inherited_common and not prefix else None
+                if not literal_ok(spec, default, inherited):
+                    rep.add("C06", "literal_default_type_mismatch", field=name, detail=repr(default), **where)
         # C11 provenance
         provenance = spec.get("provenance")
         if provenance == "canon":
@@ -1012,7 +1099,7 @@ def check_definition(ctx: Context, block: Block, owner_unit: str, definition: An
     if not isinstance(args, dict):
         rep.add("C14", "args_not_mapping", **where)
         args = {}
-    check_fields(ctx, args, where, results)
+    check_fields(ctx, args, where, results, inherited_common=True)
     for name in sorted(set(map(str, args)) & ctx.envelope_required):
         rep.add("C08", "envelope_field_restated", field=name, **where)
     for name in sorted(set(map(str, args)) & set(ctx.common_optional)):
@@ -1071,7 +1158,13 @@ def check_definition(ctx: Context, block: Block, owner_unit: str, definition: An
         rep.add("C09", "disabled_reason_outside_closed_set", detail=code, **where)
     if len(set(map(str, errors))) != len(errors) or len(set(map(str, disabled))) != len(disabled):
         rep.add("C09", "duplicate_code", **where)
-    if not definition.get("narrowing_gap_note"):
+    note = definition.get("narrowing_gap_note")
+    note_usable = isinstance(note, str) and bool(note.strip())
+    if not note_usable:
+        # Only a nonblank string honours the exemption; a boolean, number or blank string is
+        # itself a finding, and the minimum error-code check still applies.
+        if "narrowing_gap_note" in definition:
+            rep.add("C09", "narrowing_gap_note_malformed", detail=repr(note), **where)
         required_codes = set(ERROR_NARROWING["always"])
         if kind == "domain_action" or "stale_projection" in disabled:
             required_codes.add("stale_projection")
@@ -1097,6 +1190,20 @@ def check_definition(ctx: Context, block: Block, owner_unit: str, definition: An
         if owner_result == "none":
             if response_kind != "local_projection":
                 rep.add("C10", "owner_result_none_on_owner_operation", **where)
+            else:
+                # DESIGN 4.4 reserves local_projection for route/open or view state without an
+                # owner result, and CV-333 fixes the response kind by the actual owner contract,
+                # never chosen to evade durable dispatch: a catalogued domain_action, or a command
+                # whose owner_request names an owner operation, cannot be a local-only projection.
+                catalogued = {k for k, _ in ctx.catalog_kinds.get(cmd, set())}
+                owner_request = definition.get("owner_request")
+                reasons = []
+                if catalogued == {"domain_action"}:
+                    reasons.append(f"catalog command_kind {sorted(catalogued)[0]}")
+                if owner_request is not None and owner_request != "none":
+                    reasons.append(f"owner_request {owner_request}")
+                if reasons:
+                    rep.add("C10", "local_projection_ineligible", detail="; ".join(reasons), **where)
         else:
             if response_kind == "local_projection":
                 rep.add("C10", "local_projection_with_owner_result", detail=str(owner_result), **where)
@@ -1158,8 +1265,10 @@ def check_blocks(ctx: Context) -> dict[str, list[tuple[str, str]]]:
                     rep.add("C03", "owner_unit_not_command_contract", detail=str(unit.data.get("unit_type")), **base)
                 if unit.data.get("owner_doc") != doc:
                     rep.add("C03", "owner_unit_owner_doc_mismatch", detail=str(unit.data.get("owner_doc")), **base)
-                between = text[unit.end:block.start]
-                if between.strip():
+                # UCC-230 requires the block directly after the owner unit fence: a block that
+                # starts before the owner ends is misplaced even though the slice between them
+                # is empty.
+                if block.start < unit.end or text[unit.end:block.start].strip():
                     rep.add("C03", "block_not_directly_after_owner_unit", detail=f"line {block.line}", **base)
                 tokens = {str(t) for t in as_list(unit.data.get("preserved_exact_tokens"))}
             results = body.get("results") or {}
@@ -1522,6 +1631,7 @@ class Fixture:
     block_extra: dict[str, dict[str, Any]] = field(default_factory=dict)
     raw_block_suffix: dict[str, str] = field(default_factory=dict)
     between_unit_and_block: dict[str, str] = field(default_factory=dict)
+    block_before_unit: dict[str, str] = field(default_factory=dict)
     error_codes: list[str] | None = None
     schema_enum: list[str] | None = None
     catalog_kinds: list[tuple[str, str]] = field(default_factory=lambda: [("cmd.docker.image.tag", "domain_action")])
@@ -1557,8 +1667,14 @@ class Fixture:
             block = fence({"command_payload_definitions": body})
             if uid in self.raw_block_suffix:
                 block = block.replace("\n```\n", "\n" + self.raw_block_suffix[uid] + "\n```\n")
-            docs[doc] += [f"### {uid} - typed payload definitions", "", fence(unit).rstrip("\n"),
-                          self.between_unit_and_block.get(uid, ""), block]
+            if uid in self.block_before_unit:
+                # The definitions block placed before its owner unit fence (the value is the
+                # text between the block and the unit).
+                docs[doc] += [f"### {uid} - typed payload definitions", "", block,
+                              self.block_before_unit[uid], fence(unit).rstrip("\n")]
+            else:
+                docs[doc] += [f"### {uid} - typed payload definitions", "", fence(unit).rstrip("\n"),
+                              self.between_unit_and_block.get(uid, ""), block]
         for doc, parts_ in docs.items():
             out[doc] = "\n".join(parts_)
         out[DECISION_LOG] = "# Decision Log (fixture)\n\n### DL-333 - fixture\n\n" + fence({"plan_unit_id": "DL-333", "unit_type": "decision"})
@@ -1632,6 +1748,10 @@ def build_cases() -> list[tuple[str, Callable[[Fixture], None], int, set[str], s
     def _(fx: Fixture) -> None:
         fx.between_unit_and_block["CRAU-116"] = "Some prose between the unit and its definitions.\n"
 
+    @case("fail C03: definitions block placed before its owner unit fence", 1, {"C03"})
+    def _(fx: Fixture) -> None:
+        fx.block_before_unit["CRAU-116"] = ""
+
     @case("fail C03: ucc_units does not match the catalog coverage", 1, {"C03"})
     def _(fx: Fixture) -> None:
         _defs(fx, "cmd.docker.run")["ucc_units"] = ["UCC-104", "UCC-105"]
@@ -1698,6 +1818,18 @@ def build_cases() -> list[tuple[str, Callable[[Fixture], None], int, set[str], s
         spec["nullable"] = True
         spec["required_when"] = {"field": "baseline", "in": ["safe_point"]}
 
+    @case("fail C05: constraint value minimum is not a number (default none)", 1, {"C05"})
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.docker.image.tag")["args"]["retry_count"] = {
+            "type": "integer", "required": False, "default": "none",
+            "constraints": {"minimum": "oops"}, "provenance": "canon", "source": "fixture"}
+
+    @case("fail C05: constraint value minimum is not a number (literal default must not raise)", 1, {"C05"})
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.docker.image.tag")["args"]["retry_count"] = {
+            "type": "integer", "required": False, "default": 0,
+            "constraints": {"minimum": "oops"}, "provenance": "canon", "source": "fixture"}
+
     @case("fail C06: missing default key", 1, {"C06"})
     def _(fx: Fixture) -> None:
         del _defs(fx, "cmd.docker.image.tag")["args"]["image_ref"]["default"]
@@ -1709,6 +1841,54 @@ def build_cases() -> list[tuple[str, Callable[[Fixture], None], int, set[str], s
     @case("fail C06: enum default not in values", 1, {"C06"})
     def _(fx: Fixture) -> None:
         _defs(fx, "cmd.docker.image.tag")["args"]["mode"]["default"] = "rename"
+
+    @case("fail C06: list default whose items violate the item spec", 1, {"C06"})
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.docker.image.tag")["args"]["extra_refs"] = {
+            "type": "list", "item": {"type": "ref"}, "required": False, "default": [17],
+            "provenance": "canon", "source": "fixture"}
+
+    @case("fail C06: object default missing a required child", 1, {"C06"})
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.docker.image.tag")["args"]["limits"] = {
+            "type": "object", "required": False, "default": {},
+            "fields": {"count": {"type": "integer", "required": True, "default": "none",
+                                 "provenance": "canon", "source": "fixture"}},
+            "provenance": "canon", "source": "fixture"}
+
+    @case("fail C06: id default is the empty string", 1, {"C06"})
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.docker.image.tag")["args"]["image_alias"] = {
+            "type": "id", "required": False, "default": "", "provenance": "canon", "source": "fixture"}
+
+    @case("fail C06: id default contains whitespace", 1, {"C06"})
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.docker.image.tag")["args"]["image_alias"] = {
+            "type": "id", "required": False, "default": "has space", "provenance": "canon", "source": "fixture"}
+
+    @case("fail C06: string default violates its pattern constraint", 1, {"C06"})
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.docker.image.tag")["args"]["slug"] = {
+            "type": "string", "required": False, "default": "123",
+            "constraints": {"pattern": "^[a-z]+$"}, "provenance": "canon", "source": "fixture"}
+
+    @case("fail C06: common idempotency_key default exceeds the UCC-230 maximum 256", 1, {"C06"})
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.docker.image.tag")["args"]["idempotency_key"] = {
+            "type": "string", "required": False, "default": "x" * 300,
+            "provenance": "canon", "source": "fixture"}
+
+    @case("pass: literal defaults that satisfy recursive specs and inherited common constraints", 0, set())
+    def _(fx: Fixture) -> None:
+        args = _defs(fx, "cmd.docker.image.tag")["args"]
+        args["extra_refs"] = {"type": "list", "item": {"type": "ref"}, "required": False,
+                              "default": ["receipt:1"], "provenance": "canon", "source": "fixture"}
+        args["limits"] = {"type": "object", "required": False, "default": {"count": 2},
+                          "fields": {"count": {"type": "integer", "required": True, "default": "none",
+                                               "constraints": {"minimum": 0}, "provenance": "canon", "source": "fixture"}},
+                          "provenance": "canon", "source": "fixture"}
+        args["idempotency_key"] = {"type": "string", "required": False, "default": "x" * 256,
+                                   "provenance": "canon", "source": "fixture"}
 
     @case("fail C07: thread_id missing on a UCC-073 command", 1, {"C07"})
     def _(fx: Fixture) -> None:
@@ -1768,6 +1948,18 @@ def build_cases() -> list[tuple[str, Callable[[Fixture], None], int, set[str], s
         d["error_codes"].remove("stale_projection")
         d["narrowing_gap_note"] = "fixture: owner narrows further"
 
+    @case("fail C09: narrowing_gap_note is a boolean, not a nonblank string", 1, {"C09"})
+    def _(fx: Fixture) -> None:
+        d = _defs(fx, "cmd.docker.run")
+        d["error_codes"].remove("stale_projection")
+        d["narrowing_gap_note"] = True
+
+    @case("fail C09: narrowing_gap_note is a blank string", 1, {"C09"})
+    def _(fx: Fixture) -> None:
+        d = _defs(fx, "cmd.docker.run")
+        d["error_codes"].remove("stale_projection")
+        d["narrowing_gap_note"] = "   "
+
     @case("fail C10: owner_result none on an owner_operation", 1, {"C10"})
     def _(fx: Fixture) -> None:
         _defs(fx, "cmd.docker.run")["result"]["owner_result"] = "none"
@@ -1775,6 +1967,18 @@ def build_cases() -> list[tuple[str, Callable[[Fixture], None], int, set[str], s
     @case("fail C10: local_projection with an owner result", 1, {"C10"})
     def _(fx: Fixture) -> None:
         _defs(fx, "cmd.chat.copy_message")["result"]["owner_result"] = "Plans/Executor_Protocol.md#EP-200"
+
+    @case("fail C10: catalogued domain_action declares local_projection with owner_result none", 1, {"C10"})
+    def _(fx: Fixture) -> None:
+        d = _defs(fx, "cmd.docker.image.tag")
+        d["response_kind"] = "local_projection"
+        d["result"]["owner_result"] = "none"
+
+    @case("fail C10: local_projection with owner_result none but an owner_request owner operation", 1, {"C10"})
+    def _(fx: Fixture) -> None:
+        d = _defs(fx, "cmd.docker.run")
+        d["response_kind"] = "local_projection"
+        d["result"]["owner_result"] = "none"
 
     @case("fail C11: field without provenance", 1, {"C11"})
     def _(fx: Fixture) -> None:
