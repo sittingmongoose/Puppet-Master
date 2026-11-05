@@ -6746,6 +6746,7 @@
     "F3-195",
     "BRS-008",
     "BRS-016",
+    "SP-1365",
     "DL-157",
     "DL-160",
     "ATS-039",
@@ -6796,6 +6797,21 @@
     "PDS-023",
     "PLS-024",
     "SIR-055",
+    "CV-1350",
+    "CV-1351",
+    "CV-1352",
+    "CV-1353",
+    "CV-1354",
+    "CV-1355",
+    "CV-1356",
+    "CV-1357",
+    "CV-1358",
+    "CV-1359",
+    "CV-1360",
+    "CV-1361",
+    "CV-1362",
+    "CV-1363",
+    "CV-1364",
     "CV-367",
     "SP-349",
     "SP-353",
@@ -6807,6 +6823,21 @@
     "UCC-148",
     "C-046",
     "ACD-508",
+    "SP-1350",
+    "SP-1351",
+    "SP-1352",
+    "SP-1353",
+    "SP-1354",
+    "SP-1355",
+    "SP-1356",
+    "SP-1357",
+    "SP-1358",
+    "SP-1359",
+    "SP-1360",
+    "SP-1361",
+    "SP-1362",
+    "SP-1363",
+    "SP-1364",
     "CV-368",
     "SP-351",
     "SMPFS-035",
@@ -6826,6 +6857,15 @@
     "GRS-086",
     "OSI-439",
     "SQR-019",
+    "BSD-1353",
+    "BSD-1354",
+    "BSD-1355",
+    "BSD-1356",
+    "BSD-1358",
+    "BSD-1359",
+    "BSD-1361",
+    "BSD-1362",
+    "BSD-1363",
     "SMPFS-001",
     "SMPFS-144",
     "SP-352",
@@ -6989,6 +7029,8 @@
     "F3-561",
     "SCS-017",
     "BSD-031",
+    "BSD-1360",
+    "BSD-1364",
     "SSYS-042",
     "SSYS-044",
     "ACD-479",
@@ -7015,6 +7057,7 @@
     "JJI-017",
     "JJI-018",
     "BSD-030",
+    "BSD-1357",
     "MA-073",
     "F3-575",
     "0PI-068",
@@ -7058,6 +7101,7 @@
     "F3-556",
     "CV-331",
     "BSD-035",
+    "BSD-1350",
     "BSD-037",
     "ATS-038",
     "MACS-006",
@@ -7083,6 +7127,8 @@
     "F3-541",
     "UCC-163",
     "BSD-036",
+    "BSD-1351",
+    "BSD-1352",
     "SSYS-062",
     "SSYS-065",
     "EP-124",
@@ -7106,6 +7152,7 @@
     "F3-537",
     "F3-542",
     "WM-054",
+    "ATS-1230",
     "MI-044",
     "P-060",
     "PLUG-071",
@@ -15530,6 +15577,81 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "ATS-1230",
+      "to": "BSD-1350"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1230",
+      "to": "BSD-1351"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1230",
+      "to": "BSD-1352"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1230",
+      "to": "BSD-1353"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1230",
+      "to": "BSD-1354"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1230",
+      "to": "BSD-1355"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1230",
+      "to": "BSD-1356"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1230",
+      "to": "BSD-1357"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1230",
+      "to": "BSD-1358"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1230",
+      "to": "BSD-1359"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1230",
+      "to": "BSD-1360"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1230",
+      "to": "BSD-1361"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1230",
+      "to": "BSD-1362"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1230",
+      "to": "BSD-1363"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1230",
+      "to": "BSD-1364"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "BBI-001",
       "to": "FGI-001"
     },
@@ -16942,6 +17064,406 @@
       "edge_type": "depends_on",
       "from": "BSD-037",
       "to": "DL-130"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1350",
+      "to": "BSD-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1350",
+      "to": "BSD-009"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1350",
+      "to": "BSD-031"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1350",
+      "to": "BSD-032"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1350",
+      "to": "CV-1350"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1350",
+      "to": "SP-1350"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1351",
+      "to": "BSD-012"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1351",
+      "to": "BSD-016"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1351",
+      "to": "BSD-033"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1351",
+      "to": "BSD-035"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1351",
+      "to": "CV-1351"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1351",
+      "to": "SP-1351"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1352",
+      "to": "BSD-012"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1352",
+      "to": "BSD-033"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1352",
+      "to": "BSD-035"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1352",
+      "to": "CV-1352"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1352",
+      "to": "SP-1352"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1353",
+      "to": "BSD-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1353",
+      "to": "BSD-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1353",
+      "to": "BSD-014"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1353",
+      "to": "BSD-016"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1353",
+      "to": "BSD-017"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1353",
+      "to": "CV-1353"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1353",
+      "to": "SP-1353"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1354",
+      "to": "BSD-013"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1354",
+      "to": "BSD-014"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1354",
+      "to": "BSD-020"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1354",
+      "to": "CV-1354"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1354",
+      "to": "SP-1354"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1355",
+      "to": "BSD-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1355",
+      "to": "BSD-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1355",
+      "to": "BSD-014"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1355",
+      "to": "CV-1355"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1355",
+      "to": "SP-1355"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1356",
+      "to": "BSD-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1356",
+      "to": "BSD-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1356",
+      "to": "BSD-014"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1356",
+      "to": "CV-1356"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1356",
+      "to": "SP-1356"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1357",
+      "to": "BSD-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1357",
+      "to": "BSD-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1357",
+      "to": "BSD-031"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1357",
+      "to": "CV-1357"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1357",
+      "to": "SP-1357"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1358",
+      "to": "BSD-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1358",
+      "to": "BSD-009"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1358",
+      "to": "CV-1358"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1358",
+      "to": "SP-1358"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1359",
+      "to": "BSD-011"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1359",
+      "to": "BSD-012"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1359",
+      "to": "BSD-014"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1359",
+      "to": "CV-1359"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1359",
+      "to": "SP-1359"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1360",
+      "to": "BSD-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1360",
+      "to": "BSD-017"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1360",
+      "to": "BSD-020"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1360",
+      "to": "BSD-029"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1360",
+      "to": "CV-1360"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1360",
+      "to": "SP-1360"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1361",
+      "to": "BSD-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1361",
+      "to": "BSD-013"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1361",
+      "to": "BSD-014"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1361",
+      "to": "CV-1361"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1361",
+      "to": "SP-1361"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1362",
+      "to": "BSD-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1362",
+      "to": "BSD-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1362",
+      "to": "BSD-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1362",
+      "to": "BSD-016"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1362",
+      "to": "CV-1362"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1362",
+      "to": "SP-1362"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1363",
+      "to": "BSD-010"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1363",
+      "to": "BSD-013"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1363",
+      "to": "BSD-014"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1363",
+      "to": "CV-1363"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1363",
+      "to": "SP-1363"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1364",
+      "to": "BSD-016"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1364",
+      "to": "BSD-017"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1364",
+      "to": "BSD-029"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1364",
+      "to": "CV-1364"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BSD-1364",
+      "to": "SP-1364"
     },
     {
       "edge_type": "depends_on",
@@ -23640,6 +24162,206 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CV-1350",
+      "to": "BSD-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1350",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1350",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1350",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1351",
+      "to": "BSD-012"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1351",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1351",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1351",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1352",
+      "to": "BSD-012"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1352",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1352",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1352",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1353",
+      "to": "BSD-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1353",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1353",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1353",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1354",
+      "to": "BSD-013"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1354",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1354",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1354",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1355",
+      "to": "BSD-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1355",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1355",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1355",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1356",
+      "to": "BSD-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1356",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1356",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1356",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1357",
+      "to": "BSD-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1357",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1357",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1357",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1358",
+      "to": "BSD-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1358",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1358",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1358",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1359",
+      "to": "BSD-011"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1359",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1359",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1359",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CV-136",
       "to": "CV-078"
     },
@@ -23647,6 +24369,106 @@
       "edge_type": "depends_on",
       "from": "CV-136",
       "to": "CV-131"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1360",
+      "to": "BSD-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1360",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1360",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1360",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1361",
+      "to": "BSD-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1361",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1361",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1361",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1362",
+      "to": "BSD-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1362",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1362",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1362",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1363",
+      "to": "BSD-010"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1363",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1363",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1363",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1364",
+      "to": "BSD-016"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1364",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1364",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1364",
+      "to": "CV-366"
     },
     {
       "edge_type": "depends_on",
@@ -77755,6 +78577,256 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-1350",
+      "to": "CV-1350"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1350",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1350",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1350",
+      "to": "SP-318"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1350",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1351",
+      "to": "CV-1351"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1351",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1351",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1351",
+      "to": "SP-318"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1351",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1352",
+      "to": "CV-1352"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1352",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1352",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1352",
+      "to": "SP-318"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1352",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1353",
+      "to": "CV-1353"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1353",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1353",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1353",
+      "to": "SP-318"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1353",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1354",
+      "to": "CV-1354"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1354",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1354",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1354",
+      "to": "SP-318"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1354",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1355",
+      "to": "CV-1355"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1355",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1355",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1355",
+      "to": "SP-318"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1355",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1356",
+      "to": "CV-1356"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1356",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1356",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1356",
+      "to": "SP-318"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1356",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1357",
+      "to": "CV-1357"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1357",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1357",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1357",
+      "to": "SP-318"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1357",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1358",
+      "to": "CV-1358"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1358",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1358",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1358",
+      "to": "SP-318"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1358",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1359",
+      "to": "CV-1359"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1359",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1359",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1359",
+      "to": "SP-318"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1359",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SP-136",
       "to": "PDS-003"
     },
@@ -77772,6 +78844,151 @@
       "edge_type": "depends_on",
       "from": "SP-136",
       "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1360",
+      "to": "CV-1360"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1360",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1360",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1360",
+      "to": "SP-318"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1360",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1361",
+      "to": "CV-1361"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1361",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1361",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1361",
+      "to": "SP-318"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1361",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1362",
+      "to": "CV-1362"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1362",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1362",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1362",
+      "to": "SP-318"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1362",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1363",
+      "to": "CV-1363"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1363",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1363",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1363",
+      "to": "SP-318"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1363",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1364",
+      "to": "CV-1364"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1364",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1364",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1364",
+      "to": "SP-318"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1364",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1365",
+      "to": "BSD-024"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1365",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1365",
+      "to": "SP-318"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1365",
+      "to": "SP-337"
     },
     {
       "edge_type": "depends_on",
@@ -117219,7 +118436,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-04T23:02:55Z",
+  "generated_at_utc": "2026-11-05T05:25:47Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -131332,6 +132549,23 @@
       "unit_type": "acceptance_gate"
     },
     {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-1230",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "ATS-1230 - BSD W3D phase-1 oracle plan",
+        "heading_level": 3,
+        "heading_line": 7239,
+        "line": 7241,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "draft",
+      "unit_type": "validation_contract"
+    },
+    {
       "context_scope": "bitbucket_provider_identity",
       "gui_related": true,
       "owner_doc": "Plans/Bitbucket_Integration.md",
@@ -133234,6 +134468,261 @@
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": true,
+      "owner_doc": "Plans/Back_Seat_Driver.md",
+      "plan_unit_id": "BSD-1350",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "BSD-1350 - bsd.advice_emitted prepared event owner",
+        "heading_level": 3,
+        "heading_line": 2635,
+        "line": 2637,
+        "path": "Plans/Back_Seat_Driver.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Back_Seat_Driver.md",
+      "plan_unit_id": "BSD-1351",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "BSD-1351 - bsd.assignment_paused prepared event owner",
+        "heading_level": 3,
+        "heading_line": 2705,
+        "line": 2707,
+        "path": "Plans/Back_Seat_Driver.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Back_Seat_Driver.md",
+      "plan_unit_id": "BSD-1352",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "BSD-1352 - bsd.assignment_resumed prepared event owner",
+        "heading_level": 3,
+        "heading_line": 2775,
+        "line": 2777,
+        "path": "Plans/Back_Seat_Driver.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Back_Seat_Driver.md",
+      "plan_unit_id": "BSD-1353",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "BSD-1353 - bsd.assignment_started prepared event owner",
+        "heading_level": 3,
+        "heading_line": 2844,
+        "line": 2846,
+        "path": "Plans/Back_Seat_Driver.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Back_Seat_Driver.md",
+      "plan_unit_id": "BSD-1354",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "BSD-1354 - bsd.assignment_stopped prepared event owner",
+        "heading_level": 3,
+        "heading_line": 2915,
+        "line": 2917,
+        "path": "Plans/Back_Seat_Driver.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Back_Seat_Driver.md",
+      "plan_unit_id": "BSD-1355",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "BSD-1355 - bsd.finding_cleared prepared event owner",
+        "heading_level": 3,
+        "heading_line": 2984,
+        "line": 2986,
+        "path": "Plans/Back_Seat_Driver.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Back_Seat_Driver.md",
+      "plan_unit_id": "BSD-1356",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "BSD-1356 - bsd.finding_held prepared event owner",
+        "heading_level": 3,
+        "heading_line": 3053,
+        "line": 3055,
+        "path": "Plans/Back_Seat_Driver.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Back_Seat_Driver.md",
+      "plan_unit_id": "BSD-1357",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "BSD-1357 - bsd.finding_reconfirmed prepared event owner",
+        "heading_level": 3,
+        "heading_line": 3122,
+        "line": 3124,
+        "path": "Plans/Back_Seat_Driver.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Back_Seat_Driver.md",
+      "plan_unit_id": "BSD-1358",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "BSD-1358 - bsd.finding_suppressed prepared event owner",
+        "heading_level": 3,
+        "heading_line": 3191,
+        "line": 3193,
+        "path": "Plans/Back_Seat_Driver.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Back_Seat_Driver.md",
+      "plan_unit_id": "BSD-1359",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "BSD-1359 - bsd.output_quarantined prepared event owner",
+        "heading_level": 3,
+        "heading_line": 3259,
+        "line": 3261,
+        "path": "Plans/Back_Seat_Driver.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Back_Seat_Driver.md",
+      "plan_unit_id": "BSD-1360",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "BSD-1360 - bsd.policy_changed prepared event owner",
+        "heading_level": 3,
+        "heading_line": 3328,
+        "line": 3330,
+        "path": "Plans/Back_Seat_Driver.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Back_Seat_Driver.md",
+      "plan_unit_id": "BSD-1361",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "BSD-1361 - bsd.review_failed prepared event owner",
+        "heading_level": 3,
+        "heading_line": 3398,
+        "line": 3400,
+        "path": "Plans/Back_Seat_Driver.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Back_Seat_Driver.md",
+      "plan_unit_id": "BSD-1362",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "BSD-1362 - bsd.review_started prepared event owner",
+        "heading_level": 3,
+        "heading_line": 3467,
+        "line": 3469,
+        "path": "Plans/Back_Seat_Driver.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Back_Seat_Driver.md",
+      "plan_unit_id": "BSD-1363",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "BSD-1363 - bsd.review_timed_out prepared event owner",
+        "heading_level": 3,
+        "heading_line": 3537,
+        "line": 3539,
+        "path": "Plans/Back_Seat_Driver.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Back_Seat_Driver.md",
+      "plan_unit_id": "BSD-1364",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "BSD-1364 - bsd.workflow_binding_created prepared event owner",
+        "heading_level": 3,
+        "heading_line": 3606,
+        "line": 3608,
+        "path": "Plans/Back_Seat_Driver.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
     },
     {
       "context_scope": "plan_standardization",
@@ -140529,6 +142018,176 @@
       "unit_type": "constraint"
     },
     {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1350",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1350 - bsd.advice_emitted payload and original identity",
+        "heading_level": 3,
+        "heading_line": 24471,
+        "line": 24473,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1351",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1351 - bsd.assignment_paused payload and original identity",
+        "heading_level": 3,
+        "heading_line": 24529,
+        "line": 24531,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1352",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1352 - bsd.assignment_resumed payload and original identity",
+        "heading_level": 3,
+        "heading_line": 24587,
+        "line": 24589,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1353",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1353 - bsd.assignment_started payload and original identity",
+        "heading_level": 3,
+        "heading_line": 24645,
+        "line": 24647,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1354",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1354 - bsd.assignment_stopped payload and original identity",
+        "heading_level": 3,
+        "heading_line": 24703,
+        "line": 24705,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1355",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1355 - bsd.finding_cleared payload and original identity",
+        "heading_level": 3,
+        "heading_line": 24761,
+        "line": 24763,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1356",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1356 - bsd.finding_held payload and original identity",
+        "heading_level": 3,
+        "heading_line": 24819,
+        "line": 24821,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1357",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1357 - bsd.finding_reconfirmed payload and original identity",
+        "heading_level": 3,
+        "heading_line": 24877,
+        "line": 24879,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1358",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1358 - bsd.finding_suppressed payload and original identity",
+        "heading_level": 3,
+        "heading_line": 24935,
+        "line": 24937,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1359",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1359 - bsd.output_quarantined payload and original identity",
+        "heading_level": 3,
+        "heading_line": 24993,
+        "line": 24995,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
       "context_scope": "authevent_provider_owned_types",
       "gui_related": false,
       "owner_doc": "Plans/Contracts_V0.md",
@@ -140544,6 +142203,91 @@
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1360",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1360 - bsd.policy_changed payload and original identity",
+        "heading_level": 3,
+        "heading_line": 25051,
+        "line": 25053,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1361",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1361 - bsd.review_failed payload and original identity",
+        "heading_level": 3,
+        "heading_line": 25109,
+        "line": 25111,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1362",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1362 - bsd.review_started payload and original identity",
+        "heading_level": 3,
+        "heading_line": 25167,
+        "line": 25169,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1363",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1363 - bsd.review_timed_out payload and original identity",
+        "heading_level": 3,
+        "heading_line": 25225,
+        "line": 25227,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1364",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1364 - bsd.workflow_binding_created payload and original identity",
+        "heading_level": 3,
+        "heading_line": 25283,
+        "line": 25285,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
     },
     {
       "context_scope": "setup_health_enum_families",
@@ -224594,6 +226338,176 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1350",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1350 - bsd.advice_emitted candidate Storage custody",
+        "heading_level": 3,
+        "heading_line": 29479,
+        "line": 29481,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1351",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1351 - bsd.assignment_paused candidate Storage custody",
+        "heading_level": 3,
+        "heading_line": 29541,
+        "line": 29543,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1352",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1352 - bsd.assignment_resumed candidate Storage custody",
+        "heading_level": 3,
+        "heading_line": 29603,
+        "line": 29605,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1353",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1353 - bsd.assignment_started candidate Storage custody",
+        "heading_level": 3,
+        "heading_line": 29665,
+        "line": 29667,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1354",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1354 - bsd.assignment_stopped candidate Storage custody",
+        "heading_level": 3,
+        "heading_line": 29727,
+        "line": 29729,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1355",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1355 - bsd.finding_cleared candidate Storage custody",
+        "heading_level": 3,
+        "heading_line": 29789,
+        "line": 29791,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1356",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1356 - bsd.finding_held candidate Storage custody",
+        "heading_level": 3,
+        "heading_line": 29851,
+        "line": 29853,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1357",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1357 - bsd.finding_reconfirmed candidate Storage custody",
+        "heading_level": 3,
+        "heading_line": 29913,
+        "line": 29915,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1358",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1358 - bsd.finding_suppressed candidate Storage custody",
+        "heading_level": 3,
+        "heading_line": 29975,
+        "line": 29977,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1359",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1359 - bsd.output_quarantined candidate Storage custody",
+        "heading_level": 3,
+        "heading_line": 30037,
+        "line": 30039,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
       "context_scope": "storage_batch_177_runtime_terminal_storage",
       "gui_related": false,
       "owner_doc": "Plans/storage-plan.md",
@@ -224609,6 +226523,108 @@
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1360",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1360 - bsd.policy_changed candidate Storage custody",
+        "heading_level": 3,
+        "heading_line": 30099,
+        "line": 30101,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1361",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1361 - bsd.review_failed candidate Storage custody",
+        "heading_level": 3,
+        "heading_line": 30161,
+        "line": 30163,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1362",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1362 - bsd.review_started candidate Storage custody",
+        "heading_level": 3,
+        "heading_line": 30223,
+        "line": 30225,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1363",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1363 - bsd.review_timed_out candidate Storage custody",
+        "heading_level": 3,
+        "heading_line": 30285,
+        "line": 30287,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1364",
+      "reasoning_tier": "high",
+      "risk_class": "advisory_history_identity_custody_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1364 - bsd.workflow_binding_created candidate Storage custody",
+        "heading_level": 3,
+        "heading_line": 30347,
+        "line": 30349,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "draft",
+      "unit_type": "event_contract"
+    },
+    {
+      "context_scope": "event_authority_w3d_source_graph",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1365",
+      "reasoning_tier": "high",
+      "risk_class": "unproved_original_advisor_source_custody",
+      "source_location": {
+        "heading": "SP-1365 - Pending BSD original lifecycle source graph",
+        "heading_level": 3,
+        "heading_line": 30409,
+        "line": 30411,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "draft",
+      "unit_type": "storage_contract"
     },
     {
       "context_scope": "storage_batch_177_runtime_terminal_storage",
@@ -243402,10 +245418,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18750,
+    "depends_on_edge_count": 18984,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21958,
-    "node_count": 7422,
+    "edge_count": 22192,
+    "node_count": 7469,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0

@@ -7234,3 +7234,69 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/UI_Wiring_Rules.md#UIW-052, ContractName:Plans/Test_Capture_and_Motion_Evidence.md#TCME-007, ContractName:Plans/FinalGUISpec.md#F3-668, ContractName:Plans/FinalGUISpec.md#F3-674
+
+
+### ATS-1230 - BSD W3D phase-1 oracle plan
+
+```yaml
+plan_unit_id: ATS-1230
+unit_type: validation_contract
+status: draft
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  Newly authored criterion-12 oracle plan for exactly the fifteen W3D BSD families at proposed 1.0.0, prepared without admission. Plans/bsd_event_oracle_plan.json contains each exact name, its own positive paths and field/predicate-level negative inventory, including every required payload field, exact type/value, source identity/custody, transition, first receipt, storage metadata, 16 KiB value/reference path, retention, replay, checkpoint and withdrawal guard. Every planned negative has one semantic defect and valid unrelated identities/copies/digests/source/post-state. Split compound rules by field/predicate; only identical predicates on the same field at multiple sites form duplicate sets. In phase 2 use the reviewed scripts/pm_guard_isolation.py foundation and prove each site separately, then all duplicate sites together. No lane-local number/timestamp implementation or guard-proof engine is authored. Current integer/digest/physical domains and timestamp profiles come from the reviewed plans/ea-numrule-20261105 foundation; retained old recipes use authenticated original dispatch and cannot select a weaker recipe by assertion. Writer negatives include projector_replay_only; historical positives include valid retained replay-only/original history after live state changes. Malformed/unvisited $ref branches fail eagerly; formatted strings require the shared fail-closed profile, never silent jsonschema format omission. Every reference/identifier has trailing-LF/CR negatives, every exact type has disallowed string boolean/number/null/container cases, and every guard has a positive plus a single-defect negative plan. File existence, schema validation and this inventory are not executed event-oracle, mutation, native or buildability proof. The exact per-family plans adopt SP-278 source/checkpoint guards and SP-286 first-receipt guards. Criterion 12 is PARTIAL for every family until actual phase-2 fixtures/checkers and shared guard-isolation evidence pass Sol and Astra review. No event registry membership or physical family admission is granted.
+gui_related: false
+gui_classification_reason: Defines internal event, identity, Storage custody or validation, without changing presentation.
+depends_on:
+- BSD-1350
+- BSD-1351
+- BSD-1352
+- BSD-1353
+- BSD-1354
+- BSD-1355
+- BSD-1356
+- BSD-1357
+- BSD-1358
+- BSD-1359
+- BSD-1360
+- BSD-1361
+- BSD-1362
+- BSD-1363
+- BSD-1364
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, payload, original-source identity and retry custody are bound.
+- No unregistered append, physical admission or native/runtime success is implied.
+- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- Plans/bsd_event_oracle_plan.json
+risk_class: advisory_history_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3d_phase1
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/bsd_event_payloads.schema.json
+- Plans/bsd_event_storage_contracts.schema.json
+- Plans/bsd_event_storage_candidates.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3D.md
+- Deck-2 item 9.a A (answer record 2026-11-05; DL-450 application pending)
+preserved_exact_tokens:
+- PARTIAL
+- projector_replay_only
+- SP-278
+- SP-286
+- pm_guard_isolation.py
+negative_constraints:
+- Do not append a registry family, admit an event, enable BSD commands or treat static definitions as runtime evidence.
+- Do not define a local number/timestamp implementation or guard-isolation proof engine.
+owner_hints:
+- Plans/Automated_Testing_System.md
+```

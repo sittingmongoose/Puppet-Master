@@ -1,0 +1,246 @@
+{
+  "lane": "W3D",
+  "phase": 1,
+  "branch": "plans/ea-w3-back-seat-driver-20261105",
+  "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+  "counts": {
+    "prepared": 15,
+    "merged": 0,
+    "excluded": 0,
+    "stopped": 0
+  },
+  "rows": [
+    {
+      "name": "bsd.advice_emitted",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "family_revision": "1.0.0",
+      "owner_unit": "BSD-1350",
+      "contract_unit": "CV-1350",
+      "storage_unit": "SP-1350",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "retention_question": null,
+      "criterion_12": "PARTIAL"
+    },
+    {
+      "name": "bsd.assignment_paused",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "family_revision": "1.0.0",
+      "owner_unit": "BSD-1351",
+      "contract_unit": "CV-1351",
+      "storage_unit": "SP-1351",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "retention_question": null,
+      "criterion_12": "PARTIAL"
+    },
+    {
+      "name": "bsd.assignment_resumed",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "family_revision": "1.0.0",
+      "owner_unit": "BSD-1352",
+      "contract_unit": "CV-1352",
+      "storage_unit": "SP-1352",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "retention_question": null,
+      "criterion_12": "PARTIAL"
+    },
+    {
+      "name": "bsd.assignment_started",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "family_revision": "1.0.0",
+      "owner_unit": "BSD-1353",
+      "contract_unit": "CV-1353",
+      "storage_unit": "SP-1353",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "retention_question": null,
+      "criterion_12": "PARTIAL"
+    },
+    {
+      "name": "bsd.assignment_stopped",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "family_revision": "1.0.0",
+      "owner_unit": "BSD-1354",
+      "contract_unit": "CV-1354",
+      "storage_unit": "SP-1354",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "retention_question": null,
+      "criterion_12": "PARTIAL"
+    },
+    {
+      "name": "bsd.finding_cleared",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "family_revision": "1.0.0",
+      "owner_unit": "BSD-1355",
+      "contract_unit": "CV-1355",
+      "storage_unit": "SP-1355",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "retention_question": null,
+      "criterion_12": "PARTIAL"
+    },
+    {
+      "name": "bsd.finding_held",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "family_revision": "1.0.0",
+      "owner_unit": "BSD-1356",
+      "contract_unit": "CV-1356",
+      "storage_unit": "SP-1356",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "retention_question": null,
+      "criterion_12": "PARTIAL"
+    },
+    {
+      "name": "bsd.finding_reconfirmed",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "family_revision": "1.0.0",
+      "owner_unit": "BSD-1357",
+      "contract_unit": "CV-1357",
+      "storage_unit": "SP-1357",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "retention_question": null,
+      "criterion_12": "PARTIAL"
+    },
+    {
+      "name": "bsd.finding_suppressed",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "family_revision": "1.0.0",
+      "owner_unit": "BSD-1358",
+      "contract_unit": "CV-1358",
+      "storage_unit": "SP-1358",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "retention_question": null,
+      "criterion_12": "PARTIAL"
+    },
+    {
+      "name": "bsd.output_quarantined",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "family_revision": "1.0.0",
+      "owner_unit": "BSD-1359",
+      "contract_unit": "CV-1359",
+      "storage_unit": "SP-1359",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "retention_question": null,
+      "criterion_12": "PARTIAL"
+    },
+    {
+      "name": "bsd.policy_changed",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "family_revision": "1.0.0",
+      "owner_unit": "BSD-1360",
+      "contract_unit": "CV-1360",
+      "storage_unit": "SP-1360",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_question": "For bsd.policy_changed, which exact lifetime, count/overflow and deletion rule should apply to the saved project BSDPolicy revision history? Card-1 G18 covers scheduling only; RP-CONFIG-CURRENT covers current configuration values, not this event history. May this history expire, or should it remain until Delete Puppet Master project data?",
+      "criterion_12": "PARTIAL"
+    },
+    {
+      "name": "bsd.review_failed",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "family_revision": "1.0.0",
+      "owner_unit": "BSD-1361",
+      "contract_unit": "CV-1361",
+      "storage_unit": "SP-1361",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "retention_question": null,
+      "criterion_12": "PARTIAL"
+    },
+    {
+      "name": "bsd.review_started",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "family_revision": "1.0.0",
+      "owner_unit": "BSD-1362",
+      "contract_unit": "CV-1362",
+      "storage_unit": "SP-1362",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "retention_question": null,
+      "criterion_12": "PARTIAL"
+    },
+    {
+      "name": "bsd.review_timed_out",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "family_revision": "1.0.0",
+      "owner_unit": "BSD-1363",
+      "contract_unit": "CV-1363",
+      "storage_unit": "SP-1363",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "retention_question": null,
+      "criterion_12": "PARTIAL"
+    },
+    {
+      "name": "bsd.workflow_binding_created",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "family_revision": "1.0.0",
+      "owner_unit": "BSD-1364",
+      "contract_unit": "CV-1364",
+      "storage_unit": "SP-1364",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_question": "For bsd.workflow_binding_created, which exact lifetime, count/overflow and deletion rule should apply to the saved frozen workflow-binding revision history? Card-1 G18 covers scheduling only; RP-CONFIG-CURRENT covers current configuration values, not this event history. May this history expire, or should it remain until Delete Puppet Master project data?",
+      "criterion_12": "PARTIAL"
+    }
+  ]
+}

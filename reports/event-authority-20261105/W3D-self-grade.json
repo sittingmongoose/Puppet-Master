@@ -1,0 +1,3675 @@
+{
+  "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
+  "assessment_id": "EA-W3D-PHASE1-BACK-SEAT-DRIVER-20261105",
+  "assessment_kind": "author_self_grade_phase1_prepared_without_admission",
+  "assessed_tree": {
+    "branch": "plans/ea-w3-back-seat-driver-20261105",
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+    "commit": null,
+    "normative_files_sha256": {
+      "Plans/Back_Seat_Driver.md": "452eb247a94047d1923e424ab6a159ac71960723d3cddc99e7d5c4725c3a200f",
+      "Plans/Contracts_V0.md": "24a2821dffa4a126c734ba57e42135af455961a98786a7b37dea73fe1f86dd3d",
+      "Plans/storage-plan.md": "8183ce68673cf33d98944122abd5393986012d6ca208a83cc75b1c1df7959aff",
+      "Plans/Automated_Testing_System.md": "a2541e80592012943dc8e05b2b233678874b28bf237c064c29aaf61a52f27836",
+      "Plans/bsd_event_payloads.schema.json": "f1965711238d2d194555dc764fb20efd09b5933ee16055c0f0b20e699a9798b3",
+      "Plans/bsd_event_storage_contracts.schema.json": "f3f8cd48f0f148fad525dd458b9eb0cb331142c2f1077bbb20cda05e36341fac",
+      "Plans/bsd_event_storage_candidates.json": "2ce1fa174ba170ffecdf8a1eed49e489d11de8634b2bef14d09714771c2b5205",
+      "Plans/bsd_event_oracle_plan.json": "f6bf400479277890f6b7e8d97ada8ec6c0412d8ea06102fae7a8e377ad1af28e"
+    },
+    "note": "The final handoff commit may add only report/assessment evidence after this assessed code commit; normative hashes bind the exact final Plans text."
+  },
+  "rubric": {
+    "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
+    "criteria": [
+      "membership_version",
+      "owner_doc",
+      "producer",
+      "closed_payload_schema",
+      "scope_identity",
+      "replay_idempotency",
+      "retention",
+      "redaction_custody",
+      "transitions",
+      "consumers_checkpoints",
+      "compatibility_withdrawal",
+      "positive_negative_oracles"
+    ]
+  },
+  "status_meaning": {
+    "PASS": "Only a directly established phase-1 document/schema structural fact; no behavioral/native claim.",
+    "PARTIAL": "Complete draft binding/plan is present, but behavioral negatives/shared-foundation/isolation proof have not run, or an explicit product retention cell is open.",
+    "ABSENT": "No event registry membership; this is required by the task."
+  },
+  "registry": {
+    "path": "Plans/event_family_registry.json",
+    "sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+    "membership": "ABSENT_FOR_ALL_15",
+    "edited": false
+  },
+  "native_execution": "NOT_RUN",
+  "oracle_execution": "NOT_RUN_PHASE1_PLAN_ONLY",
+  "rows": [
+    {
+      "event_type": "bsd.advice_emitted",
+      "family_id": "event-family-bsd-advice_emitted",
+      "family_revision": "1.0.0",
+      "disposition": "PREPARED_WITHOUT_ADMISSION",
+      "current_owner_units": [
+        "BSD-1350",
+        "CV-1350",
+        "SP-1350",
+        "SP-1365",
+        "ATS-1230"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Registry membership deliberately remains absent; no admission is authorized.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1350",
+              "line_start": 2644,
+              "line_end": 2644,
+              "quote": "1 membership/version: registry membership remains ABSENT. Proposed 1.0.0 payload is Plans/bsd_event_payloads.schema.json#/$defs/advice_emitted; SP-318 and the central registry stil"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current exact-family semantic, payload and Storage owner routes resolve.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1350",
+              "line_start": 2643,
+              "line_end": 2643,
+              "quote": "2 item 9.a A. This exact name is required by section 19/BSD-020 and has no existing alias/admitted event contract in the per-name search recorded in reports/event-authority-2026110"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "producer": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact producer, source graph, commit/append/barrier receipt/result order authored; original-custody crash cases await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1350",
+              "line_start": 2646,
+              "line_end": 2646,
+              "quote": "3 producer: BackSeatDriverService::deliver_advice owns this transition. The actual command/dispatch/provider/deadline source must be independently authenticated. Admission checks e"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Individually closed 1.0.0 payload definition and all referenced schemas resolve under static structural validation.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1350",
+              "line_start": 2647,
+              "line_end": 2647,
+              "quote": "4 payload: independently closed schema Plans/bsd_event_payloads.schema.json#/$defs/advice_emitted, ref-only source bodies, exact tags, no raw protected content."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "scope_identity": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact Project/source joins and string identity/finding-operand recipes authored; shared numeric/profile and original-source adversarial fixtures await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1350",
+              "line_start": 2648,
+              "line_end": 2648,
+              "quote": "5 scope/identity: project_only and exact original source/assignment/binding/run/epoch/generation/actor/account joins are defined independently for this event in CV-1350. Never borr"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "replay_idempotency": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact same/different retry, authoritative dedupe and no-effect replay rules authored; lost-ack/custody negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1350",
+              "line_start": 2649,
+              "line_end": 2649,
+              "quote": "6 replay/idempotency: same original identity and semantic bytes returns exactly the original result; a different semantic digest conflicts, missing tail-current authoritative dedup"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "The real assignment/run supports a proposed RP-RUNTIME-365D binding with explicit anchor/caps/holds; boundary/hold/deletion negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1350",
+              "line_start": 2646,
+              "line_end": 2646,
+              "quote": "7 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/control transition and recovery result depend on the original receipt; no primar"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "redaction_custody": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Ref-only event body, original source/receipt/pack custody and coherent restore/access/deletion rules authored; path-by-path custody cases await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1350",
+              "line_start": 2644,
+              "line_end": 2644,
+              "quote": "8 and the central registry still refuse writers."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "transitions": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "This family has its own trigger and owner transition predicates; their positive/negative fixtures await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1350",
+              "line_start": 2646,
+              "line_end": 2646,
+              "quote": "9 by name including full-value stored v2 original resolution and SP-336/SP-347 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/con"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "consumers_checkpoints": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact reader/projector/operating consumer, pending value shapes, SP-278 nine-field token and atomic CAS/range rules authored; source/checkpoint mismatch proof awaits phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1350",
+              "line_start": 2653,
+              "line_end": 2653,
+              "quote": "10 consumers/checkpoints: projector.bsd.advice_emitted@1.0.0, reader.bsd.advice_emitted@1.0.0 and operating consumer AssistantChat::bsd_advisor_note adopt SP-278 by name via SP-135"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "compatibility_withdrawal": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Authenticated original historical reading and writer/reader withdrawal fences authored; retained-recipe and withdrawal negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1350",
+              "line_start": 2654,
+              "line_end": 2654,
+              "quote": "11 compatibility/withdrawal: There is no earlier admitted BSD event version to migrate or synthesize. The existing completed-review bsd_runtime_record is not this event and never e"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Positive/negative oracle plan only. No event oracle code or shared guard-isolation proof executed in phase 1.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1350",
+              "line_start": 2655,
+              "line_end": 2655,
+              "quote": "12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared nu"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        }
+      },
+      "remaining_gaps": [
+        "PHASE2: reviewed NUMRULE/date-time foundation adoption",
+        "PHASE2: executable one-defect oracle cases and shared guard-isolation evidence",
+        "Sol and Astra review before any later admission",
+        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled"
+      ],
+      "static_checks_seen": [
+        "structural-check-final",
+        "shard-generate",
+        "index-generate",
+        "structural-check-source-final",
+        "shard-generate-final",
+        "index-generate-final",
+        "shard-check",
+        "index-validate",
+        "shared-runtime-selftest",
+        "baseline-three-failures-final",
+        "structural-check-handoff",
+        "index-validate-final",
+        "git-diff-check"
+      ],
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "bsd.assignment_paused",
+      "family_id": "event-family-bsd-assignment_paused",
+      "family_revision": "1.0.0",
+      "disposition": "PREPARED_WITHOUT_ADMISSION",
+      "current_owner_units": [
+        "BSD-1351",
+        "CV-1351",
+        "SP-1351",
+        "SP-1365",
+        "ATS-1230"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Registry membership deliberately remains absent; no admission is authorized.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1351",
+              "line_start": 2714,
+              "line_end": 2714,
+              "quote": "1 membership/version: registry membership remains ABSENT. Proposed 1.0.0 payload is Plans/bsd_event_payloads.schema.json#/$defs/assignment_paused; SP-318 and the central registry s"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current exact-family semantic, payload and Storage owner routes resolve.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1351",
+              "line_start": 2713,
+              "line_end": 2713,
+              "quote": "2 item 9.a A. This exact name is required by section 19/BSD-020 and has no existing alias/admitted event contract in the per-name search recorded in reports/event-authority-2026110"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "producer": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact producer, source graph, commit/append/barrier receipt/result order authored; original-custody crash cases await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1351",
+              "line_start": 2716,
+              "line_end": 2716,
+              "quote": "3 producer: BackSeatDriverService::commit_assignment_pause owns this transition. The actual command/dispatch/provider/deadline source must be independently authenticated. Admission"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Individually closed 1.0.0 payload definition and all referenced schemas resolve under static structural validation.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1351",
+              "line_start": 2717,
+              "line_end": 2717,
+              "quote": "4 payload: independently closed schema Plans/bsd_event_payloads.schema.json#/$defs/assignment_paused, ref-only source bodies, exact tags, no raw protected content."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "scope_identity": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact Project/source joins and string identity/finding-operand recipes authored; shared numeric/profile and original-source adversarial fixtures await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1351",
+              "line_start": 2715,
+              "line_end": 2715,
+              "quote": "5 rather than sibling definitions."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "replay_idempotency": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact same/different retry, authoritative dedupe and no-effect replay rules authored; lost-ack/custody negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1351",
+              "line_start": 2719,
+              "line_end": 2719,
+              "quote": "6 replay/idempotency: same original identity and semantic bytes returns exactly the original result; a different semantic digest conflicts, missing tail-current authoritative dedup"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "The real assignment/run supports a proposed RP-RUNTIME-365D binding with explicit anchor/caps/holds; boundary/hold/deletion negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1351",
+              "line_start": 2716,
+              "line_end": 2716,
+              "quote": "7 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/control transition and recovery result depend on the original receipt; no primar"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "redaction_custody": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Ref-only event body, original source/receipt/pack custody and coherent restore/access/deletion rules authored; path-by-path custody cases await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1351",
+              "line_start": 2714,
+              "line_end": 2714,
+              "quote": "8 and the central registry still refuse writers."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "transitions": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "This family has its own trigger and owner transition predicates; their positive/negative fixtures await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1351",
+              "line_start": 2716,
+              "line_end": 2716,
+              "quote": "9 by name including full-value stored v2 original resolution and SP-336/SP-347 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/con"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "consumers_checkpoints": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact reader/projector/operating consumer, pending value shapes, SP-278 nine-field token and atomic CAS/range rules authored; source/checkpoint mismatch proof awaits phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1351",
+              "line_start": 2723,
+              "line_end": 2723,
+              "quote": "10 consumers/checkpoints: projector.bsd.assignment_paused@1.0.0, reader.bsd.assignment_paused@1.0.0 and operating consumer AssistantContext::bsd_pause_projection adopt SP-278 by na"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "compatibility_withdrawal": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Authenticated original historical reading and writer/reader withdrawal fences authored; retained-recipe and withdrawal negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1351",
+              "line_start": 2724,
+              "line_end": 2724,
+              "quote": "11 compatibility/withdrawal: There is no earlier admitted BSD event version to migrate or synthesize. The existing completed-review bsd_runtime_record is not this event and never e"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Positive/negative oracle plan only. No event oracle code or shared guard-isolation proof executed in phase 1.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1351",
+              "line_start": 2725,
+              "line_end": 2725,
+              "quote": "12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared nu"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        }
+      },
+      "remaining_gaps": [
+        "PHASE2: reviewed NUMRULE/date-time foundation adoption",
+        "PHASE2: executable one-defect oracle cases and shared guard-isolation evidence",
+        "Sol and Astra review before any later admission",
+        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled"
+      ],
+      "static_checks_seen": [
+        "structural-check-final",
+        "shard-generate",
+        "index-generate",
+        "structural-check-source-final",
+        "shard-generate-final",
+        "index-generate-final",
+        "shard-check",
+        "index-validate",
+        "shared-runtime-selftest",
+        "baseline-three-failures-final",
+        "structural-check-handoff",
+        "index-validate-final",
+        "git-diff-check"
+      ],
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "bsd.assignment_resumed",
+      "family_id": "event-family-bsd-assignment_resumed",
+      "family_revision": "1.0.0",
+      "disposition": "PREPARED_WITHOUT_ADMISSION",
+      "current_owner_units": [
+        "BSD-1352",
+        "CV-1352",
+        "SP-1352",
+        "SP-1365",
+        "ATS-1230"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Registry membership deliberately remains absent; no admission is authorized.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1352",
+              "line_start": 2784,
+              "line_end": 2784,
+              "quote": "1 membership/version: registry membership remains ABSENT. Proposed 1.0.0 payload is Plans/bsd_event_payloads.schema.json#/$defs/assignment_resumed; SP-318 and the central registry "
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current exact-family semantic, payload and Storage owner routes resolve.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1352",
+              "line_start": 2783,
+              "line_end": 2783,
+              "quote": "2 item 9.a A. This exact name is required by section 19/BSD-020 and has no existing alias/admitted event contract in the per-name search recorded in reports/event-authority-2026110"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "producer": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact producer, source graph, commit/append/barrier receipt/result order authored; original-custody crash cases await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1352",
+              "line_start": 2786,
+              "line_end": 2786,
+              "quote": "3 producer: BackSeatDriverService::commit_assignment_resume owns this transition. The actual command/dispatch/provider/deadline source must be independently authenticated. Admissio"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Individually closed 1.0.0 payload definition and all referenced schemas resolve under static structural validation.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1352",
+              "line_start": 2787,
+              "line_end": 2787,
+              "quote": "4 payload: independently closed schema Plans/bsd_event_payloads.schema.json#/$defs/assignment_resumed, ref-only source bodies, exact tags, no raw protected content."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "scope_identity": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact Project/source joins and string identity/finding-operand recipes authored; shared numeric/profile and original-source adversarial fixtures await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1352",
+              "line_start": 2785,
+              "line_end": 2785,
+              "quote": "5 rather than sibling definitions."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "replay_idempotency": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact same/different retry, authoritative dedupe and no-effect replay rules authored; lost-ack/custody negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1352",
+              "line_start": 2789,
+              "line_end": 2789,
+              "quote": "6 replay/idempotency: same original identity and semantic bytes returns exactly the original result; a different semantic digest conflicts, missing tail-current authoritative dedup"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "The real assignment/run supports a proposed RP-RUNTIME-365D binding with explicit anchor/caps/holds; boundary/hold/deletion negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1352",
+              "line_start": 2786,
+              "line_end": 2786,
+              "quote": "7 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/control transition and recovery result depend on the original receipt; no primar"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "redaction_custody": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Ref-only event body, original source/receipt/pack custody and coherent restore/access/deletion rules authored; path-by-path custody cases await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1352",
+              "line_start": 2784,
+              "line_end": 2784,
+              "quote": "8 and the central registry still refuse writers."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "transitions": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "This family has its own trigger and owner transition predicates; their positive/negative fixtures await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1352",
+              "line_start": 2786,
+              "line_end": 2786,
+              "quote": "9 by name including full-value stored v2 original resolution and SP-336/SP-347 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/con"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "consumers_checkpoints": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact reader/projector/operating consumer, pending value shapes, SP-278 nine-field token and atomic CAS/range rules authored; source/checkpoint mismatch proof awaits phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1352",
+              "line_start": 2793,
+              "line_end": 2793,
+              "quote": "10 consumers/checkpoints: projector.bsd.assignment_resumed@1.0.0, reader.bsd.assignment_resumed@1.0.0 and operating consumer AssistantContext::bsd_resume_projection adopt SP-278 by"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "compatibility_withdrawal": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Authenticated original historical reading and writer/reader withdrawal fences authored; retained-recipe and withdrawal negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1352",
+              "line_start": 2794,
+              "line_end": 2794,
+              "quote": "11 compatibility/withdrawal: There is no earlier admitted BSD event version to migrate or synthesize. The existing completed-review bsd_runtime_record is not this event and never e"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Positive/negative oracle plan only. No event oracle code or shared guard-isolation proof executed in phase 1.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1352",
+              "line_start": 2795,
+              "line_end": 2795,
+              "quote": "12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared nu"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        }
+      },
+      "remaining_gaps": [
+        "PHASE2: reviewed NUMRULE/date-time foundation adoption",
+        "PHASE2: executable one-defect oracle cases and shared guard-isolation evidence",
+        "Sol and Astra review before any later admission",
+        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled"
+      ],
+      "static_checks_seen": [
+        "structural-check-final",
+        "shard-generate",
+        "index-generate",
+        "structural-check-source-final",
+        "shard-generate-final",
+        "index-generate-final",
+        "shard-check",
+        "index-validate",
+        "shared-runtime-selftest",
+        "baseline-three-failures-final",
+        "structural-check-handoff",
+        "index-validate-final",
+        "git-diff-check"
+      ],
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "bsd.assignment_started",
+      "family_id": "event-family-bsd-assignment_started",
+      "family_revision": "1.0.0",
+      "disposition": "PREPARED_WITHOUT_ADMISSION",
+      "current_owner_units": [
+        "BSD-1353",
+        "CV-1353",
+        "SP-1353",
+        "SP-1365",
+        "ATS-1230"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Registry membership deliberately remains absent; no admission is authorized.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1353",
+              "line_start": 2853,
+              "line_end": 2853,
+              "quote": "1 membership/version: registry membership remains ABSENT. Proposed 1.0.0 payload is Plans/bsd_event_payloads.schema.json#/$defs/assignment_started; SP-318 and the central registry "
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current exact-family semantic, payload and Storage owner routes resolve.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1353",
+              "line_start": 2852,
+              "line_end": 2852,
+              "quote": "2 item 9.a A. This exact name is required by section 19/BSD-020 and has no existing alias/admitted event contract in the per-name search recorded in reports/event-authority-2026110"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "producer": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact producer, source graph, commit/append/barrier receipt/result order authored; original-custody crash cases await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1353",
+              "line_start": 2854,
+              "line_end": 2854,
+              "quote": "3 binds the closed payload/identity and SP-1353 binds proposed Storage values. Reuse BSD-002, BSD-004, BSD-014, BSD-016, BSD-017 rather than sibling definitions."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Individually closed 1.0.0 payload definition and all referenced schemas resolve under static structural validation.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1353",
+              "line_start": 2856,
+              "line_end": 2856,
+              "quote": "4 payload: independently closed schema Plans/bsd_event_payloads.schema.json#/$defs/assignment_started, ref-only source bodies, exact tags, no raw protected content."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "scope_identity": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact Project/source joins and string identity/finding-operand recipes authored; shared numeric/profile and original-source adversarial fixtures await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1353",
+              "line_start": 2857,
+              "line_end": 2857,
+              "quote": "5 scope/identity: project_only and exact original source/assignment/binding/run/epoch/generation/actor/account joins are defined independently for this event in CV-1353. Never borr"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "replay_idempotency": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact same/different retry, authoritative dedupe and no-effect replay rules authored; lost-ack/custody negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1353",
+              "line_start": 2858,
+              "line_end": 2858,
+              "quote": "6 replay/idempotency: same original identity and semantic bytes returns exactly the original result; a different semantic digest conflicts, missing tail-current authoritative dedup"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "The real assignment/run supports a proposed RP-RUNTIME-365D binding with explicit anchor/caps/holds; boundary/hold/deletion negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1353",
+              "line_start": 2854,
+              "line_end": 2854,
+              "quote": "7 rather than sibling definitions."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "redaction_custody": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Ref-only event body, original source/receipt/pack custody and coherent restore/access/deletion rules authored; path-by-path custody cases await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1353",
+              "line_start": 2853,
+              "line_end": 2853,
+              "quote": "8 and the central registry still refuse writers."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "transitions": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "This family has its own trigger and owner transition predicates; their positive/negative fixtures await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1353",
+              "line_start": 2855,
+              "line_end": 2855,
+              "quote": "9 by name including full-value stored v2 original resolution and SP-336/SP-347 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/con"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "consumers_checkpoints": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact reader/projector/operating consumer, pending value shapes, SP-278 nine-field token and atomic CAS/range rules authored; source/checkpoint mismatch proof awaits phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1353",
+              "line_start": 2862,
+              "line_end": 2862,
+              "quote": "10 consumers/checkpoints: projector.bsd.assignment_started@1.0.0, reader.bsd.assignment_started@1.0.0 and operating consumer AssistantContext::bsd_assignment_projection adopt SP-27"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "compatibility_withdrawal": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Authenticated original historical reading and writer/reader withdrawal fences authored; retained-recipe and withdrawal negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1353",
+              "line_start": 2863,
+              "line_end": 2863,
+              "quote": "11 compatibility/withdrawal: There is no earlier admitted BSD event version to migrate or synthesize. The existing completed-review bsd_runtime_record is not this event and never e"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Positive/negative oracle plan only. No event oracle code or shared guard-isolation proof executed in phase 1.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1353",
+              "line_start": 2864,
+              "line_end": 2864,
+              "quote": "12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared nu"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        }
+      },
+      "remaining_gaps": [
+        "PHASE2: reviewed NUMRULE/date-time foundation adoption",
+        "PHASE2: executable one-defect oracle cases and shared guard-isolation evidence",
+        "Sol and Astra review before any later admission",
+        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled"
+      ],
+      "static_checks_seen": [
+        "structural-check-final",
+        "shard-generate",
+        "index-generate",
+        "structural-check-source-final",
+        "shard-generate-final",
+        "index-generate-final",
+        "shard-check",
+        "index-validate",
+        "shared-runtime-selftest",
+        "baseline-three-failures-final",
+        "structural-check-handoff",
+        "index-validate-final",
+        "git-diff-check"
+      ],
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "bsd.assignment_stopped",
+      "family_id": "event-family-bsd-assignment_stopped",
+      "family_revision": "1.0.0",
+      "disposition": "PREPARED_WITHOUT_ADMISSION",
+      "current_owner_units": [
+        "BSD-1354",
+        "CV-1354",
+        "SP-1354",
+        "SP-1365",
+        "ATS-1230"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Registry membership deliberately remains absent; no admission is authorized.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1354",
+              "line_start": 2924,
+              "line_end": 2924,
+              "quote": "1 membership/version: registry membership remains ABSENT. Proposed 1.0.0 payload is Plans/bsd_event_payloads.schema.json#/$defs/assignment_stopped; SP-318 and the central registry "
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current exact-family semantic, payload and Storage owner routes resolve.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1354",
+              "line_start": 2923,
+              "line_end": 2923,
+              "quote": "2 item 9.a A. This exact name is required by section 19/BSD-020 and has no existing alias/admitted event contract in the per-name search recorded in reports/event-authority-2026110"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "producer": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact producer, source graph, commit/append/barrier receipt/result order authored; original-custody crash cases await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1354",
+              "line_start": 2926,
+              "line_end": 2926,
+              "quote": "3 producer: BackSeatDriverService::commit_assignment_stop owns this transition. The actual command/dispatch/provider/deadline source must be independently authenticated. Admission "
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Individually closed 1.0.0 payload definition and all referenced schemas resolve under static structural validation.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1354",
+              "line_start": 2925,
+              "line_end": 2925,
+              "quote": "4 binds the closed payload/identity and SP-1354 binds proposed Storage values. Reuse BSD-013, BSD-014, BSD-020 rather than sibling definitions."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "scope_identity": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact Project/source joins and string identity/finding-operand recipes authored; shared numeric/profile and original-source adversarial fixtures await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1354",
+              "line_start": 2928,
+              "line_end": 2928,
+              "quote": "5 scope/identity: project_only and exact original source/assignment/binding/run/epoch/generation/actor/account joins are defined independently for this event in CV-1354. Never borr"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "replay_idempotency": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact same/different retry, authoritative dedupe and no-effect replay rules authored; lost-ack/custody negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1354",
+              "line_start": 2929,
+              "line_end": 2929,
+              "quote": "6 replay/idempotency: same original identity and semantic bytes returns exactly the original result; a different semantic digest conflicts, missing tail-current authoritative dedup"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "The real assignment/run supports a proposed RP-RUNTIME-365D binding with explicit anchor/caps/holds; boundary/hold/deletion negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1354",
+              "line_start": 2926,
+              "line_end": 2926,
+              "quote": "7 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/control transition and recovery result depend on the original receipt; no primar"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "redaction_custody": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Ref-only event body, original source/receipt/pack custody and coherent restore/access/deletion rules authored; path-by-path custody cases await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1354",
+              "line_start": 2924,
+              "line_end": 2924,
+              "quote": "8 and the central registry still refuse writers."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "transitions": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "This family has its own trigger and owner transition predicates; their positive/negative fixtures await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1354",
+              "line_start": 2926,
+              "line_end": 2926,
+              "quote": "9 by name including full-value stored v2 original resolution and SP-336/SP-347 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/con"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "consumers_checkpoints": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact reader/projector/operating consumer, pending value shapes, SP-278 nine-field token and atomic CAS/range rules authored; source/checkpoint mismatch proof awaits phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1354",
+              "line_start": 2933,
+              "line_end": 2933,
+              "quote": "10 consumers/checkpoints: projector.bsd.assignment_stopped@1.0.0, reader.bsd.assignment_stopped@1.0.0 and operating consumer AssistantContext::bsd_stopped_projection adopt SP-278 b"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "compatibility_withdrawal": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Authenticated original historical reading and writer/reader withdrawal fences authored; retained-recipe and withdrawal negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1354",
+              "line_start": 2934,
+              "line_end": 2934,
+              "quote": "11 compatibility/withdrawal: There is no earlier admitted BSD event version to migrate or synthesize. The existing completed-review bsd_runtime_record is not this event and never e"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Positive/negative oracle plan only. No event oracle code or shared guard-isolation proof executed in phase 1.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1354",
+              "line_start": 2935,
+              "line_end": 2935,
+              "quote": "12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared nu"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        }
+      },
+      "remaining_gaps": [
+        "PHASE2: reviewed NUMRULE/date-time foundation adoption",
+        "PHASE2: executable one-defect oracle cases and shared guard-isolation evidence",
+        "Sol and Astra review before any later admission",
+        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled"
+      ],
+      "static_checks_seen": [
+        "structural-check-final",
+        "shard-generate",
+        "index-generate",
+        "structural-check-source-final",
+        "shard-generate-final",
+        "index-generate-final",
+        "shard-check",
+        "index-validate",
+        "shared-runtime-selftest",
+        "baseline-three-failures-final",
+        "structural-check-handoff",
+        "index-validate-final",
+        "git-diff-check"
+      ],
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "bsd.finding_cleared",
+      "family_id": "event-family-bsd-finding_cleared",
+      "family_revision": "1.0.0",
+      "disposition": "PREPARED_WITHOUT_ADMISSION",
+      "current_owner_units": [
+        "BSD-1355",
+        "CV-1355",
+        "SP-1355",
+        "SP-1365",
+        "ATS-1230"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Registry membership deliberately remains absent; no admission is authorized.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1355",
+              "line_start": 2993,
+              "line_end": 2993,
+              "quote": "1 membership/version: registry membership remains ABSENT. Proposed 1.0.0 payload is Plans/bsd_event_payloads.schema.json#/$defs/finding_cleared; SP-318 and the central registry sti"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current exact-family semantic, payload and Storage owner routes resolve.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1355",
+              "line_start": 2992,
+              "line_end": 2992,
+              "quote": "2 item 9.a A. This exact name is required by section 19/BSD-020 and has no existing alias/admitted event contract in the per-name search recorded in reports/event-authority-2026110"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "producer": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact producer, source graph, commit/append/barrier receipt/result order authored; original-custody crash cases await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1355",
+              "line_start": 2995,
+              "line_end": 2995,
+              "quote": "3 producer: BackSeatDriverService::commit_finding_clear owns this transition. The actual command/dispatch/provider/deadline source must be independently authenticated. Admission ch"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Individually closed 1.0.0 payload definition and all referenced schemas resolve under static structural validation.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1355",
+              "line_start": 2994,
+              "line_end": 2994,
+              "quote": "4 rather than sibling definitions."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "scope_identity": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact Project/source joins and string identity/finding-operand recipes authored; shared numeric/profile and original-source adversarial fixtures await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1355",
+              "line_start": 2994,
+              "line_end": 2994,
+              "quote": "5 binds the closed payload/identity and SP-1355 binds proposed Storage values. Reuse BSD-006, BSD-008, BSD-014 rather than sibling definitions."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "replay_idempotency": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact same/different retry, authoritative dedupe and no-effect replay rules authored; lost-ack/custody negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1355",
+              "line_start": 2998,
+              "line_end": 2998,
+              "quote": "6 replay/idempotency: same original identity and semantic bytes returns exactly the original result; a different semantic digest conflicts, missing tail-current authoritative dedup"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "The real assignment/run supports a proposed RP-RUNTIME-365D binding with explicit anchor/caps/holds; boundary/hold/deletion negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1355",
+              "line_start": 2995,
+              "line_end": 2995,
+              "quote": "7 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/control transition and recovery result depend on the original receipt; no primar"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "redaction_custody": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Ref-only event body, original source/receipt/pack custody and coherent restore/access/deletion rules authored; path-by-path custody cases await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1355",
+              "line_start": 2993,
+              "line_end": 2993,
+              "quote": "8 and the central registry still refuse writers."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "transitions": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "This family has its own trigger and owner transition predicates; their positive/negative fixtures await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1355",
+              "line_start": 2995,
+              "line_end": 2995,
+              "quote": "9 by name including full-value stored v2 original resolution and SP-336/SP-347 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/con"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "consumers_checkpoints": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact reader/projector/operating consumer, pending value shapes, SP-278 nine-field token and atomic CAS/range rules authored; source/checkpoint mismatch proof awaits phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1355",
+              "line_start": 3002,
+              "line_end": 3002,
+              "quote": "10 consumers/checkpoints: projector.bsd.finding_cleared@1.0.0, reader.bsd.finding_cleared@1.0.0 and operating consumer AssistantContext::bsd_finding_projection adopt SP-278 by name"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "compatibility_withdrawal": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Authenticated original historical reading and writer/reader withdrawal fences authored; retained-recipe and withdrawal negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1355",
+              "line_start": 3003,
+              "line_end": 3003,
+              "quote": "11 compatibility/withdrawal: There is no earlier admitted BSD event version to migrate or synthesize. The existing completed-review bsd_runtime_record is not this event and never e"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Positive/negative oracle plan only. No event oracle code or shared guard-isolation proof executed in phase 1.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1355",
+              "line_start": 3004,
+              "line_end": 3004,
+              "quote": "12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared nu"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        }
+      },
+      "remaining_gaps": [
+        "PHASE2: reviewed NUMRULE/date-time foundation adoption",
+        "PHASE2: executable one-defect oracle cases and shared guard-isolation evidence",
+        "Sol and Astra review before any later admission",
+        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled"
+      ],
+      "static_checks_seen": [
+        "structural-check-final",
+        "shard-generate",
+        "index-generate",
+        "structural-check-source-final",
+        "shard-generate-final",
+        "index-generate-final",
+        "shard-check",
+        "index-validate",
+        "shared-runtime-selftest",
+        "baseline-three-failures-final",
+        "structural-check-handoff",
+        "index-validate-final",
+        "git-diff-check"
+      ],
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "bsd.finding_held",
+      "family_id": "event-family-bsd-finding_held",
+      "family_revision": "1.0.0",
+      "disposition": "PREPARED_WITHOUT_ADMISSION",
+      "current_owner_units": [
+        "BSD-1356",
+        "CV-1356",
+        "SP-1356",
+        "SP-1365",
+        "ATS-1230"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Registry membership deliberately remains absent; no admission is authorized.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1356",
+              "line_start": 3062,
+              "line_end": 3062,
+              "quote": "1 membership/version: registry membership remains ABSENT. Proposed 1.0.0 payload is Plans/bsd_event_payloads.schema.json#/$defs/finding_held; SP-318 and the central registry still "
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current exact-family semantic, payload and Storage owner routes resolve.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1356",
+              "line_start": 3061,
+              "line_end": 3061,
+              "quote": "2 item 9.a A. This exact name is required by section 19/BSD-020 and has no existing alias/admitted event contract in the per-name search recorded in reports/event-authority-2026110"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "producer": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact producer, source graph, commit/append/barrier receipt/result order authored; original-custody crash cases await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1356",
+              "line_start": 3064,
+              "line_end": 3064,
+              "quote": "3 producer: BackSeatDriverService::commit_finding_hold owns this transition. The actual command/dispatch/provider/deadline source must be independently authenticated. Admission che"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Individually closed 1.0.0 payload definition and all referenced schemas resolve under static structural validation.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1356",
+              "line_start": 3063,
+              "line_end": 3063,
+              "quote": "4 rather than sibling definitions."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "scope_identity": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact Project/source joins and string identity/finding-operand recipes authored; shared numeric/profile and original-source adversarial fixtures await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1356",
+              "line_start": 3066,
+              "line_end": 3066,
+              "quote": "5 scope/identity: project_only and exact original source/assignment/binding/run/epoch/generation/actor/account joins are defined independently for this event in CV-1356. Never borr"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "replay_idempotency": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact same/different retry, authoritative dedupe and no-effect replay rules authored; lost-ack/custody negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1356",
+              "line_start": 3063,
+              "line_end": 3063,
+              "quote": "6 binds the closed payload/identity and SP-1356 binds proposed Storage values. Reuse BSD-006, BSD-008, BSD-014 rather than sibling definitions."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "The real assignment/run supports a proposed RP-RUNTIME-365D binding with explicit anchor/caps/holds; boundary/hold/deletion negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1356",
+              "line_start": 3064,
+              "line_end": 3064,
+              "quote": "7 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/control transition and recovery result depend on the original receipt; no primar"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "redaction_custody": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Ref-only event body, original source/receipt/pack custody and coherent restore/access/deletion rules authored; path-by-path custody cases await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1356",
+              "line_start": 3062,
+              "line_end": 3062,
+              "quote": "8 and the central registry still refuse writers."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "transitions": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "This family has its own trigger and owner transition predicates; their positive/negative fixtures await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1356",
+              "line_start": 3064,
+              "line_end": 3064,
+              "quote": "9 by name including full-value stored v2 original resolution and SP-336/SP-347 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/con"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "consumers_checkpoints": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact reader/projector/operating consumer, pending value shapes, SP-278 nine-field token and atomic CAS/range rules authored; source/checkpoint mismatch proof awaits phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1356",
+              "line_start": 3071,
+              "line_end": 3071,
+              "quote": "10 consumers/checkpoints: projector.bsd.finding_held@1.0.0, reader.bsd.finding_held@1.0.0 and operating consumer AssistantContext::bsd_held_projection adopt SP-278 by name via SP-1"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "compatibility_withdrawal": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Authenticated original historical reading and writer/reader withdrawal fences authored; retained-recipe and withdrawal negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1356",
+              "line_start": 3072,
+              "line_end": 3072,
+              "quote": "11 compatibility/withdrawal: There is no earlier admitted BSD event version to migrate or synthesize. The existing completed-review bsd_runtime_record is not this event and never e"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Positive/negative oracle plan only. No event oracle code or shared guard-isolation proof executed in phase 1.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1356",
+              "line_start": 3073,
+              "line_end": 3073,
+              "quote": "12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared nu"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        }
+      },
+      "remaining_gaps": [
+        "PHASE2: reviewed NUMRULE/date-time foundation adoption",
+        "PHASE2: executable one-defect oracle cases and shared guard-isolation evidence",
+        "Sol and Astra review before any later admission",
+        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled"
+      ],
+      "static_checks_seen": [
+        "structural-check-final",
+        "shard-generate",
+        "index-generate",
+        "structural-check-source-final",
+        "shard-generate-final",
+        "index-generate-final",
+        "shard-check",
+        "index-validate",
+        "shared-runtime-selftest",
+        "baseline-three-failures-final",
+        "structural-check-handoff",
+        "index-validate-final",
+        "git-diff-check"
+      ],
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "bsd.finding_reconfirmed",
+      "family_id": "event-family-bsd-finding_reconfirmed",
+      "family_revision": "1.0.0",
+      "disposition": "PREPARED_WITHOUT_ADMISSION",
+      "current_owner_units": [
+        "BSD-1357",
+        "CV-1357",
+        "SP-1357",
+        "SP-1365",
+        "ATS-1230"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Registry membership deliberately remains absent; no admission is authorized.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1357",
+              "line_start": 3131,
+              "line_end": 3131,
+              "quote": "1 membership/version: registry membership remains ABSENT. Proposed 1.0.0 payload is Plans/bsd_event_payloads.schema.json#/$defs/finding_reconfirmed; SP-318 and the central registry"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current exact-family semantic, payload and Storage owner routes resolve.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1357",
+              "line_start": 3130,
+              "line_end": 3130,
+              "quote": "2 item 9.a A. This exact name is required by section 19/BSD-020 and has no existing alias/admitted event contract in the per-name search recorded in reports/event-authority-2026110"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "producer": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact producer, source graph, commit/append/barrier receipt/result order authored; original-custody crash cases await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1357",
+              "line_start": 3133,
+              "line_end": 3133,
+              "quote": "3 producer: BackSeatDriverService::commit_finding_reconfirmation owns this transition. The actual command/dispatch/provider/deadline source must be independently authenticated. Adm"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Individually closed 1.0.0 payload definition and all referenced schemas resolve under static structural validation.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1357",
+              "line_start": 3134,
+              "line_end": 3134,
+              "quote": "4 payload: independently closed schema Plans/bsd_event_payloads.schema.json#/$defs/finding_reconfirmed, ref-only source bodies, exact tags, no raw protected content."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "scope_identity": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact Project/source joins and string identity/finding-operand recipes authored; shared numeric/profile and original-source adversarial fixtures await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1357",
+              "line_start": 3135,
+              "line_end": 3135,
+              "quote": "5 scope/identity: project_only and exact original source/assignment/binding/run/epoch/generation/actor/account joins are defined independently for this event in CV-1357. Never borr"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "replay_idempotency": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact same/different retry, authoritative dedupe and no-effect replay rules authored; lost-ack/custody negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1357",
+              "line_start": 3136,
+              "line_end": 3136,
+              "quote": "6 replay/idempotency: same original identity and semantic bytes returns exactly the original result; a different semantic digest conflicts, missing tail-current authoritative dedup"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "The real assignment/run supports a proposed RP-RUNTIME-365D binding with explicit anchor/caps/holds; boundary/hold/deletion negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1357",
+              "line_start": 3132,
+              "line_end": 3132,
+              "quote": "7 binds the closed payload/identity and SP-1357 binds proposed Storage values. Reuse BSD-006, BSD-008, BSD-031 rather than sibling definitions."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "redaction_custody": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Ref-only event body, original source/receipt/pack custody and coherent restore/access/deletion rules authored; path-by-path custody cases await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1357",
+              "line_start": 3131,
+              "line_end": 3131,
+              "quote": "8 and the central registry still refuse writers."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "transitions": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "This family has its own trigger and owner transition predicates; their positive/negative fixtures await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1357",
+              "line_start": 3133,
+              "line_end": 3133,
+              "quote": "9 by name including full-value stored v2 original resolution and SP-336/SP-347 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/con"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "consumers_checkpoints": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact reader/projector/operating consumer, pending value shapes, SP-278 nine-field token and atomic CAS/range rules authored; source/checkpoint mismatch proof awaits phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1357",
+              "line_start": 3140,
+              "line_end": 3140,
+              "quote": "10 consumers/checkpoints: projector.bsd.finding_reconfirmed@1.0.0, reader.bsd.finding_reconfirmed@1.0.0 and operating consumer AssistantContext::bsd_reconfirmation_projection adopt"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "compatibility_withdrawal": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Authenticated original historical reading and writer/reader withdrawal fences authored; retained-recipe and withdrawal negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1357",
+              "line_start": 3141,
+              "line_end": 3141,
+              "quote": "11 compatibility/withdrawal: There is no earlier admitted BSD event version to migrate or synthesize. The existing completed-review bsd_runtime_record is not this event and never e"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Positive/negative oracle plan only. No event oracle code or shared guard-isolation proof executed in phase 1.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1357",
+              "line_start": 3142,
+              "line_end": 3142,
+              "quote": "12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared nu"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        }
+      },
+      "remaining_gaps": [
+        "PHASE2: reviewed NUMRULE/date-time foundation adoption",
+        "PHASE2: executable one-defect oracle cases and shared guard-isolation evidence",
+        "Sol and Astra review before any later admission",
+        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled"
+      ],
+      "static_checks_seen": [
+        "structural-check-final",
+        "shard-generate",
+        "index-generate",
+        "structural-check-source-final",
+        "shard-generate-final",
+        "index-generate-final",
+        "shard-check",
+        "index-validate",
+        "shared-runtime-selftest",
+        "baseline-three-failures-final",
+        "structural-check-handoff",
+        "index-validate-final",
+        "git-diff-check"
+      ],
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "bsd.finding_suppressed",
+      "family_id": "event-family-bsd-finding_suppressed",
+      "family_revision": "1.0.0",
+      "disposition": "PREPARED_WITHOUT_ADMISSION",
+      "current_owner_units": [
+        "BSD-1358",
+        "CV-1358",
+        "SP-1358",
+        "SP-1365",
+        "ATS-1230"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Registry membership deliberately remains absent; no admission is authorized.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1358",
+              "line_start": 3200,
+              "line_end": 3200,
+              "quote": "1 membership/version: registry membership remains ABSENT. Proposed 1.0.0 payload is Plans/bsd_event_payloads.schema.json#/$defs/finding_suppressed; SP-318 and the central registry "
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current exact-family semantic, payload and Storage owner routes resolve.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1358",
+              "line_start": 3199,
+              "line_end": 3199,
+              "quote": "2 item 9.a A. This exact name is required by section 19/BSD-020 and has no existing alias/admitted event contract in the per-name search recorded in reports/event-authority-2026110"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "producer": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact producer, source graph, commit/append/barrier receipt/result order authored; original-custody crash cases await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1358",
+              "line_start": 3202,
+              "line_end": 3202,
+              "quote": "3 producer: BackSeatDriverService::commit_finding_suppression owns this transition. The actual command/dispatch/provider/deadline source must be independently authenticated. Admiss"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Individually closed 1.0.0 payload definition and all referenced schemas resolve under static structural validation.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1358",
+              "line_start": 3203,
+              "line_end": 3203,
+              "quote": "4 payload: independently closed schema Plans/bsd_event_payloads.schema.json#/$defs/finding_suppressed, ref-only source bodies, exact tags, no raw protected content."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "scope_identity": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact Project/source joins and string identity/finding-operand recipes authored; shared numeric/profile and original-source adversarial fixtures await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1358",
+              "line_start": 3204,
+              "line_end": 3204,
+              "quote": "5 scope/identity: project_only and exact original source/assignment/binding/run/epoch/generation/actor/account joins are defined independently for this event in CV-1358. Never borr"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "replay_idempotency": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact same/different retry, authoritative dedupe and no-effect replay rules authored; lost-ack/custody negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1358",
+              "line_start": 3205,
+              "line_end": 3205,
+              "quote": "6 replay/idempotency: same original identity and semantic bytes returns exactly the original result; a different semantic digest conflicts, missing tail-current authoritative dedup"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "The real assignment/run supports a proposed RP-RUNTIME-365D binding with explicit anchor/caps/holds; boundary/hold/deletion negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1358",
+              "line_start": 3202,
+              "line_end": 3202,
+              "quote": "7 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/control transition and recovery result depend on the original receipt; no primar"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "redaction_custody": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Ref-only event body, original source/receipt/pack custody and coherent restore/access/deletion rules authored; path-by-path custody cases await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1358",
+              "line_start": 3200,
+              "line_end": 3200,
+              "quote": "8 and the central registry still refuse writers."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "transitions": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "This family has its own trigger and owner transition predicates; their positive/negative fixtures await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1358",
+              "line_start": 3201,
+              "line_end": 3201,
+              "quote": "9 rather than sibling definitions."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "consumers_checkpoints": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact reader/projector/operating consumer, pending value shapes, SP-278 nine-field token and atomic CAS/range rules authored; source/checkpoint mismatch proof awaits phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1358",
+              "line_start": 3209,
+              "line_end": 3209,
+              "quote": "10 consumers/checkpoints: projector.bsd.finding_suppressed@1.0.0, reader.bsd.finding_suppressed@1.0.0 and operating consumer Usage::bsd_suppression_counters adopt SP-278 by name vi"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "compatibility_withdrawal": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Authenticated original historical reading and writer/reader withdrawal fences authored; retained-recipe and withdrawal negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1358",
+              "line_start": 3210,
+              "line_end": 3210,
+              "quote": "11 compatibility/withdrawal: There is no earlier admitted BSD event version to migrate or synthesize. The existing completed-review bsd_runtime_record is not this event and never e"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Positive/negative oracle plan only. No event oracle code or shared guard-isolation proof executed in phase 1.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1358",
+              "line_start": 3211,
+              "line_end": 3211,
+              "quote": "12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared nu"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        }
+      },
+      "remaining_gaps": [
+        "PHASE2: reviewed NUMRULE/date-time foundation adoption",
+        "PHASE2: executable one-defect oracle cases and shared guard-isolation evidence",
+        "Sol and Astra review before any later admission",
+        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled"
+      ],
+      "static_checks_seen": [
+        "structural-check-final",
+        "shard-generate",
+        "index-generate",
+        "structural-check-source-final",
+        "shard-generate-final",
+        "index-generate-final",
+        "shard-check",
+        "index-validate",
+        "shared-runtime-selftest",
+        "baseline-three-failures-final",
+        "structural-check-handoff",
+        "index-validate-final",
+        "git-diff-check"
+      ],
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "bsd.output_quarantined",
+      "family_id": "event-family-bsd-output_quarantined",
+      "family_revision": "1.0.0",
+      "disposition": "PREPARED_WITHOUT_ADMISSION",
+      "current_owner_units": [
+        "BSD-1359",
+        "CV-1359",
+        "SP-1359",
+        "SP-1365",
+        "ATS-1230"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Registry membership deliberately remains absent; no admission is authorized.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1359",
+              "line_start": 3268,
+              "line_end": 3268,
+              "quote": "1 membership/version: registry membership remains ABSENT. Proposed 1.0.0 payload is Plans/bsd_event_payloads.schema.json#/$defs/output_quarantined; SP-318 and the central registry "
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current exact-family semantic, payload and Storage owner routes resolve.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1359",
+              "line_start": 3267,
+              "line_end": 3267,
+              "quote": "2 item 9.a A. This exact name is required by section 19/BSD-020 and has no existing alias/admitted event contract in the per-name search recorded in reports/event-authority-2026110"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "producer": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact producer, source graph, commit/append/barrier receipt/result order authored; original-custody crash cases await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1359",
+              "line_start": 3270,
+              "line_end": 3270,
+              "quote": "3 producer: BackSeatDriverService::commit_output_quarantine owns this transition. The actual command/dispatch/provider/deadline source must be independently authenticated. Admissio"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Individually closed 1.0.0 payload definition and all referenced schemas resolve under static structural validation.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1359",
+              "line_start": 3269,
+              "line_end": 3269,
+              "quote": "4 rather than sibling definitions."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "scope_identity": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact Project/source joins and string identity/finding-operand recipes authored; shared numeric/profile and original-source adversarial fixtures await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1359",
+              "line_start": 3272,
+              "line_end": 3272,
+              "quote": "5 scope/identity: project_only and exact original source/assignment/binding/run/epoch/generation/actor/account joins are defined independently for this event in CV-1359. Never borr"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "replay_idempotency": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact same/different retry, authoritative dedupe and no-effect replay rules authored; lost-ack/custody negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1359",
+              "line_start": 3273,
+              "line_end": 3273,
+              "quote": "6 replay/idempotency: same original identity and semantic bytes returns exactly the original result; a different semantic digest conflicts, missing tail-current authoritative dedup"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "The real assignment/run supports a proposed RP-RUNTIME-365D binding with explicit anchor/caps/holds; boundary/hold/deletion negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1359",
+              "line_start": 3270,
+              "line_end": 3270,
+              "quote": "7 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/control transition and recovery result depend on the original receipt; no primar"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "redaction_custody": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Ref-only event body, original source/receipt/pack custody and coherent restore/access/deletion rules authored; path-by-path custody cases await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1359",
+              "line_start": 3268,
+              "line_end": 3268,
+              "quote": "8 and the central registry still refuse writers."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "transitions": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "This family has its own trigger and owner transition predicates; their positive/negative fixtures await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1359",
+              "line_start": 3269,
+              "line_end": 3269,
+              "quote": "9 binds the closed payload/identity and SP-1359 binds proposed Storage values. Reuse BSD-011, BSD-012, BSD-014 rather than sibling definitions."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "consumers_checkpoints": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact reader/projector/operating consumer, pending value shapes, SP-278 nine-field token and atomic CAS/range rules authored; source/checkpoint mismatch proof awaits phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1359",
+              "line_start": 3277,
+              "line_end": 3277,
+              "quote": "10 consumers/checkpoints: projector.bsd.output_quarantined@1.0.0, reader.bsd.output_quarantined@1.0.0 and operating consumer AssistantContext::bsd_quarantine_projection adopt SP-27"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "compatibility_withdrawal": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Authenticated original historical reading and writer/reader withdrawal fences authored; retained-recipe and withdrawal negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1359",
+              "line_start": 3278,
+              "line_end": 3278,
+              "quote": "11 compatibility/withdrawal: There is no earlier admitted BSD event version to migrate or synthesize. The existing completed-review bsd_runtime_record is not this event and never e"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Positive/negative oracle plan only. No event oracle code or shared guard-isolation proof executed in phase 1.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1359",
+              "line_start": 3279,
+              "line_end": 3279,
+              "quote": "12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared nu"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        }
+      },
+      "remaining_gaps": [
+        "PHASE2: reviewed NUMRULE/date-time foundation adoption",
+        "PHASE2: executable one-defect oracle cases and shared guard-isolation evidence",
+        "Sol and Astra review before any later admission",
+        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled"
+      ],
+      "static_checks_seen": [
+        "structural-check-final",
+        "shard-generate",
+        "index-generate",
+        "structural-check-source-final",
+        "shard-generate-final",
+        "index-generate-final",
+        "shard-check",
+        "index-validate",
+        "shared-runtime-selftest",
+        "baseline-three-failures-final",
+        "structural-check-handoff",
+        "index-validate-final",
+        "git-diff-check"
+      ],
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "bsd.policy_changed",
+      "family_id": "event-family-bsd-policy_changed",
+      "family_revision": "1.0.0",
+      "disposition": "PREPARED_WITHOUT_ADMISSION",
+      "current_owner_units": [
+        "BSD-1360",
+        "CV-1360",
+        "SP-1360",
+        "SP-1365",
+        "ATS-1230"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Registry membership deliberately remains absent; no admission is authorized.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1360",
+              "line_start": 3337,
+              "line_end": 3337,
+              "quote": "1 membership/version: registry membership remains ABSENT. Proposed 1.0.0 payload is Plans/bsd_event_payloads.schema.json#/$defs/policy_changed; SP-318 and the central registry stil"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current exact-family semantic, payload and Storage owner routes resolve.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1360",
+              "line_start": 3336,
+              "line_end": 3336,
+              "quote": "2 item 9.a A. This exact name is required by section 19/BSD-020 and has no existing alias/admitted event contract in the per-name search recorded in reports/event-authority-2026110"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "producer": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact producer, source graph, commit/append/barrier receipt/result order authored; original-custody crash cases await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1360",
+              "line_start": 3339,
+              "line_end": 3339,
+              "quote": "3 producer: BackSeatDriverService::commit_policy_revision owns this transition. The actual command/dispatch/provider/deadline source must be independently authenticated. Admission "
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Individually closed 1.0.0 payload definition and all referenced schemas resolve under static structural validation.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1360",
+              "line_start": 3340,
+              "line_end": 3340,
+              "quote": "4 payload: independently closed schema Plans/bsd_event_payloads.schema.json#/$defs/policy_changed, ref-only source bodies, exact tags, no raw protected content."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "scope_identity": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact Project/source joins and string identity/finding-operand recipes authored; shared numeric/profile and original-source adversarial fixtures await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1360",
+              "line_start": 3341,
+              "line_end": 3341,
+              "quote": "5 scope/identity: project_only and exact original source/assignment/binding/run/epoch/generation/actor/account joins are defined independently for this event in CV-1360. Never borr"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "replay_idempotency": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact same/different retry, authoritative dedupe and no-effect replay rules authored; lost-ack/custody negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1360",
+              "line_start": 3342,
+              "line_end": 3342,
+              "quote": "6 replay/idempotency: same original identity and semantic bytes returns exactly the original result; a different semantic digest conflicts, missing tail-current authoritative dedup"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact event lifetime/deletion choice remains PENDING_RETENTION_DECISION; question is in outcomes/report.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1360",
+              "line_start": 3339,
+              "line_end": 3339,
+              "quote": "7 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/control transition and recovery result depend on the original receipt; no primar"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "redaction_custody": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Ref-only event body, original source/receipt/pack custody and coherent restore/access/deletion rules authored; path-by-path custody cases await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1360",
+              "line_start": 3337,
+              "line_end": 3337,
+              "quote": "8 and the central registry still refuse writers."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "transitions": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "This family has its own trigger and owner transition predicates; their positive/negative fixtures await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1360",
+              "line_start": 3338,
+              "line_end": 3338,
+              "quote": "9 rather than sibling definitions."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "consumers_checkpoints": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact reader/projector/operating consumer, pending value shapes, SP-278 nine-field token and atomic CAS/range rules authored; source/checkpoint mismatch proof awaits phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1360",
+              "line_start": 3346,
+              "line_end": 3346,
+              "quote": "10 consumers/checkpoints: projector.bsd.policy_changed@1.0.0, reader.bsd.policy_changed@1.0.0 and operating consumer Settings::bsd_policy_projection adopt SP-278 by name via SP-136"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "compatibility_withdrawal": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Authenticated original historical reading and writer/reader withdrawal fences authored; retained-recipe and withdrawal negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1360",
+              "line_start": 3347,
+              "line_end": 3347,
+              "quote": "11 compatibility/withdrawal: There is no earlier admitted BSD event version to migrate or synthesize. The existing completed-review bsd_runtime_record is not this event and never e"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Positive/negative oracle plan only. No event oracle code or shared guard-isolation proof executed in phase 1.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1360",
+              "line_start": 3348,
+              "line_end": 3348,
+              "quote": "12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared nu"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        }
+      },
+      "remaining_gaps": [
+        "PHASE2: reviewed NUMRULE/date-time foundation adoption",
+        "PHASE2: executable one-defect oracle cases and shared guard-isolation evidence",
+        "Sol and Astra review before any later admission",
+        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled",
+        "For bsd.policy_changed, which exact lifetime, count/overflow and deletion rule should apply to the saved project BSDPolicy revision history? Card-1 G18 covers scheduling only; RP-CONFIG-CURRENT covers current configuration values, not this event history. May this history expire, or should it remain until Delete Puppet Master project data?"
+      ],
+      "static_checks_seen": [
+        "structural-check-final",
+        "shard-generate",
+        "index-generate",
+        "structural-check-source-final",
+        "shard-generate-final",
+        "index-generate-final",
+        "shard-check",
+        "index-validate",
+        "shared-runtime-selftest",
+        "baseline-three-failures-final",
+        "structural-check-handoff",
+        "index-validate-final",
+        "git-diff-check"
+      ],
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "bsd.review_failed",
+      "family_id": "event-family-bsd-review_failed",
+      "family_revision": "1.0.0",
+      "disposition": "PREPARED_WITHOUT_ADMISSION",
+      "current_owner_units": [
+        "BSD-1361",
+        "CV-1361",
+        "SP-1361",
+        "SP-1365",
+        "ATS-1230"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Registry membership deliberately remains absent; no admission is authorized.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1361",
+              "line_start": 3407,
+              "line_end": 3407,
+              "quote": "1 membership/version: registry membership remains ABSENT. Proposed 1.0.0 payload is Plans/bsd_event_payloads.schema.json#/$defs/review_failed; SP-318 and the central registry still"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current exact-family semantic, payload and Storage owner routes resolve.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1361",
+              "line_start": 3406,
+              "line_end": 3406,
+              "quote": "2 item 9.a A. This exact name is required by section 19/BSD-020 and has no existing alias/admitted event contract in the per-name search recorded in reports/event-authority-2026110"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "producer": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact producer, source graph, commit/append/barrier receipt/result order authored; original-custody crash cases await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1361",
+              "line_start": 3409,
+              "line_end": 3409,
+              "quote": "3 producer: BackSeatDriverService::commit_review_failure owns this transition. The actual command/dispatch/provider/deadline source must be independently authenticated. Admission c"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Individually closed 1.0.0 payload definition and all referenced schemas resolve under static structural validation.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1361",
+              "line_start": 3408,
+              "line_end": 3408,
+              "quote": "4 rather than sibling definitions."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "scope_identity": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact Project/source joins and string identity/finding-operand recipes authored; shared numeric/profile and original-source adversarial fixtures await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1361",
+              "line_start": 3411,
+              "line_end": 3411,
+              "quote": "5 scope/identity: project_only and exact original source/assignment/binding/run/epoch/generation/actor/account joins are defined independently for this event in CV-1361. Never borr"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "replay_idempotency": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact same/different retry, authoritative dedupe and no-effect replay rules authored; lost-ack/custody negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1361",
+              "line_start": 3412,
+              "line_end": 3412,
+              "quote": "6 replay/idempotency: same original identity and semantic bytes returns exactly the original result; a different semantic digest conflicts, missing tail-current authoritative dedup"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "The real assignment/run supports a proposed RP-RUNTIME-365D binding with explicit anchor/caps/holds; boundary/hold/deletion negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1361",
+              "line_start": 3409,
+              "line_end": 3409,
+              "quote": "7 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/control transition and recovery result depend on the original receipt; no primar"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "redaction_custody": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Ref-only event body, original source/receipt/pack custody and coherent restore/access/deletion rules authored; path-by-path custody cases await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1361",
+              "line_start": 3407,
+              "line_end": 3407,
+              "quote": "8 and the central registry still refuse writers."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "transitions": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "This family has its own trigger and owner transition predicates; their positive/negative fixtures await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1361",
+              "line_start": 3409,
+              "line_end": 3409,
+              "quote": "9 by name including full-value stored v2 original resolution and SP-336/SP-347 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/con"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "consumers_checkpoints": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact reader/projector/operating consumer, pending value shapes, SP-278 nine-field token and atomic CAS/range rules authored; source/checkpoint mismatch proof awaits phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1361",
+              "line_start": 3416,
+              "line_end": 3416,
+              "quote": "10 consumers/checkpoints: projector.bsd.review_failed@1.0.0, reader.bsd.review_failed@1.0.0 and operating consumer Usage::bsd_failure_attribution adopt SP-278 by name via SP-1361. "
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "compatibility_withdrawal": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Authenticated original historical reading and writer/reader withdrawal fences authored; retained-recipe and withdrawal negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1361",
+              "line_start": 3417,
+              "line_end": 3417,
+              "quote": "11 compatibility/withdrawal: There is no earlier admitted BSD event version to migrate or synthesize. The existing completed-review bsd_runtime_record is not this event and never e"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Positive/negative oracle plan only. No event oracle code or shared guard-isolation proof executed in phase 1.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1361",
+              "line_start": 3418,
+              "line_end": 3418,
+              "quote": "12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared nu"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        }
+      },
+      "remaining_gaps": [
+        "PHASE2: reviewed NUMRULE/date-time foundation adoption",
+        "PHASE2: executable one-defect oracle cases and shared guard-isolation evidence",
+        "Sol and Astra review before any later admission",
+        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled"
+      ],
+      "static_checks_seen": [
+        "structural-check-final",
+        "shard-generate",
+        "index-generate",
+        "structural-check-source-final",
+        "shard-generate-final",
+        "index-generate-final",
+        "shard-check",
+        "index-validate",
+        "shared-runtime-selftest",
+        "baseline-three-failures-final",
+        "structural-check-handoff",
+        "index-validate-final",
+        "git-diff-check"
+      ],
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "bsd.review_started",
+      "family_id": "event-family-bsd-review_started",
+      "family_revision": "1.0.0",
+      "disposition": "PREPARED_WITHOUT_ADMISSION",
+      "current_owner_units": [
+        "BSD-1362",
+        "CV-1362",
+        "SP-1362",
+        "SP-1365",
+        "ATS-1230"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Registry membership deliberately remains absent; no admission is authorized.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1362",
+              "line_start": 3476,
+              "line_end": 3476,
+              "quote": "1 membership/version: registry membership remains ABSENT. Proposed 1.0.0 payload is Plans/bsd_event_payloads.schema.json#/$defs/review_started; SP-318 and the central registry stil"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current exact-family semantic, payload and Storage owner routes resolve.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1362",
+              "line_start": 3475,
+              "line_end": 3475,
+              "quote": "2 item 9.a A. This exact name is required by section 19/BSD-020 and has no existing alias/admitted event contract in the per-name search recorded in reports/event-authority-2026110"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "producer": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact producer, source graph, commit/append/barrier receipt/result order authored; original-custody crash cases await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1362",
+              "line_start": 3478,
+              "line_end": 3478,
+              "quote": "3 producer: BackSeatDriverService::commit_review_start owns this transition. The actual command/dispatch/provider/deadline source must be independently authenticated. Admission che"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Individually closed 1.0.0 payload definition and all referenced schemas resolve under static structural validation.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1362",
+              "line_start": 3479,
+              "line_end": 3479,
+              "quote": "4 payload: independently closed schema Plans/bsd_event_payloads.schema.json#/$defs/review_started, ref-only source bodies, exact tags, no raw protected content."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "scope_identity": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact Project/source joins and string identity/finding-operand recipes authored; shared numeric/profile and original-source adversarial fixtures await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1362",
+              "line_start": 3480,
+              "line_end": 3480,
+              "quote": "5 scope/identity: project_only and exact original source/assignment/binding/run/epoch/generation/actor/account joins are defined independently for this event in CV-1362. Never borr"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "replay_idempotency": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact same/different retry, authoritative dedupe and no-effect replay rules authored; lost-ack/custody negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1362",
+              "line_start": 3477,
+              "line_end": 3477,
+              "quote": "6 rather than sibling definitions."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "The real assignment/run supports a proposed RP-RUNTIME-365D binding with explicit anchor/caps/holds; boundary/hold/deletion negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1362",
+              "line_start": 3478,
+              "line_end": 3478,
+              "quote": "7 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/control transition and recovery result depend on the original receipt; no primar"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "redaction_custody": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Ref-only event body, original source/receipt/pack custody and coherent restore/access/deletion rules authored; path-by-path custody cases await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1362",
+              "line_start": 3476,
+              "line_end": 3476,
+              "quote": "8 and the central registry still refuse writers."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "transitions": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "This family has its own trigger and owner transition predicates; their positive/negative fixtures await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1362",
+              "line_start": 3478,
+              "line_end": 3478,
+              "quote": "9 by name including full-value stored v2 original resolution and SP-336/SP-347 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/con"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "consumers_checkpoints": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact reader/projector/operating consumer, pending value shapes, SP-278 nine-field token and atomic CAS/range rules authored; source/checkpoint mismatch proof awaits phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1362",
+              "line_start": 3485,
+              "line_end": 3485,
+              "quote": "10 consumers/checkpoints: projector.bsd.review_started@1.0.0, reader.bsd.review_started@1.0.0 and operating consumer AssistantContext::bsd_review_projection adopt SP-278 by name vi"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "compatibility_withdrawal": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Authenticated original historical reading and writer/reader withdrawal fences authored; retained-recipe and withdrawal negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1362",
+              "line_start": 3486,
+              "line_end": 3486,
+              "quote": "11 compatibility/withdrawal: There is no earlier admitted BSD event version to migrate or synthesize. The existing completed-review bsd_runtime_record is not this event and never e"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Positive/negative oracle plan only. No event oracle code or shared guard-isolation proof executed in phase 1.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1362",
+              "line_start": 3487,
+              "line_end": 3487,
+              "quote": "12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared nu"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        }
+      },
+      "remaining_gaps": [
+        "PHASE2: reviewed NUMRULE/date-time foundation adoption",
+        "PHASE2: executable one-defect oracle cases and shared guard-isolation evidence",
+        "Sol and Astra review before any later admission",
+        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled"
+      ],
+      "static_checks_seen": [
+        "structural-check-final",
+        "shard-generate",
+        "index-generate",
+        "structural-check-source-final",
+        "shard-generate-final",
+        "index-generate-final",
+        "shard-check",
+        "index-validate",
+        "shared-runtime-selftest",
+        "baseline-three-failures-final",
+        "structural-check-handoff",
+        "index-validate-final",
+        "git-diff-check"
+      ],
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "bsd.review_timed_out",
+      "family_id": "event-family-bsd-review_timed_out",
+      "family_revision": "1.0.0",
+      "disposition": "PREPARED_WITHOUT_ADMISSION",
+      "current_owner_units": [
+        "BSD-1363",
+        "CV-1363",
+        "SP-1363",
+        "SP-1365",
+        "ATS-1230"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Registry membership deliberately remains absent; no admission is authorized.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1363",
+              "line_start": 3546,
+              "line_end": 3546,
+              "quote": "1 membership/version: registry membership remains ABSENT. Proposed 1.0.0 payload is Plans/bsd_event_payloads.schema.json#/$defs/review_timed_out; SP-318 and the central registry st"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current exact-family semantic, payload and Storage owner routes resolve.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1363",
+              "line_start": 3545,
+              "line_end": 3545,
+              "quote": "2 item 9.a A. This exact name is required by section 19/BSD-020 and has no existing alias/admitted event contract in the per-name search recorded in reports/event-authority-2026110"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "producer": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact producer, source graph, commit/append/barrier receipt/result order authored; original-custody crash cases await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1363",
+              "line_start": 3547,
+              "line_end": 3547,
+              "quote": "3 binds the closed payload/identity and SP-1363 binds proposed Storage values. Reuse BSD-010, BSD-013, BSD-014 rather than sibling definitions."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Individually closed 1.0.0 payload definition and all referenced schemas resolve under static structural validation.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1363",
+              "line_start": 3547,
+              "line_end": 3547,
+              "quote": "4 rather than sibling definitions."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "scope_identity": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact Project/source joins and string identity/finding-operand recipes authored; shared numeric/profile and original-source adversarial fixtures await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1363",
+              "line_start": 3550,
+              "line_end": 3550,
+              "quote": "5 scope/identity: project_only and exact original source/assignment/binding/run/epoch/generation/actor/account joins are defined independently for this event in CV-1363. Never borr"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "replay_idempotency": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact same/different retry, authoritative dedupe and no-effect replay rules authored; lost-ack/custody negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1363",
+              "line_start": 3551,
+              "line_end": 3551,
+              "quote": "6 replay/idempotency: same original identity and semantic bytes returns exactly the original result; a different semantic digest conflicts, missing tail-current authoritative dedup"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "The real assignment/run supports a proposed RP-RUNTIME-365D binding with explicit anchor/caps/holds; boundary/hold/deletion negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1363",
+              "line_start": 3548,
+              "line_end": 3548,
+              "quote": "7 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/control transition and recovery result depend on the original receipt; no primar"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "redaction_custody": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Ref-only event body, original source/receipt/pack custody and coherent restore/access/deletion rules authored; path-by-path custody cases await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1363",
+              "line_start": 3546,
+              "line_end": 3546,
+              "quote": "8 and the central registry still refuse writers."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "transitions": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "This family has its own trigger and owner transition predicates; their positive/negative fixtures await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1363",
+              "line_start": 3548,
+              "line_end": 3548,
+              "quote": "9 by name including full-value stored v2 original resolution and SP-336/SP-347 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/con"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "consumers_checkpoints": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact reader/projector/operating consumer, pending value shapes, SP-278 nine-field token and atomic CAS/range rules authored; source/checkpoint mismatch proof awaits phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1363",
+              "line_start": 3555,
+              "line_end": 3555,
+              "quote": "10 consumers/checkpoints: projector.bsd.review_timed_out@1.0.0, reader.bsd.review_timed_out@1.0.0 and operating consumer Usage::bsd_timeout_attribution adopt SP-278 by name via SP-"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "compatibility_withdrawal": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Authenticated original historical reading and writer/reader withdrawal fences authored; retained-recipe and withdrawal negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1363",
+              "line_start": 3556,
+              "line_end": 3556,
+              "quote": "11 compatibility/withdrawal: There is no earlier admitted BSD event version to migrate or synthesize. The existing completed-review bsd_runtime_record is not this event and never e"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Positive/negative oracle plan only. No event oracle code or shared guard-isolation proof executed in phase 1.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1363",
+              "line_start": 3557,
+              "line_end": 3557,
+              "quote": "12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared nu"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        }
+      },
+      "remaining_gaps": [
+        "PHASE2: reviewed NUMRULE/date-time foundation adoption",
+        "PHASE2: executable one-defect oracle cases and shared guard-isolation evidence",
+        "Sol and Astra review before any later admission",
+        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled"
+      ],
+      "static_checks_seen": [
+        "structural-check-final",
+        "shard-generate",
+        "index-generate",
+        "structural-check-source-final",
+        "shard-generate-final",
+        "index-generate-final",
+        "shard-check",
+        "index-validate",
+        "shared-runtime-selftest",
+        "baseline-three-failures-final",
+        "structural-check-handoff",
+        "index-validate-final",
+        "git-diff-check"
+      ],
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "bsd.workflow_binding_created",
+      "family_id": "event-family-bsd-workflow_binding_created",
+      "family_revision": "1.0.0",
+      "disposition": "PREPARED_WITHOUT_ADMISSION",
+      "current_owner_units": [
+        "BSD-1364",
+        "CV-1364",
+        "SP-1364",
+        "SP-1365",
+        "ATS-1230"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Registry membership deliberately remains absent; no admission is authorized.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1364",
+              "line_start": 3615,
+              "line_end": 3615,
+              "quote": "1 membership/version: registry membership remains ABSENT. Proposed 1.0.0 payload is Plans/bsd_event_payloads.schema.json#/$defs/workflow_binding_created; SP-318 and the central reg"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current exact-family semantic, payload and Storage owner routes resolve.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1364",
+              "line_start": 3614,
+              "line_end": 3614,
+              "quote": "2 item 9.a A. This exact name is required by section 19/BSD-020 and has no existing alias/admitted event contract in the per-name search recorded in reports/event-authority-2026110"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "producer": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact producer, source graph, commit/append/barrier receipt/result order authored; original-custody crash cases await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1364",
+              "line_start": 3617,
+              "line_end": 3617,
+              "quote": "3 producer: BackSeatDriverService::commit_workflow_binding_revision owns this transition. The actual command/dispatch/provider/deadline source must be independently authenticated. "
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Individually closed 1.0.0 payload definition and all referenced schemas resolve under static structural validation.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1364",
+              "line_start": 3616,
+              "line_end": 3616,
+              "quote": "4 binds the closed payload/identity and SP-1364 binds proposed Storage values. Reuse BSD-016, BSD-017, BSD-029 rather than sibling definitions."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "scope_identity": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact Project/source joins and string identity/finding-operand recipes authored; shared numeric/profile and original-source adversarial fixtures await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1364",
+              "line_start": 3619,
+              "line_end": 3619,
+              "quote": "5 scope/identity: project_only and exact original source/assignment/binding/run/epoch/generation/actor/account joins are defined independently for this event in CV-1364. Never borr"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "replay_idempotency": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact same/different retry, authoritative dedupe and no-effect replay rules authored; lost-ack/custody negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1364",
+              "line_start": 3620,
+              "line_end": 3620,
+              "quote": "6 replay/idempotency: same original identity and semantic bytes returns exactly the original result; a different semantic digest conflicts, missing tail-current authoritative dedup"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact event lifetime/deletion choice remains PENDING_RETENTION_DECISION; question is in outcomes/report.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1364",
+              "line_start": 3617,
+              "line_end": 3617,
+              "quote": "7 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/control transition and recovery result depend on the original receipt; no primar"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "redaction_custody": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Ref-only event body, original source/receipt/pack custody and coherent restore/access/deletion rules authored; path-by-path custody cases await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1364",
+              "line_start": 3615,
+              "line_end": 3615,
+              "quote": "8 and the central registry still refuse writers."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "transitions": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "This family has its own trigger and owner transition predicates; their positive/negative fixtures await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1364",
+              "line_start": 3616,
+              "line_end": 3616,
+              "quote": "9 rather than sibling definitions."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "consumers_checkpoints": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Exact reader/projector/operating consumer, pending value shapes, SP-278 nine-field token and atomic CAS/range rules authored; source/checkpoint mismatch proof awaits phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1364",
+              "line_start": 3624,
+              "line_end": 3624,
+              "quote": "10 consumers/checkpoints: projector.bsd.workflow_binding_created@1.0.0, reader.bsd.workflow_binding_created@1.0.0 and operating consumer PlanningWorkflow::bsd_stage_binding_project"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "compatibility_withdrawal": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Authenticated original historical reading and writer/reader withdrawal fences authored; retained-recipe and withdrawal negatives await phase 2.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1364",
+              "line_start": 3625,
+              "line_end": 3625,
+              "quote": "11 compatibility/withdrawal: There is no earlier admitted BSD event version to migrate or synthesize. The existing completed-review bsd_runtime_record is not this event and never e"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Positive/negative oracle plan only. No event oracle code or shared guard-isolation proof executed in phase 1.",
+          "evidence": [
+            {
+              "path": "Plans/Back_Seat_Driver.md",
+              "unit": "BSD-1364",
+              "line_start": 3626,
+              "line_end": 3626,
+              "quote": "12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared nu"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First individually authored phase-1 contract for this previously listed-only name."
+        }
+      },
+      "remaining_gaps": [
+        "PHASE2: reviewed NUMRULE/date-time foundation adoption",
+        "PHASE2: executable one-defect oracle cases and shared guard-isolation evidence",
+        "Sol and Astra review before any later admission",
+        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled",
+        "For bsd.workflow_binding_created, which exact lifetime, count/overflow and deletion rule should apply to the saved frozen workflow-binding revision history? Card-1 G18 covers scheduling only; RP-CONFIG-CURRENT covers current configuration values, not this event history. May this history expire, or should it remain until Delete Puppet Master project data?"
+      ],
+      "static_checks_seen": [
+        "structural-check-final",
+        "shard-generate",
+        "index-generate",
+        "structural-check-source-final",
+        "shard-generate-final",
+        "index-generate-final",
+        "shard-check",
+        "index-validate",
+        "shared-runtime-selftest",
+        "baseline-three-failures-final",
+        "structural-check-handoff",
+        "index-validate-final",
+        "git-diff-check"
+      ],
+      "native_execution": "NOT_RUN"
+    }
+  ],
+  "status_counts": {
+    "ABSENT": 15,
+    "PASS": 30,
+    "PARTIAL": 135
+  }
+}

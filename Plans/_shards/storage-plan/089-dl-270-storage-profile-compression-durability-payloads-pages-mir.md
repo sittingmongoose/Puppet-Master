@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L28055-L29476
+Source lines: L28055-L30495
 
-Source SHA256: `52804c7f1ff7d43a63636a254cb2fd8c66b921f208f3604faf2c6cf1d2d708b5`
+Source SHA256: `8183ce68673cf33d98944122abd5393986012d6ca208a83cc75b1c1df7959aff`
 
 ---
 
@@ -1430,3 +1430,1022 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-365
+
+
+### SP-1350 - bsd.advice_emitted candidate Storage custody
+
+```yaml
+plan_unit_id: SP-1350
+unit_type: event_contract
+status: draft
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract for bsd.advice_emitted, prepared without admission. SP-318's physical_family_registration_pending and handler_unavailable remain in force. SP-1365 separately stages the exact original lifecycle-source wrappers. The candidate rows in Plans/bsd_event_storage_candidates.json for bsd_advice_emitted_operation, bsd_advice_emitted_projection and bsd_advice_emitted_checkpoint are reviewable proposed values, not appended registry families, storage admission, a budget decision or a readiness-denominator change. An integrator must separately admit exact physical families/migration/budgets after review; no event can be made writable by these candidate rows alone. Each value uses its exact closed Plans/bsd_event_storage_contracts.schema.json definition.
+  The canonical operation key is bsd_advice_emitted_operation.v1:{scope_partition}:{hex(owner_operation_id)}; state pending_event carries the original authenticated source, event ID, key, semantic digest and durable SP-337 payload reference. state complete additionally requires the exact original first AppendReceipt. It never stores a second EventRecord or copied private body. Operation refs and their packs remain while original pending/result/receipt custody is needed, under RP-EVENT-IDENTITY-APPROOT; that lifetime protects identity and an immutable receipt, not linked content. It adopts SP-286/CV-339 first receipt/full-value v2 and SP-336/SP-347 durability explicitly. Coherent mandatory backup restores the operation, complete original source, receipt controls and payload packs together. Missing original is unavailable; it cannot be reconstructed from a GUI model or a supplied hash.
+  The derived projection key is bsd_advice_emitted_projection.v1:{scope_partition}:{hex(owner_operation_id)}. It holds only the original source/event refs and Storage identities. The derived checkpoint key is bsd_advice_emitted_checkpoint.v1:{scope_partition}:{storage_instance_id} for projector.bsd.advice_emitted@1.0.0. Both use RP-PROJECTION-3GEN with holds; source event retention is independently {"registry_schema_id": "pm.storage_value_registry.v2", "policy_id": "RP-RUNTIME-365D", "policy_version": "1.0.0"}. A pending retention marker is never a valid production registry reference. Every complete encoded value must stay at or below 16 KiB; SP-337 externalizes referenced bodies before limits, rather than leaving an oversized operation value. Canonical/derived placement and actual disk budgets require existing SP-340 admission, never unbounded storage.
+  The exact operational reader is reader.bsd.advice_emitted@1.0.0 for AssistantChat::bsd_advisor_note. It explicitly adopts SP-278 reader.storage.event_record_index@1.0.0, its CURRENT-selected actual root, globally complete verified source selection/coverage, authenticated generation anchor and advancing frontier. It scans in ascending Storage sequence, never timestamp order; the examined cursor cannot regress. It scans the complete captured range with exactly the bsd.advice_emitted/Project/version filter, resolves full values/payload refs, verifies actual storage_instance_id, partition, sequence/event/payload/source joins and original full-value custody before processing a match. Verified nonmatches are scanned; corruption, unsupported input or missing proof is unavailable/degraded, never skipped as empty. Apply the immutable event reference to only its rebuildable derived row. In one actual redb transaction compare-and-swap the entire old checkpoint and atomically commit all changed rows with last_scanned_sequence, last_matched_event_id, source selection and the nine-field durable read token. An empty source has a null cursor; a nonempty zero-match range still advances its examined cursor. Each durable token field is rejoined to actual Storage controls, then the current live snapshot supplies its transient tenth redb_snapshot_id field. Same generation alone cannot prove a frontier unchanged. Inclusive restart rechecks the last exact event/frame/offset; replay produces no review, advice delivery, notification, Usage charge, canonical write or new event.
+  Historical inspection validates authenticated original admission/schema/recipe and source custody before the retained event, but never reruns current live-epoch/state/precondition checks. Current access, deletion and withdrawal checks still apply. Genuine older history after a live change stays readable; substituted or withdrawn originals refuse. Schema/version selection cannot be caller-chosen to weaken validation. Complete withdrawal fences writer admission at the actual cutoff, resolves pending issued results, invalidates reader/checkpoint publications and requires governed successor rebuild; missing source is explicitly unavailable, not a rebuilt success. Physical replay/restore/migration remains unimplemented and unadmitted.
+gui_related: false
+gui_classification_reason: Defines internal event, identity, Storage custody or validation, without changing presentation.
+depends_on:
+- SP-318
+- SP-278
+- SP-286
+- SP-337
+- CV-1350
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, payload, original-source identity and retry custody are bound.
+- No unregistered append, physical admission or native/runtime success is implied.
+- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- Plans/bsd_event_oracle_plan.json
+risk_class: advisory_history_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3d_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/bsd_event_payloads.schema.json
+- Plans/bsd_event_storage_contracts.schema.json
+- Plans/bsd_event_storage_candidates.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3D.md
+- Deck-2 item 9.a A (answer record 2026-11-05; DL-450 application pending)
+preserved_exact_tokens:
+- bsd.advice_emitted
+- SP-318
+- SP-278
+- SP-286
+- SP-337
+- RP-EVENT-IDENTITY-APPROOT
+- RP-PROJECTION-3GEN
+negative_constraints:
+- Do not append a registry family, admit an event, enable BSD commands or treat static definitions as runtime evidence.
+- Do not define a local number/timestamp implementation or guard-isolation proof engine.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-1351 - bsd.assignment_paused candidate Storage custody
+
+```yaml
+plan_unit_id: SP-1351
+unit_type: event_contract
+status: draft
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract for bsd.assignment_paused, prepared without admission. SP-318's physical_family_registration_pending and handler_unavailable remain in force. SP-1365 separately stages the exact original lifecycle-source wrappers. The candidate rows in Plans/bsd_event_storage_candidates.json for bsd_assignment_paused_operation, bsd_assignment_paused_projection and bsd_assignment_paused_checkpoint are reviewable proposed values, not appended registry families, storage admission, a budget decision or a readiness-denominator change. An integrator must separately admit exact physical families/migration/budgets after review; no event can be made writable by these candidate rows alone. Each value uses its exact closed Plans/bsd_event_storage_contracts.schema.json definition.
+  The canonical operation key is bsd_assignment_paused_operation.v1:{scope_partition}:{hex(owner_operation_id)}; state pending_event carries the original authenticated source, event ID, key, semantic digest and durable SP-337 payload reference. state complete additionally requires the exact original first AppendReceipt. It never stores a second EventRecord or copied private body. Operation refs and their packs remain while original pending/result/receipt custody is needed, under RP-EVENT-IDENTITY-APPROOT; that lifetime protects identity and an immutable receipt, not linked content. It adopts SP-286/CV-339 first receipt/full-value v2 and SP-336/SP-347 durability explicitly. Coherent mandatory backup restores the operation, complete original source, receipt controls and payload packs together. Missing original is unavailable; it cannot be reconstructed from a GUI model or a supplied hash.
+  The derived projection key is bsd_assignment_paused_projection.v1:{scope_partition}:{hex(owner_operation_id)}. It holds only the original source/event refs and Storage identities. The derived checkpoint key is bsd_assignment_paused_checkpoint.v1:{scope_partition}:{storage_instance_id} for projector.bsd.assignment_paused@1.0.0. Both use RP-PROJECTION-3GEN with holds; source event retention is independently {"registry_schema_id": "pm.storage_value_registry.v2", "policy_id": "RP-RUNTIME-365D", "policy_version": "1.0.0"}. A pending retention marker is never a valid production registry reference. Every complete encoded value must stay at or below 16 KiB; SP-337 externalizes referenced bodies before limits, rather than leaving an oversized operation value. Canonical/derived placement and actual disk budgets require existing SP-340 admission, never unbounded storage.
+  The exact operational reader is reader.bsd.assignment_paused@1.0.0 for AssistantContext::bsd_pause_projection. It explicitly adopts SP-278 reader.storage.event_record_index@1.0.0, its CURRENT-selected actual root, globally complete verified source selection/coverage, authenticated generation anchor and advancing frontier. It scans in ascending Storage sequence, never timestamp order; the examined cursor cannot regress. It scans the complete captured range with exactly the bsd.assignment_paused/Project/version filter, resolves full values/payload refs, verifies actual storage_instance_id, partition, sequence/event/payload/source joins and original full-value custody before processing a match. Verified nonmatches are scanned; corruption, unsupported input or missing proof is unavailable/degraded, never skipped as empty. Apply the immutable event reference to only its rebuildable derived row. In one actual redb transaction compare-and-swap the entire old checkpoint and atomically commit all changed rows with last_scanned_sequence, last_matched_event_id, source selection and the nine-field durable read token. An empty source has a null cursor; a nonempty zero-match range still advances its examined cursor. Each durable token field is rejoined to actual Storage controls, then the current live snapshot supplies its transient tenth redb_snapshot_id field. Same generation alone cannot prove a frontier unchanged. Inclusive restart rechecks the last exact event/frame/offset; replay produces no review, advice delivery, notification, Usage charge, canonical write or new event.
+  Historical inspection validates authenticated original admission/schema/recipe and source custody before the retained event, but never reruns current live-epoch/state/precondition checks. Current access, deletion and withdrawal checks still apply. Genuine older history after a live change stays readable; substituted or withdrawn originals refuse. Schema/version selection cannot be caller-chosen to weaken validation. Complete withdrawal fences writer admission at the actual cutoff, resolves pending issued results, invalidates reader/checkpoint publications and requires governed successor rebuild; missing source is explicitly unavailable, not a rebuilt success. Physical replay/restore/migration remains unimplemented and unadmitted.
+gui_related: false
+gui_classification_reason: Defines internal event, identity, Storage custody or validation, without changing presentation.
+depends_on:
+- SP-318
+- SP-278
+- SP-286
+- SP-337
+- CV-1351
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, payload, original-source identity and retry custody are bound.
+- No unregistered append, physical admission or native/runtime success is implied.
+- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- Plans/bsd_event_oracle_plan.json
+risk_class: advisory_history_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3d_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/bsd_event_payloads.schema.json
+- Plans/bsd_event_storage_contracts.schema.json
+- Plans/bsd_event_storage_candidates.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3D.md
+- Deck-2 item 9.a A (answer record 2026-11-05; DL-450 application pending)
+preserved_exact_tokens:
+- bsd.assignment_paused
+- SP-318
+- SP-278
+- SP-286
+- SP-337
+- RP-EVENT-IDENTITY-APPROOT
+- RP-PROJECTION-3GEN
+negative_constraints:
+- Do not append a registry family, admit an event, enable BSD commands or treat static definitions as runtime evidence.
+- Do not define a local number/timestamp implementation or guard-isolation proof engine.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-1352 - bsd.assignment_resumed candidate Storage custody
+
+```yaml
+plan_unit_id: SP-1352
+unit_type: event_contract
+status: draft
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract for bsd.assignment_resumed, prepared without admission. SP-318's physical_family_registration_pending and handler_unavailable remain in force. SP-1365 separately stages the exact original lifecycle-source wrappers. The candidate rows in Plans/bsd_event_storage_candidates.json for bsd_assignment_resumed_operation, bsd_assignment_resumed_projection and bsd_assignment_resumed_checkpoint are reviewable proposed values, not appended registry families, storage admission, a budget decision or a readiness-denominator change. An integrator must separately admit exact physical families/migration/budgets after review; no event can be made writable by these candidate rows alone. Each value uses its exact closed Plans/bsd_event_storage_contracts.schema.json definition.
+  The canonical operation key is bsd_assignment_resumed_operation.v1:{scope_partition}:{hex(owner_operation_id)}; state pending_event carries the original authenticated source, event ID, key, semantic digest and durable SP-337 payload reference. state complete additionally requires the exact original first AppendReceipt. It never stores a second EventRecord or copied private body. Operation refs and their packs remain while original pending/result/receipt custody is needed, under RP-EVENT-IDENTITY-APPROOT; that lifetime protects identity and an immutable receipt, not linked content. It adopts SP-286/CV-339 first receipt/full-value v2 and SP-336/SP-347 durability explicitly. Coherent mandatory backup restores the operation, complete original source, receipt controls and payload packs together. Missing original is unavailable; it cannot be reconstructed from a GUI model or a supplied hash.
+  The derived projection key is bsd_assignment_resumed_projection.v1:{scope_partition}:{hex(owner_operation_id)}. It holds only the original source/event refs and Storage identities. The derived checkpoint key is bsd_assignment_resumed_checkpoint.v1:{scope_partition}:{storage_instance_id} for projector.bsd.assignment_resumed@1.0.0. Both use RP-PROJECTION-3GEN with holds; source event retention is independently {"registry_schema_id": "pm.storage_value_registry.v2", "policy_id": "RP-RUNTIME-365D", "policy_version": "1.0.0"}. A pending retention marker is never a valid production registry reference. Every complete encoded value must stay at or below 16 KiB; SP-337 externalizes referenced bodies before limits, rather than leaving an oversized operation value. Canonical/derived placement and actual disk budgets require existing SP-340 admission, never unbounded storage.
+  The exact operational reader is reader.bsd.assignment_resumed@1.0.0 for AssistantContext::bsd_resume_projection. It explicitly adopts SP-278 reader.storage.event_record_index@1.0.0, its CURRENT-selected actual root, globally complete verified source selection/coverage, authenticated generation anchor and advancing frontier. It scans in ascending Storage sequence, never timestamp order; the examined cursor cannot regress. It scans the complete captured range with exactly the bsd.assignment_resumed/Project/version filter, resolves full values/payload refs, verifies actual storage_instance_id, partition, sequence/event/payload/source joins and original full-value custody before processing a match. Verified nonmatches are scanned; corruption, unsupported input or missing proof is unavailable/degraded, never skipped as empty. Apply the immutable event reference to only its rebuildable derived row. In one actual redb transaction compare-and-swap the entire old checkpoint and atomically commit all changed rows with last_scanned_sequence, last_matched_event_id, source selection and the nine-field durable read token. An empty source has a null cursor; a nonempty zero-match range still advances its examined cursor. Each durable token field is rejoined to actual Storage controls, then the current live snapshot supplies its transient tenth redb_snapshot_id field. Same generation alone cannot prove a frontier unchanged. Inclusive restart rechecks the last exact event/frame/offset; replay produces no review, advice delivery, notification, Usage charge, canonical write or new event.
+  Historical inspection validates authenticated original admission/schema/recipe and source custody before the retained event, but never reruns current live-epoch/state/precondition checks. Current access, deletion and withdrawal checks still apply. Genuine older history after a live change stays readable; substituted or withdrawn originals refuse. Schema/version selection cannot be caller-chosen to weaken validation. Complete withdrawal fences writer admission at the actual cutoff, resolves pending issued results, invalidates reader/checkpoint publications and requires governed successor rebuild; missing source is explicitly unavailable, not a rebuilt success. Physical replay/restore/migration remains unimplemented and unadmitted.
+gui_related: false
+gui_classification_reason: Defines internal event, identity, Storage custody or validation, without changing presentation.
+depends_on:
+- SP-318
+- SP-278
+- SP-286
+- SP-337
+- CV-1352
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, payload, original-source identity and retry custody are bound.
+- No unregistered append, physical admission or native/runtime success is implied.
+- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- Plans/bsd_event_oracle_plan.json
+risk_class: advisory_history_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3d_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/bsd_event_payloads.schema.json
+- Plans/bsd_event_storage_contracts.schema.json
+- Plans/bsd_event_storage_candidates.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3D.md
+- Deck-2 item 9.a A (answer record 2026-11-05; DL-450 application pending)
+preserved_exact_tokens:
+- bsd.assignment_resumed
+- SP-318
+- SP-278
+- SP-286
+- SP-337
+- RP-EVENT-IDENTITY-APPROOT
+- RP-PROJECTION-3GEN
+negative_constraints:
+- Do not append a registry family, admit an event, enable BSD commands or treat static definitions as runtime evidence.
+- Do not define a local number/timestamp implementation or guard-isolation proof engine.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-1353 - bsd.assignment_started candidate Storage custody
+
+```yaml
+plan_unit_id: SP-1353
+unit_type: event_contract
+status: draft
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract for bsd.assignment_started, prepared without admission. SP-318's physical_family_registration_pending and handler_unavailable remain in force. SP-1365 separately stages the exact original lifecycle-source wrappers. The candidate rows in Plans/bsd_event_storage_candidates.json for bsd_assignment_started_operation, bsd_assignment_started_projection and bsd_assignment_started_checkpoint are reviewable proposed values, not appended registry families, storage admission, a budget decision or a readiness-denominator change. An integrator must separately admit exact physical families/migration/budgets after review; no event can be made writable by these candidate rows alone. Each value uses its exact closed Plans/bsd_event_storage_contracts.schema.json definition.
+  The canonical operation key is bsd_assignment_started_operation.v1:{scope_partition}:{hex(owner_operation_id)}; state pending_event carries the original authenticated source, event ID, key, semantic digest and durable SP-337 payload reference. state complete additionally requires the exact original first AppendReceipt. It never stores a second EventRecord or copied private body. Operation refs and their packs remain while original pending/result/receipt custody is needed, under RP-EVENT-IDENTITY-APPROOT; that lifetime protects identity and an immutable receipt, not linked content. It adopts SP-286/CV-339 first receipt/full-value v2 and SP-336/SP-347 durability explicitly. Coherent mandatory backup restores the operation, complete original source, receipt controls and payload packs together. Missing original is unavailable; it cannot be reconstructed from a GUI model or a supplied hash.
+  The derived projection key is bsd_assignment_started_projection.v1:{scope_partition}:{hex(owner_operation_id)}. It holds only the original source/event refs and Storage identities. The derived checkpoint key is bsd_assignment_started_checkpoint.v1:{scope_partition}:{storage_instance_id} for projector.bsd.assignment_started@1.0.0. Both use RP-PROJECTION-3GEN with holds; source event retention is independently {"registry_schema_id": "pm.storage_value_registry.v2", "policy_id": "RP-RUNTIME-365D", "policy_version": "1.0.0"}. A pending retention marker is never a valid production registry reference. Every complete encoded value must stay at or below 16 KiB; SP-337 externalizes referenced bodies before limits, rather than leaving an oversized operation value. Canonical/derived placement and actual disk budgets require existing SP-340 admission, never unbounded storage.
+  The exact operational reader is reader.bsd.assignment_started@1.0.0 for AssistantContext::bsd_assignment_projection. It explicitly adopts SP-278 reader.storage.event_record_index@1.0.0, its CURRENT-selected actual root, globally complete verified source selection/coverage, authenticated generation anchor and advancing frontier. It scans in ascending Storage sequence, never timestamp order; the examined cursor cannot regress. It scans the complete captured range with exactly the bsd.assignment_started/Project/version filter, resolves full values/payload refs, verifies actual storage_instance_id, partition, sequence/event/payload/source joins and original full-value custody before processing a match. Verified nonmatches are scanned; corruption, unsupported input or missing proof is unavailable/degraded, never skipped as empty. Apply the immutable event reference to only its rebuildable derived row. In one actual redb transaction compare-and-swap the entire old checkpoint and atomically commit all changed rows with last_scanned_sequence, last_matched_event_id, source selection and the nine-field durable read token. An empty source has a null cursor; a nonempty zero-match range still advances its examined cursor. Each durable token field is rejoined to actual Storage controls, then the current live snapshot supplies its transient tenth redb_snapshot_id field. Same generation alone cannot prove a frontier unchanged. Inclusive restart rechecks the last exact event/frame/offset; replay produces no review, advice delivery, notification, Usage charge, canonical write or new event.
+  Historical inspection validates authenticated original admission/schema/recipe and source custody before the retained event, but never reruns current live-epoch/state/precondition checks. Current access, deletion and withdrawal checks still apply. Genuine older history after a live change stays readable; substituted or withdrawn originals refuse. Schema/version selection cannot be caller-chosen to weaken validation. Complete withdrawal fences writer admission at the actual cutoff, resolves pending issued results, invalidates reader/checkpoint publications and requires governed successor rebuild; missing source is explicitly unavailable, not a rebuilt success. Physical replay/restore/migration remains unimplemented and unadmitted.
+gui_related: false
+gui_classification_reason: Defines internal event, identity, Storage custody or validation, without changing presentation.
+depends_on:
+- SP-318
+- SP-278
+- SP-286
+- SP-337
+- CV-1353
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, payload, original-source identity and retry custody are bound.
+- No unregistered append, physical admission or native/runtime success is implied.
+- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- Plans/bsd_event_oracle_plan.json
+risk_class: advisory_history_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3d_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/bsd_event_payloads.schema.json
+- Plans/bsd_event_storage_contracts.schema.json
+- Plans/bsd_event_storage_candidates.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3D.md
+- Deck-2 item 9.a A (answer record 2026-11-05; DL-450 application pending)
+preserved_exact_tokens:
+- bsd.assignment_started
+- SP-318
+- SP-278
+- SP-286
+- SP-337
+- RP-EVENT-IDENTITY-APPROOT
+- RP-PROJECTION-3GEN
+negative_constraints:
+- Do not append a registry family, admit an event, enable BSD commands or treat static definitions as runtime evidence.
+- Do not define a local number/timestamp implementation or guard-isolation proof engine.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-1354 - bsd.assignment_stopped candidate Storage custody
+
+```yaml
+plan_unit_id: SP-1354
+unit_type: event_contract
+status: draft
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract for bsd.assignment_stopped, prepared without admission. SP-318's physical_family_registration_pending and handler_unavailable remain in force. SP-1365 separately stages the exact original lifecycle-source wrappers. The candidate rows in Plans/bsd_event_storage_candidates.json for bsd_assignment_stopped_operation, bsd_assignment_stopped_projection and bsd_assignment_stopped_checkpoint are reviewable proposed values, not appended registry families, storage admission, a budget decision or a readiness-denominator change. An integrator must separately admit exact physical families/migration/budgets after review; no event can be made writable by these candidate rows alone. Each value uses its exact closed Plans/bsd_event_storage_contracts.schema.json definition.
+  The canonical operation key is bsd_assignment_stopped_operation.v1:{scope_partition}:{hex(owner_operation_id)}; state pending_event carries the original authenticated source, event ID, key, semantic digest and durable SP-337 payload reference. state complete additionally requires the exact original first AppendReceipt. It never stores a second EventRecord or copied private body. Operation refs and their packs remain while original pending/result/receipt custody is needed, under RP-EVENT-IDENTITY-APPROOT; that lifetime protects identity and an immutable receipt, not linked content. It adopts SP-286/CV-339 first receipt/full-value v2 and SP-336/SP-347 durability explicitly. Coherent mandatory backup restores the operation, complete original source, receipt controls and payload packs together. Missing original is unavailable; it cannot be reconstructed from a GUI model or a supplied hash.
+  The derived projection key is bsd_assignment_stopped_projection.v1:{scope_partition}:{hex(owner_operation_id)}. It holds only the original source/event refs and Storage identities. The derived checkpoint key is bsd_assignment_stopped_checkpoint.v1:{scope_partition}:{storage_instance_id} for projector.bsd.assignment_stopped@1.0.0. Both use RP-PROJECTION-3GEN with holds; source event retention is independently {"registry_schema_id": "pm.storage_value_registry.v2", "policy_id": "RP-RUNTIME-365D", "policy_version": "1.0.0"}. A pending retention marker is never a valid production registry reference. Every complete encoded value must stay at or below 16 KiB; SP-337 externalizes referenced bodies before limits, rather than leaving an oversized operation value. Canonical/derived placement and actual disk budgets require existing SP-340 admission, never unbounded storage.
+  The exact operational reader is reader.bsd.assignment_stopped@1.0.0 for AssistantContext::bsd_stopped_projection. It explicitly adopts SP-278 reader.storage.event_record_index@1.0.0, its CURRENT-selected actual root, globally complete verified source selection/coverage, authenticated generation anchor and advancing frontier. It scans in ascending Storage sequence, never timestamp order; the examined cursor cannot regress. It scans the complete captured range with exactly the bsd.assignment_stopped/Project/version filter, resolves full values/payload refs, verifies actual storage_instance_id, partition, sequence/event/payload/source joins and original full-value custody before processing a match. Verified nonmatches are scanned; corruption, unsupported input or missing proof is unavailable/degraded, never skipped as empty. Apply the immutable event reference to only its rebuildable derived row. In one actual redb transaction compare-and-swap the entire old checkpoint and atomically commit all changed rows with last_scanned_sequence, last_matched_event_id, source selection and the nine-field durable read token. An empty source has a null cursor; a nonempty zero-match range still advances its examined cursor. Each durable token field is rejoined to actual Storage controls, then the current live snapshot supplies its transient tenth redb_snapshot_id field. Same generation alone cannot prove a frontier unchanged. Inclusive restart rechecks the last exact event/frame/offset; replay produces no review, advice delivery, notification, Usage charge, canonical write or new event.
+  Historical inspection validates authenticated original admission/schema/recipe and source custody before the retained event, but never reruns current live-epoch/state/precondition checks. Current access, deletion and withdrawal checks still apply. Genuine older history after a live change stays readable; substituted or withdrawn originals refuse. Schema/version selection cannot be caller-chosen to weaken validation. Complete withdrawal fences writer admission at the actual cutoff, resolves pending issued results, invalidates reader/checkpoint publications and requires governed successor rebuild; missing source is explicitly unavailable, not a rebuilt success. Physical replay/restore/migration remains unimplemented and unadmitted.
+gui_related: false
+gui_classification_reason: Defines internal event, identity, Storage custody or validation, without changing presentation.
+depends_on:
+- SP-318
+- SP-278
+- SP-286
+- SP-337
+- CV-1354
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, payload, original-source identity and retry custody are bound.
+- No unregistered append, physical admission or native/runtime success is implied.
+- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- Plans/bsd_event_oracle_plan.json
+risk_class: advisory_history_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3d_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/bsd_event_payloads.schema.json
+- Plans/bsd_event_storage_contracts.schema.json
+- Plans/bsd_event_storage_candidates.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3D.md
+- Deck-2 item 9.a A (answer record 2026-11-05; DL-450 application pending)
+preserved_exact_tokens:
+- bsd.assignment_stopped
+- SP-318
+- SP-278
+- SP-286
+- SP-337
+- RP-EVENT-IDENTITY-APPROOT
+- RP-PROJECTION-3GEN
+negative_constraints:
+- Do not append a registry family, admit an event, enable BSD commands or treat static definitions as runtime evidence.
+- Do not define a local number/timestamp implementation or guard-isolation proof engine.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-1355 - bsd.finding_cleared candidate Storage custody
+
+```yaml
+plan_unit_id: SP-1355
+unit_type: event_contract
+status: draft
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract for bsd.finding_cleared, prepared without admission. SP-318's physical_family_registration_pending and handler_unavailable remain in force. SP-1365 separately stages the exact original lifecycle-source wrappers. The candidate rows in Plans/bsd_event_storage_candidates.json for bsd_finding_cleared_operation, bsd_finding_cleared_projection and bsd_finding_cleared_checkpoint are reviewable proposed values, not appended registry families, storage admission, a budget decision or a readiness-denominator change. An integrator must separately admit exact physical families/migration/budgets after review; no event can be made writable by these candidate rows alone. Each value uses its exact closed Plans/bsd_event_storage_contracts.schema.json definition.
+  The canonical operation key is bsd_finding_cleared_operation.v1:{scope_partition}:{hex(owner_operation_id)}; state pending_event carries the original authenticated source, event ID, key, semantic digest and durable SP-337 payload reference. state complete additionally requires the exact original first AppendReceipt. It never stores a second EventRecord or copied private body. Operation refs and their packs remain while original pending/result/receipt custody is needed, under RP-EVENT-IDENTITY-APPROOT; that lifetime protects identity and an immutable receipt, not linked content. It adopts SP-286/CV-339 first receipt/full-value v2 and SP-336/SP-347 durability explicitly. Coherent mandatory backup restores the operation, complete original source, receipt controls and payload packs together. Missing original is unavailable; it cannot be reconstructed from a GUI model or a supplied hash.
+  The derived projection key is bsd_finding_cleared_projection.v1:{scope_partition}:{hex(owner_operation_id)}. It holds only the original source/event refs and Storage identities. The derived checkpoint key is bsd_finding_cleared_checkpoint.v1:{scope_partition}:{storage_instance_id} for projector.bsd.finding_cleared@1.0.0. Both use RP-PROJECTION-3GEN with holds; source event retention is independently {"registry_schema_id": "pm.storage_value_registry.v2", "policy_id": "RP-RUNTIME-365D", "policy_version": "1.0.0"}. A pending retention marker is never a valid production registry reference. Every complete encoded value must stay at or below 16 KiB; SP-337 externalizes referenced bodies before limits, rather than leaving an oversized operation value. Canonical/derived placement and actual disk budgets require existing SP-340 admission, never unbounded storage.
+  The exact operational reader is reader.bsd.finding_cleared@1.0.0 for AssistantContext::bsd_finding_projection. It explicitly adopts SP-278 reader.storage.event_record_index@1.0.0, its CURRENT-selected actual root, globally complete verified source selection/coverage, authenticated generation anchor and advancing frontier. It scans in ascending Storage sequence, never timestamp order; the examined cursor cannot regress. It scans the complete captured range with exactly the bsd.finding_cleared/Project/version filter, resolves full values/payload refs, verifies actual storage_instance_id, partition, sequence/event/payload/source joins and original full-value custody before processing a match. Verified nonmatches are scanned; corruption, unsupported input or missing proof is unavailable/degraded, never skipped as empty. Apply the immutable event reference to only its rebuildable derived row. In one actual redb transaction compare-and-swap the entire old checkpoint and atomically commit all changed rows with last_scanned_sequence, last_matched_event_id, source selection and the nine-field durable read token. An empty source has a null cursor; a nonempty zero-match range still advances its examined cursor. Each durable token field is rejoined to actual Storage controls, then the current live snapshot supplies its transient tenth redb_snapshot_id field. Same generation alone cannot prove a frontier unchanged. Inclusive restart rechecks the last exact event/frame/offset; replay produces no review, advice delivery, notification, Usage charge, canonical write or new event.
+  Historical inspection validates authenticated original admission/schema/recipe and source custody before the retained event, but never reruns current live-epoch/state/precondition checks. Current access, deletion and withdrawal checks still apply. Genuine older history after a live change stays readable; substituted or withdrawn originals refuse. Schema/version selection cannot be caller-chosen to weaken validation. Complete withdrawal fences writer admission at the actual cutoff, resolves pending issued results, invalidates reader/checkpoint publications and requires governed successor rebuild; missing source is explicitly unavailable, not a rebuilt success. Physical replay/restore/migration remains unimplemented and unadmitted.
+gui_related: false
+gui_classification_reason: Defines internal event, identity, Storage custody or validation, without changing presentation.
+depends_on:
+- SP-318
+- SP-278
+- SP-286
+- SP-337
+- CV-1355
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, payload, original-source identity and retry custody are bound.
+- No unregistered append, physical admission or native/runtime success is implied.
+- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- Plans/bsd_event_oracle_plan.json
+risk_class: advisory_history_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3d_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/bsd_event_payloads.schema.json
+- Plans/bsd_event_storage_contracts.schema.json
+- Plans/bsd_event_storage_candidates.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3D.md
+- Deck-2 item 9.a A (answer record 2026-11-05; DL-450 application pending)
+preserved_exact_tokens:
+- bsd.finding_cleared
+- SP-318
+- SP-278
+- SP-286
+- SP-337
+- RP-EVENT-IDENTITY-APPROOT
+- RP-PROJECTION-3GEN
+negative_constraints:
+- Do not append a registry family, admit an event, enable BSD commands or treat static definitions as runtime evidence.
+- Do not define a local number/timestamp implementation or guard-isolation proof engine.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-1356 - bsd.finding_held candidate Storage custody
+
+```yaml
+plan_unit_id: SP-1356
+unit_type: event_contract
+status: draft
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract for bsd.finding_held, prepared without admission. SP-318's physical_family_registration_pending and handler_unavailable remain in force. SP-1365 separately stages the exact original lifecycle-source wrappers. The candidate rows in Plans/bsd_event_storage_candidates.json for bsd_finding_held_operation, bsd_finding_held_projection and bsd_finding_held_checkpoint are reviewable proposed values, not appended registry families, storage admission, a budget decision or a readiness-denominator change. An integrator must separately admit exact physical families/migration/budgets after review; no event can be made writable by these candidate rows alone. Each value uses its exact closed Plans/bsd_event_storage_contracts.schema.json definition.
+  The canonical operation key is bsd_finding_held_operation.v1:{scope_partition}:{hex(owner_operation_id)}; state pending_event carries the original authenticated source, event ID, key, semantic digest and durable SP-337 payload reference. state complete additionally requires the exact original first AppendReceipt. It never stores a second EventRecord or copied private body. Operation refs and their packs remain while original pending/result/receipt custody is needed, under RP-EVENT-IDENTITY-APPROOT; that lifetime protects identity and an immutable receipt, not linked content. It adopts SP-286/CV-339 first receipt/full-value v2 and SP-336/SP-347 durability explicitly. Coherent mandatory backup restores the operation, complete original source, receipt controls and payload packs together. Missing original is unavailable; it cannot be reconstructed from a GUI model or a supplied hash.
+  The derived projection key is bsd_finding_held_projection.v1:{scope_partition}:{hex(owner_operation_id)}. It holds only the original source/event refs and Storage identities. The derived checkpoint key is bsd_finding_held_checkpoint.v1:{scope_partition}:{storage_instance_id} for projector.bsd.finding_held@1.0.0. Both use RP-PROJECTION-3GEN with holds; source event retention is independently {"registry_schema_id": "pm.storage_value_registry.v2", "policy_id": "RP-RUNTIME-365D", "policy_version": "1.0.0"}. A pending retention marker is never a valid production registry reference. Every complete encoded value must stay at or below 16 KiB; SP-337 externalizes referenced bodies before limits, rather than leaving an oversized operation value. Canonical/derived placement and actual disk budgets require existing SP-340 admission, never unbounded storage.
+  The exact operational reader is reader.bsd.finding_held@1.0.0 for AssistantContext::bsd_held_projection. It explicitly adopts SP-278 reader.storage.event_record_index@1.0.0, its CURRENT-selected actual root, globally complete verified source selection/coverage, authenticated generation anchor and advancing frontier. It scans in ascending Storage sequence, never timestamp order; the examined cursor cannot regress. It scans the complete captured range with exactly the bsd.finding_held/Project/version filter, resolves full values/payload refs, verifies actual storage_instance_id, partition, sequence/event/payload/source joins and original full-value custody before processing a match. Verified nonmatches are scanned; corruption, unsupported input or missing proof is unavailable/degraded, never skipped as empty. Apply the immutable event reference to only its rebuildable derived row. In one actual redb transaction compare-and-swap the entire old checkpoint and atomically commit all changed rows with last_scanned_sequence, last_matched_event_id, source selection and the nine-field durable read token. An empty source has a null cursor; a nonempty zero-match range still advances its examined cursor. Each durable token field is rejoined to actual Storage controls, then the current live snapshot supplies its transient tenth redb_snapshot_id field. Same generation alone cannot prove a frontier unchanged. Inclusive restart rechecks the last exact event/frame/offset; replay produces no review, advice delivery, notification, Usage charge, canonical write or new event.
+  Historical inspection validates authenticated original admission/schema/recipe and source custody before the retained event, but never reruns current live-epoch/state/precondition checks. Current access, deletion and withdrawal checks still apply. Genuine older history after a live change stays readable; substituted or withdrawn originals refuse. Schema/version selection cannot be caller-chosen to weaken validation. Complete withdrawal fences writer admission at the actual cutoff, resolves pending issued results, invalidates reader/checkpoint publications and requires governed successor rebuild; missing source is explicitly unavailable, not a rebuilt success. Physical replay/restore/migration remains unimplemented and unadmitted.
+gui_related: false
+gui_classification_reason: Defines internal event, identity, Storage custody or validation, without changing presentation.
+depends_on:
+- SP-318
+- SP-278
+- SP-286
+- SP-337
+- CV-1356
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, payload, original-source identity and retry custody are bound.
+- No unregistered append, physical admission or native/runtime success is implied.
+- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- Plans/bsd_event_oracle_plan.json
+risk_class: advisory_history_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3d_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/bsd_event_payloads.schema.json
+- Plans/bsd_event_storage_contracts.schema.json
+- Plans/bsd_event_storage_candidates.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3D.md
+- Deck-2 item 9.a A (answer record 2026-11-05; DL-450 application pending)
+preserved_exact_tokens:
+- bsd.finding_held
+- SP-318
+- SP-278
+- SP-286
+- SP-337
+- RP-EVENT-IDENTITY-APPROOT
+- RP-PROJECTION-3GEN
+negative_constraints:
+- Do not append a registry family, admit an event, enable BSD commands or treat static definitions as runtime evidence.
+- Do not define a local number/timestamp implementation or guard-isolation proof engine.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-1357 - bsd.finding_reconfirmed candidate Storage custody
+
+```yaml
+plan_unit_id: SP-1357
+unit_type: event_contract
+status: draft
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract for bsd.finding_reconfirmed, prepared without admission. SP-318's physical_family_registration_pending and handler_unavailable remain in force. SP-1365 separately stages the exact original lifecycle-source wrappers. The candidate rows in Plans/bsd_event_storage_candidates.json for bsd_finding_reconfirmed_operation, bsd_finding_reconfirmed_projection and bsd_finding_reconfirmed_checkpoint are reviewable proposed values, not appended registry families, storage admission, a budget decision or a readiness-denominator change. An integrator must separately admit exact physical families/migration/budgets after review; no event can be made writable by these candidate rows alone. Each value uses its exact closed Plans/bsd_event_storage_contracts.schema.json definition.
+  The canonical operation key is bsd_finding_reconfirmed_operation.v1:{scope_partition}:{hex(owner_operation_id)}; state pending_event carries the original authenticated source, event ID, key, semantic digest and durable SP-337 payload reference. state complete additionally requires the exact original first AppendReceipt. It never stores a second EventRecord or copied private body. Operation refs and their packs remain while original pending/result/receipt custody is needed, under RP-EVENT-IDENTITY-APPROOT; that lifetime protects identity and an immutable receipt, not linked content. It adopts SP-286/CV-339 first receipt/full-value v2 and SP-336/SP-347 durability explicitly. Coherent mandatory backup restores the operation, complete original source, receipt controls and payload packs together. Missing original is unavailable; it cannot be reconstructed from a GUI model or a supplied hash.
+  The derived projection key is bsd_finding_reconfirmed_projection.v1:{scope_partition}:{hex(owner_operation_id)}. It holds only the original source/event refs and Storage identities. The derived checkpoint key is bsd_finding_reconfirmed_checkpoint.v1:{scope_partition}:{storage_instance_id} for projector.bsd.finding_reconfirmed@1.0.0. Both use RP-PROJECTION-3GEN with holds; source event retention is independently {"registry_schema_id": "pm.storage_value_registry.v2", "policy_id": "RP-RUNTIME-365D", "policy_version": "1.0.0"}. A pending retention marker is never a valid production registry reference. Every complete encoded value must stay at or below 16 KiB; SP-337 externalizes referenced bodies before limits, rather than leaving an oversized operation value. Canonical/derived placement and actual disk budgets require existing SP-340 admission, never unbounded storage.
+  The exact operational reader is reader.bsd.finding_reconfirmed@1.0.0 for AssistantContext::bsd_reconfirmation_projection. It explicitly adopts SP-278 reader.storage.event_record_index@1.0.0, its CURRENT-selected actual root, globally complete verified source selection/coverage, authenticated generation anchor and advancing frontier. It scans in ascending Storage sequence, never timestamp order; the examined cursor cannot regress. It scans the complete captured range with exactly the bsd.finding_reconfirmed/Project/version filter, resolves full values/payload refs, verifies actual storage_instance_id, partition, sequence/event/payload/source joins and original full-value custody before processing a match. Verified nonmatches are scanned; corruption, unsupported input or missing proof is unavailable/degraded, never skipped as empty. Apply the immutable event reference to only its rebuildable derived row. In one actual redb transaction compare-and-swap the entire old checkpoint and atomically commit all changed rows with last_scanned_sequence, last_matched_event_id, source selection and the nine-field durable read token. An empty source has a null cursor; a nonempty zero-match range still advances its examined cursor. Each durable token field is rejoined to actual Storage controls, then the current live snapshot supplies its transient tenth redb_snapshot_id field. Same generation alone cannot prove a frontier unchanged. Inclusive restart rechecks the last exact event/frame/offset; replay produces no review, advice delivery, notification, Usage charge, canonical write or new event.
+  Historical inspection validates authenticated original admission/schema/recipe and source custody before the retained event, but never reruns current live-epoch/state/precondition checks. Current access, deletion and withdrawal checks still apply. Genuine older history after a live change stays readable; substituted or withdrawn originals refuse. Schema/version selection cannot be caller-chosen to weaken validation. Complete withdrawal fences writer admission at the actual cutoff, resolves pending issued results, invalidates reader/checkpoint publications and requires governed successor rebuild; missing source is explicitly unavailable, not a rebuilt success. Physical replay/restore/migration remains unimplemented and unadmitted.
+gui_related: false
+gui_classification_reason: Defines internal event, identity, Storage custody or validation, without changing presentation.
+depends_on:
+- SP-318
+- SP-278
+- SP-286
+- SP-337
+- CV-1357
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, payload, original-source identity and retry custody are bound.
+- No unregistered append, physical admission or native/runtime success is implied.
+- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- Plans/bsd_event_oracle_plan.json
+risk_class: advisory_history_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3d_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/bsd_event_payloads.schema.json
+- Plans/bsd_event_storage_contracts.schema.json
+- Plans/bsd_event_storage_candidates.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3D.md
+- Deck-2 item 9.a A (answer record 2026-11-05; DL-450 application pending)
+preserved_exact_tokens:
+- bsd.finding_reconfirmed
+- SP-318
+- SP-278
+- SP-286
+- SP-337
+- RP-EVENT-IDENTITY-APPROOT
+- RP-PROJECTION-3GEN
+negative_constraints:
+- Do not append a registry family, admit an event, enable BSD commands or treat static definitions as runtime evidence.
+- Do not define a local number/timestamp implementation or guard-isolation proof engine.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-1358 - bsd.finding_suppressed candidate Storage custody
+
+```yaml
+plan_unit_id: SP-1358
+unit_type: event_contract
+status: draft
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract for bsd.finding_suppressed, prepared without admission. SP-318's physical_family_registration_pending and handler_unavailable remain in force. SP-1365 separately stages the exact original lifecycle-source wrappers. The candidate rows in Plans/bsd_event_storage_candidates.json for bsd_finding_suppressed_operation, bsd_finding_suppressed_projection and bsd_finding_suppressed_checkpoint are reviewable proposed values, not appended registry families, storage admission, a budget decision or a readiness-denominator change. An integrator must separately admit exact physical families/migration/budgets after review; no event can be made writable by these candidate rows alone. Each value uses its exact closed Plans/bsd_event_storage_contracts.schema.json definition.
+  The canonical operation key is bsd_finding_suppressed_operation.v1:{scope_partition}:{hex(owner_operation_id)}; state pending_event carries the original authenticated source, event ID, key, semantic digest and durable SP-337 payload reference. state complete additionally requires the exact original first AppendReceipt. It never stores a second EventRecord or copied private body. Operation refs and their packs remain while original pending/result/receipt custody is needed, under RP-EVENT-IDENTITY-APPROOT; that lifetime protects identity and an immutable receipt, not linked content. It adopts SP-286/CV-339 first receipt/full-value v2 and SP-336/SP-347 durability explicitly. Coherent mandatory backup restores the operation, complete original source, receipt controls and payload packs together. Missing original is unavailable; it cannot be reconstructed from a GUI model or a supplied hash.
+  The derived projection key is bsd_finding_suppressed_projection.v1:{scope_partition}:{hex(owner_operation_id)}. It holds only the original source/event refs and Storage identities. The derived checkpoint key is bsd_finding_suppressed_checkpoint.v1:{scope_partition}:{storage_instance_id} for projector.bsd.finding_suppressed@1.0.0. Both use RP-PROJECTION-3GEN with holds; source event retention is independently {"registry_schema_id": "pm.storage_value_registry.v2", "policy_id": "RP-RUNTIME-365D", "policy_version": "1.0.0"}. A pending retention marker is never a valid production registry reference. Every complete encoded value must stay at or below 16 KiB; SP-337 externalizes referenced bodies before limits, rather than leaving an oversized operation value. Canonical/derived placement and actual disk budgets require existing SP-340 admission, never unbounded storage.
+  The exact operational reader is reader.bsd.finding_suppressed@1.0.0 for Usage::bsd_suppression_counters. It explicitly adopts SP-278 reader.storage.event_record_index@1.0.0, its CURRENT-selected actual root, globally complete verified source selection/coverage, authenticated generation anchor and advancing frontier. It scans in ascending Storage sequence, never timestamp order; the examined cursor cannot regress. It scans the complete captured range with exactly the bsd.finding_suppressed/Project/version filter, resolves full values/payload refs, verifies actual storage_instance_id, partition, sequence/event/payload/source joins and original full-value custody before processing a match. Verified nonmatches are scanned; corruption, unsupported input or missing proof is unavailable/degraded, never skipped as empty. Apply the immutable event reference to only its rebuildable derived row. In one actual redb transaction compare-and-swap the entire old checkpoint and atomically commit all changed rows with last_scanned_sequence, last_matched_event_id, source selection and the nine-field durable read token. An empty source has a null cursor; a nonempty zero-match range still advances its examined cursor. Each durable token field is rejoined to actual Storage controls, then the current live snapshot supplies its transient tenth redb_snapshot_id field. Same generation alone cannot prove a frontier unchanged. Inclusive restart rechecks the last exact event/frame/offset; replay produces no review, advice delivery, notification, Usage charge, canonical write or new event.
+  Historical inspection validates authenticated original admission/schema/recipe and source custody before the retained event, but never reruns current live-epoch/state/precondition checks. Current access, deletion and withdrawal checks still apply. Genuine older history after a live change stays readable; substituted or withdrawn originals refuse. Schema/version selection cannot be caller-chosen to weaken validation. Complete withdrawal fences writer admission at the actual cutoff, resolves pending issued results, invalidates reader/checkpoint publications and requires governed successor rebuild; missing source is explicitly unavailable, not a rebuilt success. Physical replay/restore/migration remains unimplemented and unadmitted.
+gui_related: false
+gui_classification_reason: Defines internal event, identity, Storage custody or validation, without changing presentation.
+depends_on:
+- SP-318
+- SP-278
+- SP-286
+- SP-337
+- CV-1358
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, payload, original-source identity and retry custody are bound.
+- No unregistered append, physical admission or native/runtime success is implied.
+- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- Plans/bsd_event_oracle_plan.json
+risk_class: advisory_history_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3d_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/bsd_event_payloads.schema.json
+- Plans/bsd_event_storage_contracts.schema.json
+- Plans/bsd_event_storage_candidates.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3D.md
+- Deck-2 item 9.a A (answer record 2026-11-05; DL-450 application pending)
+preserved_exact_tokens:
+- bsd.finding_suppressed
+- SP-318
+- SP-278
+- SP-286
+- SP-337
+- RP-EVENT-IDENTITY-APPROOT
+- RP-PROJECTION-3GEN
+negative_constraints:
+- Do not append a registry family, admit an event, enable BSD commands or treat static definitions as runtime evidence.
+- Do not define a local number/timestamp implementation or guard-isolation proof engine.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-1359 - bsd.output_quarantined candidate Storage custody
+
+```yaml
+plan_unit_id: SP-1359
+unit_type: event_contract
+status: draft
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract for bsd.output_quarantined, prepared without admission. SP-318's physical_family_registration_pending and handler_unavailable remain in force. SP-1365 separately stages the exact original lifecycle-source wrappers. The candidate rows in Plans/bsd_event_storage_candidates.json for bsd_output_quarantined_operation, bsd_output_quarantined_projection and bsd_output_quarantined_checkpoint are reviewable proposed values, not appended registry families, storage admission, a budget decision or a readiness-denominator change. An integrator must separately admit exact physical families/migration/budgets after review; no event can be made writable by these candidate rows alone. Each value uses its exact closed Plans/bsd_event_storage_contracts.schema.json definition.
+  The canonical operation key is bsd_output_quarantined_operation.v1:{scope_partition}:{hex(owner_operation_id)}; state pending_event carries the original authenticated source, event ID, key, semantic digest and durable SP-337 payload reference. state complete additionally requires the exact original first AppendReceipt. It never stores a second EventRecord or copied private body. Operation refs and their packs remain while original pending/result/receipt custody is needed, under RP-EVENT-IDENTITY-APPROOT; that lifetime protects identity and an immutable receipt, not linked content. It adopts SP-286/CV-339 first receipt/full-value v2 and SP-336/SP-347 durability explicitly. Coherent mandatory backup restores the operation, complete original source, receipt controls and payload packs together. Missing original is unavailable; it cannot be reconstructed from a GUI model or a supplied hash.
+  The derived projection key is bsd_output_quarantined_projection.v1:{scope_partition}:{hex(owner_operation_id)}. It holds only the original source/event refs and Storage identities. The derived checkpoint key is bsd_output_quarantined_checkpoint.v1:{scope_partition}:{storage_instance_id} for projector.bsd.output_quarantined@1.0.0. Both use RP-PROJECTION-3GEN with holds; source event retention is independently {"registry_schema_id": "pm.storage_value_registry.v2", "policy_id": "RP-RUNTIME-365D", "policy_version": "1.0.0"}. A pending retention marker is never a valid production registry reference. Every complete encoded value must stay at or below 16 KiB; SP-337 externalizes referenced bodies before limits, rather than leaving an oversized operation value. Canonical/derived placement and actual disk budgets require existing SP-340 admission, never unbounded storage.
+  The exact operational reader is reader.bsd.output_quarantined@1.0.0 for AssistantContext::bsd_quarantine_projection. It explicitly adopts SP-278 reader.storage.event_record_index@1.0.0, its CURRENT-selected actual root, globally complete verified source selection/coverage, authenticated generation anchor and advancing frontier. It scans in ascending Storage sequence, never timestamp order; the examined cursor cannot regress. It scans the complete captured range with exactly the bsd.output_quarantined/Project/version filter, resolves full values/payload refs, verifies actual storage_instance_id, partition, sequence/event/payload/source joins and original full-value custody before processing a match. Verified nonmatches are scanned; corruption, unsupported input or missing proof is unavailable/degraded, never skipped as empty. Apply the immutable event reference to only its rebuildable derived row. In one actual redb transaction compare-and-swap the entire old checkpoint and atomically commit all changed rows with last_scanned_sequence, last_matched_event_id, source selection and the nine-field durable read token. An empty source has a null cursor; a nonempty zero-match range still advances its examined cursor. Each durable token field is rejoined to actual Storage controls, then the current live snapshot supplies its transient tenth redb_snapshot_id field. Same generation alone cannot prove a frontier unchanged. Inclusive restart rechecks the last exact event/frame/offset; replay produces no review, advice delivery, notification, Usage charge, canonical write or new event.
+  Historical inspection validates authenticated original admission/schema/recipe and source custody before the retained event, but never reruns current live-epoch/state/precondition checks. Current access, deletion and withdrawal checks still apply. Genuine older history after a live change stays readable; substituted or withdrawn originals refuse. Schema/version selection cannot be caller-chosen to weaken validation. Complete withdrawal fences writer admission at the actual cutoff, resolves pending issued results, invalidates reader/checkpoint publications and requires governed successor rebuild; missing source is explicitly unavailable, not a rebuilt success. Physical replay/restore/migration remains unimplemented and unadmitted.
+gui_related: false
+gui_classification_reason: Defines internal event, identity, Storage custody or validation, without changing presentation.
+depends_on:
+- SP-318
+- SP-278
+- SP-286
+- SP-337
+- CV-1359
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, payload, original-source identity and retry custody are bound.
+- No unregistered append, physical admission or native/runtime success is implied.
+- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- Plans/bsd_event_oracle_plan.json
+risk_class: advisory_history_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3d_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/bsd_event_payloads.schema.json
+- Plans/bsd_event_storage_contracts.schema.json
+- Plans/bsd_event_storage_candidates.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3D.md
+- Deck-2 item 9.a A (answer record 2026-11-05; DL-450 application pending)
+preserved_exact_tokens:
+- bsd.output_quarantined
+- SP-318
+- SP-278
+- SP-286
+- SP-337
+- RP-EVENT-IDENTITY-APPROOT
+- RP-PROJECTION-3GEN
+negative_constraints:
+- Do not append a registry family, admit an event, enable BSD commands or treat static definitions as runtime evidence.
+- Do not define a local number/timestamp implementation or guard-isolation proof engine.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-1360 - bsd.policy_changed candidate Storage custody
+
+```yaml
+plan_unit_id: SP-1360
+unit_type: event_contract
+status: draft
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract for bsd.policy_changed, prepared without admission. SP-318's physical_family_registration_pending and handler_unavailable remain in force. SP-1365 separately stages the exact original lifecycle-source wrappers. The candidate rows in Plans/bsd_event_storage_candidates.json for bsd_policy_changed_operation, bsd_policy_changed_projection and bsd_policy_changed_checkpoint are reviewable proposed values, not appended registry families, storage admission, a budget decision or a readiness-denominator change. An integrator must separately admit exact physical families/migration/budgets after review; no event can be made writable by these candidate rows alone. Each value uses its exact closed Plans/bsd_event_storage_contracts.schema.json definition.
+  The canonical operation key is bsd_policy_changed_operation.v1:{scope_partition}:{hex(owner_operation_id)}; state pending_event carries the original authenticated source, event ID, key, semantic digest and durable SP-337 payload reference. state complete additionally requires the exact original first AppendReceipt. It never stores a second EventRecord or copied private body. Operation refs and their packs remain while original pending/result/receipt custody is needed, under RP-EVENT-IDENTITY-APPROOT; that lifetime protects identity and an immutable receipt, not linked content. It adopts SP-286/CV-339 first receipt/full-value v2 and SP-336/SP-347 durability explicitly. Coherent mandatory backup restores the operation, complete original source, receipt controls and payload packs together. Missing original is unavailable; it cannot be reconstructed from a GUI model or a supplied hash.
+  The derived projection key is bsd_policy_changed_projection.v1:{scope_partition}:{hex(owner_operation_id)}. It holds only the original source/event refs and Storage identities. The derived checkpoint key is bsd_policy_changed_checkpoint.v1:{scope_partition}:{storage_instance_id} for projector.bsd.policy_changed@1.0.0. Both use RP-PROJECTION-3GEN with holds; source event retention is independently "PENDING_RETENTION_DECISION". A pending retention marker is never a valid production registry reference. Every complete encoded value must stay at or below 16 KiB; SP-337 externalizes referenced bodies before limits, rather than leaving an oversized operation value. Canonical/derived placement and actual disk budgets require existing SP-340 admission, never unbounded storage.
+  The exact operational reader is reader.bsd.policy_changed@1.0.0 for Settings::bsd_policy_projection. It explicitly adopts SP-278 reader.storage.event_record_index@1.0.0, its CURRENT-selected actual root, globally complete verified source selection/coverage, authenticated generation anchor and advancing frontier. It scans in ascending Storage sequence, never timestamp order; the examined cursor cannot regress. It scans the complete captured range with exactly the bsd.policy_changed/Project/version filter, resolves full values/payload refs, verifies actual storage_instance_id, partition, sequence/event/payload/source joins and original full-value custody before processing a match. Verified nonmatches are scanned; corruption, unsupported input or missing proof is unavailable/degraded, never skipped as empty. Apply the immutable event reference to only its rebuildable derived row. In one actual redb transaction compare-and-swap the entire old checkpoint and atomically commit all changed rows with last_scanned_sequence, last_matched_event_id, source selection and the nine-field durable read token. An empty source has a null cursor; a nonempty zero-match range still advances its examined cursor. Each durable token field is rejoined to actual Storage controls, then the current live snapshot supplies its transient tenth redb_snapshot_id field. Same generation alone cannot prove a frontier unchanged. Inclusive restart rechecks the last exact event/frame/offset; replay produces no review, advice delivery, notification, Usage charge, canonical write or new event.
+  Historical inspection validates authenticated original admission/schema/recipe and source custody before the retained event, but never reruns current live-epoch/state/precondition checks. Current access, deletion and withdrawal checks still apply. Genuine older history after a live change stays readable; substituted or withdrawn originals refuse. Schema/version selection cannot be caller-chosen to weaken validation. Complete withdrawal fences writer admission at the actual cutoff, resolves pending issued results, invalidates reader/checkpoint publications and requires governed successor rebuild; missing source is explicitly unavailable, not a rebuilt success. Physical replay/restore/migration remains unimplemented and unadmitted.
+gui_related: false
+gui_classification_reason: Defines internal event, identity, Storage custody or validation, without changing presentation.
+depends_on:
+- SP-318
+- SP-278
+- SP-286
+- SP-337
+- CV-1360
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, payload, original-source identity and retry custody are bound.
+- No unregistered append, physical admission or native/runtime success is implied.
+- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- Plans/bsd_event_oracle_plan.json
+risk_class: advisory_history_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3d_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/bsd_event_payloads.schema.json
+- Plans/bsd_event_storage_contracts.schema.json
+- Plans/bsd_event_storage_candidates.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3D.md
+- Deck-2 item 9.a A (answer record 2026-11-05; DL-450 application pending)
+preserved_exact_tokens:
+- bsd.policy_changed
+- SP-318
+- SP-278
+- SP-286
+- SP-337
+- RP-EVENT-IDENTITY-APPROOT
+- RP-PROJECTION-3GEN
+negative_constraints:
+- Do not append a registry family, admit an event, enable BSD commands or treat static definitions as runtime evidence.
+- Do not define a local number/timestamp implementation or guard-isolation proof engine.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-1361 - bsd.review_failed candidate Storage custody
+
+```yaml
+plan_unit_id: SP-1361
+unit_type: event_contract
+status: draft
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract for bsd.review_failed, prepared without admission. SP-318's physical_family_registration_pending and handler_unavailable remain in force. SP-1365 separately stages the exact original lifecycle-source wrappers. The candidate rows in Plans/bsd_event_storage_candidates.json for bsd_review_failed_operation, bsd_review_failed_projection and bsd_review_failed_checkpoint are reviewable proposed values, not appended registry families, storage admission, a budget decision or a readiness-denominator change. An integrator must separately admit exact physical families/migration/budgets after review; no event can be made writable by these candidate rows alone. Each value uses its exact closed Plans/bsd_event_storage_contracts.schema.json definition.
+  The canonical operation key is bsd_review_failed_operation.v1:{scope_partition}:{hex(owner_operation_id)}; state pending_event carries the original authenticated source, event ID, key, semantic digest and durable SP-337 payload reference. state complete additionally requires the exact original first AppendReceipt. It never stores a second EventRecord or copied private body. Operation refs and their packs remain while original pending/result/receipt custody is needed, under RP-EVENT-IDENTITY-APPROOT; that lifetime protects identity and an immutable receipt, not linked content. It adopts SP-286/CV-339 first receipt/full-value v2 and SP-336/SP-347 durability explicitly. Coherent mandatory backup restores the operation, complete original source, receipt controls and payload packs together. Missing original is unavailable; it cannot be reconstructed from a GUI model or a supplied hash.
+  The derived projection key is bsd_review_failed_projection.v1:{scope_partition}:{hex(owner_operation_id)}. It holds only the original source/event refs and Storage identities. The derived checkpoint key is bsd_review_failed_checkpoint.v1:{scope_partition}:{storage_instance_id} for projector.bsd.review_failed@1.0.0. Both use RP-PROJECTION-3GEN with holds; source event retention is independently {"registry_schema_id": "pm.storage_value_registry.v2", "policy_id": "RP-RUNTIME-365D", "policy_version": "1.0.0"}. A pending retention marker is never a valid production registry reference. Every complete encoded value must stay at or below 16 KiB; SP-337 externalizes referenced bodies before limits, rather than leaving an oversized operation value. Canonical/derived placement and actual disk budgets require existing SP-340 admission, never unbounded storage.
+  The exact operational reader is reader.bsd.review_failed@1.0.0 for Usage::bsd_failure_attribution. It explicitly adopts SP-278 reader.storage.event_record_index@1.0.0, its CURRENT-selected actual root, globally complete verified source selection/coverage, authenticated generation anchor and advancing frontier. It scans in ascending Storage sequence, never timestamp order; the examined cursor cannot regress. It scans the complete captured range with exactly the bsd.review_failed/Project/version filter, resolves full values/payload refs, verifies actual storage_instance_id, partition, sequence/event/payload/source joins and original full-value custody before processing a match. Verified nonmatches are scanned; corruption, unsupported input or missing proof is unavailable/degraded, never skipped as empty. Apply the immutable event reference to only its rebuildable derived row. In one actual redb transaction compare-and-swap the entire old checkpoint and atomically commit all changed rows with last_scanned_sequence, last_matched_event_id, source selection and the nine-field durable read token. An empty source has a null cursor; a nonempty zero-match range still advances its examined cursor. Each durable token field is rejoined to actual Storage controls, then the current live snapshot supplies its transient tenth redb_snapshot_id field. Same generation alone cannot prove a frontier unchanged. Inclusive restart rechecks the last exact event/frame/offset; replay produces no review, advice delivery, notification, Usage charge, canonical write or new event.
+  Historical inspection validates authenticated original admission/schema/recipe and source custody before the retained event, but never reruns current live-epoch/state/precondition checks. Current access, deletion and withdrawal checks still apply. Genuine older history after a live change stays readable; substituted or withdrawn originals refuse. Schema/version selection cannot be caller-chosen to weaken validation. Complete withdrawal fences writer admission at the actual cutoff, resolves pending issued results, invalidates reader/checkpoint publications and requires governed successor rebuild; missing source is explicitly unavailable, not a rebuilt success. Physical replay/restore/migration remains unimplemented and unadmitted.
+gui_related: false
+gui_classification_reason: Defines internal event, identity, Storage custody or validation, without changing presentation.
+depends_on:
+- SP-318
+- SP-278
+- SP-286
+- SP-337
+- CV-1361
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, payload, original-source identity and retry custody are bound.
+- No unregistered append, physical admission or native/runtime success is implied.
+- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- Plans/bsd_event_oracle_plan.json
+risk_class: advisory_history_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3d_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/bsd_event_payloads.schema.json
+- Plans/bsd_event_storage_contracts.schema.json
+- Plans/bsd_event_storage_candidates.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3D.md
+- Deck-2 item 9.a A (answer record 2026-11-05; DL-450 application pending)
+preserved_exact_tokens:
+- bsd.review_failed
+- SP-318
+- SP-278
+- SP-286
+- SP-337
+- RP-EVENT-IDENTITY-APPROOT
+- RP-PROJECTION-3GEN
+negative_constraints:
+- Do not append a registry family, admit an event, enable BSD commands or treat static definitions as runtime evidence.
+- Do not define a local number/timestamp implementation or guard-isolation proof engine.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-1362 - bsd.review_started candidate Storage custody
+
+```yaml
+plan_unit_id: SP-1362
+unit_type: event_contract
+status: draft
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract for bsd.review_started, prepared without admission. SP-318's physical_family_registration_pending and handler_unavailable remain in force. SP-1365 separately stages the exact original lifecycle-source wrappers. The candidate rows in Plans/bsd_event_storage_candidates.json for bsd_review_started_operation, bsd_review_started_projection and bsd_review_started_checkpoint are reviewable proposed values, not appended registry families, storage admission, a budget decision or a readiness-denominator change. An integrator must separately admit exact physical families/migration/budgets after review; no event can be made writable by these candidate rows alone. Each value uses its exact closed Plans/bsd_event_storage_contracts.schema.json definition.
+  The canonical operation key is bsd_review_started_operation.v1:{scope_partition}:{hex(owner_operation_id)}; state pending_event carries the original authenticated source, event ID, key, semantic digest and durable SP-337 payload reference. state complete additionally requires the exact original first AppendReceipt. It never stores a second EventRecord or copied private body. Operation refs and their packs remain while original pending/result/receipt custody is needed, under RP-EVENT-IDENTITY-APPROOT; that lifetime protects identity and an immutable receipt, not linked content. It adopts SP-286/CV-339 first receipt/full-value v2 and SP-336/SP-347 durability explicitly. Coherent mandatory backup restores the operation, complete original source, receipt controls and payload packs together. Missing original is unavailable; it cannot be reconstructed from a GUI model or a supplied hash.
+  The derived projection key is bsd_review_started_projection.v1:{scope_partition}:{hex(owner_operation_id)}. It holds only the original source/event refs and Storage identities. The derived checkpoint key is bsd_review_started_checkpoint.v1:{scope_partition}:{storage_instance_id} for projector.bsd.review_started@1.0.0. Both use RP-PROJECTION-3GEN with holds; source event retention is independently {"registry_schema_id": "pm.storage_value_registry.v2", "policy_id": "RP-RUNTIME-365D", "policy_version": "1.0.0"}. A pending retention marker is never a valid production registry reference. Every complete encoded value must stay at or below 16 KiB; SP-337 externalizes referenced bodies before limits, rather than leaving an oversized operation value. Canonical/derived placement and actual disk budgets require existing SP-340 admission, never unbounded storage.
+  The exact operational reader is reader.bsd.review_started@1.0.0 for AssistantContext::bsd_review_projection. It explicitly adopts SP-278 reader.storage.event_record_index@1.0.0, its CURRENT-selected actual root, globally complete verified source selection/coverage, authenticated generation anchor and advancing frontier. It scans in ascending Storage sequence, never timestamp order; the examined cursor cannot regress. It scans the complete captured range with exactly the bsd.review_started/Project/version filter, resolves full values/payload refs, verifies actual storage_instance_id, partition, sequence/event/payload/source joins and original full-value custody before processing a match. Verified nonmatches are scanned; corruption, unsupported input or missing proof is unavailable/degraded, never skipped as empty. Apply the immutable event reference to only its rebuildable derived row. In one actual redb transaction compare-and-swap the entire old checkpoint and atomically commit all changed rows with last_scanned_sequence, last_matched_event_id, source selection and the nine-field durable read token. An empty source has a null cursor; a nonempty zero-match range still advances its examined cursor. Each durable token field is rejoined to actual Storage controls, then the current live snapshot supplies its transient tenth redb_snapshot_id field. Same generation alone cannot prove a frontier unchanged. Inclusive restart rechecks the last exact event/frame/offset; replay produces no review, advice delivery, notification, Usage charge, canonical write or new event.
+  Historical inspection validates authenticated original admission/schema/recipe and source custody before the retained event, but never reruns current live-epoch/state/precondition checks. Current access, deletion and withdrawal checks still apply. Genuine older history after a live change stays readable; substituted or withdrawn originals refuse. Schema/version selection cannot be caller-chosen to weaken validation. Complete withdrawal fences writer admission at the actual cutoff, resolves pending issued results, invalidates reader/checkpoint publications and requires governed successor rebuild; missing source is explicitly unavailable, not a rebuilt success. Physical replay/restore/migration remains unimplemented and unadmitted.
+gui_related: false
+gui_classification_reason: Defines internal event, identity, Storage custody or validation, without changing presentation.
+depends_on:
+- SP-318
+- SP-278
+- SP-286
+- SP-337
+- CV-1362
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, payload, original-source identity and retry custody are bound.
+- No unregistered append, physical admission or native/runtime success is implied.
+- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- Plans/bsd_event_oracle_plan.json
+risk_class: advisory_history_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3d_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/bsd_event_payloads.schema.json
+- Plans/bsd_event_storage_contracts.schema.json
+- Plans/bsd_event_storage_candidates.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3D.md
+- Deck-2 item 9.a A (answer record 2026-11-05; DL-450 application pending)
+preserved_exact_tokens:
+- bsd.review_started
+- SP-318
+- SP-278
+- SP-286
+- SP-337
+- RP-EVENT-IDENTITY-APPROOT
+- RP-PROJECTION-3GEN
+negative_constraints:
+- Do not append a registry family, admit an event, enable BSD commands or treat static definitions as runtime evidence.
+- Do not define a local number/timestamp implementation or guard-isolation proof engine.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-1363 - bsd.review_timed_out candidate Storage custody
+
+```yaml
+plan_unit_id: SP-1363
+unit_type: event_contract
+status: draft
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract for bsd.review_timed_out, prepared without admission. SP-318's physical_family_registration_pending and handler_unavailable remain in force. SP-1365 separately stages the exact original lifecycle-source wrappers. The candidate rows in Plans/bsd_event_storage_candidates.json for bsd_review_timed_out_operation, bsd_review_timed_out_projection and bsd_review_timed_out_checkpoint are reviewable proposed values, not appended registry families, storage admission, a budget decision or a readiness-denominator change. An integrator must separately admit exact physical families/migration/budgets after review; no event can be made writable by these candidate rows alone. Each value uses its exact closed Plans/bsd_event_storage_contracts.schema.json definition.
+  The canonical operation key is bsd_review_timed_out_operation.v1:{scope_partition}:{hex(owner_operation_id)}; state pending_event carries the original authenticated source, event ID, key, semantic digest and durable SP-337 payload reference. state complete additionally requires the exact original first AppendReceipt. It never stores a second EventRecord or copied private body. Operation refs and their packs remain while original pending/result/receipt custody is needed, under RP-EVENT-IDENTITY-APPROOT; that lifetime protects identity and an immutable receipt, not linked content. It adopts SP-286/CV-339 first receipt/full-value v2 and SP-336/SP-347 durability explicitly. Coherent mandatory backup restores the operation, complete original source, receipt controls and payload packs together. Missing original is unavailable; it cannot be reconstructed from a GUI model or a supplied hash.
+  The derived projection key is bsd_review_timed_out_projection.v1:{scope_partition}:{hex(owner_operation_id)}. It holds only the original source/event refs and Storage identities. The derived checkpoint key is bsd_review_timed_out_checkpoint.v1:{scope_partition}:{storage_instance_id} for projector.bsd.review_timed_out@1.0.0. Both use RP-PROJECTION-3GEN with holds; source event retention is independently {"registry_schema_id": "pm.storage_value_registry.v2", "policy_id": "RP-RUNTIME-365D", "policy_version": "1.0.0"}. A pending retention marker is never a valid production registry reference. Every complete encoded value must stay at or below 16 KiB; SP-337 externalizes referenced bodies before limits, rather than leaving an oversized operation value. Canonical/derived placement and actual disk budgets require existing SP-340 admission, never unbounded storage.
+  The exact operational reader is reader.bsd.review_timed_out@1.0.0 for Usage::bsd_timeout_attribution. It explicitly adopts SP-278 reader.storage.event_record_index@1.0.0, its CURRENT-selected actual root, globally complete verified source selection/coverage, authenticated generation anchor and advancing frontier. It scans in ascending Storage sequence, never timestamp order; the examined cursor cannot regress. It scans the complete captured range with exactly the bsd.review_timed_out/Project/version filter, resolves full values/payload refs, verifies actual storage_instance_id, partition, sequence/event/payload/source joins and original full-value custody before processing a match. Verified nonmatches are scanned; corruption, unsupported input or missing proof is unavailable/degraded, never skipped as empty. Apply the immutable event reference to only its rebuildable derived row. In one actual redb transaction compare-and-swap the entire old checkpoint and atomically commit all changed rows with last_scanned_sequence, last_matched_event_id, source selection and the nine-field durable read token. An empty source has a null cursor; a nonempty zero-match range still advances its examined cursor. Each durable token field is rejoined to actual Storage controls, then the current live snapshot supplies its transient tenth redb_snapshot_id field. Same generation alone cannot prove a frontier unchanged. Inclusive restart rechecks the last exact event/frame/offset; replay produces no review, advice delivery, notification, Usage charge, canonical write or new event.
+  Historical inspection validates authenticated original admission/schema/recipe and source custody before the retained event, but never reruns current live-epoch/state/precondition checks. Current access, deletion and withdrawal checks still apply. Genuine older history after a live change stays readable; substituted or withdrawn originals refuse. Schema/version selection cannot be caller-chosen to weaken validation. Complete withdrawal fences writer admission at the actual cutoff, resolves pending issued results, invalidates reader/checkpoint publications and requires governed successor rebuild; missing source is explicitly unavailable, not a rebuilt success. Physical replay/restore/migration remains unimplemented and unadmitted.
+gui_related: false
+gui_classification_reason: Defines internal event, identity, Storage custody or validation, without changing presentation.
+depends_on:
+- SP-318
+- SP-278
+- SP-286
+- SP-337
+- CV-1363
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, payload, original-source identity and retry custody are bound.
+- No unregistered append, physical admission or native/runtime success is implied.
+- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- Plans/bsd_event_oracle_plan.json
+risk_class: advisory_history_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3d_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/bsd_event_payloads.schema.json
+- Plans/bsd_event_storage_contracts.schema.json
+- Plans/bsd_event_storage_candidates.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3D.md
+- Deck-2 item 9.a A (answer record 2026-11-05; DL-450 application pending)
+preserved_exact_tokens:
+- bsd.review_timed_out
+- SP-318
+- SP-278
+- SP-286
+- SP-337
+- RP-EVENT-IDENTITY-APPROOT
+- RP-PROJECTION-3GEN
+negative_constraints:
+- Do not append a registry family, admit an event, enable BSD commands or treat static definitions as runtime evidence.
+- Do not define a local number/timestamp implementation or guard-isolation proof engine.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-1364 - bsd.workflow_binding_created candidate Storage custody
+
+```yaml
+plan_unit_id: SP-1364
+unit_type: event_contract
+status: draft
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract for bsd.workflow_binding_created, prepared without admission. SP-318's physical_family_registration_pending and handler_unavailable remain in force. SP-1365 separately stages the exact original lifecycle-source wrappers. The candidate rows in Plans/bsd_event_storage_candidates.json for bsd_workflow_binding_created_operation, bsd_workflow_binding_created_projection and bsd_workflow_binding_created_checkpoint are reviewable proposed values, not appended registry families, storage admission, a budget decision or a readiness-denominator change. An integrator must separately admit exact physical families/migration/budgets after review; no event can be made writable by these candidate rows alone. Each value uses its exact closed Plans/bsd_event_storage_contracts.schema.json definition.
+  The canonical operation key is bsd_workflow_binding_created_operation.v1:{scope_partition}:{hex(owner_operation_id)}; state pending_event carries the original authenticated source, event ID, key, semantic digest and durable SP-337 payload reference. state complete additionally requires the exact original first AppendReceipt. It never stores a second EventRecord or copied private body. Operation refs and their packs remain while original pending/result/receipt custody is needed, under RP-EVENT-IDENTITY-APPROOT; that lifetime protects identity and an immutable receipt, not linked content. It adopts SP-286/CV-339 first receipt/full-value v2 and SP-336/SP-347 durability explicitly. Coherent mandatory backup restores the operation, complete original source, receipt controls and payload packs together. Missing original is unavailable; it cannot be reconstructed from a GUI model or a supplied hash.
+  The derived projection key is bsd_workflow_binding_created_projection.v1:{scope_partition}:{hex(owner_operation_id)}. It holds only the original source/event refs and Storage identities. The derived checkpoint key is bsd_workflow_binding_created_checkpoint.v1:{scope_partition}:{storage_instance_id} for projector.bsd.workflow_binding_created@1.0.0. Both use RP-PROJECTION-3GEN with holds; source event retention is independently "PENDING_RETENTION_DECISION". A pending retention marker is never a valid production registry reference. Every complete encoded value must stay at or below 16 KiB; SP-337 externalizes referenced bodies before limits, rather than leaving an oversized operation value. Canonical/derived placement and actual disk budgets require existing SP-340 admission, never unbounded storage.
+  The exact operational reader is reader.bsd.workflow_binding_created@1.0.0 for PlanningWorkflow::bsd_stage_binding_projection. It explicitly adopts SP-278 reader.storage.event_record_index@1.0.0, its CURRENT-selected actual root, globally complete verified source selection/coverage, authenticated generation anchor and advancing frontier. It scans in ascending Storage sequence, never timestamp order; the examined cursor cannot regress. It scans the complete captured range with exactly the bsd.workflow_binding_created/Project/version filter, resolves full values/payload refs, verifies actual storage_instance_id, partition, sequence/event/payload/source joins and original full-value custody before processing a match. Verified nonmatches are scanned; corruption, unsupported input or missing proof is unavailable/degraded, never skipped as empty. Apply the immutable event reference to only its rebuildable derived row. In one actual redb transaction compare-and-swap the entire old checkpoint and atomically commit all changed rows with last_scanned_sequence, last_matched_event_id, source selection and the nine-field durable read token. An empty source has a null cursor; a nonempty zero-match range still advances its examined cursor. Each durable token field is rejoined to actual Storage controls, then the current live snapshot supplies its transient tenth redb_snapshot_id field. Same generation alone cannot prove a frontier unchanged. Inclusive restart rechecks the last exact event/frame/offset; replay produces no review, advice delivery, notification, Usage charge, canonical write or new event.
+  Historical inspection validates authenticated original admission/schema/recipe and source custody before the retained event, but never reruns current live-epoch/state/precondition checks. Current access, deletion and withdrawal checks still apply. Genuine older history after a live change stays readable; substituted or withdrawn originals refuse. Schema/version selection cannot be caller-chosen to weaken validation. Complete withdrawal fences writer admission at the actual cutoff, resolves pending issued results, invalidates reader/checkpoint publications and requires governed successor rebuild; missing source is explicitly unavailable, not a rebuilt success. Physical replay/restore/migration remains unimplemented and unadmitted.
+gui_related: false
+gui_classification_reason: Defines internal event, identity, Storage custody or validation, without changing presentation.
+depends_on:
+- SP-318
+- SP-278
+- SP-286
+- SP-337
+- CV-1364
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, payload, original-source identity and retry custody are bound.
+- No unregistered append, physical admission or native/runtime success is implied.
+- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- Plans/bsd_event_oracle_plan.json
+risk_class: advisory_history_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3d_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/bsd_event_payloads.schema.json
+- Plans/bsd_event_storage_contracts.schema.json
+- Plans/bsd_event_storage_candidates.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3D.md
+- Deck-2 item 9.a A (answer record 2026-11-05; DL-450 application pending)
+preserved_exact_tokens:
+- bsd.workflow_binding_created
+- SP-318
+- SP-278
+- SP-286
+- SP-337
+- RP-EVENT-IDENTITY-APPROOT
+- RP-PROJECTION-3GEN
+negative_constraints:
+- Do not append a registry family, admit an event, enable BSD commands or treat static definitions as runtime evidence.
+- Do not define a local number/timestamp implementation or guard-isolation proof engine.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-1365 - Pending BSD original lifecycle source graph
+
+```yaml
+plan_unit_id: SP-1365
+unit_type: storage_contract
+status: draft
+owner_doc: Plans/storage-plan.md
+canonical_text: 'Newly authored pending original-source graph for the fifteen W3D event contracts. SP-318 remains physical_family_registration_pending
+  and no physical registry family is appended. Plans/bsd_event_storage_candidates.json stages six canonical immutable source
+  wrapper rows: bsd_source_policy, bsd_source_workflow_binding, bsd_source_assignment, bsd_source_review_cycle, bsd_source_finding
+  and bsd_source_quarantine. They preserve, rather than fork, the complete logical definitions pm.bsd.policy.v1, pm.bsd.workflow_binding.v1,
+  pm.bsd.assignment.v1, pm.bsd.review_cycle.v1, pm.bsd.finding.v1 and pm.bsd.quarantine.v1 in Plans/back_seat_driver_contracts.schema.json.
+  Each proposed key is bsd_source_<kind>.v1:{scope_partition}:{hex(subject_id)}:{hex(owner_operation_id)}; project_id supplies
+  the existing policy subject, then binding_id, bsd_assignment_id, review_cycle_id, bsd_finding_id and quarantine_id supply
+  the other subjects. Exact UTF-8 byte hex is injective and never a time/counter recipe. source_state_ref names this actual
+  immutable wrapper, not an arbitrary caller snapshot. Its opaque SP-337 payload reference, byte size and media type identify
+  the complete logical body under Storage''s declared MessagePack profile; validate logical schema and all source joins before
+  use. Every complete encoded wrapper separately obeys 16 KiB and actual SP-340 budgets. No unredacted transcript, protected-authentication
+  content or raw quarantine output is added to an event.
+
+  Every immutable source wrapper also stores original_source_ref, resolving the genuine original owner operation and its captured accepted inputs. The finding wrapper additionally requires identity_inputs_ref, pointing to SP-337 pack bytes validated by the exact closed finding_identity_inputs definition in Plans/bsd_event_storage_contracts.schema.json. This metadata-only manifest preserves original_source_ref, the original finding_family classification token, exact affected_object_refs and rule_or_constraint_refs, and the verified evidence_fingerprint/evidence_source_ref. Its refs and fingerprint must agree with the actual original logical finding and evidence-owner commitment. It supplies the operands for CV-1350 and CV-1355..CV-1358 finding-key recomputation, never a trusted caller key. Original source custody preserves these immutable operands and their actual original admission/recipe evidence; a retained read does not reacquire a now-retired provider session or current mutable evidence. Missing original custody is still unavailable. No finding claim or raw advisor output is copied into this identity manifest.
+  An original operation comes from the genuine accepted command/start/lifecycle/deadline/provider result, carrying the real
+  actor, Project, thread/run, binding, assignment, epoch, generation, permission/Stop/writer-generation and causal commitments
+  that actually apply. A source wrapper and its exact-family pending_event operation are prepared together under the original
+  owner compare-and-swap; the selected current lifecycle head cannot publish this new state before SP-286/CV-339 original
+  first receipt/full-value v2 resolution. The complete operation and actual owning head are published atomically after the
+  barrier receipt. A pending source is not current state, and a supplied hash/reference or synthetic all-true fixture is not
+  an owner capability. Recovery authenticates the original accepted source, wrapper/body, pending operation, genuine Storage
+  receipt/full original value and current restore controls before settling; it never first-mints a prior success or dispatches
+  a second review. Missing pending/original evidence remains unavailable. A canonical head must use the existing owner/migration
+  binding on physical admission; these wrappers are immutable history/source custody, not a replacement head or a new preference
+  engine.
+
+  Policy and binding source values use the existing RP-CONFIG-CURRENT current-plus-history policy, with frozen run/review/live
+  references and coherent backups holding any referenced historical version; this is a current configuration value policy
+  and does not assign the two pending event-history lifetimes. Assignment, review, finding and quarantine source values use
+  RP-RUNTIME-365D through their actual primary assignment/run, with held/closure/recovery/live/backup references protected
+  before run-completion expiry. Raw advisor transcript/output retains its independently owned content deletion/retention rules
+  and is not kept merely because a metadata wrapper survives. The actual immutable closure and held records live outside the
+  transcript and restore before another review; current head/epoch joins, not model memory, decide delivery eligibility.
+
+  Mandatory coherent backup includes source wrappers and their logical pack bodies, actual owner heads, exact-family operation
+  values and SP-286 receipt/full-value controls in the same verified cut. Preserve original logical and physical identities,
+  schema versions and access/deletion/withdrawal state; a missing or conflicting source is unavailable, never reconstructed
+  from bsd_runtime_record or a filtered event projection. Physical family/migration/budget/readiness admission and native
+  restore proof remain separately required. No command is enabled, no count/age policy is chosen for pending event histories,
+  and no EventRecord is admitted by this source graph.'
+gui_related: false
+gui_classification_reason: Defines original-source custody and pending storage shapes.
+depends_on:
+- SP-318
+- SP-286
+- SP-337
+- BSD-024
+unblocks: []
+acceptance_criteria:
+- Source wrappers bind all six existing logical kinds without registry append or handler activation.
+- Original source, lifecycle head and operation settlement use authentic custody and coherent backup.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- Plans/bsd_event_oracle_plan.json
+risk_class: unproved_original_advisor_source_custody
+reasoning_tier: high
+context_scope: event_authority_w3d_source_graph
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/bsd_event_storage_contracts.schema.json
+- Plans/bsd_event_storage_candidates.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/storage-plan.md#SP-318
+- reports/event-authority-20261105/W3D.md
+preserved_exact_tokens:
+- SP-318
+- SP-286
+- SP-337
+- RP-CONFIG-CURRENT
+- RP-RUNTIME-365D
+negative_constraints:
+- No physical or event family append, admission, new preference engine, command activation or native proof.
+owner_hints:
+- Plans/storage-plan.md
+```

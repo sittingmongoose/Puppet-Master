@@ -1,0 +1,4110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/bsd-event-storage/1.0.0/contracts.schema.json",
+  "title": "BSD proposed storage value shapes; SP-318 remains pending",
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "not": {
+        "pattern": "[\\r\\n]"
+      }
+    },
+    "safe_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^[A-Za-z][A-Za-z0-9._:/#@~-]*$",
+      "not": {
+        "pattern": "[\\r\\n]"
+      }
+    },
+    "sha256": {
+      "type": "string",
+      "minLength": 64,
+      "maxLength": 64,
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "durable_read_token": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "checkpoint_key",
+        "checkpoint_ref",
+        "generation_id",
+        "generation_anchor_sha256",
+        "frontier_revision",
+        "frontier_sha256",
+        "index_dataset_name",
+        "source_selection"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "checkpoint_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "checkpoint_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "generation_id": {
+          "type": "string",
+          "pattern": "^eig_[0-9a-f]{64}$"
+        },
+        "generation_anchor_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "frontier_revision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "frontier_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "index_dataset_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_selection": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "storage_instance_id",
+            "current_ref",
+            "current_bytes_sha256",
+            "selected_segment_generation",
+            "manifest_ref",
+            "manifest_bytes_sha256",
+            "manifest_generation",
+            "recovery_epoch",
+            "manifest_survivor_prefix_sha256",
+            "retained_inventory_sha256",
+            "durable_watermarks_sha256",
+            "excluded_ranges_sha256",
+            "retired_inputs_sha256"
+          ],
+          "properties": {
+            "storage_instance_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "current_ref": {
+              "const": "storage/seglog/CURRENT"
+            },
+            "current_bytes_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "selected_segment_generation": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "manifest_ref": {
+              "const": "storage/seglog/manifest.v1.msgpack"
+            },
+            "manifest_bytes_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "manifest_generation": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "recovery_epoch": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "manifest_survivor_prefix_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "retained_inventory_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "durable_watermarks_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "excluded_ranges_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "retired_inputs_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          }
+        }
+      }
+    },
+    "payload_reference": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^[A-Za-z][A-Za-z0-9._:/#@~-]*$",
+      "not": {
+        "pattern": "[\\r\\n]"
+      }
+    },
+    "advice_emitted_operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "storage_instance_id",
+        "project_id",
+        "owner_operation_id",
+        "source_state_ref",
+        "event_id",
+        "idempotency_key",
+        "producer_semantic_digest",
+        "state",
+        "payload_ref",
+        "first_append_receipt",
+        "payload_byte_size",
+        "payload_media_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_operation.advice_emitted.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "bsd.advice_emitted"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "event_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/identifier"
+        },
+        "producer_semantic_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "state": {
+          "enum": [
+            "pending_event",
+            "complete"
+          ]
+        },
+        "payload_ref": {
+          "$ref": "#/$defs/payload_reference"
+        },
+        "first_append_receipt": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "payload_byte_size": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "payload_media_type": {
+          "const": "application/msgpack"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "complete"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt": {
+                "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "advice_emitted_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "selected_event_type",
+        "consumer_id",
+        "publication_state",
+        "last_scanned_sequence",
+        "last_matched_event_id",
+        "index_read_token"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_checkpoint.advice_emitted.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "selected_event_type": {
+          "const": "bsd.advice_emitted"
+        },
+        "consumer_id": {
+          "const": "projector.bsd.advice_emitted@1.0.0"
+        },
+        "publication_state": {
+          "enum": [
+            "current",
+            "degraded",
+            "withdrawn"
+          ]
+        },
+        "last_scanned_sequence": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_matched_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/identifier"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "index_read_token": {
+          "$ref": "#/$defs/durable_read_token"
+        }
+      }
+    },
+    "advice_emitted_projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "sequence_id",
+        "source_state_ref",
+        "source_event_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_projection.advice_emitted.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "event_type": {
+          "const": "bsd.advice_emitted"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "event_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "sequence_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "source_event_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      }
+    },
+    "assignment_paused_operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "storage_instance_id",
+        "project_id",
+        "owner_operation_id",
+        "source_state_ref",
+        "event_id",
+        "idempotency_key",
+        "producer_semantic_digest",
+        "state",
+        "payload_ref",
+        "first_append_receipt",
+        "payload_byte_size",
+        "payload_media_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_operation.assignment_paused.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "bsd.assignment_paused"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "event_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/identifier"
+        },
+        "producer_semantic_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "state": {
+          "enum": [
+            "pending_event",
+            "complete"
+          ]
+        },
+        "payload_ref": {
+          "$ref": "#/$defs/payload_reference"
+        },
+        "first_append_receipt": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "payload_byte_size": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "payload_media_type": {
+          "const": "application/msgpack"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "complete"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt": {
+                "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "assignment_paused_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "selected_event_type",
+        "consumer_id",
+        "publication_state",
+        "last_scanned_sequence",
+        "last_matched_event_id",
+        "index_read_token"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_checkpoint.assignment_paused.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "selected_event_type": {
+          "const": "bsd.assignment_paused"
+        },
+        "consumer_id": {
+          "const": "projector.bsd.assignment_paused@1.0.0"
+        },
+        "publication_state": {
+          "enum": [
+            "current",
+            "degraded",
+            "withdrawn"
+          ]
+        },
+        "last_scanned_sequence": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_matched_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/identifier"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "index_read_token": {
+          "$ref": "#/$defs/durable_read_token"
+        }
+      }
+    },
+    "assignment_paused_projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "sequence_id",
+        "source_state_ref",
+        "source_event_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_projection.assignment_paused.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "event_type": {
+          "const": "bsd.assignment_paused"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "event_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "sequence_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "source_event_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      }
+    },
+    "assignment_resumed_operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "storage_instance_id",
+        "project_id",
+        "owner_operation_id",
+        "source_state_ref",
+        "event_id",
+        "idempotency_key",
+        "producer_semantic_digest",
+        "state",
+        "payload_ref",
+        "first_append_receipt",
+        "payload_byte_size",
+        "payload_media_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_operation.assignment_resumed.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "bsd.assignment_resumed"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "event_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/identifier"
+        },
+        "producer_semantic_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "state": {
+          "enum": [
+            "pending_event",
+            "complete"
+          ]
+        },
+        "payload_ref": {
+          "$ref": "#/$defs/payload_reference"
+        },
+        "first_append_receipt": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "payload_byte_size": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "payload_media_type": {
+          "const": "application/msgpack"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "complete"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt": {
+                "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "assignment_resumed_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "selected_event_type",
+        "consumer_id",
+        "publication_state",
+        "last_scanned_sequence",
+        "last_matched_event_id",
+        "index_read_token"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_checkpoint.assignment_resumed.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "selected_event_type": {
+          "const": "bsd.assignment_resumed"
+        },
+        "consumer_id": {
+          "const": "projector.bsd.assignment_resumed@1.0.0"
+        },
+        "publication_state": {
+          "enum": [
+            "current",
+            "degraded",
+            "withdrawn"
+          ]
+        },
+        "last_scanned_sequence": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_matched_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/identifier"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "index_read_token": {
+          "$ref": "#/$defs/durable_read_token"
+        }
+      }
+    },
+    "assignment_resumed_projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "sequence_id",
+        "source_state_ref",
+        "source_event_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_projection.assignment_resumed.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "event_type": {
+          "const": "bsd.assignment_resumed"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "event_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "sequence_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "source_event_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      }
+    },
+    "assignment_started_operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "storage_instance_id",
+        "project_id",
+        "owner_operation_id",
+        "source_state_ref",
+        "event_id",
+        "idempotency_key",
+        "producer_semantic_digest",
+        "state",
+        "payload_ref",
+        "first_append_receipt",
+        "payload_byte_size",
+        "payload_media_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_operation.assignment_started.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "bsd.assignment_started"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "event_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/identifier"
+        },
+        "producer_semantic_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "state": {
+          "enum": [
+            "pending_event",
+            "complete"
+          ]
+        },
+        "payload_ref": {
+          "$ref": "#/$defs/payload_reference"
+        },
+        "first_append_receipt": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "payload_byte_size": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "payload_media_type": {
+          "const": "application/msgpack"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "complete"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt": {
+                "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "assignment_started_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "selected_event_type",
+        "consumer_id",
+        "publication_state",
+        "last_scanned_sequence",
+        "last_matched_event_id",
+        "index_read_token"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_checkpoint.assignment_started.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "selected_event_type": {
+          "const": "bsd.assignment_started"
+        },
+        "consumer_id": {
+          "const": "projector.bsd.assignment_started@1.0.0"
+        },
+        "publication_state": {
+          "enum": [
+            "current",
+            "degraded",
+            "withdrawn"
+          ]
+        },
+        "last_scanned_sequence": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_matched_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/identifier"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "index_read_token": {
+          "$ref": "#/$defs/durable_read_token"
+        }
+      }
+    },
+    "assignment_started_projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "sequence_id",
+        "source_state_ref",
+        "source_event_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_projection.assignment_started.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "event_type": {
+          "const": "bsd.assignment_started"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "event_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "sequence_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "source_event_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      }
+    },
+    "assignment_stopped_operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "storage_instance_id",
+        "project_id",
+        "owner_operation_id",
+        "source_state_ref",
+        "event_id",
+        "idempotency_key",
+        "producer_semantic_digest",
+        "state",
+        "payload_ref",
+        "first_append_receipt",
+        "payload_byte_size",
+        "payload_media_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_operation.assignment_stopped.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "bsd.assignment_stopped"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "event_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/identifier"
+        },
+        "producer_semantic_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "state": {
+          "enum": [
+            "pending_event",
+            "complete"
+          ]
+        },
+        "payload_ref": {
+          "$ref": "#/$defs/payload_reference"
+        },
+        "first_append_receipt": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "payload_byte_size": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "payload_media_type": {
+          "const": "application/msgpack"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "complete"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt": {
+                "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "assignment_stopped_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "selected_event_type",
+        "consumer_id",
+        "publication_state",
+        "last_scanned_sequence",
+        "last_matched_event_id",
+        "index_read_token"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_checkpoint.assignment_stopped.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "selected_event_type": {
+          "const": "bsd.assignment_stopped"
+        },
+        "consumer_id": {
+          "const": "projector.bsd.assignment_stopped@1.0.0"
+        },
+        "publication_state": {
+          "enum": [
+            "current",
+            "degraded",
+            "withdrawn"
+          ]
+        },
+        "last_scanned_sequence": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_matched_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/identifier"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "index_read_token": {
+          "$ref": "#/$defs/durable_read_token"
+        }
+      }
+    },
+    "assignment_stopped_projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "sequence_id",
+        "source_state_ref",
+        "source_event_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_projection.assignment_stopped.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "event_type": {
+          "const": "bsd.assignment_stopped"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "event_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "sequence_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "source_event_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      }
+    },
+    "finding_cleared_operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "storage_instance_id",
+        "project_id",
+        "owner_operation_id",
+        "source_state_ref",
+        "event_id",
+        "idempotency_key",
+        "producer_semantic_digest",
+        "state",
+        "payload_ref",
+        "first_append_receipt",
+        "payload_byte_size",
+        "payload_media_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_operation.finding_cleared.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "bsd.finding_cleared"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "event_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/identifier"
+        },
+        "producer_semantic_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "state": {
+          "enum": [
+            "pending_event",
+            "complete"
+          ]
+        },
+        "payload_ref": {
+          "$ref": "#/$defs/payload_reference"
+        },
+        "first_append_receipt": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "payload_byte_size": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "payload_media_type": {
+          "const": "application/msgpack"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "complete"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt": {
+                "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "finding_cleared_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "selected_event_type",
+        "consumer_id",
+        "publication_state",
+        "last_scanned_sequence",
+        "last_matched_event_id",
+        "index_read_token"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_checkpoint.finding_cleared.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "selected_event_type": {
+          "const": "bsd.finding_cleared"
+        },
+        "consumer_id": {
+          "const": "projector.bsd.finding_cleared@1.0.0"
+        },
+        "publication_state": {
+          "enum": [
+            "current",
+            "degraded",
+            "withdrawn"
+          ]
+        },
+        "last_scanned_sequence": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_matched_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/identifier"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "index_read_token": {
+          "$ref": "#/$defs/durable_read_token"
+        }
+      }
+    },
+    "finding_cleared_projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "sequence_id",
+        "source_state_ref",
+        "source_event_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_projection.finding_cleared.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "event_type": {
+          "const": "bsd.finding_cleared"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "event_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "sequence_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "source_event_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      }
+    },
+    "finding_held_operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "storage_instance_id",
+        "project_id",
+        "owner_operation_id",
+        "source_state_ref",
+        "event_id",
+        "idempotency_key",
+        "producer_semantic_digest",
+        "state",
+        "payload_ref",
+        "first_append_receipt",
+        "payload_byte_size",
+        "payload_media_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_operation.finding_held.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "bsd.finding_held"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "event_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/identifier"
+        },
+        "producer_semantic_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "state": {
+          "enum": [
+            "pending_event",
+            "complete"
+          ]
+        },
+        "payload_ref": {
+          "$ref": "#/$defs/payload_reference"
+        },
+        "first_append_receipt": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "payload_byte_size": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "payload_media_type": {
+          "const": "application/msgpack"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "complete"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt": {
+                "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "finding_held_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "selected_event_type",
+        "consumer_id",
+        "publication_state",
+        "last_scanned_sequence",
+        "last_matched_event_id",
+        "index_read_token"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_checkpoint.finding_held.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "selected_event_type": {
+          "const": "bsd.finding_held"
+        },
+        "consumer_id": {
+          "const": "projector.bsd.finding_held@1.0.0"
+        },
+        "publication_state": {
+          "enum": [
+            "current",
+            "degraded",
+            "withdrawn"
+          ]
+        },
+        "last_scanned_sequence": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_matched_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/identifier"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "index_read_token": {
+          "$ref": "#/$defs/durable_read_token"
+        }
+      }
+    },
+    "finding_held_projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "sequence_id",
+        "source_state_ref",
+        "source_event_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_projection.finding_held.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "event_type": {
+          "const": "bsd.finding_held"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "event_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "sequence_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "source_event_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      }
+    },
+    "finding_reconfirmed_operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "storage_instance_id",
+        "project_id",
+        "owner_operation_id",
+        "source_state_ref",
+        "event_id",
+        "idempotency_key",
+        "producer_semantic_digest",
+        "state",
+        "payload_ref",
+        "first_append_receipt",
+        "payload_byte_size",
+        "payload_media_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_operation.finding_reconfirmed.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "bsd.finding_reconfirmed"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "event_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/identifier"
+        },
+        "producer_semantic_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "state": {
+          "enum": [
+            "pending_event",
+            "complete"
+          ]
+        },
+        "payload_ref": {
+          "$ref": "#/$defs/payload_reference"
+        },
+        "first_append_receipt": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "payload_byte_size": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "payload_media_type": {
+          "const": "application/msgpack"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "complete"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt": {
+                "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "finding_reconfirmed_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "selected_event_type",
+        "consumer_id",
+        "publication_state",
+        "last_scanned_sequence",
+        "last_matched_event_id",
+        "index_read_token"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_checkpoint.finding_reconfirmed.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "selected_event_type": {
+          "const": "bsd.finding_reconfirmed"
+        },
+        "consumer_id": {
+          "const": "projector.bsd.finding_reconfirmed@1.0.0"
+        },
+        "publication_state": {
+          "enum": [
+            "current",
+            "degraded",
+            "withdrawn"
+          ]
+        },
+        "last_scanned_sequence": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_matched_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/identifier"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "index_read_token": {
+          "$ref": "#/$defs/durable_read_token"
+        }
+      }
+    },
+    "finding_reconfirmed_projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "sequence_id",
+        "source_state_ref",
+        "source_event_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_projection.finding_reconfirmed.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "event_type": {
+          "const": "bsd.finding_reconfirmed"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "event_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "sequence_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "source_event_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      }
+    },
+    "finding_suppressed_operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "storage_instance_id",
+        "project_id",
+        "owner_operation_id",
+        "source_state_ref",
+        "event_id",
+        "idempotency_key",
+        "producer_semantic_digest",
+        "state",
+        "payload_ref",
+        "first_append_receipt",
+        "payload_byte_size",
+        "payload_media_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_operation.finding_suppressed.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "bsd.finding_suppressed"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "event_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/identifier"
+        },
+        "producer_semantic_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "state": {
+          "enum": [
+            "pending_event",
+            "complete"
+          ]
+        },
+        "payload_ref": {
+          "$ref": "#/$defs/payload_reference"
+        },
+        "first_append_receipt": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "payload_byte_size": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "payload_media_type": {
+          "const": "application/msgpack"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "complete"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt": {
+                "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "finding_suppressed_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "selected_event_type",
+        "consumer_id",
+        "publication_state",
+        "last_scanned_sequence",
+        "last_matched_event_id",
+        "index_read_token"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_checkpoint.finding_suppressed.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "selected_event_type": {
+          "const": "bsd.finding_suppressed"
+        },
+        "consumer_id": {
+          "const": "projector.bsd.finding_suppressed@1.0.0"
+        },
+        "publication_state": {
+          "enum": [
+            "current",
+            "degraded",
+            "withdrawn"
+          ]
+        },
+        "last_scanned_sequence": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_matched_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/identifier"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "index_read_token": {
+          "$ref": "#/$defs/durable_read_token"
+        }
+      }
+    },
+    "finding_suppressed_projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "sequence_id",
+        "source_state_ref",
+        "source_event_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_projection.finding_suppressed.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "event_type": {
+          "const": "bsd.finding_suppressed"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "event_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "sequence_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "source_event_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      }
+    },
+    "output_quarantined_operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "storage_instance_id",
+        "project_id",
+        "owner_operation_id",
+        "source_state_ref",
+        "event_id",
+        "idempotency_key",
+        "producer_semantic_digest",
+        "state",
+        "payload_ref",
+        "first_append_receipt",
+        "payload_byte_size",
+        "payload_media_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_operation.output_quarantined.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "bsd.output_quarantined"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "event_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/identifier"
+        },
+        "producer_semantic_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "state": {
+          "enum": [
+            "pending_event",
+            "complete"
+          ]
+        },
+        "payload_ref": {
+          "$ref": "#/$defs/payload_reference"
+        },
+        "first_append_receipt": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "payload_byte_size": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "payload_media_type": {
+          "const": "application/msgpack"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "complete"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt": {
+                "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "output_quarantined_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "selected_event_type",
+        "consumer_id",
+        "publication_state",
+        "last_scanned_sequence",
+        "last_matched_event_id",
+        "index_read_token"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_checkpoint.output_quarantined.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "selected_event_type": {
+          "const": "bsd.output_quarantined"
+        },
+        "consumer_id": {
+          "const": "projector.bsd.output_quarantined@1.0.0"
+        },
+        "publication_state": {
+          "enum": [
+            "current",
+            "degraded",
+            "withdrawn"
+          ]
+        },
+        "last_scanned_sequence": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_matched_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/identifier"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "index_read_token": {
+          "$ref": "#/$defs/durable_read_token"
+        }
+      }
+    },
+    "output_quarantined_projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "sequence_id",
+        "source_state_ref",
+        "source_event_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_projection.output_quarantined.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "event_type": {
+          "const": "bsd.output_quarantined"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "event_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "sequence_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "source_event_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      }
+    },
+    "policy_changed_operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "storage_instance_id",
+        "project_id",
+        "owner_operation_id",
+        "source_state_ref",
+        "event_id",
+        "idempotency_key",
+        "producer_semantic_digest",
+        "state",
+        "payload_ref",
+        "first_append_receipt",
+        "payload_byte_size",
+        "payload_media_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_operation.policy_changed.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "bsd.policy_changed"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "event_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/identifier"
+        },
+        "producer_semantic_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "state": {
+          "enum": [
+            "pending_event",
+            "complete"
+          ]
+        },
+        "payload_ref": {
+          "$ref": "#/$defs/payload_reference"
+        },
+        "first_append_receipt": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "payload_byte_size": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "payload_media_type": {
+          "const": "application/msgpack"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "complete"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt": {
+                "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "policy_changed_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "selected_event_type",
+        "consumer_id",
+        "publication_state",
+        "last_scanned_sequence",
+        "last_matched_event_id",
+        "index_read_token"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_checkpoint.policy_changed.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "selected_event_type": {
+          "const": "bsd.policy_changed"
+        },
+        "consumer_id": {
+          "const": "projector.bsd.policy_changed@1.0.0"
+        },
+        "publication_state": {
+          "enum": [
+            "current",
+            "degraded",
+            "withdrawn"
+          ]
+        },
+        "last_scanned_sequence": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_matched_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/identifier"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "index_read_token": {
+          "$ref": "#/$defs/durable_read_token"
+        }
+      }
+    },
+    "policy_changed_projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "sequence_id",
+        "source_state_ref",
+        "source_event_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_projection.policy_changed.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "event_type": {
+          "const": "bsd.policy_changed"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "event_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "sequence_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "source_event_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      }
+    },
+    "review_failed_operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "storage_instance_id",
+        "project_id",
+        "owner_operation_id",
+        "source_state_ref",
+        "event_id",
+        "idempotency_key",
+        "producer_semantic_digest",
+        "state",
+        "payload_ref",
+        "first_append_receipt",
+        "payload_byte_size",
+        "payload_media_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_operation.review_failed.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "bsd.review_failed"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "event_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/identifier"
+        },
+        "producer_semantic_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "state": {
+          "enum": [
+            "pending_event",
+            "complete"
+          ]
+        },
+        "payload_ref": {
+          "$ref": "#/$defs/payload_reference"
+        },
+        "first_append_receipt": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "payload_byte_size": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "payload_media_type": {
+          "const": "application/msgpack"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "complete"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt": {
+                "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "review_failed_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "selected_event_type",
+        "consumer_id",
+        "publication_state",
+        "last_scanned_sequence",
+        "last_matched_event_id",
+        "index_read_token"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_checkpoint.review_failed.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "selected_event_type": {
+          "const": "bsd.review_failed"
+        },
+        "consumer_id": {
+          "const": "projector.bsd.review_failed@1.0.0"
+        },
+        "publication_state": {
+          "enum": [
+            "current",
+            "degraded",
+            "withdrawn"
+          ]
+        },
+        "last_scanned_sequence": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_matched_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/identifier"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "index_read_token": {
+          "$ref": "#/$defs/durable_read_token"
+        }
+      }
+    },
+    "review_failed_projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "sequence_id",
+        "source_state_ref",
+        "source_event_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_projection.review_failed.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "event_type": {
+          "const": "bsd.review_failed"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "event_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "sequence_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "source_event_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      }
+    },
+    "review_started_operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "storage_instance_id",
+        "project_id",
+        "owner_operation_id",
+        "source_state_ref",
+        "event_id",
+        "idempotency_key",
+        "producer_semantic_digest",
+        "state",
+        "payload_ref",
+        "first_append_receipt",
+        "payload_byte_size",
+        "payload_media_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_operation.review_started.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "bsd.review_started"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "event_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/identifier"
+        },
+        "producer_semantic_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "state": {
+          "enum": [
+            "pending_event",
+            "complete"
+          ]
+        },
+        "payload_ref": {
+          "$ref": "#/$defs/payload_reference"
+        },
+        "first_append_receipt": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "payload_byte_size": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "payload_media_type": {
+          "const": "application/msgpack"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "complete"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt": {
+                "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "review_started_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "selected_event_type",
+        "consumer_id",
+        "publication_state",
+        "last_scanned_sequence",
+        "last_matched_event_id",
+        "index_read_token"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_checkpoint.review_started.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "selected_event_type": {
+          "const": "bsd.review_started"
+        },
+        "consumer_id": {
+          "const": "projector.bsd.review_started@1.0.0"
+        },
+        "publication_state": {
+          "enum": [
+            "current",
+            "degraded",
+            "withdrawn"
+          ]
+        },
+        "last_scanned_sequence": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_matched_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/identifier"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "index_read_token": {
+          "$ref": "#/$defs/durable_read_token"
+        }
+      }
+    },
+    "review_started_projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "sequence_id",
+        "source_state_ref",
+        "source_event_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_projection.review_started.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "event_type": {
+          "const": "bsd.review_started"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "event_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "sequence_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "source_event_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      }
+    },
+    "review_timed_out_operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "storage_instance_id",
+        "project_id",
+        "owner_operation_id",
+        "source_state_ref",
+        "event_id",
+        "idempotency_key",
+        "producer_semantic_digest",
+        "state",
+        "payload_ref",
+        "first_append_receipt",
+        "payload_byte_size",
+        "payload_media_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_operation.review_timed_out.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "bsd.review_timed_out"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "event_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/identifier"
+        },
+        "producer_semantic_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "state": {
+          "enum": [
+            "pending_event",
+            "complete"
+          ]
+        },
+        "payload_ref": {
+          "$ref": "#/$defs/payload_reference"
+        },
+        "first_append_receipt": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "payload_byte_size": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "payload_media_type": {
+          "const": "application/msgpack"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "complete"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt": {
+                "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "review_timed_out_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "selected_event_type",
+        "consumer_id",
+        "publication_state",
+        "last_scanned_sequence",
+        "last_matched_event_id",
+        "index_read_token"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_checkpoint.review_timed_out.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "selected_event_type": {
+          "const": "bsd.review_timed_out"
+        },
+        "consumer_id": {
+          "const": "projector.bsd.review_timed_out@1.0.0"
+        },
+        "publication_state": {
+          "enum": [
+            "current",
+            "degraded",
+            "withdrawn"
+          ]
+        },
+        "last_scanned_sequence": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_matched_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/identifier"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "index_read_token": {
+          "$ref": "#/$defs/durable_read_token"
+        }
+      }
+    },
+    "review_timed_out_projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "sequence_id",
+        "source_state_ref",
+        "source_event_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_projection.review_timed_out.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "event_type": {
+          "const": "bsd.review_timed_out"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "event_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "sequence_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "source_event_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      }
+    },
+    "workflow_binding_created_operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "storage_instance_id",
+        "project_id",
+        "owner_operation_id",
+        "source_state_ref",
+        "event_id",
+        "idempotency_key",
+        "producer_semantic_digest",
+        "state",
+        "payload_ref",
+        "first_append_receipt",
+        "payload_byte_size",
+        "payload_media_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_operation.workflow_binding_created.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "bsd.workflow_binding_created"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "event_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/identifier"
+        },
+        "producer_semantic_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "state": {
+          "enum": [
+            "pending_event",
+            "complete"
+          ]
+        },
+        "payload_ref": {
+          "$ref": "#/$defs/payload_reference"
+        },
+        "first_append_receipt": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "payload_byte_size": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "payload_media_type": {
+          "const": "application/msgpack"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "complete"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt": {
+                "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "workflow_binding_created_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "selected_event_type",
+        "consumer_id",
+        "publication_state",
+        "last_scanned_sequence",
+        "last_matched_event_id",
+        "index_read_token"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_checkpoint.workflow_binding_created.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "selected_event_type": {
+          "const": "bsd.workflow_binding_created"
+        },
+        "consumer_id": {
+          "const": "projector.bsd.workflow_binding_created@1.0.0"
+        },
+        "publication_state": {
+          "enum": [
+            "current",
+            "degraded",
+            "withdrawn"
+          ]
+        },
+        "last_scanned_sequence": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_matched_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/identifier"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "index_read_token": {
+          "$ref": "#/$defs/durable_read_token"
+        }
+      }
+    },
+    "workflow_binding_created_projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "sequence_id",
+        "source_state_ref",
+        "source_event_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.event_projection.workflow_binding_created.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "event_type": {
+          "const": "bsd.workflow_binding_created"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "event_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "sequence_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "source_event_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      }
+    },
+    "source_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "subject_id",
+        "owner_operation_id",
+        "logical_schema_id",
+        "logical_schema_version",
+        "logical_payload_ref",
+        "logical_payload_byte_size",
+        "logical_payload_media_type",
+        "original_source_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.source_wrapper.policy.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "subject_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "logical_schema_id": {
+          "const": "pm.bsd.policy.v1"
+        },
+        "logical_schema_version": {
+          "const": "1.0.0"
+        },
+        "logical_payload_ref": {
+          "$ref": "#/$defs/payload_reference"
+        },
+        "logical_payload_byte_size": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "logical_payload_media_type": {
+          "const": "application/msgpack"
+        },
+        "original_source_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      }
+    },
+    "source_workflow_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "subject_id",
+        "owner_operation_id",
+        "logical_schema_id",
+        "logical_schema_version",
+        "logical_payload_ref",
+        "logical_payload_byte_size",
+        "logical_payload_media_type",
+        "original_source_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.source_wrapper.workflow_binding.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "subject_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "logical_schema_id": {
+          "const": "pm.bsd.workflow_binding.v1"
+        },
+        "logical_schema_version": {
+          "const": "1.0.0"
+        },
+        "logical_payload_ref": {
+          "$ref": "#/$defs/payload_reference"
+        },
+        "logical_payload_byte_size": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "logical_payload_media_type": {
+          "const": "application/msgpack"
+        },
+        "original_source_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      }
+    },
+    "source_assignment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "subject_id",
+        "owner_operation_id",
+        "logical_schema_id",
+        "logical_schema_version",
+        "logical_payload_ref",
+        "logical_payload_byte_size",
+        "logical_payload_media_type",
+        "original_source_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.source_wrapper.assignment.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "subject_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "logical_schema_id": {
+          "const": "pm.bsd.assignment.v1"
+        },
+        "logical_schema_version": {
+          "const": "1.0.0"
+        },
+        "logical_payload_ref": {
+          "$ref": "#/$defs/payload_reference"
+        },
+        "logical_payload_byte_size": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "logical_payload_media_type": {
+          "const": "application/msgpack"
+        },
+        "original_source_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      }
+    },
+    "source_review_cycle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "subject_id",
+        "owner_operation_id",
+        "logical_schema_id",
+        "logical_schema_version",
+        "logical_payload_ref",
+        "logical_payload_byte_size",
+        "logical_payload_media_type",
+        "original_source_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.source_wrapper.review_cycle.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "subject_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "logical_schema_id": {
+          "const": "pm.bsd.review_cycle.v1"
+        },
+        "logical_schema_version": {
+          "const": "1.0.0"
+        },
+        "logical_payload_ref": {
+          "$ref": "#/$defs/payload_reference"
+        },
+        "logical_payload_byte_size": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "logical_payload_media_type": {
+          "const": "application/msgpack"
+        },
+        "original_source_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      }
+    },
+    "source_finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "subject_id",
+        "owner_operation_id",
+        "logical_schema_id",
+        "logical_schema_version",
+        "logical_payload_ref",
+        "logical_payload_byte_size",
+        "logical_payload_media_type",
+        "original_source_ref",
+        "identity_inputs_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.source_wrapper.finding.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "subject_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "logical_schema_id": {
+          "const": "pm.bsd.finding.v1"
+        },
+        "logical_schema_version": {
+          "const": "1.0.0"
+        },
+        "logical_payload_ref": {
+          "$ref": "#/$defs/payload_reference"
+        },
+        "logical_payload_byte_size": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "logical_payload_media_type": {
+          "const": "application/msgpack"
+        },
+        "original_source_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "identity_inputs_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      }
+    },
+    "source_quarantine": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "subject_id",
+        "owner_operation_id",
+        "logical_schema_id",
+        "logical_schema_version",
+        "logical_payload_ref",
+        "logical_payload_byte_size",
+        "logical_payload_media_type",
+        "original_source_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.source_wrapper.quarantine.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "subject_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "logical_schema_id": {
+          "const": "pm.bsd.quarantine.v1"
+        },
+        "logical_schema_version": {
+          "const": "1.0.0"
+        },
+        "logical_payload_ref": {
+          "$ref": "#/$defs/payload_reference"
+        },
+        "logical_payload_byte_size": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "logical_payload_media_type": {
+          "const": "application/msgpack"
+        },
+        "original_source_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      }
+    },
+    "head_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "subject_id",
+        "current_source_ref",
+        "current_owner_operation_id",
+        "first_append_receipt"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.source_head.policy.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "subject_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "current_source_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "current_owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "first_append_receipt": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+        }
+      }
+    },
+    "head_workflow_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "subject_id",
+        "current_source_ref",
+        "current_owner_operation_id",
+        "first_append_receipt"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.source_head.workflow_binding.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "subject_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "current_source_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "current_owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "first_append_receipt": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+        }
+      }
+    },
+    "head_assignment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "subject_id",
+        "current_source_ref",
+        "current_owner_operation_id",
+        "first_append_receipt"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.source_head.assignment.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "subject_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "current_source_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "current_owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "first_append_receipt": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+        }
+      }
+    },
+    "head_review_cycle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "subject_id",
+        "current_source_ref",
+        "current_owner_operation_id",
+        "first_append_receipt"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.source_head.review_cycle.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "subject_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "current_source_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "current_owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "first_append_receipt": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+        }
+      }
+    },
+    "head_finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "subject_id",
+        "current_source_ref",
+        "current_owner_operation_id",
+        "first_append_receipt"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.source_head.finding.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "subject_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "current_source_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "current_owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "first_append_receipt": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+        }
+      }
+    },
+    "head_quarantine": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "subject_id",
+        "current_source_ref",
+        "current_owner_operation_id",
+        "first_append_receipt"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.source_head.quarantine.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "subject_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "current_source_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "current_owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "first_append_receipt": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+        }
+      }
+    },
+    "finding_identity_inputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "original_source_ref",
+        "finding_family",
+        "affected_object_refs",
+        "rule_or_constraint_refs",
+        "evidence_fingerprint",
+        "evidence_source_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.finding_identity_inputs.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "original_source_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "finding_family": {
+          "$ref": "#/$defs/identifier"
+        },
+        "affected_object_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/safe_ref"
+          }
+        },
+        "rule_or_constraint_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/safe_ref"
+          }
+        },
+        "evidence_fingerprint": {
+          "$ref": "#/$defs/sha256"
+        },
+        "evidence_source_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/advice_emitted_operation"
+    },
+    {
+      "$ref": "#/$defs/advice_emitted_checkpoint"
+    },
+    {
+      "$ref": "#/$defs/advice_emitted_projection"
+    },
+    {
+      "$ref": "#/$defs/assignment_paused_operation"
+    },
+    {
+      "$ref": "#/$defs/assignment_paused_checkpoint"
+    },
+    {
+      "$ref": "#/$defs/assignment_paused_projection"
+    },
+    {
+      "$ref": "#/$defs/assignment_resumed_operation"
+    },
+    {
+      "$ref": "#/$defs/assignment_resumed_checkpoint"
+    },
+    {
+      "$ref": "#/$defs/assignment_resumed_projection"
+    },
+    {
+      "$ref": "#/$defs/assignment_started_operation"
+    },
+    {
+      "$ref": "#/$defs/assignment_started_checkpoint"
+    },
+    {
+      "$ref": "#/$defs/assignment_started_projection"
+    },
+    {
+      "$ref": "#/$defs/assignment_stopped_operation"
+    },
+    {
+      "$ref": "#/$defs/assignment_stopped_checkpoint"
+    },
+    {
+      "$ref": "#/$defs/assignment_stopped_projection"
+    },
+    {
+      "$ref": "#/$defs/finding_cleared_operation"
+    },
+    {
+      "$ref": "#/$defs/finding_cleared_checkpoint"
+    },
+    {
+      "$ref": "#/$defs/finding_cleared_projection"
+    },
+    {
+      "$ref": "#/$defs/finding_held_operation"
+    },
+    {
+      "$ref": "#/$defs/finding_held_checkpoint"
+    },
+    {
+      "$ref": "#/$defs/finding_held_projection"
+    },
+    {
+      "$ref": "#/$defs/finding_reconfirmed_operation"
+    },
+    {
+      "$ref": "#/$defs/finding_reconfirmed_checkpoint"
+    },
+    {
+      "$ref": "#/$defs/finding_reconfirmed_projection"
+    },
+    {
+      "$ref": "#/$defs/finding_suppressed_operation"
+    },
+    {
+      "$ref": "#/$defs/finding_suppressed_checkpoint"
+    },
+    {
+      "$ref": "#/$defs/finding_suppressed_projection"
+    },
+    {
+      "$ref": "#/$defs/output_quarantined_operation"
+    },
+    {
+      "$ref": "#/$defs/output_quarantined_checkpoint"
+    },
+    {
+      "$ref": "#/$defs/output_quarantined_projection"
+    },
+    {
+      "$ref": "#/$defs/policy_changed_operation"
+    },
+    {
+      "$ref": "#/$defs/policy_changed_checkpoint"
+    },
+    {
+      "$ref": "#/$defs/policy_changed_projection"
+    },
+    {
+      "$ref": "#/$defs/review_failed_operation"
+    },
+    {
+      "$ref": "#/$defs/review_failed_checkpoint"
+    },
+    {
+      "$ref": "#/$defs/review_failed_projection"
+    },
+    {
+      "$ref": "#/$defs/review_started_operation"
+    },
+    {
+      "$ref": "#/$defs/review_started_checkpoint"
+    },
+    {
+      "$ref": "#/$defs/review_started_projection"
+    },
+    {
+      "$ref": "#/$defs/review_timed_out_operation"
+    },
+    {
+      "$ref": "#/$defs/review_timed_out_checkpoint"
+    },
+    {
+      "$ref": "#/$defs/review_timed_out_projection"
+    },
+    {
+      "$ref": "#/$defs/workflow_binding_created_operation"
+    },
+    {
+      "$ref": "#/$defs/workflow_binding_created_checkpoint"
+    },
+    {
+      "$ref": "#/$defs/workflow_binding_created_projection"
+    },
+    {
+      "$ref": "#/$defs/source_policy"
+    },
+    {
+      "$ref": "#/$defs/source_workflow_binding"
+    },
+    {
+      "$ref": "#/$defs/source_assignment"
+    },
+    {
+      "$ref": "#/$defs/source_review_cycle"
+    },
+    {
+      "$ref": "#/$defs/source_finding"
+    },
+    {
+      "$ref": "#/$defs/source_quarantine"
+    },
+    {
+      "$ref": "#/$defs/head_policy"
+    },
+    {
+      "$ref": "#/$defs/head_workflow_binding"
+    },
+    {
+      "$ref": "#/$defs/head_assignment"
+    },
+    {
+      "$ref": "#/$defs/head_review_cycle"
+    },
+    {
+      "$ref": "#/$defs/head_finding"
+    },
+    {
+      "$ref": "#/$defs/head_quarantine"
+    },
+    {
+      "$ref": "#/$defs/finding_identity_inputs"
+    }
+  ]
+}

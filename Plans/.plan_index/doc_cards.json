@@ -1878,10 +1878,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 30,
+        "False": 31,
         "True": 47
       },
-      "heading_count": 152,
+      "heading_count": 153,
       "implementation_surfaces": [
         "Concepts/pm7-tools/home_workspace_source.py",
         "Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
@@ -1925,6 +1925,9 @@
         "Plans/WorktreeGitImprovement.md",
         "Plans/assistant-chat-design.md",
         "Plans/assistant_chat_contract_fixtures.json",
+        "Plans/bsd_event_payloads.schema.json",
+        "Plans/bsd_event_storage_candidates.json",
+        "Plans/bsd_event_storage_contracts.schema.json",
         "Plans/collaborative_workflows_contract_fixtures.json",
         "Plans/collaborative_workflows_contracts.schema.json",
         "Plans/coordination_event_admission.json",
@@ -1993,9 +1996,9 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 7236,
+      "line_count": 7302,
       "path": "Plans/Automated_Testing_System.md",
-      "plan_unit_count": 77,
+      "plan_unit_count": 78,
       "plan_unit_ids": [
         "ATS-001",
         "ATS-023",
@@ -2073,7 +2076,8 @@
         "ATS-082",
         "ATS-083",
         "ATS-084",
-        "ATS-085"
+        "ATS-085",
+        "ATS-1230"
       ],
       "reasoning_tiers": [
         "high",
@@ -2081,6 +2085,7 @@
         "standard"
       ],
       "risk_classes": [
+        "advisory_history_identity_custody_or_replay_drift",
         "aggregate_gate_omission_or_false_static_certification",
         "automatic_resume_overrides_user_stop",
         "case_l_durable_state_false_positive_oracle",
@@ -2144,10 +2149,11 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "76ba098f914899db177bae3445d45612d22b6b60c5e3f02f84a3a3bd2f7a0647",
+      "sha256": "a2541e80592012943dc8e05b2b233678874b28bf237c064c29aaf61a52f27836",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 76,
+        "draft": 1,
         "superseded": 1
       },
       "title": "Automated Testing System",
@@ -2157,7 +2163,7 @@
         "constraint": 1,
         "requirement": 30,
         "schema_contract": 3,
-        "validation_contract": 1,
+        "validation_contract": 2,
         "validation_criterion": 33
       },
       "validation_surfaces": [
@@ -2175,6 +2181,7 @@
         "Plans/assistant_plan_cancel_contracts/owner-field-map.json",
         "Plans/assistant_plan_cancel_contracts/publication-dependencies.json",
         "Plans/assistant_plan_cancel_contracts/semantic-obligations.json",
+        "Plans/bsd_event_oracle_plan.json",
         "Plans/collaborative_workflows_contract_fixtures.json",
         "Plans/collaborative_workflows_contracts.schema.json",
         "Plans/coordination_event_admission.json",
@@ -2412,22 +2419,25 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 3,
-        "True": 34
+        "False": 17,
+        "True": 35
       },
-      "heading_count": 76,
+      "heading_count": 91,
       "implementation_surfaces": [
         "Plans/Back_Seat_Driver.md",
         "Plans/FinalGUISpec.md",
         "Plans/Prompt_Pipeline.md",
         "Plans/Settings_System.md",
         "Plans/UI_Command_Catalog.md",
+        "Plans/bsd_event_payloads.schema.json",
+        "Plans/bsd_event_storage_candidates.json",
+        "Plans/bsd_event_storage_contracts.schema.json",
         "Plans/settings_inventory.json",
         "Plans/usage-feature.md"
       ],
-      "line_count": 2632,
+      "line_count": 3672,
       "path": "Plans/Back_Seat_Driver.md",
-      "plan_unit_count": 37,
+      "plan_unit_count": 52,
       "plan_unit_ids": [
         "BSD-001",
         "BSD-002",
@@ -2465,7 +2475,22 @@
         "BSD-034",
         "BSD-035",
         "BSD-036",
-        "BSD-037"
+        "BSD-037",
+        "BSD-1350",
+        "BSD-1351",
+        "BSD-1352",
+        "BSD-1353",
+        "BSD-1354",
+        "BSD-1355",
+        "BSD-1356",
+        "BSD-1357",
+        "BSD-1358",
+        "BSD-1359",
+        "BSD-1360",
+        "BSD-1361",
+        "BSD-1362",
+        "BSD-1363",
+        "BSD-1364"
       ],
       "reasoning_tiers": [
         "high",
@@ -2480,6 +2505,7 @@
         "advisor_stalls_or_spams_primary",
         "advisor_tool_authority_widening",
         "advisory_authority_widening",
+        "advisory_history_identity_custody_or_replay_drift",
         "authority_drift",
         "bsd_manager_presentation_drift",
         "bsd_mode_default_drift",
@@ -2505,13 +2531,15 @@
         "unsafe_advisor_output_delivered",
         "usage_attribution_collapse"
       ],
-      "sha256": "135709e7a8a2911eefe7f7c657052ba31d97241bcc3f39c5e45c7952230980c1",
+      "sha256": "452eb247a94047d1923e424ab6a159ac71960723d3cddc99e7d5c4725c3a200f",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 37
+        "accepted": 37,
+        "draft": 15
       },
       "title": "Back Seat Driver (Canonical Owner)",
       "unit_type_counts": {
+        "event_contract": 15,
         "owner_boundary": 2,
         "requirement": 35
       },
@@ -2520,6 +2548,7 @@
         "BSD required-reviewer-boundary negative fixtures",
         "BSD trigger matrix and no-call reason fixtures",
         "Plans/Wiring_Matrix.production.json",
+        "Plans/bsd_event_oracle_plan.json",
         "Plans/settings_inventory.json",
         "Usage attribution and no-call accounting fixtures",
         "advisor isolation and self-compaction fixtures",
@@ -2536,6 +2565,7 @@
         "python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-002-wand-back-seat-driver --base origin/main",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
         "quarantine reason closure and re-prime-then-pause fixtures",
         "requested versus effective disclosure fixtures",
         "restart recovery and legacy import fixtures",
@@ -4479,10 +4509,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 285,
+        "False": 300,
         "True": 76
       },
-      "heading_count": 561,
+      "heading_count": 576,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -4533,6 +4563,9 @@
         "Plans/assistant_chat_contracts.schema.json",
         "Plans/browser_event_admission.json",
         "Plans/browser_event_payloads.schema.json",
+        "Plans/bsd_event_payloads.schema.json",
+        "Plans/bsd_event_storage_candidates.json",
+        "Plans/bsd_event_storage_contracts.schema.json",
         "Plans/chain-wizard-flexibility.md",
         "Plans/chain-wizard.md",
         "Plans/collaborative_workflows_contract_fixtures.json",
@@ -4586,9 +4619,9 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 24468,
+      "line_count": 25338,
       "path": "Plans/Contracts_V0.md",
-      "plan_unit_count": 361,
+      "plan_unit_count": 376,
       "plan_unit_ids": [
         "CV-292",
         "CV-293",
@@ -4950,7 +4983,22 @@
         "CV-365",
         "CV-366",
         "CV-367",
-        "CV-368"
+        "CV-368",
+        "CV-1350",
+        "CV-1351",
+        "CV-1352",
+        "CV-1353",
+        "CV-1354",
+        "CV-1355",
+        "CV-1356",
+        "CV-1357",
+        "CV-1358",
+        "CV-1359",
+        "CV-1360",
+        "CV-1361",
+        "CV-1362",
+        "CV-1363",
+        "CV-1364"
       ],
       "reasoning_tiers": [
         "high",
@@ -4965,6 +5013,7 @@
         "account_switch_audit_loss",
         "account_vocabulary_rename_drift",
         "admin_capability_disclosure_drift",
+        "advisory_history_identity_custody_or_replay_drift",
         "allowed_action_identity_drift",
         "append_observability_retention_boundary_drift",
         "approval_scope_lineage_collapse",
@@ -5311,16 +5360,18 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "03b09cc13847139ac3c5ead7d952532de3895983c0e8a4be88def5e2b86b963d",
+      "sha256": "24a2821dffa4a126c734ba57e42135af455961a98786a7b37dea73fe1f86dd3d",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 361
+        "accepted": 361,
+        "draft": 15
       },
       "title": "Contracts V0 (Canonical)",
       "unit_type_counts": {
         "compatibility_disposition": 32,
         "constraint": 58,
         "consumer_requirement": 1,
+        "event_contract": 15,
         "future_scope_decision": 1,
         "integration_contract": 3,
         "interface_contract": 6,
@@ -5354,6 +5405,7 @@
         "Plans/assistant_plan_cancel_custody.schema.json",
         "Plans/assistant_plan_cancel_schema_resources.json",
         "Plans/browser_event_admission_fixtures.json",
+        "Plans/bsd_event_oracle_plan.json",
         "Plans/context_compaction_completion_contract_fixtures.json",
         "Plans/coordination_event_contract_fixtures.json",
         "Plans/coordination_event_payloads.schema.json",
@@ -18591,10 +18643,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 231,
+        "False": 247,
         "True": 110
       },
-      "heading_count": 817,
+      "heading_count": 833,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -18631,6 +18683,9 @@
         "Plans/browser_event_admission.json",
         "Plans/browser_event_payloads.schema.json",
         "Plans/browser_workspace_created_contracts.schema.json",
+        "Plans/bsd_event_payloads.schema.json",
+        "Plans/bsd_event_storage_candidates.json",
+        "Plans/bsd_event_storage_contracts.schema.json",
         "Plans/collaborative_workflows_contracts.schema.json",
         "Plans/event_append_receipt_contracts.schema.json",
         "Plans/event_family_registry.json",
@@ -18689,9 +18744,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 29476,
+      "line_count": 30495,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 341,
+      "plan_unit_count": 357,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -19033,13 +19088,30 @@
         "SP-350",
         "SP-351",
         "SP-352",
-        "SP-353"
+        "SP-353",
+        "SP-1350",
+        "SP-1351",
+        "SP-1352",
+        "SP-1353",
+        "SP-1354",
+        "SP-1355",
+        "SP-1356",
+        "SP-1357",
+        "SP-1358",
+        "SP-1359",
+        "SP-1360",
+        "SP-1361",
+        "SP-1362",
+        "SP-1363",
+        "SP-1364",
+        "SP-1365"
       ],
       "reasoning_tiers": [
         "high",
         "standard"
       ],
       "risk_classes": [
+        "advisory_history_identity_custody_or_replay_drift",
         "analytics_and_usage_history_loss",
         "browser_event_retention_anchor_or_physical_admission_escape",
         "browser_workspace_created_source_or_checkpoint_authority_drift",
@@ -19149,6 +19221,7 @@
         "storage_value_schema_registry_drift",
         "teach_memory_persistence_drift",
         "terminal_move_history_source_or_original_authority_escape",
+        "unproved_original_advisor_source_custody",
         "unregistered_redaction_transform_or_protected_auth_persistence",
         "unsafe_storage_migration_or_false_recovery",
         "update_schedule_restart_storm_or_false_success",
@@ -19156,10 +19229,11 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "52804c7f1ff7d43a63636a254cb2fd8c66b921f208f3604faf2c6cf1d2d708b5",
+      "sha256": "8183ce68673cf33d98944122abd5393986012d6ca208a83cc75b1c1df7959aff",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 337,
+        "draft": 16,
         "retired": 3,
         "superseded": 1
       },
@@ -19167,13 +19241,14 @@
       "unit_type_counts": {
         "compatibility_disposition": 3,
         "constraint": 4,
+        "event_contract": 15,
         "migration": 1,
         "migration_contract": 2,
         "owner_boundary": 2,
         "requirement": 277,
         "schema_contract": 23,
         "security_contract": 1,
-        "storage_contract": 27,
+        "storage_contract": 28,
         "storage_security_contract": 1
       },
       "validation_surfaces": [
@@ -19225,6 +19300,7 @@
         "Plans/browser_workspace_created_contracts.schema.json",
         "Plans/browser_workspace_reset_contract_fixtures.json",
         "Plans/browser_workspace_reset_contracts.schema.json",
+        "Plans/bsd_event_oracle_plan.json",
         "Plans/context_compaction_completion_contract_fixtures.json",
         "Plans/coordination_event_contract_fixtures.json",
         "Plans/coordination_event_payloads.schema.json",
@@ -21536,7 +21612,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-04T23:02:56Z",
+  "generated_at_utc": "2026-11-05T05:25:48Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -21544,13 +21620,14 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3631,
-      "True": 3791
+      "False": 3677,
+      "True": 3792
     },
-    "plan_unit_count": 7422,
+    "plan_unit_count": 7469,
     "source_preserving_unit_count": 0,
     "status_counts": {
       "accepted": 7204,
+      "draft": 47,
       "retired": 195,
       "superseded": 23
     },
@@ -21589,6 +21666,7 @@
       "delta_contract": 1,
       "derived_control_policy": 1,
       "display_contract": 1,
+      "event_contract": 45,
       "future_scope_decision": 1,
       "generated_artifact_residual": 6,
       "gui_command_catalog": 9,
@@ -21639,7 +21717,7 @@
       "source_lineage_reconciliation": 2,
       "source_lineage_residual_disposition": 2,
       "ssot_rule": 3,
-      "storage_contract": 27,
+      "storage_contract": 28,
       "storage_security_contract": 1,
       "structural_anchor": 5,
       "supersession_amendment": 1,
@@ -21647,7 +21725,7 @@
       "surface_default_policy": 1,
       "ui_wiring_rule": 1,
       "validation": 13,
-      "validation_contract": 1,
+      "validation_contract": 2,
       "validation_criterion": 37,
       "validation_requirement": 3,
       "validation_rule": 24,

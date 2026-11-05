@@ -1,0 +1,229 @@
+[
+  {
+    "name": "structural-check",
+    "command": [
+      "python3",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3D/structural-check.py"
+    ],
+    "exit_code": 1,
+    "available_gib_before": 10.28,
+    "seconds": 8.67,
+    "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3D/structural-check.log",
+    "sha256": "84bde2acebe956b4aa5399bdfac561642977ab014c92312f4a43c8f151befdc8"
+  },
+  {
+    "name": "structural-check-final",
+    "command": [
+      "python3",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3D/structural-check.py"
+    ],
+    "exit_code": 0,
+    "available_gib_before": 7.51,
+    "seconds": 8.79,
+    "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3D/structural-check-final.log",
+    "sha256": "893589ad3c9767f1735deff5c7f8259f6947ea84d09d60d1cdcb8347d31d2762"
+  },
+  {
+    "name": "shard-generate",
+    "command": [
+      "python3",
+      "scripts/pm-shard-plans.py",
+      "--generate",
+      "--config",
+      "Plans/sharding_config.json"
+    ],
+    "exit_code": 0,
+    "available_gib_before": 9.73,
+    "seconds": 4.0,
+    "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3D/shard-generate.log",
+    "sha256": "0097f44a100929b5fcc967352e31e0a28f4a8974cb0027f58fdf4df24ed776d3"
+  },
+  {
+    "name": "index-generate",
+    "command": [
+      "python3",
+      "scripts/pm-plan-index.py",
+      "generate"
+    ],
+    "exit_code": 0,
+    "available_gib_before": 10.45,
+    "seconds": 54.01,
+    "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3D/index-generate.log",
+    "sha256": "6b5de7c2d02750dc3178c09a299132bf6bbe743b5ecff176c36d7e484da85b85"
+  },
+  {
+    "name": "structural-check-source-final",
+    "command": [
+      "python3",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3D/structural-check.py"
+    ],
+    "exit_code": 0,
+    "available_gib_before": 13.77,
+    "seconds": 8.0,
+    "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3D/structural-check-source-final.log",
+    "sha256": "4a408357af779cc4f2017931c01a868130623c8c71edc1135b13abe3cb831aac"
+  },
+  {
+    "name": "shard-generate-final",
+    "command": [
+      "python3",
+      "scripts/pm-shard-plans.py",
+      "--generate",
+      "--config",
+      "Plans/sharding_config.json"
+    ],
+    "exit_code": 0,
+    "available_gib_before": 12.28,
+    "seconds": 4.0,
+    "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3D/shard-generate-final.log",
+    "sha256": "0097f44a100929b5fcc967352e31e0a28f4a8974cb0027f58fdf4df24ed776d3"
+  },
+  {
+    "name": "index-generate-final",
+    "command": [
+      "python3",
+      "scripts/pm-plan-index.py",
+      "generate"
+    ],
+    "exit_code": 0,
+    "available_gib_before": 12.12,
+    "seconds": 56.01,
+    "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3D/index-generate-final.log",
+    "sha256": "a7da9b92ac96e6619d4160d3db55ac86315bbeaccc0f7f540e316ffb0476dfd8"
+  },
+  {
+    "name": "shard-check",
+    "command": [
+      "python3",
+      "scripts/pm-shard-plans.py",
+      "--check",
+      "--config",
+      "Plans/sharding_config.json"
+    ],
+    "exit_code": 0,
+    "available_gib_before": 12.91,
+    "seconds": 22.01,
+    "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3D/shard-check.log",
+    "sha256": "d697ac77c260ee1fbe5007467d179c832c4c197ffc685d08b78f338e04ff7fdc"
+  },
+  {
+    "name": "index-validate",
+    "command": [
+      "python3",
+      "scripts/pm-plan-index.py",
+      "validate"
+    ],
+    "exit_code": 0,
+    "available_gib_before": 12.84,
+    "seconds": 62.02,
+    "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3D/index-validate.log",
+    "sha256": "bec91ce18119335278fe2e710ef28765755c6120f757e9d12806e7785768bbd7"
+  },
+  {
+    "name": "bsd-existing-tests",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_pm_assistant_contract_closure.py"
+    ],
+    "exit_code": 1,
+    "available_gib_before": 10.73,
+    "seconds": 10.04,
+    "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3D/bsd-existing-tests.log",
+    "sha256": "1bfb7f4aa988b4ec689c54c406e85f8024d82889237606975c821a7791afa5c7"
+  },
+  {
+    "name": "assistant-contract-check",
+    "command": [
+      "python3",
+      "scripts/pm-assistant-contract-check.py",
+      "--repo",
+      "/home/sittingmongoose/pm-worktrees/W3D"
+    ],
+    "exit_code": 1,
+    "available_gib_before": 10.67,
+    "seconds": 40.46,
+    "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3D/assistant-contract-check.log",
+    "sha256": "00e25902076040834e3bb5ab2f9edc130d0f9fb2be75d3d78c366e309b28748d"
+  },
+  {
+    "name": "shared-runtime-selftest",
+    "command": [
+      "python3",
+      "scripts/pm-shared-runtime-contracts.py",
+      "--self-test"
+    ],
+    "exit_code": 0,
+    "available_gib_before": 10.22,
+    "seconds": 2.0,
+    "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3D/shared-runtime-selftest.log",
+    "sha256": "6064a1454776e6f9cdec906eeb1453f1652e74f79bee69ee1719fec58d184027"
+  },
+  {
+    "name": "baseline-three-failures",
+    "command": [
+      "python3",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3D/baseline-compare.py"
+    ],
+    "exit_code": 1,
+    "available_gib_before": 9.95,
+    "seconds": 2.0,
+    "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3D/baseline-three-failures.log",
+    "sha256": "8e395da355e9721f956a576384c643b64da6261f4127fc5b27c53fddf58dd4cd"
+  },
+  {
+    "name": "baseline-three-failures-final",
+    "command": [
+      "python3",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3D/baseline-compare.py"
+    ],
+    "exit_code": 0,
+    "available_gib_before": 6.62,
+    "seconds": 8.01,
+    "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3D/baseline-three-failures-final.log",
+    "sha256": "98f5f07c3f615b63e2e89f36ad28f4dbb00c4c52177bb784add5aeb68cd6f0ea"
+  },
+  {
+    "name": "structural-check-handoff",
+    "command": [
+      "python3",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3D/structural-check.py"
+    ],
+    "exit_code": 0,
+    "available_gib_before": 9.5,
+    "seconds": 8.0,
+    "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3D/structural-check-handoff.log",
+    "sha256": "dfd05dae0873cd7a988422f8f3b5d691b00f7c4fa36150a860e70bf371ead687"
+  },
+  {
+    "name": "index-validate-final",
+    "command": [
+      "python3",
+      "scripts/pm-plan-index.py",
+      "validate"
+    ],
+    "exit_code": 0,
+    "available_gib_before": 9.87,
+    "seconds": 60.02,
+    "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3D/index-validate-final.log",
+    "sha256": "235623a7094b79d9d6dd55f366b1e9dc3dab35f1a708fd1af089aed33fc71995"
+  },
+  {
+    "name": "git-diff-check",
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 0,
+    "available_gib_before": 10.62,
+    "seconds": 2.0,
+    "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3D/git-diff-check.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]

@@ -2630,3 +2630,1043 @@ owner_hints:
   - Plans/Back_Seat_Driver.md#17-exact-commands-and-command-ownership
   - Plans/Back_Seat_Driver.md#18-typed-request-result-and-error-enumerations
 ```
+
+
+### BSD-1350 - bsd.advice_emitted prepared event owner
+
+```yaml
+plan_unit_id: BSD-1350
+unit_type: event_contract
+status: draft
+owner_doc: Plans/Back_Seat_Driver.md
+canonical_text: |-
+  Newly authored owner contract for bsd.advice_emitted, prepared without admission under deck-2 item 9.a A. This exact name is required by section 19/BSD-020 and has no existing alias/admitted event contract in the per-name search recorded in reports/event-authority-20261105/W3D.md.
+  1 membership/version: registry membership remains ABSENT. Proposed 1.0.0 payload is Plans/bsd_event_payloads.schema.json#/$defs/advice_emitted; SP-318 and the central registry still refuse writers.
+  2 owner: Back_Seat_Driver is the semantic owner; CV-1350 binds the closed payload/identity and SP-1350 binds proposed Storage values. Reuse BSD-006, BSD-009, BSD-031, BSD-032 rather than sibling definitions.
+  3 producer: BackSeatDriverService::deliver_advice owns this transition. The actual command/dispatch/provider/deadline source must be independently authenticated. Admission checks exact family/version, original operation and current owner/epoch/permission/Stop gates before effect. It commits the immutable selected lifecycle source and pending_event operation under owner CAS; body/payload packs are durable before references. Pending source wrappers and operation commit together under the original transition CAS; the owning lifecycle head remains at its prior committed state until original append custody is resolved and the complete operation/head publish together. A failed append cannot expose uncommitted advice or a fabricated success. Once actual admission exists, known BSD failure/quarantine isolation releases waiters through the existing owner path while Storage failure remains disclosed; this event never authorizes withholding the primary past its own bounded catch-up rule. Append the frozen producer input once, adopt SP-286/CV-339 by name including full-value stored v2 original resolution and SP-336/SP-347 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/control transition and recovery result depend on the original receipt; no primary/external action is authorized by it. Expose no successful append result, event-dependent projection or provider dispatch before the genuine first AppendReceipt. Persist complete operation/result with that original receipt before terminal publication. A crash after body but before append resumes the frozen pending event; a crash after append resolves original custody before completing. Prior domain authorization is never inferred from this historical event. Missing registration means no append and existing missing_event_registration; dependent commands remain disabled.
+  4 payload: independently closed schema Plans/bsd_event_payloads.schema.json#/$defs/advice_emitted, ref-only source bodies, exact tags, no raw protected content.
+  5 scope/identity: project_only and exact original source/assignment/binding/run/epoch/generation/actor/account joins are defined independently for this event in CV-1350. Never borrow another family's recipe.
+  6 replay/idempotency: same original identity and semantic bytes returns exactly the original result; a different semantic digest conflicts, missing tail-current authoritative dedupe is dedupe_unavailable, and a missing original receipt/body stays unavailable. A current append/retry with projector_replay_only is replay_only_not_appendable. Historical reads/rebuilds do not dispatch a review/tool, charge Usage, insert another transcript note, notify, mutate canonical lifecycle state or create an event.
+  7 retention: retention_policy_ref={registry_schema_id: pm.storage_value_registry.v2, policy_id: RP-RUNTIME-365D, policy_version: 1.0.0}. This exact family belongs to the actual primary_run_id from its assignment (BSD section 16); its recorded run completion starts the 365-day clock, with 1,000,000/run and 5,000,000/project and linked successor compaction. A nonterminal/missing completion never fabricates an anchor. This is Storage Case L-3's Runtime/run/node/attempt class, not an extension of Card-1 G13's five computer-use names. Holds, latest-25-run/recovery/live-reference/backup protection and owner deletion rules still override expiry; replay/retry/restore never restart the clock. Operation-receipt custody follows the existing lifetime identity guarantee RP-EVENT-IDENTITY-APPROOT; rebuildable projections/checkpoints use RP-PROJECTION-3GEN and cannot outlive/read a source without verified custody. These technical rows do not extend linked private-transcript/content lifetime.
+  8 custody: the original BSD lifecycle source stays canonical under its pending physical family; the proposed operation stores only redacted refs, original identity, semantic commitment and exact first receipt. SP-337 externalizes oversized bodies and every stored value is separately measured at 16 KiB. Storage holds the original first receipt/full-value commitment; coherent backup/restore includes the actual lifecycle source, operation, payload packs, original receipt and controls. Every current read/retry/replay/restore validates original custody and present access/deletion/withdrawal. Raw retained quarantine output and the advisor private transcript are never rendered by the event reader. Deleted bodies stay unavailable; retained metadata is not permission to recreate content.
+  9 transitions: Records one accepted advice delivery at the eligible step boundary, after the finding decision is committed; it is not a second review result. The selected finding is emitted, with one stamped presentation_weight and one delivery for its review cycle. A reconfirmed finding cites the newer evidence; frozen_boundary requires the actual recorded synchronous frozen safe point. async_nit is nit at a nonterminal next-step boundary. terminal_timeout_stale requires a critical held finding, actual expired/released terminal catch-up, stale=true, unreconfirmed=true and note weight. All other deliveries have both markers false. Nit and cooldown-routed deliveries stamp aside; other deliveries stamp note. A reload never re-weights the note. No primary result, gate, or run state changes.
+  10 consumers/checkpoints: projector.bsd.advice_emitted@1.0.0, reader.bsd.advice_emitted@1.0.0 and operating consumer AssistantChat::bsd_advisor_note adopt SP-278 by name via SP-1350. They filter exactly bsd.advice_emitted, the actual Project partition and exact supported payload/version. A derived projection references the authentic original event/source state; it does not become canonical assignment/finding/policy state. Checkpoint and all changed projection rows advance atomically by exact prior-value CAS after complete scanned-range proof. Persist only the nine-field durable token; the current read transaction supplies redb_snapshot_id transiently. No GUI-local state, matching-row maximum or caller proof flag supplies currentness.
+  11 compatibility/withdrawal: There is no earlier admitted BSD event version to migrate or synthesize. The existing completed-review bsd_runtime_record is not this event and never expands into lifecycle history. Genuine future retained 1.0.0 originals remain inspectable under authenticated original admission and recipe after live epoch/config changes, including compatibility-only replay policy; unsupported/missing/substituted custody or withdrawn sources refuse. A writer cutoff first fences new owner operations and drains/resolves previously issued pending inputs, records the exact cutoff under Storage governance, then withdraws the selector. Readers stop on withdrawal, invalidate their publication/checkpoint and rebuild only under an explicitly admitted successor; no fallback aliases, silent migration or fresh effects. Rebuild discards only derived rows, preserves canonical original bytes and reports unavailable expired/lost source rather than claiming empty/success.
+  12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared number/format adoption or shared guard-isolation proof is claimed in phase 1. Other grading cells report contract text only, never native proof.
+gui_related: true
+gui_classification_reason: Defines existing advisor-note presentation data without adding a control.
+depends_on:
+- BSD-006
+- BSD-009
+- BSD-031
+- BSD-032
+- CV-1350
+- SP-1350
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, payload, original-source identity and retry custody are bound.
+- No unregistered append, physical admission or native/runtime success is implied.
+- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- Plans/bsd_event_oracle_plan.json
+risk_class: advisory_history_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3d_phase1
+implementation_surfaces:
+- Plans/Back_Seat_Driver.md
+- Plans/bsd_event_payloads.schema.json
+- Plans/bsd_event_storage_contracts.schema.json
+- Plans/bsd_event_storage_candidates.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3D.md
+- Deck-2 item 9.a A (answer record 2026-11-05; DL-450 application pending)
+preserved_exact_tokens:
+- bsd.advice_emitted
+- ABSENT
+- SP-286
+- CV-339
+- SP-278
+- RP-RUNTIME-365D
+negative_constraints:
+- Do not append a registry family, admit an event, enable BSD commands or treat static definitions as runtime evidence.
+- Do not define a local number/timestamp implementation or guard-isolation proof engine.
+owner_hints:
+- Plans/Back_Seat_Driver.md
+```
+
+
+### BSD-1351 - bsd.assignment_paused prepared event owner
+
+```yaml
+plan_unit_id: BSD-1351
+unit_type: event_contract
+status: draft
+owner_doc: Plans/Back_Seat_Driver.md
+canonical_text: |-
+  Newly authored owner contract for bsd.assignment_paused, prepared without admission under deck-2 item 9.a A. This exact name is required by section 19/BSD-020 and has no existing alias/admitted event contract in the per-name search recorded in reports/event-authority-20261105/W3D.md.
+  1 membership/version: registry membership remains ABSENT. Proposed 1.0.0 payload is Plans/bsd_event_payloads.schema.json#/$defs/assignment_paused; SP-318 and the central registry still refuse writers.
+  2 owner: Back_Seat_Driver is the semantic owner; CV-1351 binds the closed payload/identity and SP-1351 binds proposed Storage values. Reuse BSD-012, BSD-016, BSD-033, BSD-035 rather than sibling definitions.
+  3 producer: BackSeatDriverService::commit_assignment_pause owns this transition. The actual command/dispatch/provider/deadline source must be independently authenticated. Admission checks exact family/version, original operation and current owner/epoch/permission/Stop gates before effect. It commits the immutable selected lifecycle source and pending_event operation under owner CAS; body/payload packs are durable before references. Pending source wrappers and operation commit together under the original transition CAS; the owning lifecycle head remains at its prior committed state until original append custody is resolved and the complete operation/head publish together. A failed append cannot expose uncommitted advice or a fabricated success. Once actual admission exists, known BSD failure/quarantine isolation releases waiters through the existing owner path while Storage failure remains disclosed; this event never authorizes withholding the primary past its own bounded catch-up rule. Append the frozen producer input once, adopt SP-286/CV-339 by name including full-value stored v2 original resolution and SP-336/SP-347 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/control transition and recovery result depend on the original receipt; no primary/external action is authorized by it. Expose no successful append result, event-dependent projection or provider dispatch before the genuine first AppendReceipt. Persist complete operation/result with that original receipt before terminal publication. A crash after body but before append resumes the frozen pending event; a crash after append resolves original custody before completing. Prior domain authorization is never inferred from this historical event. Missing registration means no append and existing missing_event_registration; dependent commands remain disabled.
+  4 payload: independently closed schema Plans/bsd_event_payloads.schema.json#/$defs/assignment_paused, ref-only source bodies, exact tags, no raw protected content.
+  5 scope/identity: project_only and exact original source/assignment/binding/run/epoch/generation/actor/account joins are defined independently for this event in CV-1351. Never borrow another family's recipe.
+  6 replay/idempotency: same original identity and semantic bytes returns exactly the original result; a different semantic digest conflicts, missing tail-current authoritative dedupe is dedupe_unavailable, and a missing original receipt/body stays unavailable. A current append/retry with projector_replay_only is replay_only_not_appendable. Historical reads/rebuilds do not dispatch a review/tool, charge Usage, insert another transcript note, notify, mutate canonical lifecycle state or create an event.
+  7 retention: retention_policy_ref={registry_schema_id: pm.storage_value_registry.v2, policy_id: RP-RUNTIME-365D, policy_version: 1.0.0}. This exact family belongs to the actual primary_run_id from its assignment (BSD section 16); its recorded run completion starts the 365-day clock, with 1,000,000/run and 5,000,000/project and linked successor compaction. A nonterminal/missing completion never fabricates an anchor. This is Storage Case L-3's Runtime/run/node/attempt class, not an extension of Card-1 G13's five computer-use names. Holds, latest-25-run/recovery/live-reference/backup protection and owner deletion rules still override expiry; replay/retry/restore never restart the clock. Operation-receipt custody follows the existing lifetime identity guarantee RP-EVENT-IDENTITY-APPROOT; rebuildable projections/checkpoints use RP-PROJECTION-3GEN and cannot outlive/read a source without verified custody. These technical rows do not extend linked private-transcript/content lifetime.
+  8 custody: the original BSD lifecycle source stays canonical under its pending physical family; the proposed operation stores only redacted refs, original identity, semantic commitment and exact first receipt. SP-337 externalizes oversized bodies and every stored value is separately measured at 16 KiB. Storage holds the original first receipt/full-value commitment; coherent backup/restore includes the actual lifecycle source, operation, payload packs, original receipt and controls. Every current read/retry/replay/restore validates original custody and present access/deletion/withdrawal. Raw retained quarantine output and the advisor private transcript are never rendered by the event reader. Deleted bodies stay unavailable; retained metadata is not permission to recreate content.
+  9 transitions: Records an actual user or safety pause of the exact assignment; quota pause remains its distinct owner state and cannot be mislabeled user/safety. The admitted owner transition changes a non-stopped, not-already-paused assignment to paused and stops queuing reviews. user requires the actual accepted pause command; safety requires the second consecutive quarantined turn under BSD-012. Held findings and closures persist. A live review callback remains subject to the current pause/epoch fence; no delivery or cursor advance bypasses it. Repeating an unchanged paused result emits nothing. The primary continues unchanged.
+  10 consumers/checkpoints: projector.bsd.assignment_paused@1.0.0, reader.bsd.assignment_paused@1.0.0 and operating consumer AssistantContext::bsd_pause_projection adopt SP-278 by name via SP-1351. They filter exactly bsd.assignment_paused, the actual Project partition and exact supported payload/version. A derived projection references the authentic original event/source state; it does not become canonical assignment/finding/policy state. Checkpoint and all changed projection rows advance atomically by exact prior-value CAS after complete scanned-range proof. Persist only the nine-field durable token; the current read transaction supplies redb_snapshot_id transiently. No GUI-local state, matching-row maximum or caller proof flag supplies currentness.
+  11 compatibility/withdrawal: There is no earlier admitted BSD event version to migrate or synthesize. The existing completed-review bsd_runtime_record is not this event and never expands into lifecycle history. Genuine future retained 1.0.0 originals remain inspectable under authenticated original admission and recipe after live epoch/config changes, including compatibility-only replay policy; unsupported/missing/substituted custody or withdrawn sources refuse. A writer cutoff first fences new owner operations and drains/resolves previously issued pending inputs, records the exact cutoff under Storage governance, then withdraws the selector. Readers stop on withdrawal, invalidate their publication/checkpoint and rebuild only under an explicitly admitted successor; no fallback aliases, silent migration or fresh effects. Rebuild discards only derived rows, preserves canonical original bytes and reports unavailable expired/lost source rather than claiming empty/success.
+  12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared number/format adoption or shared guard-isolation proof is claimed in phase 1. Other grading cells report contract text only, never native proof.
+gui_related: false
+gui_classification_reason: Defines internal event, identity, Storage custody or validation, without changing presentation.
+depends_on:
+- BSD-012
+- BSD-016
+- BSD-033
+- BSD-035
+- CV-1351
+- SP-1351
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, payload, original-source identity and retry custody are bound.
+- No unregistered append, physical admission or native/runtime success is implied.
+- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- Plans/bsd_event_oracle_plan.json
+risk_class: advisory_history_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3d_phase1
+implementation_surfaces:
+- Plans/Back_Seat_Driver.md
+- Plans/bsd_event_payloads.schema.json
+- Plans/bsd_event_storage_contracts.schema.json
+- Plans/bsd_event_storage_candidates.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3D.md
+- Deck-2 item 9.a A (answer record 2026-11-05; DL-450 application pending)
+preserved_exact_tokens:
+- bsd.assignment_paused
+- ABSENT
+- SP-286
+- CV-339
+- SP-278
+- RP-RUNTIME-365D
+negative_constraints:
+- Do not append a registry family, admit an event, enable BSD commands or treat static definitions as runtime evidence.
+- Do not define a local number/timestamp implementation or guard-isolation proof engine.
+owner_hints:
+- Plans/Back_Seat_Driver.md
+```
+
+
+### BSD-1352 - bsd.assignment_resumed prepared event owner
+
+```yaml
+plan_unit_id: BSD-1352
+unit_type: event_contract
+status: draft
+owner_doc: Plans/Back_Seat_Driver.md
+canonical_text: |-
+  Newly authored owner contract for bsd.assignment_resumed, prepared without admission under deck-2 item 9.a A. This exact name is required by section 19/BSD-020 and has no existing alias/admitted event contract in the per-name search recorded in reports/event-authority-20261105/W3D.md.
+  1 membership/version: registry membership remains ABSENT. Proposed 1.0.0 payload is Plans/bsd_event_payloads.schema.json#/$defs/assignment_resumed; SP-318 and the central registry still refuse writers.
+  2 owner: Back_Seat_Driver is the semantic owner; CV-1352 binds the closed payload/identity and SP-1352 binds proposed Storage values. Reuse BSD-012, BSD-033, BSD-035 rather than sibling definitions.
+  3 producer: BackSeatDriverService::commit_assignment_resume owns this transition. The actual command/dispatch/provider/deadline source must be independently authenticated. Admission checks exact family/version, original operation and current owner/epoch/permission/Stop gates before effect. It commits the immutable selected lifecycle source and pending_event operation under owner CAS; body/payload packs are durable before references. Pending source wrappers and operation commit together under the original transition CAS; the owning lifecycle head remains at its prior committed state until original append custody is resolved and the complete operation/head publish together. A failed append cannot expose uncommitted advice or a fabricated success. Once actual admission exists, known BSD failure/quarantine isolation releases waiters through the existing owner path while Storage failure remains disclosed; this event never authorizes withholding the primary past its own bounded catch-up rule. Append the frozen producer input once, adopt SP-286/CV-339 by name including full-value stored v2 original resolution and SP-336/SP-347 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/control transition and recovery result depend on the original receipt; no primary/external action is authorized by it. Expose no successful append result, event-dependent projection or provider dispatch before the genuine first AppendReceipt. Persist complete operation/result with that original receipt before terminal publication. A crash after body but before append resumes the frozen pending event; a crash after append resolves original custody before completing. Prior domain authorization is never inferred from this historical event. Missing registration means no append and existing missing_event_registration; dependent commands remain disabled.
+  4 payload: independently closed schema Plans/bsd_event_payloads.schema.json#/$defs/assignment_resumed, ref-only source bodies, exact tags, no raw protected content.
+  5 scope/identity: project_only and exact original source/assignment/binding/run/epoch/generation/actor/account joins are defined independently for this event in CV-1352. Never borrow another family's recipe.
+  6 replay/idempotency: same original identity and semantic bytes returns exactly the original result; a different semantic digest conflicts, missing tail-current authoritative dedupe is dedupe_unavailable, and a missing original receipt/body stays unavailable. A current append/retry with projector_replay_only is replay_only_not_appendable. Historical reads/rebuilds do not dispatch a review/tool, charge Usage, insert another transcript note, notify, mutate canonical lifecycle state or create an event.
+  7 retention: retention_policy_ref={registry_schema_id: pm.storage_value_registry.v2, policy_id: RP-RUNTIME-365D, policy_version: 1.0.0}. This exact family belongs to the actual primary_run_id from its assignment (BSD section 16); its recorded run completion starts the 365-day clock, with 1,000,000/run and 5,000,000/project and linked successor compaction. A nonterminal/missing completion never fabricates an anchor. This is Storage Case L-3's Runtime/run/node/attempt class, not an extension of Card-1 G13's five computer-use names. Holds, latest-25-run/recovery/live-reference/backup protection and owner deletion rules still override expiry; replay/retry/restore never restart the clock. Operation-receipt custody follows the existing lifetime identity guarantee RP-EVENT-IDENTITY-APPROOT; rebuildable projections/checkpoints use RP-PROJECTION-3GEN and cannot outlive/read a source without verified custody. These technical rows do not extend linked private-transcript/content lifetime.
+  8 custody: the original BSD lifecycle source stays canonical under its pending physical family; the proposed operation stores only redacted refs, original identity, semantic commitment and exact first receipt. SP-337 externalizes oversized bodies and every stored value is separately measured at 16 KiB. Storage holds the original first receipt/full-value commitment; coherent backup/restore includes the actual lifecycle source, operation, payload packs, original receipt and controls. Every current read/retry/replay/restore validates original custody and present access/deletion/withdrawal. Raw retained quarantine output and the advisor private transcript are never rendered by the event reader. Deleted bodies stay unavailable; retained metadata is not permission to recreate content.
+  9 transitions: Records acceptance of the existing explicit Resume advisor action for a paused assignment at its actual current epoch. An actual accepted cmd.bsd.assignment.resume consumes a paused assignment at the current epoch, clears pause_cause, and restores review eligibility from its retained cursor. The event records that eligibility; it does not invent an idle/queued result ahead of the owner resolver, retry a dropped batch twice, bypass a terminal quarantine pause, or resume/restart/wake the primary. Already resumed and stale-epoch requests create no new transition.
+  10 consumers/checkpoints: projector.bsd.assignment_resumed@1.0.0, reader.bsd.assignment_resumed@1.0.0 and operating consumer AssistantContext::bsd_resume_projection adopt SP-278 by name via SP-1352. They filter exactly bsd.assignment_resumed, the actual Project partition and exact supported payload/version. A derived projection references the authentic original event/source state; it does not become canonical assignment/finding/policy state. Checkpoint and all changed projection rows advance atomically by exact prior-value CAS after complete scanned-range proof. Persist only the nine-field durable token; the current read transaction supplies redb_snapshot_id transiently. No GUI-local state, matching-row maximum or caller proof flag supplies currentness.
+  11 compatibility/withdrawal: There is no earlier admitted BSD event version to migrate or synthesize. The existing completed-review bsd_runtime_record is not this event and never expands into lifecycle history. Genuine future retained 1.0.0 originals remain inspectable under authenticated original admission and recipe after live epoch/config changes, including compatibility-only replay policy; unsupported/missing/substituted custody or withdrawn sources refuse. A writer cutoff first fences new owner operations and drains/resolves previously issued pending inputs, records the exact cutoff under Storage governance, then withdraws the selector. Readers stop on withdrawal, invalidate their publication/checkpoint and rebuild only under an explicitly admitted successor; no fallback aliases, silent migration or fresh effects. Rebuild discards only derived rows, preserves canonical original bytes and reports unavailable expired/lost source rather than claiming empty/success.
+  12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared number/format adoption or shared guard-isolation proof is claimed in phase 1. Other grading cells report contract text only, never native proof.
+gui_related: false
+gui_classification_reason: Defines internal event, identity, Storage custody or validation, without changing presentation.
+depends_on:
+- BSD-012
+- BSD-033
+- BSD-035
+- CV-1352
+- SP-1352
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, payload, original-source identity and retry custody are bound.
+- No unregistered append, physical admission or native/runtime success is implied.
+- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- Plans/bsd_event_oracle_plan.json
+risk_class: advisory_history_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3d_phase1
+implementation_surfaces:
+- Plans/Back_Seat_Driver.md
+- Plans/bsd_event_payloads.schema.json
+- Plans/bsd_event_storage_contracts.schema.json
+- Plans/bsd_event_storage_candidates.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3D.md
+- Deck-2 item 9.a A (answer record 2026-11-05; DL-450 application pending)
+preserved_exact_tokens:
+- bsd.assignment_resumed
+- ABSENT
+- SP-286
+- CV-339
+- SP-278
+- RP-RUNTIME-365D
+negative_constraints:
+- Do not append a registry family, admit an event, enable BSD commands or treat static definitions as runtime evidence.
+- Do not define a local number/timestamp implementation or guard-isolation proof engine.
+owner_hints:
+- Plans/Back_Seat_Driver.md
+```
+
+
+### BSD-1353 - bsd.assignment_started prepared event owner
+
+```yaml
+plan_unit_id: BSD-1353
+unit_type: event_contract
+status: draft
+owner_doc: Plans/Back_Seat_Driver.md
+canonical_text: |-
+  Newly authored owner contract for bsd.assignment_started, prepared without admission under deck-2 item 9.a A. This exact name is required by section 19/BSD-020 and has no existing alias/admitted event contract in the per-name search recorded in reports/event-authority-20261105/W3D.md.
+  1 membership/version: registry membership remains ABSENT. Proposed 1.0.0 payload is Plans/bsd_event_payloads.schema.json#/$defs/assignment_started; SP-318 and the central registry still refuse writers.
+  2 owner: Back_Seat_Driver is the semantic owner; CV-1353 binds the closed payload/identity and SP-1353 binds proposed Storage values. Reuse BSD-002, BSD-004, BSD-014, BSD-016, BSD-017 rather than sibling definitions.
+  3 producer: BackSeatDriverService::commit_assignment_start owns this transition. The actual command/dispatch/provider/deadline source must be independently authenticated. Admission checks exact family/version, original operation and current owner/epoch/permission/Stop gates before effect. It commits the immutable selected lifecycle source and pending_event operation under owner CAS; body/payload packs are durable before references. Pending source wrappers and operation commit together under the original transition CAS; the owning lifecycle head remains at its prior committed state until original append custody is resolved and the complete operation/head publish together. A failed append cannot expose uncommitted advice or a fabricated success. Once actual admission exists, known BSD failure/quarantine isolation releases waiters through the existing owner path while Storage failure remains disclosed; this event never authorizes withholding the primary past its own bounded catch-up rule. Append the frozen producer input once, adopt SP-286/CV-339 by name including full-value stored v2 original resolution and SP-336/SP-347 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/control transition and recovery result depend on the original receipt; no primary/external action is authorized by it. Expose no successful append result, event-dependent projection or provider dispatch before the genuine first AppendReceipt. Persist complete operation/result with that original receipt before terminal publication. A crash after body but before append resumes the frozen pending event; a crash after append resolves original custody before completing. Prior domain authorization is never inferred from this historical event. Missing registration means no append and existing missing_event_registration; dependent commands remain disabled.
+  4 payload: independently closed schema Plans/bsd_event_payloads.schema.json#/$defs/assignment_started, ref-only source bodies, exact tags, no raw protected content.
+  5 scope/identity: project_only and exact original source/assignment/binding/run/epoch/generation/actor/account joins are defined independently for this event in CV-1353. Never borrow another family's recipe.
+  6 replay/idempotency: same original identity and semantic bytes returns exactly the original result; a different semantic digest conflicts, missing tail-current authoritative dedupe is dedupe_unavailable, and a missing original receipt/body stays unavailable. A current append/retry with projector_replay_only is replay_only_not_appendable. Historical reads/rebuilds do not dispatch a review/tool, charge Usage, insert another transcript note, notify, mutate canonical lifecycle state or create an event.
+  7 retention: retention_policy_ref={registry_schema_id: pm.storage_value_registry.v2, policy_id: RP-RUNTIME-365D, policy_version: 1.0.0}. This exact family belongs to the actual primary_run_id from its assignment (BSD section 16); its recorded run completion starts the 365-day clock, with 1,000,000/run and 5,000,000/project and linked successor compaction. A nonterminal/missing completion never fabricates an anchor. This is Storage Case L-3's Runtime/run/node/attempt class, not an extension of Card-1 G13's five computer-use names. Holds, latest-25-run/recovery/live-reference/backup protection and owner deletion rules still override expiry; replay/retry/restore never restart the clock. Operation-receipt custody follows the existing lifetime identity guarantee RP-EVENT-IDENTITY-APPROOT; rebuildable projections/checkpoints use RP-PROJECTION-3GEN and cannot outlive/read a source without verified custody. These technical rows do not extend linked private-transcript/content lifetime.
+  8 custody: the original BSD lifecycle source stays canonical under its pending physical family; the proposed operation stores only redacted refs, original identity, semantic commitment and exact first receipt. SP-337 externalizes oversized bodies and every stored value is separately measured at 16 KiB. Storage holds the original first receipt/full-value commitment; coherent backup/restore includes the actual lifecycle source, operation, payload packs, original receipt and controls. Every current read/retry/replay/restore validates original custody and present access/deletion/withdrawal. Raw retained quarantine output and the advisor private transcript are never rendered by the event reader. Deleted bodies stay unavailable; retained metadata is not permission to recreate content.
+  9 transitions: Records creation of the one advisor assignment for the actual primary run and stage under a frozen effective Auto or On binding. The actual primary-run/stage owner supplies the frozen binding and requested/effective route snapshot; uniqueness is (project_id, primary_run_id, stage_id) for that binding activation, including double dispatch. An Off resolution creates no assignment, no advisor context and no provider attempt. Enablement mid-run seeds the cursor to the actual current generation. The tool profile is the fixed BSD read-only grant, including BSD-011/DL-181 terminal exclusions; Persona never raises authority. An unresolved model or Persona remains inactive and creates no fabricated serving identity.
+  10 consumers/checkpoints: projector.bsd.assignment_started@1.0.0, reader.bsd.assignment_started@1.0.0 and operating consumer AssistantContext::bsd_assignment_projection adopt SP-278 by name via SP-1353. They filter exactly bsd.assignment_started, the actual Project partition and exact supported payload/version. A derived projection references the authentic original event/source state; it does not become canonical assignment/finding/policy state. Checkpoint and all changed projection rows advance atomically by exact prior-value CAS after complete scanned-range proof. Persist only the nine-field durable token; the current read transaction supplies redb_snapshot_id transiently. No GUI-local state, matching-row maximum or caller proof flag supplies currentness.
+  11 compatibility/withdrawal: There is no earlier admitted BSD event version to migrate or synthesize. The existing completed-review bsd_runtime_record is not this event and never expands into lifecycle history. Genuine future retained 1.0.0 originals remain inspectable under authenticated original admission and recipe after live epoch/config changes, including compatibility-only replay policy; unsupported/missing/substituted custody or withdrawn sources refuse. A writer cutoff first fences new owner operations and drains/resolves previously issued pending inputs, records the exact cutoff under Storage governance, then withdraws the selector. Readers stop on withdrawal, invalidate their publication/checkpoint and rebuild only under an explicitly admitted successor; no fallback aliases, silent migration or fresh effects. Rebuild discards only derived rows, preserves canonical original bytes and reports unavailable expired/lost source rather than claiming empty/success.
+  12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared number/format adoption or shared guard-isolation proof is claimed in phase 1. Other grading cells report contract text only, never native proof.
+gui_related: false
+gui_classification_reason: Defines internal event, identity, Storage custody or validation, without changing presentation.
+depends_on:
+- BSD-002
+- BSD-004
+- BSD-014
+- BSD-016
+- BSD-017
+- CV-1353
+- SP-1353
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, payload, original-source identity and retry custody are bound.
+- No unregistered append, physical admission or native/runtime success is implied.
+- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- Plans/bsd_event_oracle_plan.json
+risk_class: advisory_history_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3d_phase1
+implementation_surfaces:
+- Plans/Back_Seat_Driver.md
+- Plans/bsd_event_payloads.schema.json
+- Plans/bsd_event_storage_contracts.schema.json
+- Plans/bsd_event_storage_candidates.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3D.md
+- Deck-2 item 9.a A (answer record 2026-11-05; DL-450 application pending)
+preserved_exact_tokens:
+- bsd.assignment_started
+- ABSENT
+- SP-286
+- CV-339
+- SP-278
+- RP-RUNTIME-365D
+negative_constraints:
+- Do not append a registry family, admit an event, enable BSD commands or treat static definitions as runtime evidence.
+- Do not define a local number/timestamp implementation or guard-isolation proof engine.
+owner_hints:
+- Plans/Back_Seat_Driver.md
+```
+
+
+### BSD-1354 - bsd.assignment_stopped prepared event owner
+
+```yaml
+plan_unit_id: BSD-1354
+unit_type: event_contract
+status: draft
+owner_doc: Plans/Back_Seat_Driver.md
+canonical_text: |-
+  Newly authored owner contract for bsd.assignment_stopped, prepared without admission under deck-2 item 9.a A. This exact name is required by section 19/BSD-020 and has no existing alias/admitted event contract in the per-name search recorded in reports/event-authority-20261105/W3D.md.
+  1 membership/version: registry membership remains ABSENT. Proposed 1.0.0 payload is Plans/bsd_event_payloads.schema.json#/$defs/assignment_stopped; SP-318 and the central registry still refuse writers.
+  2 owner: Back_Seat_Driver is the semantic owner; CV-1354 binds the closed payload/identity and SP-1354 binds proposed Storage values. Reuse BSD-013, BSD-014, BSD-020 rather than sibling definitions.
+  3 producer: BackSeatDriverService::commit_assignment_stop owns this transition. The actual command/dispatch/provider/deadline source must be independently authenticated. Admission checks exact family/version, original operation and current owner/epoch/permission/Stop gates before effect. It commits the immutable selected lifecycle source and pending_event operation under owner CAS; body/payload packs are durable before references. Pending source wrappers and operation commit together under the original transition CAS; the owning lifecycle head remains at its prior committed state until original append custody is resolved and the complete operation/head publish together. A failed append cannot expose uncommitted advice or a fabricated success. Once actual admission exists, known BSD failure/quarantine isolation releases waiters through the existing owner path while Storage failure remains disclosed; this event never authorizes withholding the primary past its own bounded catch-up rule. Append the frozen producer input once, adopt SP-286/CV-339 by name including full-value stored v2 original resolution and SP-336/SP-347 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/control transition and recovery result depend on the original receipt; no primary/external action is authorized by it. Expose no successful append result, event-dependent projection or provider dispatch before the genuine first AppendReceipt. Persist complete operation/result with that original receipt before terminal publication. A crash after body but before append resumes the frozen pending event; a crash after append resolves original custody before completing. Prior domain authorization is never inferred from this historical event. Missing registration means no append and existing missing_event_registration; dependent commands remain disabled.
+  4 payload: independently closed schema Plans/bsd_event_payloads.schema.json#/$defs/assignment_stopped, ref-only source bodies, exact tags, no raw protected content.
+  5 scope/identity: project_only and exact original source/assignment/binding/run/epoch/generation/actor/account joins are defined independently for this event in CV-1354. Never borrow another family's recipe.
+  6 replay/idempotency: same original identity and semantic bytes returns exactly the original result; a different semantic digest conflicts, missing tail-current authoritative dedupe is dedupe_unavailable, and a missing original receipt/body stays unavailable. A current append/retry with projector_replay_only is replay_only_not_appendable. Historical reads/rebuilds do not dispatch a review/tool, charge Usage, insert another transcript note, notify, mutate canonical lifecycle state or create an event.
+  7 retention: retention_policy_ref={registry_schema_id: pm.storage_value_registry.v2, policy_id: RP-RUNTIME-365D, policy_version: 1.0.0}. This exact family belongs to the actual primary_run_id from its assignment (BSD section 16); its recorded run completion starts the 365-day clock, with 1,000,000/run and 5,000,000/project and linked successor compaction. A nonterminal/missing completion never fabricates an anchor. This is Storage Case L-3's Runtime/run/node/attempt class, not an extension of Card-1 G13's five computer-use names. Holds, latest-25-run/recovery/live-reference/backup protection and owner deletion rules still override expiry; replay/retry/restore never restart the clock. Operation-receipt custody follows the existing lifetime identity guarantee RP-EVENT-IDENTITY-APPROOT; rebuildable projections/checkpoints use RP-PROJECTION-3GEN and cannot outlive/read a source without verified custody. These technical rows do not extend linked private-transcript/content lifetime.
+  8 custody: the original BSD lifecycle source stays canonical under its pending physical family; the proposed operation stores only redacted refs, original identity, semantic commitment and exact first receipt. SP-337 externalizes oversized bodies and every stored value is separately measured at 16 KiB. Storage holds the original first receipt/full-value commitment; coherent backup/restore includes the actual lifecycle source, operation, payload packs, original receipt and controls. Every current read/retry/replay/restore validates original custody and present access/deletion/withdrawal. Raw retained quarantine output and the advisor private transcript are never rendered by the event reader. Deleted bodies stay unavailable; retained metadata is not permission to recreate content.
+  9 transitions: Records the actual terminal stop of one advisor assignment, preserving its final epoch/cursor and the original stop cause. The accepted assignment-stop source or primary lifecycle ending source transitions the actual nonterminal assignment to stopped once. Stop cancels future BSD eligibility and releases its catch-up waiters; it retains held and closed history under their own custody. Callbacks from the stopped assignment cannot advance its cursor, emit advice, or reopen it. Later work gets the actual owner-created assignment identity; replay never silently resumes or restarts this assignment or the primary.
+  10 consumers/checkpoints: projector.bsd.assignment_stopped@1.0.0, reader.bsd.assignment_stopped@1.0.0 and operating consumer AssistantContext::bsd_stopped_projection adopt SP-278 by name via SP-1354. They filter exactly bsd.assignment_stopped, the actual Project partition and exact supported payload/version. A derived projection references the authentic original event/source state; it does not become canonical assignment/finding/policy state. Checkpoint and all changed projection rows advance atomically by exact prior-value CAS after complete scanned-range proof. Persist only the nine-field durable token; the current read transaction supplies redb_snapshot_id transiently. No GUI-local state, matching-row maximum or caller proof flag supplies currentness.
+  11 compatibility/withdrawal: There is no earlier admitted BSD event version to migrate or synthesize. The existing completed-review bsd_runtime_record is not this event and never expands into lifecycle history. Genuine future retained 1.0.0 originals remain inspectable under authenticated original admission and recipe after live epoch/config changes, including compatibility-only replay policy; unsupported/missing/substituted custody or withdrawn sources refuse. A writer cutoff first fences new owner operations and drains/resolves previously issued pending inputs, records the exact cutoff under Storage governance, then withdraws the selector. Readers stop on withdrawal, invalidate their publication/checkpoint and rebuild only under an explicitly admitted successor; no fallback aliases, silent migration or fresh effects. Rebuild discards only derived rows, preserves canonical original bytes and reports unavailable expired/lost source rather than claiming empty/success.
+  12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared number/format adoption or shared guard-isolation proof is claimed in phase 1. Other grading cells report contract text only, never native proof.
+gui_related: false
+gui_classification_reason: Defines internal event, identity, Storage custody or validation, without changing presentation.
+depends_on:
+- BSD-013
+- BSD-014
+- BSD-020
+- CV-1354
+- SP-1354
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, payload, original-source identity and retry custody are bound.
+- No unregistered append, physical admission or native/runtime success is implied.
+- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- Plans/bsd_event_oracle_plan.json
+risk_class: advisory_history_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3d_phase1
+implementation_surfaces:
+- Plans/Back_Seat_Driver.md
+- Plans/bsd_event_payloads.schema.json
+- Plans/bsd_event_storage_contracts.schema.json
+- Plans/bsd_event_storage_candidates.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3D.md
+- Deck-2 item 9.a A (answer record 2026-11-05; DL-450 application pending)
+preserved_exact_tokens:
+- bsd.assignment_stopped
+- ABSENT
+- SP-286
+- CV-339
+- SP-278
+- RP-RUNTIME-365D
+negative_constraints:
+- Do not append a registry family, admit an event, enable BSD commands or treat static definitions as runtime evidence.
+- Do not define a local number/timestamp implementation or guard-isolation proof engine.
+owner_hints:
+- Plans/Back_Seat_Driver.md
+```
+
+
+### BSD-1355 - bsd.finding_cleared prepared event owner
+
+```yaml
+plan_unit_id: BSD-1355
+unit_type: event_contract
+status: draft
+owner_doc: Plans/Back_Seat_Driver.md
+canonical_text: |-
+  Newly authored owner contract for bsd.finding_cleared, prepared without admission under deck-2 item 9.a A. This exact name is required by section 19/BSD-020 and has no existing alias/admitted event contract in the per-name search recorded in reports/event-authority-20261105/W3D.md.
+  1 membership/version: registry membership remains ABSENT. Proposed 1.0.0 payload is Plans/bsd_event_payloads.schema.json#/$defs/finding_cleared; SP-318 and the central registry still refuse writers.
+  2 owner: Back_Seat_Driver is the semantic owner; CV-1355 binds the closed payload/identity and SP-1355 binds proposed Storage values. Reuse BSD-006, BSD-008, BSD-014 rather than sibling definitions.
+  3 producer: BackSeatDriverService::commit_finding_clear owns this transition. The actual command/dispatch/provider/deadline source must be independently authenticated. Admission checks exact family/version, original operation and current owner/epoch/permission/Stop gates before effect. It commits the immutable selected lifecycle source and pending_event operation under owner CAS; body/payload packs are durable before references. Pending source wrappers and operation commit together under the original transition CAS; the owning lifecycle head remains at its prior committed state until original append custody is resolved and the complete operation/head publish together. A failed append cannot expose uncommitted advice or a fabricated success. Once actual admission exists, known BSD failure/quarantine isolation releases waiters through the existing owner path while Storage failure remains disclosed; this event never authorizes withholding the primary past its own bounded catch-up rule. Append the frozen producer input once, adopt SP-286/CV-339 by name including full-value stored v2 original resolution and SP-336/SP-347 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/control transition and recovery result depend on the original receipt; no primary/external action is authorized by it. Expose no successful append result, event-dependent projection or provider dispatch before the genuine first AppendReceipt. Persist complete operation/result with that original receipt before terminal publication. A crash after body but before append resumes the frozen pending event; a crash after append resolves original custody before completing. Prior domain authorization is never inferred from this historical event. Missing registration means no append and existing missing_event_registration; dependent commands remain disabled.
+  4 payload: independently closed schema Plans/bsd_event_payloads.schema.json#/$defs/finding_cleared, ref-only source bodies, exact tags, no raw protected content.
+  5 scope/identity: project_only and exact original source/assignment/binding/run/epoch/generation/actor/account joins are defined independently for this event in CV-1355. Never borrow another family's recipe.
+  6 replay/idempotency: same original identity and semantic bytes returns exactly the original result; a different semantic digest conflicts, missing tail-current authoritative dedupe is dedupe_unavailable, and a missing original receipt/body stays unavailable. A current append/retry with projector_replay_only is replay_only_not_appendable. Historical reads/rebuilds do not dispatch a review/tool, charge Usage, insert another transcript note, notify, mutate canonical lifecycle state or create an event.
+  7 retention: retention_policy_ref={registry_schema_id: pm.storage_value_registry.v2, policy_id: RP-RUNTIME-365D, policy_version: 1.0.0}. This exact family belongs to the actual primary_run_id from its assignment (BSD section 16); its recorded run completion starts the 365-day clock, with 1,000,000/run and 5,000,000/project and linked successor compaction. A nonterminal/missing completion never fabricates an anchor. This is Storage Case L-3's Runtime/run/node/attempt class, not an extension of Card-1 G13's five computer-use names. Holds, latest-25-run/recovery/live-reference/backup protection and owner deletion rules still override expiry; replay/retry/restore never restart the clock. Operation-receipt custody follows the existing lifetime identity guarantee RP-EVENT-IDENTITY-APPROOT; rebuildable projections/checkpoints use RP-PROJECTION-3GEN and cannot outlive/read a source without verified custody. These technical rows do not extend linked private-transcript/content lifetime.
+  8 custody: the original BSD lifecycle source stays canonical under its pending physical family; the proposed operation stores only redacted refs, original identity, semantic commitment and exact first receipt. SP-337 externalizes oversized bodies and every stored value is separately measured at 16 KiB. Storage holds the original first receipt/full-value commitment; coherent backup/restore includes the actual lifecycle source, operation, payload packs, original receipt and controls. Every current read/retry/replay/restore validates original custody and present access/deletion/withdrawal. Raw retained quarantine output and the advisor private transcript are never rendered by the event reader. Deleted bodies stay unavailable; retained metadata is not permission to recreate content.
+  9 transitions: Records that the advisor did not restate the held finding when reviewing newer state, or that primary-epoch replacement closes its old delivery eligibility. reconfirmation_silence requires an actual completed newer review whose supplied held-finding preamble contains this exact key and whose result omits it. Silence from a failed, timed-out, missing or old-epoch callback is not clearance. epoch_replaced is an owner replacement-control path, not a provider callback: it binds the old held finding and original epoch to the authentic current replacement control. It consumes that control and closes old eligibility with closed_reason=epoch_replaced, retaining history; an advisor-only self-compaction is not primary replacement. No note is delivered and no newer finding is cleared. A current stale callback is refused; historical inspection still accepts an authentic previously valid clearance.
+  10 consumers/checkpoints: projector.bsd.finding_cleared@1.0.0, reader.bsd.finding_cleared@1.0.0 and operating consumer AssistantContext::bsd_finding_projection adopt SP-278 by name via SP-1355. They filter exactly bsd.finding_cleared, the actual Project partition and exact supported payload/version. A derived projection references the authentic original event/source state; it does not become canonical assignment/finding/policy state. Checkpoint and all changed projection rows advance atomically by exact prior-value CAS after complete scanned-range proof. Persist only the nine-field durable token; the current read transaction supplies redb_snapshot_id transiently. No GUI-local state, matching-row maximum or caller proof flag supplies currentness.
+  11 compatibility/withdrawal: There is no earlier admitted BSD event version to migrate or synthesize. The existing completed-review bsd_runtime_record is not this event and never expands into lifecycle history. Genuine future retained 1.0.0 originals remain inspectable under authenticated original admission and recipe after live epoch/config changes, including compatibility-only replay policy; unsupported/missing/substituted custody or withdrawn sources refuse. A writer cutoff first fences new owner operations and drains/resolves previously issued pending inputs, records the exact cutoff under Storage governance, then withdraws the selector. Readers stop on withdrawal, invalidate their publication/checkpoint and rebuild only under an explicitly admitted successor; no fallback aliases, silent migration or fresh effects. Rebuild discards only derived rows, preserves canonical original bytes and reports unavailable expired/lost source rather than claiming empty/success.
+  12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared number/format adoption or shared guard-isolation proof is claimed in phase 1. Other grading cells report contract text only, never native proof.
+gui_related: false
+gui_classification_reason: Defines internal event, identity, Storage custody or validation, without changing presentation.
+depends_on:
+- BSD-006
+- BSD-008
+- BSD-014
+- CV-1355
+- SP-1355
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, payload, original-source identity and retry custody are bound.
+- No unregistered append, physical admission or native/runtime success is implied.
+- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- Plans/bsd_event_oracle_plan.json
+risk_class: advisory_history_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3d_phase1
+implementation_surfaces:
+- Plans/Back_Seat_Driver.md
+- Plans/bsd_event_payloads.schema.json
+- Plans/bsd_event_storage_contracts.schema.json
+- Plans/bsd_event_storage_candidates.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3D.md
+- Deck-2 item 9.a A (answer record 2026-11-05; DL-450 application pending)
+preserved_exact_tokens:
+- bsd.finding_cleared
+- ABSENT
+- SP-286
+- CV-339
+- SP-278
+- RP-RUNTIME-365D
+negative_constraints:
+- Do not append a registry family, admit an event, enable BSD commands or treat static definitions as runtime evidence.
+- Do not define a local number/timestamp implementation or guard-isolation proof engine.
+owner_hints:
+- Plans/Back_Seat_Driver.md
+```
+
+
+### BSD-1356 - bsd.finding_held prepared event owner
+
+```yaml
+plan_unit_id: BSD-1356
+unit_type: event_contract
+status: draft
+owner_doc: Plans/Back_Seat_Driver.md
+canonical_text: |-
+  Newly authored owner contract for bsd.finding_held, prepared without admission under deck-2 item 9.a A. This exact name is required by section 19/BSD-020 and has no existing alias/admitted event contract in the per-name search recorded in reports/event-authority-20261105/W3D.md.
+  1 membership/version: registry membership remains ABSENT. Proposed 1.0.0 payload is Plans/bsd_event_payloads.schema.json#/$defs/finding_held; SP-318 and the central registry still refuse writers.
+  2 owner: Back_Seat_Driver is the semantic owner; CV-1356 binds the closed payload/identity and SP-1356 binds proposed Storage values. Reuse BSD-006, BSD-008, BSD-014 rather than sibling definitions.
+  3 producer: BackSeatDriverService::commit_finding_hold owns this transition. The actual command/dispatch/provider/deadline source must be independently authenticated. Admission checks exact family/version, original operation and current owner/epoch/permission/Stop gates before effect. It commits the immutable selected lifecycle source and pending_event operation under owner CAS; body/payload packs are durable before references. Pending source wrappers and operation commit together under the original transition CAS; the owning lifecycle head remains at its prior committed state until original append custody is resolved and the complete operation/head publish together. A failed append cannot expose uncommitted advice or a fabricated success. Once actual admission exists, known BSD failure/quarantine isolation releases waiters through the existing owner path while Storage failure remains disclosed; this event never authorizes withholding the primary past its own bounded catch-up rule. Append the frozen producer input once, adopt SP-286/CV-339 by name including full-value stored v2 original resolution and SP-336/SP-347 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/control transition and recovery result depend on the original receipt; no primary/external action is authorized by it. Expose no successful append result, event-dependent projection or provider dispatch before the genuine first AppendReceipt. Persist complete operation/result with that original receipt before terminal publication. A crash after body but before append resumes the frozen pending event; a crash after append resolves original custody before completing. Prior domain authorization is never inferred from this historical event. Missing registration means no append and existing missing_event_registration; dependent commands remain disabled.
+  4 payload: independently closed schema Plans/bsd_event_payloads.schema.json#/$defs/finding_held, ref-only source bodies, exact tags, no raw protected content.
+  5 scope/identity: project_only and exact original source/assignment/binding/run/epoch/generation/actor/account joins are defined independently for this event in CV-1356. Never borrow another family's recipe.
+  6 replay/idempotency: same original identity and semantic bytes returns exactly the original result; a different semantic digest conflicts, missing tail-current authoritative dedupe is dedupe_unavailable, and a missing original receipt/body stays unavailable. A current append/retry with projector_replay_only is replay_only_not_appendable. Historical reads/rebuilds do not dispatch a review/tool, charge Usage, insert another transcript note, notify, mutate canonical lifecycle state or create an event.
+  7 retention: retention_policy_ref={registry_schema_id: pm.storage_value_registry.v2, policy_id: RP-RUNTIME-365D, policy_version: 1.0.0}. This exact family belongs to the actual primary_run_id from its assignment (BSD section 16); its recorded run completion starts the 365-day clock, with 1,000,000/run and 5,000,000/project and linked successor compaction. A nonterminal/missing completion never fabricates an anchor. This is Storage Case L-3's Runtime/run/node/attempt class, not an extension of Card-1 G13's five computer-use names. Holds, latest-25-run/recovery/live-reference/backup protection and owner deletion rules still override expiry; replay/retry/restore never restart the clock. Operation-receipt custody follows the existing lifetime identity guarantee RP-EVENT-IDENTITY-APPROOT; rebuildable projections/checkpoints use RP-PROJECTION-3GEN and cannot outlive/read a source without verified custody. These technical rows do not extend linked private-transcript/content lifetime.
+  8 custody: the original BSD lifecycle source stays canonical under its pending physical family; the proposed operation stores only redacted refs, original identity, semantic commitment and exact first receipt. SP-337 externalizes oversized bodies and every stored value is separately measured at 16 KiB. Storage holds the original first receipt/full-value commitment; coherent backup/restore includes the actual lifecycle source, operation, payload packs, original receipt and controls. Every current read/retry/replay/restore validates original custody and present access/deletion/withdrawal. Raw retained quarantine output and the advisor private transcript are never rendered by the event reader. Deleted bodies stay unavailable; retained metadata is not permission to recreate content.
+  9 transitions: Records persistence outside the private transcript of a newly held asynchronous concern/critical, or a terminal-boundary nit requiring a later check. asynchronous_high_severity requires concern or critical from a non-frozen asynchronous review; terminal_nit requires nit at a terminal boundary. Persist the exact finding at held before exposing its count, without presentation_weight or transcript advice. Store outside the advisor transcript so self-compaction cannot erase it. The next eligible newer review receives the exact held key in its preamble. A reset preserves history but conveys no cross-primary-epoch delivery capability. A frozen synchronous review may deliver via its distinct owner rule, not claim that exception here.
+  10 consumers/checkpoints: projector.bsd.finding_held@1.0.0, reader.bsd.finding_held@1.0.0 and operating consumer AssistantContext::bsd_held_projection adopt SP-278 by name via SP-1356. They filter exactly bsd.finding_held, the actual Project partition and exact supported payload/version. A derived projection references the authentic original event/source state; it does not become canonical assignment/finding/policy state. Checkpoint and all changed projection rows advance atomically by exact prior-value CAS after complete scanned-range proof. Persist only the nine-field durable token; the current read transaction supplies redb_snapshot_id transiently. No GUI-local state, matching-row maximum or caller proof flag supplies currentness.
+  11 compatibility/withdrawal: There is no earlier admitted BSD event version to migrate or synthesize. The existing completed-review bsd_runtime_record is not this event and never expands into lifecycle history. Genuine future retained 1.0.0 originals remain inspectable under authenticated original admission and recipe after live epoch/config changes, including compatibility-only replay policy; unsupported/missing/substituted custody or withdrawn sources refuse. A writer cutoff first fences new owner operations and drains/resolves previously issued pending inputs, records the exact cutoff under Storage governance, then withdraws the selector. Readers stop on withdrawal, invalidate their publication/checkpoint and rebuild only under an explicitly admitted successor; no fallback aliases, silent migration or fresh effects. Rebuild discards only derived rows, preserves canonical original bytes and reports unavailable expired/lost source rather than claiming empty/success.
+  12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared number/format adoption or shared guard-isolation proof is claimed in phase 1. Other grading cells report contract text only, never native proof.
+gui_related: false
+gui_classification_reason: Defines internal event, identity, Storage custody or validation, without changing presentation.
+depends_on:
+- BSD-006
+- BSD-008
+- BSD-014
+- CV-1356
+- SP-1356
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, payload, original-source identity and retry custody are bound.
+- No unregistered append, physical admission or native/runtime success is implied.
+- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- Plans/bsd_event_oracle_plan.json
+risk_class: advisory_history_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3d_phase1
+implementation_surfaces:
+- Plans/Back_Seat_Driver.md
+- Plans/bsd_event_payloads.schema.json
+- Plans/bsd_event_storage_contracts.schema.json
+- Plans/bsd_event_storage_candidates.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3D.md
+- Deck-2 item 9.a A (answer record 2026-11-05; DL-450 application pending)
+preserved_exact_tokens:
+- bsd.finding_held
+- ABSENT
+- SP-286
+- CV-339
+- SP-278
+- RP-RUNTIME-365D
+negative_constraints:
+- Do not append a registry family, admit an event, enable BSD commands or treat static definitions as runtime evidence.
+- Do not define a local number/timestamp implementation or guard-isolation proof engine.
+owner_hints:
+- Plans/Back_Seat_Driver.md
+```
+
+
+### BSD-1357 - bsd.finding_reconfirmed prepared event owner
+
+```yaml
+plan_unit_id: BSD-1357
+unit_type: event_contract
+status: draft
+owner_doc: Plans/Back_Seat_Driver.md
+canonical_text: |-
+  Newly authored owner contract for bsd.finding_reconfirmed, prepared without admission under deck-2 item 9.a A. This exact name is required by section 19/BSD-020 and has no existing alias/admitted event contract in the per-name search recorded in reports/event-authority-20261105/W3D.md.
+  1 membership/version: registry membership remains ABSENT. Proposed 1.0.0 payload is Plans/bsd_event_payloads.schema.json#/$defs/finding_reconfirmed; SP-318 and the central registry still refuse writers.
+  2 owner: Back_Seat_Driver is the semantic owner; CV-1357 binds the closed payload/identity and SP-1357 binds proposed Storage values. Reuse BSD-006, BSD-008, BSD-031 rather than sibling definitions.
+  3 producer: BackSeatDriverService::commit_finding_reconfirmation owns this transition. The actual command/dispatch/provider/deadline source must be independently authenticated. Admission checks exact family/version, original operation and current owner/epoch/permission/Stop gates before effect. It commits the immutable selected lifecycle source and pending_event operation under owner CAS; body/payload packs are durable before references. Pending source wrappers and operation commit together under the original transition CAS; the owning lifecycle head remains at its prior committed state until original append custody is resolved and the complete operation/head publish together. A failed append cannot expose uncommitted advice or a fabricated success. Once actual admission exists, known BSD failure/quarantine isolation releases waiters through the existing owner path while Storage failure remains disclosed; this event never authorizes withholding the primary past its own bounded catch-up rule. Append the frozen producer input once, adopt SP-286/CV-339 by name including full-value stored v2 original resolution and SP-336/SP-347 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/control transition and recovery result depend on the original receipt; no primary/external action is authorized by it. Expose no successful append result, event-dependent projection or provider dispatch before the genuine first AppendReceipt. Persist complete operation/result with that original receipt before terminal publication. A crash after body but before append resumes the frozen pending event; a crash after append resolves original custody before completing. Prior domain authorization is never inferred from this historical event. Missing registration means no append and existing missing_event_registration; dependent commands remain disabled.
+  4 payload: independently closed schema Plans/bsd_event_payloads.schema.json#/$defs/finding_reconfirmed, ref-only source bodies, exact tags, no raw protected content.
+  5 scope/identity: project_only and exact original source/assignment/binding/run/epoch/generation/actor/account joins are defined independently for this event in CV-1357. Never borrow another family's recipe.
+  6 replay/idempotency: same original identity and semantic bytes returns exactly the original result; a different semantic digest conflicts, missing tail-current authoritative dedupe is dedupe_unavailable, and a missing original receipt/body stays unavailable. A current append/retry with projector_replay_only is replay_only_not_appendable. Historical reads/rebuilds do not dispatch a review/tool, charge Usage, insert another transcript note, notify, mutate canonical lifecycle state or create an event.
+  7 retention: retention_policy_ref={registry_schema_id: pm.storage_value_registry.v2, policy_id: RP-RUNTIME-365D, policy_version: 1.0.0}. This exact family belongs to the actual primary_run_id from its assignment (BSD section 16); its recorded run completion starts the 365-day clock, with 1,000,000/run and 5,000,000/project and linked successor compaction. A nonterminal/missing completion never fabricates an anchor. This is Storage Case L-3's Runtime/run/node/attempt class, not an extension of Card-1 G13's five computer-use names. Holds, latest-25-run/recovery/live-reference/backup protection and owner deletion rules still override expiry; replay/retry/restore never restart the clock. Operation-receipt custody follows the existing lifetime identity guarantee RP-EVENT-IDENTITY-APPROOT; rebuildable projections/checkpoints use RP-PROJECTION-3GEN and cannot outlive/read a source without verified custody. These technical rows do not extend linked private-transcript/content lifetime.
+  8 custody: the original BSD lifecycle source stays canonical under its pending physical family; the proposed operation stores only redacted refs, original identity, semantic commitment and exact first receipt. SP-337 externalizes oversized bodies and every stored value is separately measured at 16 KiB. Storage holds the original first receipt/full-value commitment; coherent backup/restore includes the actual lifecycle source, operation, payload packs, original receipt and controls. Every current read/retry/replay/restore validates original custody and present access/deletion/withdrawal. Raw retained quarantine output and the advisor private transcript are never rendered by the event reader. Deleted bodies stay unavailable; retained metadata is not permission to recreate content.
+  9 transitions: Records the advisor explicitly re-raising the exact held finding against newer primary state with current evidence, before its distinct advice delivery event. The completed review includes this exact held key in its preamble and explicitly re-raises it against a newer current generation with current evidence. Reconfirmation increments the original count exactly once and keeps the finding identity; evidence-supported escalation is allowed, downgrade to bypass hold is not. The resulting finding is eligible for delivery under BSD-006 and has the owner emitted state; this event records the check, while bsd.advice_emitted records actual eligible-boundary delivery. No key laundering, historical replay, or reset counts as a new reconfirmation.
+  10 consumers/checkpoints: projector.bsd.finding_reconfirmed@1.0.0, reader.bsd.finding_reconfirmed@1.0.0 and operating consumer AssistantContext::bsd_reconfirmation_projection adopt SP-278 by name via SP-1357. They filter exactly bsd.finding_reconfirmed, the actual Project partition and exact supported payload/version. A derived projection references the authentic original event/source state; it does not become canonical assignment/finding/policy state. Checkpoint and all changed projection rows advance atomically by exact prior-value CAS after complete scanned-range proof. Persist only the nine-field durable token; the current read transaction supplies redb_snapshot_id transiently. No GUI-local state, matching-row maximum or caller proof flag supplies currentness.
+  11 compatibility/withdrawal: There is no earlier admitted BSD event version to migrate or synthesize. The existing completed-review bsd_runtime_record is not this event and never expands into lifecycle history. Genuine future retained 1.0.0 originals remain inspectable under authenticated original admission and recipe after live epoch/config changes, including compatibility-only replay policy; unsupported/missing/substituted custody or withdrawn sources refuse. A writer cutoff first fences new owner operations and drains/resolves previously issued pending inputs, records the exact cutoff under Storage governance, then withdraws the selector. Readers stop on withdrawal, invalidate their publication/checkpoint and rebuild only under an explicitly admitted successor; no fallback aliases, silent migration or fresh effects. Rebuild discards only derived rows, preserves canonical original bytes and reports unavailable expired/lost source rather than claiming empty/success.
+  12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared number/format adoption or shared guard-isolation proof is claimed in phase 1. Other grading cells report contract text only, never native proof.
+gui_related: false
+gui_classification_reason: Defines internal event, identity, Storage custody or validation, without changing presentation.
+depends_on:
+- BSD-006
+- BSD-008
+- BSD-031
+- CV-1357
+- SP-1357
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, payload, original-source identity and retry custody are bound.
+- No unregistered append, physical admission or native/runtime success is implied.
+- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- Plans/bsd_event_oracle_plan.json
+risk_class: advisory_history_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3d_phase1
+implementation_surfaces:
+- Plans/Back_Seat_Driver.md
+- Plans/bsd_event_payloads.schema.json
+- Plans/bsd_event_storage_contracts.schema.json
+- Plans/bsd_event_storage_candidates.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3D.md
+- Deck-2 item 9.a A (answer record 2026-11-05; DL-450 application pending)
+preserved_exact_tokens:
+- bsd.finding_reconfirmed
+- ABSENT
+- SP-286
+- CV-339
+- SP-278
+- RP-RUNTIME-365D
+negative_constraints:
+- Do not append a registry family, admit an event, enable BSD commands or treat static definitions as runtime evidence.
+- Do not define a local number/timestamp implementation or guard-isolation proof engine.
+owner_hints:
+- Plans/Back_Seat_Driver.md
+```
+
+
+### BSD-1358 - bsd.finding_suppressed prepared event owner
+
+```yaml
+plan_unit_id: BSD-1358
+unit_type: event_contract
+status: draft
+owner_doc: Plans/Back_Seat_Driver.md
+canonical_text: |-
+  Newly authored owner contract for bsd.finding_suppressed, prepared without admission under deck-2 item 9.a A. This exact name is required by section 19/BSD-020 and has no existing alias/admitted event contract in the per-name search recorded in reports/event-authority-20261105/W3D.md.
+  1 membership/version: registry membership remains ABSENT. Proposed 1.0.0 payload is Plans/bsd_event_payloads.schema.json#/$defs/finding_suppressed; SP-318 and the central registry still refuse writers.
+  2 owner: Back_Seat_Driver is the semantic owner; CV-1358 binds the closed payload/identity and SP-1358 binds proposed Storage values. Reuse BSD-008, BSD-009 rather than sibling definitions.
+  3 producer: BackSeatDriverService::commit_finding_suppression owns this transition. The actual command/dispatch/provider/deadline source must be independently authenticated. Admission checks exact family/version, original operation and current owner/epoch/permission/Stop gates before effect. It commits the immutable selected lifecycle source and pending_event operation under owner CAS; body/payload packs are durable before references. Pending source wrappers and operation commit together under the original transition CAS; the owning lifecycle head remains at its prior committed state until original append custody is resolved and the complete operation/head publish together. A failed append cannot expose uncommitted advice or a fabricated success. Once actual admission exists, known BSD failure/quarantine isolation releases waiters through the existing owner path while Storage failure remains disclosed; this event never authorizes withholding the primary past its own bounded catch-up rule. Append the frozen producer input once, adopt SP-286/CV-339 by name including full-value stored v2 original resolution and SP-336/SP-347 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/control transition and recovery result depend on the original receipt; no primary/external action is authorized by it. Expose no successful append result, event-dependent projection or provider dispatch before the genuine first AppendReceipt. Persist complete operation/result with that original receipt before terminal publication. A crash after body but before append resumes the frozen pending event; a crash after append resolves original custody before completing. Prior domain authorization is never inferred from this historical event. Missing registration means no append and existing missing_event_registration; dependent commands remain disabled.
+  4 payload: independently closed schema Plans/bsd_event_payloads.schema.json#/$defs/finding_suppressed, ref-only source bodies, exact tags, no raw protected content.
+  5 scope/identity: project_only and exact original source/assignment/binding/run/epoch/generation/actor/account joins are defined independently for this event in CV-1358. Never borrow another family's recipe.
+  6 replay/idempotency: same original identity and semantic bytes returns exactly the original result; a different semantic digest conflicts, missing tail-current authoritative dedupe is dedupe_unavailable, and a missing original receipt/body stays unavailable. A current append/retry with projector_replay_only is replay_only_not_appendable. Historical reads/rebuilds do not dispatch a review/tool, charge Usage, insert another transcript note, notify, mutate canonical lifecycle state or create an event.
+  7 retention: retention_policy_ref={registry_schema_id: pm.storage_value_registry.v2, policy_id: RP-RUNTIME-365D, policy_version: 1.0.0}. This exact family belongs to the actual primary_run_id from its assignment (BSD section 16); its recorded run completion starts the 365-day clock, with 1,000,000/run and 5,000,000/project and linked successor compaction. A nonterminal/missing completion never fabricates an anchor. This is Storage Case L-3's Runtime/run/node/attempt class, not an extension of Card-1 G13's five computer-use names. Holds, latest-25-run/recovery/live-reference/backup protection and owner deletion rules still override expiry; replay/retry/restore never restart the clock. Operation-receipt custody follows the existing lifetime identity guarantee RP-EVENT-IDENTITY-APPROOT; rebuildable projections/checkpoints use RP-PROJECTION-3GEN and cannot outlive/read a source without verified custody. These technical rows do not extend linked private-transcript/content lifetime.
+  8 custody: the original BSD lifecycle source stays canonical under its pending physical family; the proposed operation stores only redacted refs, original identity, semantic commitment and exact first receipt. SP-337 externalizes oversized bodies and every stored value is separately measured at 16 KiB. Storage holds the original first receipt/full-value commitment; coherent backup/restore includes the actual lifecycle source, operation, payload packs, original receipt and controls. Every current read/retry/replay/restore validates original custody and present access/deletion/withdrawal. Raw retained quarantine output and the advisor private transcript are never rendered by the event reader. Deleted bodies stay unavailable; retained metadata is not permission to recreate content.
+  9 transitions: Records only an actual duplicate_suppressed or content_free_suppressed finding decision; cooldown changes routing and is never a suppression reason. A duplicate has the unchanged key/evidence and same or lower severity; an evidence-supported escalation remains eligible and cannot be suppressed by this reason. A content-free result has no concrete reason and consumes no per-review accepted-note budget. Durable closures survive restart and advisor reset. A genuinely changed evidence fingerprint may reopen as recorded owner history; re-reading a closure cannot. Suppression produces no transcript noise, no success review, and no primary gate change. The advisory cooldown only routes later concerns as asides; it never discards a finding.
+  10 consumers/checkpoints: projector.bsd.finding_suppressed@1.0.0, reader.bsd.finding_suppressed@1.0.0 and operating consumer Usage::bsd_suppression_counters adopt SP-278 by name via SP-1358. They filter exactly bsd.finding_suppressed, the actual Project partition and exact supported payload/version. A derived projection references the authentic original event/source state; it does not become canonical assignment/finding/policy state. Checkpoint and all changed projection rows advance atomically by exact prior-value CAS after complete scanned-range proof. Persist only the nine-field durable token; the current read transaction supplies redb_snapshot_id transiently. No GUI-local state, matching-row maximum or caller proof flag supplies currentness.
+  11 compatibility/withdrawal: There is no earlier admitted BSD event version to migrate or synthesize. The existing completed-review bsd_runtime_record is not this event and never expands into lifecycle history. Genuine future retained 1.0.0 originals remain inspectable under authenticated original admission and recipe after live epoch/config changes, including compatibility-only replay policy; unsupported/missing/substituted custody or withdrawn sources refuse. A writer cutoff first fences new owner operations and drains/resolves previously issued pending inputs, records the exact cutoff under Storage governance, then withdraws the selector. Readers stop on withdrawal, invalidate their publication/checkpoint and rebuild only under an explicitly admitted successor; no fallback aliases, silent migration or fresh effects. Rebuild discards only derived rows, preserves canonical original bytes and reports unavailable expired/lost source rather than claiming empty/success.
+  12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared number/format adoption or shared guard-isolation proof is claimed in phase 1. Other grading cells report contract text only, never native proof.
+gui_related: false
+gui_classification_reason: Defines internal event, identity, Storage custody or validation, without changing presentation.
+depends_on:
+- BSD-008
+- BSD-009
+- CV-1358
+- SP-1358
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, payload, original-source identity and retry custody are bound.
+- No unregistered append, physical admission or native/runtime success is implied.
+- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- Plans/bsd_event_oracle_plan.json
+risk_class: advisory_history_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3d_phase1
+implementation_surfaces:
+- Plans/Back_Seat_Driver.md
+- Plans/bsd_event_payloads.schema.json
+- Plans/bsd_event_storage_contracts.schema.json
+- Plans/bsd_event_storage_candidates.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3D.md
+- Deck-2 item 9.a A (answer record 2026-11-05; DL-450 application pending)
+preserved_exact_tokens:
+- bsd.finding_suppressed
+- ABSENT
+- SP-286
+- CV-339
+- SP-278
+- RP-RUNTIME-365D
+negative_constraints:
+- Do not append a registry family, admit an event, enable BSD commands or treat static definitions as runtime evidence.
+- Do not define a local number/timestamp implementation or guard-isolation proof engine.
+owner_hints:
+- Plans/Back_Seat_Driver.md
+```
+
+
+### BSD-1359 - bsd.output_quarantined prepared event owner
+
+```yaml
+plan_unit_id: BSD-1359
+unit_type: event_contract
+status: draft
+owner_doc: Plans/Back_Seat_Driver.md
+canonical_text: |-
+  Newly authored owner contract for bsd.output_quarantined, prepared without admission under deck-2 item 9.a A. This exact name is required by section 19/BSD-020 and has no existing alias/admitted event contract in the per-name search recorded in reports/event-authority-20261105/W3D.md.
+  1 membership/version: registry membership remains ABSENT. Proposed 1.0.0 payload is Plans/bsd_event_payloads.schema.json#/$defs/output_quarantined; SP-318 and the central registry still refuse writers.
+  2 owner: Back_Seat_Driver is the semantic owner; CV-1359 binds the closed payload/identity and SP-1359 binds proposed Storage values. Reuse BSD-011, BSD-012, BSD-014 rather than sibling definitions.
+  3 producer: BackSeatDriverService::commit_output_quarantine owns this transition. The actual command/dispatch/provider/deadline source must be independently authenticated. Admission checks exact family/version, original operation and current owner/epoch/permission/Stop gates before effect. It commits the immutable selected lifecycle source and pending_event operation under owner CAS; body/payload packs are durable before references. Pending source wrappers and operation commit together under the original transition CAS; the owning lifecycle head remains at its prior committed state until original append custody is resolved and the complete operation/head publish together. A failed append cannot expose uncommitted advice or a fabricated success. Once actual admission exists, known BSD failure/quarantine isolation releases waiters through the existing owner path while Storage failure remains disclosed; this event never authorizes withholding the primary past its own bounded catch-up rule. Append the frozen producer input once, adopt SP-286/CV-339 by name including full-value stored v2 original resolution and SP-336/SP-347 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/control transition and recovery result depend on the original receipt; no primary/external action is authorized by it. Expose no successful append result, event-dependent projection or provider dispatch before the genuine first AppendReceipt. Persist complete operation/result with that original receipt before terminal publication. A crash after body but before append resumes the frozen pending event; a crash after append resolves original custody before completing. Prior domain authorization is never inferred from this historical event. Missing registration means no append and existing missing_event_registration; dependent commands remain disabled.
+  4 payload: independently closed schema Plans/bsd_event_payloads.schema.json#/$defs/output_quarantined, ref-only source bodies, exact tags, no raw protected content.
+  5 scope/identity: project_only and exact original source/assignment/binding/run/epoch/generation/actor/account joins are defined independently for this event in CV-1359. Never borrow another family's recipe.
+  6 replay/idempotency: same original identity and semantic bytes returns exactly the original result; a different semantic digest conflicts, missing tail-current authoritative dedupe is dedupe_unavailable, and a missing original receipt/body stays unavailable. A current append/retry with projector_replay_only is replay_only_not_appendable. Historical reads/rebuilds do not dispatch a review/tool, charge Usage, insert another transcript note, notify, mutate canonical lifecycle state or create an event.
+  7 retention: retention_policy_ref={registry_schema_id: pm.storage_value_registry.v2, policy_id: RP-RUNTIME-365D, policy_version: 1.0.0}. This exact family belongs to the actual primary_run_id from its assignment (BSD section 16); its recorded run completion starts the 365-day clock, with 1,000,000/run and 5,000,000/project and linked successor compaction. A nonterminal/missing completion never fabricates an anchor. This is Storage Case L-3's Runtime/run/node/attempt class, not an extension of Card-1 G13's five computer-use names. Holds, latest-25-run/recovery/live-reference/backup protection and owner deletion rules still override expiry; replay/retry/restore never restart the clock. Operation-receipt custody follows the existing lifetime identity guarantee RP-EVENT-IDENTITY-APPROOT; rebuildable projections/checkpoints use RP-PROJECTION-3GEN and cannot outlive/read a source without verified custody. These technical rows do not extend linked private-transcript/content lifetime.
+  8 custody: the original BSD lifecycle source stays canonical under its pending physical family; the proposed operation stores only redacted refs, original identity, semantic commitment and exact first receipt. SP-337 externalizes oversized bodies and every stored value is separately measured at 16 KiB. Storage holds the original first receipt/full-value commitment; coherent backup/restore includes the actual lifecycle source, operation, payload packs, original receipt and controls. Every current read/retry/replay/restore validates original custody and present access/deletion/withdrawal. Raw retained quarantine output and the advisor private transcript are never rendered by the event reader. Deleted bodies stay unavailable; retained metadata is not permission to recreate content.
+  9 transitions: Records quarantine of a whole invalid advisor turn before any dispatch, with the existing reason and bounded reset/pause decision. Quarantine excludes the entire affected turn, including advice inside it, before any forbidden tool/primary dispatch. The payload_hash is verified from the original owner-held output; the event carries only its digest and a redacted access-checked reference, never raw output or credentials. The first consecutive quarantine performs one silent re-prime with the latest pending input. The second records pause_bsd, drops the affected batch, pauses the assignment with pause_cause=safety and issues one deduplicated host warning. A successful review resets the counter. No unbounded re-prime, transcript rendering of raw output, terminal read grant, or primary control is added.
+  10 consumers/checkpoints: projector.bsd.output_quarantined@1.0.0, reader.bsd.output_quarantined@1.0.0 and operating consumer AssistantContext::bsd_quarantine_projection adopt SP-278 by name via SP-1359. They filter exactly bsd.output_quarantined, the actual Project partition and exact supported payload/version. A derived projection references the authentic original event/source state; it does not become canonical assignment/finding/policy state. Checkpoint and all changed projection rows advance atomically by exact prior-value CAS after complete scanned-range proof. Persist only the nine-field durable token; the current read transaction supplies redb_snapshot_id transiently. No GUI-local state, matching-row maximum or caller proof flag supplies currentness.
+  11 compatibility/withdrawal: There is no earlier admitted BSD event version to migrate or synthesize. The existing completed-review bsd_runtime_record is not this event and never expands into lifecycle history. Genuine future retained 1.0.0 originals remain inspectable under authenticated original admission and recipe after live epoch/config changes, including compatibility-only replay policy; unsupported/missing/substituted custody or withdrawn sources refuse. A writer cutoff first fences new owner operations and drains/resolves previously issued pending inputs, records the exact cutoff under Storage governance, then withdraws the selector. Readers stop on withdrawal, invalidate their publication/checkpoint and rebuild only under an explicitly admitted successor; no fallback aliases, silent migration or fresh effects. Rebuild discards only derived rows, preserves canonical original bytes and reports unavailable expired/lost source rather than claiming empty/success.
+  12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared number/format adoption or shared guard-isolation proof is claimed in phase 1. Other grading cells report contract text only, never native proof.
+gui_related: false
+gui_classification_reason: Defines internal event, identity, Storage custody or validation, without changing presentation.
+depends_on:
+- BSD-011
+- BSD-012
+- BSD-014
+- CV-1359
+- SP-1359
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, payload, original-source identity and retry custody are bound.
+- No unregistered append, physical admission or native/runtime success is implied.
+- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- Plans/bsd_event_oracle_plan.json
+risk_class: advisory_history_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3d_phase1
+implementation_surfaces:
+- Plans/Back_Seat_Driver.md
+- Plans/bsd_event_payloads.schema.json
+- Plans/bsd_event_storage_contracts.schema.json
+- Plans/bsd_event_storage_candidates.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3D.md
+- Deck-2 item 9.a A (answer record 2026-11-05; DL-450 application pending)
+preserved_exact_tokens:
+- bsd.output_quarantined
+- ABSENT
+- SP-286
+- CV-339
+- SP-278
+- RP-RUNTIME-365D
+negative_constraints:
+- Do not append a registry family, admit an event, enable BSD commands or treat static definitions as runtime evidence.
+- Do not define a local number/timestamp implementation or guard-isolation proof engine.
+owner_hints:
+- Plans/Back_Seat_Driver.md
+```
+
+
+### BSD-1360 - bsd.policy_changed prepared event owner
+
+```yaml
+plan_unit_id: BSD-1360
+unit_type: event_contract
+status: draft
+owner_doc: Plans/Back_Seat_Driver.md
+canonical_text: |-
+  Newly authored owner contract for bsd.policy_changed, prepared without admission under deck-2 item 9.a A. This exact name is required by section 19/BSD-020 and has no existing alias/admitted event contract in the per-name search recorded in reports/event-authority-20261105/W3D.md.
+  1 membership/version: registry membership remains ABSENT. Proposed 1.0.0 payload is Plans/bsd_event_payloads.schema.json#/$defs/policy_changed; SP-318 and the central registry still refuse writers.
+  2 owner: Back_Seat_Driver is the semantic owner; CV-1360 binds the closed payload/identity and SP-1360 binds proposed Storage values. Reuse BSD-002, BSD-017, BSD-020, BSD-029 rather than sibling definitions.
+  3 producer: BackSeatDriverService::commit_policy_revision owns this transition. The actual command/dispatch/provider/deadline source must be independently authenticated. Admission checks exact family/version, original operation and current owner/epoch/permission/Stop gates before effect. It commits the immutable selected lifecycle source and pending_event operation under owner CAS; body/payload packs are durable before references. Pending source wrappers and operation commit together under the original transition CAS; the owning lifecycle head remains at its prior committed state until original append custody is resolved and the complete operation/head publish together. A failed append cannot expose uncommitted advice or a fabricated success. Once actual admission exists, known BSD failure/quarantine isolation releases waiters through the existing owner path while Storage failure remains disclosed; this event never authorizes withholding the primary past its own bounded catch-up rule. Append the frozen producer input once, adopt SP-286/CV-339 by name including full-value stored v2 original resolution and SP-336/SP-347 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/control transition and recovery result depend on the original receipt; no primary/external action is authorized by it. Expose no successful append result, event-dependent projection or provider dispatch before the genuine first AppendReceipt. Persist complete operation/result with that original receipt before terminal publication. A crash after body but before append resumes the frozen pending event; a crash after append resolves original custody before completing. Prior domain authorization is never inferred from this historical event. Missing registration means no append and existing missing_event_registration; dependent commands remain disabled.
+  4 payload: independently closed schema Plans/bsd_event_payloads.schema.json#/$defs/policy_changed, ref-only source bodies, exact tags, no raw protected content.
+  5 scope/identity: project_only and exact original source/assignment/binding/run/epoch/generation/actor/account joins are defined independently for this event in CV-1360. Never borrow another family's recipe.
+  6 replay/idempotency: same original identity and semantic bytes returns exactly the original result; a different semantic digest conflicts, missing tail-current authoritative dedupe is dedupe_unavailable, and a missing original receipt/body stays unavailable. A current append/retry with projector_replay_only is replay_only_not_appendable. Historical reads/rebuilds do not dispatch a review/tool, charge Usage, insert another transcript note, notify, mutate canonical lifecycle state or create an event.
+  7 retention: retention_policy_ref=PENDING_RETENTION_DECISION. For bsd.policy_changed, which exact lifetime, count/overflow and deletion rule should apply to the saved project BSDPolicy revision history? Card-1 G18 covers scheduling only; RP-CONFIG-CURRENT covers current configuration values, not this event history. May this history expire, or should it remain until Delete Puppet Master project data? No age/count deletion is authorized; keep incomplete history under Storage's unknown-policy protection, never infer approval/receipt authority from the companion operation receipt. Admission stays blocked on this exact retention cell. Operation-receipt custody follows the existing lifetime identity guarantee RP-EVENT-IDENTITY-APPROOT; rebuildable projections/checkpoints use RP-PROJECTION-3GEN and cannot outlive/read a source without verified custody. These technical rows do not extend linked private-transcript/content lifetime.
+  8 custody: the original BSD lifecycle source stays canonical under its pending physical family; the proposed operation stores only redacted refs, original identity, semantic commitment and exact first receipt. SP-337 externalizes oversized bodies and every stored value is separately measured at 16 KiB. Storage holds the original first receipt/full-value commitment; coherent backup/restore includes the actual lifecycle source, operation, payload packs, original receipt and controls. Every current read/retry/replay/restore validates original custody and present access/deletion/withdrawal. Raw retained quarantine output and the advisor private transcript are never rendered by the event reader. Deleted bodies stay unavailable; retained metadata is not permission to recreate content.
+  9 transitions: Records an accepted change to the project BSDPolicy revision; it is not a duplicate Settings preference write or a review-start event. The existing cmd.bsd.set or cmd.bsd.configure accepted result supplies an expected-revision-checked actual change and the committed policy revision. Only the canonical safety.approvals.bsd-* preferences are Settings truth; this is the operational policy revision and must not write aliases or a second settings store. A no-op has no event. Explicit Off remains Off on import. New defaults affect the next frozen binding; explicit mid-run reconfiguration creates a new attributable binding revision and applies epoch fencing, never rewrites prior reviews. Invalid upward tool grants are dropped with the existing warning and never granted. No assignment/run/epoch is fabricated for a project policy edit.
+  10 consumers/checkpoints: projector.bsd.policy_changed@1.0.0, reader.bsd.policy_changed@1.0.0 and operating consumer Settings::bsd_policy_projection adopt SP-278 by name via SP-1360. They filter exactly bsd.policy_changed, the actual Project partition and exact supported payload/version. A derived projection references the authentic original event/source state; it does not become canonical assignment/finding/policy state. Checkpoint and all changed projection rows advance atomically by exact prior-value CAS after complete scanned-range proof. Persist only the nine-field durable token; the current read transaction supplies redb_snapshot_id transiently. No GUI-local state, matching-row maximum or caller proof flag supplies currentness.
+  11 compatibility/withdrawal: There is no earlier admitted BSD event version to migrate or synthesize. The existing completed-review bsd_runtime_record is not this event and never expands into lifecycle history. Genuine future retained 1.0.0 originals remain inspectable under authenticated original admission and recipe after live epoch/config changes, including compatibility-only replay policy; unsupported/missing/substituted custody or withdrawn sources refuse. A writer cutoff first fences new owner operations and drains/resolves previously issued pending inputs, records the exact cutoff under Storage governance, then withdraws the selector. Readers stop on withdrawal, invalidate their publication/checkpoint and rebuild only under an explicitly admitted successor; no fallback aliases, silent migration or fresh effects. Rebuild discards only derived rows, preserves canonical original bytes and reports unavailable expired/lost source rather than claiming empty/success.
+  12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared number/format adoption or shared guard-isolation proof is claimed in phase 1. Other grading cells report contract text only, never native proof.
+gui_related: false
+gui_classification_reason: Defines internal event, identity, Storage custody or validation, without changing presentation.
+depends_on:
+- BSD-002
+- BSD-017
+- BSD-020
+- BSD-029
+- CV-1360
+- SP-1360
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, payload, original-source identity and retry custody are bound.
+- No unregistered append, physical admission or native/runtime success is implied.
+- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- Plans/bsd_event_oracle_plan.json
+risk_class: advisory_history_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3d_phase1
+implementation_surfaces:
+- Plans/Back_Seat_Driver.md
+- Plans/bsd_event_payloads.schema.json
+- Plans/bsd_event_storage_contracts.schema.json
+- Plans/bsd_event_storage_candidates.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3D.md
+- Deck-2 item 9.a A (answer record 2026-11-05; DL-450 application pending)
+preserved_exact_tokens:
+- bsd.policy_changed
+- ABSENT
+- SP-286
+- CV-339
+- SP-278
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not append a registry family, admit an event, enable BSD commands or treat static definitions as runtime evidence.
+- Do not define a local number/timestamp implementation or guard-isolation proof engine.
+owner_hints:
+- Plans/Back_Seat_Driver.md
+```
+
+
+### BSD-1361 - bsd.review_failed prepared event owner
+
+```yaml
+plan_unit_id: BSD-1361
+unit_type: event_contract
+status: draft
+owner_doc: Plans/Back_Seat_Driver.md
+canonical_text: |-
+  Newly authored owner contract for bsd.review_failed, prepared without admission under deck-2 item 9.a A. This exact name is required by section 19/BSD-020 and has no existing alias/admitted event contract in the per-name search recorded in reports/event-authority-20261105/W3D.md.
+  1 membership/version: registry membership remains ABSENT. Proposed 1.0.0 payload is Plans/bsd_event_payloads.schema.json#/$defs/review_failed; SP-318 and the central registry still refuse writers.
+  2 owner: Back_Seat_Driver is the semantic owner; CV-1361 binds the closed payload/identity and SP-1361 binds proposed Storage values. Reuse BSD-004, BSD-013, BSD-014 rather than sibling definitions.
+  3 producer: BackSeatDriverService::commit_review_failure owns this transition. The actual command/dispatch/provider/deadline source must be independently authenticated. Admission checks exact family/version, original operation and current owner/epoch/permission/Stop gates before effect. It commits the immutable selected lifecycle source and pending_event operation under owner CAS; body/payload packs are durable before references. Pending source wrappers and operation commit together under the original transition CAS; the owning lifecycle head remains at its prior committed state until original append custody is resolved and the complete operation/head publish together. A failed append cannot expose uncommitted advice or a fabricated success. Once actual admission exists, known BSD failure/quarantine isolation releases waiters through the existing owner path while Storage failure remains disclosed; this event never authorizes withholding the primary past its own bounded catch-up rule. Append the frozen producer input once, adopt SP-286/CV-339 by name including full-value stored v2 original resolution and SP-336/SP-347 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/control transition and recovery result depend on the original receipt; no primary/external action is authorized by it. Expose no successful append result, event-dependent projection or provider dispatch before the genuine first AppendReceipt. Persist complete operation/result with that original receipt before terminal publication. A crash after body but before append resumes the frozen pending event; a crash after append resolves original custody before completing. Prior domain authorization is never inferred from this historical event. Missing registration means no append and existing missing_event_registration; dependent commands remain disabled.
+  4 payload: independently closed schema Plans/bsd_event_payloads.schema.json#/$defs/review_failed, ref-only source bodies, exact tags, no raw protected content.
+  5 scope/identity: project_only and exact original source/assignment/binding/run/epoch/generation/actor/account joins are defined independently for this event in CV-1361. Never borrow another family's recipe.
+  6 replay/idempotency: same original identity and semantic bytes returns exactly the original result; a different semantic digest conflicts, missing tail-current authoritative dedupe is dedupe_unavailable, and a missing original receipt/body stays unavailable. A current append/retry with projector_replay_only is replay_only_not_appendable. Historical reads/rebuilds do not dispatch a review/tool, charge Usage, insert another transcript note, notify, mutate canonical lifecycle state or create an event.
+  7 retention: retention_policy_ref={registry_schema_id: pm.storage_value_registry.v2, policy_id: RP-RUNTIME-365D, policy_version: 1.0.0}. This exact family belongs to the actual primary_run_id from its assignment (BSD section 16); its recorded run completion starts the 365-day clock, with 1,000,000/run and 5,000,000/project and linked successor compaction. A nonterminal/missing completion never fabricates an anchor. This is Storage Case L-3's Runtime/run/node/attempt class, not an extension of Card-1 G13's five computer-use names. Holds, latest-25-run/recovery/live-reference/backup protection and owner deletion rules still override expiry; replay/retry/restore never restart the clock. Operation-receipt custody follows the existing lifetime identity guarantee RP-EVENT-IDENTITY-APPROOT; rebuildable projections/checkpoints use RP-PROJECTION-3GEN and cannot outlive/read a source without verified custody. These technical rows do not extend linked private-transcript/content lifetime.
+  8 custody: the original BSD lifecycle source stays canonical under its pending physical family; the proposed operation stores only redacted refs, original identity, semantic commitment and exact first receipt. SP-337 externalizes oversized bodies and every stored value is separately measured at 16 KiB. Storage holds the original first receipt/full-value commitment; coherent backup/restore includes the actual lifecycle source, operation, payload packs, original receipt and controls. Every current read/retry/replay/restore validates original custody and present access/deletion/withdrawal. Raw retained quarantine output and the advisor private transcript are never rendered by the event reader. Deleted bodies stay unavailable; retained metadata is not permission to recreate content.
+  9 transitions: Records a terminal failed advisor review from its actual failed route/provider/input result; it never records silent-clean success. The original actual review cycle and current callback epoch select one terminal failed result. input_does_not_fit follows one fresh-context replay that still overflowed; other retriable failures remain bounded under the owner policy and drop the exhausted batch. Known failure releases catch-up waiters. A failure does not clear a held key, deliver advice, charge fabricated zero Usage, restart/retry/block/fail the primary, or satisfy/fail a required review role. A user retry is one new review-cycle identity; replaying this failure starts none. A timed_out or quarantined source selects its own distinct event instead.
+  10 consumers/checkpoints: projector.bsd.review_failed@1.0.0, reader.bsd.review_failed@1.0.0 and operating consumer Usage::bsd_failure_attribution adopt SP-278 by name via SP-1361. They filter exactly bsd.review_failed, the actual Project partition and exact supported payload/version. A derived projection references the authentic original event/source state; it does not become canonical assignment/finding/policy state. Checkpoint and all changed projection rows advance atomically by exact prior-value CAS after complete scanned-range proof. Persist only the nine-field durable token; the current read transaction supplies redb_snapshot_id transiently. No GUI-local state, matching-row maximum or caller proof flag supplies currentness.
+  11 compatibility/withdrawal: There is no earlier admitted BSD event version to migrate or synthesize. The existing completed-review bsd_runtime_record is not this event and never expands into lifecycle history. Genuine future retained 1.0.0 originals remain inspectable under authenticated original admission and recipe after live epoch/config changes, including compatibility-only replay policy; unsupported/missing/substituted custody or withdrawn sources refuse. A writer cutoff first fences new owner operations and drains/resolves previously issued pending inputs, records the exact cutoff under Storage governance, then withdraws the selector. Readers stop on withdrawal, invalidate their publication/checkpoint and rebuild only under an explicitly admitted successor; no fallback aliases, silent migration or fresh effects. Rebuild discards only derived rows, preserves canonical original bytes and reports unavailable expired/lost source rather than claiming empty/success.
+  12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared number/format adoption or shared guard-isolation proof is claimed in phase 1. Other grading cells report contract text only, never native proof.
+gui_related: false
+gui_classification_reason: Defines internal event, identity, Storage custody or validation, without changing presentation.
+depends_on:
+- BSD-004
+- BSD-013
+- BSD-014
+- CV-1361
+- SP-1361
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, payload, original-source identity and retry custody are bound.
+- No unregistered append, physical admission or native/runtime success is implied.
+- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- Plans/bsd_event_oracle_plan.json
+risk_class: advisory_history_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3d_phase1
+implementation_surfaces:
+- Plans/Back_Seat_Driver.md
+- Plans/bsd_event_payloads.schema.json
+- Plans/bsd_event_storage_contracts.schema.json
+- Plans/bsd_event_storage_candidates.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3D.md
+- Deck-2 item 9.a A (answer record 2026-11-05; DL-450 application pending)
+preserved_exact_tokens:
+- bsd.review_failed
+- ABSENT
+- SP-286
+- CV-339
+- SP-278
+- RP-RUNTIME-365D
+negative_constraints:
+- Do not append a registry family, admit an event, enable BSD commands or treat static definitions as runtime evidence.
+- Do not define a local number/timestamp implementation or guard-isolation proof engine.
+owner_hints:
+- Plans/Back_Seat_Driver.md
+```
+
+
+### BSD-1362 - bsd.review_started prepared event owner
+
+```yaml
+plan_unit_id: BSD-1362
+unit_type: event_contract
+status: draft
+owner_doc: Plans/Back_Seat_Driver.md
+canonical_text: |-
+  Newly authored owner contract for bsd.review_started, prepared without admission under deck-2 item 9.a A. This exact name is required by section 19/BSD-020 and has no existing alias/admitted event contract in the per-name search recorded in reports/event-authority-20261105/W3D.md.
+  1 membership/version: registry membership remains ABSENT. Proposed 1.0.0 payload is Plans/bsd_event_payloads.schema.json#/$defs/review_started; SP-318 and the central registry still refuse writers.
+  2 owner: Back_Seat_Driver is the semantic owner; CV-1362 binds the closed payload/identity and SP-1362 binds proposed Storage values. Reuse BSD-003, BSD-004, BSD-005, BSD-016 rather than sibling definitions.
+  3 producer: BackSeatDriverService::commit_review_start owns this transition. The actual command/dispatch/provider/deadline source must be independently authenticated. Admission checks exact family/version, original operation and current owner/epoch/permission/Stop gates before effect. It commits the immutable selected lifecycle source and pending_event operation under owner CAS; body/payload packs are durable before references. Pending source wrappers and operation commit together under the original transition CAS; the owning lifecycle head remains at its prior committed state until original append custody is resolved and the complete operation/head publish together. A failed append cannot expose uncommitted advice or a fabricated success. Once actual admission exists, known BSD failure/quarantine isolation releases waiters through the existing owner path while Storage failure remains disclosed; this event never authorizes withholding the primary past its own bounded catch-up rule. Append the frozen producer input once, adopt SP-286/CV-339 by name including full-value stored v2 original resolution and SP-336/SP-347 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/control transition and recovery result depend on the original receipt; no primary/external action is authorized by it. Expose no successful append result, event-dependent projection or provider dispatch before the genuine first AppendReceipt. Persist complete operation/result with that original receipt before terminal publication. A crash after body but before append resumes the frozen pending event; a crash after append resolves original custody before completing. Prior domain authorization is never inferred from this historical event. Missing registration means no append and existing missing_event_registration; dependent commands remain disabled.
+  4 payload: independently closed schema Plans/bsd_event_payloads.schema.json#/$defs/review_started, ref-only source bodies, exact tags, no raw protected content.
+  5 scope/identity: project_only and exact original source/assignment/binding/run/epoch/generation/actor/account joins are defined independently for this event in CV-1362. Never borrow another family's recipe.
+  6 replay/idempotency: same original identity and semantic bytes returns exactly the original result; a different semantic digest conflicts, missing tail-current authoritative dedupe is dedupe_unavailable, and a missing original receipt/body stays unavailable. A current append/retry with projector_replay_only is replay_only_not_appendable. Historical reads/rebuilds do not dispatch a review/tool, charge Usage, insert another transcript note, notify, mutate canonical lifecycle state or create an event.
+  7 retention: retention_policy_ref={registry_schema_id: pm.storage_value_registry.v2, policy_id: RP-RUNTIME-365D, policy_version: 1.0.0}. This exact family belongs to the actual primary_run_id from its assignment (BSD section 16); its recorded run completion starts the 365-day clock, with 1,000,000/run and 5,000,000/project and linked successor compaction. A nonterminal/missing completion never fabricates an anchor. This is Storage Case L-3's Runtime/run/node/attempt class, not an extension of Card-1 G13's five computer-use names. Holds, latest-25-run/recovery/live-reference/backup protection and owner deletion rules still override expiry; replay/retry/restore never restart the clock. Operation-receipt custody follows the existing lifetime identity guarantee RP-EVENT-IDENTITY-APPROOT; rebuildable projections/checkpoints use RP-PROJECTION-3GEN and cannot outlive/read a source without verified custody. These technical rows do not extend linked private-transcript/content lifetime.
+  8 custody: the original BSD lifecycle source stays canonical under its pending physical family; the proposed operation stores only redacted refs, original identity, semantic commitment and exact first receipt. SP-337 externalizes oversized bodies and every stored value is separately measured at 16 KiB. Storage holds the original first receipt/full-value commitment; coherent backup/restore includes the actual lifecycle source, operation, payload packs, original receipt and controls. Every current read/retry/replay/restore validates original custody and present access/deletion/withdrawal. Raw retained quarantine output and the advisor private transcript are never rendered by the event reader. Deleted bodies stay unavailable; retained metadata is not permission to recreate content.
+  9 transitions: Records the real start of a newly admitted advisor review against the exact assignment epoch, primary generation and bounded input manifest. The actual review admission checks frozen effective mode, trigger, bounded material delta, quota, cost/stage limits and Shared Integration Runtime resources before provider work. Off, no trigger, paused, no material delta and every other owner no_call_* result creates no provider start and cannot be presented as review_started. Bind the genuine redaction receipt, exact current generation and delta since the cursor, stable prefix and held-key preamble. A recorded frozen boundary must correspond to an actual synchronous primary freeze. Failure to append never authorizes a provider call; the primary still follows its independently owned behavior.
+  10 consumers/checkpoints: projector.bsd.review_started@1.0.0, reader.bsd.review_started@1.0.0 and operating consumer AssistantContext::bsd_review_projection adopt SP-278 by name via SP-1362. They filter exactly bsd.review_started, the actual Project partition and exact supported payload/version. A derived projection references the authentic original event/source state; it does not become canonical assignment/finding/policy state. Checkpoint and all changed projection rows advance atomically by exact prior-value CAS after complete scanned-range proof. Persist only the nine-field durable token; the current read transaction supplies redb_snapshot_id transiently. No GUI-local state, matching-row maximum or caller proof flag supplies currentness.
+  11 compatibility/withdrawal: There is no earlier admitted BSD event version to migrate or synthesize. The existing completed-review bsd_runtime_record is not this event and never expands into lifecycle history. Genuine future retained 1.0.0 originals remain inspectable under authenticated original admission and recipe after live epoch/config changes, including compatibility-only replay policy; unsupported/missing/substituted custody or withdrawn sources refuse. A writer cutoff first fences new owner operations and drains/resolves previously issued pending inputs, records the exact cutoff under Storage governance, then withdraws the selector. Readers stop on withdrawal, invalidate their publication/checkpoint and rebuild only under an explicitly admitted successor; no fallback aliases, silent migration or fresh effects. Rebuild discards only derived rows, preserves canonical original bytes and reports unavailable expired/lost source rather than claiming empty/success.
+  12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared number/format adoption or shared guard-isolation proof is claimed in phase 1. Other grading cells report contract text only, never native proof.
+gui_related: false
+gui_classification_reason: Defines internal event, identity, Storage custody or validation, without changing presentation.
+depends_on:
+- BSD-003
+- BSD-004
+- BSD-005
+- BSD-016
+- CV-1362
+- SP-1362
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, payload, original-source identity and retry custody are bound.
+- No unregistered append, physical admission or native/runtime success is implied.
+- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- Plans/bsd_event_oracle_plan.json
+risk_class: advisory_history_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3d_phase1
+implementation_surfaces:
+- Plans/Back_Seat_Driver.md
+- Plans/bsd_event_payloads.schema.json
+- Plans/bsd_event_storage_contracts.schema.json
+- Plans/bsd_event_storage_candidates.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3D.md
+- Deck-2 item 9.a A (answer record 2026-11-05; DL-450 application pending)
+preserved_exact_tokens:
+- bsd.review_started
+- ABSENT
+- SP-286
+- CV-339
+- SP-278
+- RP-RUNTIME-365D
+negative_constraints:
+- Do not append a registry family, admit an event, enable BSD commands or treat static definitions as runtime evidence.
+- Do not define a local number/timestamp implementation or guard-isolation proof engine.
+owner_hints:
+- Plans/Back_Seat_Driver.md
+```
+
+
+### BSD-1363 - bsd.review_timed_out prepared event owner
+
+```yaml
+plan_unit_id: BSD-1363
+unit_type: event_contract
+status: draft
+owner_doc: Plans/Back_Seat_Driver.md
+canonical_text: |-
+  Newly authored owner contract for bsd.review_timed_out, prepared without admission under deck-2 item 9.a A. This exact name is required by section 19/BSD-020 and has no existing alias/admitted event contract in the per-name search recorded in reports/event-authority-20261105/W3D.md.
+  1 membership/version: registry membership remains ABSENT. Proposed 1.0.0 payload is Plans/bsd_event_payloads.schema.json#/$defs/review_timed_out; SP-318 and the central registry still refuse writers.
+  2 owner: Back_Seat_Driver is the semantic owner; CV-1363 binds the closed payload/identity and SP-1363 binds proposed Storage values. Reuse BSD-010, BSD-013, BSD-014 rather than sibling definitions.
+  3 producer: BackSeatDriverService::commit_review_timeout owns this transition. The actual command/dispatch/provider/deadline source must be independently authenticated. Admission checks exact family/version, original operation and current owner/epoch/permission/Stop gates before effect. It commits the immutable selected lifecycle source and pending_event operation under owner CAS; body/payload packs are durable before references. Pending source wrappers and operation commit together under the original transition CAS; the owning lifecycle head remains at its prior committed state until original append custody is resolved and the complete operation/head publish together. A failed append cannot expose uncommitted advice or a fabricated success. Once actual admission exists, known BSD failure/quarantine isolation releases waiters through the existing owner path while Storage failure remains disclosed; this event never authorizes withholding the primary past its own bounded catch-up rule. Append the frozen producer input once, adopt SP-286/CV-339 by name including full-value stored v2 original resolution and SP-336/SP-347 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/control transition and recovery result depend on the original receipt; no primary/external action is authorized by it. Expose no successful append result, event-dependent projection or provider dispatch before the genuine first AppendReceipt. Persist complete operation/result with that original receipt before terminal publication. A crash after body but before append resumes the frozen pending event; a crash after append resolves original custody before completing. Prior domain authorization is never inferred from this historical event. Missing registration means no append and existing missing_event_registration; dependent commands remain disabled.
+  4 payload: independently closed schema Plans/bsd_event_payloads.schema.json#/$defs/review_timed_out, ref-only source bodies, exact tags, no raw protected content.
+  5 scope/identity: project_only and exact original source/assignment/binding/run/epoch/generation/actor/account joins are defined independently for this event in CV-1363. Never borrow another family's recipe.
+  6 replay/idempotency: same original identity and semantic bytes returns exactly the original result; a different semantic digest conflicts, missing tail-current authoritative dedupe is dedupe_unavailable, and a missing original receipt/body stays unavailable. A current append/retry with projector_replay_only is replay_only_not_appendable. Historical reads/rebuilds do not dispatch a review/tool, charge Usage, insert another transcript note, notify, mutate canonical lifecycle state or create an event.
+  7 retention: retention_policy_ref={registry_schema_id: pm.storage_value_registry.v2, policy_id: RP-RUNTIME-365D, policy_version: 1.0.0}. This exact family belongs to the actual primary_run_id from its assignment (BSD section 16); its recorded run completion starts the 365-day clock, with 1,000,000/run and 5,000,000/project and linked successor compaction. A nonterminal/missing completion never fabricates an anchor. This is Storage Case L-3's Runtime/run/node/attempt class, not an extension of Card-1 G13's five computer-use names. Holds, latest-25-run/recovery/live-reference/backup protection and owner deletion rules still override expiry; replay/retry/restore never restart the clock. Operation-receipt custody follows the existing lifetime identity guarantee RP-EVENT-IDENTITY-APPROOT; rebuildable projections/checkpoints use RP-PROJECTION-3GEN and cannot outlive/read a source without verified custody. These technical rows do not extend linked private-transcript/content lifetime.
+  8 custody: the original BSD lifecycle source stays canonical under its pending physical family; the proposed operation stores only redacted refs, original identity, semantic commitment and exact first receipt. SP-337 externalizes oversized bodies and every stored value is separately measured at 16 KiB. Storage holds the original first receipt/full-value commitment; coherent backup/restore includes the actual lifecycle source, operation, payload packs, original receipt and controls. Every current read/retry/replay/restore validates original custody and present access/deletion/withdrawal. Raw retained quarantine output and the advisor private transcript are never rendered by the event reader. Deleted bodies stay unavailable; retained metadata is not permission to recreate content.
+  9 transitions: Records the actual advisor-review deadline expiring, distinct from an optional primary catch-up waiter expiring. The actual deadline owner reports expiry for the current review_cycle_id and epoch before any accepted terminal result, so that cycle becomes timed_out exactly once. The event records the owner deadline reference and does not choose a new timeout duration. A catch-up wait timing out or the user choosing Don't wait releases the primary but leaves the advisor reviewing; neither alone is review_timed_out. This timeout releases its actual catch-up waiters, preserves held/closed history, and leaves the primary result unchanged. A late callback is fenced from this terminal cycle; explicit retry creates one new cycle and cannot reopen this outcome.
+  10 consumers/checkpoints: projector.bsd.review_timed_out@1.0.0, reader.bsd.review_timed_out@1.0.0 and operating consumer Usage::bsd_timeout_attribution adopt SP-278 by name via SP-1363. They filter exactly bsd.review_timed_out, the actual Project partition and exact supported payload/version. A derived projection references the authentic original event/source state; it does not become canonical assignment/finding/policy state. Checkpoint and all changed projection rows advance atomically by exact prior-value CAS after complete scanned-range proof. Persist only the nine-field durable token; the current read transaction supplies redb_snapshot_id transiently. No GUI-local state, matching-row maximum or caller proof flag supplies currentness.
+  11 compatibility/withdrawal: There is no earlier admitted BSD event version to migrate or synthesize. The existing completed-review bsd_runtime_record is not this event and never expands into lifecycle history. Genuine future retained 1.0.0 originals remain inspectable under authenticated original admission and recipe after live epoch/config changes, including compatibility-only replay policy; unsupported/missing/substituted custody or withdrawn sources refuse. A writer cutoff first fences new owner operations and drains/resolves previously issued pending inputs, records the exact cutoff under Storage governance, then withdraws the selector. Readers stop on withdrawal, invalidate their publication/checkpoint and rebuild only under an explicitly admitted successor; no fallback aliases, silent migration or fresh effects. Rebuild discards only derived rows, preserves canonical original bytes and reports unavailable expired/lost source rather than claiming empty/success.
+  12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared number/format adoption or shared guard-isolation proof is claimed in phase 1. Other grading cells report contract text only, never native proof.
+gui_related: false
+gui_classification_reason: Defines internal event, identity, Storage custody or validation, without changing presentation.
+depends_on:
+- BSD-010
+- BSD-013
+- BSD-014
+- CV-1363
+- SP-1363
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, payload, original-source identity and retry custody are bound.
+- No unregistered append, physical admission or native/runtime success is implied.
+- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- Plans/bsd_event_oracle_plan.json
+risk_class: advisory_history_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3d_phase1
+implementation_surfaces:
+- Plans/Back_Seat_Driver.md
+- Plans/bsd_event_payloads.schema.json
+- Plans/bsd_event_storage_contracts.schema.json
+- Plans/bsd_event_storage_candidates.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3D.md
+- Deck-2 item 9.a A (answer record 2026-11-05; DL-450 application pending)
+preserved_exact_tokens:
+- bsd.review_timed_out
+- ABSENT
+- SP-286
+- CV-339
+- SP-278
+- RP-RUNTIME-365D
+negative_constraints:
+- Do not append a registry family, admit an event, enable BSD commands or treat static definitions as runtime evidence.
+- Do not define a local number/timestamp implementation or guard-isolation proof engine.
+owner_hints:
+- Plans/Back_Seat_Driver.md
+```
+
+
+### BSD-1364 - bsd.workflow_binding_created prepared event owner
+
+```yaml
+plan_unit_id: BSD-1364
+unit_type: event_contract
+status: draft
+owner_doc: Plans/Back_Seat_Driver.md
+canonical_text: |-
+  Newly authored owner contract for bsd.workflow_binding_created, prepared without admission under deck-2 item 9.a A. This exact name is required by section 19/BSD-020 and has no existing alias/admitted event contract in the per-name search recorded in reports/event-authority-20261105/W3D.md.
+  1 membership/version: registry membership remains ABSENT. Proposed 1.0.0 payload is Plans/bsd_event_payloads.schema.json#/$defs/workflow_binding_created; SP-318 and the central registry still refuse writers.
+  2 owner: Back_Seat_Driver is the semantic owner; CV-1364 binds the closed payload/identity and SP-1364 binds proposed Storage values. Reuse BSD-016, BSD-017, BSD-029 rather than sibling definitions.
+  3 producer: BackSeatDriverService::commit_workflow_binding_revision owns this transition. The actual command/dispatch/provider/deadline source must be independently authenticated. Admission checks exact family/version, original operation and current owner/epoch/permission/Stop gates before effect. It commits the immutable selected lifecycle source and pending_event operation under owner CAS; body/payload packs are durable before references. Pending source wrappers and operation commit together under the original transition CAS; the owning lifecycle head remains at its prior committed state until original append custody is resolved and the complete operation/head publish together. A failed append cannot expose uncommitted advice or a fabricated success. Once actual admission exists, known BSD failure/quarantine isolation releases waiters through the existing owner path while Storage failure remains disclosed; this event never authorizes withholding the primary past its own bounded catch-up rule. Append the frozen producer input once, adopt SP-286/CV-339 by name including full-value stored v2 original resolution and SP-336/SP-347 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/control transition and recovery result depend on the original receipt; no primary/external action is authorized by it. Expose no successful append result, event-dependent projection or provider dispatch before the genuine first AppendReceipt. Persist complete operation/result with that original receipt before terminal publication. A crash after body but before append resumes the frozen pending event; a crash after append resolves original custody before completing. Prior domain authorization is never inferred from this historical event. Missing registration means no append and existing missing_event_registration; dependent commands remain disabled.
+  4 payload: independently closed schema Plans/bsd_event_payloads.schema.json#/$defs/workflow_binding_created, ref-only source bodies, exact tags, no raw protected content.
+  5 scope/identity: project_only and exact original source/assignment/binding/run/epoch/generation/actor/account joins are defined independently for this event in CV-1364. Never borrow another family's recipe.
+  6 replay/idempotency: same original identity and semantic bytes returns exactly the original result; a different semantic digest conflicts, missing tail-current authoritative dedupe is dedupe_unavailable, and a missing original receipt/body stays unavailable. A current append/retry with projector_replay_only is replay_only_not_appendable. Historical reads/rebuilds do not dispatch a review/tool, charge Usage, insert another transcript note, notify, mutate canonical lifecycle state or create an event.
+  7 retention: retention_policy_ref=PENDING_RETENTION_DECISION. For bsd.workflow_binding_created, which exact lifetime, count/overflow and deletion rule should apply to the saved frozen workflow-binding revision history? Card-1 G18 covers scheduling only; RP-CONFIG-CURRENT covers current configuration values, not this event history. May this history expire, or should it remain until Delete Puppet Master project data? No age/count deletion is authorized; keep incomplete history under Storage's unknown-policy protection, never infer approval/receipt authority from the companion operation receipt. Admission stays blocked on this exact retention cell. Operation-receipt custody follows the existing lifetime identity guarantee RP-EVENT-IDENTITY-APPROOT; rebuildable projections/checkpoints use RP-PROJECTION-3GEN and cannot outlive/read a source without verified custody. These technical rows do not extend linked private-transcript/content lifetime.
+  8 custody: the original BSD lifecycle source stays canonical under its pending physical family; the proposed operation stores only redacted refs, original identity, semantic commitment and exact first receipt. SP-337 externalizes oversized bodies and every stored value is separately measured at 16 KiB. Storage holds the original first receipt/full-value commitment; coherent backup/restore includes the actual lifecycle source, operation, payload packs, original receipt and controls. Every current read/retry/replay/restore validates original custody and present access/deletion/withdrawal. Raw retained quarantine output and the advisor private transcript are never rendered by the event reader. Deleted bodies stay unavailable; retained metadata is not permission to recreate content.
+  9 transitions: Records the accepted initial or explicit replacement revision of the frozen BSD workflow/stage binding; opening or cancelling the configuration modal records no event. The actual cmd.bsd.workflow.configure result or accepted workflow start commits the exact policy revision, operational stage bindings and requested/effective identity once. The single start modal does not reopen at every stage. Explicit reconfiguration produces a new immutable binding revision with previous_binding_ref and the owner epoch reset where active assignments are affected; prior reviews retain their original binding. The ten Settings rows expand through BSD-029's exact operational mapping, not a second stage list. An Off stage creates no assignment. Hidden-stage coverage remains advisory and starts no WorkNode or gate. No primary assignment/run/epoch is fabricated for the binding-configuration event.
+  10 consumers/checkpoints: projector.bsd.workflow_binding_created@1.0.0, reader.bsd.workflow_binding_created@1.0.0 and operating consumer PlanningWorkflow::bsd_stage_binding_projection adopt SP-278 by name via SP-1364. They filter exactly bsd.workflow_binding_created, the actual Project partition and exact supported payload/version. A derived projection references the authentic original event/source state; it does not become canonical assignment/finding/policy state. Checkpoint and all changed projection rows advance atomically by exact prior-value CAS after complete scanned-range proof. Persist only the nine-field durable token; the current read transaction supplies redb_snapshot_id transiently. No GUI-local state, matching-row maximum or caller proof flag supplies currentness.
+  11 compatibility/withdrawal: There is no earlier admitted BSD event version to migrate or synthesize. The existing completed-review bsd_runtime_record is not this event and never expands into lifecycle history. Genuine future retained 1.0.0 originals remain inspectable under authenticated original admission and recipe after live epoch/config changes, including compatibility-only replay policy; unsupported/missing/substituted custody or withdrawn sources refuse. A writer cutoff first fences new owner operations and drains/resolves previously issued pending inputs, records the exact cutoff under Storage governance, then withdraws the selector. Readers stop on withdrawal, invalidate their publication/checkpoint and rebuild only under an explicitly admitted successor; no fallback aliases, silent migration or fresh effects. Rebuild discards only derived rows, preserves canonical original bytes and reports unavailable expired/lost source rather than claiming empty/success.
+  12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared number/format adoption or shared guard-isolation proof is claimed in phase 1. Other grading cells report contract text only, never native proof.
+gui_related: false
+gui_classification_reason: Defines internal event, identity, Storage custody or validation, without changing presentation.
+depends_on:
+- BSD-016
+- BSD-017
+- BSD-029
+- CV-1364
+- SP-1364
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, payload, original-source identity and retry custody are bound.
+- No unregistered append, physical admission or native/runtime success is implied.
+- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- Plans/bsd_event_oracle_plan.json
+risk_class: advisory_history_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3d_phase1
+implementation_surfaces:
+- Plans/Back_Seat_Driver.md
+- Plans/bsd_event_payloads.schema.json
+- Plans/bsd_event_storage_contracts.schema.json
+- Plans/bsd_event_storage_candidates.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3D.md
+- Deck-2 item 9.a A (answer record 2026-11-05; DL-450 application pending)
+preserved_exact_tokens:
+- bsd.workflow_binding_created
+- ABSENT
+- SP-286
+- CV-339
+- SP-278
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- Do not append a registry family, admit an event, enable BSD commands or treat static definitions as runtime evidence.
+- Do not define a local number/timestamp implementation or guard-isolation proof engine.
+owner_hints:
+- Plans/Back_Seat_Driver.md
+```
