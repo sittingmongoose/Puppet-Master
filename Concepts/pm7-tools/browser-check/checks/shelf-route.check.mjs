@@ -4,7 +4,7 @@ export default async function (t) {
   const targets = await f.locator('#activityBar .icon[data-target]').evaluateAll(es => es.filter(e => e.getBoundingClientRect().width).map(e=>e.dataset.target));
   const rows=[]; let reached=0;
   for (const target of targets) {
-    const icon=f.locator(`#activityBar .icon[data-target="${target}"]`);await icon.click();
+    const icon=f.locator(`#activityBar .icon[data-target="${target}"]`);await icon.click();await f.waitForTimeout(500);
     // Clicking the already selected Files icon folds its panel; a second click opens it.
     if(!await f.locator('#sidePanelSlot').isVisible())await icon.click();
     await t.visible('#sidePanelSlot',target+' rail surface opened');
