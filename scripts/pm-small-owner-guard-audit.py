@@ -855,9 +855,10 @@ def main():
             return ast.dump(node)+''.join(closure(c,seen) for c in calls)
         return {name:hashlib.sha256(closure(name).encode()).hexdigest() for name in funcs}
     for guard,edits in mutants.items():
-        available_kib=int(next(line.split()[1] for line in Path('/proc/meminfo').read_text().splitlines() if line.startswith('MemAvailable:')))
-        if available_kib < 6*1024*1024:
-            raise SystemExit('RESOURCE PAUSE: under 6 GiB available; no further guard run')
+        if Path('/proc/meminfo').is_file():
+            available_kib=int(next(line.split()[1] for line in Path('/proc/meminfo').read_text().splitlines() if line.startswith('MemAvailable:')))
+            if available_kib < 6*1024*1024:
+                raise SystemExit('RESOURCE PAUSE: under 6 GiB available; no further guard run')
         if len(sys.argv)==3 and not re.search(sys.argv[2],guard):
             continue
         changed=source
