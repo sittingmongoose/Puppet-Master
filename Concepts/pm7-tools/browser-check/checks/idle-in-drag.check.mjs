@@ -106,7 +106,8 @@ const RECORDER = (cfg) => {
 				if (omitHit && omitHit(new Error().stack || '')) { window.__pmIdleOmit.count++; return { cancel() {} }; }
 				if (typeof fn !== 'function') return real.call(this, fn, ...rest);
 				const token = ++tokens;
-				tokenOwners.set(token, ownerOf(stackOf()));
+				// Unlisted callers still belong to the shared admission's existing extra-work bucket.
+				tokenOwners.set(token, ownerOf(stackOf()) || 'busy');
 				const body = function (...a) { entered(token); return fn.apply(this, a); };
 				const was = R.admitting; R.admitting = token;
 				try { return real.call(this, body, ...rest); } finally { R.admitting = was; }
