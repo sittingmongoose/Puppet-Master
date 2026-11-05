@@ -441,7 +441,7 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 	if (!st) return { err: 'no stage' };
 	const PH = O55.pipStage.h;
 	const R = (e, label) => geometry(e, label);
-	const out = { n: 0, validPairs: 0, validFrames: 0, leavingPairs: 0, geometryError: '', off: 0, offWhy: '', moving: 0, movingMs: 0, boxFrames: 0, worstBox: 0, worst: 0, at: null, kinds: { tilt: 0, swing: 0, hop: 0, cheer: 0, propKick: 0 } };
+	const out = { n: 0, validPairs: 0, validFrames: 0, leavingPairs: 0, initialHiddenFrames: 0, geometryError: '', off: 0, offWhy: '', moving: 0, movingMs: 0, boxFrames: 0, worstBox: 0, worst: 0, at: null, kinds: { tilt: 0, swing: 0, hop: 0, cheer: 0, propKick: 0 } };
 	const was = { tilt: false, swing: false, hop: false, cheer: false, kick: false };
 	let rnd = null, restoreN = 0, prevV = null;
 	const t0 = performance.now();
@@ -477,6 +477,16 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 
 		// No comparison is eligible during the props' entrance fade. Coverage below must still become positive.
 		if (!props.length) continue;
+		// A fresh screen can expose its leaving props before its head's entrance is painted.
+		// Exclude only that initial unpainted interval; after positive sampling, disappearance is an error.
+		if (!out.validPairs && s2.gHead && s2.gHead.isConnected) {
+			let visible = true;
+			for (let e=s2.gHead; e; e=e.parentElement) {
+				const c=getComputedStyle(e);
+				if (c.display==='none' || c.visibility!=='visible' || +c.opacity===0) { visible=false; break; }
+			}
+			if (!visible) { out.initialHiddenFrames++; continue; }
+		}
 		try {
 			// Test-only controls fire after valid sampling has begun, exercising loss during a cell.
 			if (selftest && out.validPairs > 0 && performance.now() - t0 > 1000) {
@@ -600,7 +610,7 @@ async function swingAtChange(t, mode) {
 			if (r0.err) { await t.check(`${tag}: the stage`, false, r0.err); continue; }
 			const fo = r0.forced || {};
 			n.cases++; if (fo.swung) n.swung++; if (fo.wiggled) n.wiggled++;
-			const why = JSON.stringify({ forced: fo, frames: r0.n, validPairs: r0.validPairs, boxFrames: r0.boxFrames, at: r0.at });
+			const why = JSON.stringify({ forced: fo, geometryError: r0.geometryError, initialHiddenFrames: r0.initialHiddenFrames, frames: r0.n, validPairs: r0.validPairs, boxFrames: r0.boxFrames, at: r0.at });
 			await t.check(`${tag}: the idle action came`, !!fo.fired && (fo.swung || fo.wiggled), why);
 			await t.check(`${tag}: head and eligible props have valid visible geometry`, !r0.geometryError, why, { hard: true });
 			await t.check(`${tag}: positive valid measurement coverage`, r0.validPairs > 0 && r0.validFrames > 0, why, { hard: true });
