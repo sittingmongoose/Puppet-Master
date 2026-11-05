@@ -1,25 +1,25 @@
 {
   "status": "pass",
-  "implementation_commit": "be654d70037b1e79b3d694469a5e32b031da2b3f",
-  "guard_count": 88,
-  "isolated_negative_pairs": 2033,
-  "acceptance_flips": 2090,
+  "implementation_commit": "7c04fd7f86044d5746e6406e2219491197255943",
+  "guard_count": 93,
+  "isolated_negative_pairs": 5668,
+  "acceptance_flips": 5869,
   "unrelated_flips": 0,
-  "baseline_assertions": 10124,
-  "whole_checker_mutants": 88,
+  "baseline_assertions": 17964,
+  "whole_checker_mutants": 93,
   "rows": [
     {
       "guard": "D01",
-      "rule": "decode: EVENT_VALIDATOR",
+      "rule": "decode: event_validator.iter_errors",
       "negatives_that_flip": [
         "envelope_extension"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "d4dd1241a5261fce403907d50dc4f21c787d7c80dc9e485520a5d3b64b9961bd"
+      "mutant_sha256": "e1774a7b642a6a604e18681abe72021569e14c0d56dbb0029302822885acd9da"
     },
     {
       "guard": "D02",
@@ -29,11 +29,11 @@
         "payload_schema"
       ],
       "flip_count": 38,
-      "other_negatives_still_rejected": 1995,
+      "other_negatives_still_rejected": 5630,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "49dd55a1b6e4c97098dd98164c2b0bc8af4ad4ecdc0715536942e18d917c25cf"
+      "mutant_sha256": "056b5840eef252a8f8d831dfc4e99272dacf575bbd39c83abab8182089c1063f"
     },
     {
       "guard": "D03",
@@ -43,11 +43,11 @@
         "replay"
       ],
       "flip_count": 38,
-      "other_negatives_still_rejected": 1995,
+      "other_negatives_still_rejected": 5630,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "4e912a9411cc4311d5690157633c639643f1a5cda4acb2f96de5e8ae8083a03c"
+      "mutant_sha256": "9cb079118cb413c50ff04eab471a30610aac6b3c7ffca65772a9db6934ffef29"
     },
     {
       "guard": "D04",
@@ -56,11 +56,11 @@
         "inline_size"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "47c90a840b8755cb0f0cb6a5dca7f51b67dd040d7ace37ec86bb8c9da61d62ac"
+      "mutant_sha256": "0d0533dad84e3850120befb709e5b9e251b1d0e1fdc9650a1e957f98038251ca"
     },
     {
       "guard": "D05",
@@ -69,11 +69,11 @@
         "media"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "04864c98306e659e5e1044addf57037b09711f34bd967ad87acf6d55486d3373"
+      "mutant_sha256": "16613b2298357cad0bd880effc71ba593f7c6c8d64e6e49df4acd5340a895630"
     },
     {
       "guard": "D06",
@@ -82,25 +82,41 @@
         "placeholder"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "d012ace809e0dcd2bc9f847162c1e3b2bb4268e2ffce7ef34d37e3d621f6e382"
+      "mutant_sha256": "c6a8eff6d853e7d9851ad51db667badac36ac2d5977ad75282d1707585e5e7d1"
     },
     {
       "guard": "D07",
       "rule": "decode: not source or",
       "negatives_that_flip": [
+        "pack_authorized_type_0",
+        "pack_authorized_type_1",
+        "pack_authorized_type_2",
+        "pack_authorized_type_3",
+        "pack_authorized_type_4",
+        "pack_authorized_type_5",
+        "pack_authorized_type_6",
+        "pack_authorized_type_7",
+        "pack_durable_type_0",
+        "pack_durable_type_1",
+        "pack_durable_type_2",
+        "pack_durable_type_3",
+        "pack_durable_type_4",
+        "pack_durable_type_5",
+        "pack_durable_type_6",
+        "pack_durable_type_7",
         "pack_not_durable",
         "pack_unauthorized"
       ],
-      "flip_count": 38,
-      "other_negatives_still_rejected": 1995,
+      "flip_count": 342,
+      "other_negatives_still_rejected": 5326,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "3c9cb81f8ca1c743f8a26f5d168c48a64eed4181d6a770697c44215461bad6d6"
+      "mutant_sha256": "672625b4026b5818c131a8f0bb17dd465e7158cde71d29961cd12cf458fdb1d0"
     },
     {
       "guard": "D08",
@@ -109,11 +125,11 @@
         "byte_size"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "e91478c8210279dfeb04b420504fa45aefc9e4d4f9a4d0595b3ba499b5d19ba4"
+      "mutant_sha256": "1dca7e7dc79a4972e9939b1952d281f951e7e35f4c6233bfcdda34db1f1ab9d4"
     },
     {
       "guard": "D09",
@@ -122,11 +138,11 @@
         "same_size_digest"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "99d4c697e6ce227cfd15ff074ae1733b97caa8a75b3ac349a151152bf91801c0"
+      "mutant_sha256": "00431e1f6696b06059b5231edb50f7f001c4b76660ae5ce161ba51e39ebc0eea"
     },
     {
       "guard": "D10",
@@ -136,11 +152,11 @@
         "whitespace"
       ],
       "flip_count": 38,
-      "other_negatives_still_rejected": 1995,
+      "other_negatives_still_rejected": 5630,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "121ec194e7d6ccb07652dc75d4102cd4a464c139e7a319f30e4c29d0221176ba"
+      "mutant_sha256": "6f1656117056d688daae9105a05f1e860ed708ec8f5bed49d86ff5e05c95a977"
     },
     {
       "guard": "D11",
@@ -149,24 +165,151 @@
         "unnecessary_pack"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "a17d1285670c57dadd7884967f3d0fdd9cc58b4bb6780fb838d300a630f09561"
+      "mutant_sha256": "8e1d1d41f10713d68a7fdf2603f77f23c177859d89acea99fdbb9f339b85ab81"
     },
     {
       "guard": "D12",
       "rule": "decode: validator(schema",
       "negatives_that_flip": [
-        "logical_extension"
+        "console_ref_inline_decode",
+        "console_ref_packed_append",
+        "console_ref_packed_decode",
+        "cost_derived_inline_decode",
+        "cost_derived_packed_append",
+        "cost_derived_packed_decode",
+        "input_derived_inline_decode",
+        "input_derived_packed_append",
+        "input_derived_packed_decode",
+        "is_cli_reported_inline_decode",
+        "is_cli_reported_packed_append",
+        "is_cli_reported_packed_decode",
+        "is_estimated_inline_decode",
+        "is_estimated_packed_append",
+        "is_estimated_packed_decode",
+        "is_local_context_estimate_inline_decode",
+        "is_local_context_estimate_packed_append",
+        "is_local_context_estimate_packed_decode",
+        "is_provider_reported_inline_decode",
+        "is_provider_reported_packed_append",
+        "is_provider_reported_packed_decode",
+        "logical_extension",
+        "network_ref_inline_decode",
+        "network_ref_packed_append",
+        "network_ref_packed_decode",
+        "output_derived_inline_decode",
+        "output_derived_packed_append",
+        "output_derived_packed_decode",
+        "page_ref_inline_decode",
+        "page_ref_packed_append",
+        "page_ref_packed_decode",
+        "pdf_artifact_ref_inline_decode",
+        "pdf_artifact_ref_packed_append",
+        "pdf_artifact_ref_packed_decode",
+        "provider_total_derived_inline_decode",
+        "provider_total_derived_packed_append",
+        "provider_total_derived_packed_decode",
+        "reasoning_alias_inline_decode",
+        "reasoning_alias_packed_append",
+        "reasoning_alias_packed_decode",
+        "redacted_inline_decode",
+        "redacted_packed_append",
+        "redacted_packed_decode",
+        "redaction_profile_inline_decode",
+        "redaction_profile_packed_append",
+        "redaction_profile_packed_decode",
+        "refs_attempt_id_inline_decode",
+        "refs_attempt_id_packed_append",
+        "refs_attempt_id_packed_decode",
+        "refs_node_id_inline_decode",
+        "refs_node_id_packed_append",
+        "refs_node_id_packed_decode",
+        "refs_provider_attempt_ref_inline_decode",
+        "refs_provider_attempt_ref_packed_append",
+        "refs_provider_attempt_ref_packed_decode",
+        "refs_raw_payload_ref_inline_decode",
+        "refs_raw_payload_ref_packed_append",
+        "refs_raw_payload_ref_packed_decode",
+        "refs_run_id_inline_decode",
+        "refs_run_id_packed_append",
+        "refs_run_id_packed_decode",
+        "refs_thread_id_inline_decode",
+        "refs_thread_id_packed_append",
+        "refs_thread_id_packed_decode",
+        "refs_usage_event_ref_inline_decode",
+        "refs_usage_event_ref_packed_append",
+        "refs_usage_event_ref_packed_decode",
+        "refs_usage_record_id_inline_decode",
+        "refs_usage_record_id_packed_append",
+        "refs_usage_record_id_packed_decode",
+        "retry_missing_parent_inline_decode",
+        "retry_missing_parent_packed_append",
+        "retry_missing_parent_packed_decode",
+        "retry_parent_inline_decode",
+        "retry_parent_packed_append",
+        "retry_parent_packed_decode",
+        "root_provider_attempt_ref_inline_decode",
+        "root_provider_attempt_ref_packed_append",
+        "root_provider_attempt_ref_packed_decode",
+        "root_receipt_refs_inline_decode",
+        "root_receipt_refs_packed_append",
+        "root_receipt_refs_packed_decode",
+        "root_usage_event_ref_inline_decode",
+        "root_usage_event_ref_packed_append",
+        "root_usage_event_ref_packed_decode",
+        "root_usage_record_id_inline_decode",
+        "root_usage_record_id_packed_append",
+        "root_usage_record_id_packed_decode",
+        "screenshot_artifact_ref_inline_decode",
+        "screenshot_artifact_ref_packed_append",
+        "screenshot_artifact_ref_packed_decode",
+        "session_0_inline_decode",
+        "session_0_packed_append",
+        "session_0_packed_decode",
+        "session_1_inline_decode",
+        "session_1_packed_append",
+        "session_1_packed_decode",
+        "session_2_inline_decode",
+        "session_2_packed_append",
+        "session_2_packed_decode",
+        "session_3_inline_decode",
+        "session_3_packed_append",
+        "session_3_packed_decode",
+        "session_4_inline_decode",
+        "session_4_packed_append",
+        "session_4_packed_decode",
+        "session_5_inline_decode",
+        "session_5_packed_append",
+        "session_5_packed_decode",
+        "settlement_usage_event_ref_inline_decode",
+        "settlement_usage_event_ref_packed_append",
+        "settlement_usage_event_ref_packed_decode",
+        "settlement_usage_record_id_inline_decode",
+        "settlement_usage_record_id_packed_append",
+        "settlement_usage_record_id_packed_decode",
+        "total_alias_inline_decode",
+        "total_alias_packed_append",
+        "total_alias_packed_decode",
+        "usage_artifact_observed_inline_decode",
+        "usage_artifact_observed_packed_append",
+        "usage_artifact_observed_packed_decode",
+        "usage_observed_inline_decode",
+        "usage_observed_packed_append",
+        "usage_observed_packed_decode"
       ],
-      "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "flip_count": 163,
+      "other_negatives_still_rejected": 5505,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
-      "linked_same_rule_guards": [],
-      "mutant_sha256": "b6e855b9ccc4770cb5b3e150f0fb23eefdbb50cf9267eaadf0952a327a9b8a92"
+      "linked_same_rule_guards": [
+        "B01:*_inline_decode",
+        "B01:*_packed_decode",
+        "B01:*_packed_append"
+      ],
+      "mutant_sha256": "8c37bcc2aacccfbcc88759fc97092890c6a4fc63713fca0fced6187c3b53e41e"
     },
     {
       "guard": "D13",
@@ -175,11 +318,11 @@
         "project_join"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "857044ca39a30b43bc3b3546b081a950c9006286ad0800304e116f64d94a3969"
+      "mutant_sha256": "6975b42c25c7b23154c77795c5cdd20f0956c1c78bc579b7e0c89d63ed7b3fb4"
     },
     {
       "guard": "D14",
@@ -191,11 +334,11 @@
         "thread_id"
       ],
       "flip_count": 76,
-      "other_negatives_still_rejected": 1957,
+      "other_negatives_still_rejected": 5592,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "542e3ea0b2415c360a33563d80558528ecbda6a172bedbf41957033d3dce8298"
+      "mutant_sha256": "ac17e9b642b3edbe5c184f85976f6f78619133dc299c002175ef04c46f2c2d19"
     },
     {
       "guard": "D15",
@@ -204,11 +347,11 @@
         "authored_time"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "df2d35229cc4492998fbfe44eb9f4c45076a929f6aac709c13e0b5a578088947"
+      "mutant_sha256": "a050176f21a181ddc1f34161022f6a5e213cabef71fa07af6f412bdc6d965702"
     },
     {
       "guard": "D16",
@@ -217,11 +360,11 @@
         "actor"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "d1b5a33b5a7cd484dbf18bc8deceea36895b53264da1568bbe59546ddd725f7e"
+      "mutant_sha256": "6b439a8b0ed5ea687fc50db0fd5be93c8199bf690b9cfcfa3bd9398589c114a6"
     },
     {
       "guard": "D17",
@@ -230,11 +373,11 @@
         "identity"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "4fe45514bdde374aa43c8d2591990dc49f0a16fd7e98a1d0cd2f47abc2513325"
+      "mutant_sha256": "9ecf2afa3fc0ca24300723580463fad5ba4760b3668c07cb220832a1f611e725"
     },
     {
       "guard": "D18",
@@ -243,39 +386,71 @@
         "point_project"
       ],
       "flip_count": 1,
-      "other_negatives_still_rejected": 2032,
+      "other_negatives_still_rejected": 5667,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "84f5e94209bacc1580b113674116a7a0ba19581e488d8ecca0df0a6df8d793e7"
+      "mutant_sha256": "01a1f6c3aa1ed6f61dedbbb773fad3597cd2bbbc39e3b4870a47b8752f969508"
     },
     {
       "guard": "H01",
       "rule": "inspect: source['withdrawn']",
       "negatives_that_flip": [
+        "flag_type_authorized_0",
+        "flag_type_authorized_1",
+        "flag_type_authorized_2",
+        "flag_type_authorized_3",
+        "flag_type_authorized_4",
+        "flag_type_authorized_5",
+        "flag_type_authorized_6",
+        "flag_type_authorized_7",
+        "flag_type_withdrawn_0",
+        "flag_type_withdrawn_1",
+        "flag_type_withdrawn_2",
+        "flag_type_withdrawn_3",
+        "flag_type_withdrawn_4",
+        "flag_type_withdrawn_5",
+        "flag_type_withdrawn_6",
+        "flag_type_withdrawn_7",
         "unauthorized",
         "withdrawn"
       ],
-      "flip_count": 38,
-      "other_negatives_still_rejected": 1995,
+      "flip_count": 342,
+      "other_negatives_still_rejected": 5326,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "15335fc5801bbe043221f69f22773588cc97da17596ce3706a39da60cdcccbcb"
+      "mutant_sha256": "5739895ef5f05650d9cd8a6dc669ab15ea5cde68483a4ff89bf952ab1cd5b4b0"
     },
     {
       "guard": "H02",
       "rule": "inspect: source['source_valid']",
       "negatives_that_flip": [
+        "flag_type_receipt_valid_0",
+        "flag_type_receipt_valid_1",
+        "flag_type_receipt_valid_2",
+        "flag_type_receipt_valid_3",
+        "flag_type_receipt_valid_4",
+        "flag_type_receipt_valid_5",
+        "flag_type_receipt_valid_6",
+        "flag_type_receipt_valid_7",
+        "flag_type_source_valid_0",
+        "flag_type_source_valid_1",
+        "flag_type_source_valid_2",
+        "flag_type_source_valid_3",
+        "flag_type_source_valid_4",
+        "flag_type_source_valid_5",
+        "flag_type_source_valid_6",
+        "flag_type_source_valid_7",
         "forged_receipt",
         "forged_source"
       ],
-      "flip_count": 38,
-      "other_negatives_still_rejected": 1995,
+      "flip_count": 342,
+      "other_negatives_still_rejected": 5326,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "0052815b5682283be98ac27262b7a865beff72fac2e31c82490dc45ae203d0e4"
+      "mutant_sha256": "eabd1ac367436187bd995195a3bc3f41cca384d733d762449599e3354ed650bb"
     },
     {
       "guard": "H03",
@@ -285,11 +460,11 @@
         "project"
       ],
       "flip_count": 38,
-      "other_negatives_still_rejected": 1995,
+      "other_negatives_still_rejected": 5630,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "e06fc6e8bbc0b83cc1ff5f93c5514bd75f650578ad194ad985cfedc30e298300"
+      "mutant_sha256": "d0d825b884b6ef1eda4591be51200981ab5785ca9bf588f69ffedff117923769"
     },
     {
       "guard": "H04",
@@ -298,11 +473,11 @@
         "changed_original"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "1b21dc4c238074172f8ff61d2f0ec47e25d06d909d6e4c82af18d33f23a5c766"
+      "mutant_sha256": "0d37e2f3adcbf13aa68b033a4e5aa483f5b54c4c960e96ff2dc180a80092cd62"
     },
     {
       "guard": "H06",
@@ -311,11 +486,11 @@
         "authenticated_custody"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "62b71b65a2c300617b97d1980f5274f8eed260200e166e7fcbb7b27d4b9c5f10"
+      "mutant_sha256": "97d7ae26633219f2c7cff85683d7be02495684e1676c4c2841a6ff69a5163614"
     },
     {
       "guard": "H05",
@@ -324,11 +499,11 @@
         "decoder_selection"
       ],
       "flip_count": 2,
-      "other_negatives_still_rejected": 2031,
+      "other_negatives_still_rejected": 5666,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "4582893c836147ce93d4b0ccc8adbf168e1b8249594a13899fcd55727f48090d"
+      "mutant_sha256": "aea5d234ada4f912b5ed4f68883a3622c5e8ede45c89f7f4d491c02ba814a27d"
     },
     {
       "guard": "F01",
@@ -338,13 +513,13 @@
         "schema"
       ],
       "flip_count": 38,
-      "other_negatives_still_rejected": 1995,
+      "other_negatives_still_rejected": 5630,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [
         "A07"
       ],
-      "mutant_sha256": "8acc02e9e7d495e72aaf78bd8394bb39b4b3fbdeb8212a39c33f7646d0f5b847"
+      "mutant_sha256": "04ac65b2e683bbf969a7514bbeb8df46ed45ecdc2407fbaf6d96fe05d32c8524"
     },
     {
       "guard": "F02",
@@ -353,11 +528,11 @@
         "original_value_bytes"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "ccdf22b078ba5e7146a543505725911df757bf5677d3f337827398bc3cbb57da"
+      "mutant_sha256": "f0e65222c3507638ee12db9f49cc0fea78be3256210967cefa26a175a2917583"
     },
     {
       "guard": "F03",
@@ -366,11 +541,11 @@
         "partition"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "76e333cf4acbe145940defbda79872a0cdb7c2ca7057f7dd00bc1077f5a96cd9"
+      "mutant_sha256": "86186b4d84753ccf6c3db52fe22a2928f281422c2ab9ecf0671077cb9f6becb0"
     },
     {
       "guard": "F04",
@@ -379,11 +554,11 @@
         "custody_family"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "b2441b82273bfa381f09462d759974571317fc305449dd6787c65b8d2786f22e"
+      "mutant_sha256": "c647dafd61a0ef12cc0389b4675ad88344b60cbcd403627bc641c9e24e5aac70"
     },
     {
       "guard": "F05",
@@ -392,24 +567,25 @@
         "custody_key"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "da9933e6014fa7f76630087d57d77e2399a62a01afda241cfd5b97bf0724495d"
+      "mutant_sha256": "f178e78282ee78ead209be86957be94179cb59a28a641e1d412b742c66926306"
     },
     {
       "guard": "F06",
-      "rule": "full_value_matches: receipt['sequence_id'] == candidate['sequence_id']",
+      "rule": "full_value_matches: value_bytes(receipt['sequence_id']) == value_bytes(candidate['sequence_id'])",
       "negatives_that_flip": [
-        "receipt_sequence"
+        "receipt_sequence",
+        "retained_exact_receipt_type"
       ],
-      "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "flip_count": 38,
+      "other_negatives_still_rejected": 5630,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "81e7960e499509dbcd0510880ac4b830b15a1c778050def8b8380c8dab613e74"
+      "mutant_sha256": "dab4e4194669c0ae6a0f9b694e6a6f120f3640856a38a244110c8663d91b68dd"
     },
     {
       "guard": "F07",
@@ -418,11 +594,11 @@
         "segment_reference"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "0c2d4b614dd31262cdd233322c0547f656b16789093eaa64976051c884a15d23"
+      "mutant_sha256": "d2d22c127b33c06740b97c35f2117215939c9b291dffed1c523f7fbd3b64f695"
     },
     {
       "guard": "F08",
@@ -432,11 +608,11 @@
         "result_commitment"
       ],
       "flip_count": 38,
-      "other_negatives_still_rejected": 1995,
+      "other_negatives_still_rejected": 5630,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "1f87161f3f5b9d60869dd104b21614da649129d3406a5953e04e2b289fa1778d"
+      "mutant_sha256": "d75ccb04b2d245cbb9f62aec961dcdf07851b3b9f97a17fdf170cbe52b317685"
     },
     {
       "guard": "F09",
@@ -445,24 +621,25 @@
         "semantic_commitment"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "c6d580fcce015cc165292dd74ab6321392ff429edd776be856864eac71bc49eb"
+      "mutant_sha256": "8d66c2e3e269e72e8cac314e2984a07d8f7226b62ca45901f1245db22a1388ae"
     },
     {
       "guard": "F10",
-      "rule": "full_value_matches: receipt == custody['first_append_receipt']",
+      "rule": "full_value_matches: value_bytes(receipt) == value_bytes(custody['first_append_receipt'])",
       "negatives_that_flip": [
-        "receipt_copy"
+        "receipt_copy",
+        "retained_exact_receipt_type"
       ],
-      "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "flip_count": 38,
+      "other_negatives_still_rejected": 5630,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "fd2c482f704b14e2d64445ff55a43b1f27b73911c0c99426426d77f39fea5f39"
+      "mutant_sha256": "8e62d10768584cda9dd846e41deed50fe26856b4dcf76bc54a40b75240f29bbe"
     },
     {
       "guard": "F11",
@@ -473,55 +650,57 @@
         "shipped_wrong_custody_event"
       ],
       "flip_count": 57,
-      "other_negatives_still_rejected": 1976,
+      "other_negatives_still_rejected": 5611,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [
         "C06:shipped_wrong_custody_event"
       ],
-      "mutant_sha256": "c0cd8636a0f3d606c7002b789a1c9afd939b207a298229c2aa607d0f4a2b0147"
+      "mutant_sha256": "04c5e6e2dc21865d6c80f13d156047a57a6fee95a3486fb2d03508bf64a8fd3b"
     },
     {
       "guard": "F12",
-      "rule": "full_value_matches: result == original['result']",
+      "rule": "full_value_matches: value_bytes(result) == value_bytes(original['result'])",
       "negatives_that_flip": [
-        "original_result"
+        "original_result",
+        "retained_exact_receipt_type"
       ],
-      "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "flip_count": 38,
+      "other_negatives_still_rejected": 5630,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "2486e338aef087384a6e358f7fa4b06976a53ffbf8a1183da74974f43b46e612"
+      "mutant_sha256": "bcb318edcfe9af853c55d2ded85491b657b89b643ed1a63ca0bb90d83f287e1e"
     },
     {
       "guard": "F13",
-      "rule": "full_value_matches: custody == original['custody']",
+      "rule": "full_value_matches: value_bytes(custody) == value_bytes(original['custody'])",
       "negatives_that_flip": [
         "authenticated_custody",
-        "original_custody"
+        "original_custody",
+        "retained_exact_receipt_type"
       ],
-      "flip_count": 38,
-      "other_negatives_still_rejected": 1995,
+      "flip_count": 57,
+      "other_negatives_still_rejected": 5611,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [
         "H06"
       ],
-      "mutant_sha256": "771d7594d76fe042b260c1d09b734ad2472eab33d1559351dcc7bd8f9e5394c1"
+      "mutant_sha256": "b7462f929d21387920a5c5dd33de8bccbcab3d4d00d4bab946bf94d26dcadf17"
     },
     {
       "guard": "V01",
-      "rule": "stored_event_valid: EVENT_VALIDATOR",
+      "rule": "stored_event_valid: event_validator.iter_errors",
       "negatives_that_flip": [
         "event_extension"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "05ca04fdf370e9e7316d2632fb6d487bf6366321969eba099e824198b5cf4b92"
+      "mutant_sha256": "621fc1b91fb762a25fd73de4e3bea88abff9d3b9ab03c3c2bcc0142cf45725e2"
     },
     {
       "guard": "V02",
@@ -530,11 +709,11 @@
         "replay"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "075f96cb29c76bc7ede00a512ada9f182ffd7ffb81d3a69d31e3c05316feb9c6"
+      "mutant_sha256": "af892e28343bb849cf95d87f664216c0b921d7fc044db6f2d0b9f520d0b6d89c"
     },
     {
       "guard": "V03",
@@ -543,11 +722,11 @@
         "pack_ref"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "beb536effe86e5d7089a8b85dc5e766618e776244cdc269a46b84987a6557a64"
+      "mutant_sha256": "0d917905e20bec50706beb962aa632b2a934cbb7e66b0ee289b45ff82ecbebd0"
     },
     {
       "guard": "V04",
@@ -556,11 +735,11 @@
         "pack_placeholder"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "e2d6181411a020e15b3b8c445295d612905d627e2e36c248934ac735fad894a6"
+      "mutant_sha256": "f50399fe70642e8cfd2b9f902b94daeaa323e3b0b1d4d7468f57ddd26aabd651"
     },
     {
       "guard": "V05",
@@ -569,11 +748,11 @@
         "inline_size"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "b8eb5071c5b3d4dbb967f44bf58584a3018fb9a3be0eb5af5c9678aab6ad1383"
+      "mutant_sha256": "de0da290c6850bef43b6ef33e40600601418416e4449a3ca2146b0ab54616952"
     },
     {
       "guard": "V06",
@@ -582,11 +761,11 @@
         "logical_schema"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "4d025d06ffe61198027b19f0e847fa2e12c81520b8dcc876cc20e41685d9f2bd"
+      "mutant_sha256": "1e5cd2539bfe900445b1d623a0961d3602d4b8a8da96d9f5ab1ad1afda80d49d"
     },
     {
       "guard": "V07",
@@ -595,38 +774,62 @@
         "unknown_dispatch"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "eb99bb8a025ae8568193d5d70205abd703b5cbb3d805ac116d79a4b1bbdcf164"
+      "mutant_sha256": "f8e8dfa436832609bfd4eff9cd086f28e230ccae383680d7d47c91eaa7a6e11a"
     },
     {
       "guard": "A01",
-      "rule": "append: not admission",
+      "rule": "append: admission is not True",
       "negatives_that_flip": [
+        "flag_type_admission_0",
+        "flag_type_admission_1",
+        "flag_type_admission_2",
+        "flag_type_admission_3",
+        "flag_type_admission_4",
+        "flag_type_admission_5",
+        "flag_type_admission_6",
+        "flag_type_admission_7",
         "not_admitted"
       ],
-      "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "flip_count": 171,
+      "other_negatives_still_rejected": 5497,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "d6da96d6320925c6ad408e765ee9d76dc0370b0003b4b8a527aaca2591dfc1ba"
+      "mutant_sha256": "3d00060da60ae26f832d7713c8adab3ec554e9b3ee0850f8dcd2374108a48cf6"
     },
     {
       "guard": "A02",
-      "rule": "append: not source_valid",
+      "rule": "append: source_valid is not True",
       "negatives_that_flip": [
         "dedupe_unavailable",
+        "flag_type_dedupe_available_0",
+        "flag_type_dedupe_available_1",
+        "flag_type_dedupe_available_2",
+        "flag_type_dedupe_available_3",
+        "flag_type_dedupe_available_4",
+        "flag_type_dedupe_available_5",
+        "flag_type_dedupe_available_6",
+        "flag_type_dedupe_available_7",
+        "flag_type_source_valid_0",
+        "flag_type_source_valid_1",
+        "flag_type_source_valid_2",
+        "flag_type_source_valid_3",
+        "flag_type_source_valid_4",
+        "flag_type_source_valid_5",
+        "flag_type_source_valid_6",
+        "flag_type_source_valid_7",
         "source_invalid"
       ],
-      "flip_count": 38,
-      "other_negatives_still_rejected": 1995,
+      "flip_count": 342,
+      "other_negatives_still_rejected": 5326,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "03347fde1e4afb8bc9475a940e47f0a12b078be6ea743cdcadace71109878ba7"
+      "mutant_sha256": "39000675a25e2107c6c48e6760b9ea28be9cf8f5d26e08196556ecf2c3df18de"
     },
     {
       "guard": "A03",
@@ -637,11 +840,11 @@
         "projector_replay_only_retry"
       ],
       "flip_count": 57,
-      "other_negatives_still_rejected": 1976,
+      "other_negatives_still_rejected": 5611,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "a7eb0beafb76b49186a42b828e09ad8729b2e99aef69f46ab21b53cb9ec174ff"
+      "mutant_sha256": "49caea66a85bf3ee1bf8d2ac5b23cc8163802509b8d7e08d592abdab4131d272"
     },
     {
       "guard": "A04",
@@ -650,11 +853,11 @@
         "global_event_conflict"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "956969e9df0bd354d461cceb7739bd53bbddb660df04cadbd65f62114866f346"
+      "mutant_sha256": "16ae736f6db9a47ca4ba8d48a26bee14efb297532b03cc309b16672fa774af73"
     },
     {
       "guard": "A05",
@@ -663,11 +866,11 @@
         "scoped_semantic_conflict"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "946626fd30bf48a8bc78ea9f7f2090cf2752eccf846519f321a32bc209a6c90f"
+      "mutant_sha256": "b2ed4aab9a24fceefd14aa82ffba92b8403f3027ead7d5a983914687df8d312a"
     },
     {
       "guard": "A06",
@@ -676,11 +879,11 @@
         "retry_envelope_extension"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "8257836322ae3095969e30280a9554014fce6e8a655981a7e156f5d136430cb2"
+      "mutant_sha256": "880a00689f5df611056eaf4de571661702e7d61cb138a3d1717f32e5faa25805"
     },
     {
       "guard": "A07",
@@ -689,11 +892,11 @@
         "invalid_issued_custody"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "8f5c3b90c8f9fe083360fa06005c453ee2aba7924439a791cbf54f143cc74201"
+      "mutant_sha256": "f2fac283e1bb0433f9a49ecfb5c8541ec9c455fc27f1af517d41ad4505417eaa"
     },
     {
       "guard": "P01",
@@ -702,11 +905,11 @@
         "index"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "f1eacff127f2cc94619792b9aca39ec2cf7588ecae1706bb8b1c6854e2bfb484"
+      "mutant_sha256": "86249bef3e4a4fa488a46e0731a273b5abdbd2d059214eaf620c159a1ab23194"
     },
     {
       "guard": "P02",
@@ -715,11 +918,11 @@
         "checkpoint"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "7721d769b06b47d2ea8b1cf71310308e7955347ca999adb1b0e2e9e93c7c04f6"
+      "mutant_sha256": "491c96833d97e39db58cbc4ee3de4315d3ae0e632af5d85ca458651e01c4fdf0"
     },
     {
       "guard": "P03",
@@ -728,11 +931,11 @@
         "conflated"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "f72aad0077dfc0dbdcd2f6c8d157cfd3df2c3ec3b2b46cca45fc07e606c7f5ff"
+      "mutant_sha256": "e292ca78705fa42caacfb238cf3605a449d245af46cb3b2887df5739cb8840a1"
     },
     {
       "guard": "C01",
@@ -743,11 +946,11 @@
         "shipped_wrong_key_route"
       ],
       "flip_count": 57,
-      "other_negatives_still_rejected": 1976,
+      "other_negatives_still_rejected": 5611,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "4c2f9d0b51d625cf347f84d49da4de420c0594cf977fb0a4d7f5d63e748264c2"
+      "mutant_sha256": "20e380a4dbb9875a9041b077b42c4fdd4a7e9ae9892471245d52b22215540e67"
     },
     {
       "guard": "C02",
@@ -756,11 +959,11 @@
         "schema"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "2dbfdb6ef823b23836059559bbeedf7a0fa666288c6c86becd40321c8accd586"
+      "mutant_sha256": "0a6061774a86d10ef2b309f3301bcf21bf7b8c11652cb06129040e56b5a85278"
     },
     {
       "guard": "C03",
@@ -774,16 +977,19 @@
         "storage"
       ],
       "flip_count": 114,
-      "other_negatives_still_rejected": 1919,
+      "other_negatives_still_rejected": 5554,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "82521647359d4c84615a73cd032eefbaec90ebd48857d3768e93ff7086334c60"
+      "mutant_sha256": "44cc4f70cc4a11e475787febfb0d541a83f20db456ec893ed3d240338d110e52"
     },
     {
       "guard": "C04",
       "rule": "checkpoint live selection/verification/snapshot, including the repeated token snapshot join",
       "negatives_that_flip": [
+        "primary_selection_recovery_epoch_boolean",
+        "primary_selection_selected_segment_generation_boolean",
+        "primary_selection_selected_segment_generation_float",
         "shipped_unverified_source",
         "shipped_wrong_anchor_store",
         "shipped_wrong_frontier_store",
@@ -792,12 +998,12 @@
         "snapshot",
         "verified"
       ],
-      "flip_count": 133,
-      "other_negatives_still_rejected": 1900,
+      "flip_count": 190,
+      "other_negatives_still_rejected": 5478,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "8f6e0d82e3ffbb98dd6dcc0aa719ab267c61902e5f2521ed192730f4ed9a6c86"
+      "mutant_sha256": "c03edf666f3c4230c6277c0c0d32a7a6fa6de06c6df2c19cfddf92ba8d4e36c1"
     },
     {
       "guard": "C05",
@@ -808,11 +1014,11 @@
         "token_commitment"
       ],
       "flip_count": 57,
-      "other_negatives_still_rejected": 1976,
+      "other_negatives_still_rejected": 5611,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "6d723849a105481b6210e54fc320d2e792186a0989fd9b86ffadb88f29a1b1e7"
+      "mutant_sha256": "d92a60b4090d0cbc7d322026092a8e4b6e9051eb21df6567622709f6d3b14307"
     },
     {
       "guard": "C06",
@@ -823,11 +1029,11 @@
         "source_event"
       ],
       "flip_count": 57,
-      "other_negatives_still_rejected": 1976,
+      "other_negatives_still_rejected": 5611,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "abe349f6f59dddf633d302e7224e2d470b25583188c56484e9709f80389aa5e7"
+      "mutant_sha256": "e12457bd0673ac22901d553b6728c876f85fc4421651ef7849d7936de9affbb2"
     },
     {
       "guard": "C07",
@@ -838,52 +1044,89 @@
         "shipped_wrong_partition"
       ],
       "flip_count": 57,
-      "other_negatives_still_rejected": 1976,
+      "other_negatives_still_rejected": 5611,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "82857c12b1ab54e3324bfa560a4007449810755f93808e1d9129cb6f2b18d64c"
+      "mutant_sha256": "0fd1563688c768ec94d844687c4a9006e796846e24cbef7a4abc261dd7216b16"
     },
     {
       "guard": "C08",
       "rule": "checkpoint_matches: selection['current_bytes_sha256']",
       "negatives_that_flip": [
         "current_bytes",
+        "current_generation_type_0",
+        "current_generation_type_1",
+        "current_generation_type_2",
+        "current_generation_type_3",
+        "current_generation_type_4",
+        "current_generation_type_5",
+        "current_generation_type_6",
+        "current_generation_type_7",
         "manifest_bytes",
+        "manifest_generation_type_0",
+        "manifest_generation_type_1",
+        "manifest_generation_type_2",
+        "manifest_generation_type_3",
+        "manifest_generation_type_4",
+        "manifest_generation_type_5",
+        "manifest_generation_type_6",
+        "manifest_generation_type_7",
+        "manifest_inventory_type",
+        "manifest_segment_type_0",
+        "manifest_segment_type_1",
+        "manifest_segment_type_2",
+        "manifest_segment_type_3",
+        "manifest_segment_type_4",
+        "manifest_segment_type_5",
+        "manifest_segment_type_6",
+        "manifest_segment_type_7",
+        "recovery_epoch_type_0",
+        "recovery_epoch_type_1",
+        "recovery_epoch_type_2",
+        "recovery_epoch_type_3",
+        "recovery_epoch_type_4",
+        "recovery_epoch_type_5",
+        "recovery_epoch_type_6",
+        "recovery_epoch_type_7",
         "shipped_wrong_source_selection"
       ],
-      "flip_count": 57,
-      "other_negatives_still_rejected": 1976,
+      "flip_count": 684,
+      "other_negatives_still_rejected": 4984,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "86646abc38073fdf1cb5f5d05d5fefa1af58b2024542c71b62b4a87d12a35b26"
+      "mutant_sha256": "cd859db011694b25136139e5f98f18f7218bbafa0af9d2fb85d68e37274f2d37"
     },
     {
       "guard": "C09",
-      "rule": "checkpoint_matches: anchor['source_selection'] != selection",
+      "rule": "checkpoint_matches: value_bytes(anchor['source_selection']) != value_bytes(selection)",
       "negatives_that_flip": [
         "coverage"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "fe39fdcce29f7897c11c4f3b4ae310adb4f7a5ed41d186b5ab53354d738b5304"
+      "mutant_sha256": "0423eea3c9f3b70b5940dbb4e8300c8cad701997e91b3654775a1f9134e89c86"
     },
     {
       "guard": "C10",
       "rule": "checkpoint_matches: coverage['last_frame']",
       "negatives_that_flip": [
-        "last_frame"
+        "last_frame",
+        "source_frame_end_type",
+        "source_segment_retained_event_count_boolean",
+        "source_segment_scan_start_offset_boolean",
+        "source_segment_segment_generation_boolean"
       ],
-      "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "flip_count": 95,
+      "other_negatives_still_rejected": 5573,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "4302a47c541c2c78f87cbd199bd438cb900b1a538c45b67d0775458ed4aba061"
+      "mutant_sha256": "fae5339f75651a21e139af2abe729230705e9a8dc90a44bea3a58068f97a0b4b"
     },
     {
       "guard": "C11",
@@ -892,25 +1135,25 @@
         "segment"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "61e5720ac91556adfa45478c0f606021b48338fa8222d3769211994452ee012f"
+      "mutant_sha256": "6119a9e94c3bf195e65f12d72b8ad02199f7fccdf3bf3707961003e14734611a"
     },
     {
       "guard": "C12",
-      "rule": "checkpoint_matches: bundle['datasets'] == {token['index_dataset_name']: dataset}",
+      "rule": "checkpoint_matches: value_bytes(bundle['datasets']) == value_bytes({token['index_dataset_name']: dataset})",
       "negatives_that_flip": [
         "dataset",
         "shipped_missing_dataset"
       ],
       "flip_count": 38,
-      "other_negatives_still_rejected": 1995,
+      "other_negatives_still_rejected": 5630,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "ae209487cf9c9028f386c057e1021127d57593e2bf11c659edf6ec39065a34c6"
+      "mutant_sha256": "0b5919a245369c7e90d749b0db843ffaab6fa4d4d1861830661bd04929dfbdbc"
     },
     {
       "guard": "C13",
@@ -919,11 +1162,11 @@
         "row_count"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "3ceea56435f9e9db7da805007a89c736c46749878b7f8ac02f77556a7fa45d46"
+      "mutant_sha256": "29a78e8f68943b1f4ef4dd5517f128820ea2561ed268619d6a6f49a0f97770ab"
     },
     {
       "guard": "C14",
@@ -932,26 +1175,50 @@
         "row_set_digest"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "6667ec827ebe233ace0b1a66a0f2b1ee9edc9f2ae35e8714f3f84e6c30b6f976"
+      "mutant_sha256": "ebb735796db7cb397504fa6f1e6ae73d6c98e2ba0e488c050eb5b9ecc0922ada"
     },
     {
       "guard": "O01",
       "rule": "observation_admissible: source['proof_valid']",
       "negatives_that_flip": [
         "predecessor_complete",
+        "predecessor_complete_type_0",
+        "predecessor_complete_type_1",
+        "predecessor_complete_type_2",
+        "predecessor_complete_type_3",
+        "predecessor_complete_type_4",
+        "predecessor_complete_type_5",
+        "predecessor_complete_type_6",
+        "predecessor_complete_type_7",
         "proof_valid",
-        "snapshot_current"
+        "proof_valid_type_0",
+        "proof_valid_type_1",
+        "proof_valid_type_2",
+        "proof_valid_type_3",
+        "proof_valid_type_4",
+        "proof_valid_type_5",
+        "proof_valid_type_6",
+        "proof_valid_type_7",
+        "snapshot_current",
+        "snapshot_current_type_0",
+        "snapshot_current_type_1",
+        "snapshot_current_type_2",
+        "snapshot_current_type_3",
+        "snapshot_current_type_4",
+        "snapshot_current_type_5",
+        "snapshot_current_type_6",
+        "snapshot_current_type_7"
       ],
-      "flip_count": 3,
-      "other_negatives_still_rejected": 2030,
+      "flip_count": 27,
+      "other_negatives_still_rejected": 5641,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "678f0a492e368a3fcbd05909d35adc1817931163b2d7ff813bfb79918bdb0cac"
+      "mutant_sha256": "0e29e839f35da2e5114bedef7fc28e36ba1cc19039955a635fd5406a72b422fa"
     },
     {
       "guard": "O02",
@@ -960,11 +1227,11 @@
         "grouping"
       ],
       "flip_count": 1,
-      "other_negatives_still_rejected": 2032,
+      "other_negatives_still_rejected": 5667,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "54752e56afe04433f5a2ac22c7f019e9ad028cbb96db3aa590be5ac7b73c49a9"
+      "mutant_sha256": "00759ed012715612a8468c10d727684fbd34fe40bd29af5267fcf8c4ecb926b6"
     },
     {
       "guard": "O03",
@@ -973,11 +1240,11 @@
         "source_snapshot"
       ],
       "flip_count": 1,
-      "other_negatives_still_rejected": 2032,
+      "other_negatives_still_rejected": 5667,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "10c44f06c685a619f1b380b452d8c92082808851d7f0efa88cdbdd507958c401"
+      "mutant_sha256": "44863a33ed3b305a6e6363a754c85da5a2c0e6221e1dfaabbece9694c3f60811"
     },
     {
       "guard": "O04",
@@ -987,11 +1254,11 @@
         "first_producer_sequence_id"
       ],
       "flip_count": 2,
-      "other_negatives_still_rejected": 2031,
+      "other_negatives_still_rejected": 5666,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "ec66679046ee11ba2626c805601ebe1558aa3bbf593beadd65a6fea5cc29442c"
+      "mutant_sha256": "ef6461e46be54b3ceffb1c509dd683ab3a6e47edd5847cfb620e34f5e4e4ecdf"
     },
     {
       "guard": "O05",
@@ -1007,11 +1274,11 @@
         "source_thread_id"
       ],
       "flip_count": 8,
-      "other_negatives_still_rejected": 2025,
+      "other_negatives_still_rejected": 5660,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "d9d20660a0c529009f310cce0b067a7185112974416b6043559971851882e724"
+      "mutant_sha256": "b8fbf1c2c4c23742f973900b224a17af4520bca650c2e825851e2c91126b5266"
     },
     {
       "guard": "O06",
@@ -1020,11 +1287,11 @@
         "unchanged"
       ],
       "flip_count": 1,
-      "other_negatives_still_rejected": 2032,
+      "other_negatives_still_rejected": 5667,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "8d6543937dc05e0d3d6044fb88d1d860ae533324335d7ed1d7ca401d88ca6d61"
+      "mutant_sha256": "239f9ef836273ea1f5296e903f940302fa4a7ee4305b56694e47e1f63bbd3452"
     },
     {
       "guard": "O07",
@@ -1033,11 +1300,11 @@
         "terminal_reopen"
       ],
       "flip_count": 1,
-      "other_negatives_still_rejected": 2032,
+      "other_negatives_still_rejected": 5667,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "b1acf2a47c31237a7385a7532aebda682d1f7996a616933cf23f3f6702e5b2f5"
+      "mutant_sha256": "f7b95a7450610123e16b49eb1c853e5687803c29483a5ee05b8a5955d24f5b26"
     },
     {
       "guard": "O08",
@@ -1047,11 +1314,11 @@
         "2"
       ],
       "flip_count": 2,
-      "other_negatives_still_rejected": 2031,
+      "other_negatives_still_rejected": 5666,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "2a28818516e03a7ece908bec1fdf933b01e893522c71e66d25c47c3aa087bb49"
+      "mutant_sha256": "c06f219e5ffe5f92e75cb97be5066300a9cc9e28ccabf98ca3f4c4e5387a4572"
     },
     {
       "guard": "O09",
@@ -1060,11 +1327,11 @@
         "predecessor"
       ],
       "flip_count": 1,
-      "other_negatives_still_rejected": 2032,
+      "other_negatives_still_rejected": 5667,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "0767607396ada61c2cd90ab25c20762a5400722d0c1da3c16794c1881870fd04"
+      "mutant_sha256": "d7de111aa435852b971960b40c685a99e1a051edd7f03553fac512da6c214cf9"
     },
     {
       "guard": "O10",
@@ -1073,11 +1340,11 @@
         "prior_group"
       ],
       "flip_count": 1,
-      "other_negatives_still_rejected": 2032,
+      "other_negatives_still_rejected": 5667,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "f1676e6a0b4a631afd7f45df6f249ba441b718aa05b8cd10e55b96e9fae5be18"
+      "mutant_sha256": "9ce9d6ff2c5f78fabdff32f1149aca4a5040eba441f334bd95dff40840362b41"
     },
     {
       "guard": "S01",
@@ -1086,11 +1353,11 @@
         "unresolved_optional"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "other_negatives_still_rejected": 5649,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "83a86ab5ac5760e8b298618a775a7029bfa8e1acb5ababbd6e4377b378e36fa9"
+      "mutant_sha256": "61e8ed1d3232992fa54560054da5d1edf61538fdd7169d6c7d6ebbb562c4e978"
     },
     {
       "guard": "S02",
@@ -1099,11 +1366,11 @@
         "identifier_LF"
       ],
       "flip_count": 1,
-      "other_negatives_still_rejected": 2032,
+      "other_negatives_still_rejected": 5667,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "596cee60ffa650652e76dfc5ff2512ed850f30b677989b639a61efe46709bdf7"
+      "mutant_sha256": "7b738b4ed98ca06deb7b57b454c59cd2f5942dcab60cca2fdbbf475384974584"
     },
     {
       "guard": "S04",
@@ -1112,11 +1379,11 @@
         "identifier_key_LF"
       ],
       "flip_count": 1,
-      "other_negatives_still_rejected": 2032,
+      "other_negatives_still_rejected": 5667,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "bb6752c8fe41d0c6e61548878efcd1acf925b30dbbba176f5fbd3cbf903a19c8"
+      "mutant_sha256": "b8421bd2fda61c3bb22a4c1aa24d206a260ec66b9d07d12e7c71044f5a28bc52"
     },
     {
       "guard": "S03",
@@ -1125,11 +1392,11 @@
         "provider_hash"
       ],
       "flip_count": 2,
-      "other_negatives_still_rejected": 2031,
+      "other_negatives_still_rejected": 5666,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "4aa98d0e94dbf86c49851fa99b3336a594e8779610bbc4035c68f8a2a5c6f697"
+      "mutant_sha256": "f0b240af40d9870b11c21475c8b622f5655f951ec4233e491c99e8934bb641d7"
     },
     {
       "guard": "S05",
@@ -1138,11 +1405,11 @@
         "success_is_not_failure"
       ],
       "flip_count": 1,
-      "other_negatives_still_rejected": 2032,
+      "other_negatives_still_rejected": 5667,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "7abd6310d5b82caec16b1d5555656ed06366f8b540e8ccf52e61beada5b61ac6"
+      "mutant_sha256": "2a87d7fe9f7d771b86d921a392fca9174de80b526018f82d88a47a81c045192b"
     },
     {
       "guard": "I01",
@@ -1154,11 +1421,11 @@
         "negative_observation_revision"
       ],
       "flip_count": 4,
-      "other_negatives_still_rejected": 2029,
+      "other_negatives_still_rejected": 5664,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "09d7b1a5fcc98cbc8a6d2af6e4024c93412db2368bca0654ff81672e17587ebe"
+      "mutant_sha256": "59f3f97b3e6f378ab64ffac21a94860b39110237dc7e1a2f33136452b9f11992"
     },
     {
       "guard": "I02",
@@ -1169,11 +1436,11 @@
         "negative_infinite_value"
       ],
       "flip_count": 3,
-      "other_negatives_still_rejected": 2030,
+      "other_negatives_still_rejected": 5665,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "da7c56e17dba06c30b72d98747817dcfe17fdd8629e76ebd040139927bc4d5f5"
+      "mutant_sha256": "88c59c3ce1fc47946b5a79645225c79f702c5685cf5a1e9dc72fff204e843ebb"
     },
     {
       "guard": "I03",
@@ -1182,11 +1449,11 @@
         "unsupported_binary"
       ],
       "flip_count": 1,
-      "other_negatives_still_rejected": 2032,
+      "other_negatives_still_rejected": 5667,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "60393f8fc09c9d45dc50e1eafba72b06fe028da72f5e42d4ce17ef0cc97cc419"
+      "mutant_sha256": "e91520f97da6442388c89d0d56c1f5d1e8638a5e0c2aa13f459919ace068f5d7"
     },
     {
       "guard": "S06",
@@ -1195,24 +1462,354 @@
         "unsupported_validation_profile"
       ],
       "flip_count": 1,
-      "other_negatives_still_rejected": 2032,
+      "other_negatives_still_rejected": 5667,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "8a3aaef30411c87ebd3a56007ea60afba444b1bf20211b1a509281f3e33c3ac2"
+      "mutant_sha256": "c6f4819856c6c860928ba7556d28e4f9e66c8e1049dedf45513e064a75682b15"
     },
     {
       "guard": "H07",
-      "rule": "inspect: return 'metadata_only' if source['body_deleted'] else 'metadata_and_authorized_refs'",
+      "rule": "inspect: return ('metadata_only' if source['body_deleted'] else 'metadata_and_authorized_refs') if type(source['body_deleted']) is bool else 'unavailable'",
       "negatives_that_flip": [
-        "deleted_body_refs"
+        "deleted_body_refs",
+        "flag_type_body_deleted_0",
+        "flag_type_body_deleted_1",
+        "flag_type_body_deleted_2",
+        "flag_type_body_deleted_3",
+        "flag_type_body_deleted_4",
+        "flag_type_body_deleted_5",
+        "flag_type_body_deleted_6",
+        "flag_type_body_deleted_7"
       ],
-      "flip_count": 19,
-      "other_negatives_still_rejected": 2014,
+      "flip_count": 171,
+      "other_negatives_still_rejected": 5497,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "44cc8b402201a584eb10059efcb7a2a42ba0627e789af5901019b0ae158b2565"
+      "mutant_sha256": "cd3b6c2000a62a2b34282e1ed8dd6a4386683e7ed948cf4d20dc457077082a46"
+    },
+    {
+      "guard": "N01",
+      "rule": "numeric_walk: not math.isfinite(value)",
+      "negatives_that_flip": [
+        "exponent_checkpoint",
+        "exponent_custody",
+        "exponent_event",
+        "exponent_open_map",
+        "exponent_receipt",
+        "exponent_result",
+        "exponent_storage_form_inline",
+        "exponent_storage_form_packed",
+        "float_checkpoint",
+        "float_custody",
+        "float_event",
+        "float_open_map",
+        "float_receipt",
+        "float_result",
+        "float_storage_form_inline",
+        "float_storage_form_packed",
+        "negative_zero_checkpoint",
+        "negative_zero_custody",
+        "negative_zero_event",
+        "negative_zero_open_map",
+        "negative_zero_receipt",
+        "negative_zero_result",
+        "negative_zero_storage_form_inline",
+        "negative_zero_storage_form_packed",
+        "positive_zero_checkpoint",
+        "positive_zero_custody",
+        "positive_zero_event",
+        "positive_zero_open_map",
+        "positive_zero_receipt",
+        "positive_zero_result",
+        "positive_zero_storage_form_inline",
+        "positive_zero_storage_form_packed"
+      ],
+      "flip_count": 608,
+      "other_negatives_still_rejected": 5060,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "5f618c8cfc39412255b91fbf62ddee5c8387d564a4afe59c19ee44d1b3517d4e"
+    },
+    {
+      "guard": "B01",
+      "rule": "source_agreement: copy != source",
+      "negatives_that_flip": [
+        "console_ref_inline_append",
+        "console_ref_inline_decode",
+        "console_ref_packed_append",
+        "console_ref_packed_decode",
+        "console_ref_schema",
+        "cost_derived_inline_append",
+        "cost_derived_inline_decode",
+        "cost_derived_packed_append",
+        "cost_derived_packed_decode",
+        "cost_derived_schema",
+        "input_derived_inline_append",
+        "input_derived_inline_decode",
+        "input_derived_packed_append",
+        "input_derived_packed_decode",
+        "input_derived_schema",
+        "is_cli_reported_inline_append",
+        "is_cli_reported_inline_decode",
+        "is_cli_reported_packed_append",
+        "is_cli_reported_packed_decode",
+        "is_cli_reported_schema",
+        "is_estimated_inline_append",
+        "is_estimated_inline_decode",
+        "is_estimated_packed_append",
+        "is_estimated_packed_decode",
+        "is_estimated_schema",
+        "is_local_context_estimate_inline_append",
+        "is_local_context_estimate_inline_decode",
+        "is_local_context_estimate_packed_append",
+        "is_local_context_estimate_packed_decode",
+        "is_local_context_estimate_schema",
+        "is_provider_reported_inline_append",
+        "is_provider_reported_inline_decode",
+        "is_provider_reported_packed_append",
+        "is_provider_reported_packed_decode",
+        "is_provider_reported_schema",
+        "network_ref_inline_append",
+        "network_ref_inline_decode",
+        "network_ref_packed_append",
+        "network_ref_packed_decode",
+        "network_ref_schema",
+        "output_derived_inline_append",
+        "output_derived_inline_decode",
+        "output_derived_packed_append",
+        "output_derived_packed_decode",
+        "output_derived_schema",
+        "page_ref_inline_append",
+        "page_ref_inline_decode",
+        "page_ref_packed_append",
+        "page_ref_packed_decode",
+        "page_ref_schema",
+        "pdf_artifact_ref_inline_append",
+        "pdf_artifact_ref_inline_decode",
+        "pdf_artifact_ref_packed_append",
+        "pdf_artifact_ref_packed_decode",
+        "pdf_artifact_ref_schema",
+        "provider_total_derived_inline_append",
+        "provider_total_derived_inline_decode",
+        "provider_total_derived_packed_append",
+        "provider_total_derived_packed_decode",
+        "provider_total_derived_schema",
+        "reasoning_alias_inline_append",
+        "reasoning_alias_inline_decode",
+        "reasoning_alias_packed_append",
+        "reasoning_alias_packed_decode",
+        "reasoning_alias_schema",
+        "redacted_inline_append",
+        "redacted_inline_decode",
+        "redacted_packed_append",
+        "redacted_packed_decode",
+        "redacted_schema",
+        "redaction_profile_inline_append",
+        "redaction_profile_inline_decode",
+        "redaction_profile_packed_append",
+        "redaction_profile_packed_decode",
+        "redaction_profile_schema",
+        "refs_attempt_id_inline_append",
+        "refs_attempt_id_inline_decode",
+        "refs_attempt_id_packed_append",
+        "refs_attempt_id_packed_decode",
+        "refs_attempt_id_schema",
+        "refs_node_id_inline_append",
+        "refs_node_id_inline_decode",
+        "refs_node_id_packed_append",
+        "refs_node_id_packed_decode",
+        "refs_node_id_schema",
+        "refs_provider_attempt_ref_inline_append",
+        "refs_provider_attempt_ref_inline_decode",
+        "refs_provider_attempt_ref_packed_append",
+        "refs_provider_attempt_ref_packed_decode",
+        "refs_provider_attempt_ref_schema",
+        "refs_raw_payload_ref_inline_append",
+        "refs_raw_payload_ref_inline_decode",
+        "refs_raw_payload_ref_packed_append",
+        "refs_raw_payload_ref_packed_decode",
+        "refs_raw_payload_ref_schema",
+        "refs_run_id_inline_append",
+        "refs_run_id_inline_decode",
+        "refs_run_id_packed_append",
+        "refs_run_id_packed_decode",
+        "refs_run_id_schema",
+        "refs_thread_id_inline_append",
+        "refs_thread_id_inline_decode",
+        "refs_thread_id_packed_append",
+        "refs_thread_id_packed_decode",
+        "refs_thread_id_schema",
+        "refs_usage_event_ref_inline_append",
+        "refs_usage_event_ref_inline_decode",
+        "refs_usage_event_ref_packed_append",
+        "refs_usage_event_ref_packed_decode",
+        "refs_usage_event_ref_schema",
+        "refs_usage_record_id_inline_append",
+        "refs_usage_record_id_inline_decode",
+        "refs_usage_record_id_packed_append",
+        "refs_usage_record_id_packed_decode",
+        "refs_usage_record_id_schema",
+        "retry_missing_parent_inline_append",
+        "retry_missing_parent_inline_decode",
+        "retry_missing_parent_packed_append",
+        "retry_missing_parent_packed_decode",
+        "retry_missing_parent_schema",
+        "retry_parent_inline_append",
+        "retry_parent_inline_decode",
+        "retry_parent_packed_append",
+        "retry_parent_packed_decode",
+        "retry_parent_schema",
+        "root_provider_attempt_ref_inline_append",
+        "root_provider_attempt_ref_inline_decode",
+        "root_provider_attempt_ref_packed_append",
+        "root_provider_attempt_ref_packed_decode",
+        "root_provider_attempt_ref_schema",
+        "root_receipt_refs_inline_append",
+        "root_receipt_refs_inline_decode",
+        "root_receipt_refs_packed_append",
+        "root_receipt_refs_packed_decode",
+        "root_receipt_refs_schema",
+        "root_usage_event_ref_inline_append",
+        "root_usage_event_ref_inline_decode",
+        "root_usage_event_ref_packed_append",
+        "root_usage_event_ref_packed_decode",
+        "root_usage_event_ref_schema",
+        "root_usage_record_id_inline_append",
+        "root_usage_record_id_inline_decode",
+        "root_usage_record_id_packed_append",
+        "root_usage_record_id_packed_decode",
+        "root_usage_record_id_schema",
+        "screenshot_artifact_ref_inline_append",
+        "screenshot_artifact_ref_inline_decode",
+        "screenshot_artifact_ref_packed_append",
+        "screenshot_artifact_ref_packed_decode",
+        "screenshot_artifact_ref_schema",
+        "session_0_inline_append",
+        "session_0_inline_decode",
+        "session_0_packed_append",
+        "session_0_packed_decode",
+        "session_0_schema",
+        "session_1_inline_append",
+        "session_1_inline_decode",
+        "session_1_packed_append",
+        "session_1_packed_decode",
+        "session_1_schema",
+        "session_2_inline_append",
+        "session_2_inline_decode",
+        "session_2_packed_append",
+        "session_2_packed_decode",
+        "session_2_schema",
+        "session_3_inline_append",
+        "session_3_inline_decode",
+        "session_3_packed_append",
+        "session_3_packed_decode",
+        "session_3_schema",
+        "session_4_inline_append",
+        "session_4_inline_decode",
+        "session_4_packed_append",
+        "session_4_packed_decode",
+        "session_4_schema",
+        "session_5_inline_append",
+        "session_5_inline_decode",
+        "session_5_packed_append",
+        "session_5_packed_decode",
+        "session_5_schema",
+        "settlement_usage_event_ref_inline_append",
+        "settlement_usage_event_ref_inline_decode",
+        "settlement_usage_event_ref_packed_append",
+        "settlement_usage_event_ref_packed_decode",
+        "settlement_usage_event_ref_schema",
+        "settlement_usage_record_id_inline_append",
+        "settlement_usage_record_id_inline_decode",
+        "settlement_usage_record_id_packed_append",
+        "settlement_usage_record_id_packed_decode",
+        "settlement_usage_record_id_schema",
+        "total_alias_inline_append",
+        "total_alias_inline_decode",
+        "total_alias_packed_append",
+        "total_alias_packed_decode",
+        "total_alias_schema",
+        "usage_artifact_observed_inline_append",
+        "usage_artifact_observed_inline_decode",
+        "usage_artifact_observed_packed_append",
+        "usage_artifact_observed_packed_decode",
+        "usage_artifact_observed_schema",
+        "usage_observed_inline_append",
+        "usage_observed_inline_decode",
+        "usage_observed_packed_append",
+        "usage_observed_packed_decode",
+        "usage_observed_schema"
+      ],
+      "flip_count": 240,
+      "other_negatives_still_rejected": 5428,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "1f89e5ea935d4b21d4623911fa2d44a8377f2846725c848d5b7d4d6c9a7dda36"
+    },
+    {
+      "guard": "B02",
+      "rule": "decode: raw is False",
+      "negatives_that_flip": [
+        "source_bytes_type_inline",
+        "source_bytes_type_packed"
+      ],
+      "flip_count": 4,
+      "other_negatives_still_rejected": 5664,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "2f1d42ce1cad3329ba4b0282ad8ab62aacea7327f8100dbb877e3cc0b0cf2d0c"
+    },
+    {
+      "guard": "B03",
+      "rule": "decode: evidence['provider_payload_hash'] != expected",
+      "negatives_that_flip": [
+        "source_digest_inline",
+        "source_digest_packed"
+      ],
+      "flip_count": 4,
+      "other_negatives_still_rejected": 5664,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "7657699378b6dc6d9af79578fd0b3e3c0e4eb14128ea728c09b8ff52e6de1b71"
+    },
+    {
+      "guard": "S07",
+      "rule": "primitive JSON type at artifact_id, sequence_id and boolean scalar witness leaves; union/format tags retained",
+      "negatives_that_flip": [
+        "boolean_type_0",
+        "boolean_type_1",
+        "boolean_type_2",
+        "boolean_type_3",
+        "boolean_type_4",
+        "boolean_type_5",
+        "boolean_type_6",
+        "boolean_type_7",
+        "event_number_type_0",
+        "event_number_type_1",
+        "event_number_type_2",
+        "event_number_type_3",
+        "event_number_type_4",
+        "event_number_type_5",
+        "payload_string_type_0",
+        "payload_string_type_1",
+        "payload_string_type_2",
+        "payload_string_type_3",
+        "payload_string_type_4",
+        "payload_string_type_5",
+        "payload_string_type_6"
+      ],
+      "flip_count": 399,
+      "other_negatives_still_rejected": 5269,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "9eb783690c70719f9a97d88008db30eba838f08620654f5e270ed01cee398b87"
     }
   ],
   "native_execution": "NOT_RUN",

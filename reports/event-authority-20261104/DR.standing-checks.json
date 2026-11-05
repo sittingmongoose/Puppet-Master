@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.runtime_artifact.standing_check_report.v1",
-  "implementation_commit": "be654d70037b1e79b3d694469a5e32b031da2b3f",
+  "implementation_commit": "7c04fd7f86044d5746e6406e2219491197255943",
   "status": "pass",
   "families": 19,
   "standing_checks": 11,
@@ -11,68 +11,68 @@
       "checks": {
         "1": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
           "open_reason": null
         },
         "11": {
-          "status": "fixed",
-          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
-          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
+          "status": "pass",
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
+          "negative_case": "Complete 93-row guard table, including forwarded D12/B01 validation, all isolated own flips and zero unrelated flips; separately repeated in uncached raw modules.",
           "open_reason": null
         }
       },
@@ -83,68 +83,68 @@
       "checks": {
         "1": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
           "open_reason": null
         },
         "11": {
-          "status": "fixed",
-          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
-          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
+          "status": "pass",
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
+          "negative_case": "Complete 93-row guard table, including forwarded D12/B01 validation, all isolated own flips and zero unrelated flips; separately repeated in uncached raw modules.",
           "open_reason": null
         }
       },
@@ -155,68 +155,68 @@
       "checks": {
         "1": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
           "open_reason": null
         },
         "11": {
-          "status": "fixed",
-          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
-          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
+          "status": "pass",
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
+          "negative_case": "Complete 93-row guard table, including forwarded D12/B01 validation, all isolated own flips and zero unrelated flips; separately repeated in uncached raw modules.",
           "open_reason": null
         }
       },
@@ -227,68 +227,68 @@
       "checks": {
         "1": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
           "open_reason": null
         },
         "11": {
-          "status": "fixed",
-          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
-          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
+          "status": "pass",
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
+          "negative_case": "Complete 93-row guard table, including forwarded D12/B01 validation, all isolated own flips and zero unrelated flips; separately repeated in uncached raw modules.",
           "open_reason": null
         }
       },
@@ -299,68 +299,68 @@
       "checks": {
         "1": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
           "open_reason": null
         },
         "11": {
-          "status": "fixed",
-          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
-          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
+          "status": "pass",
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
+          "negative_case": "Complete 93-row guard table, including forwarded D12/B01 validation, all isolated own flips and zero unrelated flips; separately repeated in uncached raw modules.",
           "open_reason": null
         }
       },
@@ -371,68 +371,68 @@
       "checks": {
         "1": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
           "open_reason": null
         },
         "11": {
-          "status": "fixed",
-          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
-          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
+          "status": "pass",
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
+          "negative_case": "Complete 93-row guard table, including forwarded D12/B01 validation, all isolated own flips and zero unrelated flips; separately repeated in uncached raw modules.",
           "open_reason": null
         }
       },
@@ -443,68 +443,68 @@
       "checks": {
         "1": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
-          "status": "fixed",
-          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
+          "status": "pass",
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
           "open_reason": null
         },
         "11": {
-          "status": "fixed",
-          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
-          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
+          "status": "pass",
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
+          "negative_case": "Complete 93-row guard table, including forwarded D12/B01 validation, all isolated own flips and zero unrelated flips; separately repeated in uncached raw modules.",
           "open_reason": null
         }
       },
@@ -515,68 +515,68 @@
       "checks": {
         "1": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
           "open_reason": null
         },
         "11": {
-          "status": "fixed",
-          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
-          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
+          "status": "pass",
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
+          "negative_case": "Complete 93-row guard table, including forwarded D12/B01 validation, all isolated own flips and zero unrelated flips; separately repeated in uncached raw modules.",
           "open_reason": null
         }
       },
@@ -587,68 +587,68 @@
       "checks": {
         "1": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
           "open_reason": null
         },
         "11": {
-          "status": "fixed",
-          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
-          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
+          "status": "pass",
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
+          "negative_case": "Complete 93-row guard table, including forwarded D12/B01 validation, all isolated own flips and zero unrelated flips; separately repeated in uncached raw modules.",
           "open_reason": null
         }
       },
@@ -659,68 +659,68 @@
       "checks": {
         "1": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
           "open_reason": null
         },
         "11": {
-          "status": "fixed",
-          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
-          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
+          "status": "pass",
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
+          "negative_case": "Complete 93-row guard table, including forwarded D12/B01 validation, all isolated own flips and zero unrelated flips; separately repeated in uncached raw modules.",
           "open_reason": null
         }
       },
@@ -731,68 +731,68 @@
       "checks": {
         "1": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
           "open_reason": null
         },
         "11": {
-          "status": "fixed",
-          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
-          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
+          "status": "pass",
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
+          "negative_case": "Complete 93-row guard table, including forwarded D12/B01 validation, all isolated own flips and zero unrelated flips; separately repeated in uncached raw modules.",
           "open_reason": null
         }
       },
@@ -803,68 +803,68 @@
       "checks": {
         "1": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
           "open_reason": null
         },
         "11": {
-          "status": "fixed",
-          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
-          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
+          "status": "pass",
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
+          "negative_case": "Complete 93-row guard table, including forwarded D12/B01 validation, all isolated own flips and zero unrelated flips; separately repeated in uncached raw modules.",
           "open_reason": null
         }
       },
@@ -875,68 +875,68 @@
       "checks": {
         "1": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
           "open_reason": null
         },
         "11": {
-          "status": "fixed",
-          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
-          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
+          "status": "pass",
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
+          "negative_case": "Complete 93-row guard table, including forwarded D12/B01 validation, all isolated own flips and zero unrelated flips; separately repeated in uncached raw modules.",
           "open_reason": null
         }
       },
@@ -947,68 +947,68 @@
       "checks": {
         "1": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
           "open_reason": null
         },
         "11": {
-          "status": "fixed",
-          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
-          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
+          "status": "pass",
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
+          "negative_case": "Complete 93-row guard table, including forwarded D12/B01 validation, all isolated own flips and zero unrelated flips; separately repeated in uncached raw modules.",
           "open_reason": null
         }
       },
@@ -1019,68 +1019,68 @@
       "checks": {
         "1": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
           "open_reason": null
         },
         "11": {
-          "status": "fixed",
-          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
-          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
+          "status": "pass",
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
+          "negative_case": "Complete 93-row guard table, including forwarded D12/B01 validation, all isolated own flips and zero unrelated flips; separately repeated in uncached raw modules.",
           "open_reason": null
         }
       },
@@ -1091,68 +1091,68 @@
       "checks": {
         "1": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
           "open_reason": null
         },
         "11": {
-          "status": "fixed",
-          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
-          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
+          "status": "pass",
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
+          "negative_case": "Complete 93-row guard table, including forwarded D12/B01 validation, all isolated own flips and zero unrelated flips; separately repeated in uncached raw modules.",
           "open_reason": null
         }
       },
@@ -1163,68 +1163,68 @@
       "checks": {
         "1": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
           "open_reason": null
         },
         "11": {
-          "status": "fixed",
-          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
-          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
+          "status": "pass",
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
+          "negative_case": "Complete 93-row guard table, including forwarded D12/B01 validation, all isolated own flips and zero unrelated flips; separately repeated in uncached raw modules.",
           "open_reason": null
         }
       },
@@ -1235,68 +1235,68 @@
       "checks": {
         "1": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
-          "status": "fixed",
-          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
+          "status": "pass",
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
           "open_reason": null
         },
         "11": {
-          "status": "fixed",
-          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
-          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
+          "status": "pass",
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
+          "negative_case": "Complete 93-row guard table, including forwarded D12/B01 validation, all isolated own flips and zero unrelated flips; separately repeated in uncached raw modules.",
           "open_reason": null
         }
       },
@@ -1307,68 +1307,68 @@
       "checks": {
         "1": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
-          "commit": null,
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
           "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
           "open_reason": null
         },
         "11": {
-          "status": "fixed",
-          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
-          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
+          "status": "pass",
+          "commit": "7c04fd7f86044d5746e6406e2219491197255943",
+          "negative_case": "Complete 93-row guard table, including forwarded D12/B01 validation, all isolated own flips and zero unrelated flips; separately repeated in uncached raw modules.",
           "open_reason": null
         }
       },
