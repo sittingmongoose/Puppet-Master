@@ -655,8 +655,8 @@
       return lo;
     }
     /* Pip's head where it hangs at rest from the hand's spot, on the floor it rests on: the box the props keep off (fit);
-       swing: the swing's reach, rad (by default the one under way) */
-    pipHead(swing) {
+       swing: the swing's reach, rad (by default the one under way); now: the head as render() draws it this frame */
+    pipHead(swing, now) {
       const ps = this.ps, Lay = this.L, s = Lay.s;
       if (!ps || !this.pipReach(ps.tiltT)) return null;
       const box = (cx, cy, ang, th) => {
@@ -680,7 +680,19 @@
       const A = still ? 0 : swing != null ? swing : this.swingAmp(ps.th, ps.thv, F.w, F.damp);
       if (A > .002) [-1, -.5, .5, 1].forEach((q) => { b = join(b, box(ps.Ct.x, ps.Ct.y, ps.tiltT + A * q * .9, A * q)); });
       const sw = still ? 0 : F.sway * (ps.asleep ? .2 : 1), bob = still || !F.bob ? 0 : F.bob * .6;
-      return [b[0] - sw, b[1] - bob, b[2] + sw, b[3] + bob];
+      b = [b[0] - sw, b[1] - bob, b[2] + sw, b[3] + bob];
+      /* (and the head where it is drawn now, turned, stretched and lifted as render() draws it: with no room to swing Pip
+         wiggled, and the turn took its head 4 units past that box into the forge held at its edge as the forge swung in,
+         Glass Light 860, retro-c4) */
+      if (now) {
+        const h = this.pipBB.h, c = Math.cos(now.ang), n = Math.sin(now.ang);
+        const p = [[h[0], h[1]], [h[0] + h[2], h[1]], [h[0], h[1] + h[3]], [h[0] + h[2], h[1] + h[3]]].map(([x, y]) => {
+          const u = (x - 32) * now.sx * s, v = ((y - 59.5) * now.sy + 28) * s;
+          return [now.H[0] + u * c - v * n, now.H[1] + u * n + v * c];
+        });
+        b = join(b, [Math.min(...p.map((q) => q[0])), Math.min(...p.map((q) => q[1])), Math.max(...p.map((q) => q[0])), Math.max(...p.map((q) => q[1]))]);
+      }
+      return b;
     }
     /* Creating's and Protect's stack of blocks stands on the lowest floor a person can see, and is drawn closer and
        smaller when it would rise past the pane's top or into a speech box that cannot move (Retro's tube crops the floor
@@ -1185,7 +1197,7 @@
          that lands before it talks is already below it) */
       if (f === 'nier') { const nb = this.boxInScene(this.bubble, 6); if (nb) this.nierBox = nb; }
       this.keepOff = f === 'nier' ? this.nierBox || null : this.bubbleKeepOff || null;
-      this.pipKeep = this.pipHead();
+      this.pipKeep = this.pipHead(null, { H, ang, sx, sy });
       this.renderN = (this.renderN || 0) + 1;
       this.props.forEach((pr) => this.placeProp(pr));
       // particles
