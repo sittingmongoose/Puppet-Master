@@ -139,7 +139,8 @@ async function begin(t, f, look, mode, screen, tag) {
 	if (!(await openAt(t, f, screen))) return false;
 	await settled(f, screen);
 	await motionHolds(t, f, tag);
-	if (mode) await f.locator('#pm-o55-onboarding button.o55-talk').first().click();
+	if (await f.evaluate(() => O55.talk.mode()) !== (mode ? 'Expert' : 'ELI5')) await f.locator('#pm-o55-onboarding button.o55-talk').first().click();
+	await t.check('requested wording is applied', await f.evaluate(() => O55.talk.mode()) === (mode ? 'Expert' : 'ELI5')); 
 	await t.page.waitForTimeout(300);
 	await take(f);
 	return true;
@@ -147,11 +148,24 @@ async function begin(t, f, look, mode, screen, tag) {
 
 export default async function (t) {
 	const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
-	const only = t.args.only ? String(t.args.only).split(',') : ['smb', 'drive', 'nfs', 'install'];
+	const only = t.args.only ? String(t.args.only).split(',') : ['discovery', 'smb', 'drive', 'nfs', 'install'];
 	const combos = looks.flatMap((look) => [[look, 0], [look, 1]]);
 	await setMotion(t);
 	for (const [i, [look, mode]] of combos.entries()) {
 		const tag = `${look} w${mode}`;
+        if (only.includes('discovery')) await t.step(`${tag} · discovery`, async () => {
+            const f = await t.app.open();
+            await begin(t, f, look, mode, 'nas-find', tag);
+            const scan = await tx(f, 'pip.say.nas-find.enter');
+            await t.check('discovery scanning line while running', !!await typing(f, scan, 4));
+            await f.waitForFunction(() => O55.S.sess.ops['discover:ssh']?.state === 'done');
+            await t.mark(`${tag} discovery results`);
+            await t.check('result replaces scanning line', !!await typing(f, await tx(f, 'pip.say.nas-find.found'), 8));
+            await clickIn(f, '[data-o55-do="device"]');
+            await t.check('selection replaces discovery result', !!await typing(f, await tx(f, 'pip.say.nas-find.selected'), 8));
+            await clickIn(f, '[data-o55-do="method"][data-arg="smb"]');
+            await t.check('method change leaves no scanning line', !!await typing(f, await tx(f, 'pip.say.nas-find.method:smb'), 8));
+        });
 		if (only.includes('smb')) await t.step(`${tag} · smb`, async () => {
 			const f = await t.app.open();
 			if (!(await begin(t, f, look, mode, 'nas-smb', `${tag} smb`))) return t.check(`${tag}: Sign in to the shared folder opens`, false, 'not opened from its row', { hard: true });
@@ -249,7 +263,8 @@ export default async function (t) {
 			await arm(f);
 			if (!(await openAt(t, f, 'nas-install'))) return t.check(`${tag}: Adding the key opens`, false, 'not opened from its row', { hard: true });
 			await motionHolds(t, f, `${tag} install`);
-			if (mode) await f.locator('#pm-o55-onboarding button.o55-talk').first().click();
+			if (await f.evaluate(() => O55.talk.mode()) !== (mode ? 'Expert' : 'ELI5')) await f.locator('#pm-o55-onboarding button.o55-talk').first().click();
+	await t.check('requested wording is applied', await f.evaluate(() => O55.talk.mode()) === (mode ? 'Expert' : 'ELI5')); 
 			await t.check(`${tag} install: the install passes`, await checkIs(f, 'nas-install', 'done'), await primaryDo(f));
 			await t.page.waitForTimeout(900);
 			await verdict(t, f, `${tag} install running, then done`, ['nas-install:done']);

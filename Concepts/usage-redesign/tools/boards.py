@@ -536,8 +536,8 @@ B = {
 # its fallback height h (inside the kind's range); a fixed preset always takes its own height. Compact provider plates show the active account and fold
 # a provider's other accounts to their "N more" line (hover, Details). HOSTS_DIGEST is the hash of the generated host
 # boards: --check fails when HOSTS changes without a new HOSTS_VERSION (and HOSTS_DIGEST) or a version without a change.
-HOSTS_VERSION = 'pmu-hosts-2026-10-10b'
-HOSTS_DIGEST = '3ce745e8635d68a7'
+HOSTS_VERSION = 'pmu-hosts-2026-11-05'
+HOSTS_DIGEST = '956aeeacfc5fead3'
 HOST_CLASSES = {'S': 12, 'M': 20, 'L': 24}
 HOST_PLATES = ['acct-claude-code', 'acct-openai-codex', 'acct-antigravity', 'acct-muse', 'acct-github-copilot',
                'acct-qwen-coding', 'acct-zai-coding', 'acct-kimi-coding', 'acct-opencode-go', 'acct-anthropic-api',
@@ -548,13 +548,11 @@ _PLATES = ' '.join(pid + '@compact:10' for pid in HOST_PLATES)
 HOSTS = {
     # new dash-<n> tabs: the usage summary (Overview's Usage health) and one provider plate per provider
     'dashboard': {cls: 'health@standard ' + _PLATES for cls in HOST_CLASSES},
+    # Projection axes belong in Home's first row, before its initial scroll fold.
     'home': {
-        'S': 'health@standard month@standard next-reset@standard active-runs@standard budget-now@expanded '
-             'attention-now@expanded ov-resets@wide',
-        'M': 'health@standard month@standard budget-now@standard next-reset@standard active-runs@standard '
-             'ov-resets@standard attention-now@expanded',
-        'L': 'health@standard month@standard next-reset@standard active-runs@standard budget-now@standard '
-             'attention-now@standard ov-resets@standard',
+        'S': 'budget-now@expanded health@standard month@standard next-reset@standard active-runs@standard attention-now@expanded ov-resets@wide',
+        'M': 'budget-now@standard health@standard month@standard next-reset@standard active-runs@standard ov-resets@standard attention-now@expanded',
+        'L': 'budget-now@standard health@standard month@standard next-reset@standard active-runs@standard attention-now@standard ov-resets@standard',
     },
     'metrics': {
         'S': 'token-trend@wide quota-history@standard budget-now@expanded ov-headroom@panel cost-month@standard',

@@ -59,6 +59,7 @@ export default async function(t) {
     await key('demo-key-previous-123456');
     await f.waitForFunction(()=>O55.S.sess.ai.list.some(x=>x.provider==='cursor'));
     await f.locator(LAYER+' '+row+'[data-o55-do="manage"]').first().click();
+    await f.locator(LAYER+' '+row+'[data-o55-do="manage"]').first().click();
     await f.locator(LAYER+' '+row+'[data-o55-do="addAnother"]').first().click();
    }
    await key('short-key');
@@ -82,6 +83,16 @@ export default async function(t) {
     await key('demo-key-0000-1111-2222');
     await f.waitForFunction(()=>O55.S.sess.ai.list.some(x=>x.provider==='cursor'));
     await f.waitForFunction(()=>{const b=document.querySelector('#pm-o55-onboarding .pst-bt-on');return b && b.textContent.startsWith('That');});
+   }
+   if(action==='checkedit') {
+    const typed=await f.evaluate(()=>O55.S.sess.ai.accounts.cursor.keyTyped);
+    await t.check('discarded replacement clears typed state',typed===false,JSON.stringify({typed}));
+    await f.locator(LAYER+' '+row+'[data-o55-do="manage"]').first().click();
+    await f.locator(LAYER+' '+row+'[data-o55-do="addAnother"]').first().click();
+    await f.waitForSelector('#o55f-key-cursor');
+    const fresh=await f.evaluate(()=>({value:document.querySelector('#o55f-key-cursor').value,typed:O55.S.sess.ai.accounts.cursor.keyTyped}));
+    await t.check('Add another key opens empty and untyped',fresh.value===''&&fresh.typed===false,JSON.stringify(fresh));
+    await f.locator(LAYER+' [data-o55-do="cancelAdd"]').first().click();
    }
    const ids=await f.evaluate(()=>O55.S.sess.ai.list.filter(x=>x.provider==='cursor').map(x=>x.id));
    const targetId=ids[ids.length-1], otherId=ids.length>1 ? ids[0] : null;

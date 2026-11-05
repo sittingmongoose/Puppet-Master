@@ -169,7 +169,17 @@
       /* (no AI and no free models: Pip doesn't cheer an AI that isn't there, Opus p60) */
       state: (S) => (O55.ai && !O55.ai.readyIds(S).length && !O55.ai.freeReady(S) ? 'noAi' : md(S).project_mode === 'later' ? 'later' : 'enter'), look: 'crew-hardhat'
     },
-    'nas-find': { props: one('nas'), state: (S) => ((S.sess.nas || {}).sshOff ? 'sshOff' : 'enter'), vars: (S) => ({ method: (S.sess.nas || {}).method || 'ssh' }) },
+    'nas-find': { props: one('nas'), speech: (S) => {
+      const n = S.sess.nas || {}, st = op(S, 'discover:ssh');
+      return { key: JSON.stringify([n.method || 'ssh', !!n.manual, n.addr || '', n.choice || n.device || null]), state: st ? st.state : 'none' };
+    }, state: (S) => {
+      const n = S.sess.nas || {}, method = n.method || 'ssh', st = op(S, 'discover:ssh');
+      if (method !== 'ssh') return 'method:' + method;
+      if (n.manual) return 'typing';
+      const d = O55.nas.picked(S);
+      if (d) return d.pm ? 'pm' : !d.ssh ? 'sshOff' : 'selected';
+      return st && st.state === 'done' ? (S.env.devices.length ? 'found' : 'empty') : st && st.state === 'failed' ? 'failed' : 'enter';
+    }, vars: (S) => ({ method: (S.sess.nas || {}).method || 'ssh' }) },
     'nas-identity': { props: nasWith('idcard'), state: (S) => ((S.sess.nas || {}).trusted ? 'trusted' : 'enter') },
     'nas-key': { props: nasWith('key') },
     'nas-signin': { props: () => [P('nas', 'pairA'), P('key', 'pairB'), P('lock', 'hi', { scale: 0.8 })] },

@@ -490,6 +490,8 @@
           payload: { provider_entry_id: p.settings, auth_family: w.family || 'api_key', method: 'api_key', host_id: host(S).id }, sound: { fail: 'warn' }, /* a refused key is a soft warning under its field */
           onDone: () => {
             if (!current()) return;
+            /* Success removes this field, including any unsubmitted replacement draft. */
+            r.keyTyped = false; r.replaced = false;
             addAccount(S, p, { via: 'key', workspace: p.context === 'project' && r.project ? T('ai.ctx.project.named', { project: r.project }) : null });
           },
           onFail: () => { if (!current()) return; r.state = 'keyEntry'; S.save(); O55.ui.refresh(); }
