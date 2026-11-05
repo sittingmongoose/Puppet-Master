@@ -1,6 +1,6 @@
 # CA-SEAL2 — fourth recorded seal-check input change
 
-**ROUND 6 FIXES IMPLEMENTED; RE-REVIEW PENDING.** Worker CA-SEAL2-FIX6 (Codex), stream E, VM, 2026-11-05, from Astra-3-reviewed head `ea7a74e364d5a2d30be082a1fd4af314d194e37c`. B01–B06 tests and the complete coverage table are in `90c0eacee18e0862e067f0f54b9e79a11ea331f8`. Validator bytes remain frozen. Corpus 158/158; 327 coverage rows; 221 Astra variants accounted for; zero unclassified. Earlier round sections remain historical. Independent re-review and coordinated landing remain required; external `fix6/DELIVERY.json` records export/push/cleanup.
+**ROUND 8 FIXES IMPLEMENTED; INDEPENDENT RE-REVIEW PENDING.** Worker CA-SEAL2-FIX8 (Codex), stream E, VM, 2026-11-05, from Astra-5-reviewed head `fceb67118ec6f5b73017f2fb8ab31056ed27a52e`. B01–B03 are fixed in `56eaff6497d4c30ab7ef4cbdfc7965d29205636d`. Validator bytes remain frozen. Corpus **190/190**; combined inventory **327 walker + 43 supplement = 370 rows**; **263 variant executions accounted for; 0 unclassified**. Astra 5’s every-touched-predicate ruling is accepted. Earlier round sections remain historical. Independent re-review and coordinated landing remain required.
 
 ## Design in five lines
 
@@ -643,3 +643,70 @@ Records updated, with no change to tests or the validator:
 - wrapper sites 20 and 179 carry the mixed-child scope note.
 
 The totals are now 197 killed, 57 structural, 20 implied, 3 duplicate and 50 frozen-input only, with 0 unclassified. Whether the walker must be completed before landing is decided by that review.
+
+## Astra round 5: findings and responses
+
+Round 8 addresses the neutral Astra 5 review of `fceb67118ec6f5b73017f2fb8ab31056ed27a52e`. Its every-touched-predicate ruling is accepted. B01, B02 and B03 are fixed in `56eaff6497d4c30ab7ef4cbdfc7965d29205636d`; none is disputed or stopped. Independent re-review remains required. `H` below is `reports/event-authority-20261105/CA-SEAL2-checks.py`; `V` is the frozen validator. `E` is `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/`.
+
+| Finding | Where / cause | Fix and verification |
+|---|---|---|
+| **CA2-A5-B01** | V:867/984/1066/1072; exception alternatives were omitted, and H's expected-refusal wrapper accepted escaping aggregate errors before checking their results. | H:296/366/1087: missing fourth receipt, malformed fourth receipt, unavailable/mismatched source and unavailable Git repository controls. Both aggregate negatives now assert complete=false, diagnostic_only=true, the exact one issue/detail and the surviving state fields. Missing receipt/outcomes controls assert their exact returned diagnostic. All nine own dispatch cuts fail exactly their matching control; all 189 peer pass states remain true. Custody ValueError cuts also change older broad refusal strings; this is not claimed as byte-identical peer diagnostics. |
+| **CA2-A5-B02** | V:847/848/850/851/907/917/997/1000/1013/1016/1023/1026/1043; a later Python crash previously counted as adequate structural protection. | H:463/771/811/862: all thirteen named wrong-type controls require the direct helper's False or its exact controlled ValueError. TypeError and AttributeError fail. Each narrow type cut loses its own control; the files-type cut also loses the ssot-type control because that path intentionally produces files=None. No accepting input is inferred from an exception. |
+| **CA2-A5-B03** | V:964/1080; every prior case supplied a map, and inequality allowed null observed hashes to pass. | H:433/450/573: unset only the map on a valid absolute-source fixture, require all 597 bytes to verify and source_locations=null. Assert all four present observations equal hashes of actual fixture bytes. Remove only the denominator and require its null observation, all other observed hashes and the unchanged historical identities. Presence-forced-True and presence-forced-False cuts both fail. A separate real-input absent-map observation records the machine's actual custody outcome without claiming a successful default-source run. |
+
+### Enforced complete inventory
+
+`CA-SEAL2-coverage.json` now has **327 walker rows plus 43 supplement rows = 370**, with **0 unclassified**. The old unenforced outside-walker list and supported-forms-only completeness claim are retired. The complete inventory follows all 15 changed top-level functions and their nested functions against CA-SEAL `17c842445a2623bb0334ba8d6932e7a6bf088967`.
+
+H:114 independently audits changed AST spans rather than relying on the walker's first-line filter. Explicit rules enumerate the assigned completion negation, four exception tuples and all twenty class alternatives, three JSON parser callback bindings, Boolean compositions/coercion, a combined comprehension filter and the overlapping multiline third-receipt wrapper. Every row is checked for identity, outcome, tests or explanation, narrow cut and evidence. Unknown syntax, exception classes, callbacks, calls and filters fail closed. A separate audit uses Git diff rather than the corpus's SequenceMatcher and regenerates exactly the same 43 supplemental identities without calling `predicate_supplement()`.
+
+Eight single-dependency-fault controls cover the remaining defensive TypeError, KeyError and SubprocessError dispatch alternatives. These are explicit helper seam tests, not claims that strict JSON defeats the preceding type guards. Each own class cut fails only its matching control. UnicodeError at each of the three tuples is implied by ValueError on the same raised exception: removing only UnicodeError preserves the result, while removing both classes propagates that identical fault. The builder's new Boolean conversion duplicates its existing returned-pass conversion at V:2339: an explicit zero input remains False under either single-site cut and becomes integer zero under the paired cut. These are same-exception containment and same-value normalization proofs; unrelated terminal refusals are never implication evidence.
+
+Current combined outcomes: **270 killed by, 21 structural/data-flow, 23 implied, 4 same-predicate duplicate, 52 frozen-input only**. Sixteen structural rows are fixed data returns, not independent accepting-guard proofs. Other surviving structural interruptions are stated explicitly. The 84 earlier survivor records remain historical source lineage; current per-site outcomes supersede their former type-protection labels.
+
+### Fresh replay and limits
+
+- **Corpus:** 190/190; 597/597 real source hashes and lengths; final restoration matches all result records. Thirty new recorded controls extend the prior 160; the existing builder test also gains the zero-valued duplicate witness.
+- **Astra 5:** all 31 original variants are detected. Eight additional defensive dispatch cuts are detected. The builder's two single cuts match their duplicate outcome and its paired cut fails the Boolean-result assertion. Three Unicode subclass witnesses meet the logical implication and paired-cut standard.
+- **Astra 2 / Astra 3:** 182 original variants: 139 detected cuts and 43 classified survivors. The complete 221-variant Astra 3 set has 171 detected cuts, 43 classified survivors and 7 structural interruptions. Including the 42 new/supplemental executions gives 263: 211 detected cuts, 45 classified survivors and 7 structural interruptions. Every surviving variant matches its recorded outcome; 0 unclassified. `removal.py`, `supplemental.py`, `additional.py`, `dispatch.py`, `touched.py`, `inventory.py` and `close_inventory.py` run from scratch copies. Their cuts are unchanged.
+- **Coverage demonstration:** missing walker/supplement rows, an absent supplement, a stale row and a removed ValueError alternative all fail the real coverage test. Injected While, Assert, NamedExpr, Match, a bare comprehension filter an unknown call, an unknown parser callback and an unknown exception class all fail closed. Intact and restored tables pass.
+- **Repository checks:** shard check exits 0 with top-level pass. Index validation exits 1 with 88 failures (21 invalid removal-ledger records, 66 removals without ledger decisions and one stale generated artifact); its complete failure array equals the reviewed fceb67118e baseline run under the same ignored currentness inputs. All reports-only changes are restored byte-for-byte after that baseline comparison. No owner/generated artifact is regenerated.
+- **Scope:** only tests and compact records under `reports/event-authority-20261105/` change. Validator SHA-256 remains `3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72`; every tracked Plans/script/receipt byte is unchanged from the reviewed head. No Spec Lock, .evidence, auto-decisions, .gitignore, registry or Decision Log edit.
+
+The complete replay runs sequentially in checkpointed batches because an earlier long shell received SIGTERM after 18 original cuts. Scheduling changes never alter a cut or assertion; the final checker/validator hashes bind every batch. Preliminary runs completed the Boolean-coercion proof and are not counted as the final full campaign. The first coverage-demo restoration used normalized line endings and failed only the frozen-byte hash; its corrected restoration writes the original CRLF bytes, and the retained demonstration passes. These are harness adaptations, not validator repairs.
+
+The saved 26 mapped source editions (13,102,646 bytes) are copied to local scratch, with both source/copy hashes recorded. Replay map locations therefore differ, while all 597 required source hashes and lengths and the frozen receipt/list pins remain unchanged. Only immutable revision-qualified Git blobs are cached. File reads, SHA computations, byte lengths and map reads remain live. The final corpus uses the original supplied map. The real absent-map probe returns a contextual ValueError containing 17 source-custody issues; forcing only the presence guard True instead raises TypeError. No successful real default-source run is claimed.
+
+Reproduce H with the supplied original map using:
+
+```sh
+python3 -B reports/event-authority-20261105/CA-SEAL2-checks.py --source-map /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/source-locations.json --out /home/sittingmongoose/PM-Experiments/ca-seal2-result.json
+```
+
+`E/README.md` describes replay extraction, byte-verified local mapping, batching and the independent audit. `E/SHA256SUMS` inventories retained scripts/results. The compact committed bundle is `CA-SEAL2-fix8-results.json`.
+
+No mailbox, subagent, browser, server, main push, admission or seal was used. Family grades **N/A**; IDs used **none**. CA-SEAL2-FIX8 joins the procedural seal-applier exclusion. Actual landers/final anchors, unchanged August prerequisites, complete real per-name outcomes/depth, coordinated assembly and independent before/after reviews remain integration work. The helper positives inject prior admissions; they grant none. **Stopped row: none.**
+
+### Retained evidence — round 8
+
+| Evidence path | SHA-256 |
+|---|---|
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/final-corpus.json` | `c8512a90df0a17053b3eb5fed13fc0a11919be106858a5d83ee6f1eaa2a76de9` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json` | `324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/independent-supplement-audit.json` | `123231b2b719385827d63abccb10a04f74f827041cd5f320a67b154e15cdde9e` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/coverage-demo.json` | `5af9de5867c3906c59a9dcf355e8419fda86e390ee37be88d28b1a1b4786395b` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/unicode-dispatch-proofs.json` | `a506a026b9e4f2cb07b69b9c26494ae64e16ae3ed858e34aeca4487b47d8f927` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/builder-bool-summary.json` | `88690d7604fc7b9aa9fad33a55d73e20977e5ebda51f2f15317a5b56dfb67794` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/real-absent-map-witness.json` | `6631ffb727f210e9957de2045c41e553da5cc01dd96f2fe6affbe4d362eb6b42` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/index-comparison.json` | `866f239c1ae1af9b6462cf97d8f7f377c70a29cf5a24e1bd0ed3c3c1d46ac4b5` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/repo-check-summary.json` | `fddcf2c95bae940532a3d39edac0032607105abfb091867cb7b15b8cf7b57c6e` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/evidence-reference-audit.json` | `61ede00066d584b6243c50f65919d29b6d7ec4df766eddbf034acb3f22af94c7` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/extraction-manifest.json` | `1efc449a90c10a11bffcf3946ad97ecb3b20a41436547b08693a704a275d1e8b` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/source-revisions.json` | `05e6becb01c3fe6fae734492d3e84d11b9f237f5e63bbd364540d821ea77abe3` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/local-source-copy-manifest.json` | `540b01eca3a59b4579cdec54752ce772f1f97dce3a759cf31d569962443fab76` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/removal-summary.json` | `99db37a02e8e0ee86a422f7fee2ac23f773df84b3563e8e0e6cf5976eec64c60` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/supplemental-summary.json` | `79253293ce55d2f552a5192d323598a60c3ca69c363e06a3de1b9329779759f4` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/additional-summary.json` | `5418c1db0c3ed2c6b99e00d755ae43b9a9dc43b1c3e3efb4590f69d8d8a9f704` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/dispatch-summary.json` | `0c6f36bee7527e103075f7f65e67cfa667d235a2afbc97ea1fb192ed9f07759e` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/touched-summary.json` | `0647d5f085d4a4e403d25ccf43646d978f7cb4489fccf6149ba6b515b5cce94d` |
+
