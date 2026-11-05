@@ -192,7 +192,7 @@ Task: `lanes/SWEEP-P1-OPUS.md`. Worker head before the report commit: `b0e7f5fa3
 | **5. Carried integration items** | No lane action. Retention integration and Q1/Q3 stay with integration: this pass neither changes retention nor picks a reading of SP-349/SP-351, and the Storage retention review found the Q1 reading defensible and the Q3 confirmation carrying over (`reports/event-authority-20260911/step-09-storage-retention-20261104.md:187-189`, `:222`). Linked-successor physical and admission work stays with admission. Native cases stay NOT_RUN. | none | The four companion baselines are rerun below against current `main`. |
 | **New: DO-P1F-01** expected row out of step | **Fixed.** Where: `scripts/pm_coordination_events.py:898-900`. Why: the text pass moved one sentence of the `coordination_event_records` row (`c43ae4d0c9`, `Plans/storage_value_registry.json:10996`) but this script keeps its own expected copy, so the checker refused at `actual_coordination_storage_member_drift`. The stale pin aborted the checker first, which hid this; the text pass's "no sweep edit caused it" is true of the pin only. Fix: same words in the expected row. Negative added. | `50840e5030`; `scripts/pm-orchestrator-event-contracts.py:149-155` | `row-drift-controls.json`: putting the old sentence back on either side alone exits 1 at that assertion. |
 | **New: DO-P1F-02** blind spot under a re-synced pin | **Fixed.** Where: `scripts/pm_orchestrator_event_oracles.py:662-679`, `:697`. Why: tightening `CoordinationProjectionApplicationV1`, `WorkflowCommandContextV1` or `WorkflowRootRefV1` with the pin re-synced still exited 0, because all 66 board fixture sources carry `original_output: null` and no value reaches them. A re-pin alone would have been a restamp. Fix: `successor_errors` also compares a content digest of the seven selected shared definitions, taken from the edition the reviews saw. Negatives added. | `4905a334d1`; `scripts/pm-orchestrator-event-contracts.py:108-132`, `:241` | `mutation-probes-before-guard.log` shows the three exit 0; `mutation-probes-after-guard.log` shows all seven exit 1 at `successor_selected_definitions`, and edits to the definitions main really changed still exit 0. |
-| **New: DO-P1F-03** board members break a landed Storage rule | **Stopped for a decision; question below.** | none; `Plans/storage-plan.md:530` against SP-720..722 | `python3 -m unittest tests.test_shared_runtime_storage_contracts` exits 0 on `main` and 1 here. |
+| **New: DO-P1F-03** board members break a landed Storage rule | **Stopped for a decision; question below.** The lead answered at 21:43Z: conform. See "DO-P1F-03: findings and responses". | none; `Plans/storage-plan.md:530` against SP-720..722 | `python3 -m unittest tests.test_shared_runtime_storage_contracts` exits 0 on `main` and 1 here. |
 
 ### Pin update
 
@@ -214,6 +214,8 @@ No DO contract or fixture needed to change. Both pins also match current `origin
 
 ### DO-P1F-03: decision needed
 
+_Answered by the lead at 21:43Z: conform. The text below is the question as it was asked; "DO-P1F-03: findings and responses" records the fix._
+
 **Where:** the three members `crew_board_message_posted`, `crew_board_message_read` and `crew_board_messages_archived` in `coordination_event_records` (`Plans/storage_value_registry.json`, copied from `Plans/orchestrator_event_payloads.schema.json`), described by SP-720..722.
 
 **Why it breaks:** landed SP-320 says an event-record member "carries `schema_version` and no `schema_id`, because the envelope's `payload_schema_id` names it" (`Plans/storage-plan.md:530`). SP-720 says this member's literal `schema_id` is stored. Readiness enforces the landed rule at `scripts/pm-implementation-readiness.py:6655` and refuses all three members. The same sentence of SP-320 also says members are copies from the file `value_schema_ref` names, and these come from a second file. No earlier round or review ran this test, so this is new to the lane's record, not caused by the rebase.
@@ -232,6 +234,8 @@ No DO contract or fixture needed to change. Both pins also match current `origin
 | Tier-0 launch-critical | 61 | same family | **62** | 61 |
 | Later / migration-only | 273 / 10 | none | 273 / 10 | 273 / 10 |
 | Retention policies | 35 | none | 35 | 35 |
+
+_Superseded by "DO-P1F-03: findings and responses", which moves these pins so the storage contract test can exit 0._
 
 **Pins left at `main`'s values.** The rebase did not conflict on them, and `Plans/storage-plan.md:533` says readiness re-pins "only to landed, recorded registry changes". Most family-adding lane branches carry the same gap. So `scripts/pm-implementation-readiness.py:793`, `:797-806` and `tests/test_shared_runtime_storage_contracts.py:225-233` move to these numbers at landing.
 
@@ -269,6 +273,163 @@ All 24 rows appear only because `main` moved past this branch's base, and `main`
 
 No fixture carries a non-null `original_output`, so the non-null branch at `scripts/pm_orchestrator_event_oracles.py:547` and the output root are never exercised by a value. DO-P1F-02 catches drift in that root; it does not prove a real output validates. Not on this pass's list, and not fixed.
 
+## DO-P1F-03: findings and responses
+
+Task: `lanes/DO-P1F03.md`. Branch start `075f07920f`. No rebase. The fix commits are `ad933eede3`, `52a498fa1d`, `7ca810a424`, `182035cfd5`, `f7990a7b45` and `f0d610eb32`. Evidence: `drafts/DO/sweep-p1/p1f3/`.
+
+**Result:** the three `crew.board_*` members carry no stored `schema_id`. `tests.test_shared_runtime_storage_contracts` exits 0. Each family has a refusal negative with the specific readiness code. SP-320 and the readiness guard (`scripts/pm-implementation-readiness.py:6664`) are unchanged. No Decision Log entry, event registry append, admission, seal or reseal; `Plans/Spec_Lock.json`, `Plans/.evidence/**`, `Plans/auto_decisions.jsonl`, `.gitignore` and the frozen validator are unchanged.
+
+### What changed per family
+
+| | `crew.board_message_posted` | `crew.board_message_read` | `crew.board_messages_archived` |
+|---|---|---|---|
+| **Owner text** | SP-720, OSI-681 | SP-721, OSI-682 | SP-722, OSI-683 |
+| **Orchestrator definition** | loses `schema_id` | loses `schema_id` | loses `schema_id` |
+| **New payload schema, `Plans/coordination_event_payloads.schema.json`** | `$defs/crew_board_message_posted` | `$defs/crew_board_message_read` | `$defs/crew_board_messages_archived` |
+| **Envelope `payload_schema_id`, unchanged value** | `pm.event_payload.crew_board_message_posted.v1@1.0.0` | `pm.event_payload.crew_board_message_read.v1@1.0.0` | `pm.event_payload.crew_board_messages_archived.v1@1.0.0` |
+| **Fixture items regenerated** | 264 | 117 | 117 |
+| **New `stored_schema_id` fixture negatives** | 4 | 3 | 3 |
+
+**Why a second definition file.** SP-320 says members are copies from the file `value_schema_ref` names, and the row names `Plans/coordination_event_payloads.schema.json`. The members came from the Orchestrator file, the second half of this finding. Each new definition equals the Orchestrator one apart from `$schema` and `$id`, and sits outside the root `oneOf` of agent rows, like the `*ApplicationV1` editions already there. OSI-681..683 keep naming the Orchestrator definition, so two files now hold one definition. `board_member_failures` and the complete checker refuse drift between them.
+
+**Registry row `coordination_event_records`.** Three fields change, all from the existing `expected_svr_rows()`:
+- `value_schema`: three members lose `schema_id`, and `$comment` is rewritten.
+- `optional_fields`: `schema_id` is removed. No other member has it.
+- `migration`: one sentence follows the new source.
+
+`required_fields` stays `["schema_version"]`. The key shapes are unchanged.
+
+**Fixtures.** The lane has no standalone generator: rounds 1..8 evolved the file with scripts in the evidence folder. `tools/regen_board_fixtures.py` drives the same builders. Its gate replays them over the old file with no change, which must reproduce it byte for byte, and it did. No non-board item changes. All 97 digests of old board positives are gone.
+- **Boundary vectors:** the 9 SP-337 vectors stay at exactly 16,384 and 16,385 encoded bytes.
+- **Exact-family negatives:** the 20 that named a sibling through the stored `schema_id` now name it on the envelope, with the same one defect.
+
+**Member separation.** `schema_id` used to tell the members apart. The composition's `oneOf` still accepts each value exactly once, because the members are closed and have different required fields. Every `board_storage_cases` and `body_cases` value runs through it.
+
+### Census
+
+The brief says to keep the census unchanged and also to make the test exit 0. The test pins 344 while the registry holds 345, so it cannot exit 0 with the pins left alone. I read "unchanged" as its own explanation says: no family is added or removed. The family set is identical before and after this round. The pins move to the numbers already derived in the fixture pass:
+
+| Count | `main` | DO adds | Pin before | Pin after |
+|---|---:|---|---:|---:|
+| Families | 344 | `crew_board_message_application_v2` | 344 | **345** |
+| Materialized | 320 | same family | 320 | **321** |
+| Tier-0 launch-critical | 61 | same family | 61 | **62** |
+| Deferred / alias | 23 / 1 | none | 23 / 1 | 23 / 1 |
+| Later / migration-only | 273 / 10 | none | 273 / 10 | 273 / 10 |
+| Retention policies | 35 | none | 35 | 35 |
+
+Locations: `scripts/pm-implementation-readiness.py:796`, `:801`, `:806`; `tests/test_shared_runtime_storage_contracts.py:227`; `tests/test_pm_onboarding_phases.py:368`, `:369`, `:377`. Other lanes already re-pin this way (`ea-w2-filemanager` at 346, `ea-collab-prep` at 353).
+
+The readiness tables `STORAGE_VALUE_KEYED_COMPOSITION_MEMBERS` and `_KEY_SHAPES` gain the three names and key shapes (`:992`, `:1017`). The fixture-pass recommendation named this. They are exact lists, so they add nothing permissive. The guard itself is untouched.
+
+### Checks, before and after
+
+Before is `075f07920f`. The round-8 controls' before column is the fixture-pass run at `b0e7f5fa35`, which differs from `075f07920f` only in this report. Main is `origin/main` `b78a5957fd`.
+
+| Command | Before | After | `main` |
+|---|---|---|---|
+| `python3 -m unittest tests.test_shared_runtime_storage_contracts` | **1**: 16 tests, 2 failures | **0**: 17 tests | 0: 16 tests |
+| `python3 -m unittest tests.test_pm_onboarding_phases` | 1: 50 tests, 1 failure | 0: 50 tests | not run |
+| `python3 scripts/pm-orchestrator-event-contracts.py` | 0: 38,391 checks | **0: 38,535 checks** | not applicable |
+| `probes.py family-suite` | 0: 35,672 | 0: 35,682 (posted 3,680 to 3,684; read 2,044 to 2,047; archived 2,048 to 2,051; the other 22 unchanged) | not applicable |
+| `probes.py responses` | 0: flips 12/60/6, stays 66/18/72 | 0: same | not applicable |
+| `probes.py cli-controls` | 0: 9 of 9 as recorded | 0: 9 of 9 as recorded | not applicable |
+| `python3 scripts/pm_coordination_events.py` | 1: 2 baseline failures | 1: the same 2; the census detail lists the 3 new names | baseline |
+| `python3 -m unittest discover -s tests -p test_pm_coordination_events.py` | 1: 50 tests, 14 failures | 1: the same 14 by name | baseline |
+| `python3 scripts/pm-implementation-readiness.py validate` | 1: 69 rows | 1: 61 rows | 1: 59 rows |
+| `python3 scripts/pm-storage-profile-check.py` | 1: 41 errors | 1: byte-identical stdout | baseline |
+| `python3 scripts/pm-runtime-integration-canon-validate.py validate` | 1: 161 failures | 1: byte-identical stdout | baseline |
+| `python3 -m unittest tests.test_pm_event_index_binding` | 0: 14 tests | 0: 14 tests | not applicable |
+| `python3 scripts/pm_event_numbers_corpus.py` | 0 | 0 | not applicable |
+| `python3 scripts/pm_event_numbers.py --self-test` | 0 | 0 | not applicable |
+| `python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json` | not run | 0: churn only in the three edited documents | not applicable |
+| `python3 scripts/pm-plan-index.py generate` | not run | 0: 7,519 plan units, none added or removed | not applicable |
+| `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` | not run | 0: 99 sources | not applicable |
+| `python3 scripts/pm-plan-index.py validate` | 1: 25 rows | 1: the same 25 rows | 0: no rows |
+
+The 144 new complete-checker checks are 152 added minus 8 removed: the 8 board `valid_payloads` no longer have a missing-`schema_id` negative, because the field is gone.
+
+**Readiness, 69 to 61.**
+- **Gone, 9 rows:** family, status and tier counts; two member-order rows; the three stored-header rows; the self-test row.
+- **New, 1 row:** `event_authority_currentness_source_drift` for `Plans/coordination_event_payloads.schema.json`, which this round edits.
+- **Against `main`:** two more rows, both that class: this file and `Plans/Automated_Testing_System.md`. `main` has no row that this head lacks.
+
+**Index, 25 rows, none caused by this round.** `main` moved past this branch's base, and `main` has none of them.
+- **4 rows, `plan_unit_removed_without_ledger_decision`:** DL-337..340, added on `main` after `2989975e8f`.
+- **21 rows, `plan_unit_removal_ledger_invalid`:** legacy ledgers, read once a removal needs adjudicating.
+
+The fixture pass showed the same class clears on a trial merge. I did not repeat the trial, because the batch-2 integration rebases.
+
+### Negatives
+
+| Boundary | Defect | Refusal | Cases |
+|---|---|---|---|
+| **Readiness** | stored header on the member, optional form | `storage_value_registry_keyed_composition_payload_member_has_stored_header`, that code alone, naming the member | 1 per family, in `tests/test_shared_runtime_storage_contracts.py:239` and the complete checker |
+| **Readiness** | stored header, required form | same | 1 per family, complete checker |
+| **Coordination checker** | header in both definition files | `board_member_stored_header` | 1 per family |
+| **Coordination checker** | drift, wrong `$id`, missing definition | `board_member_copy_drift`, `board_member_schema_id`, `board_member_definition_missing` | 3 per family |
+| **Closed definition and stored composition** | value with a stored header | additional property | 2 per board event case |
+| **Append, history** | same, with digests recaptured so it is the only defect | exactly `logical_payload_schema` | 2 per board event case |
+| **Retry** | same | `retry_value_schema` | 1 per board event case |
+| **Board join** | value with a stored header | exactly `board_member_stored_header` | 10 fixture cases |
+| **Board join** | envelope names a sibling member | `board_family_payload_join` | 20 fixture cases, plus a foreign value on each of 10 storage cases |
+| **Event join** | envelope names a sibling member | exactly `event_join_payload_schema_id` | 53 cases, all 25 families. This guard had no negative before |
+
+The 40 wrong-type `schema_id` entries for the board families in `type_cases` stay (20 posted, 10 read, 10 archived). They now prove a wrong-typed stored header is refused as well.
+
+**Full-entry controls through the real `main()`:** the clean tree exits 0. A stored header on the registry member exits 1 for each family, at `actual_coordination_storage_member_drift`. A stored header on an appended value exits 1 for each family, at the closed definition.
+
+### Targeted guard isolation
+
+One predicate cut at a time, for the guards this round adds or changes. This supplements the complete checker, as round 8's table did. It is not the whole-lane proof: that stays on the Part 2 list as P1..P3, and nothing here claims it. `targeted-isolation.json` holds the case names and mutant hashes.
+
+| Guard cut | Own negatives that pass | Others still refused |
+|---|---:|---:|
+| Readiness stored-header refusal (landed, unchanged) | 6 | 2 |
+| `board_join_errors`, stored header | 10 | 20 |
+| `board_join_errors`, envelope names this member | 20 | 10 |
+| `event_errors`, `payload_schema_id` join | 53 | 53 |
+| Closed definition, `additionalProperties: false` | 8 | not cut for other members |
+| `board_member_definition_failures`, stored header | 3 | 9 |
+| `board_member_definition_failures`, `$id` | 3 | 9 |
+| `board_member_definition_failures`, copy drift | 3 | 9 |
+| `board_member_definition_failures`, missing definition | 3 | 9 |
+
+### `closed_payload_schema` grades
+
+| Family | Recorded before | At `075f07920f`, by the rubric | After |
+|---|---|---|---|
+| `crew.board_message_posted` | PASS (carried) | CONFLICT | **PASS** |
+| `crew.board_message_read` | PASS (carried) | CONFLICT | **PASS** |
+| `crew.board_messages_archived` | PASS (carried) | CONFLICT | **PASS** |
+
+**Why it holds at PASS.** The rubric asks for a closed root at the registered version, compatible with current owner precedence. The roots were always closed, but the stored header broke landed SP-320, so the carried PASS claimed more than the tree showed. No earlier round ran this test. Now the member follows SP-320 and copies the right file, and the negatives above catch the defect. No other cell was re-graded, and the status counts stay 250 PASS / 25 PARTIAL / 25 ABSENT. Native execution stays NOT_RUN.
+
+### Recurring classes
+
+| Class | How it was ruled out, or not |
+|---|---|
+| **Forged or contradictory inputs** | The envelope's name is recomputed from the definition, never read from the payload. **Not ruled out for the frontier copies: see DO-P1F3-N1.** |
+| **One field read two ways** | No check reads a payload `schema_id` now. `event_errors` uses one derivation for all 25 families. |
+| **Unresolved references** | The three definitions contain no `$ref`; the eager closure on the composition still runs. |
+| **Size limits** | The boundary vectors were resized and each asserted at its exact byte count. |
+| **Historical readers** | The families were never admitted, so no retained value has a stored header. A value with one is refused on history. Retained positives keep their original recipes and number types. |
+| **Masked negatives** | Each new negative changes one thing, with digests and field lists kept in step; the exact-list assertions and the table above show it. |
+| **Grades** | The cell above says what the tests show. |
+| **Types** | The guard tests key presence, so any value type is refused. The wrong-type `type_cases` still run. |
+| **Number and date-time domains** | Not touched. They stay on the Part 2 list. |
+
+### Open notes
+
+- **DO-P1F3-N1, for the lead: a contradictory frontier is accepted.**
+  - Where: `scripts/pm_orchestrator_event_oracles.py:991` (`recapture_history`) and `:843` (`checkpoint_errors`).
+  - Why: `frontier.coverage.last_frame.frame_end_offset` and the segment's `scanned_through_offset`, `source_durable_end_offset` and `source_durable_bytes_sha256` all copy the event's bytes. The builder does not refresh them and no guard reads them. The 406 retained and 154 compatibility positives of the other 22 families, and their negatives, carry values from a different event.
+  - Fix: refresh them in the builder, compare them in `checkpoint_errors`, and regenerate those families.
+  - Status: not done here, because this round regenerates three families only. The board positives are already consistent. It predates this round, and a review could read it as a product guard accepting what it should refuse.
+- **DO-P1F3-N2, for integration: census text.** `Plans/storage-plan.md:533` still says 344 and says readiness re-pins "only to landed, recorded registry changes". These pins land with the registry change they count, and they follow the lane branches above. At batch integration, recompute them from the merged registry and update that sentence.
+- **DO-P1F3-N3, for integration: currentness.** The readiness row for `Plans/coordination_event_payloads.schema.json` clears with the currentness refresh, like the other drift rows. `reports/event-authority-20261104/census-recount-20261104/RECEIPT.json` also records that file's old hash, as a record of its own time; no script reads it.
+- **The other 22 families keep their payload `schema_id`.** They are not keyed-composition members, so SP-320 does not reach them. The decision covers the three board members only.
+
 ## Part 2 items
 
 Number-handling, date-time, guard-table and proof-machinery items, parked for the shared-tool sweep (locations from `reviews/DO-sol/REVIEW-cycle8.md`, unchanged by this pass):
@@ -285,10 +446,11 @@ Number-handling, date-time, guard-table and proof-machinery items, parked for th
 | DO-C8-P3 | whole-schema/whole-keyword cuts | same script `:69`, `:567-578` |
 | Guard tables | restructure lane guards as named predicate functions in a table | whole `scripts/pm_orchestrator_event_oracles.py` guard set, once `plans/ea-guardtool-20261105` passes |
 | Fixture-pass guards | `selected_definition_errors` and the row-drift negative join the guard table with the rest | `scripts/pm_orchestrator_event_oracles.py:672`; `scripts/pm-orchestrator-event-contracts.py:149` |
+| DO-P1F-03 guards | `board_member_stored_header`, the envelope join, `event_join_payload_schema_id` and `board_member_definition_failures` join the guard table with the rest | `scripts/pm-orchestrator-event-contracts.py:85`, `:89`; `scripts/pm_orchestrator_event_oracles.py:492`; `scripts/pm_coordination_events.py:419` |
 | Date-time gate | adopt the shared date-time gate; `scripts/pm_event_datetime.py` (byte-exact from `plans/ea-numrule-20261105` at `883af36ba4a68230e14497df86a5e4edcd38f697`) is the corpus dependency | envelope/payload format validators in `scripts/pm_orchestrator_event_oracles.py` and `scripts/pm-orchestrator-event-contracts.py` |
 
 ## Grades
 
-The last review's family grades are carried unchanged; this pass re-graded nothing (no checker, fixture or schema file changed). The fixture pass also carries them unchanged: its fixes change no cell. DO-P1F-03 bears on the `closed_payload_schema` cell of the three `crew.board_*` families, so a reviewer should weigh that cell until the question is answered. Cycle-8 independent regrade: **225 PASS / 50 PARTIAL / 25 ABSENT / 0 CONFLICT**; every family **9 PASS / 2 PARTIAL / 1 ABSENT** with membership ABSENT, retention PARTIAL and oracles PARTIAL (`reviews/DO-sol/REVIEW-cycle8.md` twelve-criterion table), verdict NOT_READY. Membership stays ABSENT pending admission; retention stays PARTIAL pending integration; native execution stays NOT_RUN.
+The last review's family grades are carried unchanged; this pass re-graded nothing (no checker, fixture or schema file changed). The fixture pass also carries them unchanged: its fixes change no cell. DO-P1F-03 bore on the `closed_payload_schema` cell of the three `crew.board_*` families. The lead answered it, the members now conform, and that cell alone was re-graded: PASS, with the reasons in "DO-P1F-03: findings and responses". The review still judges it. Cycle-8 independent regrade: **225 PASS / 50 PARTIAL / 25 ABSENT / 0 CONFLICT**; every family **9 PASS / 2 PARTIAL / 1 ABSENT** with membership ABSENT, retention PARTIAL and oracles PARTIAL (`reviews/DO-sol/REVIEW-cycle8.md` twelve-criterion table), verdict NOT_READY. Membership stays ABSENT pending admission; retention stays PARTIAL pending integration; native execution stays NOT_RUN.
 
 This lane's own review of its timestamp fields is interim only until the shared date-time gate passes.

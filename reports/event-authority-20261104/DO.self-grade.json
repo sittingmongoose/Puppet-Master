@@ -556,22 +556,36 @@
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-681 explicitly binds this exact-family criterion in the assessed source; static contract/oracles pass, native execution remains NOT_RUN.",
+          "finding": "OSI-681 and SP-720 bind this family's closed member under landed SP-320: additionalProperties false at the root, schema_version and no stored schema_id, copied from the file value_schema_ref names. Static contract and oracles pass; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
               "unit": "OSI-681",
-              "line_start": 32227,
-              "line_end": 32227,
-              "quote": "**Payload and scope.** `Plans/orchestrator_event_payloads.schema.json#/$defs/crew_board_message_posted` (`pm.event_payload.crew_board_message_posted.v1@1.0.0`) is the closed payloa"
+              "line_start": 32233,
+              "line_end": 32233,
+              "quote": "`Plans/orchestrator_event_payloads.schema.json#/$defs/crew_board_message_posted` (`pm.event_payload.crew_board_message_posted.v1@1.0.0`) is the closed payload. It carries schema_version and no stored schema_id: under SP-320 the EventRecord's payload_schema_id names it."
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-720",
+              "line_start": 29597,
+              "line_end": 29597,
+              "quote": "Its closed member `crew_board_message_posted` is copied from Plans/coordination_event_payloads.schema.json#/$defs/crew_board_message_posted, the file the row's value_schema_ref names, including schema_version and scope union;"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-320",
+              "line_start": 530,
+              "line_end": 530,
+              "quote": "An event-record member is an EventRecord payload: it carries `schema_version` and no `schema_id`, because the envelope's `payload_schema_id` names it."
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
-            "status": "PASS"
+            "source": "reports/event-authority-20261104/DO.md, DO-P1F-03 (fixture pass)",
+            "status": "PASS, carried from cycle 8; flagged for a reviewer to weigh until the lead answered"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held_after_conforming",
+          "change_reason": "DO-P1F-03: at 075f07920f the member stored schema_id against landed SP-320, so readiness refused it and the recorded PASS claimed more than the tree showed; under the rubric's \"compatible with current owner precedence\" clause it should have read CONFLICT until conformed. ad933eede3a444c7649ddadb4577f1e215cccfe9 conforms the member. It holds PASS because the closed schema now agrees with SP-320, and negatives catch the defect: readiness refuses a stored header with storage_value_registry_keyed_composition_payload_member_has_stored_header in the optional and the required form; append, retry and history refuse it; the coordination checker refuses it and any drift between the two definition files. The guard cuts flip those negatives. Native execution stays NOT_RUN."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1031,22 +1045,36 @@
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-682 explicitly binds this exact-family criterion in the assessed source; static contract/oracles pass, native execution remains NOT_RUN.",
+          "finding": "OSI-682 and SP-721 bind this family's closed member under landed SP-320: additionalProperties false at the root, schema_version and no stored schema_id, copied from the file value_schema_ref names. Static contract and oracles pass; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
               "unit": "OSI-682",
-              "line_start": 32283,
-              "line_end": 32283,
-              "quote": "**Payload and scope.** `Plans/orchestrator_event_payloads.schema.json#/$defs/crew_board_message_read` (`pm.event_payload.crew_board_message_read.v1@1.0.0`) is the closed payload. A"
+              "line_start": 32289,
+              "line_end": 32289,
+              "quote": "`Plans/orchestrator_event_payloads.schema.json#/$defs/crew_board_message_read` (`pm.event_payload.crew_board_message_read.v1@1.0.0`) is the closed payload. It carries schema_version and no stored schema_id: under SP-320 the EventRecord's payload_schema_id names it."
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-721",
+              "line_start": 29642,
+              "line_end": 29642,
+              "quote": "Its closed member `crew_board_message_read` is copied from Plans/coordination_event_payloads.schema.json#/$defs/crew_board_message_read, the file the row's value_schema_ref names, including schema_version and scope union;"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-320",
+              "line_start": 530,
+              "line_end": 530,
+              "quote": "An event-record member is an EventRecord payload: it carries `schema_version` and no `schema_id`, because the envelope's `payload_schema_id` names it."
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
-            "status": "PASS"
+            "source": "reports/event-authority-20261104/DO.md, DO-P1F-03 (fixture pass)",
+            "status": "PASS, carried from cycle 8; flagged for a reviewer to weigh until the lead answered"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held_after_conforming",
+          "change_reason": "DO-P1F-03: at 075f07920f the member stored schema_id against landed SP-320, so readiness refused it and the recorded PASS claimed more than the tree showed; under the rubric's \"compatible with current owner precedence\" clause it should have read CONFLICT until conformed. ad933eede3a444c7649ddadb4577f1e215cccfe9 conforms the member. It holds PASS because the closed schema now agrees with SP-320, and negatives catch the defect: readiness refuses a stored header with storage_value_registry_keyed_composition_payload_member_has_stored_header in the optional and the required form; append, retry and history refuse it; the coordination checker refuses it and any drift between the two definition files. The guard cuts flip those negatives. Native execution stays NOT_RUN."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1492,22 +1520,36 @@
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-683 explicitly binds this exact-family criterion in the assessed source; static contract/oracles pass, native execution remains NOT_RUN.",
+          "finding": "OSI-683 and SP-722 bind this family's closed member under landed SP-320: additionalProperties false at the root, schema_version and no stored schema_id, copied from the file value_schema_ref names. Static contract and oracles pass; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
               "unit": "OSI-683",
-              "line_start": 32337,
-              "line_end": 32337,
-              "quote": "**Payload and scope.** `Plans/orchestrator_event_payloads.schema.json#/$defs/crew_board_messages_archived` (`pm.event_payload.crew_board_messages_archived.v1@1.0.0`) is the closed "
+              "line_start": 32343,
+              "line_end": 32343,
+              "quote": "`Plans/orchestrator_event_payloads.schema.json#/$defs/crew_board_messages_archived` (`pm.event_payload.crew_board_messages_archived.v1@1.0.0`) is the closed payload. It carries schema_version and no stored schema_id: under SP-320 the EventRecord's payload_schema_id names it."
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-722",
+              "line_start": 29687,
+              "line_end": 29687,
+              "quote": "Its closed member `crew_board_messages_archived` is copied from Plans/coordination_event_payloads.schema.json#/$defs/crew_board_messages_archived, the file the row's value_schema_ref names, including schema_version and scope union;"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-320",
+              "line_start": 530,
+              "line_end": 530,
+              "quote": "An event-record member is an EventRecord payload: it carries `schema_version` and no `schema_id`, because the envelope's `payload_schema_id` names it."
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
-            "status": "PASS"
+            "source": "reports/event-authority-20261104/DO.md, DO-P1F-03 (fixture pass)",
+            "status": "PASS, carried from cycle 8; flagged for a reviewer to weigh until the lead answered"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held_after_conforming",
+          "change_reason": "DO-P1F-03: at 075f07920f the member stored schema_id against landed SP-320, so readiness refused it and the recorded PASS claimed more than the tree showed; under the rubric's \"compatible with current owner precedence\" clause it should have read CONFLICT until conformed. ad933eede3a444c7649ddadb4577f1e215cccfe9 conforms the member. It holds PASS because the closed schema now agrees with SP-320, and negatives catch the defect: readiness refuses a stored header with storage_value_registry_keyed_composition_payload_member_has_stored_header in the optional and the required form; append, retry and history refuse it; the coordination checker refuses it and any drift between the two definition files. The guard cuts flip those negatives. Native execution stays NOT_RUN."
         },
         "scope_identity": {
           "status": "PASS",
@@ -11346,7 +11388,8 @@
     "DO-C8-02": "4ad3a39c4076deae2d6877b59fa512153f5396c9",
     "DO-C8-03": "1f438465b4ad3acaec9c2cf536e3b2772426db89",
     "DO-C8-02-regressions": "5fca2287053362c2ccf8fe7f471161329ad1f3ca",
-    "shared-corpus-dependency": "23971fcea36d9b879f35e5ae1a984ebb6c2832e0"
+    "shared-corpus-dependency": "23971fcea36d9b879f35e5ae1a984ebb6c2832e0",
+    "DO-P1F-03": "ad933eede3a444c7649ddadb4577f1e215cccfe9"
   },
   "shared_sweep_items": [
     "DO-C8-N1",
@@ -11357,5 +11400,9 @@
     "DO-C8-P1",
     "DO-C8-P2",
     "DO-C8-P3"
-  ]
+  ],
+  "do_p1f3_regrade": {
+    "scope": "closed_payload_schema of crew.board_message_posted, crew.board_message_read and crew.board_messages_archived only; every other cell is carried unchanged",
+    "status_counts_changed": false
+  }
 }
