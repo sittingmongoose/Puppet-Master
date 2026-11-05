@@ -36,8 +36,9 @@ async function works(t, f) {
 
 export default async function(t) {
  const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
- for (const look of looks) for (const mode of [0,1]) {
-  if (t.args.only !== 'token') await t.step(`${look} w${mode} AI cheer removed`, async()=>{
+ for (const [ix,look] of looks.entries()) for (const mode of [0,1]) {
+  if(t.args.widths) {const widths=String(t.args.widths).split(',').map(Number);await t.page.setViewportSize({width:widths[(ix*2+mode)%widths.length],height:t.args.short ? 500 : 1080});}
+  if (t.args.only !== 'token') for (const action of (t.args.action ? [t.args.action] : ['remove','key'])) await t.step(`${look} w${mode} AI cheer ${action}`, async()=>{
    const f = await t.app.open(); await t.app.look(look);
    if (t.args.motion !== 'reduced') await t.emulate({ reducedMotion:'no-preference' });
    await openAt(t,f,'ai');
@@ -52,19 +53,22 @@ export default async function(t) {
    await f.waitForFunction(()=>O55.S.sess.ai.list.some(x=>x.provider==='cursor'));
    await f.waitForFunction(()=>{const b=document.querySelector('#pm-o55-onboarding .pst-bt-on');return b && b.textContent.startsWith('That');});
    await f.locator(LAYER+' '+row+'[data-o55-do="manage"]').first().click();
-   await f.locator(LAYER+' '+row+'[data-o55-do="remove"]').first().click();
+   if(action==='remove') await f.locator(LAYER+' '+row+'[data-o55-do="remove"]').first().click();
+   else await f.locator(LAYER+' '+row+'[data-o55-do="addAnother"]').first().click();
    await f.evaluate(()=>{
     window.__aiFrames=[];
     const tick=()=>{const b=document.querySelector('#pm-o55-onboarding .pst-bubble'), el=b&&b.querySelector('.pst-bt-on');
      const text=b&&b.classList.contains('on')&&el?el.textContent:'';
-     const alive=O55.S.sess.ai.list.some(x=>x.provider==='cursor');
+     const alive=O55.S.sess.ai.list.some(x=>x.provider==='cursor') && !O55.S.sess.ai.accounts.cursor.keyTyped;
      __aiFrames.push({alive,text}); window.__aiRAF=requestAnimationFrame(tick);};tick();
    });
-   await f.locator(LAYER+' '+row+'[data-o55-do="removeGo"]').first().click(); await t.mark(`${look} w${mode} account removed`);
+   if(action==='remove') await f.locator(LAYER+' '+row+'[data-o55-do="removeGo"]').first().click();
+   else await f.locator('#o55f-key-cursor').fill('replacement-key-1234');
+   await t.mark(`${look} w${mode} account ${action}`);
    await t.page.waitForTimeout(1100);
    const r=await f.evaluate(()=>{cancelAnimationFrame(__aiRAF);return __aiFrames;});
    const gone=r.filter(x=>!x.alive), bad=gone.filter(x=>x.text.startsWith('That'));
-   await t.check('removed account cannot keep its cheer',gone.length>10&&bad.length===0,JSON.stringify({frames:gone.length,bad:bad.length,first:gone.slice(0,4)}));
+   await t.check('account removal/key edit cannot keep its cheer',gone.length>10&&bad.length===0,JSON.stringify({frames:gone.length,bad:bad.length,first:gone.slice(0,4)}));
   });
   if(t.args.only !== 'ai') await t.step(`${look} w${mode} token abandoned`,async()=>{
    const f=await t.app.open();await t.app.look(look);await openAt(t,f,'online-service');
