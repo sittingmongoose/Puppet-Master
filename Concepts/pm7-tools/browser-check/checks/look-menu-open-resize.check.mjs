@@ -48,9 +48,12 @@ export default async function(t) {
         const state = await f.evaluate(id => {
           const q=document.querySelector(`.o55-lookslot .o55-tipq[data-arg="${id}"]`);
           const head=document.querySelector('.o55-stage svg g.pst-pip g.pst-head');
-          const r=head?.getBoundingClientRect();
+          const r=head?.getBoundingClientRect(), stage=document.querySelector('.o55-stage').getBoundingClientRect();
           return {retained:O55.S.tip?.id === id,expanded:q?.getAttribute('aria-expanded'),menu:!!document.querySelector('.o55-lookmenu'),
-            pip:!!r && r.width>1 && r.height>1 && Number.isFinite(r.x) && Number.isFinite(r.y)};
+            pip:!!r && r.width>1 && r.height>1 && Number.isFinite(r.x) && Number.isFinite(r.y)
+              && r.x+r.width/2 >= stage.left && r.x+r.width/2 <= stage.right
+              && r.y+r.height/2 >= stage.top && r.y+r.height/2 <= stage.bottom,
+            head:r ? {x:r.x,y:r.y,width:r.width,height:r.height} : null};
         },id);
         const reach = written ? await reachableMenuLines(t,f,id) : {ok:false};
         t.log(JSON.stringify({look,wording,motion,width,height,ready,written,state,reach}));
