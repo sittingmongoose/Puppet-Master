@@ -13,6 +13,7 @@ export default async function(t) {
   await t.equal('look screen offers Auto', await f.locator('[data-o55-do="pickMode"][data-arg="auto"]').count(), 1);
   await click('lookMenu');
   await t.equal('onboarding header offers Auto', await f.locator('[data-o55-do="lookMode"][data-arg="auto"]').count(), 1);
+  await t.equal('header modes share one row', await f.locator('.o55-lookmodes button').evaluateAll(bs => new Set(bs.map(b => Math.round(b.getBoundingClientRect().top))).size), 1);
   await click('lookMenu');
   if (!await f.locator('[data-o55-do="pickMode"][data-arg="auto"]').count()) return;
   for (const family of ['basic','friendly','retro','glass','nier']) {
