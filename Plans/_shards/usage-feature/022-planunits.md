@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L927-L5047
+Source lines: L927-L5053
 
-Source SHA256: `7f4b7a83ec9fb018f8ffb6112535edadf9529a0e3a1e5c5595e19264b2d2d499`
+Source SHA256: `389a72a0bc5714f2724e44823875a486b23e61d851475b3ae34137e471d5e37a`
 
 ---
 
@@ -970,7 +970,7 @@ plan_unit_id: UF-019
 unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
-canonical_text: Gemini Usage must distinguish Gemini direct from Gemini CLI and retire stale-canon wording that collapses Gemini into local counters, one mixed-account provider, or a generic API-key key-exception; CLI runtime transport remains owned by CLI_Bridged_Providers.
+canonical_text: Gemini Usage must distinguish the two current Gemini-family routes, Gemini Direct (the API-key direct provider route) and Antigravity CLI (its own active CLI-runtime route where verified), and retire stale-canon wording that collapses Gemini into local counters, one mixed-account provider, or a generic API-key key-exception. Gemini CLI is retired/source-lineage vocabulary only (UF-021) and is never an active Usage route or distinction. CLI runtime transport remains owned by CLI_Bridged_Providers.md. Amended 2026-11-05 by DL-332.
 gui_related: false
 gui_classification_reason: The unit preserves provider mode and owner-boundary semantics rather than visual presentation.
 split_recommended: false
@@ -997,19 +997,25 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0029
+- Plans/Decision_Log.md#DL-332
 preserved_exact_tokens:
 - Gemini
 - Gemini CLI
+- Gemini Direct
+- Antigravity CLI
 - mixed-account
 - key-exception
 - local counters
 - CLI_Bridged_Providers.md
 negative_constraints:
 - Usage must not collapse Gemini into one direct provider with mixed OAuth/API-key pools and no CLI runtime.
+- Usage must not present Gemini CLI as an active Usage route, row, page, or distinction.
 preserved_contractrefs: []
-compatibility_only_notes: []
+compatibility_only_notes:
+- Gemini CLI appears here only as retired/source-lineage vocabulary; UF-021 owns the retired Gemini CLI usage evidence tokens.
 stale_retired_dispositions:
 - Stale-canon wording that reduces Gemini to local counters, a single `mixed-account` provider, or a generic API-key `key-exception` is not live Usage canon.
+- The earlier wording "distinguish Gemini direct from Gemini CLI" is retired by DL-332 (Jared, 2026-11-05); the current distinction is Gemini Direct versus Antigravity CLI.
 owner_hints:
 - Plans/usage-feature.md
 ```

@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L19639-L21265
+Source lines: L19639-L21309
 
-Source SHA256: `9cec4eac30ba570ee643805a3ad5242a4618f3a9a74a2d17282c81c538150398`
+Source SHA256: `11fa04ed8991a9f3f0672980ab55071d97f4484e493639a309d8c1266d727e57`
 
 ---
 
@@ -1634,4 +1634,48 @@ preserved_exact_tokens:
 owner_hints:
   - Plans/Automated_Testing_System.md
   - Plans/Tools.md
+```
+
+
+### DL-332 - UF-019 Distinguishes Gemini Direct From Antigravity CLI
+
+```yaml
+plan_unit_id: DL-332
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-332 records Jared's answer of 2026-11-05 ("approve all") to closure question 4: Plans/usage-feature.md#UF-019
+  is reworded so Usage distinguishes the two current Gemini-family routes, Gemini Direct and Antigravity CLI, instead
+  of Gemini direct versus Gemini CLI. Gemini CLI stays retired/source-lineage vocabulary only (UF-021) and is never an
+  active Usage route or distinction.
+gui_related: false
+gui_classification_reason: Records a provider-route wording decision; no GUI contract changes.
+split_recommended: false
+depends_on: [UF-019, UF-021]
+unblocks: []
+acceptance_criteria:
+  - "UF-019 names Gemini Direct and Antigravity CLI as the routes Usage distinguishes, and names Gemini CLI only as retired lineage."
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+risk_class: retired_provider_route_revived
+reasoning_tier: medium
+context_scope: closure_owner_answers_20261105
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/usage-feature.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T02:48:03Z: Jared's answer \"approve all\" to the closure questions; question 4 (closure row B14 317) is this entry"
+preserved_exact_tokens:
+  - "DL-332"
+  - "Gemini Direct"
+  - "Antigravity CLI"
+  - "Gemini CLI"
+owner_hints:
+  - Plans/usage-feature.md
+  - Plans/CLI_Bridged_Providers.md
 ```

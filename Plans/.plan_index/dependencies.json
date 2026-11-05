@@ -4352,6 +4352,7 @@
     "UF-063",
     "UF-067",
     "UF-057",
+    "DL-332",
     "UF-064",
     "UF-069",
     "UF-089",
@@ -29461,6 +29462,16 @@
       "edge_type": "depends_on",
       "from": "DL-331",
       "to": "T-159"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-332",
+      "to": "UF-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-332",
+      "to": "UF-021"
     },
     {
       "edge_type": "depends_on",
@@ -117263,7 +117274,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-05T04:06:07Z",
+  "generated_at_utc": "2026-11-05T04:08:25Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -152450,6 +152461,23 @@
         "heading_level": 3,
         "heading_line": 21216,
         "line": 21218,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "closure_owner_answers_20261105",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-332",
+      "reasoning_tier": "medium",
+      "risk_class": "retired_provider_route_revived",
+      "source_location": {
+        "heading": "DL-332 - UF-019 Distinguishes Gemini Direct From Antigravity CLI",
+        "heading_level": 3,
+        "heading_line": 21268,
+        "line": 21270,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -237414,8 +237442,8 @@
       "source_location": {
         "heading": "UF-001 - Usage Feature Source-Preserving Bridge Retired",
         "heading_level": 3,
-        "heading_line": 4922,
-        "line": 4924,
+        "heading_line": 4928,
+        "line": 4930,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237737,8 +237765,8 @@
       "source_location": {
         "heading": "UF-020 - Gemini Direct Setup Usage",
         "heading_level": 3,
-        "heading_line": 1933,
-        "line": 1935,
+        "heading_line": 1939,
+        "line": 1941,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237754,8 +237782,8 @@
       "source_location": {
         "heading": "UF-021 - Retired Gemini CLI Usage Evidence",
         "heading_level": 3,
-        "heading_line": 1985,
-        "line": 1987,
+        "heading_line": 1991,
+        "line": 1993,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237771,8 +237799,8 @@
       "source_location": {
         "heading": "UF-022 - Active Provider Family Pooling Capability Posture",
         "heading_level": 3,
-        "heading_line": 2047,
-        "line": 2049,
+        "heading_line": 2053,
+        "line": 2055,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237788,8 +237816,8 @@
       "source_location": {
         "heading": "UF-023 - Provider Source Confidence Augmentation",
         "heading_level": 3,
-        "heading_line": 2110,
-        "line": 2112,
+        "heading_line": 2116,
+        "line": 2118,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237805,8 +237833,8 @@
       "source_location": {
         "heading": "UF-024 - Direct Provider Status Probes",
         "heading_level": 3,
-        "heading_line": 2167,
-        "line": 2169,
+        "heading_line": 2173,
+        "line": 2175,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237822,8 +237850,8 @@
       "source_location": {
         "heading": "UF-025 - Cost Usage Artifact Routing",
         "heading_level": 3,
-        "heading_line": 2218,
-        "line": 2220,
+        "heading_line": 2224,
+        "line": 2226,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237839,8 +237867,8 @@
       "source_location": {
         "heading": "UF-026 - OpenCode Product Pipeline Reference",
         "heading_level": 3,
-        "heading_line": 2273,
-        "line": 2275,
+        "heading_line": 2279,
+        "line": 2281,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237856,8 +237884,8 @@
       "source_location": {
         "heading": "UF-027 - Backend Input Hierarchy",
         "heading_level": 3,
-        "heading_line": 2326,
-        "line": 2328,
+        "heading_line": 2332,
+        "line": 2334,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237873,8 +237901,8 @@
       "source_location": {
         "heading": "UF-028 - Usage Linked Planning Widget Consumer Boundary",
         "heading_level": 3,
-        "heading_line": 2385,
-        "line": 2387,
+        "heading_line": 2391,
+        "line": 2393,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237890,8 +237918,8 @@
       "source_location": {
         "heading": "UF-029 - Canonical Usage Placement And Exclusions",
         "heading_level": 3,
-        "heading_line": 2437,
-        "line": 2439,
+        "heading_line": 2443,
+        "line": 2445,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237907,8 +237935,8 @@
       "source_location": {
         "heading": "UF-030 - Canonical Usage Event Pipeline",
         "heading_level": 3,
-        "heading_line": 2496,
-        "line": 2498,
+        "heading_line": 2502,
+        "line": 2504,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237924,8 +237952,8 @@
       "source_location": {
         "heading": "UF-031 - Debug Investigation Phase Attribution",
         "heading_level": 3,
-        "heading_line": 2550,
-        "line": 2552,
+        "heading_line": 2556,
+        "line": 2558,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237941,8 +237969,8 @@
       "source_location": {
         "heading": "UF-032 - Billing Attribution Family And Pricing Metadata",
         "heading_level": 3,
-        "heading_line": 2600,
-        "line": 2602,
+        "heading_line": 2606,
+        "line": 2608,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237958,8 +237986,8 @@
       "source_location": {
         "heading": "UF-033 - Artifact Bridge And Inspector Routing",
         "heading_level": 3,
-        "heading_line": 2653,
-        "line": 2655,
+        "heading_line": 2659,
+        "line": 2661,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237975,8 +238003,8 @@
       "source_location": {
         "heading": "UF-034 - Notification Projection Health Gating",
         "heading_level": 3,
-        "heading_line": 2711,
-        "line": 2713,
+        "heading_line": 2717,
+        "line": 2719,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237992,8 +238020,8 @@
       "source_location": {
         "heading": "UF-035 - UsageRecord Schema Source Attribution",
         "heading_level": 3,
-        "heading_line": 2767,
-        "line": 2769,
+        "heading_line": 2773,
+        "line": 2775,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238009,8 +238037,8 @@
       "source_location": {
         "heading": "UF-036 - Cost Precision Display Boundary",
         "heading_level": 3,
-        "heading_line": 2826,
-        "line": 2828,
+        "heading_line": 2832,
+        "line": 2834,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238026,8 +238054,8 @@
       "source_location": {
         "heading": "UF-037 - Blocked Escalation Observability",
         "heading_level": 3,
-        "heading_line": 2878,
-        "line": 2880,
+        "heading_line": 2884,
+        "line": 2886,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238043,8 +238071,8 @@
       "source_location": {
         "heading": "UF-038 - Usage Secrets Fallback Source Labeling",
         "heading_level": 3,
-        "heading_line": 2937,
-        "line": 2939,
+        "heading_line": 2943,
+        "line": 2945,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238060,8 +238088,8 @@
       "source_location": {
         "heading": "UF-039 - Usage Api Refresh Rate Limiting",
         "heading_level": 3,
-        "heading_line": 2988,
-        "line": 2990,
+        "heading_line": 2994,
+        "line": 2996,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238077,8 +238105,8 @@
       "source_location": {
         "heading": "UF-040 - Canonical UsageRecord Write Path",
         "heading_level": 3,
-        "heading_line": 3038,
-        "line": 3040,
+        "heading_line": 3044,
+        "line": 3046,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238094,8 +238122,8 @@
       "source_location": {
         "heading": "UF-041 - Usage Window Model And Platform Semantics",
         "heading_level": 3,
-        "heading_line": 3091,
-        "line": 3093,
+        "heading_line": 3097,
+        "line": 3099,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238111,8 +238139,8 @@
       "source_location": {
         "heading": "UF-042 - Seglog Retention Rollup Freshness",
         "heading_level": 3,
-        "heading_line": 3148,
-        "line": 3150,
+        "heading_line": 3154,
+        "line": 3156,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238128,8 +238156,8 @@
       "source_location": {
         "heading": "UF-043 - Stale Data And Project Scope Disclosure",
         "heading_level": 3,
-        "heading_line": 3207,
-        "line": 3209,
+        "heading_line": 3213,
+        "line": 3215,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238145,8 +238173,8 @@
       "source_location": {
         "heading": "UF-044 - Current Time Window And Scope Selectors",
         "heading_level": 3,
-        "heading_line": 3260,
-        "line": 3262,
+        "heading_line": 3266,
+        "line": 3268,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238162,8 +238190,8 @@
       "source_location": {
         "heading": "UF-045 - Deferred Reset Countdown",
         "heading_level": 3,
-        "heading_line": 3320,
-        "line": 3322,
+        "heading_line": 3326,
+        "line": 3328,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238179,8 +238207,8 @@
       "source_location": {
         "heading": "UF-046 - Deferred Per Run Config Usage",
         "heading_level": 3,
-        "heading_line": 3368,
-        "line": 3370,
+        "heading_line": 3374,
+        "line": 3376,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238196,8 +238224,8 @@
       "source_location": {
         "heading": "UF-047 - Deferred Usage Page Export",
         "heading_level": 3,
-        "heading_line": 3419,
-        "line": 3421,
+        "heading_line": 3425,
+        "line": 3427,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238213,8 +238241,8 @@
       "source_location": {
         "heading": "UF-048 - Deferred Compact Header Usage",
         "heading_level": 3,
-        "heading_line": 3468,
-        "line": 3470,
+        "heading_line": 3474,
+        "line": 3476,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238230,8 +238258,8 @@
       "source_location": {
         "heading": "UF-049 - Deferred Doctor Usage Integration",
         "heading_level": 3,
-        "heading_line": 3517,
-        "line": 3519,
+        "heading_line": 3523,
+        "line": 3525,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238247,8 +238275,8 @@
       "source_location": {
         "heading": "UF-050 - Deferred Cost Column",
         "heading_level": 3,
-        "heading_line": 3566,
-        "line": 3568,
+        "heading_line": 3572,
+        "line": 3574,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238264,8 +238292,8 @@
       "source_location": {
         "heading": "UF-051 - Deferred Alerts History",
         "heading_level": 3,
-        "heading_line": 3614,
-        "line": 3616,
+        "heading_line": 3620,
+        "line": 3622,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238281,8 +238309,8 @@
       "source_location": {
         "heading": "UF-052 - Out Of Scope Peer Benchmarks",
         "heading_level": 3,
-        "heading_line": 3663,
-        "line": 3665,
+        "heading_line": 3669,
+        "line": 3671,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238298,8 +238326,8 @@
       "source_location": {
         "heading": "UF-053 - Usage Plan Out Of Scope Constraints",
         "heading_level": 3,
-        "heading_line": 3711,
-        "line": 3713,
+        "heading_line": 3717,
+        "line": 3719,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238315,8 +238343,8 @@
       "source_location": {
         "heading": "UF-054 - Usage Success Criteria",
         "heading_level": 3,
-        "heading_line": 3763,
-        "line": 3765,
+        "heading_line": 3769,
+        "line": 3771,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238332,8 +238360,8 @@
       "source_location": {
         "heading": "UF-055 - Widget Composed Usage Page Scope",
         "heading_level": 3,
-        "heading_line": 3814,
-        "line": 3816,
+        "heading_line": 3820,
+        "line": 3822,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238349,8 +238377,8 @@
       "source_location": {
         "heading": "UF-056 - Default Usage Layout Non Empty Seed",
         "heading_level": 3,
-        "heading_line": 3870,
-        "line": 3872,
+        "heading_line": 3876,
+        "line": 3878,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238366,8 +238394,8 @@
       "source_location": {
         "heading": "UF-057 - Search Acceleration Analytics Signal",
         "heading_level": 3,
-        "heading_line": 3917,
-        "line": 3919,
+        "heading_line": 3923,
+        "line": 3925,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238383,8 +238411,8 @@
       "source_location": {
         "heading": "UF-058 - Default Usage Widget Layout Table",
         "heading_level": 3,
-        "heading_line": 3971,
-        "line": 3973,
+        "heading_line": 3977,
+        "line": 3979,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238400,8 +238428,8 @@
       "source_location": {
         "heading": "UF-059 - Usage Widget Responsive Grid Resizing",
         "heading_level": 3,
-        "heading_line": 4036,
-        "line": 4038,
+        "heading_line": 4042,
+        "line": 4044,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238417,8 +238445,8 @@
       "source_location": {
         "heading": "UF-060 - Usage Widget Configuration And Persistence",
         "heading_level": 3,
-        "heading_line": 4090,
-        "line": 4092,
+        "heading_line": 4096,
+        "line": 4098,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238434,8 +238462,8 @@
       "source_location": {
         "heading": "UF-061 - Multi Account Widget Observability Boundary",
         "heading_level": 3,
-        "heading_line": 4146,
-        "line": 4148,
+        "heading_line": 4152,
+        "line": 4154,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238451,8 +238479,8 @@
       "source_location": {
         "heading": "UF-062 - Dashboard Add Widget Reuse For Usage Widgets",
         "heading_level": 3,
-        "heading_line": 4212,
-        "line": 4214,
+        "heading_line": 4218,
+        "line": 4220,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238468,8 +238496,8 @@
       "source_location": {
         "heading": "UF-063 - Runtime Recovery Counters And Metrics Integrity",
         "heading_level": 3,
-        "heading_line": 4266,
-        "line": 4268,
+        "heading_line": 4272,
+        "line": 4274,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238485,8 +238513,8 @@
       "source_location": {
         "heading": "UF-064 - Cross Surface Cost Routing And View Ban",
         "heading_level": 3,
-        "heading_line": 4327,
-        "line": 4329,
+        "heading_line": 4333,
+        "line": 4335,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238502,8 +238530,8 @@
       "source_location": {
         "heading": "UF-065 - Reversibility Undo And High Cost Disclosure",
         "heading_level": 3,
-        "heading_line": 4387,
-        "line": 4389,
+        "heading_line": 4393,
+        "line": 4395,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238519,8 +238547,8 @@
       "source_location": {
         "heading": "UF-066 - Bulk Receipt Shape And Owner Precedence",
         "heading_level": 3,
-        "heading_line": 4453,
-        "line": 4455,
+        "heading_line": 4459,
+        "line": 4461,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238536,8 +238564,8 @@
       "source_location": {
         "heading": "UF-067 - Requested Account And Pressure Record Boundary",
         "heading_level": 3,
-        "heading_line": 4523,
-        "line": 4525,
+        "heading_line": 4529,
+        "line": 4531,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238553,8 +238581,8 @@
       "source_location": {
         "heading": "UF-068 - Usage Contract Evidence And Consolidation Gate",
         "heading_level": 3,
-        "heading_line": 4578,
-        "line": 4580,
+        "heading_line": 4584,
+        "line": 4586,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238570,8 +238598,8 @@
       "source_location": {
         "heading": "UF-069 - Subject Routing And Inspector History Focus",
         "heading_level": 3,
-        "heading_line": 4635,
-        "line": 4637,
+        "heading_line": 4641,
+        "line": 4643,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238587,8 +238615,8 @@
       "source_location": {
         "heading": "UF-070 - Export Labels And View Export Boundary",
         "heading_level": 3,
-        "heading_line": 4694,
-        "line": 4696,
+        "heading_line": 4700,
+        "line": 4702,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238604,8 +238632,8 @@
       "source_location": {
         "heading": "UF-071 - Source Control Views And History Dimensions",
         "heading_level": 3,
-        "heading_line": 4751,
-        "line": 4753,
+        "heading_line": 4757,
+        "line": 4759,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238621,8 +238649,8 @@
       "source_location": {
         "heading": "UF-072 - Effective Resolution Display Boundary",
         "heading_level": 3,
-        "heading_line": 4814,
-        "line": 4816,
+        "heading_line": 4820,
+        "line": 4822,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238638,8 +238666,8 @@
       "source_location": {
         "heading": "UF-073 - Provider Provenance Before Resolved Facts",
         "heading_level": 3,
-        "heading_line": 4869,
-        "line": 4871,
+        "heading_line": 4875,
+        "line": 4877,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238655,8 +238683,8 @@
       "source_location": {
         "heading": "UF-074 - Provider Usage Source Confidence And Missing-Vs-Zero Contract",
         "heading_level": 3,
-        "heading_line": 5065,
-        "line": 5067,
+        "heading_line": 5071,
+        "line": 5073,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238672,8 +238700,8 @@
       "source_location": {
         "heading": "UF-075 - Provider Plan Gating And Quota Pressure Presentation",
         "heading_level": 3,
-        "heading_line": 5108,
-        "line": 5110,
+        "heading_line": 5114,
+        "line": 5116,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238689,8 +238717,8 @@
       "source_location": {
         "heading": "UF-076 - Vision Bridge Usage Attribution",
         "heading_level": 3,
-        "heading_line": 5156,
-        "line": 5158,
+        "heading_line": 5162,
+        "line": 5164,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238706,8 +238734,8 @@
       "source_location": {
         "heading": "UF-077 - Free Models Paid Costed Fallback Gates And Budget Evidence",
         "heading_level": 3,
-        "heading_line": 5250,
-        "line": 5252,
+        "heading_line": 5256,
+        "line": 5258,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238723,8 +238751,8 @@
       "source_location": {
         "heading": "UF-078 - Free Models Fallback Receipts And Immutable Request Provenance",
         "heading_level": 3,
-        "heading_line": 5305,
-        "line": 5307,
+        "heading_line": 5311,
+        "line": 5313,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238740,8 +238768,8 @@
       "source_location": {
         "heading": "UF-079 - P1-CONTEXT-BUDGET-RECEIPTS-BY-SOURCE",
         "heading_level": 3,
-        "heading_line": 5368,
-        "line": 5370,
+        "heading_line": 5374,
+        "line": 5376,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238757,8 +238785,8 @@
       "source_location": {
         "heading": "UF-080 - P0-CACHE-USAGE-ENVELOPE",
         "heading_level": 3,
-        "heading_line": 5846,
-        "line": 5848,
+        "heading_line": 5852,
+        "line": 5854,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238774,8 +238802,8 @@
       "source_location": {
         "heading": "UF-081 - P2-CACHE-OBSERVABILITY-DASHBOARD",
         "heading_level": 3,
-        "heading_line": 5911,
-        "line": 5913,
+        "heading_line": 5917,
+        "line": 5919,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238791,8 +238819,8 @@
       "source_location": {
         "heading": "UF-082 - P2-CACHE-PRIVACY-POLICY",
         "heading_level": 3,
-        "heading_line": 5973,
-        "line": 5975,
+        "heading_line": 5979,
+        "line": 5981,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238808,8 +238836,8 @@
       "source_location": {
         "heading": "UF-083 - P1-USAGE-ANOMALY-QUOTA-GUARD",
         "heading_level": 3,
-        "heading_line": 6040,
-        "line": 6042,
+        "heading_line": 6046,
+        "line": 6048,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238825,8 +238853,8 @@
       "source_location": {
         "heading": "UF-084 - P2-OTEL-EXPORT-OPTIONAL-ADAPTER",
         "heading_level": 3,
-        "heading_line": 6126,
-        "line": 6128,
+        "heading_line": 6132,
+        "line": 6134,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238842,8 +238870,8 @@
       "source_location": {
         "heading": "UF-085 - Implementation Ready Usage Accounting Contract",
         "heading_level": 3,
-        "heading_line": 5643,
-        "line": 5645,
+        "heading_line": 5649,
+        "line": 5651,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238859,8 +238887,8 @@
       "source_location": {
         "heading": "UF-086 - Provider Parser Fixture And Acceptance Contract",
         "heading_level": 3,
-        "heading_line": 5753,
-        "line": 5755,
+        "heading_line": 5759,
+        "line": 5761,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238876,8 +238904,8 @@
       "source_location": {
         "heading": "UF-087 - UsageRecord GUI Projection And Alias Contract",
         "heading_level": 3,
-        "heading_line": 5453,
-        "line": 5455,
+        "heading_line": 5459,
+        "line": 5461,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238893,8 +238921,8 @@
       "source_location": {
         "heading": "UF-088 - GUI Usage Acceptance Fixture Matrix",
         "heading_level": 3,
-        "heading_line": 5545,
-        "line": 5547,
+        "heading_line": 5551,
+        "line": 5553,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238910,8 +238938,8 @@
       "source_location": {
         "heading": "UF-089 - Usage Page Head Presentation",
         "heading_level": 3,
-        "heading_line": 6209,
-        "line": 6211,
+        "heading_line": 6215,
+        "line": 6217,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238927,8 +238955,8 @@
       "source_location": {
         "heading": "UF-090 - Complete Provider And Helper Attempt Attribution",
         "heading_level": 3,
-        "heading_line": 6303,
-        "line": 6305,
+        "heading_line": 6309,
+        "line": 6311,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238944,8 +238972,8 @@
       "source_location": {
         "heading": "UF-091 - Operational Time, Wait, And BSD Attribution",
         "heading_level": 3,
-        "heading_line": 6336,
-        "line": 6338,
+        "heading_line": 6342,
+        "line": 6344,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238961,8 +238989,8 @@
       "source_location": {
         "heading": "UF-092 - Usage Page Counting Honesty, Settlement Axis, And Policy Boundary",
         "heading_level": 3,
-        "heading_line": 6386,
-        "line": 6388,
+        "heading_line": 6392,
+        "line": 6394,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238978,8 +239006,8 @@
       "source_location": {
         "heading": "UF-093 - Usage Rooms Disclosure And Local Projection State",
         "heading_level": 3,
-        "heading_line": 6481,
-        "line": 6483,
+        "heading_line": 6487,
+        "line": 6489,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238995,8 +239023,8 @@
       "source_location": {
         "heading": "UF-094 - Curated Room Defaults And Saved-Layout Migration",
         "heading_level": 3,
-        "heading_line": 6723,
-        "line": 6725,
+        "heading_line": 6729,
+        "line": 6731,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -239012,8 +239040,8 @@
       "source_location": {
         "heading": "UF-095 - Usage Workspace Settled-State Persistence Consumer Contract",
         "heading_level": 3,
-        "heading_line": 6794,
-        "line": 6796,
+        "heading_line": 6800,
+        "line": 6802,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -239029,8 +239057,8 @@
       "source_location": {
         "heading": "UF-096 - Polished Usage Widget Width Coverage Set",
         "heading_level": 3,
-        "heading_line": 6871,
-        "line": 6873,
+        "heading_line": 6877,
+        "line": 6879,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -239046,8 +239074,8 @@
       "source_location": {
         "heading": "UF-097 - Full-Thread Usage Projection And Attempt Continuity",
         "heading_level": 3,
-        "heading_line": 6652,
-        "line": 6654,
+        "heading_line": 6658,
+        "line": 6660,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -239063,8 +239091,8 @@
       "source_location": {
         "heading": "UF-098 - Public Gate, Authentication, Rate, And Quota Separation",
         "heading_level": 3,
-        "heading_line": 6691,
-        "line": 6693,
+        "heading_line": 6697,
+        "line": 6699,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -239080,8 +239108,8 @@
       "source_location": {
         "heading": "Working Notebook Usage Fidelity Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 6995,
-        "line": 7003,
+        "heading_line": 7001,
+        "line": 7009,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -239097,8 +239125,8 @@
       "source_location": {
         "heading": "Working Notebook Usage Fidelity Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 6995,
-        "line": 7038,
+        "heading_line": 7001,
+        "line": 7044,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -239114,8 +239142,8 @@
       "source_location": {
         "heading": "Working Notebook Usage Fidelity Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 6995,
-        "line": 7073,
+        "heading_line": 7001,
+        "line": 7079,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -239131,8 +239159,8 @@
       "source_location": {
         "heading": "UF-102 - Run-start attribution context reader",
         "heading_level": 3,
-        "heading_line": 7151,
-        "line": 7153,
+        "heading_line": 7157,
+        "line": 7159,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -239148,8 +239176,8 @@
       "source_location": {
         "heading": "UF-103 - Browser Operational Attribution Without Synthetic Usage",
         "heading_level": 3,
-        "heading_line": 7106,
-        "line": 7108,
+        "heading_line": 7112,
+        "line": 7114,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -239165,8 +239193,8 @@
       "source_location": {
         "heading": "UF-104 - Pre-Start Run Estimate",
         "heading_level": 3,
-        "heading_line": 7211,
-        "line": 7213,
+        "heading_line": 7217,
+        "line": 7219,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -239182,8 +239210,8 @@
       "source_location": {
         "heading": "UF-105 - Live Run Cost From The Run Group",
         "heading_level": 3,
-        "heading_line": 7254,
-        "line": 7256,
+        "heading_line": 7260,
+        "line": 7262,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -239199,8 +239227,8 @@
       "source_location": {
         "heading": "UF-106 - Live Run Cost Against The Run's Effective Limit",
         "heading_level": 3,
-        "heading_line": 7292,
-        "line": 7294,
+        "heading_line": 7298,
+        "line": 7300,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -239216,8 +239244,8 @@
       "source_location": {
         "heading": "UF-107 - Redesigned Usage Page: One Provider Catalog, Every Account, Accounts In Place, Honest Pace And Live Readings",
         "heading_level": 3,
-        "heading_line": 7338,
-        "line": 7340,
+        "heading_line": 7344,
+        "line": 7346,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -239233,8 +239261,8 @@
       "source_location": {
         "heading": "UF-108 - Usage Loads From Rollups And Keeps Its Daily Totals",
         "heading_level": 3,
-        "heading_line": 7580,
-        "line": 7582,
+        "heading_line": 7586,
+        "line": 7588,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -243514,10 +243542,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18757,
+    "depends_on_edge_count": 18759,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21966,
-    "node_count": 7426,
+    "edge_count": 21968,
+    "node_count": 7427,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3209,
     "unresolved_reference_count": 0
