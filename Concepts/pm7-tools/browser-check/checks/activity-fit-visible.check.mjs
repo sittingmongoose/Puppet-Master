@@ -14,11 +14,11 @@ export default async function(t) {
     const r=await f.evaluate(()=>{
       const bar=document.querySelector('#pmRoot .chat-float .activity-bar, #pmRoot .chat-float .pm56-activity-bar');
       const wrap=bar.parentElement;
-      return {selected:PM56_DEMO.getState().selectedThread,width:bar.clientWidth,scroll:bar.scrollWidth,wrap:wrap.clientWidth,classes:wrap.className,cache:window.__abMeasure};
+      return {selected:PM56_DEMO.getState().selectedThread,history:document.querySelector('.history-flyout')?.getBoundingClientRect().width,pinned:document.body.dataset.phDrawer==='pinned',chat:document.querySelector('#chatPanel').getBoundingClientRect().width,width:bar.clientWidth,scroll:bar.scrollWidth,wrap:wrap.clientWidth,classes:wrap.className,cache:window.__abMeasure};
     });
     results.push(r); t.log(JSON.stringify(r));
     if(r.scroll-r.width>1) await t.shot('hidden-fit-'+i,'Activity overflow after Chat is revealed, native window');
   }
   await t.shot('activity-visible-final','Activity strip after six hidden-render/reveal cycles');
-  await t.check('activity fit survives hidden rendering',results.length===6&&results.every(r=>r.selected==='query'&&r.scroll-r.width<=1),JSON.stringify(results));
+  await t.check('activity fit survives hidden rendering',results.length===6&&results.every(r=>r.selected==='query'&&r.pinned&&Math.abs(r.history-320)<=1&&Math.abs(r.chat-880)<=1&&r.scroll-r.width<=1),JSON.stringify(results));
 }

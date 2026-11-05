@@ -175,6 +175,9 @@ export default async function (t) {
           const hit = e => { const q = paintedRect(e); if (!q || q.right <= q.left || q.bottom <= q.top) return 0; const ix = Math.max(0, Math.min(P.right, q.right) - Math.max(P.left, q.left)), iy = Math.max(0, Math.min(P.bottom, q.bottom) - Math.max(P.top, q.top)); return ix * iy > .5 ? Math.round(ix) + 'x' + Math.round(iy) : 0; };
           if (selftest === 'clipped') {
             const e = document.querySelector('#pmRoot .chat-float .activity-item');
+            e.style.setProperty('transition','none','important');
+            e.style.setProperty('animation','none','important');
+            e.style.setProperty('transform','none','important');
             const old = e.getBoundingClientRect();
             e.style.setProperty('transform',`translate(${P.left+2-old.left}px,${P.top+2-old.top}px)`,'important');
             const moved=e.getBoundingClientRect(), q=paintedRect(e);
@@ -214,7 +217,8 @@ export default async function (t) {
         }
       }
     }
-    t.log(`${w}x${h}: inspected ${ids.length} threads at top and bottom`);
+    if (t.args.fitProbe) t.log(`${w}x${h}: fitting diagnostic only; no clearance views counted`);
+    else t.log(`${w}x${h}: inspected ${ids.length} threads at top and bottom`);
   }
   if (t.args.setupOnly || t.args.fitProbe) return;
   await t.check('Pod clears controls in every size, thread and scroll position', views === threads * 2 && views > 0 && !bad.length, `${views} views; ${bad.slice(0, 12).join('; ')}`);
