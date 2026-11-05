@@ -20,10 +20,12 @@ export const tests = Object.fromEntries(['onboarding','tour','settings'].map(rou
         await b.focus(); await b.press('Enter');
       }
     } else if (route === 'settings') {
-      for (const [setting,value] of [['theme',family === 'nier' ? 'NieR' : family[0].toUpperCase()+family.slice(1)],['theme-mode',mode === 'light' ? 'Light' : 'Dark']]) {
+      for (const [setting,value] of [['theme',(family === 'nier' ? 'NieR' : family[0].toUpperCase()+family.slice(1))],['theme-mode',mode === 'light' ? 'Light' : 'Dark']]) {
         const b = f.locator(`select[data-setting="general.visual.${setting}"]`).locator('..').locator('.pm51-dd-trigger');
+        const labels = await f.locator(`select[data-setting="general.visual.${setting}"] option`).allTextContents();
+        const name = labels.includes(value) ? value : `${value} ${mode === 'light' ? 'Light' : 'Dark'}`;
         await b.scrollIntoViewIfNeeded(); await b.click();
-        await f.getByRole('option',{name:value,exact:true}).click();
+        await f.getByRole('option',{name,exact:true}).click();
       }
     }
     else await t.app.look(look);
