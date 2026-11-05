@@ -206,11 +206,11 @@ const RECORDER = (cfg) => {
 	Object.defineProperty(window, '__pmIdleWork', { configurable: false, enumerable: false, writable: false, value: Object.freeze({
 		// a work site ran (from a breakpoint condition): which owner, which site, when, inside a drag or not, the native idle job
 		// running at the time (0: none, another queue carried it) and, inside a drag, the first frames that got it there
-		hit(owner, site) { try { const drag = held(); hits.push({ owner, site, at: now(), drag, job: R.job ? R.job.id : 0, from: drag ? where() : '' }); } catch (_) { /* never in the page's way */ } return false; },
+		hit(owner, site) { try { const drag = held(); hits[hits.length] = { owner, site, at: now(), drag, job: R.job ? R.job.id : 0, from: drag ? where() : '' }; } catch (_) { /* never in the page's way */ } return false; },
 		read() { return { hits: hits.map((h) => Object.assign({}, h)), effects: effects.map((e) => Object.assign({}, e)) }; }
 	}) });
 	// effect witness: delivered at the end of the task that wrote, so its time and drag state are that task's
-	const fx = (owner, effect) => effects.push({ owner, effect, at: now(), drag: held() });
+	const fx = (owner, effect) => { effects[effects.length] = { owner, effect, at: now(), drag: held() }; };
 	const isVeil = (n) => n && n.nodeType === 1 && has.call(classesOf.call(n), 'pm-look-veil');
 	const veilStyle = new MutationObserver((rs) => { for (let k = 0; k < rs.length; k++) fx('theme', 'cover style'); });
 	new MutationObserver((rs) => {
