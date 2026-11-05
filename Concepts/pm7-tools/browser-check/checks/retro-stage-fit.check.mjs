@@ -446,14 +446,9 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 	let rnd = null, restoreN = 0, prevV = null;
 	const t0 = performance.now();
 	let lastPoseChange = t0, previousPose = null;
-	// Only the head and hand's drawn SVG geometry; no stage/background or prop motion.
-	const pose = (s) => [s.gHead, s.gCtl].flatMap((e) => {
-		geometry(e, 'Pip pose');
-		const m = e.getScreenCTM(), b = e.getBBox();
-		return [[b.x,b.y], [b.x+b.width,b.y], [b.x,b.y+b.height], [b.x+b.width,b.y+b.height]].flatMap(([x,y]) => {
-			const q = new DOMPoint(x,y).matrixTransform(m); return [q.x,q.y];
-		});
-	});
+	// These are the SVG transforms render() writes for the head and hand, including turn, lift and squash.
+	// Reading their own attributes excludes the animated stage/background and avoids repeating layout reads.
+	const pose = (s) => [s.gHead, s.gCtl].flatMap((e) => [e.getAttribute('transform'), e.style.transform]);
 	while (performance.now() - t0 < ms) {
 		await new Promise((r) => requestAnimationFrame(() => r()));
 		out.n++;
@@ -490,9 +485,10 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 				if (selftest === 'head-detached') s2.gHead.remove();
 			}
 			const hb = R(s2.gHead, 'head');
+			R(s2.gCtl, 'hand');
 			const v = pose(s2);
 			if (!previousPose) lastPoseChange = tNow;
-			else if (v.some((x,i) => Math.abs(x-previousPose[i]) > .0001)) {
+			else if (v.some((x,i) => x !== previousPose[i])) {
 				out.moving++; out.movingMs += Math.min(50, tNow-lastPoseChange); lastPoseChange=tNow;
 			}
 			previousPose = v;
