@@ -21,9 +21,9 @@ export default async function(t) {
     if(!face)continue;
     // Refresh the acknowledgement's own deadline with a real click before its hold.
     if(state==='copied')await c.click();
-    const b=await c.boundingBox(),before=await f.evaluate(()=>window.__copyClicks.length);
+    const b=await c.boundingBox(),rest=await c.evaluate(e=>{const r=e.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height};}),before=await f.evaluate(()=>window.__copyClicks.length);
     await t.page.mouse.move(b.x+1,b.y+b.height/2);await t.page.mouse.down();
-    const h=await c.evaluate((e,b)=>new Promise(resolve=>{const start=performance.now();let worst=0,frames=0;const tick=()=>{const r=e.getBoundingClientRect();frames++;worst=Math.max(worst,Math.abs(r.x-b.x),Math.abs(r.y-b.y),Math.abs(r.width-b.width),Math.abs(r.height-b.height));if(performance.now()-start<350)requestAnimationFrame(tick);else{const k=e.firstElementChild,s=k&&getComputedStyle(k);resolve({worst,frames,translate:s?.translate,scale:s?.scale,identity:!s||s.transform==='none'||new DOMMatrixReadOnly(s.transform).isIdentity});}};requestAnimationFrame(tick);}),b);
+    const h=await c.evaluate((e,b)=>new Promise(resolve=>{const start=performance.now();let worst=0,frames=0;const tick=()=>{const r=e.getBoundingClientRect();frames++;worst=Math.max(worst,Math.abs(r.x-b.x),Math.abs(r.y-b.y),Math.abs(r.width-b.width),Math.abs(r.height-b.height));if(performance.now()-start<350)requestAnimationFrame(tick);else{const k=e.firstElementChild,s=k&&getComputedStyle(k);resolve({worst,frames,translate:s?.translate,scale:s?.scale,identity:!s||s.transform==='none'||new DOMMatrixReadOnly(s.transform).isIdentity});}};requestAnimationFrame(tick);}),rest);
     await t.page.mouse.up();await f.waitForFunction(n=>window.__copyClicks.length>n,before,{timeout:1000});
     const clicks=await f.evaluate(n=>window.__copyClicks.slice(n),before);
     const still=h.worst<=.01&&h.frames>=2,flat=['none','0px','0px 0px'].includes(h.translate)&&['none','1','1 1'].includes(h.scale)&&h.identity;
