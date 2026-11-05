@@ -1,5 +1,5 @@
 // FO-68/74: real failure routes, every requested look/size, painted ink and non-overlapping recovery.
-import {paintedText} from '../helpers/painted-text.mjs';
+import {paintedText,paintedBody} from '../helpers/painted-text.mjs';
 const LOOKS=['basic','friendly','retro','glass','nier'].flatMap(x=>[x+'-light',x+'-dark']);
 const SIZES=[[740,900],[860,900],[1024,900],[1280,900],[1280,500],[1390,900],[1920,900]];
 const REASONS=['permission','offline','unsupported','verify','expired','signin','signinOffline','connection','installed'];
@@ -62,13 +62,13 @@ async function scrollRange(el){
 export default async function(t){
  const f=await t.app.open();
  // Reduce Motion by default (the kit's rule), set here explicitly; --set motion=on measures with motion on
- const on=t.args.motion==='on';
+ const on=t.args.motion==='on',geometry=t.args.geometry==='1';
  await t.emulate({reducedMotion:on?'no-preference':'reduce'});await f.evaluate(on=>O55.studio.looks.setReduced(!on),on);
  await t.check(`motion ${on?'on':'reduced'} as asked`,await f.evaluate(on=>O55.motion.reduced()!==on,on));
  const looks=list(t.args.looks,LOOKS),routes=list(t.args.routes,['fresh','copied']),reasons=list(t.args.reasons,REASONS);
  const sizes=SIZES.filter(([w,h])=>!t.args.widths||String(t.args.widths).split(',').includes(String(w)));
  await t.check('valid nonempty selection',sizes.length>0&&looks.length>0&&reasons.length>0&&reasons.every(x=>REASONS.includes(x))&&looks.every(x=>LOOKS.includes(x)));
- let lowest={contrast:Infinity};
+ let lowest={contrast:Infinity},totalMeasured=0;
  for(const route of routes)for(const code of reasons){
   await t.viewport(1390,900);
   if(route==='fresh')await freshRoute(t,f,code);else await copiedRoute(t,f,code);
@@ -93,10 +93,10 @@ export default async function(t){
     await row.locator('.o55-row').scrollIntoViewIfNeeded();await t.settle();
     const {scroller,range}=await scrollRange(row.locator('.o55-row'));
     await t.check(`${route} ${code} ${look} ${w}x${h} status visible scroll range`,range.hi>=range.lo,JSON.stringify(range));
-    const positions=glass?[...new Set([range.lo,Math.min(range.hi,range.lo+80),Math.round((range.lo+range.hi)/2),range.hi])]:[Math.round((range.lo+range.hi)/2)];
+    const positions=glass&&!geometry?[...new Set([range.lo,Math.min(range.hi,range.lo+80),Math.round((range.lo+range.hi)/2),range.hi])]:[Math.round((range.lo+range.hi)/2)];
     for(const pos of positions){
      await scroller.evaluate((s,n)=>s.scrollTop=n,pos);
-     for(const state of ['rest','hover','focus']){
+     for(const state of (geometry?['rest']:['rest','hover','focus'])){
       await t.page.mouse.move(1,1);await f.evaluate(()=>document.activeElement&&document.activeElement.blur&&document.activeElement.blur());
       if(state==='hover'){const b=await row.boundingBox();await t.page.mouse.move(b.x+b.width*0.5,b.y+b.height/2);}
       if(state==='focus'){const btn=row.locator('.o55-row > button:not(.o55-tipq)');await t.page.keyboard.press('Tab');await btn.focus();
@@ -118,8 +118,15 @@ export default async function(t){
       });
       await t.check(`${route} ${code} ${look} ${w}x${h} ${state} recovery has separate text boxes`,boxes.length===0,JSON.stringify(boxes));
       if(t.args.sabotage==='ink')await pill.evaluate(e=>e.style.setProperty('color','transparent','important'));
+      if(code==='expired'&&look==='retro-dark'&&w===860&&state==='rest')await t.crop(`${route}-retro-expired-860`,row,'Recovery prose and expired status occupy separate lines',{scroll:false});
+      if(geometry){
+       const body=await paintedBody(row.locator('.o55-rowmeta'),t.page);
+       await t.check(`${route} ${code} ${look} ${w}x${h} recovery prose paints native pixels`,body.paintedCount>=8,JSON.stringify(body));
+       await t.check('recovery paint retains requested scroll',Math.abs(await scroller.evaluate(s=>s.scrollTop)-pos)<=1);
+       measured++;totalMeasured++;continue;
+      }
       const before=await scroller.evaluate(s=>s.scrollTop),p=await paintedText(pill),after=await scroller.evaluate(s=>s.scrollTop);
-      measured++;
+      measured++;totalMeasured++;
       const label=`${route} ${code} ${look} ${w}x${h} scroll ${before}/${range.max} ${state}`;
       t.log(JSON.stringify({label,count:p.count,minimum:p.minimum,brightest:p.brightest}));
       await t.check(label+' retains requested scroll',Math.abs(before-pos)<=1&&Math.abs(after-pos)<=1,`${pos}: ${before} -> ${after}`);
@@ -133,6 +140,7 @@ export default async function(t){
    }
   }
  }
- await t.check('selection measured at least one painted cell',Number.isFinite(lowest.contrast));
+ await t.check('selection measured at least one painted cell',totalMeasured>0);
+ t.log('MEASURED '+totalMeasured);
  t.log('LOWEST '+JSON.stringify(lowest));
 }
