@@ -39,6 +39,8 @@ Parallel runs are safe: each gets its own browser and run folder. Give each its 
 | `nier-loader-phase` | SW-21: shared NieR diamond owner gives each instance a stable phase across refresh and preserves Reduced Motion breath. Record control (`--set control=1`) and fix on the same GPU; count simultaneous edge-on frames from decoded pixels. |
 | `shell-loader-phase` | SW-22 control film: Studio's real loader gallery, repeated switches into Retro Light and Dark, four sizes with shared-clock snapshots. Record with `--record`; judge phases on native video frames. |
 | `shell-contrast` | SW-18: opaque text stems against the ground painted at those exact pixels (two paints), Recommended and primary rest/hover in all ten looks; Glass Continue, inline Install and Done also cover keyboard focus and pressed. Runs on both surfaces. |
+| `header-relayout` | FO-69: Retro Dark Name/Project header at 1024↔740, twelve trips; steady font asserted, marks for 60 fps GPU frame review. |
+| `glass-exclusion` | FO-62: independent own-ink reference accepts an intact opaque fixture and rejects lost own ink as an invalid sample. Both surfaces. `glass-backing --set only=agents --set reps=6` repeats the 1390→1920 route. |
 | `boot` | Ready (`data-pmr-ready`, `PM_THEME`), default Basic Dark, main content on top, shell painted, no overflow, no console errors. Lists one full frame. |
 | `looks` | All ten looks (Basic, Friendly, Retro, Glass and NieR, light and dark). Each applies (`data-theme`, `PM_NIER.on()`), paints, has its main content on top and has no overflow. Frames are saved for `diff`. |
 | `widths` | 860, 1024, 1280, 1390 and 1920 wide, plus narrow 740 and short 1280x500. Main content is visible with no overflow. Frames are saved for `diff`. |
