@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L7479-L7653
+Source lines: L7479-L7655
 
-Source SHA256: `cdd74888c5be7c90500f5a8ad2cedb1b1c77e86f3b9f14f486eaa3eb7ce77ee3`
+Source SHA256: `005624ede810e3ada7df968cb7a4ed44e5047ed39788daf158525d2848fee33e`
 
 ---
 
@@ -96,6 +96,8 @@ acceptance_criteria:
 - Use exact own-family source, scope, selected schema realm and existing retention; no registry admission,
   native runtime or governance proof.
 validation_surfaces:
+- python3 scripts/pm_goal_own_c3_w12b_oracles.py
+- Plans/goal_own_c_contracts/w12b-corpus-v1/coverage.json
 - python3 scripts/pm_goal_own_c3_w12_successor_oracles.py
 - Plans/goal_own_c_contracts/w12-successor-v2/cancel-methods.v2.json
 - python3 scripts/pm_goal_own_c_source_oracles.py
@@ -122,7 +124,7 @@ negative_constraints:
 - No source capability, runtime installation, full oracle PASS, Event Authority or WorkNode from a test adapter.
 ```
 
-The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (Goal cancellation migration and three original route oracles). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; the original source roots and historical banks stay byte-exact, while C3-W12 part 2 explicitly selects the versioned source/bank successors named in that protocol. This selection alone does not close W1 or W2.
+The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (Goal cancellation migration and three original route oracles). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; the original source roots and historical banks stay byte-exact, while C3-W12 part 2 explicitly selects the versioned source/bank successors named in that protocol. C3-W12b adds explicitly bounded no-association migration/cancellation witnesses and a per-method remaining inventory. Its complete inherited W2 tuple coverage remains NOT_COMPLETE.
 
 ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json
 

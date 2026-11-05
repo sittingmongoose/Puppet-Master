@@ -61,7 +61,10 @@
       ],
       "c3_w12_part2_successor_selection": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-methods.v2.json",
       "c3_w12_part2_qualification": "python3 scripts/pm_goal_own_c3_w12_successor_oracles.py",
-      "c3_w12_part2_whole_root_closure": "NOT_COMPLETE"
+      "c3_w12_part2_whole_root_closure": "NOT_COMPLETE",
+      "c3_w12b_corpus": "Plans/goal_own_c_contracts/w12b-corpus-v1/coverage.json",
+      "c3_w12b_oracle": "python3 scripts/pm_goal_own_c3_w12b_oracles.py",
+      "c3_w12b_whole_root_closure": "NOT_COMPLETE"
     },
     {
       "event_type": "goal_run.started",
