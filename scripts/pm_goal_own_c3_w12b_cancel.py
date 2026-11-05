@@ -173,12 +173,14 @@ class CancellationGraph:
         self.identity = self.make('NormalizedIdentity', dict(request_ref='request:W12b', command_instance_id='command:W12b',
             operation_id=self.operation_id, payload_sha256=self.hash(self.accepted_request), idempotency_key='sir:W12b',
             dispatch_frame_id='dispatch-frame:W12b', owner_identity=dict(scope_kind='project', project_id=self.scope['project_id'],
-                project_home_server_id='server:W12b', thread_id=self.scope['thread_id'], goal_id=self.scope['goal_id'],
+                server_id='server:W12b', project_home_server_id='server:W12b', execution_host_id='host:W12b',
+                execution_environment_id='environment:W12b', thread_id=self.scope['thread_id'], goal_id=self.scope['goal_id'],
                 command_instance_id='command:W12b', operation_id=self.operation_id)))
         self.nonterminal = self.make('NonterminalOutcome', dict(command_id='cmd.chat.goal.cancel',
             command_instance_id='command:W12b', identity=self.identity['owner_identity'], payload_sha256=self.identity['payload_sha256'],
             idempotency_key=self.identity['idempotency_key'], dispatch_frame_id=self.identity['dispatch_frame_id'],
-            outcome='acknowledged', acknowledgement_receipt_ref='acknowledgement:W12b', acknowledgement_frame_offset=8))
+            outcome='acknowledged', acknowledgement_receipt_ref='acknowledgement:W12b', acknowledgement_frame_offset=8,
+            acknowledgement_frame_id=self.identity['dispatch_frame_id'], same_frame_acknowledged=True))
         self.binding = self.make('ExecutionBinding', dict(kind='no_bound_plan', active_run_ref=None,
             goal_plan_binding_ref=None, goal_plan_binding_sha256=None, assistant_plan_id=None, plan_run_id=None,
             plan_version=None, plan_hash=None, execution_owner_ref=migration.host_owner,
@@ -527,6 +529,7 @@ class CancellationGraph:
             owner_result_ref=result_ref, owner_result_sha256=self.result_hash(result), result_receipt_ref=result_ref)
         outcome = self.make(outcome_name, outcome_seed)
         response = self.make(response_name, dict(command_instance_id=self.accepted_request['command_instance_id'], command_id='cmd.chat.goal.cancel',
+            operation_id=self.operation_id, owner_identity=self.identity['owner_identity'], command_outcome_ref=self.source['command_outcome_ref'],
             owner_result_ref=result_ref, owner_result_sha256=self.result_hash(result), result_status=result_status,
             receipt_ref=result_ref, event_refs=[self.event_id] if kind == 'succeeded' else []))
         terminal = self.make('Terminal', dict(**self.scope, operation_id=self.operation_id, source_audit_sha256=self.row_hash('SourceAudit', self.source),

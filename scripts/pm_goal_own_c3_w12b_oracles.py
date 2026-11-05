@@ -272,6 +272,10 @@ def execute(roots, inputs, codec, suite, artifacts):
         value = graph('control_published')
         terminal_values = value.finish()
         terminal = copy.deepcopy(value.terminal)
+        require('oracle/terminal_original_identity', equal(terminal['response']['owner_identity'], value.identity['owner_identity'])
+            and equal(terminal['outcome']['identity'], value.identity['owner_identity'])
+            and terminal['response']['operation_id'] == value.operation_id
+            and terminal['response']['command_outcome_ref'] == value.source['command_outcome_ref'])
         original_effects = copy.deepcopy(value.effects)
         value.replay_terminal(terminal)
         require('oracle/replay_no_effect', equal(value.effects, original_effects))
