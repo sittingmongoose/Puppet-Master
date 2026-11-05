@@ -102,13 +102,13 @@ export default async function(t){
   const row=f.locator(`#pm-o55-onboarding [data-key="pv-${id}"]`),pill=row.locator(code==='installed'?'.o55-pill-ready':'.o55-pill-fail');
   const expected=code==='installed'?'ready':code==='expired'?'expired':code.startsWith('signin')?'signinFailed':code==='connection'?'connectFailed':'installFailed';
   await pill.waitFor({state:'visible'});
-  await t.check(`${route} ${code} row shows one failure status`,await pill.count()===1);
+  await t.check(`${route} ${code} row shows one expected status`,await pill.count()===1);
   const reason=await f.evaluate(code=>O55.t(code==='installed'?'ai.ready':code==='expired'?'ai.expired.title':code.startsWith('signin')?'ai.signinFail.title':code==='connection'?'ai.oc.failTitle':'ai.installFailure.'+code),code);
   await t.check(`${route} ${code} row keeps its reason`,(await row.innerText()).replace(/\s+/g,' ').includes(reason.replace(/\s+/g,' ')));
   if(await pill.count()!==1)continue;
   for(const look of looks){
    await applyLook(t,f,look);
-   await t.check(`${route} ${code} ${look} install still failed`,await row.getAttribute('data-state')===expected);
+   await t.check(`${route} ${code} ${look} ${expected} state retained`,await row.getAttribute('data-state')===expected);
    const glass=look.startsWith('glass');
    for(const [w,h] of sizes){
     let measured=0;
@@ -123,7 +123,7 @@ export default async function(t){
       await t.page.mouse.move(1,1);await f.evaluate(()=>document.activeElement&&document.activeElement.blur&&document.activeElement.blur());
       if(state==='hover'){const b=await row.boundingBox();await t.page.mouse.move(b.x+b.width*0.5,b.y+b.height/2);}
       if(state==='focus'){const btn=row.locator('.o55-row > button:not(.o55-tipq)');await t.page.keyboard.press('Tab');await btn.focus();
-       await t.check(`${route} ${code} ${look} ${w}x${h} Try again keyboard focus`,await btn.evaluate(e=>e.matches(':focus-visible')));}
+       await t.check(`${route} ${code} ${look} ${w}x${h} recovery action keyboard focus`,await btn.evaluate(e=>e.matches(':focus-visible')));}
       await scroller.evaluate((s,n)=>s.scrollTop=n,pos);await t.settle();
       await t.check(`${look} ${code} ${w} ${state} requested scroll restored`,Math.abs(await scroller.evaluate(s=>s.scrollTop)-pos)<=1);
       if(state==='focus'){
@@ -144,7 +144,7 @@ export default async function(t){
       });
       await t.check(`${route} ${code} ${look} ${w}x${h} ${state} recovery has separate text boxes`,boxes.length===0,JSON.stringify(boxes));
       if(t.args.sabotage==='ink')await pill.evaluate(e=>e.style.setProperty('color','transparent','important'));
-      if(code==='expired'&&look==='retro-dark'&&w===860&&state==='rest')await t.crop(`${route}-retro-expired-860`,row,'Recovery prose and expired status occupy separate lines',{scroll:false});
+      if(code==='expired'&&look==='retro-dark'&&w===860&&state==='rest')await t.crop(`${route}-retro-expired-860`,row,'Expired row: native recovery prose and status layout at 860px',{scroll:false});
       if(geometry){
        const body=await paintedBody(row.locator('.o55-rowmeta'),t.page);
        await t.check(`${route} ${code} ${look} ${w}x${h} recovery prose paints native pixels`,body.paintedCount>=8,JSON.stringify(body));
