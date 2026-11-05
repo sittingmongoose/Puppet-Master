@@ -10,7 +10,12 @@ export default async function(t) {
  await f.evaluate(()=>{
   window.__press={clicks:[],downs:[],trial:''};
   const id=e=>{const c=e.target.closest&&e.target.closest('button');return c?c.__pressId??'other-choice':null;};
-  window.addEventListener('pointerdown',e=>window.__press.downs.push({trial:window.__press.trial,id:id(e)}),true);
+  window.addEventListener('pointerdown',e=>{
+   const p=window.__press;p.downs.push({trial:p.trial,id:id(e)});p.holding=true;p.metrics={worst:0,frames:0};
+   const sample=()=>{if(!p.holding||!p.node)return;const r=p.node.getBoundingClientRect(),b=p.rest;p.metrics.frames++;p.metrics.worst=Math.max(p.metrics.worst,Math.abs(r.x-b.x),Math.abs(r.y-b.y),Math.abs(r.width-b.w),Math.abs(r.height-b.h));requestAnimationFrame(sample);};sample();
+  },true);
+  window.addEventListener('pointerup',()=>{window.__press.holding=false;},true);
+  window.addEventListener('pointercancel',()=>{window.__press.holding=false;},true);
   window.addEventListener('click',e=>{window.__press.clicks.push({trial:window.__press.trial,id:id(e)});e.stopImmediatePropagation();e.preventDefault();},true);
  });
  const motions=t.args.motion?String(t.args.motion).split(','):['no-preference','reduce','attribute'];
@@ -21,13 +26,13 @@ export default async function(t) {
   for(const look of looks) {
    await f.evaluate(([fam,mode])=>O55.ui.applyLook(fam,mode),look.split('-'));await f.waitForTimeout(1600);
    await f.evaluate(m=>document.documentElement.setAttribute('data-motion',m==='attribute'?'reduced':'full'),motion);
-   await f.evaluate(()=>{window.__pressSeen=new Set();});
+   await f.evaluate(()=>{window.__pressSeen=new Set();window.__pressInventory=[];});
    for(const screen of screens) {
     await t.page.mouse.move(2,2);await f.evaluate(s=>{O55.S.lookOpen=false;O55.S.sess.ui.sheet=null;if(s==='away-proxy'){O55.S.draft().remote_mode='reverse_proxy';O55.S.draft().proxy_hostname='https://pm.example.net';}O55.ui.go(s==='look-menu'?'look':s==='backup-sheet'?'safe':s==='tree-sheet'?'ex-folder':s==='away-proxy'?'away':s,{noHistory:true});if(s==='look-menu')O55.ui.act('lookMenu');if(s==='backup-sheet'||s==='tree-sheet'){O55.S.sess.ui.sheet=s==='backup-sheet'?'backup':'tree';O55.ui.refresh();}},screen);await f.waitForTimeout(1800);
-    await f.evaluate(()=>{document.querySelectorAll('[data-press-test]').forEach(e=>e.removeAttribute('data-press-test'));document.querySelectorAll('#pm-o55-onboarding button:not(.o55-card, .o55-tile):not([aria-disabled="true"]):not(:disabled)').forEach(e=>{if(e.checkVisibility()&&e.getBoundingClientRect().width){const cls=[...e.classList].filter(c=>!['o55-on','pmh-on','o55-lookbtn','o55-talk','o55-close'].includes(c)).sort().join('.')||e.parentElement.className;const key=cls+(e.matches('.o55-btn')?':'+(e.closest('.o55-foot')?'footer':e.closest('.o55-sheet')?'sheet':'inline'):'');if(!window.__pressSeen.has(key)){window.__pressSeen.add(key);e.setAttribute('data-press-test','');}}});});
+    await f.evaluate(()=>{document.querySelectorAll('[data-press-test]').forEach(e=>e.removeAttribute('data-press-test'));document.querySelectorAll('#pm-o55-onboarding button:not(.o55-card, .o55-tile):not([aria-disabled="true"]):not(:disabled)').forEach(e=>{if(e.checkVisibility()&&e.getBoundingClientRect().width){const cls=[...e.classList].filter(c=>!['o55-on','pmh-on','o55-lookbtn','o55-talk','o55-close'].includes(c)).sort().join('.')||e.parentElement.className;const key=cls+(e.matches('.o55-btn')?':'+(e.closest('.o55-foot')?'footer':e.closest('.o55-sheet')?'sheet':'inline'):'');if(!window.__pressSeen.has(key)){window.__pressSeen.add(key);window.__pressInventory.push({key,screen:O55.S.sess.screen,classes:e.className,action:e.getAttribute('data-o55-do'),label:e.textContent.trim(),width:e.getBoundingClientRect().width});e.setAttribute('data-press-test','');}}});});
     const sel=L+'button[data-press-test]'+(t.args.button?String(t.args.button):''),count=await f.locator(sel).count(),tag=`${look} ${motion} ${screen}`;
     await f.evaluate(()=>{window.__press.clicks=[];window.__press.downs=[];});
-    const misses=[],moved=[],scaled=[],flat=[],covered=[];let presses=0,feedback=0;
+    const misses=[],moved=[],scaled=[],covered=[];let presses=0;
     for(let i=0;i<count;i++) {
      const c=f.locator(sel).nth(i);await c.scrollIntoViewIfNeeded();await t.page.mouse.move(2,2);
      const rest=await f.evaluate(async({sel,i})=>{
@@ -47,23 +52,21 @@ export default async function(t) {
       const exposed=await f.evaluate(({sel,i,x,y})=>{const e=document.querySelectorAll(sel)[i],p=document.elementFromPoint(x,y);return p===e||e.contains(p);},{sel,i,x,y});
       if(!exposed){covered.push(trial);continue;}
       await t.page.mouse.move(2,2);
-      await f.evaluate(async({sel,i,trial})=>{const e=document.querySelectorAll(sel)[i];getComputedStyle(e).transform;
+      await f.evaluate(async({sel,i,trial,rest})=>{const e=document.querySelectorAll(sel)[i];getComputedStyle(e).transform;
        const ancestors=[];for(let n=e;n&&n!==document.body;n=n.parentElement)ancestors.push(n);
-      await Promise.all(ancestors.flatMap(n=>n.getAnimations()).filter(a=>a.playState==='running'&&Number.isFinite(a.effect.getComputedTiming().endTime)).map(a=>a.finished.catch(()=>{})));window.__press.trial=trial;},{sel,i,trial});
+      await Promise.all(ancestors.flatMap(n=>n.getAnimations()).filter(a=>a.playState==='running'&&Number.isFinite(a.effect.getComputedTiming().endTime)).map(a=>a.finished.catch(()=>{})));window.__press.trial=trial;window.__press.node=e;window.__press.rest=rest;},{sel,i,trial,rest});
       await t.page.mouse.move(off.x+x,off.y+y);if(t.args.marks)await t.mark(`down ${trial}`);await t.page.mouse.down();
-      // the box is sampled in the page for the whole hold, every frame, so a spring between reads is seen too
-      const drift=await f.evaluate(({sel,i,hold,rest})=>new Promise(res=>{const e=document.querySelectorAll(sel)[i],t0=performance.now();let worst=0,frames=0;
-       const tick=()=>{const r=e.getBoundingClientRect();frames++;worst=Math.max(worst,Math.abs(r.x-rest.x),Math.abs(r.y-rest.y),Math.abs(r.width-rest.w),Math.abs(r.height-rest.h));
-        if(performance.now()-t0<hold)requestAnimationFrame(tick);else res({worst,frames});};requestAnimationFrame(tick);}),{sel,i,hold,rest});
+      // Sampling starts in pointerdown capture, before owner press handlers and the first painted frame.
+      await f.waitForTimeout(hold);
+      const drift=await f.evaluate(()=>({...window.__press.metrics}));
       const read=()=>f.evaluate(({sel,i})=>{const e=document.querySelectorAll(sel)[i],r=e.getBoundingClientRect(),kid=e.firstElementChild,ks=kid?getComputedStyle(kid):null;
        return {x:r.x,y:r.y,w:r.width,h:r.height,transform:getComputedStyle(e).transform,active:e.matches(':active'),kidTranslate:ks?ks.translate:'none',kidScale:ks?ks.scale:'none',kidTransform:ks?ks.transform:'none'};},{sel,i});
       let h=await read();
       if(t.args.marks)await t.mark(`up ${trial}`);await t.page.mouse.up();presses++;
       const got=await f.evaluate(trial=>({c:window.__press.clicks.filter(x=>x.trial===trial),d:window.__press.downs.filter(x=>x.trial===trial)}),trial);
       if(!(got.d.length===1&&got.d[0].id===i&&got.c.length===1&&got.c[0].id===i))misses.push({trial,down:got.d.map(x=>x.id),click:got.c.map(x=>x.id),held:h.transform});
-      if(drift.worst>.01||Math.abs(h.x-rest.x)>.01||Math.abs(h.y-rest.y)>.01||Math.abs(h.w-rest.w)>.01||Math.abs(h.h-rest.h)>.01)moved.push({trial,drift,rest,held:h});
+      if(drift.frames<2||drift.worst>.01||Math.abs(h.x-rest.x)>.01||Math.abs(h.y-rest.y)>.01||Math.abs(h.w-rest.w)>.01||Math.abs(h.h-rest.h)>.01)moved.push({trial,drift,rest,held:h});
       const contentScaled=(h.kidScale!=='none'&&h.kidScale!=='1')||/matrix\((?!1, 0, 0, 1,)/.test(h.kidTransform);
-      if(contentScaled)feedback++;else flat.push({trial,active:h.active,kidScale:h.kidScale});
       if(motion!=='no-preference'&&(contentScaled||h.transform!=='none'||!['none','0px','0px 0px'].includes(h.kidTranslate)))scaled.push({trial,transform:h.transform,kidScale:h.kidScale,kidTransform:h.kidTransform});
      }
     }
@@ -73,6 +76,7 @@ export default async function(t) {
     if(motion!=='no-preference')await t.check(`FO-73 no press scale with Reduced Motion ${tag}`,!scaled.length,JSON.stringify(scaled.slice(0,3)));
     
    }
+   await t.check(`FO-73 representative inventory ${look} ${motion}`,true,JSON.stringify(await f.evaluate(()=>window.__pressInventory)));
   }
  }
  await f.evaluate(()=>document.documentElement.setAttribute('data-motion','full'));
