@@ -103,11 +103,13 @@
   "$defs": {
     "safe_id": {
       "type": "string",
+      "minLength": 1,
       "maxLength": 160,
       "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*(?![\\s\\S])"
     },
     "non_secret_ref": {
       "type": "string",
+      "minLength": 8,
       "maxLength": 320,
       "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*(?![\\s\\S])",
       "description": "Opaque typed original-owner reference. Resolve under the referenced owner with current authorization, deletion and retention checks; spelling alone proves neither existence nor access."

@@ -287,7 +287,21 @@
           ],
           "minimum": 1
         },
-        "cardinality_scope": {},
+        "cardinality_scope": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "instance",
+            "project",
+            "thread",
+            "run",
+            "session",
+            "logical_key"
+          ]
+        },
         "additional_cardinality_limits": {
           "type": "array",
           "items": {

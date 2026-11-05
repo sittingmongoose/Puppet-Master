@@ -34987,17 +34987,20 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/file_copied.schema.json",
+              "pointer": "#/$defs/safe_id/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/file_copied.schema.json",
               "pointer": "#/$defs/safe_id/pattern"
             }
           ],
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": []
           },
           "name": "rule:file_copied.schema:minLength:70280240",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "event_payloads/file_manager/file_copied.schema.json",
@@ -35032,17 +35035,20 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/file_copied.schema.json",
+              "pointer": "#/$defs/non_secret_ref/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/file_copied.schema.json",
               "pointer": "#/$defs/non_secret_ref/pattern"
             }
           ],
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": []
           },
           "name": "rule:file_copied.schema:minLength:4af1c18a",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "event_payloads/file_manager/file_copied.schema.json",
@@ -35716,17 +35722,20 @@
           "guards": [
             {
               "document": "event_record.schema.json",
+              "pointer": "#/properties/schema_id/type"
+            },
+            {
+              "document": "event_record.schema.json",
               "pointer": "#/properties/schema_id/const"
             }
           ],
           "expected_schema": {
-            "validator": "const",
+            "validator": "type",
             "path": []
           },
           "name": "rule:event_record.schema:type:b478fbf0",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "filemanager_operation_contracts.schema.json",
@@ -36356,17 +36365,20 @@
           "guards": [
             {
               "document": "filemanager_operation_contracts.schema.json",
+              "pointer": "#/$defs/family_control/properties/drain_operation_keys/items/maxLength"
+            },
+            {
+              "document": "filemanager_operation_contracts.schema.json",
               "pointer": "#/$defs/family_control/properties/drain_operation_keys/items/pattern"
             }
           ],
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "maxLength",
             "path": []
           },
           "name": "rule:filemanager_operation_contracts.schema:maxLength:e71a7995",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "filemanager_operation_contracts.schema.json",
@@ -36404,17 +36416,20 @@
           "guards": [
             {
               "document": "filemanager_operation_contracts.schema.json",
+              "pointer": "#/$defs/safe_id/minLength"
+            },
+            {
+              "document": "filemanager_operation_contracts.schema.json",
               "pointer": "#/$defs/safe_id/pattern"
             }
           ],
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": []
           },
           "name": "rule:filemanager_operation_contracts.schema:minLength:8d9e7eb7",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "filemanager_operation_contracts.schema.json",
@@ -36449,17 +36464,20 @@
           "guards": [
             {
               "document": "filemanager_operation_contracts.schema.json",
+              "pointer": "#/$defs/non_secret_ref/minLength"
+            },
+            {
+              "document": "filemanager_operation_contracts.schema.json",
               "pointer": "#/$defs/non_secret_ref/pattern"
             }
           ],
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": []
           },
           "name": "rule:filemanager_operation_contracts.schema:minLength:be3dcf96",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "filemanager_operation_contracts.schema.json",
@@ -36472,17 +36490,20 @@
           "guards": [
             {
               "document": "filemanager_operation_contracts.schema.json",
+              "pointer": "#/$defs/family_control/properties/drain_operation_keys/items/minLength"
+            },
+            {
+              "document": "filemanager_operation_contracts.schema.json",
               "pointer": "#/$defs/family_control/properties/drain_operation_keys/items/pattern"
             }
           ],
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": []
           },
           "name": "rule:filemanager_operation_contracts.schema:minLength:08e04f5b",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "filemanager_operation_contracts.schema.json",
@@ -38644,47 +38665,26 @@
           "valid": false
         },
         {
-          "name": "rule:storage_value_registry.schema:enum:472c53b7",
-          "scenario": "schema-rule",
           "document": "storage_value_registry.schema.json",
-          "definition": "#/$defs/retention_policy",
+          "definition": "#/$defs/retention_policy/properties/cardinality_scope",
+          "control": null,
           "mutation": {
-            "path": [
-              "cardinality_scope"
-            ],
+            "path": [],
             "value": "unrecognized"
           },
           "guards": [
             {
               "document": "storage_value_registry.schema.json",
-              "pointer": "#/$defs/retention_policy/allOf/4/else/properties/cardinality_scope/enum"
+              "pointer": "#/$defs/retention_policy/properties/cardinality_scope/enum"
             }
           ],
-          "valid": false,
           "expected_schema": {
             "validator": "enum",
-            "path": [
-              "cardinality_scope"
-            ]
+            "path": []
           },
-          "anchors_rule_id": "rule:storage_value_registry.schema:enum:472c53b7",
-          "control": {
-            "policy_id": "RP-DELIVERY-365D",
-            "retention_mode": "fixed_ttl",
-            "anchor_kind": "terminal_transition",
-            "retain_indefinitely": false,
-            "ttl_seconds": 31536000,
-            "source_policy_ref": null,
-            "max_cardinality": 100000,
-            "cardinality_scope": "project",
-            "additional_cardinality_limits": [],
-            "max_bytes": null,
-            "overflow_action": "evict_oldest_eligible",
-            "hold_eligible": true,
-            "expiry_action": "compact",
-            "policy_version": "1.0.0"
-          },
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "name": "rule:storage_value_registry.schema:enum:472c53b7",
+          "scenario": "schema-rule",
+          "valid": false
         },
         {
           "document": "storage_value_registry.schema.json",
@@ -39827,47 +39827,30 @@
           "valid": false
         },
         {
-          "name": "rule:storage_value_registry.schema:type:e02c78cb",
-          "scenario": "schema-rule",
           "document": "storage_value_registry.schema.json",
-          "definition": "#/$defs/retention_policy",
+          "definition": "#/$defs/retention_policy/properties/cardinality_scope",
+          "control": null,
           "mutation": {
-            "path": [
-              "cardinality_scope"
-            ],
+            "path": [],
             "value": false
           },
           "guards": [
             {
               "document": "storage_value_registry.schema.json",
-              "pointer": "#/$defs/retention_policy/allOf/4/then/properties/cardinality_scope/type"
+              "pointer": "#/$defs/retention_policy/properties/cardinality_scope/type"
+            },
+            {
+              "document": "storage_value_registry.schema.json",
+              "pointer": "#/$defs/retention_policy/properties/cardinality_scope/enum"
             }
           ],
-          "valid": false,
           "expected_schema": {
             "validator": "type",
-            "path": [
-              "cardinality_scope"
-            ]
+            "path": []
           },
-          "anchors_rule_id": "rule:storage_value_registry.schema:type:e02c78cb",
-          "control": {
-            "policy_id": "RP-AUTHORITY-INDEFINITE",
-            "retention_mode": "indefinite",
-            "anchor_kind": "creation",
-            "retain_indefinitely": true,
-            "ttl_seconds": null,
-            "source_policy_ref": null,
-            "max_cardinality": null,
-            "cardinality_scope": null,
-            "additional_cardinality_limits": [],
-            "max_bytes": null,
-            "overflow_action": "fail_closed",
-            "hold_eligible": true,
-            "expiry_action": "none",
-            "policy_version": "1.0.0"
-          },
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "name": "rule:storage_value_registry.schema:type:e02c78cb",
+          "scenario": "schema-rule",
+          "valid": false
         },
         {
           "document": "storage_value_registry.schema.json",
@@ -45570,17 +45553,20 @@
           "guards": [
             {
               "document": "event_record.schema.json",
+              "pointer": "#/properties/schema_id/type"
+            },
+            {
+              "document": "event_record.schema.json",
               "pointer": "#/properties/schema_id/const"
             }
           ],
           "expected_schema": {
-            "validator": "const",
+            "validator": "type",
             "path": []
           },
           "name": "rule:event_record.schema:type:b478fbf0:null",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "event_record.schema.json",
@@ -45593,17 +45579,20 @@
           "guards": [
             {
               "document": "event_record.schema.json",
+              "pointer": "#/properties/schema_id/type"
+            },
+            {
+              "document": "event_record.schema.json",
               "pointer": "#/properties/schema_id/const"
             }
           ],
           "expected_schema": {
-            "validator": "const",
+            "validator": "type",
             "path": []
           },
           "name": "rule:event_record.schema:type:b478fbf0:array",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "event_record.schema.json",
@@ -45616,17 +45605,20 @@
           "guards": [
             {
               "document": "event_record.schema.json",
+              "pointer": "#/properties/schema_id/type"
+            },
+            {
+              "document": "event_record.schema.json",
               "pointer": "#/properties/schema_id/const"
             }
           ],
           "expected_schema": {
-            "validator": "const",
+            "validator": "type",
             "path": []
           },
           "name": "rule:event_record.schema:type:b478fbf0:object",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "event_record.schema.json",
@@ -45641,17 +45633,20 @@
           "guards": [
             {
               "document": "event_record.schema.json",
+              "pointer": "#/properties/schema_id/type"
+            },
+            {
+              "document": "event_record.schema.json",
               "pointer": "#/properties/schema_id/const"
             }
           ],
           "expected_schema": {
-            "validator": "const",
+            "validator": "type",
             "path": []
           },
           "name": "rule:event_record.schema:type:b478fbf0:nested-object",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "event_record.schema.json",
@@ -45664,17 +45659,20 @@
           "guards": [
             {
               "document": "event_record.schema.json",
+              "pointer": "#/properties/schema_id/type"
+            },
+            {
+              "document": "event_record.schema.json",
               "pointer": "#/properties/schema_id/const"
             }
           ],
           "expected_schema": {
-            "validator": "const",
+            "validator": "type",
             "path": []
           },
           "name": "rule:event_record.schema:type:b478fbf0:bool",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "event_record.schema.json",
@@ -45687,17 +45685,20 @@
           "guards": [
             {
               "document": "event_record.schema.json",
+              "pointer": "#/properties/schema_id/type"
+            },
+            {
+              "document": "event_record.schema.json",
               "pointer": "#/properties/schema_id/const"
             }
           ],
           "expected_schema": {
-            "validator": "const",
+            "validator": "type",
             "path": []
           },
           "name": "rule:event_record.schema:type:b478fbf0:float",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "filemanager_operation_contracts.schema.json",
@@ -48054,100 +48055,63 @@
           "valid": false
         },
         {
-          "name": "rule:storage_value_registry.schema:type:e02c78cb:array",
-          "scenario": "schema-rule",
           "document": "storage_value_registry.schema.json",
-          "definition": "#/$defs/retention_policy",
+          "definition": "#/$defs/retention_policy/properties/cardinality_scope",
+          "control": null,
           "mutation": {
-            "path": [
-              "cardinality_scope"
-            ],
+            "path": [],
             "value": []
           },
           "guards": [
             {
               "document": "storage_value_registry.schema.json",
-              "pointer": "#/$defs/retention_policy/allOf/4/then/properties/cardinality_scope/type"
+              "pointer": "#/$defs/retention_policy/properties/cardinality_scope/type"
+            },
+            {
+              "document": "storage_value_registry.schema.json",
+              "pointer": "#/$defs/retention_policy/properties/cardinality_scope/enum"
             }
           ],
-          "valid": false,
           "expected_schema": {
             "validator": "type",
-            "path": [
-              "cardinality_scope"
-            ]
+            "path": []
           },
-          "anchors_rule_id": "rule:storage_value_registry.schema:type:e02c78cb",
-          "control": {
-            "policy_id": "RP-AUTHORITY-INDEFINITE",
-            "retention_mode": "indefinite",
-            "anchor_kind": "creation",
-            "retain_indefinitely": true,
-            "ttl_seconds": null,
-            "source_policy_ref": null,
-            "max_cardinality": null,
-            "cardinality_scope": null,
-            "additional_cardinality_limits": [],
-            "max_bytes": null,
-            "overflow_action": "fail_closed",
-            "hold_eligible": true,
-            "expiry_action": "none",
-            "policy_version": "1.0.0"
-          },
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "name": "rule:storage_value_registry.schema:type:e02c78cb:array",
+          "scenario": "schema-rule",
+          "valid": false
         },
         {
-          "name": "rule:storage_value_registry.schema:type:e02c78cb:object",
-          "scenario": "schema-rule",
           "document": "storage_value_registry.schema.json",
-          "definition": "#/$defs/retention_policy",
+          "definition": "#/$defs/retention_policy/properties/cardinality_scope",
+          "control": null,
           "mutation": {
-            "path": [
-              "cardinality_scope"
-            ],
+            "path": [],
             "value": {}
           },
           "guards": [
             {
               "document": "storage_value_registry.schema.json",
-              "pointer": "#/$defs/retention_policy/allOf/4/then/properties/cardinality_scope/type"
+              "pointer": "#/$defs/retention_policy/properties/cardinality_scope/type"
+            },
+            {
+              "document": "storage_value_registry.schema.json",
+              "pointer": "#/$defs/retention_policy/properties/cardinality_scope/enum"
             }
           ],
-          "valid": false,
           "expected_schema": {
             "validator": "type",
-            "path": [
-              "cardinality_scope"
-            ]
+            "path": []
           },
-          "anchors_rule_id": "rule:storage_value_registry.schema:type:e02c78cb",
-          "control": {
-            "policy_id": "RP-AUTHORITY-INDEFINITE",
-            "retention_mode": "indefinite",
-            "anchor_kind": "creation",
-            "retain_indefinitely": true,
-            "ttl_seconds": null,
-            "source_policy_ref": null,
-            "max_cardinality": null,
-            "cardinality_scope": null,
-            "additional_cardinality_limits": [],
-            "max_bytes": null,
-            "overflow_action": "fail_closed",
-            "hold_eligible": true,
-            "expiry_action": "none",
-            "policy_version": "1.0.0"
-          },
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "name": "rule:storage_value_registry.schema:type:e02c78cb:object",
+          "scenario": "schema-rule",
+          "valid": false
         },
         {
-          "name": "rule:storage_value_registry.schema:type:e02c78cb:nested-object",
-          "scenario": "schema-rule",
           "document": "storage_value_registry.schema.json",
-          "definition": "#/$defs/retention_policy",
+          "definition": "#/$defs/retention_policy/properties/cardinality_scope",
+          "control": null,
           "mutation": {
-            "path": [
-              "cardinality_scope"
-            ],
+            "path": [],
             "value": {
               "value": 0
             }
@@ -48155,120 +48119,72 @@
           "guards": [
             {
               "document": "storage_value_registry.schema.json",
-              "pointer": "#/$defs/retention_policy/allOf/4/then/properties/cardinality_scope/type"
+              "pointer": "#/$defs/retention_policy/properties/cardinality_scope/type"
+            },
+            {
+              "document": "storage_value_registry.schema.json",
+              "pointer": "#/$defs/retention_policy/properties/cardinality_scope/enum"
             }
           ],
-          "valid": false,
           "expected_schema": {
             "validator": "type",
-            "path": [
-              "cardinality_scope"
-            ]
+            "path": []
           },
-          "anchors_rule_id": "rule:storage_value_registry.schema:type:e02c78cb",
-          "control": {
-            "policy_id": "RP-AUTHORITY-INDEFINITE",
-            "retention_mode": "indefinite",
-            "anchor_kind": "creation",
-            "retain_indefinitely": true,
-            "ttl_seconds": null,
-            "source_policy_ref": null,
-            "max_cardinality": null,
-            "cardinality_scope": null,
-            "additional_cardinality_limits": [],
-            "max_bytes": null,
-            "overflow_action": "fail_closed",
-            "hold_eligible": true,
-            "expiry_action": "none",
-            "policy_version": "1.0.0"
-          },
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "name": "rule:storage_value_registry.schema:type:e02c78cb:nested-object",
+          "scenario": "schema-rule",
+          "valid": false
         },
         {
-          "name": "rule:storage_value_registry.schema:type:e02c78cb:bool",
-          "scenario": "schema-rule",
           "document": "storage_value_registry.schema.json",
-          "definition": "#/$defs/retention_policy",
+          "definition": "#/$defs/retention_policy/properties/cardinality_scope",
+          "control": null,
           "mutation": {
-            "path": [
-              "cardinality_scope"
-            ],
+            "path": [],
             "value": false
           },
           "guards": [
             {
               "document": "storage_value_registry.schema.json",
-              "pointer": "#/$defs/retention_policy/allOf/4/then/properties/cardinality_scope/type"
+              "pointer": "#/$defs/retention_policy/properties/cardinality_scope/type"
+            },
+            {
+              "document": "storage_value_registry.schema.json",
+              "pointer": "#/$defs/retention_policy/properties/cardinality_scope/enum"
             }
           ],
-          "valid": false,
           "expected_schema": {
             "validator": "type",
-            "path": [
-              "cardinality_scope"
-            ]
+            "path": []
           },
-          "anchors_rule_id": "rule:storage_value_registry.schema:type:e02c78cb",
-          "control": {
-            "policy_id": "RP-AUTHORITY-INDEFINITE",
-            "retention_mode": "indefinite",
-            "anchor_kind": "creation",
-            "retain_indefinitely": true,
-            "ttl_seconds": null,
-            "source_policy_ref": null,
-            "max_cardinality": null,
-            "cardinality_scope": null,
-            "additional_cardinality_limits": [],
-            "max_bytes": null,
-            "overflow_action": "fail_closed",
-            "hold_eligible": true,
-            "expiry_action": "none",
-            "policy_version": "1.0.0"
-          },
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "name": "rule:storage_value_registry.schema:type:e02c78cb:bool",
+          "scenario": "schema-rule",
+          "valid": false
         },
         {
-          "name": "rule:storage_value_registry.schema:type:e02c78cb:float",
-          "scenario": "schema-rule",
           "document": "storage_value_registry.schema.json",
-          "definition": "#/$defs/retention_policy",
+          "definition": "#/$defs/retention_policy/properties/cardinality_scope",
+          "control": null,
           "mutation": {
-            "path": [
-              "cardinality_scope"
-            ],
+            "path": [],
             "value": 0.5
           },
           "guards": [
             {
               "document": "storage_value_registry.schema.json",
-              "pointer": "#/$defs/retention_policy/allOf/4/then/properties/cardinality_scope/type"
+              "pointer": "#/$defs/retention_policy/properties/cardinality_scope/type"
+            },
+            {
+              "document": "storage_value_registry.schema.json",
+              "pointer": "#/$defs/retention_policy/properties/cardinality_scope/enum"
             }
           ],
-          "valid": false,
           "expected_schema": {
             "validator": "type",
-            "path": [
-              "cardinality_scope"
-            ]
+            "path": []
           },
-          "anchors_rule_id": "rule:storage_value_registry.schema:type:e02c78cb",
-          "control": {
-            "policy_id": "RP-AUTHORITY-INDEFINITE",
-            "retention_mode": "indefinite",
-            "anchor_kind": "creation",
-            "retain_indefinitely": true,
-            "ttl_seconds": null,
-            "source_policy_ref": null,
-            "max_cardinality": null,
-            "cardinality_scope": null,
-            "additional_cardinality_limits": [],
-            "max_bytes": null,
-            "overflow_action": "fail_closed",
-            "hold_eligible": true,
-            "expiry_action": "none",
-            "policy_version": "1.0.0"
-          },
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "name": "rule:storage_value_registry.schema:type:e02c78cb:float",
+          "scenario": "schema-rule",
+          "valid": false
         },
         {
           "name": "exact-identity-epoch:string-false",
@@ -97567,12 +97483,16 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/file_copied.schema.json",
+              "pointer": "#/$defs/safe_id/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/file_copied.schema.json",
               "pointer": "#/$defs/safe_id/pattern"
             }
           ],
           "valid": false,
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": [
               "project_id"
             ]
@@ -97580,8 +97500,7 @@
           "anchors_rule_id": "rule:file_copied.schema:minLength:70280240",
           "control_path": [
             "payload"
-          ],
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          ]
         },
         {
           "name": "root-anchor:rule:file_copied.schema:minLength:22df9717",
@@ -97626,12 +97545,16 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/file_copied.schema.json",
+              "pointer": "#/$defs/non_secret_ref/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/file_copied.schema.json",
               "pointer": "#/$defs/non_secret_ref/pattern"
             }
           ],
           "valid": false,
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": [
               "source_node_ref"
             ]
@@ -97639,8 +97562,7 @@
           "anchors_rule_id": "rule:file_copied.schema:minLength:4af1c18a",
           "control_path": [
             "payload"
-          ],
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          ]
         },
         {
           "name": "root-anchor:rule:file_copied.schema:minimum:b166f690",
@@ -99282,12 +99204,16 @@
           "guards": [
             {
               "document": "filemanager_operation_contracts.schema.json",
+              "pointer": "#/$defs/family_control/properties/drain_operation_keys/items/maxLength"
+            },
+            {
+              "document": "filemanager_operation_contracts.schema.json",
               "pointer": "#/$defs/family_control/properties/drain_operation_keys/items/pattern"
             }
           ],
           "valid": false,
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "maxLength",
             "path": [
               "drain_operation_keys",
               0
@@ -99299,8 +99225,7 @@
             7,
             "args",
             1
-          ],
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          ]
         },
         {
           "name": "root-anchor:rule:filemanager_operation_contracts.schema:minItems:08e3535d",
@@ -99421,6 +99346,10 @@
           "guards": [
             {
               "document": "filemanager_operation_contracts.schema.json",
+              "pointer": "#/$defs/non_secret_ref/minLength"
+            },
+            {
+              "document": "filemanager_operation_contracts.schema.json",
               "pointer": "#/$defs/non_secret_ref/pattern"
             }
           ],
@@ -99438,8 +99367,7 @@
             "custody_model",
             "operation_rows",
             "filemanager_operation_custody.v1:578615a0bdfdf732eb7d6e69001c4dab726bfb72e5d510882c5a3ed533c0abde"
-          ],
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          ]
         },
         {
           "name": "root-anchor:rule:filemanager_operation_contracts.schema:minLength:08e04f5b",
@@ -99456,12 +99384,16 @@
           "guards": [
             {
               "document": "filemanager_operation_contracts.schema.json",
+              "pointer": "#/$defs/family_control/properties/drain_operation_keys/items/minLength"
+            },
+            {
+              "document": "filemanager_operation_contracts.schema.json",
               "pointer": "#/$defs/family_control/properties/drain_operation_keys/items/pattern"
             }
           ],
           "valid": false,
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": [
               "drain_operation_keys",
               0
@@ -99473,8 +99405,7 @@
             7,
             "args",
             1
-          ],
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          ]
         },
         {
           "name": "root-anchor:rule:filemanager_operation_contracts.schema:minimum:71d230d5",
@@ -113698,6 +113629,10 @@
           "guards": [
             {
               "document": "storage_value_registry.schema.json",
+              "pointer": "#/$defs/retention_policy/properties/cardinality_scope/enum"
+            },
+            {
+              "document": "storage_value_registry.schema.json",
               "pointer": "#/$defs/retention_policy/allOf/4/else/properties/cardinality_scope/enum"
             }
           ],
@@ -113724,8 +113659,7 @@
             "hold_eligible": true,
             "expiry_action": "compact",
             "policy_version": "1.0.0"
-          },
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          }
         },
         {
           "name": "root-anchor:rule:storage_value_registry.schema:maximum:b12249eb",
@@ -121683,6 +121617,14 @@
           "guards": [
             {
               "document": "storage_value_registry.schema.json",
+              "pointer": "#/$defs/retention_policy/properties/cardinality_scope/type"
+            },
+            {
+              "document": "storage_value_registry.schema.json",
+              "pointer": "#/$defs/retention_policy/properties/cardinality_scope/enum"
+            },
+            {
+              "document": "storage_value_registry.schema.json",
               "pointer": "#/$defs/retention_policy/allOf/4/then/properties/cardinality_scope/type"
             }
           ],
@@ -121709,8 +121651,7 @@
             "hold_eligible": true,
             "expiry_action": "none",
             "policy_version": "1.0.0"
-          },
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          }
         },
         {
           "name": "root-anchor:rule:storage_value_registry.schema:uniqueItems:9647da5d",
@@ -156163,17 +156104,20 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/file_created.schema.json",
+              "pointer": "#/$defs/safe_id/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/file_created.schema.json",
               "pointer": "#/$defs/safe_id/pattern"
             }
           ],
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": []
           },
           "name": "rule:file_created.schema:minLength:f89361b0",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "event_payloads/file_manager/file_created.schema.json",
@@ -156208,17 +156152,20 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/file_created.schema.json",
+              "pointer": "#/$defs/non_secret_ref/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/file_created.schema.json",
               "pointer": "#/$defs/non_secret_ref/pattern"
             }
           ],
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": []
           },
           "name": "rule:file_created.schema:minLength:29d216b8",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "event_payloads/file_manager/file_created.schema.json",
@@ -201971,12 +201918,16 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/file_created.schema.json",
+              "pointer": "#/$defs/safe_id/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/file_created.schema.json",
               "pointer": "#/$defs/safe_id/pattern"
             }
           ],
           "valid": false,
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": [
               "project_id"
             ]
@@ -201984,8 +201935,7 @@
           "anchors_rule_id": "rule:file_created.schema:minLength:f89361b0",
           "control_path": [
             "payload"
-          ],
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          ]
         },
         {
           "name": "root-anchor:rule:file_created.schema:minLength:de3ce68a",
@@ -202030,12 +201980,16 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/file_created.schema.json",
+              "pointer": "#/$defs/non_secret_ref/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/file_created.schema.json",
               "pointer": "#/$defs/non_secret_ref/pattern"
             }
           ],
           "valid": false,
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": [
               "destination_container_ref"
             ]
@@ -202043,8 +201997,7 @@
           "anchors_rule_id": "rule:file_created.schema:minLength:29d216b8",
           "control_path": [
             "payload"
-          ],
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          ]
         },
         {
           "name": "root-anchor:rule:file_created.schema:minimum:afb84eb6",
@@ -232619,17 +232572,20 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/file_deleted.schema.json",
+              "pointer": "#/$defs/safe_id/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/file_deleted.schema.json",
               "pointer": "#/$defs/safe_id/pattern"
             }
           ],
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": []
           },
           "name": "rule:file_deleted.schema:minLength:1318ee42",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "event_payloads/file_manager/file_deleted.schema.json",
@@ -232664,17 +232620,20 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/file_deleted.schema.json",
+              "pointer": "#/$defs/non_secret_ref/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/file_deleted.schema.json",
               "pointer": "#/$defs/non_secret_ref/pattern"
             }
           ],
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": []
           },
           "name": "rule:file_deleted.schema:minLength:0e23b21b",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "event_payloads/file_manager/file_deleted.schema.json",
@@ -278147,12 +278106,16 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/file_deleted.schema.json",
+              "pointer": "#/$defs/safe_id/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/file_deleted.schema.json",
               "pointer": "#/$defs/safe_id/pattern"
             }
           ],
           "valid": false,
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": [
               "project_id"
             ]
@@ -278160,8 +278123,7 @@
           "anchors_rule_id": "rule:file_deleted.schema:minLength:1318ee42",
           "control_path": [
             "payload"
-          ],
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          ]
         },
         {
           "name": "root-anchor:rule:file_deleted.schema:minLength:39e536a9",
@@ -278206,12 +278168,16 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/file_deleted.schema.json",
+              "pointer": "#/$defs/non_secret_ref/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/file_deleted.schema.json",
               "pointer": "#/$defs/non_secret_ref/pattern"
             }
           ],
           "valid": false,
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": [
               "prior_node_ref"
             ]
@@ -278219,8 +278185,7 @@
           "anchors_rule_id": "rule:file_deleted.schema:minLength:0e23b21b",
           "control_path": [
             "payload"
-          ],
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          ]
         },
         {
           "name": "root-anchor:rule:file_deleted.schema:minimum:3d29bebf",
@@ -312542,17 +312507,20 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/file_exported.schema.json",
+              "pointer": "#/$defs/safe_id/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/file_exported.schema.json",
               "pointer": "#/$defs/safe_id/pattern"
             }
           ],
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": []
           },
           "name": "rule:file_exported.schema:minLength:d69d4b3f",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "event_payloads/file_manager/file_exported.schema.json",
@@ -312587,17 +312555,20 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/file_exported.schema.json",
+              "pointer": "#/$defs/non_secret_ref/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/file_exported.schema.json",
               "pointer": "#/$defs/non_secret_ref/pattern"
             }
           ],
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": []
           },
           "name": "rule:file_exported.schema:minLength:d2629919",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "event_payloads/file_manager/file_exported.schema.json",
@@ -362719,12 +362690,16 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/file_exported.schema.json",
+              "pointer": "#/$defs/safe_id/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/file_exported.schema.json",
               "pointer": "#/$defs/safe_id/pattern"
             }
           ],
           "valid": false,
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": [
               "project_id"
             ]
@@ -362732,8 +362707,7 @@
           "anchors_rule_id": "rule:file_exported.schema:minLength:d69d4b3f",
           "control_path": [
             "payload"
-          ],
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          ]
         },
         {
           "name": "root-anchor:rule:file_exported.schema:minLength:c131d9fd",
@@ -362778,12 +362752,16 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/file_exported.schema.json",
+              "pointer": "#/$defs/non_secret_ref/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/file_exported.schema.json",
               "pointer": "#/$defs/non_secret_ref/pattern"
             }
           ],
           "valid": false,
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": [
               "source_node_ref"
             ]
@@ -362791,8 +362769,7 @@
           "anchors_rule_id": "rule:file_exported.schema:minLength:d2629919",
           "control_path": [
             "payload"
-          ],
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          ]
         },
         {
           "name": "root-anchor:rule:file_exported.schema:minimum:e389de84",
@@ -399642,17 +399619,20 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/file_moved.schema.json",
+              "pointer": "#/$defs/safe_id/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/file_moved.schema.json",
               "pointer": "#/$defs/safe_id/pattern"
             }
           ],
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": []
           },
           "name": "rule:file_moved.schema:minLength:79a1b40e",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "event_payloads/file_manager/file_moved.schema.json",
@@ -399687,17 +399667,20 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/file_moved.schema.json",
+              "pointer": "#/$defs/non_secret_ref/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/file_moved.schema.json",
               "pointer": "#/$defs/non_secret_ref/pattern"
             }
           ],
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": []
           },
           "name": "rule:file_moved.schema:minLength:bf7f7241",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "event_payloads/file_manager/file_moved.schema.json",
@@ -449819,12 +449802,16 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/file_moved.schema.json",
+              "pointer": "#/$defs/safe_id/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/file_moved.schema.json",
               "pointer": "#/$defs/safe_id/pattern"
             }
           ],
           "valid": false,
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": [
               "project_id"
             ]
@@ -449832,8 +449819,7 @@
           "anchors_rule_id": "rule:file_moved.schema:minLength:79a1b40e",
           "control_path": [
             "payload"
-          ],
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          ]
         },
         {
           "name": "root-anchor:rule:file_moved.schema:minLength:62a085b2",
@@ -449878,12 +449864,16 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/file_moved.schema.json",
+              "pointer": "#/$defs/non_secret_ref/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/file_moved.schema.json",
               "pointer": "#/$defs/non_secret_ref/pattern"
             }
           ],
           "valid": false,
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": [
               "node_ref"
             ]
@@ -449891,8 +449881,7 @@
           "anchors_rule_id": "rule:file_moved.schema:minLength:bf7f7241",
           "control_path": [
             "payload"
-          ],
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          ]
         },
         {
           "name": "root-anchor:rule:file_moved.schema:minimum:14699fb5",
@@ -483884,17 +483873,20 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/file_renamed.schema.json",
+              "pointer": "#/$defs/safe_id/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/file_renamed.schema.json",
               "pointer": "#/$defs/safe_id/pattern"
             }
           ],
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": []
           },
           "name": "rule:file_renamed.schema:minLength:c2478609",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "event_payloads/file_manager/file_renamed.schema.json",
@@ -483929,17 +483921,20 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/file_renamed.schema.json",
+              "pointer": "#/$defs/non_secret_ref/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/file_renamed.schema.json",
               "pointer": "#/$defs/non_secret_ref/pattern"
             }
           ],
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": []
           },
           "name": "rule:file_renamed.schema:minLength:d36dea1a",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "event_payloads/file_manager/file_renamed.schema.json",
@@ -534061,12 +534056,16 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/file_renamed.schema.json",
+              "pointer": "#/$defs/safe_id/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/file_renamed.schema.json",
               "pointer": "#/$defs/safe_id/pattern"
             }
           ],
           "valid": false,
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": [
               "project_id"
             ]
@@ -534074,8 +534073,7 @@
           "anchors_rule_id": "rule:file_renamed.schema:minLength:c2478609",
           "control_path": [
             "payload"
-          ],
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          ]
         },
         {
           "name": "root-anchor:rule:file_renamed.schema:minLength:e88b3ba1",
@@ -534120,12 +534118,16 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/file_renamed.schema.json",
+              "pointer": "#/$defs/non_secret_ref/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/file_renamed.schema.json",
               "pointer": "#/$defs/non_secret_ref/pattern"
             }
           ],
           "valid": false,
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": [
               "node_ref"
             ]
@@ -534133,8 +534135,7 @@
           "anchors_rule_id": "rule:file_renamed.schema:minLength:d36dea1a",
           "control_path": [
             "payload"
-          ],
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          ]
         },
         {
           "name": "root-anchor:rule:file_renamed.schema:minimum:672834c5",
@@ -569371,17 +569372,20 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/folder_copied.schema.json",
+              "pointer": "#/$defs/safe_id/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/folder_copied.schema.json",
               "pointer": "#/$defs/safe_id/pattern"
             }
           ],
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": []
           },
           "name": "rule:folder_copied.schema:minLength:4f380f5d",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "event_payloads/file_manager/folder_copied.schema.json",
@@ -569416,17 +569420,20 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/folder_copied.schema.json",
+              "pointer": "#/$defs/non_secret_ref/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/folder_copied.schema.json",
               "pointer": "#/$defs/non_secret_ref/pattern"
             }
           ],
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": []
           },
           "name": "rule:folder_copied.schema:minLength:c1160ec3",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "event_payloads/file_manager/folder_copied.schema.json",
@@ -620038,12 +620045,16 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/folder_copied.schema.json",
+              "pointer": "#/$defs/safe_id/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/folder_copied.schema.json",
               "pointer": "#/$defs/safe_id/pattern"
             }
           ],
           "valid": false,
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": [
               "project_id"
             ]
@@ -620051,8 +620062,7 @@
           "anchors_rule_id": "rule:folder_copied.schema:minLength:4f380f5d",
           "control_path": [
             "payload"
-          ],
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          ]
         },
         {
           "name": "root-anchor:rule:folder_copied.schema:minLength:a7affda1",
@@ -620097,12 +620107,16 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/folder_copied.schema.json",
+              "pointer": "#/$defs/non_secret_ref/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/folder_copied.schema.json",
               "pointer": "#/$defs/non_secret_ref/pattern"
             }
           ],
           "valid": false,
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": [
               "source_folder_ref"
             ]
@@ -620110,8 +620124,7 @@
           "anchors_rule_id": "rule:folder_copied.schema:minLength:c1160ec3",
           "control_path": [
             "payload"
-          ],
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          ]
         },
         {
           "name": "root-anchor:rule:folder_copied.schema:minimum:38e865aa",
@@ -654341,17 +654354,20 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/folder_created.schema.json",
+              "pointer": "#/$defs/safe_id/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/folder_created.schema.json",
               "pointer": "#/$defs/safe_id/pattern"
             }
           ],
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": []
           },
           "name": "rule:folder_created.schema:minLength:a59f76c5",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "event_payloads/file_manager/folder_created.schema.json",
@@ -654386,17 +654402,20 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/folder_created.schema.json",
+              "pointer": "#/$defs/non_secret_ref/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/folder_created.schema.json",
               "pointer": "#/$defs/non_secret_ref/pattern"
             }
           ],
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": []
           },
           "name": "rule:folder_created.schema:minLength:af14d621",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "event_payloads/file_manager/folder_created.schema.json",
@@ -700149,12 +700168,16 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/folder_created.schema.json",
+              "pointer": "#/$defs/safe_id/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/folder_created.schema.json",
               "pointer": "#/$defs/safe_id/pattern"
             }
           ],
           "valid": false,
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": [
               "project_id"
             ]
@@ -700162,8 +700185,7 @@
           "anchors_rule_id": "rule:folder_created.schema:minLength:a59f76c5",
           "control_path": [
             "payload"
-          ],
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          ]
         },
         {
           "name": "root-anchor:rule:folder_created.schema:minLength:ace473fa",
@@ -700208,12 +700230,16 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/folder_created.schema.json",
+              "pointer": "#/$defs/non_secret_ref/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/folder_created.schema.json",
               "pointer": "#/$defs/non_secret_ref/pattern"
             }
           ],
           "valid": false,
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": [
               "destination_container_ref"
             ]
@@ -700221,8 +700247,7 @@
           "anchors_rule_id": "rule:folder_created.schema:minLength:af14d621",
           "control_path": [
             "payload"
-          ],
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          ]
         },
         {
           "name": "root-anchor:rule:folder_created.schema:minimum:a0bc2a46",
@@ -731371,17 +731396,20 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/folder_deleted.schema.json",
+              "pointer": "#/$defs/safe_id/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/folder_deleted.schema.json",
               "pointer": "#/$defs/safe_id/pattern"
             }
           ],
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": []
           },
           "name": "rule:folder_deleted.schema:minLength:e55da67a",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "event_payloads/file_manager/folder_deleted.schema.json",
@@ -731416,17 +731444,20 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/folder_deleted.schema.json",
+              "pointer": "#/$defs/non_secret_ref/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/folder_deleted.schema.json",
               "pointer": "#/$defs/non_secret_ref/pattern"
             }
           ],
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": []
           },
           "name": "rule:folder_deleted.schema:minLength:ebaebbfd",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "event_payloads/file_manager/folder_deleted.schema.json",
@@ -777940,12 +777971,16 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/folder_deleted.schema.json",
+              "pointer": "#/$defs/safe_id/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/folder_deleted.schema.json",
               "pointer": "#/$defs/safe_id/pattern"
             }
           ],
           "valid": false,
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": [
               "project_id"
             ]
@@ -777953,8 +777988,7 @@
           "anchors_rule_id": "rule:folder_deleted.schema:minLength:e55da67a",
           "control_path": [
             "payload"
-          ],
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          ]
         },
         {
           "name": "root-anchor:rule:folder_deleted.schema:minLength:9c9432a8",
@@ -777999,12 +778033,16 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/folder_deleted.schema.json",
+              "pointer": "#/$defs/non_secret_ref/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/folder_deleted.schema.json",
               "pointer": "#/$defs/non_secret_ref/pattern"
             }
           ],
           "valid": false,
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": [
               "prior_folder_ref"
             ]
@@ -778012,8 +778050,7 @@
           "anchors_rule_id": "rule:folder_deleted.schema:minLength:ebaebbfd",
           "control_path": [
             "payload"
-          ],
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          ]
         },
         {
           "name": "root-anchor:rule:folder_deleted.schema:minimum:3edfb357",
@@ -812949,17 +812986,20 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/folder_exported.schema.json",
+              "pointer": "#/$defs/safe_id/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/folder_exported.schema.json",
               "pointer": "#/$defs/safe_id/pattern"
             }
           ],
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": []
           },
           "name": "rule:folder_exported.schema:minLength:4b8beccb",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "event_payloads/file_manager/folder_exported.schema.json",
@@ -812994,17 +813034,20 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/folder_exported.schema.json",
+              "pointer": "#/$defs/non_secret_ref/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/folder_exported.schema.json",
               "pointer": "#/$defs/non_secret_ref/pattern"
             }
           ],
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": []
           },
           "name": "rule:folder_exported.schema:minLength:3f656c08",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "event_payloads/file_manager/folder_exported.schema.json",
@@ -864167,12 +864210,16 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/folder_exported.schema.json",
+              "pointer": "#/$defs/safe_id/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/folder_exported.schema.json",
               "pointer": "#/$defs/safe_id/pattern"
             }
           ],
           "valid": false,
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": [
               "project_id"
             ]
@@ -864180,8 +864227,7 @@
           "anchors_rule_id": "rule:folder_exported.schema:minLength:4b8beccb",
           "control_path": [
             "payload"
-          ],
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          ]
         },
         {
           "name": "root-anchor:rule:folder_exported.schema:minLength:42c9393c",
@@ -864226,12 +864272,16 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/folder_exported.schema.json",
+              "pointer": "#/$defs/non_secret_ref/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/folder_exported.schema.json",
               "pointer": "#/$defs/non_secret_ref/pattern"
             }
           ],
           "valid": false,
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": [
               "source_folder_ref"
             ]
@@ -864239,8 +864289,7 @@
           "anchors_rule_id": "rule:folder_exported.schema:minLength:3f656c08",
           "control_path": [
             "payload"
-          ],
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          ]
         },
         {
           "name": "root-anchor:rule:folder_exported.schema:minimum:ec28cf49",
@@ -901463,17 +901512,20 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/folder_moved.schema.json",
+              "pointer": "#/$defs/safe_id/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/folder_moved.schema.json",
               "pointer": "#/$defs/safe_id/pattern"
             }
           ],
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": []
           },
           "name": "rule:folder_moved.schema:minLength:b0758da0",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "event_payloads/file_manager/folder_moved.schema.json",
@@ -901508,17 +901560,20 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/folder_moved.schema.json",
+              "pointer": "#/$defs/non_secret_ref/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/folder_moved.schema.json",
               "pointer": "#/$defs/non_secret_ref/pattern"
             }
           ],
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": []
           },
           "name": "rule:folder_moved.schema:minLength:63c60e37",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "event_payloads/file_manager/folder_moved.schema.json",
@@ -952191,12 +952246,16 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/folder_moved.schema.json",
+              "pointer": "#/$defs/safe_id/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/folder_moved.schema.json",
               "pointer": "#/$defs/safe_id/pattern"
             }
           ],
           "valid": false,
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": [
               "project_id"
             ]
@@ -952204,8 +952263,7 @@
           "anchors_rule_id": "rule:folder_moved.schema:minLength:b0758da0",
           "control_path": [
             "payload"
-          ],
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          ]
         },
         {
           "name": "root-anchor:rule:folder_moved.schema:minLength:25aaed63",
@@ -952250,12 +952308,16 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/folder_moved.schema.json",
+              "pointer": "#/$defs/non_secret_ref/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/folder_moved.schema.json",
               "pointer": "#/$defs/non_secret_ref/pattern"
             }
           ],
           "valid": false,
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": [
               "folder_ref"
             ]
@@ -952263,8 +952325,7 @@
           "anchors_rule_id": "rule:folder_moved.schema:minLength:63c60e37",
           "control_path": [
             "payload"
-          ],
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          ]
         },
         {
           "name": "root-anchor:rule:folder_moved.schema:minimum:8d2246ed",
@@ -986579,17 +986640,20 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/folder_renamed.schema.json",
+              "pointer": "#/$defs/safe_id/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/folder_renamed.schema.json",
               "pointer": "#/$defs/safe_id/pattern"
             }
           ],
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": []
           },
           "name": "rule:folder_renamed.schema:minLength:d83c66bf",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "event_payloads/file_manager/folder_renamed.schema.json",
@@ -986624,17 +986688,20 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/folder_renamed.schema.json",
+              "pointer": "#/$defs/non_secret_ref/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/folder_renamed.schema.json",
               "pointer": "#/$defs/non_secret_ref/pattern"
             }
           ],
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": []
           },
           "name": "rule:folder_renamed.schema:minLength:28254fc6",
           "scenario": "schema-rule",
-          "valid": false,
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          "valid": false
         },
         {
           "document": "event_payloads/file_manager/folder_renamed.schema.json",
@@ -1037278,12 +1037345,16 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/folder_renamed.schema.json",
+              "pointer": "#/$defs/safe_id/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/folder_renamed.schema.json",
               "pointer": "#/$defs/safe_id/pattern"
             }
           ],
           "valid": false,
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": [
               "project_id"
             ]
@@ -1037291,8 +1037362,7 @@
           "anchors_rule_id": "rule:folder_renamed.schema:minLength:d83c66bf",
           "control_path": [
             "payload"
-          ],
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          ]
         },
         {
           "name": "root-anchor:rule:folder_renamed.schema:minLength:918a45b4",
@@ -1037337,12 +1037407,16 @@
           "guards": [
             {
               "document": "event_payloads/file_manager/folder_renamed.schema.json",
+              "pointer": "#/$defs/non_secret_ref/minLength"
+            },
+            {
+              "document": "event_payloads/file_manager/folder_renamed.schema.json",
               "pointer": "#/$defs/non_secret_ref/pattern"
             }
           ],
           "valid": false,
           "expected_schema": {
-            "validator": "pattern",
+            "validator": "minLength",
             "path": [
               "filesafe_receipt_ref"
             ]
@@ -1037350,8 +1037424,7 @@
           "anchors_rule_id": "rule:folder_renamed.schema:minLength:28254fc6",
           "control_path": [
             "payload"
-          ],
-          "isolation_refactor": "Removed only schema assertions implied by retained predicates; no accepted complete value changes."
+          ]
         },
         {
           "name": "root-anchor:rule:folder_renamed.schema:minimum:a1f6157b",
