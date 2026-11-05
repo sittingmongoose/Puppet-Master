@@ -1,4 +1,5 @@
 // FO-73: real held presses at each button edge; sample hit bounds every frame.
+import { appendFile } from 'node:fs/promises';
 import { LOOKS } from '../browser-check.config.mjs';
 const L='#pm-o55-onboarding ';
 export default async function(t) {
@@ -20,15 +21,15 @@ export default async function(t) {
  });
  const motions=t.args.motion?String(t.args.motion).split(','):['no-preference','reduce','attribute'];
  const looks=t.args.look?String(t.args.look).split(','):LOOKS;
- const screens=t.args.screen?String(t.args.screen).split(','):['look','where','nas-find','begin','name','safe','away','review','ai-none','ready','look-menu','backup-sheet','ex-folder','nas-smb','tree-sheet','away-proxy'];
+ const screens=t.args.screen?String(t.args.screen).split(','):['look','where','nas-find','begin','name','safe','away','review','ai-none','ready','look-menu','backup-sheet','ex-folder','nas-smb','tree-sheet','away-proxy','safe-details','rail-history'];
  for(const motion of motions) {
   await t.emulate({reducedMotion:motion==='attribute'?'no-preference':motion});
   for(const look of looks) {
    await f.evaluate(([fam,mode])=>O55.ui.applyLook(fam,mode),look.split('-'));await f.waitForTimeout(1600);
    await f.evaluate(m=>document.documentElement.setAttribute('data-motion',m==='attribute'?'reduced':'full'),motion);
-   await f.evaluate(()=>{window.__pressSeen=new Set();window.__pressInventory=[];});
+   await f.evaluate(()=>{window.__pressSeen=new Set();window.__pressInventory=[];O55.S.sess.ui['details:hist']=false;O55.S.sess.history=[];});
    for(const screen of screens) {
-    await t.page.mouse.move(2,2);await f.evaluate(s=>{O55.S.lookOpen=false;O55.S.sess.ui.sheet=null;if(s==='away-proxy'){O55.S.draft().remote_mode='reverse_proxy';O55.S.draft().proxy_hostname='https://pm.example.net';}O55.ui.go(s==='look-menu'?'look':s==='backup-sheet'?'safe':s==='tree-sheet'?'ex-folder':s==='away-proxy'?'away':s,{noHistory:true});if(s==='look-menu')O55.ui.act('lookMenu');if(s==='backup-sheet'||s==='tree-sheet'){O55.S.sess.ui.sheet=s==='backup-sheet'?'backup':'tree';O55.ui.refresh();}},screen);await f.waitForTimeout(1800);
+    await t.page.mouse.move(2,2);await f.evaluate(s=>{O55.S.lookOpen=false;O55.S.sess.ui.sheet=null;if(s==='safe-details')O55.S.sess.ui['details:hist']=true;if(s==='rail-history')O55.S.sess.history=['welcome','where','begin','name'];if(s==='away-proxy'){O55.S.draft().remote_mode='reverse_proxy';O55.S.draft().proxy_hostname='https://pm.example.net';}O55.ui.go(s==='look-menu'?'look':s==='backup-sheet'?'safe':s==='tree-sheet'?'ex-folder':s==='away-proxy'?'away':s==='safe-details'?'safe':s==='rail-history'?'review':s,{noHistory:true});if(s==='look-menu')O55.ui.act('lookMenu');if(s==='backup-sheet'||s==='tree-sheet'){O55.S.sess.ui.sheet=s==='backup-sheet'?'backup':'tree';O55.ui.refresh();}},screen);await f.waitForTimeout(1800);
     await f.evaluate(()=>{document.querySelectorAll('[data-press-test]').forEach(e=>e.removeAttribute('data-press-test'));document.querySelectorAll('#pm-o55-onboarding button:not(.o55-card, .o55-tile):not([aria-disabled="true"]):not(:disabled)').forEach(e=>{if(e.checkVisibility()&&e.getBoundingClientRect().width){const cls=[...e.classList].filter(c=>!['o55-on','pmh-on','o55-lookbtn','o55-talk','o55-close'].includes(c)).sort().join('.')||e.parentElement.className;const key=cls+(e.matches('.o55-btn')?':'+(e.closest('.o55-foot')?'footer':e.closest('.o55-sheet')?'sheet':'inline'):'');if(!window.__pressSeen.has(key)){window.__pressSeen.add(key);window.__pressInventory.push({key,screen:O55.S.sess.screen,classes:e.className,action:e.getAttribute('data-o55-do'),label:e.textContent.trim(),width:e.getBoundingClientRect().width});e.setAttribute('data-press-test','');}}});});
     const sel=L+'button[data-press-test]'+(t.args.button?String(t.args.button):''),count=await f.locator(sel).count(),tag=`${look} ${motion} ${screen}`;
     await f.evaluate(()=>{window.__press.clicks=[];window.__press.downs=[];});
@@ -76,7 +77,10 @@ export default async function(t) {
     if(motion!=='no-preference')await t.check(`FO-73 no press scale with Reduced Motion ${tag}`,!scaled.length,JSON.stringify(scaled.slice(0,3)));
     
    }
-   await t.check(`FO-73 representative inventory ${look} ${motion}`,true,JSON.stringify(await f.evaluate(()=>window.__pressInventory)));
+   const inventory=await f.evaluate(()=>window.__pressInventory);
+   await t.check(`FO-73 representative inventory ${look} ${motion}`,inventory.length>0);
+   if(!t.args.screen){const required=['o55-iconbtn','o55-btn','o55-link','o55-suggestchip','o55-detbtn','o55-morebtn','o55-lookopt','o55-treeitem','o55-check','o55-toggle','o55-railjump'];const missing=required.filter(c=>!inventory.some(e=>e.classes.split(' ').includes(c)));await t.check(`FO-73 complete family coverage ${look} ${motion}`,!missing.length,JSON.stringify(missing));}
+   if(t.args.inventoryOut)await appendFile(String(t.args.inventoryOut),JSON.stringify({look,motion,inventory})+'\n');
   }
  }
  await f.evaluate(()=>document.documentElement.setAttribute('data-motion','full'));
