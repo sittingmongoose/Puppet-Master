@@ -133,6 +133,17 @@ def audit(family):
                     main(family)
                 actual = outcome(value, operation)
                 record('full_cli_' + name, operation, actual, expected, full_cli_exit=0)
+                if expected != 'accept':
+                    # Repair only the defective reference/identity fact. The
+                    # syntax witness retains its literal '~2' target key; its
+                    # valid RFC6901 spelling escapes the tilde as '~0'.
+                    repaired = {PATH: linked} if name in ('transitive_unused_ref', 'external_target_validation') else {}
+                    if name == 'ref_pointer_syntax':
+                        repaired = copy.deepcopy(replacements)
+                        next(f for f in repaired[REGISTRY]['families'] if f['event_type'] == 'run.started')['payload_schema_ref']['json_pointer'] = '#/$defs/bad~02escape'
+                    m.load = lambda p: repaired[p] if p in repaired else original_load(p)
+                    record('single_fact_repair_' + name, operation, outcome(value, operation), 'accept')
+                    m.load = lambda p: inputs[p] if p in inputs else original_load(p)
                 if expected == 'registered_schema_ref':
                     closure = schemas.reference_closure
                     schemas.reference_closure = lambda *a: None
