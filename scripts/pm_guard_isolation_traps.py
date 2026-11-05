@@ -1010,7 +1010,24 @@ def round4_probe(g, trap, memory):
                 blocked[expression] = g.python_atom_reason(ast.parse(expression, mode='eval').body)
         allowed = {expr: g.python_atom_reason(ast.parse(expr, mode='eval').body)
                    for expr in ('v["x"] == 0', 'len(v["x"].encode()) > 8', 'v.get("x", 0) >= -1')}
-        return {'blocked': blocked, 'allowed': allowed}, all(blocked.values()) and not any(allowed.values())
+        payloads = []
+        for body in ('assert v["x"] >= 0, (v["x"], v["y"])',
+                     'assert v["x"] >= 0, opaque(v)',
+                     'if v["x"] < 0:\n        raise ValueError((v["x"], v["y"]))',
+                     'if v["x"] < 0:\n        errors.append((v["x"], v["y"]))',
+                     'require(v["x"] >= 0, opaque(v))',
+                     'if v["x"] < 0:\n        refuse(opaque(v))'):
+            source = 'def check(v):\n    ' + body + '\n    return True\n'
+            module = g.AstGuards('payload', source, {})
+            target = module.candidates()[0]
+            try:
+                module.register(target, 'bad', g.Invariant('/x', 'nonnegative'))
+                refused = False
+            except g.IsolationError:
+                refused = True
+            payloads.append({'source': source, 'target': target, 'registration_refused': refused})
+        return {'blocked': blocked, 'allowed': allowed, 'payloads': payloads}, (
+            all(blocked.values()) and not any(allowed.values()) and all(p['registration_refused'] for p in payloads))
     if trap['kind'] == 'round4_control_boundaries':
         bodies = {
             'while-if': 'while v["x"] < 0 or v["y"] < 0:\n        if True:\n            return False',

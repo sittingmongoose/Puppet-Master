@@ -1091,8 +1091,16 @@ class AstGuards:
                             elif condition is not None and node.value is not None and not isinstance(node.value, ast.Constant):
                                 reason = "conditional return value may carry additional predicates; atomic adapter required"
                         if isinstance(node, ast.Raise) and (not isinstance(node.exc, ast.Call) or node.exc.keywords or
+                                not isinstance(node.exc.func, (ast.Name, ast.Attribute)) or
                                 not all(isinstance(arg, ast.Constant) and python_node_supported(arg, "refusal_value") for arg in node.exc.args)):
                             reason = "refusal payload is not a fixed scalar constructor; atomic adapter required"
+                        if isinstance(node, ast.Assert) and node.msg is not None and not isinstance(node.msg, ast.Constant):
+                            reason = "assert refusal message is not a fixed scalar value; atomic adapter required"
+                        if checkcall and (node.keywords or any(not isinstance(arg, ast.Constant) for i, arg in enumerate(node.args) if i != arg_index)):
+                            reason = "predicate helper has additional nonliteral refusal arguments; atomic adapter required"
+                        if refusal_call and isinstance(node, ast.Expr) and isinstance(node.value.func, ast.Name) and (
+                                node.value.keywords or not all(isinstance(arg, ast.Constant) for arg in node.value.args)):
+                            reason = "refusal helper payload is not fixed scalar values; atomic adapter required"
                         if isinstance(fn, ast.AsyncFunctionDef):
                             reason = "async guard requires an explicit atomic adapter"
                         if isinstance(node, ast.Raise) and node.cause is not None:
@@ -1104,6 +1112,8 @@ class AstGuards:
                             if (not python_node_supported(call, "accumulator_write") or call.keywords or len(call.args) != 1
                                     or not isinstance(call.args[0], ast.Constant)):
                                 reason = "append payload is not one fixed scalar error; atomic adapter required"
+                        if isinstance(node, (ast.Raise, ast.Return, ast.Assert)) and not python_node_supported(node, "refusal_value"):
+                            reason = "statement fails closed in refusal-value position; atomic adapter required"
                         reason = control_reason(node, fn) or reason
                         result.append({"function": name, "line": node.lineno,
                             "column": node.col_offset, "action": action,
