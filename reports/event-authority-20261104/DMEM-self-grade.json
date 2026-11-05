@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-W2-DMEM-FIX5-SELF-GRADE-20261104",
+  "assessment_id": "EA-W2-DMEM-FIX6-SELF-GRADE-20261104",
   "assessment_kind": "worker_self_grade",
   "rubric": {
     "criteria": [
@@ -21,7 +21,7 @@
   },
   "assessed_tree": {
     "branch": "plans/ea-w2-memory-maintenance-20261104",
-    "commit": "5e1512a7da88d62a760e00f51d86cfbf637efa67",
+    "commit": "a997e62c4bb70ae858e9c7eee78cb8efc6018f94",
     "base": "be4766513ff71776346fc73b84f2542990f955af"
   },
   "registry": {
@@ -29,9 +29,9 @@
     "sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653"
   },
   "status_counts": {
-    "ABSENT": 12,
     "PASS": 120,
-    "PARTIAL": 12
+    "PARTIAL": 12,
+    "ABSENT": 12
   },
   "native_execution": "NOT_RUN",
   "rows": [
@@ -78,11 +78,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "owner_doc": {
           "status": "PASS",
@@ -105,11 +105,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "producer": {
           "status": "PASS",
@@ -132,11 +132,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -152,11 +152,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "scope_identity": {
           "status": "PASS",
@@ -179,11 +179,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -227,11 +227,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "retention": {
           "status": "PARTIAL",
@@ -247,11 +247,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -295,11 +295,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "transitions": {
           "status": "PASS",
@@ -329,11 +329,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -356,11 +356,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -383,16 +383,16 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Single-defect custody inputs and the complete checker corpus pass named guard removal/restoration. Integrity and semantic binding are independent; no whole-gate no-op is evidence. Native execution remains NOT_RUN.",
+          "finding": "Full canonical, replay-only and compatibility historical positives and forged/foreign/withdrawn negatives pass the complete checker; every named guard or duplicate set has flipping negatives and the complete complement retains its refusal. Numeric commitments normalize equivalent integer spellings. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -454,8 +454,8 @@
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-315",
               "quote": "reference_cases checks standing check 9: before any instance validation the checker walks every subschema",
-              "line_start": 7257,
-              "line_end": 7257
+              "line_start": 7261,
+              "line_end": 7261
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
@@ -481,38 +481,66 @@
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
-              "quote": "def start_custody_gate(state, first_start=False, writer_event=None):",
-              "line_start": 355,
-              "line_end": 355
+              "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
+              "line_start": 377,
+              "line_end": 377
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 554,
-              "line_end": 554
+              "line_start": 576,
+              "line_end": 576
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 985,
-              "line_end": 985
+              "line_start": 1127,
+              "line_end": 1127
             },
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 524,
-              "line_end": 524,
+              "line_start": 586,
+              "line_end": 586,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None):"
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.dedup_sweep.completed:compatibility-replay-only\",",
+              "line_start": 754,
+              "line_end": 754
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.dedup_sweep.completed:foreign-project-compatibility_replay\",",
+              "line_start": 3299,
+              "line_end": 3299
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.dedup_sweep.completed:numeric-spelling-commitment-1e0\",",
+              "line_start": 2528,
+              "line_end": 2528
+            },
+            {
+              "path": "scripts/pm_memory_maintenance_events.py",
+              "unit": "read_canonical_history",
+              "quote": "def read_canonical_history(before, event):",
+              "line_start": 736,
+              "line_end": 736
             }
           ],
           "prior": {
-            "source": "Sol cycle-4 review at dc4c46c58c",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Standing check 11 verified for this exact family; full case ids and complements are in DMEM-check11-guards.json and its SHA-pinned external proof."
+          "change_reason": "Round-6 canonical historical-reader, cutoff/reference, numeric and isolated-guard oracles pass; native NOT_RUN."
         }
       },
       "remaining_gaps": [
@@ -522,11 +550,13 @@
         "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof."
       ],
       "static_checks_seen": [
-        "scripts/pm_memory_maintenance_events.py"
+        "scripts/pm_memory_maintenance_events.py",
+        "scripts/pm_memory_guard_isolation.py",
+        "Plans/memory_canonical_history_fixtures.json"
       ],
-      "notes": "Prepared without admission. Round-4 worker regrade after Astra round 2 (start custody gate redesign and standing check 9); final independent review remains. Membership ABSENT, retention PARTIAL, native NOT_RUN.",
+      "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains.",
       "assessed_tree": {
-        "commit": "5e1512a7da88d62a760e00f51d86cfbf637efa67",
+        "commit": "a997e62c4bb70ae858e9c7eee78cb8efc6018f94",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       }
     },
@@ -573,11 +603,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "owner_doc": {
           "status": "PASS",
@@ -600,11 +630,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "producer": {
           "status": "PASS",
@@ -627,11 +657,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -647,11 +677,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "scope_identity": {
           "status": "PASS",
@@ -674,11 +704,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -722,11 +752,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "retention": {
           "status": "PARTIAL",
@@ -742,11 +772,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -790,11 +820,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "transitions": {
           "status": "PASS",
@@ -831,11 +861,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -858,11 +888,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -885,16 +915,16 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Single-defect custody inputs and the complete checker corpus pass named guard removal/restoration. Integrity and semantic binding are independent; no whole-gate no-op is evidence. Native execution remains NOT_RUN.",
+          "finding": "Full canonical, replay-only and compatibility historical positives and forged/foreign/withdrawn negatives pass the complete checker; every named guard or duplicate set has flipping negatives and the complete complement retains its refusal. Numeric commitments normalize equivalent integer spellings. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -956,8 +986,8 @@
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-315",
               "quote": "reference_cases checks standing check 9: before any instance validation the checker walks every subschema",
-              "line_start": 7257,
-              "line_end": 7257
+              "line_start": 7261,
+              "line_end": 7261
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
@@ -983,38 +1013,66 @@
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
-              "quote": "def start_custody_gate(state, first_start=False, writer_event=None):",
-              "line_start": 355,
-              "line_end": 355
+              "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
+              "line_start": 377,
+              "line_end": 377
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 554,
-              "line_end": 554
+              "line_start": 576,
+              "line_end": 576
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 985,
-              "line_end": 985
+              "line_start": 1127,
+              "line_end": 1127
             },
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 524,
-              "line_end": 524,
+              "line_start": 586,
+              "line_end": 586,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None):"
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.dedup_sweep.started:compatibility-replay-only\",",
+              "line_start": 5807,
+              "line_end": 5807
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.dedup_sweep.started:foreign-project-compatibility_replay\",",
+              "line_start": 8224,
+              "line_end": 8224
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.dedup_sweep.started:numeric-spelling-commitment-1e0\",",
+              "line_start": 7489,
+              "line_end": 7489
+            },
+            {
+              "path": "scripts/pm_memory_maintenance_events.py",
+              "unit": "read_canonical_history",
+              "quote": "def read_canonical_history(before, event):",
+              "line_start": 736,
+              "line_end": 736
             }
           ],
           "prior": {
-            "source": "Sol cycle-4 review at dc4c46c58c",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Standing check 11 verified for this exact family; full case ids and complements are in DMEM-check11-guards.json and its SHA-pinned external proof."
+          "change_reason": "Round-6 canonical historical-reader, cutoff/reference, numeric and isolated-guard oracles pass; native NOT_RUN."
         }
       },
       "remaining_gaps": [
@@ -1024,11 +1082,13 @@
         "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof."
       ],
       "static_checks_seen": [
-        "scripts/pm_memory_maintenance_events.py"
+        "scripts/pm_memory_maintenance_events.py",
+        "scripts/pm_memory_guard_isolation.py",
+        "Plans/memory_canonical_history_fixtures.json"
       ],
-      "notes": "Prepared without admission. Round-4 worker regrade after Astra round 2 (start custody gate redesign and standing check 9); final independent review remains. Membership ABSENT, retention PARTIAL, native NOT_RUN.",
+      "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains.",
       "assessed_tree": {
-        "commit": "5e1512a7da88d62a760e00f51d86cfbf637efa67",
+        "commit": "a997e62c4bb70ae858e9c7eee78cb8efc6018f94",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       }
     },
@@ -1075,11 +1135,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1102,11 +1162,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "producer": {
           "status": "PASS",
@@ -1136,11 +1196,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1156,11 +1216,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1183,11 +1243,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1238,11 +1298,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1258,11 +1318,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1306,11 +1366,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "transitions": {
           "status": "PASS",
@@ -1347,11 +1407,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1374,11 +1434,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1401,16 +1461,16 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Single-defect custody inputs and the complete checker corpus pass named guard removal/restoration. Integrity and semantic binding are independent; no whole-gate no-op is evidence. Native execution remains NOT_RUN.",
+          "finding": "Full canonical, replay-only and compatibility historical positives and forged/foreign/withdrawn negatives pass the complete checker; every named guard or duplicate set has flipping negatives and the complete complement retains its refusal. Numeric commitments normalize equivalent integer spellings. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1472,8 +1532,8 @@
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-315",
               "quote": "reference_cases checks standing check 9: before any instance validation the checker walks every subschema",
-              "line_start": 7257,
-              "line_end": 7257
+              "line_start": 7261,
+              "line_end": 7261
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
@@ -1499,38 +1559,66 @@
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
-              "quote": "def start_custody_gate(state, first_start=False, writer_event=None):",
-              "line_start": 355,
-              "line_end": 355
+              "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
+              "line_start": 377,
+              "line_end": 377
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 554,
-              "line_end": 554
+              "line_start": 576,
+              "line_end": 576
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 985,
-              "line_end": 985
+              "line_start": 1127,
+              "line_end": 1127
             },
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 524,
-              "line_end": 524,
+              "line_start": 586,
+              "line_end": 586,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None):"
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.index.lexical.rebuild.completed:compatibility-replay-only\",",
+              "line_start": 11068,
+              "line_end": 11068
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.index.lexical.rebuild.completed:foreign-project-compatibility_replay\",",
+              "line_start": 13613,
+              "line_end": 13613
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.index.lexical.rebuild.completed:numeric-spelling-commitment-1e0\",",
+              "line_start": 12842,
+              "line_end": 12842
+            },
+            {
+              "path": "scripts/pm_memory_maintenance_events.py",
+              "unit": "read_canonical_history",
+              "quote": "def read_canonical_history(before, event):",
+              "line_start": 736,
+              "line_end": 736
             }
           ],
           "prior": {
-            "source": "Sol cycle-4 review at dc4c46c58c",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Standing check 11 verified for this exact family; full case ids and complements are in DMEM-check11-guards.json and its SHA-pinned external proof."
+          "change_reason": "Round-6 canonical historical-reader, cutoff/reference, numeric and isolated-guard oracles pass; native NOT_RUN."
         }
       },
       "remaining_gaps": [
@@ -1540,11 +1628,13 @@
         "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof."
       ],
       "static_checks_seen": [
-        "scripts/pm_memory_maintenance_events.py"
+        "scripts/pm_memory_maintenance_events.py",
+        "scripts/pm_memory_guard_isolation.py",
+        "Plans/memory_canonical_history_fixtures.json"
       ],
-      "notes": "Prepared without admission. Round-4 worker regrade after Astra round 2 (start custody gate redesign and standing check 9); final independent review remains. Membership ABSENT, retention PARTIAL, native NOT_RUN.",
+      "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains.",
       "assessed_tree": {
-        "commit": "5e1512a7da88d62a760e00f51d86cfbf637efa67",
+        "commit": "a997e62c4bb70ae858e9c7eee78cb8efc6018f94",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       }
     },
@@ -1591,11 +1681,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1618,11 +1708,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "producer": {
           "status": "PASS",
@@ -1652,11 +1742,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1672,11 +1762,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1699,11 +1789,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1754,11 +1844,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1774,11 +1864,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1822,11 +1912,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "transitions": {
           "status": "PASS",
@@ -1870,11 +1960,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1897,11 +1987,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1924,16 +2014,16 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Single-defect custody inputs and the complete checker corpus pass named guard removal/restoration. Integrity and semantic binding are independent; no whole-gate no-op is evidence. Native execution remains NOT_RUN.",
+          "finding": "Full canonical, replay-only and compatibility historical positives and forged/foreign/withdrawn negatives pass the complete checker; every named guard or duplicate set has flipping negatives and the complete complement retains its refusal. Numeric commitments normalize equivalent integer spellings. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1995,8 +2085,8 @@
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-315",
               "quote": "reference_cases checks standing check 9: before any instance validation the checker walks every subschema",
-              "line_start": 7257,
-              "line_end": 7257
+              "line_start": 7261,
+              "line_end": 7261
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
@@ -2022,38 +2112,66 @@
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
-              "quote": "def start_custody_gate(state, first_start=False, writer_event=None):",
-              "line_start": 355,
-              "line_end": 355
+              "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
+              "line_start": 377,
+              "line_end": 377
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 554,
-              "line_end": 554
+              "line_start": 576,
+              "line_end": 576
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 985,
-              "line_end": 985
+              "line_start": 1127,
+              "line_end": 1127
             },
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 524,
-              "line_end": 524,
+              "line_start": 586,
+              "line_end": 586,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None):"
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.index.lexical.rebuild.started:compatibility-replay-only\",",
+              "line_start": 16545,
+              "line_end": 16545
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.index.lexical.rebuild.started:foreign-project-compatibility_replay\",",
+              "line_start": 18962,
+              "line_end": 18962
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.index.lexical.rebuild.started:numeric-spelling-commitment-1e0\",",
+              "line_start": 18227,
+              "line_end": 18227
+            },
+            {
+              "path": "scripts/pm_memory_maintenance_events.py",
+              "unit": "read_canonical_history",
+              "quote": "def read_canonical_history(before, event):",
+              "line_start": 736,
+              "line_end": 736
             }
           ],
           "prior": {
-            "source": "Sol cycle-4 review at dc4c46c58c",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Standing check 11 verified for this exact family; full case ids and complements are in DMEM-check11-guards.json and its SHA-pinned external proof."
+          "change_reason": "Round-6 canonical historical-reader, cutoff/reference, numeric and isolated-guard oracles pass; native NOT_RUN."
         }
       },
       "remaining_gaps": [
@@ -2063,11 +2181,13 @@
         "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof."
       ],
       "static_checks_seen": [
-        "scripts/pm_memory_maintenance_events.py"
+        "scripts/pm_memory_maintenance_events.py",
+        "scripts/pm_memory_guard_isolation.py",
+        "Plans/memory_canonical_history_fixtures.json"
       ],
-      "notes": "Prepared without admission. Round-4 worker regrade after Astra round 2 (start custody gate redesign and standing check 9); final independent review remains. Membership ABSENT, retention PARTIAL, native NOT_RUN.",
+      "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains.",
       "assessed_tree": {
-        "commit": "5e1512a7da88d62a760e00f51d86cfbf637efa67",
+        "commit": "a997e62c4bb70ae858e9c7eee78cb8efc6018f94",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       }
     },
@@ -2114,11 +2234,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2141,11 +2261,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "producer": {
           "status": "PASS",
@@ -2175,11 +2295,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2195,11 +2315,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2222,11 +2342,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2277,11 +2397,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2297,11 +2417,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2345,11 +2465,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "transitions": {
           "status": "PASS",
@@ -2386,11 +2506,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2413,11 +2533,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2440,16 +2560,16 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Single-defect custody inputs and the complete checker corpus pass named guard removal/restoration. Integrity and semantic binding are independent; no whole-gate no-op is evidence. Native execution remains NOT_RUN.",
+          "finding": "Full canonical, replay-only and compatibility historical positives and forged/foreign/withdrawn negatives pass the complete checker; every named guard or duplicate set has flipping negatives and the complete complement retains its refusal. Numeric commitments normalize equivalent integer spellings. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -2511,8 +2631,8 @@
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-315",
               "quote": "reference_cases checks standing check 9: before any instance validation the checker walks every subschema",
-              "line_start": 7257,
-              "line_end": 7257
+              "line_start": 7261,
+              "line_end": 7261
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
@@ -2538,38 +2658,66 @@
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
-              "quote": "def start_custody_gate(state, first_start=False, writer_event=None):",
-              "line_start": 355,
-              "line_end": 355
+              "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
+              "line_start": 377,
+              "line_end": 377
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 554,
-              "line_end": 554
+              "line_start": 576,
+              "line_end": 576
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 985,
-              "line_end": 985
+              "line_start": 1127,
+              "line_end": 1127
             },
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 524,
-              "line_end": 524,
+              "line_start": 586,
+              "line_end": 586,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None):"
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.index.semantic.rebuild.completed:compatibility-replay-only\",",
+              "line_start": 21710,
+              "line_end": 21710
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.index.semantic.rebuild.completed:foreign-project-compatibility_replay\",",
+              "line_start": 24255,
+              "line_end": 24255
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.index.semantic.rebuild.completed:numeric-spelling-commitment-1e0\",",
+              "line_start": 23484,
+              "line_end": 23484
+            },
+            {
+              "path": "scripts/pm_memory_maintenance_events.py",
+              "unit": "read_canonical_history",
+              "quote": "def read_canonical_history(before, event):",
+              "line_start": 736,
+              "line_end": 736
             }
           ],
           "prior": {
-            "source": "Sol cycle-4 review at dc4c46c58c",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Standing check 11 verified for this exact family; full case ids and complements are in DMEM-check11-guards.json and its SHA-pinned external proof."
+          "change_reason": "Round-6 canonical historical-reader, cutoff/reference, numeric and isolated-guard oracles pass; native NOT_RUN."
         }
       },
       "remaining_gaps": [
@@ -2579,11 +2727,13 @@
         "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof."
       ],
       "static_checks_seen": [
-        "scripts/pm_memory_maintenance_events.py"
+        "scripts/pm_memory_maintenance_events.py",
+        "scripts/pm_memory_guard_isolation.py",
+        "Plans/memory_canonical_history_fixtures.json"
       ],
-      "notes": "Prepared without admission. Round-4 worker regrade after Astra round 2 (start custody gate redesign and standing check 9); final independent review remains. Membership ABSENT, retention PARTIAL, native NOT_RUN.",
+      "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains.",
       "assessed_tree": {
-        "commit": "5e1512a7da88d62a760e00f51d86cfbf637efa67",
+        "commit": "a997e62c4bb70ae858e9c7eee78cb8efc6018f94",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       }
     },
@@ -2630,11 +2780,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2657,11 +2807,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "producer": {
           "status": "PASS",
@@ -2691,11 +2841,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2711,11 +2861,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2738,11 +2888,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2793,11 +2943,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2813,11 +2963,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2861,11 +3011,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "transitions": {
           "status": "PASS",
@@ -2909,11 +3059,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2936,11 +3086,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2963,16 +3113,16 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Single-defect custody inputs and the complete checker corpus pass named guard removal/restoration. Integrity and semantic binding are independent; no whole-gate no-op is evidence. Native execution remains NOT_RUN.",
+          "finding": "Full canonical, replay-only and compatibility historical positives and forged/foreign/withdrawn negatives pass the complete checker; every named guard or duplicate set has flipping negatives and the complete complement retains its refusal. Numeric commitments normalize equivalent integer spellings. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -3034,8 +3184,8 @@
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-315",
               "quote": "reference_cases checks standing check 9: before any instance validation the checker walks every subschema",
-              "line_start": 7257,
-              "line_end": 7257
+              "line_start": 7261,
+              "line_end": 7261
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
@@ -3061,38 +3211,66 @@
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
-              "quote": "def start_custody_gate(state, first_start=False, writer_event=None):",
-              "line_start": 355,
-              "line_end": 355
+              "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
+              "line_start": 377,
+              "line_end": 377
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 554,
-              "line_end": 554
+              "line_start": 576,
+              "line_end": 576
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 985,
-              "line_end": 985
+              "line_start": 1127,
+              "line_end": 1127
             },
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 524,
-              "line_end": 524,
+              "line_start": 586,
+              "line_end": 586,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None):"
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.index.semantic.rebuild.started:compatibility-replay-only\",",
+              "line_start": 27091,
+              "line_end": 27091
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.index.semantic.rebuild.started:foreign-project-compatibility_replay\",",
+              "line_start": 29508,
+              "line_end": 29508
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.index.semantic.rebuild.started:numeric-spelling-commitment-1e0\",",
+              "line_start": 28773,
+              "line_end": 28773
+            },
+            {
+              "path": "scripts/pm_memory_maintenance_events.py",
+              "unit": "read_canonical_history",
+              "quote": "def read_canonical_history(before, event):",
+              "line_start": 736,
+              "line_end": 736
             }
           ],
           "prior": {
-            "source": "Sol cycle-4 review at dc4c46c58c",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Standing check 11 verified for this exact family; full case ids and complements are in DMEM-check11-guards.json and its SHA-pinned external proof."
+          "change_reason": "Round-6 canonical historical-reader, cutoff/reference, numeric and isolated-guard oracles pass; native NOT_RUN."
         }
       },
       "remaining_gaps": [
@@ -3102,11 +3280,13 @@
         "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof."
       ],
       "static_checks_seen": [
-        "scripts/pm_memory_maintenance_events.py"
+        "scripts/pm_memory_maintenance_events.py",
+        "scripts/pm_memory_guard_isolation.py",
+        "Plans/memory_canonical_history_fixtures.json"
       ],
-      "notes": "Prepared without admission. Round-4 worker regrade after Astra round 2 (start custody gate redesign and standing check 9); final independent review remains. Membership ABSENT, retention PARTIAL, native NOT_RUN.",
+      "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains.",
       "assessed_tree": {
-        "commit": "5e1512a7da88d62a760e00f51d86cfbf637efa67",
+        "commit": "a997e62c4bb70ae858e9c7eee78cb8efc6018f94",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       }
     },
@@ -3153,11 +3333,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3180,11 +3360,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "producer": {
           "status": "PASS",
@@ -3207,11 +3387,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3227,11 +3407,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3254,11 +3434,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3302,11 +3482,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3322,11 +3502,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3370,11 +3550,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "transitions": {
           "status": "PASS",
@@ -3404,11 +3584,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3431,11 +3611,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3458,16 +3638,16 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Single-defect custody inputs and the complete checker corpus pass named guard removal/restoration. Integrity and semantic binding are independent; no whole-gate no-op is evidence. Native execution remains NOT_RUN.",
+          "finding": "Full canonical, replay-only and compatibility historical positives and forged/foreign/withdrawn negatives pass the complete checker; every named guard or duplicate set has flipping negatives and the complete complement retains its refusal. Numeric commitments normalize equivalent integer spellings. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -3529,8 +3709,8 @@
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-315",
               "quote": "reference_cases checks standing check 9: before any instance validation the checker walks every subschema",
-              "line_start": 7257,
-              "line_end": 7257
+              "line_start": 7261,
+              "line_end": 7261
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
@@ -3556,38 +3736,66 @@
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
-              "quote": "def start_custody_gate(state, first_start=False, writer_event=None):",
-              "line_start": 355,
-              "line_end": 355
+              "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
+              "line_start": 377,
+              "line_end": 377
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 554,
-              "line_end": 554
+              "line_start": 576,
+              "line_end": 576
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 985,
-              "line_end": 985
+              "line_start": 1127,
+              "line_end": 1127
             },
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 524,
-              "line_end": 524,
+              "line_start": 586,
+              "line_end": 586,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None):"
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.verification_sweep.completed:compatibility-replay-only\",",
+              "line_start": 31928,
+              "line_end": 31928
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.verification_sweep.completed:foreign-project-compatibility_replay\",",
+              "line_start": 34473,
+              "line_end": 34473
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.verification_sweep.completed:numeric-spelling-commitment-1e0\",",
+              "line_start": 33702,
+              "line_end": 33702
+            },
+            {
+              "path": "scripts/pm_memory_maintenance_events.py",
+              "unit": "read_canonical_history",
+              "quote": "def read_canonical_history(before, event):",
+              "line_start": 736,
+              "line_end": 736
             }
           ],
           "prior": {
-            "source": "Sol cycle-4 review at dc4c46c58c",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Standing check 11 verified for this exact family; full case ids and complements are in DMEM-check11-guards.json and its SHA-pinned external proof."
+          "change_reason": "Round-6 canonical historical-reader, cutoff/reference, numeric and isolated-guard oracles pass; native NOT_RUN."
         }
       },
       "remaining_gaps": [
@@ -3597,11 +3805,13 @@
         "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof."
       ],
       "static_checks_seen": [
-        "scripts/pm_memory_maintenance_events.py"
+        "scripts/pm_memory_maintenance_events.py",
+        "scripts/pm_memory_guard_isolation.py",
+        "Plans/memory_canonical_history_fixtures.json"
       ],
-      "notes": "Prepared without admission. Round-4 worker regrade after Astra round 2 (start custody gate redesign and standing check 9); final independent review remains. Membership ABSENT, retention PARTIAL, native NOT_RUN.",
+      "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains.",
       "assessed_tree": {
-        "commit": "5e1512a7da88d62a760e00f51d86cfbf637efa67",
+        "commit": "a997e62c4bb70ae858e9c7eee78cb8efc6018f94",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       }
     },
@@ -3648,11 +3858,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3675,11 +3885,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "producer": {
           "status": "PASS",
@@ -3702,11 +3912,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3722,11 +3932,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3749,11 +3959,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3797,11 +4007,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3817,11 +4027,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3865,11 +4075,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "transitions": {
           "status": "PASS",
@@ -3906,11 +4116,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3933,11 +4143,11 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3960,16 +4170,16 @@
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Single-defect custody inputs and the complete checker corpus pass named guard removal/restoration. Integrity and semantic binding are independent; no whole-gate no-op is evidence. Native execution remains NOT_RUN.",
+          "finding": "Full canonical, replay-only and compatibility historical positives and forged/foreign/withdrawn negatives pass the complete checker; every named guard or duplicate set has flipping negatives and the complete complement retains its refusal. Numeric commitments normalize equivalent integer spellings. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -4031,8 +4241,8 @@
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-315",
               "quote": "reference_cases checks standing check 9: before any instance validation the checker walks every subschema",
-              "line_start": 7257,
-              "line_end": 7257
+              "line_start": 7261,
+              "line_end": 7261
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
@@ -4058,38 +4268,66 @@
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
-              "quote": "def start_custody_gate(state, first_start=False, writer_event=None):",
-              "line_start": 355,
-              "line_end": 355
+              "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
+              "line_start": 377,
+              "line_end": 377
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 554,
-              "line_end": 554
+              "line_start": 576,
+              "line_end": 576
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 985,
-              "line_end": 985
+              "line_start": 1127,
+              "line_end": 1127
             },
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 524,
-              "line_end": 524,
+              "line_start": 586,
+              "line_end": 586,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None):"
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.verification_sweep.started:compatibility-replay-only\",",
+              "line_start": 36981,
+              "line_end": 36981
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.verification_sweep.started:foreign-project-compatibility_replay\",",
+              "line_start": 39398,
+              "line_end": 39398
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.verification_sweep.started:numeric-spelling-commitment-1e0\",",
+              "line_start": 38663,
+              "line_end": 38663
+            },
+            {
+              "path": "scripts/pm_memory_maintenance_events.py",
+              "unit": "read_canonical_history",
+              "quote": "def read_canonical_history(before, event):",
+              "line_start": 736,
+              "line_end": 736
             }
           ],
           "prior": {
-            "source": "Sol cycle-4 review at dc4c46c58c",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Standing check 11 verified for this exact family; full case ids and complements are in DMEM-check11-guards.json and its SHA-pinned external proof."
+          "change_reason": "Round-6 canonical historical-reader, cutoff/reference, numeric and isolated-guard oracles pass; native NOT_RUN."
         }
       },
       "remaining_gaps": [
@@ -4099,11 +4337,13 @@
         "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof."
       ],
       "static_checks_seen": [
-        "scripts/pm_memory_maintenance_events.py"
+        "scripts/pm_memory_maintenance_events.py",
+        "scripts/pm_memory_guard_isolation.py",
+        "Plans/memory_canonical_history_fixtures.json"
       ],
-      "notes": "Prepared without admission. Round-4 worker regrade after Astra round 2 (start custody gate redesign and standing check 9); final independent review remains. Membership ABSENT, retention PARTIAL, native NOT_RUN.",
+      "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains.",
       "assessed_tree": {
-        "commit": "5e1512a7da88d62a760e00f51d86cfbf637efa67",
+        "commit": "a997e62c4bb70ae858e9c7eee78cb8efc6018f94",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       }
     },
@@ -4127,7 +4367,7 @@
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "assessed_tree": {
-        "commit": "5e1512a7da88d62a760e00f51d86cfbf637efa67",
+        "commit": "a997e62c4bb70ae858e9c7eee78cb8efc6018f94",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       },
       "current_owner_units": [
@@ -4154,11 +4394,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "owner_doc": {
           "status": "PASS",
@@ -4174,11 +4414,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "producer": {
           "status": "PASS",
@@ -4194,11 +4434,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "ABSENT"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change": "carried",
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -4214,11 +4454,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "ABSENT"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change": "carried",
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "scope_identity": {
           "status": "PASS",
@@ -4234,11 +4474,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "ABSENT"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change": "carried",
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -4254,11 +4494,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "ABSENT"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change": "carried",
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "retention": {
           "status": "PARTIAL",
@@ -4274,11 +4514,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -4294,11 +4534,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "ABSENT"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change": "carried",
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "transitions": {
           "status": "PASS",
@@ -4314,11 +4554,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "PARTIAL"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change": "carried",
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -4334,11 +4574,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "ABSENT"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change": "carried",
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4354,16 +4594,16 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "ABSENT"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change": "carried",
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Single-defect custody inputs and the complete checker corpus pass named guard removal/restoration. Integrity and semantic binding are independent; no whole-gate no-op is evidence. Native execution remains NOT_RUN.",
+          "finding": "Full canonical, replay-only and compatibility historical positives and forged/foreign/withdrawn negatives pass the complete checker; every named guard or duplicate set has flipping negatives and the complete complement retains its refusal. Numeric commitments normalize equivalent integer spellings. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -4375,17 +4615,73 @@
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 524,
-              "line_end": 524,
+              "line_start": 586,
+              "line_end": 586,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None):"
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.monthly_summary.completed:compatibility-replay-only\",",
+              "line_start": 42083,
+              "line_end": 42083
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.monthly_summary.completed:foreign-project-compatibility_replay\",",
+              "line_start": 44724,
+              "line_end": 44724
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.monthly_summary.completed:numeric-spelling-commitment-1e0\",",
+              "line_start": 43926,
+              "line_end": 43926
+            },
+            {
+              "path": "scripts/pm_memory_maintenance_events.py",
+              "unit": "read_canonical_history",
+              "quote": "def read_canonical_history(before, event):",
+              "line_start": 736,
+              "line_end": 736
+            },
+            {
+              "path": "Plans/memory_archive_event_fixtures.json",
+              "unit": "#/guard_cases",
+              "quote": "\"name\": \"memory.monthly_summary.completed:cutoff-self-reference\",",
+              "line_start": 104911,
+              "line_end": 104911
+            },
+            {
+              "path": "Plans/memory_archive_event_fixtures.json",
+              "unit": "#/guard_cases",
+              "quote": "\"name\": \"memory.monthly_summary.completed:cutoff-duplicate-reference\",",
+              "line_start": 105083,
+              "line_end": 105083
+            },
+            {
+              "path": "Plans/memory_archive_event_fixtures.json",
+              "unit": "#/guard_cases",
+              "quote": "\"name\": \"memory.monthly_summary.completed:selected-rewrite-kind\",",
+              "line_start": 105236,
+              "line_end": 105236
+            },
+            {
+              "path": "Plans/memory_archive_event_fixtures.json",
+              "unit": "#/guard_cases",
+              "quote": "\"name\": \"memory.monthly_summary.completed:selected-rewrite-pinned\",",
+              "line_start": 105363,
+              "line_end": 105363
             }
           ],
           "prior": {
-            "source": "Card 1b worker grade at bc4f6fef9f",
-            "status": "PASS"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Standing check 11 verified for this exact family; full case ids and complements are in DMEM-check11-guards.json and its SHA-pinned external proof."
+          "change": "upgraded",
+          "change_reason": "Round-6 canonical historical-reader, cutoff/reference, numeric and isolated-guard oracles pass; native NOT_RUN."
         }
       },
       "remaining_gaps": [
@@ -4396,9 +4692,11 @@
       ],
       "static_checks_seen": [
         "scripts/pm_memory_archive_events.py",
-        "scripts/pm_memory_maintenance_events.py"
+        "scripts/pm_memory_maintenance_events.py",
+        "scripts/pm_memory_guard_isolation.py",
+        "Plans/memory_canonical_history_fixtures.json"
       ],
-      "notes": "Conditional full contract by exact-family adoption. Ten PASS, one PARTIAL (operation retention), one ABSENT (membership). Original eight assessed row objects are preserved verbatim at their earlier assessed_tree pin."
+      "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains."
     },
     {
       "event_type": "memory.monthly_summary.started",
@@ -4420,7 +4718,7 @@
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "assessed_tree": {
-        "commit": "5e1512a7da88d62a760e00f51d86cfbf637efa67",
+        "commit": "a997e62c4bb70ae858e9c7eee78cb8efc6018f94",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       },
       "current_owner_units": [
@@ -4447,11 +4745,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "owner_doc": {
           "status": "PASS",
@@ -4467,11 +4765,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "producer": {
           "status": "PASS",
@@ -4487,11 +4785,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "ABSENT"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change": "carried",
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -4507,11 +4805,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "ABSENT"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change": "carried",
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "scope_identity": {
           "status": "PASS",
@@ -4527,11 +4825,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "ABSENT"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change": "carried",
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -4547,11 +4845,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "ABSENT"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change": "carried",
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "retention": {
           "status": "PARTIAL",
@@ -4567,11 +4865,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -4587,11 +4885,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "ABSENT"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change": "carried",
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "transitions": {
           "status": "PASS",
@@ -4607,11 +4905,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "PARTIAL"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change": "carried",
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -4627,11 +4925,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "ABSENT"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change": "carried",
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4647,16 +4945,16 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "ABSENT"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change": "carried",
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Single-defect custody inputs and the complete checker corpus pass named guard removal/restoration. Integrity and semantic binding are independent; no whole-gate no-op is evidence. Native execution remains NOT_RUN.",
+          "finding": "Full canonical, replay-only and compatibility historical positives and forged/foreign/withdrawn negatives pass the complete checker; every named guard or duplicate set has flipping negatives and the complete complement retains its refusal. Numeric commitments normalize equivalent integer spellings. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -4668,17 +4966,73 @@
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 524,
-              "line_end": 524,
+              "line_start": 586,
+              "line_end": 586,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None):"
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.monthly_summary.started:compatibility-replay-only\",",
+              "line_start": 47572,
+              "line_end": 47572
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.monthly_summary.started:foreign-project-compatibility_replay\",",
+              "line_start": 50085,
+              "line_end": 50085
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.monthly_summary.started:numeric-spelling-commitment-1e0\",",
+              "line_start": 49323,
+              "line_end": 49323
+            },
+            {
+              "path": "scripts/pm_memory_maintenance_events.py",
+              "unit": "read_canonical_history",
+              "quote": "def read_canonical_history(before, event):",
+              "line_start": 736,
+              "line_end": 736
+            },
+            {
+              "path": "Plans/memory_archive_event_fixtures.json",
+              "unit": "#/guard_cases",
+              "quote": "\"name\": \"memory.monthly_summary.started:cutoff-self-reference\",",
+              "line_start": 105618,
+              "line_end": 105618
+            },
+            {
+              "path": "Plans/memory_archive_event_fixtures.json",
+              "unit": "#/guard_cases",
+              "quote": "\"name\": \"memory.monthly_summary.started:cutoff-duplicate-reference\",",
+              "line_start": 105790,
+              "line_end": 105790
+            },
+            {
+              "path": "Plans/memory_archive_event_fixtures.json",
+              "unit": "#/guard_cases",
+              "quote": "\"name\": \"memory.monthly_summary.started:selected-rewrite-kind\",",
+              "line_start": 105943,
+              "line_end": 105943
+            },
+            {
+              "path": "Plans/memory_archive_event_fixtures.json",
+              "unit": "#/guard_cases",
+              "quote": "\"name\": \"memory.monthly_summary.started:selected-rewrite-pinned\",",
+              "line_start": 106070,
+              "line_end": 106070
             }
           ],
           "prior": {
-            "source": "Card 1b worker grade at bc4f6fef9f",
-            "status": "PASS"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Standing check 11 verified for this exact family; full case ids and complements are in DMEM-check11-guards.json and its SHA-pinned external proof."
+          "change": "upgraded",
+          "change_reason": "Round-6 canonical historical-reader, cutoff/reference, numeric and isolated-guard oracles pass; native NOT_RUN."
         }
       },
       "remaining_gaps": [
@@ -4689,9 +5043,11 @@
       ],
       "static_checks_seen": [
         "scripts/pm_memory_archive_events.py",
-        "scripts/pm_memory_maintenance_events.py"
+        "scripts/pm_memory_maintenance_events.py",
+        "scripts/pm_memory_guard_isolation.py",
+        "Plans/memory_canonical_history_fixtures.json"
       ],
-      "notes": "Conditional full contract by exact-family adoption. Ten PASS, one PARTIAL (operation retention), one ABSENT (membership). Original eight assessed row objects are preserved verbatim at their earlier assessed_tree pin."
+      "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains."
     },
     {
       "event_type": "memory.prune_archive.completed",
@@ -4713,7 +5069,7 @@
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "assessed_tree": {
-        "commit": "5e1512a7da88d62a760e00f51d86cfbf637efa67",
+        "commit": "a997e62c4bb70ae858e9c7eee78cb8efc6018f94",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       },
       "current_owner_units": [
@@ -4740,11 +5096,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "owner_doc": {
           "status": "PASS",
@@ -4760,11 +5116,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "producer": {
           "status": "PASS",
@@ -4780,11 +5136,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "ABSENT"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change": "carried",
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -4800,11 +5156,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "ABSENT"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change": "carried",
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "scope_identity": {
           "status": "PASS",
@@ -4820,11 +5176,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "ABSENT"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change": "carried",
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -4840,11 +5196,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "ABSENT"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change": "carried",
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "retention": {
           "status": "PARTIAL",
@@ -4860,11 +5216,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -4880,11 +5236,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "ABSENT"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change": "carried",
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "transitions": {
           "status": "PASS",
@@ -4900,11 +5256,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "PARTIAL"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change": "carried",
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -4920,11 +5276,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "ABSENT"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change": "carried",
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4940,16 +5296,16 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "ABSENT"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change": "carried",
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Single-defect custody inputs and the complete checker corpus pass named guard removal/restoration. Integrity and semantic binding are independent; no whole-gate no-op is evidence. Native execution remains NOT_RUN.",
+          "finding": "Full canonical, replay-only and compatibility historical positives and forged/foreign/withdrawn negatives pass the complete checker; every named guard or duplicate set has flipping negatives and the complete complement retains its refusal. Numeric commitments normalize equivalent integer spellings. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -4961,17 +5317,73 @@
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 524,
-              "line_end": 524,
+              "line_start": 586,
+              "line_end": 586,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None):"
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.prune_archive.completed:compatibility-replay-only\",",
+              "line_start": 52794,
+              "line_end": 52794
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.prune_archive.completed:foreign-project-compatibility_replay\",",
+              "line_start": 55403,
+              "line_end": 55403
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.prune_archive.completed:numeric-spelling-commitment-1e0\",",
+              "line_start": 54614,
+              "line_end": 54614
+            },
+            {
+              "path": "scripts/pm_memory_maintenance_events.py",
+              "unit": "read_canonical_history",
+              "quote": "def read_canonical_history(before, event):",
+              "line_start": 736,
+              "line_end": 736
+            },
+            {
+              "path": "Plans/memory_archive_event_fixtures.json",
+              "unit": "#/guard_cases",
+              "quote": "\"name\": \"memory.prune_archive.completed:cutoff-self-reference\",",
+              "line_start": 106325,
+              "line_end": 106325
+            },
+            {
+              "path": "Plans/memory_archive_event_fixtures.json",
+              "unit": "#/guard_cases",
+              "quote": "\"name\": \"memory.prune_archive.completed:cutoff-duplicate-reference\",",
+              "line_start": 106493,
+              "line_end": 106493
+            },
+            {
+              "path": "Plans/memory_archive_event_fixtures.json",
+              "unit": "#/guard_cases",
+              "quote": "\"name\": \"memory.prune_archive.completed:selected-rewrite-kind\",",
+              "line_start": 106643,
+              "line_end": 106643
+            },
+            {
+              "path": "Plans/memory_archive_event_fixtures.json",
+              "unit": "#/guard_cases",
+              "quote": "\"name\": \"memory.prune_archive.completed:selected-rewrite-pinned\",",
+              "line_start": 106754,
+              "line_end": 106754
             }
           ],
           "prior": {
-            "source": "Card 1b worker grade at bc4f6fef9f",
-            "status": "PASS"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Standing check 11 verified for this exact family; full case ids and complements are in DMEM-check11-guards.json and its SHA-pinned external proof."
+          "change": "upgraded",
+          "change_reason": "Round-6 canonical historical-reader, cutoff/reference, numeric and isolated-guard oracles pass; native NOT_RUN."
         }
       },
       "remaining_gaps": [
@@ -4982,9 +5394,11 @@
       ],
       "static_checks_seen": [
         "scripts/pm_memory_archive_events.py",
-        "scripts/pm_memory_maintenance_events.py"
+        "scripts/pm_memory_maintenance_events.py",
+        "scripts/pm_memory_guard_isolation.py",
+        "Plans/memory_canonical_history_fixtures.json"
       ],
-      "notes": "Conditional full contract by exact-family adoption. Ten PASS, one PARTIAL (operation retention), one ABSENT (membership). Original eight assessed row objects are preserved verbatim at their earlier assessed_tree pin."
+      "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains."
     },
     {
       "event_type": "memory.prune_archive.started",
@@ -5006,7 +5420,7 @@
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "assessed_tree": {
-        "commit": "5e1512a7da88d62a760e00f51d86cfbf637efa67",
+        "commit": "a997e62c4bb70ae858e9c7eee78cb8efc6018f94",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       },
       "current_owner_units": [
@@ -5033,11 +5447,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "owner_doc": {
           "status": "PASS",
@@ -5053,11 +5467,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "producer": {
           "status": "PASS",
@@ -5073,11 +5487,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "ABSENT"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change": "carried",
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -5093,11 +5507,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "ABSENT"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change": "carried",
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "scope_identity": {
           "status": "PASS",
@@ -5113,11 +5527,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "ABSENT"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change": "carried",
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -5133,11 +5547,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "ABSENT"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change": "carried",
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "retention": {
           "status": "PARTIAL",
@@ -5153,11 +5567,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "source": "Sol cycle-5 review at b50da70b3d",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -5173,11 +5587,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "ABSENT"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change": "carried",
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "transitions": {
           "status": "PASS",
@@ -5193,11 +5607,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "PARTIAL"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change": "carried",
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -5213,11 +5627,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "ABSENT"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change": "carried",
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -5233,16 +5647,16 @@
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "ABSENT"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
+          "change": "carried",
+          "change_reason": "Normative grade carried from the independent cycle-5 review; exact source citations re-located at this head."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Single-defect custody inputs and the complete checker corpus pass named guard removal/restoration. Integrity and semantic binding are independent; no whole-gate no-op is evidence. Native execution remains NOT_RUN.",
+          "finding": "Full canonical, replay-only and compatibility historical positives and forged/foreign/withdrawn negatives pass the complete checker; every named guard or duplicate set has flipping negatives and the complete complement retains its refusal. Numeric commitments normalize equivalent integer spellings. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -5254,17 +5668,73 @@
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 524,
-              "line_end": 524,
+              "line_start": 586,
+              "line_end": 586,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None):"
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.prune_archive.started:compatibility-replay-only\",",
+              "line_start": 58175,
+              "line_end": 58175
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.prune_archive.started:foreign-project-compatibility_replay\",",
+              "line_start": 60656,
+              "line_end": 60656
+            },
+            {
+              "path": "Plans/memory_canonical_history_fixtures.json",
+              "unit": "#/canonical_history_families",
+              "quote": "\"name\": \"memory.prune_archive.started:numeric-spelling-commitment-1e0\",",
+              "line_start": 59903,
+              "line_end": 59903
+            },
+            {
+              "path": "scripts/pm_memory_maintenance_events.py",
+              "unit": "read_canonical_history",
+              "quote": "def read_canonical_history(before, event):",
+              "line_start": 736,
+              "line_end": 736
+            },
+            {
+              "path": "Plans/memory_archive_event_fixtures.json",
+              "unit": "#/guard_cases",
+              "quote": "\"name\": \"memory.prune_archive.started:cutoff-self-reference\",",
+              "line_start": 106977,
+              "line_end": 106977
+            },
+            {
+              "path": "Plans/memory_archive_event_fixtures.json",
+              "unit": "#/guard_cases",
+              "quote": "\"name\": \"memory.prune_archive.started:cutoff-duplicate-reference\",",
+              "line_start": 107145,
+              "line_end": 107145
+            },
+            {
+              "path": "Plans/memory_archive_event_fixtures.json",
+              "unit": "#/guard_cases",
+              "quote": "\"name\": \"memory.prune_archive.started:selected-rewrite-kind\",",
+              "line_start": 107295,
+              "line_end": 107295
+            },
+            {
+              "path": "Plans/memory_archive_event_fixtures.json",
+              "unit": "#/guard_cases",
+              "quote": "\"name\": \"memory.prune_archive.started:selected-rewrite-pinned\",",
+              "line_start": 107406,
+              "line_end": 107406
             }
           ],
           "prior": {
-            "source": "Card 1b worker grade at bc4f6fef9f",
-            "status": "PASS"
+            "source": "Sol cycle-5 review at b50da70b3d",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Standing check 11 verified for this exact family; full case ids and complements are in DMEM-check11-guards.json and its SHA-pinned external proof."
+          "change": "upgraded",
+          "change_reason": "Round-6 canonical historical-reader, cutoff/reference, numeric and isolated-guard oracles pass; native NOT_RUN."
         }
       },
       "remaining_gaps": [
@@ -5275,27 +5745,29 @@
       ],
       "static_checks_seen": [
         "scripts/pm_memory_archive_events.py",
-        "scripts/pm_memory_maintenance_events.py"
+        "scripts/pm_memory_maintenance_events.py",
+        "scripts/pm_memory_guard_isolation.py",
+        "Plans/memory_canonical_history_fixtures.json"
       ],
-      "notes": "Conditional full contract by exact-family adoption. Ten PASS, one PARTIAL (operation retention), one ABSENT (membership). Original eight assessed row objects are preserved verbatim at their earlier assessed_tree pin."
+      "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains."
     }
   ],
-  "review_round": 5,
-  "reviewed_head": "dc4c46c58c7462f288684a6e672febdf134e3c89",
-  "review_scope": "Standing check 11 across all twelve DMEM families; Sol cycle-4 B3 plus the four Card 1b families added at bc4f6fef9f.",
+  "review_round": 6,
+  "reviewed_head": "b50da70b3d7d4e382717c12135ccff26c8230c05",
+  "review_scope": "Sol cycle 5 B1/B2/B3 and local findings 4/5/6; all eleven checks and all ten Astra classes across all twelve families.",
   "review_baseline_prepared_status_counts": {
-    "PASS": 112,
-    "PARTIAL": 20,
+    "PASS": 108,
+    "PARTIAL": 24,
     "ABSENT": 12
   },
   "prepared_status_counts": {
-    "ABSENT": 12,
     "PASS": 120,
-    "PARTIAL": 12
+    "PARTIAL": 12,
+    "ABSENT": 12
   },
   "card1b_assessment": {
     "assessed_tree": {
-      "commit": "5e1512a7da88d62a760e00f51d86cfbf637efa67",
+      "commit": "a997e62c4bb70ae858e9c7eee78cb8efc6018f94",
       "branch": "plans/ea-w2-memory-maintenance-20261104"
     },
     "scope": [
@@ -5309,7 +5781,7 @@
       "DL-403"
     ],
     "event_retention": "DL-401/G04 on origin/plans/ea-retention-cards1-20261104@2663667e14346235daaa561d193e959422640b6e",
-    "source_pin_rule": "Fix 5 regrades all twelve rows at the common assessed_tree source pin; earlier decision/retention source pins remain unchanged.",
+    "source_pin_rule": "Fix 6 regrades all twelve rows at the common source pin; decision and retention source pins remain historical integration dependencies.",
     "status_counts": {
       "ABSENT": 4,
       "PASS": 40,
@@ -5318,6 +5790,6 @@
   },
   "check11_evidence": {
     "path": "reports/event-authority-20261104/DMEM-check11-guards.json",
-    "full_proof_sha256": "b4bda65b2464b301eb5c24e241f991dcfdb86cb85e6236d7ac77d50bb83a191d"
+    "full_proof_sha256": "9e1ad6df7b81a5f8593dcec670e2f8442f521f2ff827b4c09d6115d805b579c2"
   }
 }
