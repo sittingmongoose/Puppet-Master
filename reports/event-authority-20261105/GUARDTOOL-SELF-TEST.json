@@ -1,9 +1,9 @@
 {
   "status": "PASS",
-  "caught": 201,
-  "trap_count": 201,
-  "old": 148,
-  "new": 53,
+  "caught": 204,
+  "trap_count": 204,
+  "old": 201,
+  "new": 3,
   "implementation_commit": "ec841e41cf272c43c829d6a8996a101b735dec4b",
   "core_fix_commit": "ff7fb58db46861b403abce778960b91301d2a83c",
   "meaning": "Bounded complete-path input-atom cuts; unknown paths and grammar stay unclassified.",
@@ -1087,6 +1087,21 @@
       "id": "C6-constant-cut-gate",
       "expected": "generated matrix rejects a credited constant cut even if the overall suite FAILs",
       "caught": true
+    },
+    {
+      "id": "C7-optimized-original",
+      "expected": "an original compiled with optimize=2 (assertions removed) is refused before any cut",
+      "caught": true
+    },
+    {
+      "id": "C7-optimized-process",
+      "expected": "the tool refuses to run under python -O",
+      "caught": true
+    },
+    {
+      "id": "C7-clone-keeps-assertions",
+      "expected": "an x-only cut clone keeps the untouched assertion: cut vector accept/accept/refuse",
+      "caught": true
     }
   ],
   "C6_B1": {
@@ -1102,5 +1117,15 @@
   "evidence": {
     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix6/verification-manifest.json",
     "sha256": "e2188a82208af05e831c8b65038549c8790cf93f0db44cd6deeb8abfccc9c33e"
+  },
+  "C7_B1": {
+    "finding": "reviews/GUARDTOOL-sol/REVIEW-cycle7.md C7-B1: cut clones recompiled with the process optimize level, so under python -O an optimize=0 original lost its untouched assertion",
+    "fix": "AstGuards refuses sys.flags.optimize != 0; refuses an original whose bytecode is not the optimize=0 compilation of its source when optimization changes that bytecode; clones compile with optimize=0",
+    "traps": [
+      "C7-optimized-original",
+      "C7-optimized-process",
+      "C7-clone-keeps-assertions"
+    ],
+    "fixed_by": "stream E lead (small review fix), round 7"
   }
 }

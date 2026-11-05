@@ -448,3 +448,17 @@ Python syntax and the example adapter pass. The 1 MiB RSS probe refuses as expec
 Preflight: **106 GB disk / 19 GiB available RAM**. Heavy checks ran one at a time. Review scripts kept fresh RAM samples, the six-GiB floor and their outer address-space limit. Self-test low-memory messages are synthetic resource regressions. A small subprocess launcher avoids inheriting the harness's unrelated RSS high-water mark; the RSS gate stays enabled. Unknown flow, dataflow, non-scalar expressions, helper/source closure and checked-input bindings retain the documented adapter/reviewer boundary.
 
 **Evidence:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix6/verification-manifest.json`, SHA-256 `e2188a82208af05e831c8b65038549c8790cf93f0db44cd6deeb8abfccc9c33e`. The manifest fingerprints 118 retained raw scripts, results, adaptations, command/resource receipts, review/source fingerprints and cleanup records. Reproduction restores the four paths in `fix6/input-manifest.json` from `ec841e41cf272c43c829d6a8996a101b735dec4b` to its named scratch tree, then runs the copied scripts serially. Their original sources remain unchanged in the `*-original/` directories. Runtime scratch was hash-verified and removed. Report, self-grade, checks, compact self-test and census are copied to the requested `drafts/GUARDTOOL/` directory. The branch alone is pushed; main is never pushed.
+
+## Review round 7: findings and responses (lead fix, 2026-11-05)
+
+**C7-B1 (`reviews/GUARDTOOL-sol/REVIEW-cycle7.md`): under `python -O`, cloning an `optimize=0` checker deleted its untouched assertions, so an x-only cut admitted both defects.** Fixed by the stream E lead as a small review fix.
+
+- `scripts/pm_guard_isolation.py`:
+  - `AstGuards.__init__` refuses to run when `sys.flags.optimize` is non-zero.
+  - For every function whose bytecode changes under optimization (assertions or `__debug__`), `_require_unoptimized()` requires the supplied original to equal the `optimize=0` compilation of its source; otherwise the run fails closed with `IsolationError`. An absent original is not compared, because its uncut baseline cannot run and fails on its own.
+  - `AstGuards.clone()` compiles every cut clone with `optimize=0`, so a clone differs from its original only by the declared cut.
+- Traps (`Plans/guard_isolation_traps.json`, probe `round7_probe` in `scripts/pm_guard_isolation_traps.py`):
+  - `C7-optimized-original`: an original compiled with `optimize=2` is refused before any cut.
+  - `C7-optimized-process`: a subprocess under `python -O` is refused.
+  - `C7-clone-keeps-assertions`: the reviewer's exact source; the x-only cut vector is accept / accept / refuse, so the untouched assertion still refuses the y defect.
+- Verification: `python3 scripts/pm_guard_isolation.py --self-test` gives **PASS, 204/204 traps** (201 earlier and 3 new). The census gate passes at 82 classes × 5 positions, the coverage gate passes, and the cross-product is 945 cells with 72 verified per-atom credits. `reports/event-authority-20261105/GUARDTOOL-SELF-TEST.json` is updated.

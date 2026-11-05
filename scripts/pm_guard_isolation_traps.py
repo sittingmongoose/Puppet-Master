@@ -4,6 +4,7 @@ This is a verification companion, not a lane proof implementation. The engine
 must report the expected defect or exact flip/stay row for every corpus entry.
 """
 import json
+import sys
 from pathlib import Path
 
 
@@ -38,6 +39,8 @@ def example_suite():
 def probe(g, trap, memory):
     kind = trap["kind"]
     uri = "https://pm.invalid/traps/" + trap["id"] + ".json"
+    if kind.startswith("round7_"):
+        return round7_probe(g, trap, memory)
     if kind.startswith("round6_"):
         return round6_probe(g, trap, memory)
     if kind.startswith("round5_"):
@@ -1475,3 +1478,52 @@ def round6_probe(g, trap, memory):
     assert independent == {'x_only_cut': [True, True, False], 'y_only_cut': [True, False, True]}
     return {'source': source, 'targets': targets, 'baseline': baseline, 'attempts': attempts,
             'verified_cuts': cuts, 'independent_vectors': independent}, True
+
+
+ROUND7_SOURCE = (
+    'def check(v):\n'
+    '    if v["x"] >= 0 and v["y"] >= 0:\n'
+    '        return True\n'
+    '    assert False, "bad"\n'
+    '    return True\n')
+
+
+def round7_probe(g, trap, memory):
+    """Review C7-B1: cut clones compile exactly like their originals (optimize=0)."""
+    if trap['kind'] == 'round7_optimized_original':
+        env = {}
+        exec(compile(ROUND7_SOURCE, '<optimized-original>', 'exec', optimize=2), env)
+        try:
+            g.AstGuards('round7/optimized-original', ROUND7_SOURCE, env)
+        except g.IsolationError as exc:
+            return {'refused': str(exc)}, 'optimize=0' in str(exc)
+        return {'refused': None}, False
+    if trap['kind'] == 'round7_optimized_process':
+        import subprocess
+        code = ('import sys; sys.path.insert(0, %r); import pm_guard_isolation as g\n'
+                'env = {}\nexec(compile(%r, "<o>", "exec", optimize=0), env)\n'
+                'g.AstGuards("round7/optimized-process", %r, env)\n') % (
+                    str(Path(__file__).resolve().parent), ROUND7_SOURCE, ROUND7_SOURCE)
+        result = subprocess.run([sys.executable, '-O', '-c', code], capture_output=True, text=True, timeout=120)
+        refused = result.returncode != 0 and 'without -O' in result.stderr
+        return {'returncode': result.returncode, 'stderr_tail': result.stderr[-400:]}, refused
+    if trap['kind'] == 'round7_clone_keeps_assertions':
+        env = {}
+        exec(compile(ROUND7_SOURCE, '<original>', 'exec', optimize=0), env)
+        module = g.AstGuards('round7/clone', ROUND7_SOURCE, env)
+        candidates = module.candidates()
+        target = next((c for c in candidates if c.get('refusal_kind') == 'assert' and c.get('predicate_count') == 1
+                       and c.get('cut') and c['expression'] == "v['x'] >= 0"), None)
+        if target is None:
+            return {'candidates': candidates}, False
+        gid = module.register(target, 'bad', g.Invariant('/x', 'nonnegative'))
+        clone = module.clone(frozenset({gid}))
+        vector = []
+        for value in ({'x': 0, 'y': 0}, {'x': -1, 'y': 0}, {'x': 0, 'y': -1}):
+            try:
+                vector.append(clone.check(value) is True)
+            except AssertionError:
+                vector.append(False)
+        # The x-only cut admits only the x defect; the untouched assertion still refuses y.
+        return {'cut_vector': vector, 'candidate': target['id']}, vector == [True, True, False]
+    raise ValueError('unknown round7 trap ' + trap['kind'])

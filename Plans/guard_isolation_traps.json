@@ -3087,6 +3087,21 @@
       "id": "C6-constant-cut-gate",
       "kind": "round6_constant_cut_gate",
       "expected": "generated matrix rejects a credited constant cut even if the overall suite FAILs"
+    },
+    {
+      "id": "C7-optimized-original",
+      "kind": "round7_optimized_original",
+      "expected": "an original compiled with optimize=2 (assertions removed) is refused before any cut"
+    },
+    {
+      "id": "C7-optimized-process",
+      "kind": "round7_optimized_process",
+      "expected": "the tool refuses to run under python -O"
+    },
+    {
+      "id": "C7-clone-keeps-assertions",
+      "kind": "round7_clone_keeps_assertions",
+      "expected": "an x-only cut clone keeps the untouched assertion: cut vector accept/accept/refuse"
     }
   ]
 }

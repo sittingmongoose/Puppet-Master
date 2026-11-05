@@ -1019,6 +1019,38 @@ class CodeSite:
     target: dict = field(default_factory=dict)
 
 
+def _code_fingerprint(code):
+    """Bytecode of a code object and every nested code object (line tables excluded)."""
+    return (code.co_code, tuple(_code_fingerprint(const) for const in code.co_consts
+                                if isinstance(const, types.CodeType)))
+
+
+def _require_unoptimized(module_name, function_name, node, original):
+    """Review C7-B1: cut clones compile with optimize=0, so the original must too.
+
+    Optimized compilation removes assertions and folds __debug__. If that changes
+    this function's bytecode, the supplied original must equal the optimize=0
+    compilation of the same source; otherwise a clone would differ from the
+    original in more than the declared cut, and the run fails closed.
+    """
+    fn = copy.deepcopy(node)
+    fn.decorator_list = []
+    module = ast.fix_missing_locations(ast.Module(body=[fn], type_ignores=[]))
+    references = []
+    for level in (0, 2):
+        code = compile(module, "<guard-isolation-optimization-reference>", "exec", optimize=level)
+        references.append(next(const for const in code.co_consts
+                               if isinstance(const, types.CodeType) and const.co_name == function_name))
+    unoptimized, optimized = (_code_fingerprint(c) for c in references)
+    if unoptimized == optimized or original is None:
+        # No original in the namespace: nothing to compare. Its uncut baseline
+        # cannot run, so a missing original fails on its own, never as a PASS.
+        return
+    if not isinstance(original, types.FunctionType) or _code_fingerprint(original.__code__) != unoptimized:
+        raise IsolationError(f"{module_name}.{function_name}: the original is not the optimize=0 compilation of its "
+                             "source (assertions or __debug__ code differ); cut clones would not match it")
+
+
 class AstGuards:
     """Exact refusal sites in top-level Python functions, compiled in memory.
 
@@ -1036,6 +1068,12 @@ class AstGuards:
         self.sites: dict[str, CodeSite] = {}
         self.functions = {n.name: n for n in self.tree.body if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))}
         self.source_hash = hashlib.sha256(source.encode()).hexdigest()
+        # Review C7-B1: an optimized process or original would let a clone drop
+        # assertions that the declared cut never touched.
+        if sys.flags.optimize:
+            raise IsolationError(f"guard isolation must run without -O/-OO (sys.flags.optimize={sys.flags.optimize})")
+        for function_name, node in self.functions.items():
+            _require_unoptimized(name, function_name, node, namespace.get(function_name))
         # Call name -> index of its acceptance predicate. Only the predicate
         # argument is cut; the helper, its code and other arguments remain.
         self.call_predicates = {"require": 0} if call_predicates is None else dict(call_predicates)
@@ -1417,7 +1455,7 @@ class AstGuards:
                 raise IsolationError(f"AST cuts did not match exactly: {name}")
             tree.decorator_list = []        # do not rerun import-time decorators/caches
             exec(compile(ast.fix_missing_locations(ast.Module(body=[tree], type_ignores=[])),
-                         f"<guard-isolation:{self.name}:{self.source_hash}>", "exec"), namespace)
+                         f"<guard-isolation:{self.name}:{self.source_hash}>", "exec", optimize=0), namespace)
         return module
 
 
