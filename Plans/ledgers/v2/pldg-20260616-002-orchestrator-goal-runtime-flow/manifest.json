@@ -68,17 +68,17 @@
     "questions": "records/questions.jsonl"
   },
   "governance_status": "sealed",
-  "last_event_id": "evt-0017",
+  "last_event_id": "evt-0018",
   "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
   "notes": "Compiled to live canonical Plans PlanUnits and allowed Plans/.plan_index outputs; governance_status=sealed after explicit governance refresh. Archive17 projection repair resolved q-0007 through q-0009 as source-lineage by current PNC/GRS PlanUnits; no active compile plan remains. Current PlanUnit index readiness is contract-level ready_for_node_compile only. No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, product implementation files, production build tasks, runtime dispatch, or final node queues were created.",
   "phase": "compiled_orchestrator_goal_runtime_flow_governance_sealed",
   "profile": "bootstrap_planning",
   "record_counts": {
     "blockers": 0,
-    "corrections": 10,
+    "corrections": 11,
     "decisions": 29,
     "design_atoms": 104,
-    "events": 17,
+    "events": 18,
     "questions": 9
   },
   "schema_id": "pm.bootstrap_planning_ledger_manifest.v1",
@@ -106,5 +106,5 @@
   ],
   "status": "sealed",
   "title": "Orchestrator Goal Runtime Flow Rewrite",
-  "updated_at_utc": "2026-11-05T13:21:08Z"
+  "updated_at_utc": "2026-11-05T17:10:37Z"
 }
