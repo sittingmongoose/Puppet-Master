@@ -2,15 +2,24 @@ import {installActivityInputProbe} from '../helpers/activity-paint.mjs';
 import {beginActivityFrameClock} from '../helpers/activity-frame-clock.mjs';
 import {mkdirSync,writeFileSync} from 'node:fs';
 import {join} from 'node:path';
+import {pathToFileURL} from 'node:url';
 
 // Stream F SW regressions. Uses actual controls and the public fixture APIs.
 export const tests = {
  'SW01 first click in short window': async t => {
-  await t.viewport(1024,480);
+  await t.viewport(1024,504);
+  await t.emulate({reducedMotion:'no-preference'});
+  const url=t.args.page?(/^https?:/.test(t.args.page)?t.args.page:pathToFileURL(t.args.page).href):new URL('../../../PMConcept7.html',import.meta.url).href;
+  const [f]=await t.openSideBySide([{url:url+'?o55=off',width:1024,height:480}],{height:480,settleMs:0});
+  if(Number(t.args.sandbox)===1)await (await f.frameElement()).evaluate(el=>el.setAttribute('sandbox','allow-scripts allow-forms allow-popups allow-downloads'));
+  // Match the retained films: bootstrap Home once, then measure the first input
+  // after each fresh reload. No idle/settling delay is introduced.
   for(let i=0;i<Number(t.args.reps||10);i++) {
    await t.page.mouse.move(0,0);
-   const f=await t.app.open();
-   await t.emulate({reducedMotion:'no-preference'});
+   await f.goto(url+'?o55=off&first-paint-reload='+i,{timeout:30000});
+   await f.waitForFunction(()=>window.__PM56_BOOT_OK&&window.PM56_PORT?.ready);
+   await f.locator('#o55np-reboot').waitFor({state:'detached',timeout:15000});
+   await t.check('fresh Basic Dark Home after reload '+i,await f.evaluate(()=>innerWidth===1024&&innerHeight===480&&!PM_NIER.on()&&document.documentElement.dataset.theme==='basic-dark'&&!document.querySelector('#pmRoot .activity-panel.cover')));
    const b=f.locator('#pmRoot [data-action="open-activity"]').first();
    await f.evaluate(installActivityInputProbe);
    await f.evaluate(()=>{
@@ -42,7 +51,7 @@ export const tests = {
    await t.check('first click painted within 500 ms '+i,
     !paint.error&&paint.input.trusted&&paint.elapsed>=0&&paint.elapsed<=500);
    await t.equal('cover click avoids full transcript render '+i,await f.evaluate(()=>window.__activityClickRenders),0);
-   await t.painted('#pmRoot .activity-panel.cover');
+   await t.painted(f.locator('#pmRoot .activity-panel.cover'));
   }
  },
  'SW11 duplicate titles select identity': async t => {
