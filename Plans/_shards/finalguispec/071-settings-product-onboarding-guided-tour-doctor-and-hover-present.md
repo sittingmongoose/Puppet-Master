@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L36256-L37487
 
-Source SHA256: `9dac730e10cfcc426ed0bfbe21fb8fca7e801acb648d9efa2760be95c5dc2bce`
+Source SHA256: `5e31ae60db6d0b015b0d9deba42d940bae1d8f3edb4e4f588b40eac38c7f4cb8`
 
 ---
 
@@ -578,7 +578,7 @@ negative_constraints:
 - Do not add a surface-owned physics loop or require unsupported effects; F3-663’s approved bounded solver/CRT/world
   effects obey O2 and the supported reduced-motion/capability path. Filter replacements require a look-preserving recorded
   A/B.
-- Include family nier in the ten-theme choices and Look menu (Q22); commit only through the Settings owner at an
+- Include family nier in the five visible family choices and Look menu, with one Light/Dark/Auto control resolving ten variants (DL-301); commit only through the Settings owner at an
   explicitly accepted admissible level. A Project own write requires a real Project binding; Later/app writes use
   admitted app levels and pre-claim/unbound preview stays ephemeral (DL-286).
 - Do not move server, provider, Project, backup/restore, authentication, or persistence ownership into Final GUI.

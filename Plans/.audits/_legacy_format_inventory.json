@@ -1,0 +1,2133 @@
+{
+ "decision": "Plans/Decision_Log.md#DL-334",
+ "directories": {
+  "audit-20260615-001-part-3-fable-cleanup": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "b9b1075b636480c5bff8f8a77f2f6ecf3908a0acee7b87e51e4811c0141f9ced"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "86640724cc0a167ee52bd122d98a47764ac87c7d1f81fb873cdce745fb2e6eb3"
+    },
+    "audit_report.json": {
+     "sha256": "03f37158de285389ce030287dd14e8c05ac9fed67c4db47206e6bf865dc02403"
+    },
+    "changed_plan_fidelity.jsonl": {
+     "sha256": "f765b5e992a060a8970ee448bf81cf753006b94b87800b492da5d77679ea917d"
+    },
+    "ledger_consistency.json": {
+     "sha256": "82844b4771046de51d3b2c39e88b428321d263cca2ac1cadcb80bf26b10c79fc"
+    },
+    "repair_report.json": {
+     "sha256": "bf4689e31327fd4b9dd5844333fae43a326adba9b717dd3891386bf444e3a18b"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "61e4b32a1127cb392043fe1826003be17bdeec0bd5ed9cdda803d2a4a83b5fcf"
+    },
+    "validator_results.json": {
+     "sha256": "e540b55a9bdbe89c8d4439ccaaa0fe07d2f8acbe5c07ac7da0e1e9dc597ae983"
+    }
+   }
+  },
+  "audit-20260615-002-part-4-fable-cleanup": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "dc7af0a589bac0ab3847056c211c876e7484b6c1079246882f4f62d5a46bf33d"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "fd8155960fe11a970bbb784c9429f9fa8045562d23a0601e2f11956a13e6f02b"
+    },
+    "audit_report.json": {
+     "sha256": "00b040bca68b448bd4c3ec76c2cea9239e22c61aa41b62563fe0ad87876b99b0"
+    },
+    "changed_plan_fidelity.jsonl": {
+     "sha256": "a2d80959d4466fcd7dbbcc7c7b067fda15741b1d32bcad58375ade2c6f89f5af"
+    },
+    "ledger_consistency.json": {
+     "sha256": "2ba20299391d2da7fd81dd7ed6c3e648ed651188621419c71abd1594199f3d21"
+    },
+    "repair_report.json": {
+     "sha256": "09903c3f598417b4705b69cfd3292d7ef018557b13c952f2b390964f06910ffe"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "1e9cd3fe5c8bb9c65aee3b06ca2e524e82f614bf6593356c6787937dcf6ebd47"
+    },
+    "validator_results.json": {
+     "sha256": "73460884337ecafd9f1b94420159a448e29a4f2a3f89519bb95a2dfd31a0b247"
+    }
+   }
+  },
+  "audit-20260616-001-part-4-fable-cleanup": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "8fab4c6aa8f086a861fcfafea087de1eb5a8e4817606f470f1831c692d9f38a9"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "d2b4ae68744367f400aab385f5259ea9c20331874692ba6b48f51e2632d11321"
+    },
+    "audit_report.json": {
+     "sha256": "519377948022c9ac45c5ba629c53524fc36a8893a6b03412c81cb8bb088ef93b"
+    },
+    "changed_plan_fidelity.jsonl": {
+     "sha256": "1f0eb34b67d0953f425a5f42a287a77a3d3f05252763e2064a9838bd30ecfc1b"
+    },
+    "ledger_consistency.json": {
+     "sha256": "8f6ca9cf779cecbf8965e8da1a1593a2aa35b47ab2da9f5562f8fee0bd9c3bc7"
+    },
+    "repair_report.json": {
+     "sha256": "57e5441c3df3a3c39a43c60e4329b235e54f9448783982bde7e7142837897ca1"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "e51afc70eb1aa6ddd34de4fd3c469be424740b61a08ef1e6cf28b4aedea0a92c"
+    },
+    "validator_results.json": {
+     "sha256": "2f4b2843a82801fe9d9ea6a38d41110a72071f648788dcb036ef48feaadaa399"
+    }
+   }
+  },
+  "audit-20260616-002-goal-runtime-system": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "d34e5fd5fee85b273d20e22ccb1c0060e03b65b08f79a447cae15d91d37de40b"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "dadf30207c8b7724ff9c038a2769b5cffbc9d9a7865aa97873a567209a563229"
+    },
+    "audit_report.json": {
+     "sha256": "2ae118788618b3a02dc8df66a39ccc7bd052133d3b015688346a42ca443a86a0"
+    },
+    "changed_plan_fidelity.jsonl": {
+     "sha256": "ab5134867d04ba61fbfed2366e0eca7026305bc6216b2e2b2b54ca22ec29d0e9"
+    },
+    "ledger_consistency.json": {
+     "sha256": "f1b6410f6f6dce76f5ecdc5b26e854940613e53303cfe7375fe7bb8c11d36491"
+    },
+    "repair_report.json": {
+     "sha256": "8497671281b28f7df6da602b328a6b1cc8337b81825fa329eec9f51c08a8e149"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "94652af8f8b2c3a1ab7dca4c6b1b22502e09d6a73b0428ae356b043b74ca6cb1"
+    },
+    "validator_results.json": {
+     "sha256": "265b97be9b51e856d740a00d6d22f817c5d3e096dfc20d58a8fb34ff9a0fb2f8"
+    }
+   }
+  },
+  "audit-20260616-003-goal-runtime-system": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "a91b8f5f978291236f78b2c9c2d8ce65db6ca912e599599e2ac2dad9bbd8dbb5"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "e6a74202db1eef2e1cde0ed9eccac2b4190355035e0e1bced8aafc6185e9b380"
+    },
+    "audit_report.json": {
+     "sha256": "0991fc3ce9d6addf964cb046e4d56a601614c876c808105bd8b1055da011d13c"
+    },
+    "changed_plan_fidelity.jsonl": {
+     "sha256": "d4a070f4a439c6b2b570c0086f22e89a1a1ee2e31f82655e17bcb52063545d65"
+    },
+    "ledger_consistency.json": {
+     "sha256": "f69ff9fc406b006ae14c8a5205f0d93d548fa17c369b506f9f82eb0e47052156"
+    },
+    "repair_report.json": {
+     "sha256": "327bd3e31b9083844d6b880fa2da4f3b36ff9071e39525a75efdc80a107c69fd"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "d05de6b541ab075061dcf92b7fe3638a2b08bca0a4398f44b41c2b09f8887688"
+    },
+    "validator_results.json": {
+     "sha256": "392fdd07fdabe4123dcd21ae575529992914729f6ee879e62e3cad181b63bde3"
+    }
+   }
+  },
+  "audit-20260616-004-goal-runtime-system": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "337fa100f9198a2e27b231c7a7f90d65cd45d6ef3ab048e11f3cb099b07bb9e2"
+    },
+    "audit_report.json": {
+     "sha256": "29050f560344a6bc039ffe36ee2c831a5ce2c75fc8fd82aa63d3dc146f0c79b1"
+    },
+    "changed_plan_fidelity.jsonl": {
+     "sha256": "790be1680f997c8b082e471ff10acbbe559313b60830158d58521991026e0a78"
+    },
+    "ledger_consistency.json": {
+     "sha256": "ce3b4b908d2401abb235be4a7a24e69cdfa8675f62f4742730c0792f580e9ac8"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "1394e4d98d18057b3dc0a68b3d90aa6d5c827d5e8a0e40fdf97c515b68121466"
+    },
+    "validator_results.json": {
+     "sha256": "51276361f89c863762ead775d0f15127811ec6277af8bea9269eeee43d5bcd65"
+    }
+   }
+  },
+  "audit-20260616-005-goal-runtime-system": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "4f4b3db78dbbce56487a17a5e04b34304ff7014517b73f07819b16806b60b201"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "aa377421c11082b319bcac9f64fd66e5d78c76c9494aa9a0e87091246c634b51"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "edde99bbc5efcfdc28c7c84a30b6e1eee8bdebee14da71411fdc2d584639f3f7"
+    },
+    "audit_report.json": {
+     "sha256": "81b87efca2f87437cca79ff830be71104dd092e620bccf2bce9eafd89386edde"
+    },
+    "changed_plan_fidelity.jsonl": {
+     "sha256": "0b1d59119174d96f7dd378dab1c8db2bd31d29f323906d592bc5145ba9cbf6fd"
+    },
+    "ledger_consistency.json": {
+     "sha256": "449f50c8ee09874b890bd448cc940aa63dbe3a06cecb2d7585020457f7a544dc"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "eeff7c1febe11e37d2014e47ca3fb82e6ce8391ab9c09decf0a71fe8fca12114"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "b9908f23286343c9369879df7a788a63af61f1e717a5b1b2bd81428ef543471b"
+    },
+    "repair_report.json": {
+     "sha256": "02afc8b2ad1a952a69061bb8a0814a57272014f45c812abcbb32e082ebb552f2"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "d0853b4f7811c35a634a4d517edf5a694e0c3d42c75c339cc5336f78b02a06db"
+    },
+    "validator_results.json": {
+     "sha256": "de8a76240eedfea3ccc7a987ef91a1332539e333f8371c1d3204622a43ca302e"
+    }
+   }
+  },
+  "audit-20260616-006-goal-runtime-system": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "61a3e68fef65ee00efcba73c6bae0e7b2e0b5557f47cea0de93db020208a1367"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "ddeca74f2054e9ecb4c530f60e31c88d67c7e97fc765fa9eea3ab06562d59e37"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "7c4f7ff014160542ca6547c6a3dea8274e29199b0c34b84a5172980f93c5de70"
+    },
+    "audit_report.json": {
+     "sha256": "1297c79f5dc18cebbbc101f0b4b5fde560281cf9b25c2638b16f50fe319fcfeb"
+    },
+    "changed_plan_fidelity.jsonl": {
+     "sha256": "8c34412e900bea64eb9c07120bd47cbf6991ec8a07f7070f06b441ba7a0fef0a"
+    },
+    "ledger_consistency.json": {
+     "sha256": "26b1c71d3914ec14f60b047bd8f7dc491172b3c124e5db7dd0120e941d1dc604"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "5958ccfd4fd3bda43fa9f648b2f21dcbcea617f5f9db3f6dcb91f92e88840fe0"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "8919d50e767cbd8b3ffeeee810b0aba5a07375d62d10b1783da810f852e697e1"
+    },
+    "repair_report.json": {
+     "sha256": "46329bec15ecdfdccee9d1d63832317e28f35e07f0e2d16f7fe3dec323c1aac4"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "da225dc335411b25b76651b6ed2d14a3bf39e32de7a72eb5ae2fe78da511776c"
+    },
+    "validator_results.json": {
+     "sha256": "f1c25c849c2f29cc93674a0b8bf49e76a11611cb88afc52cdbaac1f9a0f02c21"
+    }
+   }
+  },
+  "audit-20260616-007-orchestrator-goal-runtime-flow": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "00050287484024a67e7a392ef1b31529abcea2a7945c1b5a219a2c9d00a6afeb"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "ada274a6652e9079d9d69f057ea909eeeb6234dfe316a146e9db3b9c7a45ac7b"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "3feea1bab50cfd52264999c7890abd383e3043d6e8182ec5e7d80385346d5898"
+    },
+    "audit_report.json": {
+     "sha256": "b55e945747e9a33a3475f2126ffb9bc67f1ae9254a191253d9e792b82a452fb9"
+    },
+    "changed_plan_fidelity.jsonl": {
+     "sha256": "85e0b13b1bdaf9609e6e5b9f8f4c749d9104dbd11993417c1d244dc724d0e211"
+    },
+    "ledger_consistency.json": {
+     "sha256": "5fb5f0ff4d22c0149aff21d58713ff4b5b92b1c11dc2693bd12a5bd34f32be8f"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "27decc61e59832ca2103864b42d9c03db0b716371e70533faa3f56b279891d40"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "dc0b20d4bf16cb21ac014d34c6974675dfd96b8c304d4a79634cad0fdd6cbba2"
+    },
+    "repair_report.json": {
+     "sha256": "0408057f041fcc906b77986b32cd8431885a6fb48df2a3e8ddfab82084c9e8ad"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "20705833fd14316ffb3f0991f3227f99020c5fd1a0dd43991f0aa66c25a78193"
+    },
+    "validator_results.json": {
+     "sha256": "36cacad0078248d583ab73015de41d88dfada396f0f943e8de6ecfd5b2c1452e"
+    }
+   }
+  },
+  "audit-20260616-008-orchestrator-goal-runtime-flow-post-repair": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "2c6dd44f2ca5b96abbd4ed00548c9294bc14ed13c598e252722aba7d9d584e1d"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "e2d154c36643b7955689ecad437fb37219ddee27b3315667fc8750b94f81eb0a"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "61319fb3046ed186b66238cccb4bac60490915415a5dd1b706a530070813cd2a"
+    },
+    "audit_report.json": {
+     "sha256": "b39657e76677d9492b438e74d23e9782a16626916f9556b69f765ee1d9fbd98f"
+    },
+    "changed_plan_fidelity.jsonl": {
+     "sha256": "916fdfa44251f8d427ae3e1567dd2ea362498cc7716b4c8088a3b5a3bc75ab99"
+    },
+    "ledger_consistency.json": {
+     "sha256": "69891f1724d25aef498717e8d0d23c5a04cd9520dbcd32a138ec8073b67aaba9"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "ea0a2d98ecd0fbacfa6ec78078724263cfa31fefc1f16ee49c1cdcf5cd3f4dda"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "99f782e710b63c04763d8af221f89f078082f11a56f8bcae9c3d77075fa9ab3a"
+    },
+    "repair_report.json": {
+     "sha256": "4296b317fb120be6bdee5e9d62b88d3923fbdf8d43ac794948fb379ad983a998"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "1160091fefa6ac96b17498321790bf8cafc7557024eacdeb2a73e0be2e7ca311"
+    },
+    "validator_results.json": {
+     "sha256": "d6c66a893f0c7ac062e7686ef1d93a364e32c41571bf8fd8ca46ce110144a563"
+    },
+    "validator_results_repair.json": {
+     "sha256": "1cede9a17d1cdf6408c6f21c10ebf6a55f48537202e5a54f81d4abec8d947126"
+    }
+   }
+  },
+  "audit-20260617-001-orchestrator-goal-runtime-flow-post-repair-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "2f36b6cf249dec81e8a482453fbb5c28d094a1d5fa790d3b4fcb13559eeee208"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "2eb4c76c1bd850086e2336d32a904a9f607a0132a40e94baf12d9394e7c9c3d6"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "2aab1f4266a973de19dd1fc73b58befbc601c9b03acca01680e1f22bb349a18f"
+    },
+    "audit_report.json": {
+     "sha256": "43bd5d78de9f830856329fe9b8978924c27ab614ef13fc6d1ddc683e178c0b68"
+    },
+    "build_audit_artifacts.py": {
+     "sha256": "b72fa2dcba0f35268a96b2d83805dace37c95f24e7e7a8852cb21e4c50ab5850"
+    },
+    "changed_plan_fidelity.jsonl": {
+     "sha256": "50ba2c6ec0a1f68cadae41f0165a8db71c1b4f8041dc0e939e8ae95b88467d07"
+    },
+    "finalize_audit.py": {
+     "sha256": "0d6bb14bfd3e067e5bceccbaa4a2ae214b5c2fb9d17b4bff72a729c04cf0aa48"
+    },
+    "ledger_consistency.json": {
+     "sha256": "1f390df4a03e85be4eac6f11b8a8c6f3add961f7b70f4f23123eea01cefbad32"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "2aeb6f281ef063e6ea98a1faa7532848e668788cd3732678e2598174956825aa"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "dcd1ca51957e18e1960df329f8c08da90afc560a7a5403d3d6d4be740b5e31cf"
+    },
+    "repair_report.json": {
+     "sha256": "d81a7cca56c34edd84cd9083256265ed019c5625877e82f13c34bbfee88d5549"
+    },
+    "repair_validator_results.json": {
+     "sha256": "ccec5dca4c383d9449bc57910c512f8c863e8987f76014df4d6316186ec511a8"
+    },
+    "run_validators.py": {
+     "sha256": "5c2f22641b3571d08af9628e9d0fca2f9d30b06cffbc797e7bc69062a299af95"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "4bd19e98fd8fe1753e3d6645dab5b2b6af42a611efe7255b895f2dfd93eddbb4"
+    },
+    "validator_results.json": {
+     "sha256": "8d29764e3e6950f8aa79cc518bc1e7c8a4020fb3acb8204d4bf988725f2248f7"
+    }
+   }
+  },
+  "audit-20260617-002-orchestrator-goal-runtime-flow-semantic-repair-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "f37fa42a246fc4002d062453e469257e7cac33c33a95336a60a19041b5695465"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "ffe18192be8e9939adf804ad5e33cc6815f13ca60ba44e226c3fecdbb9fc087a"
+    },
+    "audit_report.json": {
+     "sha256": "f9a1112bb89d2a4e37bb9e19986b8db24357a03b8c1697a975a5e414d2f3ca8d"
+    },
+    "build_audit_artifacts.py": {
+     "sha256": "fadd11ce0b7a6ffee7e6a246df5a76ededd538b7a52ed6bc4ea3b470fd4dea15"
+    },
+    "changed_plan_fidelity.jsonl": {
+     "sha256": "1bedf5649e7e769d52776b8bd3dda27119cbf64931a1861a3ebfd824af6fc85c"
+    },
+    "finalize_audit.py": {
+     "sha256": "ca7f338b146763204ad69aaad0cc92d0e3abf47cce3830a187e777f6115e4c24"
+    },
+    "ledger_consistency.json": {
+     "sha256": "9f5b90df1894b2509fafa514f3a3edcab67a50bd7e6c488c1d8e5c175011cacf"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "14a29572de76dd61f2d1d5b33e3de0b903913b9fe19d6e234d741e3bd06e781a"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "2425bdf94f1e2c7c4a2faa3185ddffb0f482580843fd21849f4dd5457e128231"
+    },
+    "run_validators.py": {
+     "sha256": "1d5ae6005e97d7688a3226b2186c216285f68fa384c7d10ff119da74f70c7c47"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "c4ac2f47243e5098f2a82585c4cccfaab8ecaff1f7feb392940390d7be443f38"
+    },
+    "validator_results.json": {
+     "sha256": "8127d06920560dc78b9a92dba9dfa2746798ee141661c481617ec3d0024d283c"
+    }
+   }
+  },
+  "audit-20260617-003-orchestrator-goal-runtime-flow-head-semantic-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "ca3600073dda58f1192f2776381d491df0eace4510e07061d5b4a5d2655cf7be"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "4be5de944f614397d8f826fac4165f7715f1a1122758702425bd98fcad182137"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "d8eb18b545e6f862d7bb4293fd11d71866befd6d17ffec6e3df23a66d832da85"
+    },
+    "audit_report.json": {
+     "sha256": "3f7e3fcf0f0c85cb34e94fbf06de359ea1c9ca565692447e82f975ad91097f33"
+    },
+    "build_audit_artifacts.py": {
+     "sha256": "18fcd6bf89d81afcc7203689f05213f40f0d2a4fa0241c0ffdbe4bb75cbaec19"
+    },
+    "changed_plan_fidelity.jsonl": {
+     "sha256": "b1a6b98a9b9ec0f841e436658a86ea95e7319508e3d12a4ec67e359e22d06ad1"
+    },
+    "finalize_audit.py": {
+     "sha256": "a8a66253097e677d57ffe1efdfa881d3522422624650a99af3ee127c1612588d"
+    },
+    "integrate_subagent_findings.py": {
+     "sha256": "1187bdded54aba6ebe92e50ebb17ea448e118b4697634ee5c7ab70b650e168cc"
+    },
+    "ledger_consistency.json": {
+     "sha256": "4b86978095e0cb0abea756125ae08f0801974bef2ef4f028218f2be688569af0"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "e47914f6fc21909fb97a7643b9edd1bfd3be4143ae9e5a6327fdcdc40534187a"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "9f33e30eff7e2c9d01c80987bfa34285cc327a9f82beb4bdd7854435711a55ba"
+    },
+    "repair_closure_matrix.jsonl": {
+     "bytes": 1112905,
+     "lines": 1577,
+     "sha256": "d27213e62f08d51a624b346516c20e4f48e435036b57bbda4f610de9126fb2da"
+    },
+    "repair_report.json": {
+     "sha256": "c3c3835ab4cee7d39ec83cdc8666a41b33cfd466f3416109773b2c719e55439f"
+    },
+    "run_validators.py": {
+     "sha256": "36b1170aa4dcc4ad35fce87dd57dee6c6ddbc241fe6493b6d9cec55ac47ec733"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "df52693f9934206dc3619716ae8be60088a71b413fbc21fcc617c604e5dff149"
+    },
+    "validator_results.json": {
+     "sha256": "70dd36bab960b0508518d506db24acbd19ebeae683453de9b54f78b4422379a1"
+    }
+   }
+  },
+  "audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "7c56774155e7df86284153af62698ffe5800146143d73743a49ee33f6bc43c3b"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "fb94ef51e76b06cc2c2cd9f37d9f53c51cbac712b9f5ff320b2b207539228423"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "ced604fd889673a2ec2c78d80daaa74499cf475556b7486b93acff3d88c1e90a"
+    },
+    "audit_report.json": {
+     "sha256": "e2b0dc37464bf7bf664b58237ceb4d1e45cf47c683040c781edc4e2b3baf1d51"
+    },
+    "changed_plan_fidelity.jsonl": {
+     "sha256": "f0cb466a91a642be5a90f62a697d1ff5ad5698f0815e175e035dbae9acb135e0"
+    },
+    "ledger_consistency.json": {
+     "sha256": "f25abbbad4fbfe12786375ad53d84e4018c2a7334f0a5a4c19207803e95e31b0"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "97541c39796c6ea4a3dd75436b31632fc25665b64319a331f609d098a07d1c6c"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "40a79e827e026fd124979974904ea11263f64438db41e607493d160025a36cb6"
+    },
+    "repair_closure_matrix.jsonl": {
+     "bytes": 1357904,
+     "lines": 1666,
+     "sha256": "3166a79e18cef6fe6ada00051ba05384e11b8d068cee03db6914796eae603ae2"
+    },
+    "repair_report.json": {
+     "sha256": "2062693a4696728c4277888dddfa599cc164dd4cc3a6a14c6ee458e2915ae969"
+    },
+    "repair_validator_results.json": {
+     "sha256": "e35de415b6950aa1f46a24d33831f1eece617731a203bd89100502a1016b30ee"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "0a46a77de557cfb8c022298922cdbcd520ec15abcfc14aa0760489dd820c592b"
+    },
+    "validator_results.json": {
+     "sha256": "a2b09c39bcdfe9ff6028d3d0df363f73da932f409e48dd49d4bf1576a1747af6"
+    }
+   }
+  },
+  "audit-20260617-005-orchestrator-goal-runtime-flow-semantic-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "5f1537fabb1cdd054e18c3d24bdc35579e4d319cf50d31cb8b1d97bf5dd7dfc8"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "c47652c7c2496f85e82715c43f5ff0c77e60c3126137d61c408a436cbf3e096e"
+    },
+    "audit_report.json": {
+     "sha256": "c9276634869844c79dbd782743a95f448b9f3a2f3ba2339ef84be50027a529c9"
+    },
+    "changed_doc_deltas.jsonl": {
+     "sha256": "8b29e70d645c0c3252788c3b5826a2aabadb6553cc7c195c30497ab5835c2594"
+    },
+    "ledger_consistency.json": {
+     "sha256": "68b818382f6667868b1b5263e798cba694c89b7386edc0c08ece704e9223c86a"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "56a09fb94383a6a10bec829304115c0a49d3f2058a177799f46e050e1356046e"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "50c7404703060cdde900d30741983ef769213d877a07ef52663839981f92dde2"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "3228650813f414350c05f0993ab8cb321161fcebf6ad91ef22a1429ea8f4987f"
+    },
+    "validator_bootstrap_ledger_validate.out": {
+     "sha256": "73dc025eff7a9f9523ad8c2fb04bf3c81bff9e7228eb357df9b59363a104c53c"
+    },
+    "validator_git_diff_check.out": {
+     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "validator_pm_plan_index_validate.out": {
+     "sha256": "9d84ac5a2c5c90c05ee640e1eb70c4ceece48f4aec29a15f906878d916d22d57"
+    },
+    "validator_pm_plan_migration_validate.out": {
+     "sha256": "92a82f98bee09ae0e9ac2b86b289a441abd931363c2545ead5c00472a950f2a3"
+    },
+    "validator_results.json": {
+     "sha256": "15cc07a10b096700740d69473989045d07f74433f12be03eddcc706672a87f7b"
+    },
+    "validator_run_gates.out": {
+     "sha256": "4023e611f38e19f9167f79b4b018f5fecc1b808b97311b9fd6d706a964a73d8e"
+    },
+    "validator_shard_check.out": {
+     "sha256": "949ed5e68d773903f27e54c61d72b35bdcd035a567f412a494b0dc0ad499a995"
+    },
+    "validator_validate_auto_decisions.out": {
+     "sha256": "e8fa3bf570372388df1d1b2a62b1249d3fa581a3c7d43817a525bdb4107ffb84"
+    },
+    "validator_validate_evidence.out": {
+     "sha256": "0dc8f798d80fee512dc1ed8d600ae8657df21e26969b7a160409f33b4db5ecd4"
+    },
+    "validator_verify_spec_lock.out": {
+     "sha256": "c23c9fff17fe7f9c884dd9437d4c3bc52cb1e97109e186376eafe91ced5c435f"
+    }
+   }
+  },
+  "audit-20260617-006-semantic-closure-registry-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "1fb736fdddc51d92b398b8222d1f133254321c96c284ca2ce0247ac864f94b66"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "961d1ea629a10b968ed64871d5f81a8b6c166dafb2375c88237dc7eabe6daa0a"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "04c15d4f1fd2e419b4aa8b80b509eb9584796cd465ea4aca08a68d588ed2cb4c"
+    },
+    "audit_report.json": {
+     "sha256": "27e0ce2642b2d8f0b582ded0f17825bbadab618647c41bc4633e160ff1730e63"
+    },
+    "closure_reuse.jsonl": {
+     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "ledger_consistency.json": {
+     "sha256": "d21603cc5bc84eea680eb37e2ae342ed7e676dd69ae766bf3c0a2815fb471221"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "0df05a2fb28b1c3b9afe2603b8cf34c2ebaef312c92cf264da7ff545f2f2fc85"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "8ad25f4efbefc380ceb3c5b769d77d0a43c2b1ec67fe947599818842f1796da4"
+    },
+    "repair_closure_matrix.jsonl": {
+     "bytes": 23275,
+     "lines": 23,
+     "sha256": "cec3487b33672d3d75583acf6d17a6b468a1140654fb562ec2036f299e5bc36d"
+    },
+    "repair_report.json": {
+     "sha256": "fb45bd4c93dfbad69cfff7a174f7fee66c11e5ff7f333ae6e98eef8498eb522c"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "64d3daedfe8369172c232167c787f3198d8661972975f07788e2a63e94afda1f"
+    },
+    "validator_results.json": {
+     "sha256": "be06426da4f292f9056a9115276dd06c72d5fcb4fabdbe643d7d390702be6cd5"
+    }
+   }
+  },
+  "audit-20260617-007-semantic-closure-registry-post-repair-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "f789c9fdcd39239d92a9129dc463cdd7199e86e019b6a422fa28e5fd945494cd"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "36e062f7c7710a95142a8a2d4c6de541e1a64ac796958cda9f3f490bf91d0e18"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "6ae59ffd78037f3312e3a7b701ef8bee18ccb67ba234f3cf8896d531a41892dd"
+    },
+    "audit_report.json": {
+     "sha256": "f4db250eec839a4a68fb78ba4762bf1c9280d3c49d788c6e842d287ce14255bc"
+    },
+    "closure_reuse.jsonl": {
+     "sha256": "d3e127ab49c8e06eda86d85725bf947aa6b4e7ecced1949080bac3adeeca4140"
+    },
+    "ledger_consistency.json": {
+     "sha256": "0fc8e30194d72057d8db20c0eea83781476342cd87092aa2a02482de8c0b89dc"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "73801d391a413e5b4547a2aa9a62d3d4139773966399e29b69d3d4159bbf6401"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "b41588f3623c37d9eaff58b7367c4d86bbbf8d22e621b669d4567ff8173d07d4"
+    },
+    "repair_closure_matrix.jsonl": {
+     "bytes": 15103,
+     "lines": 14,
+     "sha256": "196ae8df7e4f3731c1741da2dd52d3385a96edec6a23d4c5f13597aacfbaee96"
+    },
+    "repair_report.json": {
+     "sha256": "93bbbe7a2e05be585cf74b44852a06faca2b3f263c3c3b55764516742b4aac7a"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "bd7d451d6b86d883e0a3d8652e61bfc0ea6060c2971c6c0e7cb3f209c50963fb"
+    },
+    "validator_results.json": {
+     "sha256": "dc64abe0f6c1a8938cd1c6c57c208fb82690857a02db802c82842ffa5dae527e"
+    }
+   }
+  },
+  "audit-20260617-008-semantic-closure-registry-repair-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "3da0b44d91d40a278540d58f61eb46caa48a3c16a04debf80d730be8d2979be1"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "7462353944b1d5bf1c7a8d7a6f9804a83cb07ccf222b5f802cee3d290e167982"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "f60cd192b8fd66dcfe5693488e581ce803c68ed0dea09cd14c8d773b8b15c849"
+    },
+    "audit_report.json": {
+     "sha256": "c46134dedd561721e145b39b991ee0af8b55a1f6131dc8522b112c9bd4132e77"
+    },
+    "closure_reuse.jsonl": {
+     "sha256": "70ad3f793b2860b16e4b16c06fad26e393ce5a339a4509d58164fab4b68b82de"
+    },
+    "ledger_consistency.json": {
+     "sha256": "05dcd8266610ef4adb4f0cc1ef74a1fd5119ce9cfa88cef3a66b5ab434aabb73"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "b7f8413209ef698498ccb26f8b4c18e02fc378b96fa9f5b0307583f765cebb23"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "5b7b60f3e7b390791f36bf359a818e6ae82c777d464630bfc83a34497d9f3df1"
+    },
+    "repair_closure_matrix.jsonl": {
+     "bytes": 18440,
+     "lines": 14,
+     "sha256": "5812af2e13a8c1b57999797c545288a2932f6ea64e7fbde651d07f23d52161f0"
+    },
+    "repair_report.json": {
+     "sha256": "a3281256e8e53eddc0486c6778b7bdbebae259cde8e8ef859866cd1aae15c035"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "02812383757748994481e3da29e923f3f67ed1b2d9d7299cebbe169c321642d8"
+    },
+    "validator_results.json": {
+     "sha256": "f81d02366541fdb1159688e7c14951cfc98d4216802fde5b6d330a22017bdd30"
+    }
+   }
+  },
+  "audit-20260617-009-orchestrator-goal-runtime-flow-post-repair-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "35f104d1bbbcadcf5e3ab36ce7db83c8385f6c0b73e927ba36017164bc1a4f2b"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "6ccff642aa382f1825b6d99780e33084fb743cc65919e05daf76cb8c17d4d93e"
+    },
+    "audit_report.json": {
+     "sha256": "9739677c961b33b3a8a13d719f31ebd4b221bf231e8dab49239a9a0787fa88f6"
+    },
+    "closure_reuse.jsonl": {
+     "sha256": "4eabc4024393f5c0fcfdafd36542dad2cad5a53437a14219e15db2f9b3e9995d"
+    },
+    "ledger_consistency.json": {
+     "sha256": "2602fdaa49b2573fff407a4e5b7fe3cc590a2f4b1db487dcc959ef58bb859c3f"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "02f6dc6b35c9d7220f42927fae7c0ad0433d434184d18fa2081dacccb2d28c02"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "ccfba13ba3163f9b45a02ae69da5ee91fdf9a3e5473500d85071b777aa93d45e"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "validator_results.json": {
+     "sha256": "1256104e9137d9a5eee1bc5cf7ef2c3d2a167beea4bf1936d31b238d38d4ae06"
+    }
+   }
+  },
+  "audit-20260617-010-orchestrator-goal-runtime-flow-post-repair-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "fb5354e329fb6b81e5ef1fb24d317b1b21ed3ce22c7ec25a96ba8b5efc33a381"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "4e576d0209b7ede0ec5b67612275cf326bb787dfa514e4c1a4f32440311b7045"
+    },
+    "audit_report.json": {
+     "sha256": "564abf751dc47e97176718456eb013dcd4ab3bab996b1e72050f42f4c9b4c6f6"
+    },
+    "closure_reuse.jsonl": {
+     "sha256": "a567f40cb2c46cabbf6b5bbee26c022c0b09e8417212b5f287a7537a6b839f0f"
+    },
+    "ledger_consistency.json": {
+     "sha256": "478d3e38a3437f9af8039417ea657f619995ba097694394eef85d634618ff0e2"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "5ef3cd57df59a589854691d2b40b22b654018bb1c2f408010896f7ef0721bd0a"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "df8a7016f4cad18878731bbacdd0e860da4cc65e60e51d939bd525e7a523d85a"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "validator_results.json": {
+     "sha256": "65b7c993ec004880bba9bb8752250f275e521bf1006f6226aed0be13690c97c2"
+    }
+   }
+  },
+  "audit-20260617-011-plans-to-code-handoff-post-compile": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "60f538deaee9c87142cd28c93f23b4db93193cc6228450c2bdc185e885321589"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "f798a38a345272d97839712b604a8d0b3c738ffef9bded24ad0acf146252ffeb"
+    },
+    "audit_report.json": {
+     "sha256": "4c70a0b6e8d5ace9647ade85eaf8c9e4ce93d1ec17a32170d080deaab338efa1"
+    },
+    "changed_plan_fidelity.jsonl": {
+     "sha256": "60c9feca4e579b13bb62d006b1aad75f35e9194a3dc7f8c2d18d97b50a886106"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "a79ca200bfa9759dd03bffef886e928ed524448444b778d8ed7d3b8106d2b992"
+    },
+    "validator_results.json": {
+     "sha256": "8a5fa67738ada3385f7e8ec3fff4575dbcd58894e74216d635e2ef360feff826"
+    }
+   }
+  },
+  "audit-20260617-012-plans-to-code-handoff-deep-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "708ab9cdfc4a04e324faa4f9b5f7b383721a18b93521388155cec18e966666ef"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "9f7c15410df1fcdb397e1aef74dbdfc4930a804922f674e8ade42d3f1feca0e9"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "40474f6fce55ffdbdcfaf0d7a0ccf60c75eb5ea56196d111d0d2eb6fd9527aa0"
+    },
+    "audit_report.json": {
+     "sha256": "2f565ccfe63ddc077765e6b35433f77daa6058b7c9e18e8ab46fe58161082cbd"
+    },
+    "closure_registry_audit.json": {
+     "sha256": "4409474bc81a988ec9c3cc6b60059a5a7f4d23eed4c6e6050415e4a89efd965e"
+    },
+    "closure_reuse.jsonl": {
+     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "forbidden_artifacts.json": {
+     "sha256": "16f568205209ce8ce5db59c199dae2160b2445bfa952030f41fd6f2eda70557e"
+    },
+    "implementation_readiness_findings.jsonl": {
+     "sha256": "3cb68be4b9d2d93a10733d1f0e7bcb954150772fd2f5a35aec7c52ccbda93010"
+    },
+    "ledger_consistency.json": {
+     "sha256": "05058be928791fbe84e314c6793bddc575e9e69eb6617bbcd3f8a0e59434d6ff"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "7a489620451c171d182663af7785f03d24923b38361787d0adf0b4cac475e679"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "7df4765b1aa90a4a733a790b5d4882b26f628e15756fcd8e034078d007677a2c"
+    },
+    "repair_closure_matrix.jsonl": {
+     "bytes": 46332,
+     "lines": 42,
+     "sha256": "aa0bc09f0182bbd0a6276e772f7fbf5313e820f52a450d792df6657152e3c29a"
+    },
+    "repair_report.json": {
+     "sha256": "8b1c789809b69d505dbbc3dd4bc57b924ae6bee339688bca77c90a90722708f4"
+    },
+    "repair_validator_results.json": {
+     "sha256": "ef14b7d78d719749d027e6c5d394488c206b2dfbbbb2fca9abdcc0a5334982e3"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "3d2731c8c78291a1a4bba3b82339a6b96725867cc2bc04a83ec27d9c82834b0d"
+    },
+    "validator_results.json": {
+     "sha256": "b8dda94d1d5a30819d76673d851c78b6b9977a49c8f48dc90e472ca41207c25c"
+    }
+   }
+  },
+  "audit-20260617-013-plans-to-code-handoff-post-repair-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "a570b9201808f117ecb19ec9aa904d6105df05662f8d95c6a270a35555313445"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "b05781b00eb96012a2db3cc6abeda6c1e9fd80cad7c227104e7c65d9decaf3a3"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "c1bbdd45900211c2fb09bc66866b2fac224126f48b33756f226e647fbaaef162"
+    },
+    "audit_report.json": {
+     "sha256": "681078de5130f7a57192710997211bea42cf1ab57f4e66aa09ac6534e42059c5"
+    },
+    "closure_registry_audit.json": {
+     "sha256": "65656b779387622adec76a5ff2caa318f6c93860d467c23166f1864388349f8c"
+    },
+    "closure_reuse.jsonl": {
+     "sha256": "597dbe0c10629f1fbfe7c0d0d39817097b1f4650b9f524d573960971622316c4"
+    },
+    "doc_impact_reference_findings.jsonl": {
+     "sha256": "770142a24f3e487067dc90f0faf9acedcf7c167aa8cea4214cb742a53a0fda85"
+    },
+    "forbidden_artifacts.json": {
+     "sha256": "431d6f2fd82114a8ebd6063c7c86c13408d4817ad10225ed1df335d570ab882f"
+    },
+    "implementation_readiness_findings.jsonl": {
+     "sha256": "6ad90cf43a377221b895b1637a2630ff62722e81e0265888b5445c6c9e0cc1f2"
+    },
+    "ledger_consistency.json": {
+     "sha256": "98e1d4a77d17fb4df0e909d67ed796b28ae0c0f786a2547dd1835dbbfd3f22ad"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "15966fa900764477b7823a44e97d7f901e56779a221696707ef88002fabe9ad8"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "823ab6379596a97565f5c640f9d73d1077c47620859b6d3ae2e7576a7fea6d3e"
+    },
+    "repair_closure_matrix.jsonl": {
+     "bytes": 2544,
+     "lines": 2,
+     "sha256": "6dbf1cbdb564b3454eb3380840c5be6139a10f7b74662ed4d1d6756fc5da4045"
+    },
+    "repair_report.json": {
+     "sha256": "140d6dd6f4f52075782c1a45991a26dfd179cde59d5184f69eef0baaaef37dcd"
+    },
+    "repair_validator_results.json": {
+     "sha256": "7367bb31c1587c8c04ff57af152320292dd2e960b0ba8f2001f77b014f7d3a05"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "a1f716c493dda78d29418e1f100f50e9fc9c386d80224403524cec90bb16004b"
+    },
+    "validator_results.json": {
+     "sha256": "70742da960e57712f6e67273d895990b4af2ad107b83a27caff4006885d10680"
+    }
+   }
+  },
+  "audit-20260617-014-plans-to-code-handoff-post-repair-clean-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "7844f3843c35c02eb760ca098a08eb4488a0cf07f0b107bf8cd3c1a487ab0c9f"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "0f2d15f9eaa1625ae70671b6e6295066529c045b8e49f4e08139f983be13e791"
+    },
+    "audit_generation_summary.json": {
+     "sha256": "2dbd8bf7aa01284e9e56b37bfa6a32beb35be90043890d8e615f6baac3897c83"
+    },
+    "audit_report.json": {
+     "sha256": "cb7b36ff42915eaf78fa1cedbdd5b1f6a72b25f1638514b3f0c6f13a332ca162"
+    },
+    "closure_registry_audit.json": {
+     "sha256": "c8b5188f502e238dc1d43911f2db81e55960120636f197d1ba8dfd2438e02fe8"
+    },
+    "closure_reuse.jsonl": {
+     "sha256": "52f1a37006b91b63190a244b9d3059f976d7efb81620beaefba0c3d1eab4f18b"
+    },
+    "doc_impact_reference_findings.jsonl": {
+     "sha256": "dcd022a32251f43a66b58db21f36ce5d8e4b91dc7e90d9fb729de83bf697c5ff"
+    },
+    "forbidden_artifacts.json": {
+     "sha256": "449232532e19f439da17f778c062447e3a9b79fe45c648c2e593740a24e83a1c"
+    },
+    "implementation_readiness_findings.jsonl": {
+     "sha256": "026c0dba3d430b62f9135d09faa4ff9a494314c81836fa69e42fc2fd65f44a4e"
+    },
+    "ledger_consistency.json": {
+     "sha256": "337d72d0f73b55b3a124e7e4697c7cb6ededb3e3368daf4a1960eaf0ffce8ddc"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "ab92f96dcc860fc689a1cf108a6f972e0fcb6c85a10df319d95dc366adb5b5d3"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "f4fc6e98bdeb2fd0970bac6d27ee078d2982da26ca18d2b1ee4a867a1f9e63d5"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "validator_results.json": {
+     "sha256": "eb70700ef77abf93c53bfa5d46d1e653494ec6b63e055c11a5da55aa2402c970"
+    }
+   }
+  },
+  "audit-20260618-001-plans-to-code-handoff-post-governance-deep-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "cf70702b31433eab125631afca726dd19fb74c2cfd79d39ab9917ab580c61148"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "f05a0e494a148d7fb59f9915b48d8ca2184a8060c29fe2510f3c667f1253b99a"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "b84685d0e26e4de620cdeef29065511f646e18d5b37ff996b3d3f5dd67b353e8"
+    },
+    "audit_generation_summary.json": {
+     "sha256": "9c1589409193e59a48a652d663244223112842d3a1270d431f451a6c1d33b3ce"
+    },
+    "audit_report.json": {
+     "sha256": "87d158e7359636c3a8a04a74f2ed880206dd3f0fbdff034a9f3510e6ebeda6e8"
+    },
+    "closure_registry_audit.json": {
+     "sha256": "61645274a3289a9b1a0bf08afcbc26697f5cf1dacc567921f770c13e499f5960"
+    },
+    "closure_reuse.jsonl": {
+     "sha256": "513f874851ff015214460a491016f7705eeaecddb23e2ccce0d77084d42554ae"
+    },
+    "doc_impact_reference_findings.jsonl": {
+     "sha256": "7a2db5d6d318d6dc31a66dab1331009f662973ba94c07fb52bab4592c6e89f62"
+    },
+    "forbidden_artifacts.json": {
+     "sha256": "7adf1ba4cc2197a52ecacbb435ef8490df60363ea0e860fd2714411f2219d804"
+    },
+    "implementation_readiness_findings.jsonl": {
+     "sha256": "81f44c7ebbcc5086000927815ff253c2ae0d0491aab7a612e2c08fddf0480328"
+    },
+    "ledger_consistency.json": {
+     "sha256": "8b8aa868be1e7af2900875accb7c0b578e7e853ea4e839e5f12f3f2ce7eb8715"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "aaf2ca69d840e62139692eec7df28ebbf42c54a42721193f4969fa2804970ef0"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "619f6106c6b42ee0cd85b5e8c53356e14a083d8dbcbde734e518729e12c03cdb"
+    },
+    "repair_report.json": {
+     "sha256": "e2504ab8241cffec166a0a0c2828754218f428991b8a195fce663847da810ce6"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "validator_results.json": {
+     "sha256": "2e996da3f1aa2672cd6b8ce108c0026d2203dc449642fe042d5a3d33d9cdb257"
+    }
+   }
+  },
+  "audit-20260618-002-plans-to-code-final-docs-repair-certification": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "dc7136e5967516d708b170033e91e6932f30a15e8db07e3bd4e5303e39d13922"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "8f2b68dd3a5f3c8d44e92ad6292bd8827692b08498c06e11f8cac7e5fc207bc8"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "97b01d4b20bda34ae13628f2dfeef4a177cb5350cbe187e627649fc463a04e90"
+    },
+    "audit_generation_summary.json": {
+     "sha256": "81c03b465b7ce0f56f7fdc823ee0277a0c3be3e9335b3332c9edff814c3daff7"
+    },
+    "audit_report.json": {
+     "sha256": "6415965bde6e91272aa3a38c7d9df5752faa46539d1f626aabccf82eb021d20d"
+    },
+    "closure_registry_audit.json": {
+     "sha256": "fd83ce193f99ec865907824fc8121cabc1cb19a14d0d69dc1dc560e740fa8e1a"
+    },
+    "closure_reuse.jsonl": {
+     "sha256": "5a1a38ebad136b4af8847f50e6de93f9aee0e2a3cd1c68c6738c5d972fcfeea4"
+    },
+    "doc_impact_reference_findings.jsonl": {
+     "sha256": "5d8a8c935cb8d1d5f8a05d517ed2cf3a79842b1513f0f42de13729ebf65919d1"
+    },
+    "forbidden_artifacts.json": {
+     "sha256": "18dafd41cda24bab0f367ff3c7f9ef635b3403b43faad330146705ee7a5fcd0b"
+    },
+    "implementation_readiness_findings.jsonl": {
+     "sha256": "979af427f207501f30531c4d5cd193b5fa471be1811022f429351b0a1a578a09"
+    },
+    "ledger_consistency.json": {
+     "sha256": "7e70f2b881f3f4162a8387ace224c1c70ab1670f8a66d9c37eb6530e74c6c201"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "5d8a8c935cb8d1d5f8a05d517ed2cf3a79842b1513f0f42de13729ebf65919d1"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "b4f5495ebbef38c9ed07920be00f0586eae08f6e1936c9f87e33d49ec8938f77"
+    },
+    "repair_report.json": {
+     "sha256": "e78e50251fbf49c94cbd3ad7564cccd932bdda0aab86ad91ee645abb412c099e"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "validator_results.json": {
+     "sha256": "5f9d957c19630a493b04ed6ab9a7e1c9ba4a107212df04f2bef41728b46e4826"
+    }
+   }
+  },
+  "audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "03756ebcd50810e1257c1e6cb290219ccafe3bb50f29363cc45ee8743e45b4fa"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "a329b308c72b4de99701563cd9450f02d9ef39aaf5c7f5f2821eb59579adac2e"
+    },
+    "audit_generation_summary.json": {
+     "sha256": "f7a3627efaa7d60e26dc4acc610581c90c61edb7665e6f52043a65a5f363f654"
+    },
+    "audit_report.json": {
+     "sha256": "fa3fe3bbf938b0ef9ad155c084b735dbd6d5a7677e8d257820af664e9a9fc073"
+    },
+    "closure_registry_audit.json": {
+     "sha256": "5708d12dcc4cb9655017daca9558e66d01c68f57484b10dc938ba59a9e273f10"
+    },
+    "closure_reuse.jsonl": {
+     "sha256": "e12f6d225f0eef7c169038523e1adc5bef3cea038b6e01b34092dce6a55db4c9"
+    },
+    "doc_impact_reference_findings.jsonl": {
+     "sha256": "a43aa08f32c33dbfb84dee4076db8f523629a4886990d9ac519ee688af0206d5"
+    },
+    "forbidden_artifacts.json": {
+     "sha256": "eadcfb62497f53568a9932b255905b70fc7589cdcc14517a272dbb0775fec11d"
+    },
+    "implementation_readiness_findings.jsonl": {
+     "sha256": "0e6584d4769529657e65da1b2cfce1b427a019f039ca079d45c665d649a31f8f"
+    },
+    "ledger_consistency.json": {
+     "sha256": "4575391871bda9b789a82ae4c86be8c5c2ef16246b548005be3eea6f8c10e03d"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "b8c8bc385910bca8e34f873487e79bb4c8fbad6ce4da92c46af97d75cea384f8"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "28f816413d612d3547d156725632599afa8034310ed7bda2823515a55ddbb4f1"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "validator_results.json": {
+     "sha256": "4f492cab165973fcc2b3fd3c6aae1659a74b5a9a90038650a21746407c02b777"
+    }
+   }
+  },
+  "audit-20260618-004-plans-to-code-currentness-compatibility-repair": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "baa7edc071701accbb09920310476a88eefc5192a01a56b854cfd0650a7e9c8a"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "4f2ded4e1ab4b9b52a3ed89cf5a23de5c87c991406c2cd234bafa2b81c059aae"
+    },
+    "audit_generation_summary.json": {
+     "sha256": "0538d7257386a85767d88184ece4c92646e18b210cbbf7cc42396d0079d68706"
+    },
+    "audit_report.json": {
+     "sha256": "1756250ee864ad4e2abf98dfbec56859e2397bc5d8e49b3396fc3106fead4247"
+    },
+    "closure_registry_audit.json": {
+     "sha256": "6a7ab7356808b437d6f81fdb6f7efb4179974271cdcd6546f2fded8f4ea398ed"
+    },
+    "closure_reuse.jsonl": {
+     "sha256": "d6ec41f100d2eb980ec12e18d36eac278880b986566fc80e79c74052702f67ce"
+    },
+    "compatibility_findings.jsonl": {
+     "sha256": "d693052165ba23a92179150ea6c4b7806dd866746520f4356a8e6e1d1f4747f0"
+    },
+    "doc_impact_reference_findings.jsonl": {
+     "sha256": "074c1655e8c56c51b6c186bc7035775cf989d1e2b3f1aa627d839f039a7f12c0"
+    },
+    "forbidden_artifacts.json": {
+     "sha256": "803e035c694d121f8a5de43f3f323b0a7238f1e44e061321c86a1600bf559903"
+    },
+    "implementation_readiness_findings.jsonl": {
+     "sha256": "a8c2cafdd5e7ad590b6c3b1fd7ea6615f6f72de04a5a92377c0e1592e71570e2"
+    },
+    "ledger_consistency.json": {
+     "sha256": "51810ac79a0089dcbd44a30853eddf096bc4702e2b8c3e9b1234771b8f4f7661"
+    },
+    "ledger_currentness_findings.jsonl": {
+     "sha256": "b88c539133e0c130dae6542c194a0641d6587bbb9af75e761a4f0d5eef2dfc03"
+    },
+    "orchestrator_tab_findings.jsonl": {
+     "sha256": "7ee3e5235ef1c7f364155972fda806867c096edb5a64df697340ae8c3efd863d"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "6a5997be915aa1dcf0f92455ce0f8fcc640f09e123826330e4f04c857d59489b"
+    },
+    "schema_route_findings.jsonl": {
+     "sha256": "838176015119f0ccac14a6420ecc001f1f4426064c3293e720dac3c763dee215"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "subagent_assignments.json": {
+     "sha256": "17e92c6e9e4f8d46f625965bc38f7eb869358362da4da36d8543bdf38fffe96d"
+    },
+    "subagent_findings.jsonl": {
+     "sha256": "6a5997be915aa1dcf0f92455ce0f8fcc640f09e123826330e4f04c857d59489b"
+    },
+    "validator_results.json": {
+     "sha256": "c46aae34c0af8f6a5a828665e786803f2043a58f0f624c1b6bb077aa0558586b"
+    }
+   }
+  },
+  "audit-20260618-005-plans-to-code-final-corrective-certification": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "07cffda2179c6a1dd3c84ea272a02c2daff760d859c9df874bfedff84e7a5969"
+    },
+    "certification_checks.json": {
+     "sha256": "bca9dcb2262cf4cf43824855914010ef226e14ddef967e6ada426963d60c710d"
+    },
+    "validator_results.json": {
+     "sha256": "40f1af7ffd0c21f0d42cf556cd413261001d647e1b9f8c0846da9f82e5df6e46"
+    }
+   }
+  },
+  "audit-20260618-006-prd-planning-wizard-semantic-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "db528d7eef24d8622a11a735033e799d822bbf830e1668078a3b8cad8b0a1c1e"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "52c14fbbd8ced75a2e2db3fc17dcc7220b02c11aa7b3395742622cb4561b2162"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "6096c4c4eecf6aa4210e512c238a51cd8292bd3f0a87fc99186fe1465386686c"
+    },
+    "audit_report.json": {
+     "sha256": "0ccf8bb78d4580a13f12ddf5a8681a69cb17c5b31c6f5346be4b469cc8d9b64f"
+    },
+    "closure_reuse.jsonl": {
+     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "ledger_consistency.json": {
+     "sha256": "59c05fd91fb1ad5daaebec30c2532454ac8bd1a59d37823d287de51ff83f187e"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "c8d29b02bea4a76a2298213e321302bdfb2e1056c50d40af256c05137fa5b677"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "56ca2f84f702f8cb04b272518f2e399782d9c70ae035b1101d081c30d12f5473"
+    },
+    "repair_closure_matrix.jsonl": {
+     "bytes": 14455,
+     "lines": 11,
+     "sha256": "fcd62820d952c5956d5a4fb4af3f61a0e152c4a4d0923cd5eb3e8a2f52f7bb4d"
+    },
+    "repair_report.json": {
+     "sha256": "e2ef92346d9de78354fbd0d6027d4cf3a826d82b79cf599a205f7c30e788a8fc"
+    },
+    "repair_validator_results.json": {
+     "sha256": "161858f53592a4e918636a4754a8302e63da06950154b7696b8fafa5e82faac3"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "2d8c45695291b4ed49fa61283cce30881ad1f6feb262b6854e0b8ed7bc9b06d7"
+    },
+    "validator_results.json": {
+     "sha256": "1cca8610032f76890bd18e6a4893d3f22f7210d7dfd50f072d2db5fc724b54e3"
+    }
+   }
+  },
+  "audit-20260618-007-prd-planning-wizard-post-repair-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "1609768db56e5035e21245a2426773753ef25ff11ef789ce1f8decf26c72c5c6"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "23ab977c40607af350aad7fd1b337d4087013be71d5fbc4c1966834663101c90"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "0fe9dc84dcd95c1cce5c8ade7691aa0dfea94f78c942b85e7e08690fbae9bfdd"
+    },
+    "audit_report.json": {
+     "sha256": "670ee3275a28b36f7e5a504b7f4fcbed1d548fdfac4b988fdeb73e82a01732c9"
+    },
+    "closure_reuse.jsonl": {
+     "sha256": "485359b39d0331f9124c86ee2f19d9d5f6c8bab01822c62de34d4fc3181fa69b"
+    },
+    "ledger_consistency.json": {
+     "sha256": "6626c36eb6ae39b6fb1815aaec8e4551fa078ae90598e2eb860a2f64f27293f9"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "e88d48d85d599e3c81a82c3e183543b7a179e9b2ba298a2b9642ae945da7b522"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "08ad926a12b6e96c8f4a1bc5040365aa8f221aada4089e9188e9ea8fd2099fc5"
+    },
+    "repair_closure_matrix.jsonl": {
+     "bytes": 156687,
+     "lines": 94,
+     "sha256": "f9930c851ec699be591300325376df8923f608f35b5a336fda917acfe71e552b"
+    },
+    "repair_report.json": {
+     "sha256": "359c2327bc45cf287cc46d72071ffa6dd3dea2a3028693656884a041d01d984e"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "901f77cb5bec9de54fa30a69db0fbe417f285d5d08c0fb5e997c61a4813d9102"
+    },
+    "validator_results.json": {
+     "sha256": "a76ecc7c2c828bd0b5993c9d1473497aed8ed2d77c56fa1c60c3f4a54cdcd666"
+    }
+   }
+  },
+  "audit-20260618-008-prd-planning-wizard-semantic-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "380c4150eeb045595acef63afcce3f3193de8a9514cc31223cc9a1aa0ad925ff"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "8526d5111559bf087bc2bbfcd57dd7460a16833887abdd4e43a910f0f949d0f6"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "8ebc0b85cc59606790e6df75b71c0bfc8467d22029aa3e5fec1b22c489bc8d26"
+    },
+    "audit_report.json": {
+     "sha256": "b8a0377cb03f58a0594abb0fb7637437a606e1d1b856c5c0bcbc17ce27252d1e"
+    },
+    "closure_reuse.jsonl": {
+     "sha256": "99d0fdc23ab5a75f1a9a8c1e1cb04bf8d1de51916e49e7de14318709042558ea"
+    },
+    "ledger_consistency.json": {
+     "sha256": "2336aaa1381e048b676f6f33b5160cc45b7edbee1372d9f1b8470994706da027"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "05f00f7a625be6e55e79b9ffda272e73aa5f376489bea5fdbbb7bd68d726d60a"
+    },
+    "repair_closure_matrix.jsonl": {
+     "bytes": 7412,
+     "lines": 3,
+     "sha256": "260c0ceec6248902a188c0f198c25fa5187babcdea89993d1d827e277e3cf729"
+    },
+    "repair_report.json": {
+     "sha256": "0ca03a7a66aefd400c1b8b7d6040bb7afc896c1dee2d490014c875f00d9b750a"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "validator_results.json": {
+     "sha256": "308edcddd84f66985fac482ebd036a16e2c5f3f9fd74c6b3ae3a47c3cbc657c9"
+    }
+   }
+  },
+  "audit-20260618-009-prd-planning-wizard-post-closure-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "7d2de02d59563dad3ef770eaeeddd446f2247bad85a3d75982179db1dc122b0f"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "aa4e55e838e1762e3adf04fb60ce83a53af48e0ca38a5bfd9a54dbfd0abf3572"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "e6237b8b2da0532b57f89d1f52a8bccd9a0064568a068a133005051e830dc40e"
+    },
+    "audit_report.json": {
+     "sha256": "02872cddb96bd26638911c16feedc106b2f65c14588be2cc84c88832f417b103"
+    },
+    "closure_reuse.jsonl": {
+     "sha256": "132c4727d3be0c1aa4e46a7a3a6e2ec90f2c555bba8a6c295f5738c3d83ad7e9"
+    },
+    "ledger_consistency.json": {
+     "sha256": "0a0aead9faa452af692409b8f7fe33744633aa60fdd62efc8c1cfa0865ab8457"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "0a77431ea207b329727518b8ae95f3e19cdcf6b6b5798f94913aa0122220a971"
+    },
+    "repair_closure_matrix.jsonl": {
+     "bytes": 18230,
+     "lines": 10,
+     "sha256": "169fb5f1c9139e726fc12e243a5a4c19c84d40a1a75c512ce13e180217d42f58"
+    },
+    "repair_report.json": {
+     "sha256": "078a983abe9bb2b0a9d6ebda9b598f1a291d3c662cb605144c397e64200b5d22"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "94697edf9b9364b6a6ac011f4b5ae10cdc06584d40d87dffbeac93ad395526a1"
+    },
+    "validator_results.json": {
+     "sha256": "b82e350f5ce4886f79467887b9b2aca8a4fc57320c5d8d2e8ed80f4738e905e6"
+    }
+   }
+  },
+  "audit-20260619-001-prd-planning-wizard-final-semantic-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "ef0bd147cb79c213875892a4c7f8d3eeadea564a40704b05fc4fdd6c1b8e61e7"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "0955bac4e544773dede0e3a1d73e7ac97a9799156268da6df6adcf939e7922f6"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "61551d85992f933484c2a3e34890967a53cbee136a32779ee60b0e4f556a515f"
+    },
+    "audit_report.json": {
+     "sha256": "de9798f5d2907344c6cec15aeea4bb10e74819fe4095e68641578f7554f188b9"
+    },
+    "closure_reuse.jsonl": {
+     "sha256": "0a6de7d6e7a32fc9385adb74ee29f8c66ed91255bc6f087f5c37e1b333b55327"
+    },
+    "ledger_consistency.json": {
+     "sha256": "1a3ef81079f158b2f1e46429cb3f993b1c7e472405b439c59fca4fcf0380367c"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "e0e086793a41a87b4c5220b29bbf8f1349f7c0cbf70e66c9886bedee48d4b588"
+    },
+    "repair_closure_matrix.jsonl": {
+     "bytes": 21731,
+     "lines": 16,
+     "sha256": "7abc4a05a1ca836e448e9c94a1815aaef02d6f92f7c64af9a193d1ec1b88da60"
+    },
+    "repair_report.json": {
+     "sha256": "30417079cefc2e3ed27ffa74ab61cf96fde7f352817b91b781c28cba867a7c41"
+    },
+    "repair_validator_results.json": {
+     "sha256": "9c8e3a6d83757269872729da145ba1014c88c702e670bcf15e9f090e403a343c"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "41656d913be1bd4b627eef0f22d382a389534021b2cc61cf20c5e7378fd629d6"
+    },
+    "validator_results.json": {
+     "sha256": "5401ac00c06d2824eded90382c5db63dad52beb1c74f4e2624f1695914dc606e"
+    }
+   }
+  },
+  "audit-20260619-002-prd-planning-wizard-head-semantic-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "4b3b72c7fdfde5b75887afa1c163db7b7d3f94cf1465a788116c0876ccd99ba5"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "68f65937bf1e54837c48cee16a647c0ed1f85970664a6a3f0ae649b08b4942e1"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "2bf4ffccf75c3a002305d8ff275bb47927caedbdb04be516c498a6d962c99654"
+    },
+    "audit_report.json": {
+     "sha256": "bf913330cfb7131a17f857ae519b379c039e1f86699f79c5c034472821216999"
+    },
+    "changed_plan_fidelity.jsonl": {
+     "sha256": "49526911fe8fc7ac01ae166e6084dca56dd0e7cdadac4e4eb7951e695b9b34ed"
+    },
+    "closure_reuse.jsonl": {
+     "sha256": "f6c322169cd175a117285b2c6e56bed24f8f0a6cbfe1a0b34468b763503bbd6e"
+    },
+    "ledger_consistency.json": {
+     "sha256": "b748ae989fa74704e3df40769543d813b2fd21d9b4e76c5e2e81a38fdb2efebd"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "ece047a9071154a4ea0f53e12a1cd9b197a73fa1134e9b58404f664d5c1c3998"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "964ff12bbbc094060baaa414218589397415f6d17a13b66c36cf7d107e410b6d"
+    },
+    "repair_closure_matrix.jsonl": {
+     "bytes": 21053,
+     "lines": 16,
+     "sha256": "2cb0c73401d5e186de12aa02b9232cc8078b64c897e73b5013fb23d42fae7f66"
+    },
+    "repair_report.json": {
+     "sha256": "fdcd60247f36d77e3fcb9868e9d742d2628757942fbe633ffc69d3c36b865e23"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "cb391c090aa8ac35e71aaa0d2c04a1a4130ca7521266279566ccf86ce1096699"
+    },
+    "validator_results.json": {
+     "sha256": "af807330050893ac515e8fedb13b57baabee6a2d1f7ab470ae8015e6cb6ddd30"
+    }
+   }
+  },
+  "audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "91d3702ec5d97954dfcc2ceef54ae81fc428e65766943ea8c626249128de22bf"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "3002dbd1f96cb9638cf55c45e3afbb7cbe75cc3ea8e566cb6751fb4679bc2eee"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "96cbb3498251eb951e80fddeba681e95378a593f0f26c53e53e945fe0326b9d3"
+    },
+    "audit_report.json": {
+     "sha256": "8193441e638b5aaca5288cefb8fed9defe4505af59de7eabf1f168d9f8593c3a"
+    },
+    "changed_plan_fidelity.jsonl": {
+     "sha256": "a4fb39a15da6b3e4e8fa7a18aada8fc2a93719021b54b7dd5c7663688be48628"
+    },
+    "closure_reuse.jsonl": {
+     "sha256": "3a4f7325dd04ef62275e01da4b1893b8c9db67dff181805b5dabbf831a49408d"
+    },
+    "ledger_consistency.json": {
+     "sha256": "0981a0ccd5fa63bceaa7573408ff3fdd283f5265fad483ac266cda845f85362a"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "facf7a4dc1810da6b2aa708bd95c537021021d30f401a96eda90bbeccf0c0f7b"
+    },
+    "repair_closure_matrix.jsonl": {
+     "bytes": 21645,
+     "lines": 16,
+     "sha256": "dbb8ec50c2146da20a5901d17af64a3295cc8015d32d310d26149b09b73fbf87"
+    },
+    "repair_report.json": {
+     "sha256": "e8e060b0ec5e4c9101f71b56ea1cc158b65ba2d4a0fa149d986c6af7527c6ad7"
+    },
+    "repair_validator_results.json": {
+     "sha256": "78e6e42c1154f02d6663917f321b687fb46e116c7e22d33b90ee6d227ed7a436"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "validator_results.json": {
+     "sha256": "14b820864797f4d58fc58440a2302a5332c162e65f255ea22a383f7a7883abc3"
+    }
+   }
+  },
+  "audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "d420e2b709719f1fd255d7712fcc7192a32eef331fa6c04bb586e735843b75ef"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "9108cb35183dbea0997cb2af65a4fb04c0406dce6e4dd96bd473469a5464db33"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "50be49f27d558caf95958a7609d98fbce80391bfdacaa8fde55f07ef5629fd53"
+    },
+    "audit_report.json": {
+     "sha256": "0a480e0f20ae727f836354e941079386f4ee172b8adca4fe379cd5e4c4ea3297"
+    },
+    "changed_plan_fidelity.jsonl": {
+     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "closure_reuse.jsonl": {
+     "sha256": "4feaeab761580103bb80b5e5566c5c950f0223ce1e45db17b8ed7e68298f2759"
+    },
+    "ledger_consistency.json": {
+     "sha256": "f244996ee0eb95238d329a30e77a7b2038880d1ba67c8bdd85eb2751bc63cbed"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "446920a5507cd1dadcf8a814226743a63f0b4ca4f0b1f56e2bb197f902fafd3a"
+    },
+    "repair_closure_matrix.jsonl": {
+     "bytes": 26247,
+     "lines": 20,
+     "sha256": "c26272509f73b1310153a9433b85575f9f53e209a694cc5430e6c3b32d0f4eff"
+    },
+    "repair_report.json": {
+     "sha256": "e51b5d8f26a8cd50b0a484134d340e6c203bed474ea6338917b3ff3845e43a39"
+    },
+    "repair_validator_results.json": {
+     "sha256": "ed27b93dd14c0c17b6db5cf994430542a6f8f5133b614cb29f2fec23a5d73c5d"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "99704968d648d3482913f076650eb132bfde169662dd37860d4b049ac62645bf"
+    },
+    "validator_results.json": {
+     "sha256": "4129058076be82750f26a12394d5e40073ef1a974c904b8e64e754ab573125d9"
+    }
+   }
+  },
+  "audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "df0ec229dec3f58a1376a16890edc287ba0d612c8adcd78174c100d1a6dcd0fa"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "54547168b0c70ae8459ee6c1b68363e55479a01853cdefd9ed931d536c123eff"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "aa776c66bac668ee37f5d68e76abfc9b13c6042a5f2679a7cde2d8f10fcb269b"
+    },
+    "audit_report.json": {
+     "sha256": "f54673bd41f0d7129a09f983eec4b76435c445abb8f327ad32609510c507b90e"
+    },
+    "closure_reuse.jsonl": {
+     "sha256": "702e60e8d46d7a9a4796c203442e7133a96be1af44f1315204302ef61bd4cc60"
+    },
+    "ledger_consistency.json": {
+     "sha256": "07bac35322bcb2aba1cea50b545117d86ec70d29623b24a87642026332184959"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "c934d3e8a4662882118449aacef1e07a1f1daf9a5d40306b04f9b0f6f997d181"
+    },
+    "repair_closure_matrix.jsonl": {
+     "bytes": 23249,
+     "lines": 16,
+     "sha256": "e3ea101cf56f9581546f26c16b0888dda08cee4086a37de81adfe3829df6af7d"
+    },
+    "repair_report.json": {
+     "sha256": "2cc772e9ad38d2b167879db52265ec0807a2ce4acb4b68ec0d0ba3bb77a48230"
+    },
+    "repair_validator_results.json": {
+     "sha256": "b3b92301b592851bf2aed38e785b26bb877da2698be27135eca97bfa1e48fd23"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "4303b8be98b6cadd86c958f05b9eeb44160450d85a65f2a4801100655b32f84b"
+    },
+    "validator_results.json": {
+     "sha256": "379a5872c2fa0ad63d26f56b83c720ac856019cf9a14e7e68e52fb78867699a9"
+    }
+   }
+  },
+  "audit-20260619-006-prd-planning-wizard-post-repair-head-semantic-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "717e59665e95e21bb3e95f91a6409963111b1d8557c85704d37f6a75aeb87530"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "c0fdb4a0aea1083f7ffc154836c73a6c8ceb9143aae7d913730a4e28c77ed6a1"
+    },
+    "audit_report.json": {
+     "sha256": "312160327f3c29f5f163d1b0ff117dfc6a12ed995149a1b7f1f1aec38f985119"
+    },
+    "closure_reuse.jsonl": {
+     "sha256": "4a30407ec00c0df1d7a68ac960e9cc4ea2ca45707ea85531537866babb6989f0"
+    },
+    "ledger_consistency.json": {
+     "sha256": "78edffb3934f099ba1921f0f7775d9e55ad3eb85b7045241a6b25e632d340b5b"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "d79e79f6f09fb32f202fac722bfe58a4750ea63d2a3e8efc758afb9d02fdeace"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "f3ed3373bd1646be46a314f84d26bc0798dcbe8896671b8cd33cdb0be157c83d"
+    },
+    "validator_results.json": {
+     "sha256": "1b682a3095a61cfd9817b672426ba380194a1f6e018a29519cfaad30e5237ba6"
+    }
+   }
+  },
+  "audit-20260619-007-prd-planning-wizard-head-semantic-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "77b557b827513e1db14240b1ea01086b9c07c1a4a111cc9538e1189dfe4d10e7"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "2854d50260a56c5ee3a2d8b94bf044f5fd3fd18a2ee53ffc2e3c4a5f990292a3"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "56ac7218cafa38892fefbd1b27bfdbf686770708e984e399160afac26dc406b9"
+    },
+    "audit_report.json": {
+     "sha256": "e9bdcd58157532e3eb5d4456941efc772f7160cdb29842aaa5a30fb54ff3d9e3"
+    },
+    "closure_reuse.jsonl": {
+     "sha256": "363224bb7036323d3c575b4c16dc70345683261080a12535937cbc2d71c2c5c9"
+    },
+    "ledger_consistency.json": {
+     "sha256": "0712b4bdb825da832fb02c63183e4bc443bbf8b3bff789215e23b9a47f9ccd18"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "aad46b7eec971443e4261285b9e6cd0c8e4e6be8214c33fc7bfc59666533700d"
+    },
+    "parallel_assignment_receipts.jsonl": {
+     "sha256": "201ad1bcc9c2144ec0826c7b57058d1a7db53ce5f89cf79cdd5ceba7c6e2483a"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "d16a65c251eddf3ccd1bf53c5a66b36a5ee5a630537b7c89f0b0c46d0fd3bdda"
+    },
+    "repair_closure_matrix.jsonl": {
+     "bytes": 7673,
+     "lines": 4,
+     "sha256": "4a651507ef501bc84f64dce4c27e5421c4851e249a299bfab9892b240d0628e0"
+    },
+    "repair_report.json": {
+     "sha256": "150b3b370623674d121e766eb36ffee8a6e2eda3975d3fcded90e19dac581b48"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "b300d4e53066229ef325dd8978aea4880c7db382293f6c839228e674c5485779"
+    },
+    "validator_results.json": {
+     "sha256": "43658cb47040bd2037b4e4cd86c10153bae47a506edd871b47d446e1db63f93a"
+    }
+   }
+  },
+  "audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "0fe70bec6d0369692292b009e1ec969a404414f7c3deb9ee1049cbd210f0ac75"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "303c2bb14a68e1486d4ff918680330f8eea67d039ab30aad43183de26db1dc24"
+    },
+    "audit_report.json": {
+     "sha256": "d19c4ecc507a4331f84c1df905eb4d58f8dfb5b66058cda0463add6b92b8e3f6"
+    },
+    "closure_reuse.jsonl": {
+     "sha256": "b42106274a7e0f59f0671c4fb4babd96c1ba2f12f1c40746cf8919deb3877feb"
+    },
+    "ledger_consistency.json": {
+     "sha256": "bb2d2e6790e438031525d1d3c4f52b40c9cb14074844a517a805fd9dae3e3290"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "parallel_assignment_receipts.jsonl": {
+     "sha256": "fc9e9e3c028b02e15a5dcb811ea8afcc1627e851068bf7d1a78ffce190934abc"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "38747a7d27d4104cb0891dce0134208d2ae9997facff8e64791b717e0ed81ce4"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "99ff19a7aa8907345b1589e7d581b7004eb8486a0949d097af61a302ce4a8090"
+    },
+    "validator_results.json": {
+     "sha256": "925fb616183063eb117bd1cdb391f23ab40ee16298a2c8b0f57a5406892275a5"
+    }
+   }
+  },
+  "audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "a162a98fd445faa65157071501666d5f9c0e248c0ba2e0b93c88966c98509481"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "ad8e514c4037dbe098523ee5a542e0393ac849f570cb3901c2acfbb2b8858cbc"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "0a9b02bef38e6687f7f986ab99f77d1a0ea2188d637d99a5dc213ab64405337a"
+    },
+    "audit_report.json": {
+     "sha256": "6973898b597c74b80bf958b51254ec3ec354bfc881d341f56d8e9be5ab3b3e4a"
+    },
+    "closure_reuse.jsonl": {
+     "sha256": "7c4a7db182c0c058eab0aa1fb2bc574f14dd548d2cbc63b39b99a26191b5e4df"
+    },
+    "ledger_consistency.json": {
+     "sha256": "f48db7f178c74dc11c76089a0db2acc5232279e77e19a5332e38f6402ee0e410"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "parallel_assignment_receipts.jsonl": {
+     "sha256": "542176ee85ef05988b0b5c8a69fe4c7f4a79150e01ee610914b4c445e17ca4d9"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "b9c288b29481fa6c4db2bf39f9f47f81fedf00dbb6a87d44d81285fff6100fa6"
+    },
+    "repair_closure_matrix.jsonl": {
+     "bytes": 9384,
+     "lines": 5,
+     "sha256": "7178043ba64b825cffaa01c5bf7bd3f6d4ee27ee9cf7075ed44de702d70db5a2"
+    },
+    "repair_report.json": {
+     "sha256": "94d636785b8ddb0d01c5d356a7f10d5287020223ec45507231b7628a2f30d38c"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "52bee009932310dcd0e86d562f71359258206d6277c69eadcf7d9500d04943d7"
+    },
+    "validator_results.json": {
+     "sha256": "71bdd4c8af11b1dd382a44f74d953db2357068873ee86c1ac97371e0747ea75c"
+    }
+   }
+  },
+  "audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "91105aacb3d38a3d8c440f0ee49244d8f19437f2d2b17286d2dacdd004c0f504"
+    },
+    "REPAIR_CERTIFICATION.md": {
+     "sha256": "574b4dff596050bce742fedfc347b20fb9cda4a7e8688950d518968e6c848de6"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "d79d07955f8958db9de4708c241d2ffd0e017853a5f71431d86ea2725449af57"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "0d5a2aa5f7b9ac6adecd5ef587b70bebbfdc0be31d64fb8e479ff56a1b62ffe7"
+    },
+    "audit_report.json": {
+     "sha256": "73b9a4aea289d1c1b7b31407094842022dd9639d94f2af76ba8589fc4f5c6af7"
+    },
+    "audit_scope_manifest.jsonl": {
+     "sha256": "5df06235913b56f2df767a59c64b726466ddbf6839667a7f1b0127aece97c706"
+    },
+    "closure_reuse.jsonl": {
+     "sha256": "67bdec7a56d31875201564cfe000cd8e940aae9b0bdc9dbcf1aa8635aa7e7c3b"
+    },
+    "ledger_consistency.json": {
+     "sha256": "6ba537c83f75925a92966436ff28365b9a9f701d324c21d1dba83474306a4607"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "8c0b85aa553d61146f62f1d4e68c56941d17beff9f5564cf7bbca530617d3ca3"
+    },
+    "parallel_assignment_receipts.jsonl": {
+     "sha256": "14743abf58c857f00a093064532a1da16c2dd02b104bb931522bdb3624dc9bad"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "7f87f166c227315f0812a293b958ddc19a8e6a38039525de0f43a39fc0037da2"
+    },
+    "post_repair_audit_report.json": {
+     "sha256": "c9bedd2daf73e778d4a3c7e28c4a76630a6a18de6e9bbd1df0cf3215307b1615"
+    },
+    "repair_closure_matrix.jsonl": {
+     "bytes": 10314,
+     "lines": 6,
+     "sha256": "ec888e4d5fbaba73e51bf85b3931fa9eab50b6e110f371b9f65451308aaf3d28"
+    },
+    "repair_impact_matrix.jsonl": {
+     "sha256": "83123c95ce32fce041b6d71d6aaff604ef8354a045256468263c422e61e25a03"
+    },
+    "repair_report.json": {
+     "sha256": "4c42a9ae8def71ed5171be8ce5674ddda696a373ee3948f65091b9ca71e4996c"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "3a45c07d13d4003ec4c83d2e841ee34d66ad6738b6ae56aaecf8bbb73a8446e9"
+    },
+    "terminal_state.json": {
+     "sha256": "edc2807486bb6a3d8099be313b34cd33460c150349ed43de8ceca4b79e5beaa3"
+    },
+    "validator_results.json": {
+     "sha256": "36cba1dca78cd41db0a607a47613a1b0d82492934c521d75c42fa534cbea6b7c"
+    }
+   }
+  },
+  "audit-20260623-001-fff-ledger-to-plans-semantic-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "375927e1d65eaca3ccf121eaf88c37c52f5927b1251b875c720c10771b428940"
+    },
+    "REPAIR_CERTIFICATION.md": {
+     "sha256": "e98e755070ef007bdb96fdcb39024e4d9ab5fa01e8b4023cb4e4ed062c0b8189"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "54250691bed1aa98d43fc1a5c987cb70f69e1942f73e4eb65c97511b0cb33f6a"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "3c631bfd6154f588a39dcff449b22fc6e925c1530e4edef4e75cf4f88ca248a3"
+    },
+    "audit_report.json": {
+     "sha256": "c2dbd05f768bfceec66d223219356b1e6ca03dc86a50300a22a2380c778af75e"
+    },
+    "audit_scope_manifest.jsonl": {
+     "sha256": "217d9b9b842546500f5de39060533ee7c1e8ff0b0008fd9db2a07de1537ab708"
+    },
+    "closure_reuse.jsonl": {
+     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "ledger_consistency.json": {
+     "sha256": "ed704a3c672e9be7d0fafa86ac3b99eb4eac11328b528bf4787673fb23e95580"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "fa2593fcec85640f3a5b6379a966e5c52a5c26f003bea3e9f4d178a876b02a99"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "87b631512843e529919cf92de53a0d394494cde850b9436d1da01c5d68ac2399"
+    },
+    "post_repair_audit_report.json": {
+     "sha256": "949878c6ae474da222f07c681aa9d4b26af1576908b5450054ba48b1d8b6d554"
+    },
+    "repair_closure_matrix.jsonl": {
+     "bytes": 6812,
+     "lines": 4,
+     "sha256": "b77b0664a69d93680b13cf00a09af2d13eaaf799186afdd08c6f8283bcffdd6a"
+    },
+    "repair_impact_matrix.jsonl": {
+     "sha256": "03caac67e694d582c05b92131070c248fd00be099120fcadcc254f45abc7381b"
+    },
+    "repair_report.json": {
+     "sha256": "d4bb63fe7bd62e8ff6c21b28d48128e932a38311b861e0a313cc47d420bc0c12"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "569a657167c8c659326dfc03b8053866aabcdf5cd33ca8351cfcc9fe79c9c7ed"
+    },
+    "validator_results.json": {
+     "sha256": "94d94e795bebba3641bbc7b45c48454436f8149c1b117d6303c5560f2d18f15d"
+    }
+   }
+  },
+  "audit-20260623-002-fff-post-repair-closed-world-semantic-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "7f1ac52d7ee6885b568776bc17ba25613919a499b1247cabac4eabc7bd69c880"
+    },
+    "REPAIR_CERTIFICATION.md": {
+     "sha256": "9e4a3ffc8d66bd57087d7d6a18c0a0811f2789c7c00321582d68f447190524d5"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "fc3220cc9ce2a9baf02640a98f61b003a007f38f41fe4c07608a646189708cb4"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "e2d01127f7d8188509488b7157e32dd0d1a86ec6b75c7c074a7ee19bec2e2dc1"
+    },
+    "audit_report.json": {
+     "sha256": "31a8d2fe4dc78384341ff4faf8265c46dff4e52dde1f5aca962c34b6a4deb7cd"
+    },
+    "audit_scope_manifest.jsonl": {
+     "sha256": "1589e067f43c10754eae93d5b8cafb37d82cf1c21a856867027be1a5e465afd5"
+    },
+    "closure_reuse.jsonl": {
+     "sha256": "f660353971cd40dce6e28ca825de52f8f3ea25ecfb2c7a302210257e74f3c32b"
+    },
+    "ledger_consistency.json": {
+     "sha256": "0118c00d73f4e46008890e0807480b8e950c621f9e30e32f7bad92cc9bbb8616"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "6df443f7ed5c1dfeb402476273702502e67aa374bebf3dde99bc0236ff695ed2"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "84ca7aaaecdd99b568e130659fcd886bd43dae5d85ab958d33461273f8d5705c"
+    },
+    "post_repair_audit_report.json": {
+     "sha256": "91b4658ef5e2690ea66c7004572ea1daeb47ddbe3a9d0a03286c6687353e835f"
+    },
+    "repair_closure_matrix.jsonl": {
+     "bytes": 2900,
+     "lines": 1,
+     "sha256": "edd15309a2d9f446e87823ad8c588d85827156c6f5851975753083ced2125aed"
+    },
+    "repair_impact_matrix.jsonl": {
+     "sha256": "bdef1455068f927a8c3dc10d6841335045d0444f1fa4f42a3ddb87d26674572c"
+    },
+    "repair_report.json": {
+     "sha256": "46aa588d661c92d4ffb0cfe7c00e42af6070da85573464a74f394646606289c0"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "bdd1dc4006b68661135ad92362302fe6a7b72758058f07a04391fc465d940abe"
+    },
+    "validator_results.json": {
+     "sha256": "e6447744f2d9800bf9c1acbdf9a62765e7581a814236a3e4a8feab95eabbaa4c"
+    }
+   }
+  },
+  "audit-20260623-003-fff-closed-world-semantic-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "edc39b15fad88e3aefba45b2d4e32e65c12c175c1fb6d559d0101d5e7857827d"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "cd08765824ddb593a2c1c660123b36275f4c7194fdff6387251818d735669b7f"
+    },
+    "audit_report.json": {
+     "sha256": "c1a75147ed2454807a2e14d4b6a57f7702b5d6dd9235a0c4abeb25fec1ce9cdf"
+    },
+    "audit_scope_manifest.jsonl": {
+     "sha256": "77ab0b3c14b018e0f1431167579cfe414ce6496bb1c81a26bcffbe1cf98510f4"
+    },
+    "closure_reuse.jsonl": {
+     "sha256": "2291c843ad4a962ecb3d2de33d8fb54ad034d231db1af9ea8f435d12bcf012eb"
+    },
+    "ledger_consistency.json": {
+     "sha256": "9eedd32180c8bd2d0fe17f08260732dd16589680721bb791cae79a78d9b72838"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "ede9846ad431b6eae58f4614b4a8c6a76a49f68c44d351318477c65ca94e21df"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "ba19f18a4c4e37550657d440ce8df69c0d2118eb3ce86109bb10fe3e5e10781b"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "8d87ce26f31e766fba5728835782934c8ede9eac77a21bf7bc6a756a742c4672"
+    },
+    "validator_results.json": {
+     "sha256": "b6b25ba48bd577b82f170f6e0aeb352eff1011e01e742ad453764768b212bd9a"
+    }
+   }
+  },
+  "audit-20260625-001-provider-adjacent-plans": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "aed373518851b5a39ff5039567544eca7b5994a14431b9b2bd1938390b17a8b9"
+    },
+    "agent_summaries.md": {
+     "sha256": "2fd0f88bc93d25c4c8ae99f6eb8d23cc22843798f0b55e66633ac3d798018eee"
+    },
+    "audit_scope.json": {
+     "sha256": "6815a3a4a2b73cb46792c8aecb0669521432993db1f27c7ba32aa5c6df899a38"
+    },
+    "findings.jsonl": {
+     "sha256": "5ed1498ac09d6c74c95f112f391deee6205f4de340221ed486192faab3817245"
+    },
+    "validator_results.json": {
+     "sha256": "404b66ae9a0116e83a2630fa18fe339e58fc0c7c191134524adc7fb405ca7a48"
+    }
+   }
+  },
+  "audit-20260626-001-provider-updates-closed-world-semantic-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "dfb44e4c1fb52f82a01ec85df38745f426896645a1315112c0fa372c2391c1b6"
+    },
+    "REPAIR_CERTIFICATION.md": {
+     "sha256": "1216e3dc11cf600a1653e8491c67834f80a78809636d1ed99c7814ad7e1bf383"
+    },
+    "REPAIR_REPORT.md": {
+     "sha256": "9dc9a9349a760942e4bb642326a19ecce3b9f14e9bec212be8f210e0cebb0a01"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "6b96ef2b667e3f207ace514d0dc64187a6f88a861c67ee7c304b1a591b3253f0"
+    },
+    "audit_report.json": {
+     "sha256": "1fe3a0c25e5fb41b86aebeca46190a3366734a2b6b187c547e775303b419567c"
+    },
+    "audit_scope_manifest.jsonl": {
+     "sha256": "e402503032853bc43defd7c4f6fb3ff09519e2983ff6383ecae9f8221b4d3888"
+    },
+    "closure_reuse.jsonl": {
+     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "ledger_consistency.json": {
+     "sha256": "a83099e740a79f5a6076a1c80d1d3c12740e18dd3e6d92a9a689a47062ab8594"
+    },
+    "manifest_generation_summary.json": {
+     "sha256": "511091faa1d086ea07e6df911634db8aa3d31d0b31ac41e153a502dfe8f383d1"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "aa804201bee9aea3e402904cde53c098a10dd8d6d4d89e89d1536f3cb5b4b0f9"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "e1c3a11ada553b51dd1b0d8f1a41f7e5f88dbf66fc92d8922dccde2506173698"
+    },
+    "post_repair_audit_report.json": {
+     "sha256": "7174904c0cc0239efd7f857be83313eb9472d6c5fc30eb849cf7b583102d4f77"
+    },
+    "repair_closure_matrix.jsonl": {
+     "bytes": 13635,
+     "lines": 8,
+     "sha256": "1d9a6f32a6b30c7e7183e7be66a3032c6c5bb1a720c981255f369b058e72936c"
+    },
+    "repair_impact_matrix.jsonl": {
+     "sha256": "60e0f4856a3d0e1fc66da2d23c635ff35eed99226ed2acbf3f2305d613b33c88"
+    },
+    "repair_report.json": {
+     "sha256": "387a1ceb7a46a4f377836d11c09632da4a24d1ad85ca2439dee6574f538b543a"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "3070be052fe80278ad40895f7122d761fe25c48c0b37a428e55e2e99f357fd9b"
+    },
+    "terminal_state.json": {
+     "sha256": "00a0240957fd50b7de63cb9eaa1d33ac15b572c11bef6a826775e367bb006be9"
+    },
+    "validator_results.json": {
+     "sha256": "c3001de9011a7dd378a94f9a4b3e010d0e944815b3a0e6c05a414ad47ee9ece6"
+    }
+   }
+  },
+  "audit-20260626-002-provider-updates-post-repair-closed-world-semantic-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "a1039adb5b3e25b184b082d082dbed2309ec9324d9f0049b83c4163b286a82b9"
+    },
+    "atom_fidelity_matrix.jsonl": {
+     "sha256": "c684feaf6423528f7e36c6035f231b7f84fb05fb6a0d55e6459cc2360b0c0930"
+    },
+    "audit_report.json": {
+     "sha256": "3def4cb947acc24ed63b5b43c80131181ff9439bf50cccd5496b7e3b9eee5149"
+    },
+    "audit_scope_manifest.jsonl": {
+     "sha256": "f26d20e002b2e6d43ac88d9420b7f9ca5de34927cd14dcfefd8722301d211219"
+    },
+    "closure_reuse.jsonl": {
+     "sha256": "b3e4f010bb84b1dfce7a0f0bc341f2671abbf8935b7cf30dc5ee8bab86b1ad85"
+    },
+    "ledger_consistency.json": {
+     "sha256": "59d28e757cefac048cb61ee9da487679eb06779ba99cec916bccfd30c683a7de"
+    },
+    "owner_routing_findings.jsonl": {
+     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "planunit_source_claims.jsonl": {
+     "sha256": "24e77b659798ec37e7454ca4d6e4a46cf691921fd1c4ec8ad5f4f74112762fd2"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "b4e8bcb52fe2bbeeb5785f4ab1911e84a34942ebe5e1033c83824f74e394a687"
+    },
+    "validator_results.json": {
+     "sha256": "fcd90f069e83d81173fda8524608823bdd0bd1cf60683b786e7c523096662568"
+    }
+   }
+  },
+  "audit-20260627-001-feature-name-closed-world-semantic-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "08c7c7292a9ee8a8cc51ef4d5585f9685e1222ade5fdd09b0d42ef6eae7417b6"
+    },
+    "REPAIR_CERTIFICATION.md": {
+     "sha256": "81fd0b92e5079c661218ed8d6ee1ea68fb38550647558ded0ec907a1d1b7d1ad"
+    },
+    "audit_report.json": {
+     "sha256": "d576299a4e04842de80f19060c9ce2093d09714be11e8585ea8c3e186e29d495"
+    },
+    "post_repair_audit_report.json": {
+     "sha256": "188d0a9e4e65c00a75e4cea181928c4e81e199c3f15d88c0f736392a9c1d5b71"
+    },
+    "repair_closure_matrix.jsonl": {
+     "bytes": 11991,
+     "lines": 5,
+     "sha256": "70bd144c1b3fcac01b83864299988e1c8c5a1cb11b1d59b48b305d8f4347a1d1"
+    },
+    "repair_impact_matrix.jsonl": {
+     "sha256": "ead5746b80354649c0423fcf79282f077d530fedf1527d22b48c532b45995156"
+    },
+    "repair_report.json": {
+     "sha256": "c985c7e922f6337499060f1b4d85e53b9664f9fe8279ae51bac3c461f3aaa6ba"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "f167d9f68af5f34d5a130860a7b0efc73cf2c09773779dd15b3c9f1f2ec8cf61"
+    },
+    "terminal_state.json": {
+     "sha256": "d8b20f285efb1ee0f245da91f224d46600cb689e06399079eb430f9da36bbcb2"
+    }
+   }
+  },
+  "audit-20260627-002-feature-name-post-repair-closed-world-semantic-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "5529374bbe20202ecc765c3ae3b99933ba4b1a6c86e521ebf37529c1d976fde3"
+    }
+   }
+  },
+  "audit-20260628-001-feature-intake-closed-world-semantic-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "6dbcde7f8405a4b2040bcaaa35c76bc9d7aaad6e323460be302f50401885e4ce"
+    },
+    "REPAIR_CERTIFICATION.md": {
+     "sha256": "9ab219c9f19def10c1489b7e6cc1e9ecee621040bfc3f3bf99c57d02db6c91d8"
+    },
+    "audit_report.json": {
+     "sha256": "4a6ab30d295cb86cdb2cbfda0a1c5e787c9bfdc7bb4ae98d762004349efd02b0"
+    },
+    "post_repair_audit_report.json": {
+     "sha256": "8092ddd4565f7a46358f8f1d2eba2967f254849d899e8a9243a8f4929801d336"
+    },
+    "repair_closure_matrix.jsonl": {
+     "bytes": 9595,
+     "lines": 5,
+     "sha256": "1733e86334a3f5826b3bbbfe29f808b5946106dfa5ac846a10104494078e3c36"
+    },
+    "repair_impact_matrix.jsonl": {
+     "sha256": "740cc4851c6277284f711eb56a54eee73d2e0b60cb3c75def6f1c5853657be27"
+    },
+    "repair_report.json": {
+     "sha256": "8062baa4f44a77ded76ee1dbe132ef177291a4e9cc5facc3ab5a9b630a8db34f"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "cf0caf3e578f7538f5f2ad111f672ea62831675f3e19e3b106e30b3fd99b6d2b"
+    }
+   }
+  },
+  "audit-20260628-002-feature-intake-post-repair-closed-world-semantic-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "46e78ba5e08f236c0903a957354d60d5e4968bc8143d642daf0db38372500139"
+    }
+   }
+  },
+  "audit-20260629-001-free-models-closed-world-semantic-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "c8a616e298ca1e196ad8242a746ec60e2797ea0f77e4466aaab46af9c23e4da2"
+    },
+    "repair_closure_matrix.jsonl": {
+     "bytes": 4732,
+     "lines": 3,
+     "sha256": "c4b2e85e18bcb6b60d29bde154a07ac8609163a934b364774e42cc7d27b14f20"
+    },
+    "repair_impact_matrix.jsonl": {
+     "sha256": "7ff1be4cf4f1b7905df03d675539668712b1004b34380764546c31746be34aa7"
+    },
+    "semantic_risks.jsonl": {
+     "sha256": "37072bb07ef480dc55b98c3b656d98eccad4b1e0434c8170c27d8f96d3cb663c"
+    }
+   }
+  },
+  "audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity": {
+   "files": {
+    "FINAL_REPORT.md": {
+     "sha256": "62589105cc90702fc0183eb2fa820f02aafeec731722e28b5490d656dc128bcb"
+    }
+   }
+  }
+ },
+ "freeze_commit": "5378f99f690240a03d273c4e2d5dc7bdee5fe89e",
+ "note": "Tracked bytes of the 55 June 2026 audit directories at the freeze commit. effective_status.json is a regenerated projection and is not listed. A listed directory gets the legacy format rule only while every listed file has these bytes; repair_closure_matrix.jsonl may only grow by appended lines, and only its first `lines` rows are historical.",
+ "rule": "pm.audit_closure.legacy_format.v1",
+ "schema_id": "pm.audit_closure.legacy_format_inventory.v1"
+}

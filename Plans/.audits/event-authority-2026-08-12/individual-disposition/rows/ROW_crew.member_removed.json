@@ -7,7 +7,7 @@
   ],
   "july_classification": "confirmed_persisted_unregistered",
   "disposition": "RECLASSIFY_TO_EXCLUDED",
-  "disposition_rationale": "DL-039 Step 9 individual semantic adjudication at 2026-09-25T04:46:50Z: Jared gave no answer to EA-S09B2-CREW-HISTORY-001 on 2026-09-25 and wrote \"retire them but register the shared collaborative workflow events, so adding scope to this.\" (Plans/Decision_Log.md#DL-087): crew.formed, crew.member_added, crew.member_removed, crew.coordination, crew.completed and crew.disbanded are retired, the substance of the card's option 1, and a Crew run is recorded only by the history all collaborative workflows share, whose kind-specific records \"never create a second run identity\" (Plans/Collaborative_Workflows.md:51); DL-090 to DL-092 add the registration of those shared events as new scope. crew.member_removed is a row of the Contracts crew table (Plans/Contracts_V0.md:3063) and of accepted CV-271 (Plans/Contracts_V0.md:16669-16717); no Plans document names a producer for it, nothing writes it, and the orchestrator says crew lifecycle follows the canonical parent/child orchestration and runtime lifecycle contracts (Plans/orchestrator-subagent-integration.md:4202). A Crew's members are fixed when the run starts (Plans/Collaborative_Workflows.md:416), so removing a member describes something Crew does not do. The Contracts owner edit that removes the six rows, narrows CV-270 to the board events and retires CV-271, and the orchestrator's pointer to Collaborative Workflows, are still pending. This records the exclusion of this exact token from the persisted-family campaign as retired; it creates no alias, deletes no history and changes no registered family. Application: reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json. The legacy CPU bucket and cohort pins remain because the frozen schema and validator have no J248 exclusion category. No denominator removal, contract-depth pass or seal is claimed.",
+  "disposition_rationale": "DL-039 Step 9 individual semantic adjudication at 2026-09-25T04:46:50Z: Jared gave no answer to EA-S09B2-CREW-HISTORY-001 on 2026-09-25 and wrote \"retire them but register the shared collaborative workflow events, so adding scope to this.\" (Plans/Decision_Log.md#DL-087): crew.formed, crew.member_added, crew.member_removed, crew.coordination, crew.completed and crew.disbanded are retired, the substance of the card's option 1, and a Crew run is recorded only by the history all collaborative workflows share, whose kind-specific records \"never create a second run identity\" (Plans/Collaborative_Workflows.md:51); DL-090 to DL-092 add the registration of those shared events as new scope. crew.member_removed is retained only as retirement history in the DL-087 amendment (Plans/Contracts_V0.md:3058) and retired CV-271 (Plans/Contracts_V0.md:16822); no Plans document names a producer for it, nothing writes it, and the orchestrator says crew lifecycle follows the canonical parent/child orchestration and runtime lifecycle contracts (Plans/orchestrator-subagent-integration.md:4367). A Crew's members are fixed when the run starts (Plans/Collaborative_Workflows.md:464), so removing a member describes something Crew does not do. Batch 1 integration follow-up (2026-11-05, B1 part 2 review): the Contracts owner edits are complete in this integration: the six rows are removed (Plans/Contracts_V0.md:3058), CV-270 covers only the three board events (Plans/Contracts_V0.md:16768), and CV-271 is retired (Plans/Contracts_V0.md:16822). The separately assigned orchestrator pointer to Collaborative Workflows remains pending (Plans/orchestrator-subagent-integration.md:4367, 4425); it does not restore any retired event. This integration branch is prepared for review and has not itself landed on main. This records the exclusion of this exact token from the persisted-family campaign as retired; it creates no alias, deletes no history and changes no registered family. Application: reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json. The legacy CPU bucket and cohort pins remain because the frozen schema and validator have no J248 exclusion category. No denominator removal, contract-depth pass or seal is claimed.",
   "evidence": {
     "membership_version": {
       "status": "OWNER_REQUIRED",
@@ -26,13 +26,13 @@
     },
     "closed_payload_schema": {
       "status": "FAIL",
-      "citation": "Plans/Contracts_V0.md:2967",
-      "note": "The exact crew.member_removed row enumerates payload field names but does not provide field types/constraints, envelope closure, or unknown-field behavior."
+      "citation": "Plans/Contracts_V0.md:3058",
+      "note": "Historical pre-retirement FAIL assessment only, preserved without regrading: The exact crew.member_removed row enumerates payload field names but does not provide field types/constraints, envelope closure, or unknown-field behavior. The cited current retirement text removes the row; this cell grants no live family, lineage or payload obligation."
     },
     "scope_identity": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:2953-2967",
-      "note": "The crew lineage floor and exact crew.member_removed row require run_id, thread_id, crew_id, and applicable parent/child/member identities."
+      "citation": "Plans/Contracts_V0.md:16822-16838",
+      "note": "Historical pre-retirement PASS assessment only, preserved without regrading: The crew lineage floor and exact crew.member_removed row require run_id, thread_id, crew_id, and applicable parent/child/member identities. The cited current retirement text removes the row; this cell grants no live family, lineage or payload obligation."
     },
     "replay_idempotency": {
       "status": "FAIL",
@@ -51,8 +51,8 @@
     },
     "transitions": {
       "status": "FAIL",
-      "citation": "Plans/Contracts_V0.md:2967",
-      "note": "The description states the meaning of crew.member_removed but does not define allowed source states, target state, revision/CAS behavior, or rejected transitions."
+      "citation": "Plans/Contracts_V0.md:3058",
+      "note": "Historical pre-retirement FAIL assessment only, preserved without regrading: The description states the meaning of crew.member_removed but does not define allowed source states, target state, revision/CAS behavior, or rejected transitions. The cited current retirement text removes the row; this cell grants no live family, lineage or payload obligation."
     },
     "consumers_checkpoints": {
       "status": "FAIL",
@@ -72,16 +72,6 @@
   },
   "citations_checked": [
     {
-      "citation": "Plans/Contracts_V0.md:2953-2967",
-      "status": "ok",
-      "notes": "Exact crew lineage floor plus crew.member_removed payload inventory and meaning."
-    },
-    {
-      "citation": "Plans/Contracts_V0.md:2975",
-      "status": "ok",
-      "notes": "References storage-plan and Run_Modes contracts but does not itself name owner/producer or close the missing event dimensions."
-    },
-    {
       "citation": "Plans/.audits/event-authority-2026-08-12/cohort-pins/EVENT_TO_COHORTS.json:242-244",
       "status": "ok",
       "notes": "Immutable cohort map assigns crew.member_removed to july248; retained independently of working bucket."
@@ -92,34 +82,39 @@
       "notes": "Jared's answer to EA-S09B2-CREW-HISTORY-001, 2026-09-25: no answer, with the words \"retire them but register the shared collaborative workflow events, so adding scope to this.\"; recorded as retiring the six crew lifecycle events."
     },
     {
-      "citation": "Plans/Contracts_V0.md:3063",
-      "status": "ok",
-      "notes": "The crew table row for this event; DL-087's Contracts owner edit removes it (pending)."
-    },
-    {
-      "citation": "Plans/Contracts_V0.md:16669-16717",
-      "status": "ok",
-      "notes": "Accepted CV-271 lists the six crew lifecycle families; DL-087's Contracts owner edit retires it and narrows CV-270 (16621-16667) to the board events (pending)."
-    },
-    {
       "citation": "Plans/Collaborative_Workflows.md:51",
       "status": "ok",
       "notes": "One CollaborativeRun per invocation; kind-specific records attach to it and \"never create a second run identity\"."
     },
     {
-      "citation": "Plans/orchestrator-subagent-integration.md:4202",
+      "citation": "Plans/orchestrator-subagent-integration.md:4367",
       "status": "ok",
       "notes": "Crew lifecycle follows the canonical parent/child orchestration and runtime lifecycle contracts; the orchestrator names none of the six events."
     },
     {
-      "citation": "Plans/Collaborative_Workflows.md:384-408",
+      "citation": "Plans/Collaborative_Workflows.md:430-454",
       "status": "ok",
       "notes": "Section 13: the shared collaborative workflow events, emission disabled until registration; DL-090 to DL-092 add their registration as new scope."
     },
     {
-      "citation": "Plans/Collaborative_Workflows.md:416",
+      "citation": "Plans/Collaborative_Workflows.md:464",
       "status": "ok",
       "notes": "The effective roster frozen at start is the run's truth; a Crew's membership does not change during a run."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:3058",
+      "status": "ok",
+      "notes": "DL-087 owner amendment removes all six crew lifecycle rows; only retirement history remains."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:16768-16838",
+      "status": "ok",
+      "notes": "CV-270 is board-only and CV-271 is retired, with no live event-family, payload or test authority."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:3070-3076",
+      "status": "ok",
+      "notes": "The current crew table contains only its three board events and preserves the Storage/Run Modes ContractRef."
     }
   ],
   "owner_veto": null,

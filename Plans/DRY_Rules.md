@@ -67,13 +67,13 @@ The following cross-file concepts are DRY owner routes. Consumer docs may index 
 
 | Concept boundary | Owner route |
 |---|---|
-| Runtime ready-set, `/backoff`, remediation, and blocked scheduling | `Plans/Executor_Protocol.md` owns ready-set scoring, scheduler lane order, retry/backoff policy, remediation flow, wake reasons, and blocked-to-runnable behavior. `Plans/Contracts_V0.md` owns runtime event and payload vocabulary, including `scheduler.pass`, `node.blocked`, `node.unblocked`, `run.node_backoff_started`, `run.node_backoff_expired`, `run.node_retry_scheduled`, `remediation.spawned`, `remediation.resolved`, `blocked_reason_code`, `allowed_action_id`, `allowed_action_ids[]`, `dirty_worktree`, and `worktree_conflict`. `Plans/chain-wizard-flexibility.md` owns `wizard_status`; `chain-wizard` consumers do not redefine blocked runtime fields. Legacy `NEEDS` / `RECONCILIATION` audit flags are transfer-state dispositions, not live enum values, once the owner docs carry the reconciled canon. |
+| Runtime ready-set, `/backoff`, remediation, and blocked scheduling | `Plans/Executor_Protocol.md` owns ready-set scoring, scheduler lane order, retry/backoff policy, remediation flow, wake reasons, and blocked-to-runnable behavior. `Plans/Contracts_V0.md` owns runtime event and payload vocabulary, including `scheduler.pass`, `node.blocked`, `node.unblocked`, `run.node_backoff_started`, `run.node_backoff_expired`, `run.node_retry_scheduled`, `remediation.spawned`, `remediation.resolved`, `blocked_reason_code`, `allowed_action_id`, `allowed_action_ids[]`, `dirty_worktree`, and `worktree_conflict`. `Plans/Planning_Wizard.md` (PWIZ-038) owns `wizard_status` and the wizard `attention_required` / `blocked` states and transitions, and `Plans/Decision_Policy.md` (§6.5, DP-064) owns the clarification-round limits (DL-330); retired `Plans/chain-wizard-flexibility.md` is source lineage only for them, and `chain-wizard` consumers do not redefine blocked runtime fields. Legacy `NEEDS` / `RECONCILIATION` audit flags are transfer-state dispositions, not live enum values, once the owner docs carry the reconciled canon. |
 | Orchestrator graph, record, and storage-schema clusters | `Plans/Run_Graph_View.md` owns graph inspector and `/full-record` presentation. `Plans/Contracts_V0.md` owns concern, promotion, graph-patch, recovery record, and recovery event contracts. `Plans/storage-plan.md` owns investigation storage, receipt extensions, web-operation child payload persistence refs, seglog wire format including the compression flag, codec id and dictionary id (SP-335), the BLAKE3 payload store and pack files (SP-337), the redb canonical and derived families with their size limits, compaction and per-family disk budgets (SP-340), and storage `key-shape` rules. Amended 2026-10-31 (DL-270): DR-082 routes each storage-profile rule to its owner. `Plans/UI_Command_Catalog.md` owns wrapper-completeness through stable wrapper command normalization, command IDs, and `normalizes_to_contract`; `low-priority` audit labels do not change the owner route. |
 | Compare, review, and SCM anti-dup boundaries | Requested/effective runtime identity stays in `Plans/Contracts_V0.md`. Compare-session and same-path-across-worktrees source wording maps to explicit same-file or same `repo_relative_path` compare/open identity in `Plans/WorktreeGitImprovement.md`, `Plans/FileManager.md`, and `Plans/storage-plan.md`. Hunk expand/collapse, grouped hunk actions, and diff-local search stay with `Plans/FileManager.md` and `Plans/UI_Command_Catalog.md`. Cross-surface receipt schema stays with `Plans/storage-plan.md`; Orchestrator run-to-repo lineage stays a consumer route through `Plans/Orchestrator_Page.md` plus storage receipts; Health remains read-only and Source Control owns live-worktree truth per `Plans/WorktreeGitImprovement.md`. |
 | Worktree owner-node rename and compatibility | `owner_node_id` is the canonical orchestration-node lineage field for worktree ownership. `owner_tier_id` may remain only as documented compatibility, migration, or source-lineage evidence; consumer docs that still expose worktree owner lineage must carry `owner_node_id` beside any compatibility `owner_tier_id` alias. |
 | Permission snapshot split | `Plans/Permissions_System.md` owns permission snapshot schema, enums, approval-surface expectations, and blocked-action semantics. `Plans/storage-plan.md` owns only the durable storage binding, including `permission_snapshot_record.v1:{project_id}:{snapshot_id}` and `attempt_record.permission_snapshot_id`; storage consumers may cache index fields but may not redefine the nested permission snapshot schema. |
 
-ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FileManager.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Glossary.md
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Planning_Wizard.md#PWIZ-038, ContractName:Plans/Decision_Policy.md#DP-064, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FileManager.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Glossary.md
 
 ### 2.2 Special recovery contradiction-check routing
 
@@ -638,7 +638,7 @@ plan_unit_id: DR-009
 unit_type: requirement
 status: accepted
 owner_doc: Plans/DRY_Rules.md
-canonical_text: Executor owns ready-set/backoff/remediation scheduling, Contracts owns runtime event and payload vocabulary, chain-wizard-flexibility owns wizard_status, and legacy NEEDS/RECONCILIATION are transfer-state dispositions, not live enum values.
+canonical_text: Executor owns ready-set/backoff/remediation scheduling, Contracts owns runtime event and payload vocabulary, Planning_Wizard (PWIZ-038) owns wizard_status and the wizard attention_required/blocked states and transitions, Decision_Policy (DP-064) owns the clarification-round limits, and legacy NEEDS/RECONCILIATION are transfer-state dispositions, not live enum values. Amended 2026-11-05 by DL-330; retired chain-wizard-flexibility is source lineage only for wizard_status.
 gui_related: false
 gui_classification_reason: This unit defines backend/governance DRY behavior, not GUI presentation.
 split_recommended: false
@@ -662,6 +662,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:DRY_Rules-S0005
+- Plans/Decision_Log.md#DL-330
 preserved_exact_tokens:
 - Plans/Executor_Protocol.md
 - /backoff
@@ -682,13 +683,18 @@ preserved_exact_tokens:
 - wizard_status
 - NEEDS
 - RECONCILIATION
+- Plans/Planning_Wizard.md
 negative_constraints: []
 compatibility_only_notes:
 - Legacy NEEDS / RECONCILIATION audit flags are transfer-state dispositions, not live enum values.
-stale_retired_dispositions: []
-owner_boundary_notes: []
+stale_retired_dispositions:
+- The route "chain-wizard-flexibility owns wizard_status" is retired by DL-330 (Jared, 2026-11-05); Plans/chain-wizard-flexibility.md is retired source lineage and owns no active wizard state.
+owner_boundary_notes:
+- Plans/Planning_Wizard.md#PWIZ-038 owns wizard_status and the wizard attention_required/blocked lifecycle; Plans/Decision_Policy.md#DP-064 owns the clarification-round limits; Plans/Contracts_V0.md keeps the wizard.blocked / wizard.unblocked event payloads.
 owner_hints:
 - Plans/DRY_Rules.md
+- Plans/Planning_Wizard.md
+- Plans/Decision_Policy.md
 ```
 
 ### DR-010 - Graph Record Storage Owner Route

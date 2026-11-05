@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L3692-L17636
+Source lines: L3688-L17650
 
-Source SHA256: `03b09cc13847139ac3c5ead7d952532de3895983c0e8a4be88def5e2b86b963d`
+Source SHA256: `078ea0299d9a8cbba000a9e5b550f2c95ca1f02c7d8a4525dc53c6427bdad8c5`
 
 ---
 
@@ -5328,8 +5328,10 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   Subagent lifecycle payloads use the canonical subagent.* event family without
-  a chat. prefix, and request/completion variants preserve the same PM lineage
-  envelope instead of creating a parallel chat namespace.
+  a chat. prefix instead of creating a parallel chat namespace, and carry the PM
+  lineage envelope. Amended 2026-11-04 (DL-088): no separate request or
+  completion variant is recorded for starting a subagent; a start that has to
+  wait is a child in the queued state.
 gui_related: false
 gui_classification_reason: This unit defines runtime event namespace compatibility for subagents.
 split_recommended: true
@@ -5338,7 +5340,6 @@ unblocks: []
 acceptance_criteria:
   - subagent.* remains the canonical subagent lifecycle event family.
   - Legacy chat.subagent_* aliases normalize to subagent.*.
-  - subagent.spawn_requested and subagent.spawn_completed preserve the same PM lineage envelope as subagent.spawned and subagent.completed.
   - PM lineage envelope fields include run_id, thread_id, agent_id, parent_run_id?, child_run_id?, parent_thread_id?, and requested/effective runtime descriptors.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -5355,13 +5356,12 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0042
+  - Plans/Decision_Log.md#DL-088 (amendment of 2026-11-04, Jared's answer of 2026-09-25)
 preserved_exact_tokens:
   - "`subagent.*`"
   - "`chat.subagent_*`"
   - "`chat.subagent_`"
   - "`chat.subagent_spawned`"
-  - "`subagent.spawn_requested`"
-  - "`subagent.spawn_completed`"
   - "`run_id`"
   - "`agent_id`"
   - "`parent_run_id?`"
@@ -5370,6 +5370,9 @@ compatibility_only_notes:
   - "legacy chat.subagent_* aliases normalize to subagent.*."
 negative_constraints:
   - "Subagent lifecycle payloads must not create a parallel chat namespace."
+  - "Do not record a request to start a subagent apart from the child it creates (DL-088)."
+stale_retired_dispositions:
+  - "Amended 2026-11-04 (DL-088): the two start-request names and their criterion are removed; a start that has to wait is a queued child, and a start refused for budget before any child exists keeps its orchestrator outcome reason."
 owner_hints:
   - Plans/Contracts_V0.md
 ```
@@ -12889,9 +12892,9 @@ owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   Stable subagent.* event families preserve the PM lineage envelope with run,
   thread, agent, parent, child, parent-thread, and requested/effective runtime
-  descriptor fields; subagent.spawn_requested and subagent.spawn_completed
-  remain under subagent.*, while chat.subagent_* and chat.subagent_spawned are
-  legacy source aliases only.
+  descriptor fields, while chat.subagent_* and chat.subagent_spawned are legacy
+  source aliases only. Amended 2026-11-04 (DL-088): no start-request lifecycle
+  shares the envelope; a start that has to wait is a child in the queued state.
 gui_related: false
 gui_classification_reason: This unit defines runtime lineage and event alias boundaries.
 split_recommended: false
@@ -12899,7 +12902,6 @@ depends_on: [CV-256]
 unblocks: [CV-267, CV-268, CV-269]
 acceptance_criteria:
   - "Every subagent.* event preserves the PM lineage envelope."
-  - "subagent.spawn_requested and subagent.spawn_completed remain under subagent.*."
   - "chat.subagent_* and chat.subagent_spawned remain legacy source aliases only."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -12918,6 +12920,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0115
+  - Plans/Decision_Log.md#DL-088 (amendment of 2026-11-04, Jared's answer of 2026-09-25)
 preserved_exact_tokens:
   - "`subagent.*`"
   - "`run_id`"
@@ -12926,8 +12929,6 @@ preserved_exact_tokens:
   - "`parent_run_id?`"
   - "`child_run_id?`"
   - "`parent_thread_id?`"
-  - "`subagent.spawn_requested`"
-  - "`subagent.spawn_completed`"
   - "`chat.subagent_*`"
   - "`chat.subagent_spawned`"
   - "ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md"
@@ -12936,6 +12937,8 @@ compatibility_only_notes:
   - "chat.subagent_* and chat.subagent_spawned are legacy source aliases only."
 negative_constraints:
   - "Child identity and lineage are not optional metadata for subagent.* events."
+stale_retired_dispositions:
+  - "Amended 2026-11-04 (DL-088): the two start-request names, their clause in the canonical text and their criterion are removed; the lineage envelope sentence keeps its chat.subagent_* alias clause."
 owner_hints:
   - Plans/Contracts_V0.md
   - Plans/orchestrator-subagent-integration.md
@@ -13093,17 +13096,20 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  Every crew.* event preserves crew and child lineage together, including
-  run_id, thread_id, crew_id, optional parent_run_id, optional child_run_id, and
-  member_agent_ids when membership matters.
+  Every crew.* board event (crew.board_message_posted, crew.board_message_read
+  and crew.board_messages_archived) preserves crew and child lineage together,
+  including run_id, thread_id, crew_id, optional parent_run_id, optional
+  child_run_id, and member_agent_ids when membership matters. Amended 2026-11-04
+  (DL-087): narrowed to the three crew board events; the six crew lifecycle
+  events are retired with CV-271.
 gui_related: false
 gui_classification_reason: This unit defines crew runtime event lineage fields.
 split_recommended: false
 depends_on: [CV-256]
 unblocks: [CV-271]
 acceptance_criteria:
-  - "Every crew.* event preserves run_id, thread_id, crew_id, parent_run_id, child_run_id, and member_agent_ids where relevant."
-  - "Crew and child lineage remain linked in crew events."
+  - "Every crew.* board event preserves run_id, thread_id, crew_id, parent_run_id, child_run_id, and member_agent_ids where relevant."
+  - "Crew and child lineage remain linked in crew board events."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -13120,6 +13126,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0115
+  - Plans/Decision_Log.md#DL-087 (amendment of 2026-11-04, Jared's words of 2026-09-25)
 preserved_exact_tokens:
   - "`crew.*`"
   - "`crew_id`"
@@ -13127,6 +13134,8 @@ preserved_exact_tokens:
   - "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/orchestrator-subagent-integration.md"
 negative_constraints:
   - "Crew event payloads must not drop child lineage when membership matters."
+stale_retired_dispositions:
+  - "Amended 2026-11-04 (DL-087): narrowed from every crew.* event to the three crew board events, since the six crew lifecycle events are retired."
 owner_hints:
   - Plans/Contracts_V0.md
   - Plans/assistant-chat-design.md
@@ -13138,20 +13147,24 @@ owner_hints:
 ```yaml
 plan_unit_id: CV-271
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  Crew event-family rows and payloads are preserved for crew.formed,
-  crew.member_added, crew.member_removed, crew.coordination, crew.completed,
-  and crew.disbanded.
+  CV-271 is retired by DL-087 (amendment of 2026-11-04). The six crew lifecycle
+  events crew.formed, crew.member_added, crew.member_removed, crew.coordination,
+  crew.completed and crew.disbanded are retired and their rows are removed from
+  the crew event table. A Crew run is recorded only by the history that all
+  collaborative workflows share (Plans/Collaborative_Workflows.md), and Crew
+  keeps no second lifecycle history. The ID remains only for historical
+  references; it defines no event family, payload or test obligation.
 gui_related: false
 gui_classification_reason: This unit defines crew runtime event table rows.
 split_recommended: false
 depends_on: [CV-270]
 unblocks: []
 acceptance_criteria:
-  - "crew.formed, crew.member_added, crew.member_removed, crew.coordination, crew.completed, and crew.disbanded remain stable event families."
-  - "Each event row preserves its source payload field list and description."
+  - "The crew event table carries no crew lifecycle row; its rows are the three crew board events."
+  - "No consumer cites CV-271 as authority for an event family, payload or test."
   - "The final storage-plan and Run_Modes ContractRef is preserved."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -13164,10 +13177,12 @@ implementation_surfaces:
   - Plans/storage-plan.md
   - Plans/Run_Modes.md
 node_compile_hint:
-  mode: crew_event_family_table
+  mode: retired_crew_lifecycle_event_table
   create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0115
+  - Plans/Decision_Log.md#DL-087 (amendment of 2026-11-04, Jared's words of 2026-09-25)
 preserved_exact_tokens:
   - "`crew.formed`"
   - "`crew.member_added`"
@@ -13176,7 +13191,10 @@ preserved_exact_tokens:
   - "`crew.completed`"
   - "`crew.disbanded`"
   - "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md"
-negative_constraints: []
+negative_constraints:
+  - "Do not reintroduce the six crew lifecycle events or a second Crew lifecycle history (DL-087)."
+stale_retired_dispositions:
+  - "Amended 2026-11-04 (DL-087): retired; the six crew lifecycle rows are removed from the crew event table."
 owner_hints:
   - Plans/Contracts_V0.md
   - Plans/storage-plan.md
