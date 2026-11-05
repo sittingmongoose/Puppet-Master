@@ -187,10 +187,16 @@ def family_probes(m, row):
     good = rebuild(m, name, good)
     bad = clone(good)
     bad['payload'][field] = bool(good['payload'][field])
-    if name == 'persona.deleted' and field == 'revision':
-        bad['payload']['expected_owner_revision'] = bad['payload'][field]
     bad = rebuild(m, name, bad)
     add('coherent_python_equal_bool/' + field, 'payload_integer_type', good, bad, 'payload.' + field)
+    if name == 'persona.deleted':
+        # The caller's CAS precondition is independent of the removed/result
+        # revision. Python equality must not disguise either type defect.
+        bad = clone(good)
+        bad['payload']['expected_owner_revision'] = bool(good['payload']['expected_owner_revision'])
+        bad = rebuild(m, name, bad)
+        add('coherent_python_equal_bool/expected_owner_revision', 'payload_integer_type',
+            good, bad, 'payload.expected_owner_revision')
 
     if name.startswith('persona.'):
         for kind in ('request','result'):
@@ -286,6 +292,7 @@ def family_probes(m, row):
         add('partition/envelope','partition',project,bad,'scope_partition')
         if name.startswith('persona.'):
             bad=clone(project);bad['payload']['scope']['scope_partition']='project:foreign';bad=rebuild(m,name,bad)
+            bad['scope_partition']=project['scope_partition']
             add('partition/coherent_source','partition',project,bad,'payload.scope.scope_partition')
     if name == 'persona.deleted':
         bad=clone(base);bad['payload']['expected_owner_revision']=base['payload']['revision']-1;bad=rebuild(m,name,bad)
@@ -296,10 +303,9 @@ def family_probes(m, row):
         bad=clone(base);bad['payload']['source_revision']=bad['payload']['expected_owner_revision']=bad['payload']['revision'];bad=rebuild(m,name,bad)
         add('semantic/update_revision_order','cas',base,bad,'source previous revision')
     if name == 'persona.imported':
-        bad=clone(base)
-        for key in ('source_id','source_revision','source_sha256'):bad['payload'][key]=None
-        bad=rebuild(m,name,bad)
-        add('semantic/import_source_reference','source_trust',base,bad,'payload.source reference tuple')
+        for key in ('source_id','source_revision','source_sha256'):
+            bad=clone(base);bad['payload'][key]=None;bad=rebuild(m,name,bad)
+            add('semantic/import_source_reference/'+key,'source_trust',base,bad,'payload.'+key)
     if name.startswith('persona.') and name!='persona.selected':
         project=clone(next(c for c in row['append_valid'] if m['source_scope'](c['source'])['scope_kind']=='project'))
         bad=clone(project);bad['payload']['home_kind']='library';bad['payload']['home_project_id']=None;bad['payload']['project_version_id']=None;bad=rebuild(m,name,bad)
@@ -335,6 +341,8 @@ def family_probes(m, row):
                            (('reader_current','family_withdrawn'),'historical_withdrawn'),
                            (('access_current','body_deleted'),'historical_access')]:
         for field in fields:
+            bad=clone(hbase); bad[field]=not hbase[field]
+            add('history_flag/' + field, guard, hbase, bad, 'history.'+field, 'history')
             for label, value in [('false_string','false'),('zero_string','0'),('integer',0),('null',None),('array',[]),('object',{'x':False})]:
                 bad=clone(hbase); bad[field]=value
                 add('history_type/' + field + '/' + label, guard, hbase, bad, 'history.'+field, 'history')
