@@ -1,10 +1,10 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_kind": "self_grade_round5_prepared_without_admission",
+  "assessment_kind": "self_grade_round6_prepared_without_admission",
   "assessed_tree": {
     "branch": "plans/ea-w2-filemanager-20261104",
-    "commit": "891d0b2e875434960cefac1d8e1d75fe4e36dedb",
-    "read_method": "Exact current normative citations re-read per family; complete authored-negative inventory includes explicit, schema and implicit lookup guards. One site or named duplicate set per mutation, all other validators enabled. Retention and admission remain open. Report-only commit follows."
+    "commit": "aea78ea17bc38b19499758dbb7af9f2962fb8909",
+    "read_method": "Current citations and preserved owner/schema bytes checked after all serial full-checker, semantic/schema/lookup/harness guard-removal and regression runs. Rule-level schema coverage follows REVIEW-cycle6; no admission or native execution is claimed."
   },
   "rubric": {
     "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
@@ -24,9 +24,9 @@
     ]
   },
   "status_counts": {
+    "ABSENT": 12,
     "PASS": 120,
-    "PARTIAL": 12,
-    "ABSENT": 12
+    "PARTIAL": 12
   },
   "native_execution": "NOT_RUN",
   "rows": [
@@ -72,11 +72,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "owner_doc": {
           "status": "PASS",
@@ -92,11 +92,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "producer": {
           "status": "PASS",
@@ -126,11 +126,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -146,11 +146,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "scope_identity": {
           "status": "PASS",
@@ -166,11 +166,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -207,11 +207,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "retention": {
           "status": "PARTIAL",
@@ -227,11 +227,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -268,11 +268,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "transitions": {
           "status": "PASS",
@@ -288,11 +288,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -315,11 +315,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -356,16 +356,16 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-150 has full-checker positives, settlement/source-custody negatives, retained-policy history controls and a complete authored-negative guard table; native execution remains NOT_RUN.",
+          "finding": "F-150 has per-schema rule-level negative coverage, complete guard-removal proofs, and numeric/type sweep regressions. Date-time remains an interpreter limitation; native execution is NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -377,8 +377,8 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_snapshot_subjects",
-              "line_start": 613,
-              "line_end": 613,
+              "line_start": 635,
+              "line_end": 635,
               "quote": "def validate_snapshot_subjects(event_type, payload, operation):"
             },
             {
@@ -391,59 +391,66 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "check_negative_reason",
-              "line_start": 971,
-              "line_end": 971,
+              "line_start": 1010,
+              "line_end": 1010,
               "quote": "def check_negative_reason(case, error):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/0",
-              "line_start": 9570,
-              "line_end": 9570,
+              "line_start": 10311,
+              "line_end": 10311,
               "quote": "\"name\": \"file.copied:snapshot-selected-root\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/0",
-              "line_start": 9985,
-              "line_end": 9985,
+              "line_start": 10726,
+              "line_end": 10726,
               "quote": "\"name\": \"file.copied:unexercised-$defs-pointer\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/0",
-              "line_start": 9234,
-              "line_end": 9234,
+              "line_start": 9975,
+              "line_end": 9975,
               "quote": "\"name\": \"file.copied:identifier-lf-receipt_ref\""
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_path_custody",
-              "line_start": 593,
-              "line_end": 593,
+              "line_start": 615,
+              "line_end": 615,
               "quote": "def validate_path_custody(payload, row):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "identity",
-              "line_start": 871,
-              "line_end": 871,
+              "line_start": 905,
+              "line_end": 905,
               "quote": "def identity(event_type, payload, context):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_original_models",
-              "line_start": 761,
-              "line_end": 761,
+              "line_start": 793,
+              "line_end": 793,
               "quote": "def validate_original_models(event_type, payload, trace, *, operation_candidate=None,"
+            },
+            {
+              "path": "Plans/filemanager_event_contract_fixtures.json",
+              "unit": "rows/0",
+              "line_start": 29213,
+              "line_end": 29213,
+              "quote": "\"name\": \"rule:file_copied.schema:additionalProperties:99b649cb\""
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "The four cycle-5 findings have full-checker regression and isolated counterexamples at the repaired head."
+          "change_reason": "Distinct schema rules now have isolating authored negatives and completed serial guard proofs; numeric/type regressions are covered."
         }
       },
       "remaining_gaps": [
@@ -455,7 +462,7 @@
         "fix3/guard-proof.json: twelve per-family weakening mutations detected, including six tail replacements and six pattern removals.",
         "fix3/standing-checks.json, graph-proof.json and review-cycle1/2/3.json: all applicable checks and original review mutations pass."
       ],
-      "notes": "Round 5: 2,775 cases; every authored negative isolated across explicit/schema/implicit guards. 1,553 schema keyword locations remain inventoried without direct deletion counterexamples; no exhaustive-schema mutation claim. All ten Astra classes checked per family. Native NOT_RUN; membership ABSENT; retention PARTIAL/PENDING_RETENTION_DECISION."
+      "notes": "Round 6: complete serial checker and explicit/schema/lookup/harness guard proofs; distinct schema rules mapped per schema. Astra classes 1\u201311 checked. Date-time remains an interpreter limitation; native NOT_RUN, membership ABSENT, retention pending."
     },
     {
       "event_type": "file.created",
@@ -499,11 +506,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "owner_doc": {
           "status": "PASS",
@@ -519,11 +526,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "producer": {
           "status": "PASS",
@@ -553,11 +560,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -573,11 +580,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "scope_identity": {
           "status": "PASS",
@@ -593,11 +600,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -634,11 +641,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "retention": {
           "status": "PARTIAL",
@@ -654,11 +661,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -695,11 +702,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "transitions": {
           "status": "PASS",
@@ -715,11 +722,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -742,11 +749,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -783,16 +790,16 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-151 has full-checker positives, settlement/source-custody negatives, retained-policy history controls and a complete authored-negative guard table; native execution remains NOT_RUN.",
+          "finding": "F-151 has per-schema rule-level negative coverage, complete guard-removal proofs, and numeric/type sweep regressions. Date-time remains an interpreter limitation; native execution is NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -804,8 +811,8 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_snapshot_subjects",
-              "line_start": 613,
-              "line_end": 613,
+              "line_start": 635,
+              "line_end": 635,
               "quote": "def validate_snapshot_subjects(event_type, payload, operation):"
             },
             {
@@ -818,59 +825,66 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "check_negative_reason",
-              "line_start": 971,
-              "line_end": 971,
+              "line_start": 1010,
+              "line_end": 1010,
               "quote": "def check_negative_reason(case, error):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/1",
-              "line_start": 36729,
-              "line_end": 36729,
+              "line_start": 126917,
+              "line_end": 126917,
               "quote": "\"name\": \"file.created:snapshot-selected-root\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/1",
-              "line_start": 37126,
-              "line_end": 37126,
+              "line_start": 127314,
+              "line_end": 127314,
               "quote": "\"name\": \"file.created:unexercised-$defs-pointer\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/1",
-              "line_start": 36393,
-              "line_end": 36393,
+              "line_start": 126581,
+              "line_end": 126581,
               "quote": "\"name\": \"file.created:identifier-lf-receipt_ref\""
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_path_custody",
-              "line_start": 593,
-              "line_end": 593,
+              "line_start": 615,
+              "line_end": 615,
               "quote": "def validate_path_custody(payload, row):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "identity",
-              "line_start": 871,
-              "line_end": 871,
+              "line_start": 905,
+              "line_end": 905,
               "quote": "def identity(event_type, payload, context):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_original_models",
-              "line_start": 761,
-              "line_end": 761,
+              "line_start": 793,
+              "line_end": 793,
               "quote": "def validate_original_models(event_type, payload, trace, *, operation_candidate=None,"
+            },
+            {
+              "path": "Plans/filemanager_event_contract_fixtures.json",
+              "unit": "rows/1",
+              "line_start": 145953,
+              "line_end": 145953,
+              "quote": "\"name\": \"rule:file_created.schema:additionalProperties:7f1bd9d8\""
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "The four cycle-5 findings have full-checker regression and isolated counterexamples at the repaired head."
+          "change_reason": "Distinct schema rules now have isolating authored negatives and completed serial guard proofs; numeric/type regressions are covered."
         }
       },
       "remaining_gaps": [
@@ -882,7 +896,7 @@
         "fix3/guard-proof.json: twelve per-family weakening mutations detected, including six tail replacements and six pattern removals.",
         "fix3/standing-checks.json, graph-proof.json and review-cycle1/2/3.json: all applicable checks and original review mutations pass."
       ],
-      "notes": "Round 5: 2,775 cases; every authored negative isolated across explicit/schema/implicit guards. 1,553 schema keyword locations remain inventoried without direct deletion counterexamples; no exhaustive-schema mutation claim. All ten Astra classes checked per family. Native NOT_RUN; membership ABSENT; retention PARTIAL/PENDING_RETENTION_DECISION."
+      "notes": "Round 6: complete serial checker and explicit/schema/lookup/harness guard proofs; distinct schema rules mapped per schema. Astra classes 1\u201311 checked. Date-time remains an interpreter limitation; native NOT_RUN, membership ABSENT, retention pending."
     },
     {
       "event_type": "file.deleted",
@@ -926,11 +940,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "owner_doc": {
           "status": "PASS",
@@ -946,11 +960,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "producer": {
           "status": "PASS",
@@ -980,11 +994,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1000,11 +1014,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1020,11 +1034,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1061,11 +1075,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1081,11 +1095,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1122,11 +1136,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "transitions": {
           "status": "PASS",
@@ -1142,11 +1156,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1169,11 +1183,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1210,16 +1224,16 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-152 has full-checker positives, settlement/source-custody negatives, retained-policy history controls and a complete authored-negative guard table; native execution remains NOT_RUN.",
+          "finding": "F-152 has per-schema rule-level negative coverage, complete guard-removal proofs, and numeric/type sweep regressions. Date-time remains an interpreter limitation; native execution is NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -1231,8 +1245,8 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_snapshot_subjects",
-              "line_start": 613,
-              "line_end": 613,
+              "line_start": 635,
+              "line_end": 635,
               "quote": "def validate_snapshot_subjects(event_type, payload, operation):"
             },
             {
@@ -1245,59 +1259,66 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "check_negative_reason",
-              "line_start": 971,
-              "line_end": 971,
+              "line_start": 1010,
+              "line_end": 1010,
               "quote": "def check_negative_reason(case, error):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/2",
-              "line_start": 64082,
-              "line_end": 64082,
+              "line_start": 202070,
+              "line_end": 202070,
               "quote": "\"name\": \"file.deleted:snapshot-selected-root\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/2",
-              "line_start": 64443,
-              "line_end": 64443,
+              "line_start": 202431,
+              "line_end": 202431,
               "quote": "\"name\": \"file.deleted:unexercised-$defs-pointer\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/2",
-              "line_start": 63746,
-              "line_end": 63746,
+              "line_start": 201734,
+              "line_end": 201734,
               "quote": "\"name\": \"file.deleted:identifier-lf-receipt_ref\""
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_path_custody",
-              "line_start": 593,
-              "line_end": 593,
+              "line_start": 615,
+              "line_end": 615,
               "quote": "def validate_path_custody(payload, row):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "identity",
-              "line_start": 871,
-              "line_end": 871,
+              "line_start": 905,
+              "line_end": 905,
               "quote": "def identity(event_type, payload, context):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_original_models",
-              "line_start": 761,
-              "line_end": 761,
+              "line_start": 793,
+              "line_end": 793,
               "quote": "def validate_original_models(event_type, payload, trace, *, operation_candidate=None,"
+            },
+            {
+              "path": "Plans/filemanager_event_contract_fixtures.json",
+              "unit": "rows/2",
+              "line_start": 218633,
+              "line_end": 218633,
+              "quote": "\"name\": \"rule:file_deleted.schema:additionalProperties:21c51baf\""
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "The four cycle-5 findings have full-checker regression and isolated counterexamples at the repaired head."
+          "change_reason": "Distinct schema rules now have isolating authored negatives and completed serial guard proofs; numeric/type regressions are covered."
         }
       },
       "remaining_gaps": [
@@ -1309,7 +1330,7 @@
         "fix3/guard-proof.json: twelve per-family weakening mutations detected, including six tail replacements and six pattern removals.",
         "fix3/standing-checks.json, graph-proof.json and review-cycle1/2/3.json: all applicable checks and original review mutations pass."
       ],
-      "notes": "Round 5: 2,775 cases; every authored negative isolated across explicit/schema/implicit guards. 1,553 schema keyword locations remain inventoried without direct deletion counterexamples; no exhaustive-schema mutation claim. All ten Astra classes checked per family. Native NOT_RUN; membership ABSENT; retention PARTIAL/PENDING_RETENTION_DECISION."
+      "notes": "Round 6: complete serial checker and explicit/schema/lookup/harness guard proofs; distinct schema rules mapped per schema. Astra classes 1\u201311 checked. Date-time remains an interpreter limitation; native NOT_RUN, membership ABSENT, retention pending."
     },
     {
       "event_type": "file.exported",
@@ -1353,11 +1374,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1373,11 +1394,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "producer": {
           "status": "PASS",
@@ -1407,11 +1428,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1427,11 +1448,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1447,11 +1468,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1488,11 +1509,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1508,11 +1529,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1549,11 +1570,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "transitions": {
           "status": "PASS",
@@ -1569,11 +1590,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1596,11 +1617,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1637,16 +1658,16 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-153 has full-checker positives, settlement/source-custody negatives, retained-policy history controls and a complete authored-negative guard table; native execution remains NOT_RUN.",
+          "finding": "F-153 has per-schema rule-level negative coverage, complete guard-removal proofs, and numeric/type sweep regressions. Date-time remains an interpreter limitation; native execution is NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -1658,8 +1679,8 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_snapshot_subjects",
-              "line_start": 613,
-              "line_end": 613,
+              "line_start": 635,
+              "line_end": 635,
               "quote": "def validate_snapshot_subjects(event_type, payload, operation):"
             },
             {
@@ -1672,59 +1693,66 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "check_negative_reason",
-              "line_start": 971,
-              "line_end": 971,
+              "line_start": 1010,
+              "line_end": 1010,
               "quote": "def check_negative_reason(case, error):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/3",
-              "line_start": 89995,
-              "line_end": 89995,
+              "line_start": 275467,
+              "line_end": 275467,
               "quote": "\"name\": \"file.exported:snapshot-selected-root\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/3",
-              "line_start": 90400,
-              "line_end": 90400,
+              "line_start": 275872,
+              "line_end": 275872,
               "quote": "\"name\": \"file.exported:unexercised-$defs-pointer\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/3",
-              "line_start": 89659,
-              "line_end": 89659,
+              "line_start": 275131,
+              "line_end": 275131,
               "quote": "\"name\": \"file.exported:identifier-lf-receipt_ref\""
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_path_custody",
-              "line_start": 593,
-              "line_end": 593,
+              "line_start": 615,
+              "line_end": 615,
               "quote": "def validate_path_custody(payload, row):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "identity",
-              "line_start": 871,
-              "line_end": 871,
+              "line_start": 905,
+              "line_end": 905,
               "quote": "def identity(event_type, payload, context):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_original_models",
-              "line_start": 761,
-              "line_end": 761,
+              "line_start": 793,
+              "line_end": 793,
               "quote": "def validate_original_models(event_type, payload, trace, *, operation_candidate=None,"
+            },
+            {
+              "path": "Plans/filemanager_event_contract_fixtures.json",
+              "unit": "rows/3",
+              "line_start": 293849,
+              "line_end": 293849,
+              "quote": "\"name\": \"rule:file_exported.schema:additionalProperties:836f945d\""
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "The four cycle-5 findings have full-checker regression and isolated counterexamples at the repaired head."
+          "change_reason": "Distinct schema rules now have isolating authored negatives and completed serial guard proofs; numeric/type regressions are covered."
         }
       },
       "remaining_gaps": [
@@ -1736,7 +1764,7 @@
         "fix3/guard-proof.json: twelve per-family weakening mutations detected, including six tail replacements and six pattern removals.",
         "fix3/standing-checks.json, graph-proof.json and review-cycle1/2/3.json: all applicable checks and original review mutations pass."
       ],
-      "notes": "Round 5: 2,775 cases; every authored negative isolated across explicit/schema/implicit guards. 1,553 schema keyword locations remain inventoried without direct deletion counterexamples; no exhaustive-schema mutation claim. All ten Astra classes checked per family. Native NOT_RUN; membership ABSENT; retention PARTIAL/PENDING_RETENTION_DECISION."
+      "notes": "Round 6: complete serial checker and explicit/schema/lookup/harness guard proofs; distinct schema rules mapped per schema. Astra classes 1\u201311 checked. Date-time remains an interpreter limitation; native NOT_RUN, membership ABSENT, retention pending."
     },
     {
       "event_type": "file.moved",
@@ -1780,11 +1808,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1800,11 +1828,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "producer": {
           "status": "PASS",
@@ -1834,11 +1862,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1854,11 +1882,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1874,11 +1902,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1915,11 +1943,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1935,11 +1963,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1976,11 +2004,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "transitions": {
           "status": "PASS",
@@ -1996,11 +2024,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2023,11 +2051,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2064,16 +2092,16 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-154 has full-checker positives, settlement/source-custody negatives, retained-policy history controls and a complete authored-negative guard table; native execution remains NOT_RUN.",
+          "finding": "F-154 has per-schema rule-level negative coverage, complete guard-removal proofs, and numeric/type sweep regressions. Date-time remains an interpreter limitation; native execution is NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -2085,8 +2113,8 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_snapshot_subjects",
-              "line_start": 613,
-              "line_end": 613,
+              "line_start": 635,
+              "line_end": 635,
               "quote": "def validate_snapshot_subjects(event_type, payload, operation):"
             },
             {
@@ -2099,59 +2127,66 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "check_negative_reason",
-              "line_start": 971,
-              "line_end": 971,
+              "line_start": 1010,
+              "line_end": 1010,
               "quote": "def check_negative_reason(case, error):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/4",
-              "line_start": 117725,
-              "line_end": 117725,
+              "line_start": 355354,
+              "line_end": 355354,
               "quote": "\"name\": \"file.moved:snapshot-selected-root\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/4",
-              "line_start": 118140,
-              "line_end": 118140,
+              "line_start": 355769,
+              "line_end": 355769,
               "quote": "\"name\": \"file.moved:unexercised-$defs-pointer\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/4",
-              "line_start": 117389,
-              "line_end": 117389,
+              "line_start": 355018,
+              "line_end": 355018,
               "quote": "\"name\": \"file.moved:identifier-lf-receipt_ref\""
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_path_custody",
-              "line_start": 593,
-              "line_end": 593,
+              "line_start": 615,
+              "line_end": 615,
               "quote": "def validate_path_custody(payload, row):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "identity",
-              "line_start": 871,
-              "line_end": 871,
+              "line_start": 905,
+              "line_end": 905,
               "quote": "def identity(event_type, payload, context):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_original_models",
-              "line_start": 761,
-              "line_end": 761,
+              "line_start": 793,
+              "line_end": 793,
               "quote": "def validate_original_models(event_type, payload, trace, *, operation_candidate=None,"
+            },
+            {
+              "path": "Plans/filemanager_event_contract_fixtures.json",
+              "unit": "rows/4",
+              "line_start": 376208,
+              "line_end": 376208,
+              "quote": "\"name\": \"rule:file_moved.schema:additionalProperties:a1aaeaf8\""
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "The four cycle-5 findings have full-checker regression and isolated counterexamples at the repaired head."
+          "change_reason": "Distinct schema rules now have isolating authored negatives and completed serial guard proofs; numeric/type regressions are covered."
         }
       },
       "remaining_gaps": [
@@ -2163,7 +2198,7 @@
         "fix3/guard-proof.json: twelve per-family weakening mutations detected, including six tail replacements and six pattern removals.",
         "fix3/standing-checks.json, graph-proof.json and review-cycle1/2/3.json: all applicable checks and original review mutations pass."
       ],
-      "notes": "Round 5: 2,775 cases; every authored negative isolated across explicit/schema/implicit guards. 1,553 schema keyword locations remain inventoried without direct deletion counterexamples; no exhaustive-schema mutation claim. All ten Astra classes checked per family. Native NOT_RUN; membership ABSENT; retention PARTIAL/PENDING_RETENTION_DECISION."
+      "notes": "Round 6: complete serial checker and explicit/schema/lookup/harness guard proofs; distinct schema rules mapped per schema. Astra classes 1\u201311 checked. Date-time remains an interpreter limitation; native NOT_RUN, membership ABSENT, retention pending."
     },
     {
       "event_type": "file.renamed",
@@ -2207,11 +2242,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2227,11 +2262,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "producer": {
           "status": "PASS",
@@ -2261,11 +2296,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2281,11 +2316,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2301,11 +2336,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2342,11 +2377,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2362,11 +2397,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2403,11 +2438,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "transitions": {
           "status": "PASS",
@@ -2423,11 +2458,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2450,11 +2485,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2491,16 +2526,16 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-155 has full-checker positives, settlement/source-custody negatives, retained-policy history controls and a complete authored-negative guard table; native execution remains NOT_RUN.",
+          "finding": "F-155 has per-schema rule-level negative coverage, complete guard-removal proofs, and numeric/type sweep regressions. Date-time remains an interpreter limitation; native execution is NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -2512,8 +2547,8 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_snapshot_subjects",
-              "line_start": 613,
-              "line_end": 613,
+              "line_start": 635,
+              "line_end": 635,
               "quote": "def validate_snapshot_subjects(event_type, payload, operation):"
             },
             {
@@ -2526,59 +2561,66 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "check_negative_reason",
-              "line_start": 971,
-              "line_end": 971,
+              "line_start": 1010,
+              "line_end": 1010,
               "quote": "def check_negative_reason(case, error):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/5",
-              "line_start": 147927,
-              "line_end": 147927,
+              "line_start": 437713,
+              "line_end": 437713,
               "quote": "\"name\": \"file.renamed:snapshot-selected-root\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/5",
-              "line_start": 148378,
-              "line_end": 148378,
+              "line_start": 438164,
+              "line_end": 438164,
               "quote": "\"name\": \"file.renamed:unexercised-$defs-pointer\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/5",
-              "line_start": 147591,
-              "line_end": 147591,
+              "line_start": 437377,
+              "line_end": 437377,
               "quote": "\"name\": \"file.renamed:identifier-lf-receipt_ref\""
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_path_custody",
-              "line_start": 593,
-              "line_end": 593,
+              "line_start": 615,
+              "line_end": 615,
               "quote": "def validate_path_custody(payload, row):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "identity",
-              "line_start": 871,
-              "line_end": 871,
+              "line_start": 905,
+              "line_end": 905,
               "quote": "def identity(event_type, payload, context):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_original_models",
-              "line_start": 761,
-              "line_end": 761,
+              "line_start": 793,
+              "line_end": 793,
               "quote": "def validate_original_models(event_type, payload, trace, *, operation_candidate=None,"
+            },
+            {
+              "path": "Plans/filemanager_event_contract_fixtures.json",
+              "unit": "rows/5",
+              "line_start": 456141,
+              "line_end": 456141,
+              "quote": "\"name\": \"rule:file_renamed.schema:additionalProperties:c314c034\""
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "The four cycle-5 findings have full-checker regression and isolated counterexamples at the repaired head."
+          "change_reason": "Distinct schema rules now have isolating authored negatives and completed serial guard proofs; numeric/type regressions are covered."
         }
       },
       "remaining_gaps": [
@@ -2590,7 +2632,7 @@
         "fix3/guard-proof.json: twelve per-family weakening mutations detected, including six tail replacements and six pattern removals.",
         "fix3/standing-checks.json, graph-proof.json and review-cycle1/2/3.json: all applicable checks and original review mutations pass."
       ],
-      "notes": "Round 5: 2,775 cases; every authored negative isolated across explicit/schema/implicit guards. 1,553 schema keyword locations remain inventoried without direct deletion counterexamples; no exhaustive-schema mutation claim. All ten Astra classes checked per family. Native NOT_RUN; membership ABSENT; retention PARTIAL/PENDING_RETENTION_DECISION."
+      "notes": "Round 6: complete serial checker and explicit/schema/lookup/harness guard proofs; distinct schema rules mapped per schema. Astra classes 1\u201311 checked. Date-time remains an interpreter limitation; native NOT_RUN, membership ABSENT, retention pending."
     },
     {
       "event_type": "folder.copied",
@@ -2634,11 +2676,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2654,11 +2696,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "producer": {
           "status": "PASS",
@@ -2688,11 +2730,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2708,11 +2750,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2728,11 +2770,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2769,11 +2811,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2789,11 +2831,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2830,11 +2872,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "transitions": {
           "status": "PASS",
@@ -2850,11 +2892,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2877,11 +2919,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2918,16 +2960,16 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-156 has full-checker positives, settlement/source-custody negatives, retained-policy history controls and a complete authored-negative guard table; native execution remains NOT_RUN.",
+          "finding": "F-156 has per-schema rule-level negative coverage, complete guard-removal proofs, and numeric/type sweep regressions. Date-time remains an interpreter limitation; native execution is NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -2939,8 +2981,8 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_snapshot_subjects",
-              "line_start": 613,
-              "line_end": 613,
+              "line_start": 635,
+              "line_end": 635,
               "quote": "def validate_snapshot_subjects(event_type, payload, operation):"
             },
             {
@@ -2953,59 +2995,66 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "check_negative_reason",
-              "line_start": 971,
-              "line_end": 971,
+              "line_start": 1010,
+              "line_end": 1010,
               "quote": "def check_negative_reason(case, error):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/6",
-              "line_start": 175970,
-              "line_end": 175970,
+              "line_start": 517892,
+              "line_end": 517892,
               "quote": "\"name\": \"folder.copied:snapshot-selected-root\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/6",
-              "line_start": 176419,
-              "line_end": 176419,
+              "line_start": 518341,
+              "line_end": 518341,
               "quote": "\"name\": \"folder.copied:unexercised-$defs-pointer\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/6",
-              "line_start": 175634,
-              "line_end": 175634,
+              "line_start": 517556,
+              "line_end": 517556,
               "quote": "\"name\": \"folder.copied:identifier-lf-receipt_ref\""
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_path_custody",
-              "line_start": 593,
-              "line_end": 593,
+              "line_start": 615,
+              "line_end": 615,
               "quote": "def validate_path_custody(payload, row):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "identity",
-              "line_start": 871,
-              "line_end": 871,
+              "line_start": 905,
+              "line_end": 905,
               "quote": "def identity(event_type, payload, context):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_original_models",
-              "line_start": 761,
-              "line_end": 761,
+              "line_start": 793,
+              "line_end": 793,
               "quote": "def validate_original_models(event_type, payload, trace, *, operation_candidate=None,"
+            },
+            {
+              "path": "Plans/filemanager_event_contract_fixtures.json",
+              "unit": "rows/6",
+              "line_start": 536484,
+              "line_end": 536484,
+              "quote": "\"name\": \"rule:folder_copied.schema:additionalProperties:6471b4a5\""
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "The four cycle-5 findings have full-checker regression and isolated counterexamples at the repaired head."
+          "change_reason": "Distinct schema rules now have isolating authored negatives and completed serial guard proofs; numeric/type regressions are covered."
         }
       },
       "remaining_gaps": [
@@ -3017,7 +3066,7 @@
         "fix3/guard-proof.json: twelve per-family weakening mutations detected, including six tail replacements and six pattern removals.",
         "fix3/standing-checks.json, graph-proof.json and review-cycle1/2/3.json: all applicable checks and original review mutations pass."
       ],
-      "notes": "Round 5: 2,775 cases; every authored negative isolated across explicit/schema/implicit guards. 1,553 schema keyword locations remain inventoried without direct deletion counterexamples; no exhaustive-schema mutation claim. All ten Astra classes checked per family. Native NOT_RUN; membership ABSENT; retention PARTIAL/PENDING_RETENTION_DECISION."
+      "notes": "Round 6: complete serial checker and explicit/schema/lookup/harness guard proofs; distinct schema rules mapped per schema. Astra classes 1\u201311 checked. Date-time remains an interpreter limitation; native NOT_RUN, membership ABSENT, retention pending."
     },
     {
       "event_type": "folder.created",
@@ -3061,11 +3110,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3081,11 +3130,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "producer": {
           "status": "PASS",
@@ -3115,11 +3164,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3135,11 +3184,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3155,11 +3204,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3196,11 +3245,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3216,11 +3265,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3257,11 +3306,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "transitions": {
           "status": "PASS",
@@ -3277,11 +3326,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3304,11 +3353,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3345,16 +3394,16 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-157 has full-checker positives, settlement/source-custody negatives, retained-policy history controls and a complete authored-negative guard table; native execution remains NOT_RUN.",
+          "finding": "F-157 has per-schema rule-level negative coverage, complete guard-removal proofs, and numeric/type sweep regressions. Date-time remains an interpreter limitation; native execution is NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -3366,8 +3415,8 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_snapshot_subjects",
-              "line_start": 613,
-              "line_end": 613,
+              "line_start": 635,
+              "line_end": 635,
               "quote": "def validate_snapshot_subjects(event_type, payload, operation):"
             },
             {
@@ -3380,59 +3429,66 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "check_negative_reason",
-              "line_start": 971,
-              "line_end": 971,
+              "line_start": 1010,
+              "line_end": 1010,
               "quote": "def check_negative_reason(case, error):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/7",
-              "line_start": 203505,
-              "line_end": 203505,
+              "line_start": 598075,
+              "line_end": 598075,
               "quote": "\"name\": \"folder.created:snapshot-selected-root\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/7",
-              "line_start": 203902,
-              "line_end": 203902,
+              "line_start": 598472,
+              "line_end": 598472,
               "quote": "\"name\": \"folder.created:unexercised-$defs-pointer\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/7",
-              "line_start": 203169,
-              "line_end": 203169,
+              "line_start": 597739,
+              "line_end": 597739,
               "quote": "\"name\": \"folder.created:identifier-lf-receipt_ref\""
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_path_custody",
-              "line_start": 593,
-              "line_end": 593,
+              "line_start": 615,
+              "line_end": 615,
               "quote": "def validate_path_custody(payload, row):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "identity",
-              "line_start": 871,
-              "line_end": 871,
+              "line_start": 905,
+              "line_end": 905,
               "quote": "def identity(event_type, payload, context):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_original_models",
-              "line_start": 761,
-              "line_end": 761,
+              "line_start": 793,
+              "line_end": 793,
               "quote": "def validate_original_models(event_type, payload, trace, *, operation_candidate=None,"
+            },
+            {
+              "path": "Plans/filemanager_event_contract_fixtures.json",
+              "unit": "rows/7",
+              "line_start": 617111,
+              "line_end": 617111,
+              "quote": "\"name\": \"rule:folder_created.schema:additionalProperties:b9dad2fa\""
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "The four cycle-5 findings have full-checker regression and isolated counterexamples at the repaired head."
+          "change_reason": "Distinct schema rules now have isolating authored negatives and completed serial guard proofs; numeric/type regressions are covered."
         }
       },
       "remaining_gaps": [
@@ -3444,7 +3500,7 @@
         "fix3/guard-proof.json: twelve per-family weakening mutations detected, including six tail replacements and six pattern removals.",
         "fix3/standing-checks.json, graph-proof.json and review-cycle1/2/3.json: all applicable checks and original review mutations pass."
       ],
-      "notes": "Round 5: 2,775 cases; every authored negative isolated across explicit/schema/implicit guards. 1,553 schema keyword locations remain inventoried without direct deletion counterexamples; no exhaustive-schema mutation claim. All ten Astra classes checked per family. Native NOT_RUN; membership ABSENT; retention PARTIAL/PENDING_RETENTION_DECISION."
+      "notes": "Round 6: complete serial checker and explicit/schema/lookup/harness guard proofs; distinct schema rules mapped per schema. Astra classes 1\u201311 checked. Date-time remains an interpreter limitation; native NOT_RUN, membership ABSENT, retention pending."
     },
     {
       "event_type": "folder.deleted",
@@ -3488,11 +3544,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3508,11 +3564,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "producer": {
           "status": "PASS",
@@ -3542,11 +3598,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3562,11 +3618,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3582,11 +3638,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3623,11 +3679,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3643,11 +3699,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3684,11 +3740,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "transitions": {
           "status": "PASS",
@@ -3704,11 +3760,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3731,11 +3787,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3772,16 +3828,16 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-158 has full-checker positives, settlement/source-custody negatives, retained-policy history controls and a complete authored-negative guard table; native execution remains NOT_RUN.",
+          "finding": "F-158 has per-schema rule-level negative coverage, complete guard-removal proofs, and numeric/type sweep regressions. Date-time remains an interpreter limitation; native execution is NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -3793,8 +3849,8 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_snapshot_subjects",
-              "line_start": 613,
-              "line_end": 613,
+              "line_start": 635,
+              "line_end": 635,
               "quote": "def validate_snapshot_subjects(event_type, payload, operation):"
             },
             {
@@ -3807,59 +3863,66 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "check_negative_reason",
-              "line_start": 971,
-              "line_end": 971,
+              "line_start": 1010,
+              "line_end": 1010,
               "quote": "def check_negative_reason(case, error):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/8",
-              "line_start": 230950,
-              "line_end": 230950,
+              "line_start": 673356,
+              "line_end": 673356,
               "quote": "\"name\": \"folder.deleted:snapshot-selected-root\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/8",
-              "line_start": 231345,
-              "line_end": 231345,
+              "line_start": 673751,
+              "line_end": 673751,
               "quote": "\"name\": \"folder.deleted:unexercised-$defs-pointer\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/8",
-              "line_start": 230614,
-              "line_end": 230614,
+              "line_start": 673020,
+              "line_end": 673020,
               "quote": "\"name\": \"folder.deleted:identifier-lf-receipt_ref\""
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_path_custody",
-              "line_start": 593,
-              "line_end": 593,
+              "line_start": 615,
+              "line_end": 615,
               "quote": "def validate_path_custody(payload, row):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "identity",
-              "line_start": 871,
-              "line_end": 871,
+              "line_start": 905,
+              "line_end": 905,
               "quote": "def identity(event_type, payload, context):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_original_models",
-              "line_start": 761,
-              "line_end": 761,
+              "line_start": 793,
+              "line_end": 793,
               "quote": "def validate_original_models(event_type, payload, trace, *, operation_candidate=None,"
+            },
+            {
+              "path": "Plans/filemanager_event_contract_fixtures.json",
+              "unit": "rows/8",
+              "line_start": 690297,
+              "line_end": 690297,
+              "quote": "\"name\": \"rule:folder_deleted.schema:additionalProperties:bbe8c334\""
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "The four cycle-5 findings have full-checker regression and isolated counterexamples at the repaired head."
+          "change_reason": "Distinct schema rules now have isolating authored negatives and completed serial guard proofs; numeric/type regressions are covered."
         }
       },
       "remaining_gaps": [
@@ -3871,7 +3934,7 @@
         "fix3/guard-proof.json: twelve per-family weakening mutations detected, including six tail replacements and six pattern removals.",
         "fix3/standing-checks.json, graph-proof.json and review-cycle1/2/3.json: all applicable checks and original review mutations pass."
       ],
-      "notes": "Round 5: 2,775 cases; every authored negative isolated across explicit/schema/implicit guards. 1,553 schema keyword locations remain inventoried without direct deletion counterexamples; no exhaustive-schema mutation claim. All ten Astra classes checked per family. Native NOT_RUN; membership ABSENT; retention PARTIAL/PENDING_RETENTION_DECISION."
+      "notes": "Round 6: complete serial checker and explicit/schema/lookup/harness guard proofs; distinct schema rules mapped per schema. Astra classes 1\u201311 checked. Date-time remains an interpreter limitation; native NOT_RUN, membership ABSENT, retention pending."
     },
     {
       "event_type": "folder.exported",
@@ -3915,11 +3978,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3935,11 +3998,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "producer": {
           "status": "PASS",
@@ -3969,11 +4032,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3989,11 +4052,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "scope_identity": {
           "status": "PASS",
@@ -4009,11 +4072,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -4050,11 +4113,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "retention": {
           "status": "PARTIAL",
@@ -4070,11 +4133,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -4111,11 +4174,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "transitions": {
           "status": "PASS",
@@ -4131,11 +4194,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -4158,11 +4221,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4199,16 +4262,16 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-159 has full-checker positives, settlement/source-custody negatives, retained-policy history controls and a complete authored-negative guard table; native execution remains NOT_RUN.",
+          "finding": "F-159 has per-schema rule-level negative coverage, complete guard-removal proofs, and numeric/type sweep regressions. Date-time remains an interpreter limitation; native execution is NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -4220,8 +4283,8 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_snapshot_subjects",
-              "line_start": 613,
-              "line_end": 613,
+              "line_start": 635,
+              "line_end": 635,
               "quote": "def validate_snapshot_subjects(event_type, payload, operation):"
             },
             {
@@ -4234,59 +4297,66 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "check_negative_reason",
-              "line_start": 971,
-              "line_end": 971,
+              "line_start": 1010,
+              "line_end": 1010,
               "quote": "def check_negative_reason(case, error):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/9",
-              "line_start": 257331,
-              "line_end": 257331,
+              "line_start": 748358,
+              "line_end": 748358,
               "quote": "\"name\": \"folder.exported:snapshot-selected-root\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/9",
-              "line_start": 257770,
-              "line_end": 257770,
+              "line_start": 748797,
+              "line_end": 748797,
               "quote": "\"name\": \"folder.exported:unexercised-$defs-pointer\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/9",
-              "line_start": 256995,
-              "line_end": 256995,
+              "line_start": 748022,
+              "line_end": 748022,
               "quote": "\"name\": \"folder.exported:identifier-lf-receipt_ref\""
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_path_custody",
-              "line_start": 593,
-              "line_end": 593,
+              "line_start": 615,
+              "line_end": 615,
               "quote": "def validate_path_custody(payload, row):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "identity",
-              "line_start": 871,
-              "line_end": 871,
+              "line_start": 905,
+              "line_end": 905,
               "quote": "def identity(event_type, payload, context):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_original_models",
-              "line_start": 761,
-              "line_end": 761,
+              "line_start": 793,
+              "line_end": 793,
               "quote": "def validate_original_models(event_type, payload, trace, *, operation_candidate=None,"
+            },
+            {
+              "path": "Plans/filemanager_event_contract_fixtures.json",
+              "unit": "rows/9",
+              "line_start": 767118,
+              "line_end": 767118,
+              "quote": "\"name\": \"rule:folder_exported.schema:additionalProperties:cfe17af9\""
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "The four cycle-5 findings have full-checker regression and isolated counterexamples at the repaired head."
+          "change_reason": "Distinct schema rules now have isolating authored negatives and completed serial guard proofs; numeric/type regressions are covered."
         }
       },
       "remaining_gaps": [
@@ -4298,7 +4368,7 @@
         "fix3/guard-proof.json: twelve per-family weakening mutations detected, including six tail replacements and six pattern removals.",
         "fix3/standing-checks.json, graph-proof.json and review-cycle1/2/3.json: all applicable checks and original review mutations pass."
       ],
-      "notes": "Round 5: 2,775 cases; every authored negative isolated across explicit/schema/implicit guards. 1,553 schema keyword locations remain inventoried without direct deletion counterexamples; no exhaustive-schema mutation claim. All ten Astra classes checked per family. Native NOT_RUN; membership ABSENT; retention PARTIAL/PENDING_RETENTION_DECISION."
+      "notes": "Round 6: complete serial checker and explicit/schema/lookup/harness guard proofs; distinct schema rules mapped per schema. Astra classes 1\u201311 checked. Date-time remains an interpreter limitation; native NOT_RUN, membership ABSENT, retention pending."
     },
     {
       "event_type": "folder.moved",
@@ -4342,11 +4412,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "owner_doc": {
           "status": "PASS",
@@ -4362,11 +4432,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "producer": {
           "status": "PASS",
@@ -4396,11 +4466,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -4416,11 +4486,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "scope_identity": {
           "status": "PASS",
@@ -4436,11 +4506,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -4477,11 +4547,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "retention": {
           "status": "PARTIAL",
@@ -4497,11 +4567,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -4538,11 +4608,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "transitions": {
           "status": "PASS",
@@ -4558,11 +4628,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -4585,11 +4655,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4626,16 +4696,16 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-160 has full-checker positives, settlement/source-custody negatives, retained-policy history controls and a complete authored-negative guard table; native execution remains NOT_RUN.",
+          "finding": "F-160 has per-schema rule-level negative coverage, complete guard-removal proofs, and numeric/type sweep regressions. Date-time remains an interpreter limitation; native execution is NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -4647,8 +4717,8 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_snapshot_subjects",
-              "line_start": 613,
-              "line_end": 613,
+              "line_start": 635,
+              "line_end": 635,
               "quote": "def validate_snapshot_subjects(event_type, payload, operation):"
             },
             {
@@ -4661,59 +4731,66 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "check_negative_reason",
-              "line_start": 971,
-              "line_end": 971,
+              "line_start": 1010,
+              "line_end": 1010,
               "quote": "def check_negative_reason(case, error):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/10",
-              "line_start": 285487,
-              "line_end": 285487,
+              "line_start": 829808,
+              "line_end": 829808,
               "quote": "\"name\": \"folder.moved:snapshot-selected-root\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/10",
-              "line_start": 285902,
-              "line_end": 285902,
+              "line_start": 830223,
+              "line_end": 830223,
               "quote": "\"name\": \"folder.moved:unexercised-$defs-pointer\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/10",
-              "line_start": 285151,
-              "line_end": 285151,
+              "line_start": 829472,
+              "line_end": 829472,
               "quote": "\"name\": \"folder.moved:identifier-lf-receipt_ref\""
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_path_custody",
-              "line_start": 593,
-              "line_end": 593,
+              "line_start": 615,
+              "line_end": 615,
               "quote": "def validate_path_custody(payload, row):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "identity",
-              "line_start": 871,
-              "line_end": 871,
+              "line_start": 905,
+              "line_end": 905,
               "quote": "def identity(event_type, payload, context):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_original_models",
-              "line_start": 761,
-              "line_end": 761,
+              "line_start": 793,
+              "line_end": 793,
               "quote": "def validate_original_models(event_type, payload, trace, *, operation_candidate=None,"
+            },
+            {
+              "path": "Plans/filemanager_event_contract_fixtures.json",
+              "unit": "rows/10",
+              "line_start": 850866,
+              "line_end": 850866,
+              "quote": "\"name\": \"rule:folder_moved.schema:additionalProperties:e36c5ccc\""
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "The four cycle-5 findings have full-checker regression and isolated counterexamples at the repaired head."
+          "change_reason": "Distinct schema rules now have isolating authored negatives and completed serial guard proofs; numeric/type regressions are covered."
         }
       },
       "remaining_gaps": [
@@ -4725,7 +4802,7 @@
         "fix3/guard-proof.json: twelve per-family weakening mutations detected, including six tail replacements and six pattern removals.",
         "fix3/standing-checks.json, graph-proof.json and review-cycle1/2/3.json: all applicable checks and original review mutations pass."
       ],
-      "notes": "Round 5: 2,775 cases; every authored negative isolated across explicit/schema/implicit guards. 1,553 schema keyword locations remain inventoried without direct deletion counterexamples; no exhaustive-schema mutation claim. All ten Astra classes checked per family. Native NOT_RUN; membership ABSENT; retention PARTIAL/PENDING_RETENTION_DECISION."
+      "notes": "Round 6: complete serial checker and explicit/schema/lookup/harness guard proofs; distinct schema rules mapped per schema. Astra classes 1\u201311 checked. Date-time remains an interpreter limitation; native NOT_RUN, membership ABSENT, retention pending."
     },
     {
       "event_type": "folder.renamed",
@@ -4769,11 +4846,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "owner_doc": {
           "status": "PASS",
@@ -4789,11 +4866,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "producer": {
           "status": "PASS",
@@ -4823,11 +4900,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -4843,11 +4920,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "scope_identity": {
           "status": "PASS",
@@ -4863,11 +4940,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -4904,11 +4981,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "retention": {
           "status": "PARTIAL",
@@ -4924,11 +5001,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -4965,11 +5042,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "transitions": {
           "status": "PASS",
@@ -4985,11 +5062,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -5012,11 +5089,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -5053,16 +5130,16 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact normative text retains its meaning and citation; retention remains pending and membership absent."
+          "change_reason": "Current normative source retains its support; membership stays absent and retention remains Jared\u2019s pending choice."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-161 has full-checker positives, settlement/source-custody negatives, retained-policy history controls and a complete authored-negative guard table; native execution remains NOT_RUN.",
+          "finding": "F-161 has per-schema rule-level negative coverage, complete guard-removal proofs, and numeric/type sweep regressions. Date-time remains an interpreter limitation; native execution is NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -5074,8 +5151,8 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_snapshot_subjects",
-              "line_start": 613,
-              "line_end": 613,
+              "line_start": 635,
+              "line_end": 635,
               "quote": "def validate_snapshot_subjects(event_type, payload, operation):"
             },
             {
@@ -5088,59 +5165,66 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "check_negative_reason",
-              "line_start": 971,
-              "line_end": 971,
+              "line_start": 1010,
+              "line_end": 1010,
               "quote": "def check_negative_reason(case, error):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/11",
-              "line_start": 315942,
-              "line_end": 315942,
+              "line_start": 913066,
+              "line_end": 913066,
               "quote": "\"name\": \"folder.renamed:snapshot-selected-root\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/11",
-              "line_start": 316393,
-              "line_end": 316393,
+              "line_start": 913517,
+              "line_end": 913517,
               "quote": "\"name\": \"folder.renamed:unexercised-$defs-pointer\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/11",
-              "line_start": 315606,
-              "line_end": 315606,
+              "line_start": 912730,
+              "line_end": 912730,
               "quote": "\"name\": \"folder.renamed:identifier-lf-receipt_ref\""
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_path_custody",
-              "line_start": 593,
-              "line_end": 593,
+              "line_start": 615,
+              "line_end": 615,
               "quote": "def validate_path_custody(payload, row):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "identity",
-              "line_start": 871,
-              "line_end": 871,
+              "line_start": 905,
+              "line_end": 905,
               "quote": "def identity(event_type, payload, context):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_original_models",
-              "line_start": 761,
-              "line_end": 761,
+              "line_start": 793,
+              "line_end": 793,
               "quote": "def validate_original_models(event_type, payload, trace, *, operation_candidate=None,"
+            },
+            {
+              "path": "Plans/filemanager_event_contract_fixtures.json",
+              "unit": "rows/11",
+              "line_start": 931672,
+              "line_end": 931672,
+              "quote": "\"name\": \"rule:folder_renamed.schema:additionalProperties:303a5fe8\""
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle5.md at 646053fffd7d088b459f8894f121f776569e38af",
+            "source": "DFM-sol/REVIEW-cycle6.md at 698327c61f5730f9de4580725a568d47f86b24d2",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "The four cycle-5 findings have full-checker regression and isolated counterexamples at the repaired head."
+          "change_reason": "Distinct schema rules now have isolating authored negatives and completed serial guard proofs; numeric/type regressions are covered."
         }
       },
       "remaining_gaps": [
@@ -5152,15 +5236,20 @@
         "fix3/guard-proof.json: twelve per-family weakening mutations detected, including six tail replacements and six pattern removals.",
         "fix3/standing-checks.json, graph-proof.json and review-cycle1/2/3.json: all applicable checks and original review mutations pass."
       ],
-      "notes": "Round 5: 2,775 cases; every authored negative isolated across explicit/schema/implicit guards. 1,553 schema keyword locations remain inventoried without direct deletion counterexamples; no exhaustive-schema mutation claim. All ten Astra classes checked per family. Native NOT_RUN; membership ABSENT; retention PARTIAL/PENDING_RETENTION_DECISION."
+      "notes": "Round 6: complete serial checker and explicit/schema/lookup/harness guard proofs; distinct schema rules mapped per schema. Astra classes 1\u201311 checked. Date-time remains an interpreter limitation; native NOT_RUN, membership ABSENT, retention pending."
     }
   ],
-  "review_round": 4,
+  "review_round": 6,
   "review_before_counts": {
     "PASS": 108,
     "PARTIAL": 24,
     "ABSENT": 12
   },
   "prepared_families": 12,
-  "review_cap_note": "Extra targeted round 4 explicitly authorized by Jared after the three-round cap; independent review still required."
+  "review_cap_note": "Round 6 is the second and last technical round after the extra round; retention remains Jared\u2019s decision.",
+  "guard_table_ref": "reports/event-authority-20261104/DFM.guard-table.json",
+  "limitations": [
+    "Retention pending for Jared; membership absent; native execution NOT_RUN.",
+    "date-time is unavailable in this interpreter FormatChecker; no executed format PASS."
+  ]
 }
