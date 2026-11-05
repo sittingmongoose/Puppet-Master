@@ -38,7 +38,7 @@ core.payload_from = payload_from
 
 # Distinct module instance: the eight-family checker and its original fixture expectations are untouched.
 _original_transition, _original_append, _original_accept = core.transition, core.append_current, core.accept
-_original_gate, _original_require = core.start_custody_gate, core.require
+_original_require = core.require
 _REMOVED = None
 _REQUESTED_EVENT = None
 
@@ -48,14 +48,14 @@ def guard(name, test, reason=None):
         _original_require(test, reason or name)
 
 
-def start_custody_gate(state, first_start=False, writer_event=None):
+def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):
     """SP-636/SP-637 gate, with the canonical comparisons split by invariant for check 11.
 
     These are the original predicates; no retained value is repaired, substituted or reconstructed as proof.
     """
     core.require(not state['withdrawn'], 'permission_or_withdrawal')
     row = state['operation']; started = event_type(row, 'started'); completed = event_type(row, 'completed')
-    expected = core.full_value(row, 'started'); start_id = expected['event_id']
+    expected = (core.canonical_value if canonical_history else core.full_value)(row, 'started'); start_id = expected['event_id']
     record = state['originals'].get(started)
     canonical = state.get('original') if writer_event == started else None
     terminal = state.get('original') if writer_event == completed else None
@@ -70,7 +70,7 @@ def start_custody_gate(state, first_start=False, writer_event=None):
     elif not first_start:
         core.require(record is not None or canonical is not None, 'start_receipt_missing')
     if record is not None:
-        core.require(core.original_matches(record, expected), 'start_receipt_missing')
+        core.require((core.historical_matches if canonical_history else core.original_matches)(record, expected), 'start_receipt_missing')
     if canonical is not None:
         value = canonical.get('full_value') if isinstance(canonical, dict) else None
         reference = core.canonical_value(row, 'started')
@@ -101,6 +101,9 @@ def cutoff_gate(state):
     guard('cutoff_record', shape)
     if not shape:
         return
+    guard('cutoff_reference', record['cutoff_ref'] == row['cutoff_ref'])
+    guard('cutoff_unique', sum(isinstance(value, dict) and value.get('cutoff_ref') == row['cutoff_ref']
+                               for value in state['cutoff_authorities'].values()) <= 1)
     guard('cutoff_scope', record['job'] == job and record['scope_kind'] == 'project'
           and record['project_id'] == row['project_id'])
     guard('cutoff_commitment', core.digest(record) == row['cutoff_sha256'])
@@ -139,6 +142,12 @@ def archive_validate(before, after, job):
     common = set(source) & set(result)
     guard('evidence_preserved', all(source[k]['evidence_refs'] == result[k]['evidence_refs'] for k in common))
     guard('versions_preserved', all(source[k]['version_ref'] == result[k]['version_ref'] for k in common))
+    # Together with evidence/versions above this compares each selected original in full except archived.
+    # Keep those independently tested fields out of this predicate, avoiding an unnamed duplicate guard.
+    guard('selected_fields_preserved', all(
+        {field: value for field, value in source[k].items() if field not in ('archived', 'evidence_refs', 'version_ref')}
+        == {field: value for field, value in result[k].items() if field not in ('archived', 'evidence_refs', 'version_ref')}
+        for k in common & selected if not source[k]['pinned']))
     guard('pins_preserved', all(source[k] == result[k] for k in common if source[k]['pinned']))
     guard('selected_archived', all(result[k]['archived'] for k in common & selected if not source[k]['pinned']))
     guard('unselected_preserved', all(source[k] == result[k] for k in common - selected if not source[k]['pinned']))
@@ -476,8 +485,12 @@ def main():
     bounds = payload_upper_bounds(families)
     paths = run_adopted_paths(fixtures, families)
     guards = run_guards(fixtures, families)
+    canonical_history = core.run_canonical_history(core.load('Plans/memory_canonical_history_fixtures.json'), families)
+    numeric_writers = core.run_numeric_writers(fixtures['families'])
     print(json.dumps({'status':'pass','families':paths,'guard_cases':len(fixtures['guard_cases']),
-                      'guard_removal_table':guards,'payload_messagepack_upper_bounds':bounds,'native':'NOT_RUN','admission':'ABSENT',
+                      'guard_removal_table':guards,'canonical_history_cases':canonical_history,
+                      'numeric_writer_cases':numeric_writers,
+                      'payload_messagepack_upper_bounds':bounds,'native':'NOT_RUN','admission':'ABSENT',
                       'real_cutoffs':'ABSENT; numeric proposals in report only'},indent=2))
 
 if __name__ == '__main__':

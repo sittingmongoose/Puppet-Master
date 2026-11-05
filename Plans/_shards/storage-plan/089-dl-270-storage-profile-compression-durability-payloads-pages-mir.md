@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L28057-L30228
 
-Source SHA256: `f7c28cf77ee689fe249790a29fc8d44cdacbd7f114c868f3313aff88cddc2ca2`
+Source SHA256: `fccbc20b8a361ac2d3b7b7cd2a87831e6bc5919fa9b9393d9222e5e66b4c4b05`
 
 ---
 
@@ -1960,7 +1960,7 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.m
   invocation cannot bypass it. When Jared approves an owner proposal, resolve that exact authenticated owner-approved
   policy for this job and this Project, freeze its ref/content hash in the initial operation and request digest,
   and recheck it before each current writer/effect boundary. A Boolean, caller policy argument, wrong-scope ref,
-  altered digest or sibling-job approval is insufficient. Fixtures contain a synthetic resolver record solely to
+  altered digest or sibling-job approval is insufficient. The lookup key, resolved record''s own cutoff_ref and frozen operation cutoff_ref must be equal and resolve to exactly one owner record, never multiple alias records. The resolved job/scope/Project and recomputed content hash must agree with the frozen operation, request binding and every copied start/terminal payload field. A coherent rehash cannot authorize contradictory refs. Fixtures contain a synthetic resolver record solely to
   test this conditional contract; they select no real cutoff values and create no approval. History reads do not
   require a currently available cutoff: a retained authentic event valid when written remains readable after cutoffs,
   source, request or live counters change; withdrawal, revoked permission, missing start custody or forgery still
@@ -2107,7 +2107,7 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.m
   invocation cannot bypass it. When Jared approves an owner proposal, resolve that exact authenticated owner-approved
   policy for this job and this Project, freeze its ref/content hash in the initial operation and request digest,
   and recheck it before each current writer/effect boundary. A Boolean, caller policy argument, wrong-scope ref,
-  altered digest or sibling-job approval is insufficient. Fixtures contain a synthetic resolver record solely to
+  altered digest or sibling-job approval is insufficient. The lookup key, resolved record''s own cutoff_ref and frozen operation cutoff_ref must be equal and resolve to exactly one owner record, never multiple alias records. The resolved job/scope/Project and recomputed content hash must agree with the frozen operation, request binding and every copied start/terminal payload field. A coherent rehash cannot authorize contradictory refs. Fixtures contain a synthetic resolver record solely to
   test this conditional contract; they select no real cutoff values and create no approval. History reads do not
   require a currently available cutoff: a retained authentic event valid when written remains readable after cutoffs,
   source, request or live counters change; withdrawal, revoked permission, missing start custody or forgery still

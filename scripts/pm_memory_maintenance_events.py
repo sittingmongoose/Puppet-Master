@@ -7,6 +7,7 @@ import base64
 import hashlib
 import importlib.util
 import json
+import math
 from urllib.parse import urljoin
 from jsonschema import Draft202012Validator, FormatChecker
 from referencing import Registry
@@ -52,9 +53,30 @@ def load(path):
     return json.loads((ROOT / path).read_text())
 
 
+def canonical_numbers(value):
+    """One JSON number spelling for this integer-only contract, including -0 and integral exponents.
+
+    JSON Schema's integer accepts 1.0. Normalize that mathematical integer before every hash;
+    nonintegral/nonfinite numbers have no representation in these maintenance recipes.
+    """
+    if isinstance(value, float):
+        if math.isfinite(value) and value.is_integer():
+            return int(value)
+        raise ValueError('non_integer_commitment_number')
+    if isinstance(value, dict):
+        return {key: canonical_numbers(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [canonical_numbers(item) for item in value]
+    return value
+
+
 def digest(value):
-    return hashlib.sha256(json.dumps(value, ensure_ascii=False, sort_keys=True,
+    return hashlib.sha256(json.dumps(canonical_numbers(value), ensure_ascii=False, sort_keys=True,
                                     separators=(',', ':')).encode('utf-8')).hexdigest()
+
+
+def parse_json_number(literal):
+    return json.loads(literal)
 
 
 def identity(event_type, instance, project, operation):
@@ -352,7 +374,7 @@ def lawful_phases(row):
     return ('accepted', 'started', 'effect_committed', 'completed')
 
 
-def start_custody_gate(state, first_start=False, writer_event=None):
+def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):
     """The one start-custody rule of SP-630 to SP-637, adopting SP-286/CV-339 retained full-value originals.
 
     Every path except first start admission must resolve and verify the exact original start record before it
@@ -364,7 +386,7 @@ def start_custody_gate(state, first_start=False, writer_event=None):
     require(not state['withdrawn'], 'permission_or_withdrawal')
     row = state['operation']
     started = event_type(row, 'started'); completed = event_type(row, 'completed')
-    expected = full_value(row, 'started'); start_id = expected['event_id']
+    expected = (canonical_value if canonical_history else full_value)(row, 'started'); start_id = expected['event_id']
     record = state['originals'].get(started)
     canonical = state.get('original') if writer_event == started else None
     terminal = state.get('original') if writer_event == completed else None
@@ -382,7 +404,7 @@ def start_custody_gate(state, first_start=False, writer_event=None):
         require(record is not None or canonical is not None, 'start_receipt_missing')
     if record is not None:
         # Exact retained value, full-flush settled receipt, digest, identity, operation, event type and payload.
-        require(original_matches(record, expected), 'start_receipt_missing')
+        require((historical_matches if canonical_history else original_matches)(record, expected), 'start_receipt_missing')
     if canonical is not None:
         value = canonical.get('full_value') if isinstance(canonical, dict) else None
         reference = canonical_value(row, 'started')
@@ -669,6 +691,126 @@ def read_history(before, event):
     start_custody_gate(state)
     require(custody(state, suffix), 'original_missing')
     return deepcopy(state['originals'][event]['full_value'])
+
+
+def historical_envelope_matches(value):
+    # The frozen 1.0.0 reader is an explicit envelope-owner definition; never a writer option.
+    if isinstance(value, dict) and value.get('schema_version') == '1.0.0':
+        return validator('Plans/event_record.schema.json', 'event_record_1_0_0_compatibility_reader').is_valid(value)
+    return envelope_validator().is_valid(value)
+
+
+def historical_payload_matches(value, expected):
+    return validator('Plans/memory_maintenance_event_payloads.schema.json',
+                     expected['event_type'].replace('.', '_')).is_valid(value.get('payload'))
+
+
+def historical_binding(value, expected):
+    """Semantic joins only. Closed schemas independently own presence, shape and allowed policies."""
+    reference = deepcopy(expected)
+    if value.get('schema_version') == '1.0.0':
+        reference['schema_version'] = '1.0.0'
+        del reference['scope_kind']
+    fields = set(reference) & set(value) - STORAGE_FIELDS - {'payload', 'replay_policy', 'migration', 'actor_ref'}
+    if not retained_binding({key: value[key] for key in fields}, {key: reference[key] for key in fields}):
+        return False
+    payload = value.get('payload')
+    return (isinstance(payload, dict) and retained_binding(
+        {key: payload[key] for key in set(payload) & set(reference['payload'])},
+        {key: reference['payload'][key] for key in set(payload) & set(reference['payload'])}))
+
+
+def historical_producer_matches(value, expected):
+    # Presence belongs to the closed envelope schema; this predicate owns only the producer join.
+    return value.get('actor_ref', expected['actor_ref']) == expected['actor_ref']
+
+
+def historical_matches(original, expected):
+    return (retained_shape(original) and retained_flush(original) and retained_digest(original)
+            and historical_envelope_matches(original['full_value'])
+            and historical_payload_matches(original['full_value'], expected)
+            and historical_producer_matches(original['full_value'], expected)
+            and historical_binding(original['full_value'], expected))
+
+
+def read_canonical_history(before, event):
+    """Read full retained envelopes against their frozen write-time operation, never the live operation.
+
+    written_operation is the synthetic resolved immutable operation witness. originals are synthetic
+    Storage full-flush records. Their physical authentication remains native NOT_RUN. Current access
+    and the withdrawal fence still apply; current admission, cutoffs, writer policy and live state do not.
+    """
+    require(before['permission'] and not before['withdrawn'], 'permission_or_withdrawal')
+    row = before['written_operation']
+    require(valid_operation(row, operation_name(event_type(row, 'started'))), 'invalid_operation')
+    suffix = event.rsplit('.', 1)[1] if event.count('.') >= 2 else ''
+    require(suffix in ('started', 'completed') and event == event_type(row, suffix), 'unknown_event')
+    snapshot = {'operation': row, 'originals': before['originals'], 'withdrawn': before['withdrawn']}
+    start_custody_gate(snapshot, canonical_history=True)
+    record = before['originals'].get(event)
+    require(historical_matches(record, canonical_value(row, suffix)), 'original_missing')
+    return deepcopy(record['full_value'])
+
+
+def run_canonical_history(fixtures, families):
+    counts = {}
+    for family in fixtures['canonical_history_families']:
+        event = family['event_type']
+        if event not in families:
+            continue
+        assert event not in counts
+        names = [case['name'] for case in family['cases']]
+        assert len(names) == len(set(names))
+        required = {'canonical-retained', 'canonical-replay-only', 'compatibility-retained',
+                    'compatibility-replay-only', 'live-operation-replaced', 'live-source-request-counters',
+                    'withdrawn', 'permission-revoked', 'missing-start', 'forged-commitment',
+                    'forged-rehashed-value', 'foreign-project', 'foreign-identity', 'foreign-family',
+                    'numeric-1', 'numeric-1.0', 'numeric-1e0', 'numeric--0', 'numeric-01'}
+        assert required <= {name.split(':', 1)[1] for name in names}, event
+        for case in family['cases']:
+            state = patch(family['states'][case['initial']], case.get('edits', []))
+            before = deepcopy(state)
+            try:
+                if case.get('number_literal') is not None:
+                    number = parse_json_number(case['number_literal'])
+                    assert digest(number) == digest(case['canonical_number']), case['name']
+                output = read_canonical_history(state, case['read'])
+            except (Refusal, json.JSONDecodeError) as error:
+                reason = 'invalid_json_number' if isinstance(error, json.JSONDecodeError) else str(error)
+                assert case.get('refusal') == reason, (case['name'], reason)
+            else:
+                assert 'refusal' not in case, (case['name'], 'expected refusal')
+                assert output == case['output'], (case['name'], 'wrong retained bytes')
+            assert state == before, (case['name'], 'history mutated state')
+        counts[event] = len(family['cases'])
+    assert set(counts) == set(families)
+    return counts
+
+
+def run_numeric_writers(contexts):
+    counts = {}
+    for family in contexts:
+        event = family['event_type']
+        states = family.get('writer_states', family.get('states'))
+        before = states['before']; untouched = deepcopy(before)
+        counts[event] = 0
+        for literal in ('1', '1.0', '1e0', '-0', '01'):
+            try:
+                number = parse_json_number(literal)
+            except json.JSONDecodeError:
+                assert literal == '01'
+            else:
+                value = canonical_value(before['operation'], event.rsplit('.', 1)[1])
+                value['sequence_id'] = number
+                after, output = append_current(before, value, event)
+                canonical = {**value, 'sequence_id': int(number)}
+                assert output == value and after['original']['full_value'] == value
+                assert after['original']['full_value_sha256'] == digest(canonical)
+                assert after['append_count'] == before['append_count'] + 1
+                assert after['effect_count'] == before['effect_count']
+                assert before == untouched
+            counts[event] += 1
+    return counts
 
 
 def run_reference_cases(fixtures, families):
@@ -1000,6 +1142,8 @@ def main():
     checkpoints = run_checkpoint_joins(fixtures, families)
     matrix = run_custody_matrix(fixtures, families, families)
     history = run_history(fixtures, families)
+    canonical_history = run_canonical_history(load('Plans/memory_canonical_history_fixtures.json'), families)
+    numeric_writers = run_numeric_writers(fixtures['writer_families'])
     identifier_names = [case['name'] for case in fixtures['identifier_cases']]
     assert len(identifier_names) == len(set(identifier_names))
     assert {event.replace('.', '_') + ':' + name for event in families
@@ -1042,6 +1186,8 @@ def main():
                       'current_writer_steps': writers, 'identifier_cases': len(fixtures['identifier_cases']),
                       'generic_checkpoint_identity_cases': checkpoints,
                       'start_custody_matrix': matrix, 'history_cases': history,
+                      'canonical_history_cases': canonical_history,
+                      'numeric_writer_cases': numeric_writers,
                       'schema_reference_cases': references, 'registry_mirrors_reference_checked': mirrors,
                       'native': 'NOT_RUN', 'admission': 'ABSENT', 'retention': 'PENDING_RETENTION_DECISION'}, indent=2))
 
