@@ -251,6 +251,14 @@ def family_probes(m, row):
     bad = clone(base); bad['event_record']['event_id'] += '-foreign'
     add('envelope/identity', 'identity', base, bad, 'event_record.event_id')
 
+    # Each account is a separate custody predicate. The peer stays unchanged.
+    # Historical bytes authenticate this exact envelope, so a stale Storage
+    # copy cannot hide a missing account/source comparison.
+    for field in ('requested_account_ref', 'effective_account_ref'):
+        bad = clone(base); bad['event_record'][field] = 'ref:account/foreign'
+        add('account_custody/' + field, 'envelope_source_join', base, bad,
+            'event_record.' + field)
+
     # Numeric spellings use a caller integer field with no observational copy.
     # Its exact-type rule can therefore be removed without a stale identity or
     # codec refusal hiding it. Signed zero is a separate canonical positive.
@@ -268,6 +276,23 @@ def family_probes(m, row):
         for hook in ('post_tool_invoke','post_attempt_complete'):
             bad=clone(base); bad['payload']['hook_name']=hook; bad=rebuild(m,name,bad)
             add('semantic/'+hook,'observation_only_hook',base,bad,'payload.hook_name')
+    if name in ('plugin.hook.error', 'plugin.hook.invoked', 'persona.selected'):
+        field, values = (('persona_selection_source', ('manual', 'not_an_owner_source'))
+                         if name == 'persona.selected' else
+                         ('hook_name', ('tool.before', 'not_a_registered_hook')))
+        for value in (*values, True, 0, None, [], {'value': 'unknown'}):
+            bad = clone(base); bad['payload'][field] = value
+            bad = rebuild(m, name, bad)
+            add('owner_vocabulary/' + json.dumps(value, sort_keys=True), 'payload_owner_vocabulary', base, bad,
+                'payload.' + field)
+    if name in ('persona.created', 'persona.deleted', 'persona.imported', 'persona.updated'):
+        for persona_id in sorted(m['PROTECTED_PERSONA_IDS']):
+            bad = clone(base); bad['payload']['persona_id'] = persona_id
+            if name == 'persona.updated':
+                bad['payload']['source_id'] = persona_id
+            bad = rebuild(m, name, bad)
+            add('protected_identity/' + persona_id, 'protected_identity', base, bad,
+                'original target Persona identity with protected_id=false')
     if name.startswith('persona.'):
         for old in row['semantic_invalid']:
             if old['expected_error'] not in ('home_scope','override_lineage','cas','creation_source'): continue
@@ -337,6 +362,12 @@ def family_probes(m, row):
         add('history/' + label, c['expected_error'], good, bad, label, 'history')
     hbase = clone(next(c for c in row['history_cases'] if c['label'] == 'retained_after_live_state_changed'))
     hbase.pop('label', None)
+    for field in ('requested_account_ref', 'effective_account_ref'):
+        bad = clone(hbase)
+        bad['original']['event_record'][field] = 'ref:account/foreign'
+        bad['storage_record']['event_record_bytes_hex'] = binding_bytes(bad['original']['event_record']).hex()
+        add('history_account_custody/' + field, 'envelope_source_join', hbase, bad,
+            'original.event_record.' + field, 'history')
     for fields, guard in [(('retained','authentic','admitted_when_written'),'historical_provenance'),
                            (('reader_current','family_withdrawn'),'historical_withdrawn'),
                            (('access_current','body_deleted'),'historical_access')]:

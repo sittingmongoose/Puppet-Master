@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8546-L8743
+Source lines: L8546-L8747
 
-Source SHA256: `212f3634ee38453d53ee6294b83f1280bb82aeef9426394b0ba303c6f76ab24a`
+Source SHA256: `1bb3a8651e9750466e20d9a4a106e3c2d0647d960e8f30a2cac4fd11fbc3bcc7`
 
 ---
 
@@ -18,6 +18,10 @@ Every command in this addendum consumes the closed v2 `UICommandResponse` in `Pl
 
 ### Added GUI command families
 
+The Persona rows below preserve historical Project-only command sketches, not the active scope contract. UCC-214 and P-060 select each exact `persona_<operation>_request_v2` / `persona_<operation>_result_v2` from `Plans/projects_refresh_command_bindings.json`, including create/delete/export/import/select/update and the distinct-ID duplicate route. Each uses WorkflowScopeV2 (CV-365): the actual Server application scope has required-present null Project fields; actual Project operations retain real Project identity. Existing historical Project schemas remain unchanged. Save writes the current whole-record home under expected revision; `persona_patch` in the historical sketch does not grant per-field layering. No event is admitted here.
+
+The selected Persona result vocabulary is `requested_persona` / `effective_persona` (Personas section 10), never parallel `_id` runtime fields. The select result’s existing authenticated owner_result_ref carries original frozen resolution evidence (CV-691 persona_selected_resolution); historical `_id` spellings are read-only migration/source-lineage aliases and cannot authorize a current write or fresh Settings resolution. CV-691/P-124 supplies the exact event binding.
+
 | Command ID | Payload fields | Result fields | Error/disabled fields | Receipt or event effect |
 |---|---|---|---|---|
 | `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (resolved theme; in `auto` it tracks OS `prefers-color-scheme` live), `contrast_profile` | `stale_projection`, `permission_denied`, `invalid_args` | `settings.theme.updated` |
@@ -27,7 +31,7 @@ Every command in this addendum consumes the closed v2 `UICommandResponse` in `Pl
 | `cmd.persona.create` | `project_id`, `persona_spec`, `source_refs[]`, `idempotency_key` | `persona_id`, `persona_revision` | `invalid_args`, `permission_denied`, `stale_projection` | `persona.created` |
 | `cmd.persona.update` | `project_id`, `persona_id`, `persona_patch`, `expected_persona_revision`, `idempotency_key` | `persona_id`, `persona_revision` | `stale_projection`, `invalid_args`, `permission_denied` | `persona.updated` |
 | `cmd.persona.delete` | `project_id`, `persona_id`, `expected_persona_revision`, `confirmation_token`, `idempotency_key` | `persona_id`, `terminal_state` | `blocked_state_required`, `permission_denied`, `stale_projection` | `persona.deleted` |
-| `cmd.persona.select` | `project_id`, `surface`, `persona_id`, `expected_persona_revision?` | `effective_persona_id`, `selection_scope` | `invalid_args`, `stale_projection` | `persona.selected` |
+| `cmd.persona.select` | `project_id`, `surface`, `persona_id`, `expected_persona_revision?` | `effective_persona`, `selection_scope` (canonical naming; old `_id` read alias only) | `invalid_args`, `stale_projection` | `persona.selected` |
 | `cmd.persona.duplicate` | `project_id`, `source_persona_id`, `new_name`, `idempotency_key` | `persona_id`, `persona_revision` | `invalid_args`, `permission_denied` | `persona.created` |
 | `cmd.persona.import` | `project_id`, `source_ref`, `import_mode`, `authority_snapshot`, `idempotency_key` | `persona_id`, `persona_revision`, `import_receipt_ref` | `invalid_args`, `permission_denied`, `handler_unavailable` | `persona.imported` |
 | `cmd.persona.export` | `project_id`, `persona_id`, `format`, `redaction_profile` | `export_ref`, `persona_revision` | `invalid_args`, `permission_denied` | `persona.exported` |

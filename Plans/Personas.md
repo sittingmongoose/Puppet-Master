@@ -3848,6 +3848,8 @@ Producer: **handlers::persona::create (or the existing handlers::persona::duplic
 The payload is exactly `Plans/dg6b_event_contracts.schema.json#/$defs/persona_created` (closed root, version 1.0.0), routed by CV-691 with this family’s individual SP-672 subsection. Bind scope to the original selected WorkflowScopeV2 request and actual owning Server, not focus or a Computer mirror. `home_kind`, `home_ref`, `home_project_id`, `project_version_id`, reach, source hashes, owner revision, Client and return refs come from authenticated original request/result custody. Runtime identity uses only the canonical names in section 10; legacy `_id` fields are migration/source-lineage aliases and cannot be parallel fields. The event stores refs and hashes, never PERSONA.md body, prompts, credentials, or arbitrary output. Refs require current source authorization and deletion checks. These technical bindings change no feature, scope choice, deletion policy or retention class.
 
 
+The mutation oracle independently verifies the authenticated original target `persona_id` against section 6's nine protected core built-in IDs. A source `protected_id=false` cannot authorize a protected target; all request/result/frozen copies must agree with that target. This does not restrict copying an eligible protected source to a new non-reserved ID or legitimate selection/export.
+
 <a id="P-121"></a>
 ### P-121 - persona.deleted prepared event contract
 
@@ -3882,6 +3884,8 @@ Producer: **handlers::persona::delete**. Observe only the confirmed deleted resu
 
 The payload is exactly `Plans/dg6b_event_contracts.schema.json#/$defs/persona_deleted` (closed root, version 1.0.0), routed by CV-691 with this family’s individual SP-672 subsection. Bind scope to the original selected WorkflowScopeV2 request and actual owning Server, not focus or a Computer mirror. `home_kind`, `home_ref`, `home_project_id`, `project_version_id`, reach, source hashes, owner revision, Client and return refs come from authenticated original request/result custody. Runtime identity uses only the canonical names in section 10; legacy `_id` fields are migration/source-lineage aliases and cannot be parallel fields. The event stores refs and hashes, never PERSONA.md body, prompts, credentials, or arbitrary output. Refs require current source authorization and deletion checks. These technical bindings change no feature, scope choice, deletion policy or retention class.
 
+
+The mutation oracle independently verifies the authenticated original target `persona_id` against section 6's nine protected core built-in IDs. A source `protected_id=false` cannot authorize a protected target; all request/result/frozen copies must agree with that target. This does not restrict copying an eligible protected source to a new non-reserved ID or legitimate selection/export.
 
 <a id="P-122"></a>
 ### P-122 - persona.exported prepared event contract
@@ -3955,6 +3959,8 @@ Producer: **handlers::persona::import**. Observe only the imported result of cmd
 The payload is exactly `Plans/dg6b_event_contracts.schema.json#/$defs/persona_imported` (closed root, version 1.0.0), routed by CV-691 with this family’s individual SP-672 subsection. Bind scope to the original selected WorkflowScopeV2 request and actual owning Server, not focus or a Computer mirror. `home_kind`, `home_ref`, `home_project_id`, `project_version_id`, reach, source hashes, owner revision, Client and return refs come from authenticated original request/result custody. Runtime identity uses only the canonical names in section 10; legacy `_id` fields are migration/source-lineage aliases and cannot be parallel fields. The event stores refs and hashes, never PERSONA.md body, prompts, credentials, or arbitrary output. Refs require current source authorization and deletion checks. These technical bindings change no feature, scope choice, deletion policy or retention class.
 
 
+The mutation oracle independently verifies the authenticated original target `persona_id` against section 6's nine protected core built-in IDs. A source `protected_id=false` cannot authorize a protected target; all request/result/frozen copies must agree with that target. This does not restrict copying an eligible protected source to a new non-reserved ID or legitimate selection/export.
+
 <a id="P-124"></a>
 ### P-124 - persona.selected prepared event contract
 
@@ -3992,6 +3998,8 @@ The payload is exactly `Plans/dg6b_event_contracts.schema.json#/$defs/persona_se
 
 The selected payload, stored operation payload and authenticated frozen resolution independently enforce section 10: persona_override_scope is thread, run, node, attempt or actor only when persona_override_owner_id equals the corresponding actual runtime_lineage thread_id/run_id/node_id/attempt_id/actor_id. The complete required-present nullable runtime_lineage comes from the frozen original runtime snapshot, joins the original resolution and supplies any applicable EventRecord execution joins; tier and tier_id are forbidden even when all copied source values agree. Metadata-only Settings selection uses persona_override_scope=null and persona_override_owner_id=null with no invented execution lineage. Project scope, definition home and Settings target are not runtime override owners. The root and stored schemas close these domains; coherent retired-tier and mismatched actual-lineage negatives run through the full checker.
 
+For `persona.selected`, the event payload, stored operation payload, frozen resolution and its physical inline representation enforce the canonical `persona_selection_source` enum: `user_selected`, `project_default`, `role_default`, `policy_override`, `fallback`, `everywhere_default`, `computer_default`. `runtime_selection_source` is a separate field; `manual` and arbitrary names are refused. Retained Project-era records using the original five source values and scope-aware records using the two successors keep their exact original bytes and owner recipe.
+
 <a id="P-125"></a>
 ### P-125 - persona.updated prepared event contract
 
@@ -4025,3 +4033,5 @@ node_compile_hint: {mode: contract_only, create_worknodes: false}
 Producer: **handlers::persona::update**. Observe only the updated result of cmd.persona.update after expected_owner_revision CAS, full PERSONA.md validation, whole-record commit to the actual home, and authenticated readback. Computer mirrors are read-only. A library Save writes the settings home; creating a same-ID Project version is the separate save-as-override route. Record the exact previous revision/hash and resulting revision/hash; stale CAS or protected-ID shadowing refuses before mutation. A retry never reapplies a patch, creates a Project version, or changes frozen runs.
 
 The payload is exactly `Plans/dg6b_event_contracts.schema.json#/$defs/persona_updated` (closed root, version 1.0.0), routed by CV-691 with this family’s individual SP-672 subsection. Bind scope to the original selected WorkflowScopeV2 request and actual owning Server, not focus or a Computer mirror. `home_kind`, `home_ref`, `home_project_id`, `project_version_id`, reach, source hashes, owner revision, Client and return refs come from authenticated original request/result custody. Runtime identity uses only the canonical names in section 10; legacy `_id` fields are migration/source-lineage aliases and cannot be parallel fields. The event stores refs and hashes, never PERSONA.md body, prompts, credentials, or arbitrary output. Refs require current source authorization and deletion checks. These technical bindings change no feature, scope choice, deletion policy or retention class.
+
+The `persona.updated` oracle independently verifies the authenticated original target `persona_id` against section 6's nine protected core built-in IDs. A source `protected_id=false` cannot authorize a protected target even when source/request/result/frozen copies agree. Selection and export retain their existing eligibility.

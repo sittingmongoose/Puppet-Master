@@ -4766,6 +4766,8 @@ Do not add UI, auth providers, hooks, permissions or command behavior from this 
 
 
 
+For this family, `hook_name` in the payload and stored operation is one of the section 4 canonical hook names or the five documented PLUG-064 lifecycle aliases. The aliases retain their exact recorded spelling; `tool.before` and unknown names are refused even when every frozen/physical copy agrees. This binds the dispatched hook catalog and does not admit a new hook. Valid retained records keep their original owner-defined spelling and bytes; current Settings never rename them.
+
 <a id="PLUG-133"></a>
 ### PLUG-133 - plugin.hook.invoked prepared event contract
 
@@ -4800,6 +4802,8 @@ Producer: **hook dispatch completion observer**. A hook dispatch has completed w
 Do not add UI, auth providers, hooks, permissions or command behavior from this draft. Original bodies stay with the existing credential/plugin owner. Evidence refs are resolved only through current owner authorization. Event text contains metadata and refs, never raw prompts, hook output, token/device_code secrets or credential values. This contract does not assign retention or deletion policy.
 
 
+
+For this family, `hook_name` in the payload and stored operation is one of the section 4 canonical hook names or the five documented PLUG-064 lifecycle aliases. The aliases retain their exact recorded spelling; `tool.before` and unknown names are refused even when every frozen/physical copy agrees. This binds the dispatched hook catalog and does not admit a new hook. Valid retained records keep their original owner-defined spelling and bytes; current Settings never rename them.
 
 <a id="PLUG-134"></a>
 ### PLUG-134 - plugin.load_failed prepared event contract

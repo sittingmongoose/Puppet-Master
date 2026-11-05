@@ -125549,7 +125549,27 @@
                   "hook_name": {
                     "type": "string",
                     "minLength": 1,
-                    "maxLength": 256
+                    "maxLength": 256,
+                    "enum": [
+                      "tool.execute.before",
+                      "tool.execute.after",
+                      "permission.ask",
+                      "session.start",
+                      "session.end",
+                      "chat.message",
+                      "chat.params",
+                      "session.compacting",
+                      "shell.env",
+                      "system.prompt.transform",
+                      "attempt.start.before",
+                      "node.dispatch.before",
+                      "attempt.complete.after",
+                      "pre_tool_invoke",
+                      "post_tool_invoke",
+                      "pre_attempt_start",
+                      "pre_node_dispatch",
+                      "post_attempt_complete"
+                    ]
                   },
                   "invocation_ref": {
                     "type": "string",
@@ -125859,7 +125879,27 @@
                   "hook_name": {
                     "type": "string",
                     "minLength": 1,
-                    "maxLength": 256
+                    "maxLength": 256,
+                    "enum": [
+                      "tool.execute.before",
+                      "tool.execute.after",
+                      "permission.ask",
+                      "session.start",
+                      "session.end",
+                      "chat.message",
+                      "chat.params",
+                      "session.compacting",
+                      "shell.env",
+                      "system.prompt.transform",
+                      "attempt.start.before",
+                      "node.dispatch.before",
+                      "attempt.complete.after",
+                      "pre_tool_invoke",
+                      "post_tool_invoke",
+                      "pre_attempt_start",
+                      "pre_node_dispatch",
+                      "post_attempt_complete"
+                    ]
                   },
                   "invocation_ref": {
                     "type": "string",
@@ -130286,7 +130326,16 @@
                   "persona_selection_source": {
                     "type": "string",
                     "minLength": 1,
-                    "maxLength": 256
+                    "maxLength": 256,
+                    "enum": [
+                      "user_selected",
+                      "project_default",
+                      "role_default",
+                      "policy_override",
+                      "fallback",
+                      "everywhere_default",
+                      "computer_default"
+                    ]
                   },
                   "selection_reason": {
                     "type": "string",

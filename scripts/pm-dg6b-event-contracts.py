@@ -10,6 +10,11 @@ from pathlib import Path
 from jsonschema import Draft202012Validator as JsonSchemaValidator, FormatChecker, validators
 ROOT = Path(__file__).resolve().parents[1]
 
+# Personas section 6, protected core built-ins only. First-party team Personas
+# are explicitly outside this set; source_id may name a protected copy source.
+PROTECTED_PERSONA_IDS = frozenset(('assistant', 'general-purpose', 'overseer', 'bash',
+    'teacher', 'collaborator', 'researcher', 'deep-researcher', 'explorer'))
+
 # JSON Schema's mathematical integer includes 1.0. The selected physical codec
 # accepts built-in integers only. Use that same domain at every typed boundary.
 Draft202012Validator = validators.extend(JsonSchemaValidator, type_checker=
@@ -375,6 +380,8 @@ def persona_semantic(name, payload, scope_key, source):
             raise ValueError('mirror')
         if s['protected_id'] is not False:
             raise ValueError('protected')
+        if p['persona_id'] in PROTECTED_PERSONA_IDS:
+            raise ValueError('protected_identity')
     if name == 'persona.deleted' and s['confirmation_current'] is not True:
         raise ValueError('confirmation')
     if name in ('persona.deleted', 'persona.updated', 'persona.imported') and s['cas_current'] is not True:
