@@ -2706,6 +2706,23 @@ def self_test() -> int:
         got = _block_uses_merge(text)
         print(f"{'ok' if got == expect else 'FAIL'} {name}")
         failures += got != expect
+    # A genuinely quoted or escaped nested plan_unit_id key, with no plain `plan_unit_id:` text in the
+    # block, must give C14 block_contains_plan_unit_id; the name as scalar text must not (Astra r2).
+    def _kinds(extra: str) -> set[str]:
+        fx = Fixture()
+        fx.doc_suffix["Plans/Probe_Doc.md"] = "\n\n```yaml\n" + extra + "\n```\n"
+        return {row.get("kind") for row in run_check(Corpus(files=fx.files()))["errors"]}
+    for name, extra, expect in [
+            ("unit: a double-quoted nested plan_unit_id key is forbidden",
+             'command_payload_definitions:\n  meta: {"plan_unit_id": "x"}', True),
+            ("unit: an escaped nested plan_unit_id key is forbidden",
+             'command_payload_definitions:\n  meta: {"plan' + chr(92) + 'x5funit_id": "x"}', True),
+            ("unit: plan_unit_id as scalar text is not a forbidden key",
+             'command_payload_definitions:\n  meta: {note: "plan_unit_id"}', False)]:
+        assert "plan_unit_id:" not in extra
+        got = "block_contains_plan_unit_id" in _kinds(extra)
+        print(f"{'ok' if got == expect else 'FAIL'} {name}")
+        failures += got != expect
     usage_cases = [("cli usage --json with a missing option value", ["--json", "--plans-root"]),
                    ("cli usage: an abbreviated --js is rejected (exit 2, plain usage error)", ["--js"]),
                    ("cli usage --json with an unknown option", ["--json", "--bogus-option"]),
@@ -2724,7 +2741,7 @@ def self_test() -> int:
         if not ok:
             failures += 1
             print(f"     got exit={run.returncode} stdout={run.stdout[:300]!r} stderr={run.stderr[:300]!r}")
-    total = len(cases) + len(cli_cases) + len(usage_cases) + 4
+    total = len(cases) + len(cli_cases) + len(usage_cases) + 4 + 3
     print(f"self-test: {total - failures}/{total} cases passed")
     return 0 if failures == 0 else 1
 
