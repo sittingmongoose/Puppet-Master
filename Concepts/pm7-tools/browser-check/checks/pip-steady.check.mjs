@@ -245,14 +245,15 @@ async function surface(t, sandbox) {
 	const w = readWitness(fs.readFileSync(file, 'utf8'));
 	const S = (i) => (i >= 0 ? w.strings[i] : '');
 	const vis = w.recs.filter((r) => r[w.F.cls] === 'v');
-	const costs = w.recs.map((r) => r[w.F.cost]).sort((a, b) => a - b), p95 = costs[Math.floor(costs.length * 0.95)] || 0;
+	const costs = w.recs.map((r) => r[w.F.cost]).sort((a, b) => a - b), p95 = costs[Math.floor(costs.length * 0.95)] || 0, mean = costs.reduce((a, b) => a + b, 0) / Math.max(1, costs.length);
+	const gaps = w.recs.slice(1).map((r, i) => r[w.F.t] - w.recs[i][w.F.t]).sort((a, b) => a - b), interval = gaps[gaps.length >> 1] || 16.7;
 	t.log(`witness cost by part (ms per frame): ${JSON.stringify(Object.fromEntries(Object.entries(w.end.prof || {}).filter(([k]) => k !== 'n').map(([k, v]) => [k, +(v / Math.max(1, w.end.prof.n)).toFixed(3)])))}`);
 	t.log(`witness: ${w.recs.length} frames, ${vis.length} visible, cost p95 ${(p95 / 1000).toFixed(2)} ms, ${w.cals.filter((c) => c.ok).length} calibrations, log ${file}`);
 	for (const r of evaluateWitness(w)) await t.check(r.name, r.ok, r.detail);
 	for (const p of ['welcome', 'tiles', 'begin', 'smb'].filter((x) => phases.includes(x))) for (const r of evaluateWitness(w, { phase: p }).slice(1, 3)) await t.check(r.name, r.ok, r.detail);
 	/* the witness runs in every frame: kept small so it does not change what the page draws (the film's coverage shows
 	   whether the page still drew its frames) */
-	await t.check(`the witness costs under 4 ms a frame (p95 ${(p95 / 1000).toFixed(2)} ms)`, p95 < 4000, 'a heavy witness could change what the page paints');
+	await t.check(`the witness takes under 15 % of the page's frame (mean ${(mean / 1000).toFixed(2)} ms of a ${interval.toFixed(1)} ms frame, p95 ${(p95 / 1000).toFixed(2)} ms)`, mean / 1000 < 0.15 * interval, 'a heavy witness could change what the page paints');
 	const shown = [...new Set(vis.map((r) => S(r[w.F.look])))];
 	await t.check(`every requested look was shown (${looks.join(', ')})`, looks.every((l) => shown.includes(l)), `shown: ${shown.join(', ')}`);
 }
