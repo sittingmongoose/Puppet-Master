@@ -3715,7 +3715,8 @@
       "error": "original_bytes_type",
       "target_predicate": "original_bytes_type",
       "enforcement": "authored",
-      "single_defect": "original_bytes_type"
+      "single_defect": "original_bytes_type",
+      "fixture_boundary": "Exact byte-carrier gate with coherent sealed UTF-8 string and fixture-only content verifier; not native custody proof."
     },
     {
       "id": "history-denied",
@@ -3804,7 +3805,8 @@
       "error": "original_binding",
       "target_predicate": "original.binding.scope_kind",
       "enforcement": "authored",
-      "single_defect": "original.binding.scope_kind"
+      "single_defect": "original.binding.scope_kind",
+      "fixture_boundary": "Scope equality only: expected query is constructed without __post_init__ to retain project_id=None. Not a valid project query or constructor-domain test."
     },
     {
       "id": "history-foreign-server_id",

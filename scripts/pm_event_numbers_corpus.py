@@ -74,7 +74,12 @@ def _retained(m, case, corpus):
         name = scenario.removeprefix("foreign_")
         val = "foreign" if name != "project_id" else "foreign-project"
         if name == "scope_kind":
-            expected = replace(binding, scope_kind="project", project_id="foreign-project")
+            # A valid project binding must also change project_id. Isolate the
+            # dispatcher's scope comparison with a boundary-only fixture that
+            # bypasses constructor validation, keeping every peer field fixed.
+            # This is not a valid project query or a constructor-domain proof.
+            expected = replace(binding)
+            object.__setattr__(expected, "scope_kind", "project")
         elif name == "project_id":
             # Valid project context, different original project, one changed join.
             binding = replace(binding, scope_kind="project", project_id="project-A")
@@ -110,7 +115,10 @@ def _retained(m, case, corpus):
     elif scenario in ("forged_result", "forged_receipt"):
         observed = replace(original, **{scenario.removeprefix("forged_") + "_bytes": b"forged"})
     elif scenario == "string_record_bytes":
-        observed = replace(original, record_bytes=raw.decode())
+        # Isolate the exact bytes carrier gate: the independent fixture seal
+        # carries the same string, and its UTF-8 content still has the original
+        # commitment. The specialized verifier adapter below is fixture-only.
+        sealed = observed = replace(original, record_bytes=raw.decode())
     elif scenario in ("denied", "deleted", "withdrawn", "hold_denied"):
         allow = False
     elif scenario == "truthy_disclosure":
@@ -128,8 +136,10 @@ def _retained(m, case, corpus):
         calls.append(record.recipe)
         # Exact independent original pin joins bytes/identity/source/recipe/result.
         # These names describe fixture recipes, not newly registered product IDs.
+        verification_bytes = (record.record_bytes.encode() if scenario == "string_record_bytes"
+                              else record.record_bytes)
         authentic = (record == sealed and
-                     hashlib.sha256(record.record_bytes).hexdigest() == record.binding.source_commitment)
+                     hashlib.sha256(verification_bytes).hexdigest() == record.binding.source_commitment)
         if authentic and case.get("date_time_profile"):
             from pm_event_datetime import date_time
             # The frozen original resource map selects this; no request switch.
