@@ -240,6 +240,17 @@ def run(repo, output, source_map, apply_cut=None):
                 put(str(v.RECOUNT_OUTCOMES.relative_to(root)), encoded(doc))
                 return v.recount_outcomes(names, set(names) if admitted is None else admitted)
             record('positive_complete_outcome_reader_with_injected_admitted_set', lambda: outcomes(outcome_doc))
+            # Astra A01: one defect per case, from the same complete parent.
+            # These helper positives inject prior admissions; they grant none.
+            for label, mutate in [
+                ('schema_id', lambda d: d.__setitem__('schema_id', 'wrong.schema')),
+                ('receipt_sha256', lambda d: d.__setitem__('recount_receipt_sha256', '0' * 64)),
+                ('registered_extra_field', lambda d: d['rows'][0].__setitem__('extra', 'not allowed')),
+            ]:
+                outcomes(outcome_doc)
+                bad = copy.deepcopy(outcome_doc)
+                mutate(bad)
+                record('negative_outcome_' + label, lambda bad=bad: outcomes(bad), True)
             for label, mutate in [
                 ('missing_name', lambda d: d['rows'].pop()),
                 ('duplicate_name', lambda d: d['rows'].__setitem__(1, copy.deepcopy(d['rows'][0]))),
@@ -275,6 +286,43 @@ def run(repo, output, source_map, apply_cut=None):
                 'source_citations': [{'path': 'Plans/fixture-owner.md', 'sha256': sha(evidence_raw), 'line_start': 1, 'line_end': 1}]}
             admitted_rest = set(names[1:])
             record('positive_exclusion_own_decision_and_evidence', lambda: outcomes(excluded, admitted_rest))
+            for label, mutate in [
+                ('extra_field', lambda d: d['rows'][0].__setitem__('extra', 'not allowed')),
+                ('disposition', lambda d: d['rows'][0].__setitem__('disposition', 'KEEP_REGISTERED')),
+                ('citation_extra_field', lambda d: d['rows'][0]['source_citations'][0].__setitem__('extra', 'not allowed')),
+            ]:
+                outcomes(excluded, admitted_rest)
+                bad = copy.deepcopy(excluded)
+                mutate(bad)
+                record('negative_exclusion_' + label, lambda bad=bad: outcomes(bad, admitted_rest), True)
+
+            # Change the decision token alone; synchronize its observational hash.
+            # Own-name source evidence and every other decision field stay valid.
+            outcomes(excluded, admitted_rest)
+            decision_raw = decision_path.read_bytes()
+            sibling_section = own_section.replace(names[0].encode(), (names[0] + '.other').encode())
+            bad = copy.deepcopy(excluded)
+            bad['rows'][0]['decision_section_sha256'] = sha(sibling_section)
+            try:
+                decision_path.write_bytes(decision_raw[:-len(own_section)] + sibling_section)
+                record('negative_exclusion_decision_dotted_sibling',
+                       lambda: outcomes(bad, admitted_rest), True, 'decision fingerprint/name mismatch')
+            finally:
+                decision_path.write_bytes(decision_raw)
+
+            # The relative spelling, bytes, digest, span and name remain valid.
+            # Only the resolved evidence location moves outside Plans.
+            outcomes(excluded, admitted_rest)
+            evidence_path = root / 'Plans/fixture-owner.md'
+            outside = put('fixture-source-bytes/exclusion-owner.md', evidence_raw)
+            evidence_path.unlink()
+            try:
+                evidence_path.symlink_to(outside)
+                record('negative_exclusion_evidence_symlink_outside_Plans',
+                       lambda: outcomes(excluded, admitted_rest), True, 'evidence escapes Plans')
+            finally:
+                evidence_path.unlink()
+                evidence_path.write_bytes(evidence_raw)
             for label, spelling in [('prefix', 'x' + names[0]), ('suffix', names[0] + '_other'),
                                      ('dotted_sibling', names[0] + '.other')]:
                 raw = (spelling + ' has no live persisted writer.\n').encode()
