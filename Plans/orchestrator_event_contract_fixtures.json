@@ -154647,6 +154647,2932 @@
       },
       "expected_error": "board_family_payload_join",
       "expected_exit_code": 1
+    },
+    {
+      "name": "typed_accepted_source_copy:0",
+      "kind": "typed_accepted_source_copy",
+      "case": {
+        "event_type": "crew.board_message_posted",
+        "payload": {
+          "schema_id": "pm.event_payload.crew_board_message_posted.v1",
+          "schema_version": "1.0.0",
+          "scope": "application",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "server_id": "server_id-example",
+          "run_id": "run_id-example",
+          "thread_id": "thread_id-example",
+          "operation_id": "operation_id-example",
+          "occurrence": 1,
+          "occurred_at_utc": "2026-11-04T00:00:00Z",
+          "crew_id": "crew_id-example",
+          "parent_run_id": "parent_run_id-example",
+          "child_run_id": "child_run_id-example",
+          "message_id": "message_id-example",
+          "from_agent_id": "from_agent_id-example",
+          "subject": "subject-example",
+          "priority": "normal",
+          "content": "Sanitized crew coordination update."
+        },
+        "source": {
+          "schema_id": "pm.application_source.coordination_append.v2",
+          "schema_version": "2.0.0",
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server_id-example"
+          },
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "server_id": "server_id-example",
+          "thread_id": "thread_id-example",
+          "original_operation_id": "operation_id-example",
+          "interface_id": "storage.coordination_append.application@2.0.0",
+          "original_input": {
+            "schema_id": "pm.coordination.agent_message.application.v2",
+            "schema_version": "2.0.0",
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "server_id-example"
+            },
+            "thread_id": "thread_id-example",
+            "crew_id": "crew_id-example",
+            "run_id": "run_id-example",
+            "message_id": "message_id-example",
+            "sender_agent_id": "from_agent_id-example",
+            "receiver_agent_id": null,
+            "message_kind": "board",
+            "inline_text": "Sanitized crew coordination update.",
+            "blake3_payload_ref": null,
+            "source_sequence": 1,
+            "created_at": "2026-11-04T00:00:00Z",
+            "subject": "subject-example",
+            "priority": "normal",
+            "from_platform": "platform-example",
+            "receiver_agent_type": null,
+            "to_node_id": null,
+            "to_lane_id": null,
+            "message_type": "Update",
+            "context": {
+              "files_mentioned": [],
+              "operations_mentioned": [],
+              "sender_node": null,
+              "related_message_ids": []
+            },
+            "in_reply_to": null,
+            "read_by": [],
+            "resolved": false
+          },
+          "original_input_semantic_sha256": "2a0bc243f55c66d2bcb37aa92c676bfaea5a5c8ddaf45ddb8892f19b1015ae74",
+          "original_output": null,
+          "original_output_semantic_sha256": null,
+          "accepted_source_ref": "synthetic:accepted-original-source",
+          "accepted_source_sha256": "0705ef6eb7d2d818af64a38b47d9fffdd413de2a9f6cd790ccf1024ced2ef546",
+          "stage_custody": {
+            "original_intent": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-original_intent",
+                "source_sha256": "a79398ae1f9f76b1e082d055704d42f8b2fe61d7c88715e3fe740a468802a178",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "accepted_original_source": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-accepted_original_source",
+                "source_sha256": "b2f19843cdc3868aac3d68622c2d4db71ad9ba2b00e542430ba94008615f161d",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "current_owner_and_stop_fence": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-current_owner_and_stop_fence",
+                "source_sha256": "c27b559f9f54dd894e98d592c3f672a74505dab99d92345dcbf1a8b5502762c4",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "canonical_pending_or_reservation": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-canonical_pending_or_reservation",
+                "source_sha256": "b8e76696ddf20a44edd0d669d089055a49e5823735cdf77b77d9ba889ea7f23d",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "owner_commit": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner_commit",
+                "source_sha256": "8a6d4bba0b4a4db54c88bb97dd7626eafb3db5b036d28ac9f66b4dcd4971d400",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "event_append_if_admitted": {
+              "status": "not_reached",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "first_receipt_custody": {
+              "status": "not_reached",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "immutable_terminal_result": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "canonical_or_derived_read": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "coherent_backup_restore": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "retention_release": {
+              "status": "not_reached",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            }
+          },
+          "source_codec_id": "pm.crew_board_message.application.physical_messagepack.v2",
+          "semantic_hash_kind": "accepted_source",
+          "source_sha256": "6983ffb7411369b4b2d218cc80faf36e00158074ec21cdf4b8ff07942338971d"
+        },
+        "envelope": {
+          "scope": "application",
+          "run_id": "run_id-example",
+          "thread_id": "thread_id-example",
+          "occurred_at_utc": "2026-11-04T00:00:00Z",
+          "scope_partition": "app",
+          "event_id": "evt_do_caa8976268473cbbdcc54e59edf51b9e1e5c2c98a8d492770b9cef859123dcf9",
+          "idempotency_key": "application@1:7365727665725f69642d6578616d706c65:5b2265612d646f2d6f62736572766174696f6e2d7631222c226f7065726174696f6e5f69642d6578616d706c65222c227468726561645f69642d6578616d706c65222c2272756e5f69642d6578616d706c65222c22637265772e626f6172645f6d6573736167655f706f73746564222c315d",
+          "replay_policy": "dedupe_by_idempotency_key"
+        },
+        "terminal_run": {
+          "scope": "application",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "server_id": "server_id-example",
+          "thread_id": "thread_id-example",
+          "crew_id": "crew_id-example",
+          "run_id": "run_id-example",
+          "kind": "first_durable_terminal_canonical_run"
+        },
+        "wrapper": {
+          "schema_id": "pm.storage_value.crew_board_message.application.v2",
+          "schema_version": "2.0.0",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "server_id": "server_id-example",
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server_id-example"
+          },
+          "record": {
+            "schema_id": "pm.coordination.agent_message.application.v2",
+            "schema_version": "2.0.0",
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "server_id-example"
+            },
+            "thread_id": "thread_id-example",
+            "crew_id": "crew_id-example",
+            "run_id": "run_id-example",
+            "message_id": "message_id-example",
+            "sender_agent_id": "from_agent_id-example",
+            "receiver_agent_id": null,
+            "message_kind": "board",
+            "inline_text": "Sanitized crew coordination update.",
+            "blake3_payload_ref": null,
+            "source_sequence": 1,
+            "created_at": "2026-11-04T00:00:00Z",
+            "subject": "subject-example",
+            "priority": "normal",
+            "from_platform": "platform-example",
+            "receiver_agent_type": null,
+            "to_node_id": null,
+            "to_lane_id": null,
+            "message_type": "Update",
+            "context": {
+              "files_mentioned": [],
+              "operations_mentioned": [],
+              "sender_node": null,
+              "related_message_ids": []
+            },
+            "in_reply_to": null,
+            "read_by": [],
+            "resolved": false
+          }
+        },
+        "wrapper_key": "crew_board_message.application.v2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6d6573736167655f69642d6578616d706c65",
+        "event_case_id": "crew.board_message_posted:application:1",
+        "accepted_source_witness": {
+          "ref": "synthetic:accepted-original-source",
+          "value": {
+            "schema_id": "pm.coordination.agent_message.application.v2",
+            "schema_version": "2.0.0",
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "server_id-example"
+            },
+            "thread_id": "thread_id-example",
+            "crew_id": "crew_id-example",
+            "run_id": "run_id-example",
+            "message_id": "message_id-example",
+            "sender_agent_id": "from_agent_id-example",
+            "receiver_agent_id": null,
+            "message_kind": "board",
+            "inline_text": "Sanitized crew coordination update.",
+            "blake3_payload_ref": null,
+            "source_sequence": 1.0,
+            "created_at": "2026-11-04T00:00:00Z",
+            "subject": "subject-example",
+            "priority": "normal",
+            "from_platform": "platform-example",
+            "receiver_agent_type": null,
+            "to_node_id": null,
+            "to_lane_id": null,
+            "message_type": "Update",
+            "context": {
+              "files_mentioned": [],
+              "operations_mentioned": [],
+              "sender_node": null,
+              "related_message_ids": []
+            },
+            "in_reply_to": null,
+            "read_by": [],
+            "resolved": false
+          }
+        },
+        "physical_record_sha256": "86410e69ea814f186af700112cb28f202d07ed22620eec219b2b0e2cb2f7f227",
+        "stage_evidence_witnesses": {
+          "original_intent": {
+            "ref": "synthetic:original-original_intent",
+            "value": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "stage": "original_intent",
+              "owner_evidence_metadata": {
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "revision": 1,
+                "generation": 1
+              },
+              "original_input_semantic_sha256": "2a0bc243f55c66d2bcb37aa92c676bfaea5a5c8ddaf45ddb8892f19b1015ae74",
+              "accepted_source_ref": "synthetic:accepted-original-source",
+              "accepted_source_sha256": "0705ef6eb7d2d818af64a38b47d9fffdd413de2a9f6cd790ccf1024ced2ef546",
+              "wrapper_key": "crew_board_message.application.v2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6d6573736167655f69642d6578616d706c65",
+              "physical_record_sha256": "86410e69ea814f186af700112cb28f202d07ed22620eec219b2b0e2cb2f7f227"
+            }
+          },
+          "accepted_original_source": {
+            "ref": "synthetic:original-accepted_original_source",
+            "value": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "stage": "accepted_original_source",
+              "owner_evidence_metadata": {
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "revision": 1,
+                "generation": 1
+              },
+              "original_input_semantic_sha256": "2a0bc243f55c66d2bcb37aa92c676bfaea5a5c8ddaf45ddb8892f19b1015ae74",
+              "accepted_source_ref": "synthetic:accepted-original-source",
+              "accepted_source_sha256": "0705ef6eb7d2d818af64a38b47d9fffdd413de2a9f6cd790ccf1024ced2ef546",
+              "wrapper_key": "crew_board_message.application.v2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6d6573736167655f69642d6578616d706c65",
+              "physical_record_sha256": "86410e69ea814f186af700112cb28f202d07ed22620eec219b2b0e2cb2f7f227"
+            }
+          },
+          "current_owner_and_stop_fence": {
+            "ref": "synthetic:original-current_owner_and_stop_fence",
+            "value": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "stage": "current_owner_and_stop_fence",
+              "owner_evidence_metadata": {
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "revision": 1,
+                "generation": 1
+              },
+              "original_input_semantic_sha256": "2a0bc243f55c66d2bcb37aa92c676bfaea5a5c8ddaf45ddb8892f19b1015ae74",
+              "accepted_source_ref": "synthetic:accepted-original-source",
+              "accepted_source_sha256": "0705ef6eb7d2d818af64a38b47d9fffdd413de2a9f6cd790ccf1024ced2ef546",
+              "wrapper_key": "crew_board_message.application.v2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6d6573736167655f69642d6578616d706c65",
+              "physical_record_sha256": "86410e69ea814f186af700112cb28f202d07ed22620eec219b2b0e2cb2f7f227"
+            }
+          },
+          "canonical_pending_or_reservation": {
+            "ref": "synthetic:original-canonical_pending_or_reservation",
+            "value": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "stage": "canonical_pending_or_reservation",
+              "owner_evidence_metadata": {
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "revision": 1,
+                "generation": 1
+              },
+              "original_input_semantic_sha256": "2a0bc243f55c66d2bcb37aa92c676bfaea5a5c8ddaf45ddb8892f19b1015ae74",
+              "accepted_source_ref": "synthetic:accepted-original-source",
+              "accepted_source_sha256": "0705ef6eb7d2d818af64a38b47d9fffdd413de2a9f6cd790ccf1024ced2ef546",
+              "wrapper_key": "crew_board_message.application.v2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6d6573736167655f69642d6578616d706c65",
+              "physical_record_sha256": "86410e69ea814f186af700112cb28f202d07ed22620eec219b2b0e2cb2f7f227"
+            }
+          },
+          "owner_commit": {
+            "ref": "synthetic:original-owner_commit",
+            "value": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "stage": "owner_commit",
+              "owner_evidence_metadata": {
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "revision": 1,
+                "generation": 1
+              },
+              "original_input_semantic_sha256": "2a0bc243f55c66d2bcb37aa92c676bfaea5a5c8ddaf45ddb8892f19b1015ae74",
+              "accepted_source_ref": "synthetic:accepted-original-source",
+              "accepted_source_sha256": "0705ef6eb7d2d818af64a38b47d9fffdd413de2a9f6cd790ccf1024ced2ef546",
+              "wrapper_key": "crew_board_message.application.v2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6d6573736167655f69642d6578616d706c65",
+              "physical_record_sha256": "86410e69ea814f186af700112cb28f202d07ed22620eec219b2b0e2cb2f7f227"
+            }
+          }
+        }
+      },
+      "expected_error": "accepted_original_source_join",
+      "expected_exit_code": 1
+    },
+    {
+      "name": "typed_accepted_source_copy:2",
+      "kind": "typed_accepted_source_copy",
+      "case": {
+        "event_type": "crew.board_message_read",
+        "payload": {
+          "schema_id": "pm.event_payload.crew_board_message_read.v1",
+          "schema_version": "1.0.0",
+          "scope": "application",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "server_id": "server_id-example",
+          "run_id": "run_id-example",
+          "thread_id": "thread_id-example",
+          "operation_id": "operation_id-example",
+          "occurrence": 1,
+          "occurred_at_utc": "2026-11-04T00:00:00Z",
+          "crew_id": "crew_id-example",
+          "message_id": "message_id-example",
+          "agent_id": "agent_id-example",
+          "read_at_utc": "2026-11-04T00:00:00Z"
+        },
+        "source": {
+          "schema_id": "pm.application_source.coordination_append.v1",
+          "schema_version": "1.0.0",
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server_id-example"
+          },
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "server_id": "server_id-example",
+          "thread_id": "thread_id-example",
+          "original_operation_id": "operation_id-example",
+          "interface_id": "storage.coordination_append.application@1.0.0",
+          "original_input": {
+            "schema_id": "pm.coordination.agent_message.application.v1",
+            "schema_version": "1.0.0",
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "server_id-example"
+            },
+            "thread_id": "thread_id-example",
+            "crew_id": "crew_id-example",
+            "run_id": "run_id-example",
+            "message_id": "message_id-example",
+            "sender_agent_id": "agent-sender",
+            "receiver_agent_id": null,
+            "message_kind": "board",
+            "inline_text": "Retained original body.",
+            "blake3_payload_ref": null,
+            "source_sequence": 1,
+            "created_at": "2026-11-04T00:00:00Z"
+          },
+          "original_input_semantic_sha256": "5768aa811d7200b2b83113974ee689daa93f88df790d01ada53264aa9f29f323",
+          "original_output": null,
+          "original_output_semantic_sha256": null,
+          "accepted_source_ref": "synthetic:accepted-original-source",
+          "accepted_source_sha256": "69f20f4d51cdb0c8e023c9668243e78fbf453f4ca18fa0fc60923b47cc712fdc",
+          "stage_custody": {
+            "original_intent": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@1.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-original_intent",
+                "source_sha256": "f84e061107541cae373a6cef822247dfb38e886439202828a58eefea10ba1680",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "accepted_original_source": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@1.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-accepted_original_source",
+                "source_sha256": "95245c803a4c122cd67a1c41dd3a6bf214736cb1474133106c71df41ba6ba5de",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "current_owner_and_stop_fence": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@1.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-current_owner_and_stop_fence",
+                "source_sha256": "11f8927c7102fd5065eb1d211456ac6b658e15bf72be7864856078ba310764c9",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "canonical_pending_or_reservation": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@1.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-canonical_pending_or_reservation",
+                "source_sha256": "e4f0abb4297ee67c4c4044f137e6fd5492d8e6879099a9ca10ef66dffd26ecc7",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "owner_commit": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@1.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner_commit",
+                "source_sha256": "b82ba09459a37958c7b01863e8c60930c2fc8d75eff3e4334be33f8170501c0c",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "event_append_if_admitted": {
+              "status": "not_reached",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@1.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "first_receipt_custody": {
+              "status": "not_reached",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@1.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "immutable_terminal_result": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@1.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "canonical_or_derived_read": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@1.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "coherent_backup_restore": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@1.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "retention_release": {
+              "status": "not_reached",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@1.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            }
+          },
+          "source_codec_id": "pm.application.physical_messagepack.v1",
+          "semantic_hash_kind": "accepted_source",
+          "source_sha256": "fa2fc57063dc0c6f9157edbfbb7bf5a1b7a5e3ca23067863317c02e4ff83c91a"
+        },
+        "envelope": {
+          "scope": "application",
+          "run_id": "run_id-example",
+          "thread_id": "thread_id-example",
+          "occurred_at_utc": "2026-11-04T00:00:00Z",
+          "scope_partition": "app",
+          "event_id": "evt_do_426b480a2c3860c3367dff28a381d27802f9fc339aca1d321358fae680401e86",
+          "idempotency_key": "application@1:7365727665725f69642d6578616d706c65:5b2265612d646f2d6f62736572766174696f6e2d7631222c226f7065726174696f6e5f69642d6578616d706c65222c227468726561645f69642d6578616d706c65222c2272756e5f69642d6578616d706c65222c22637265772e626f6172645f6d6573736167655f72656164222c315d",
+          "replay_policy": "dedupe_by_idempotency_key"
+        },
+        "terminal_run": {
+          "scope": "application",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "server_id": "server_id-example",
+          "thread_id": "thread_id-example",
+          "crew_id": "crew_id-example",
+          "run_id": "run_id-example",
+          "kind": "first_durable_terminal_canonical_run"
+        },
+        "wrapper": {
+          "schema_id": "pm.storage_value.crew_board_message.application.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "server_id": "server_id-example",
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server_id-example"
+          },
+          "record": {
+            "schema_id": "pm.coordination.agent_message.application.v1",
+            "schema_version": "1.0.0",
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "server_id-example"
+            },
+            "thread_id": "thread_id-example",
+            "crew_id": "crew_id-example",
+            "run_id": "run_id-example",
+            "message_id": "message_id-example",
+            "sender_agent_id": "agent-sender",
+            "receiver_agent_id": null,
+            "message_kind": "board",
+            "inline_text": "Retained original body.",
+            "blake3_payload_ref": null,
+            "source_sequence": 1,
+            "created_at": "2026-11-04T00:00:00Z"
+          }
+        },
+        "wrapper_key": "crew_board_message.application.v1:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6d6573736167655f69642d6578616d706c65",
+        "event_case_id": "crew.board_message_read:application:3",
+        "accepted_source_witness": {
+          "ref": "synthetic:accepted-original-source",
+          "value": {
+            "schema_id": "pm.coordination.agent_message.application.v1",
+            "schema_version": "1.0.0",
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "server_id-example"
+            },
+            "thread_id": "thread_id-example",
+            "crew_id": "crew_id-example",
+            "run_id": "run_id-example",
+            "message_id": "message_id-example",
+            "sender_agent_id": "agent-sender",
+            "receiver_agent_id": null,
+            "message_kind": "board",
+            "inline_text": "Retained original body.",
+            "blake3_payload_ref": null,
+            "source_sequence": 1.0,
+            "created_at": "2026-11-04T00:00:00Z"
+          }
+        },
+        "physical_record_sha256": "04516d4edc0bbdf7508771006b8f6a2f75f7cdeb623a7c98b03ae317cac49db6",
+        "stage_evidence_witnesses": {
+          "original_intent": {
+            "ref": "synthetic:original-original_intent",
+            "value": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@1.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "stage": "original_intent",
+              "owner_evidence_metadata": {
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "revision": 1,
+                "generation": 1
+              },
+              "original_input_semantic_sha256": "5768aa811d7200b2b83113974ee689daa93f88df790d01ada53264aa9f29f323",
+              "accepted_source_ref": "synthetic:accepted-original-source",
+              "accepted_source_sha256": "69f20f4d51cdb0c8e023c9668243e78fbf453f4ca18fa0fc60923b47cc712fdc",
+              "wrapper_key": "crew_board_message.application.v1:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6d6573736167655f69642d6578616d706c65",
+              "physical_record_sha256": "04516d4edc0bbdf7508771006b8f6a2f75f7cdeb623a7c98b03ae317cac49db6"
+            }
+          },
+          "accepted_original_source": {
+            "ref": "synthetic:original-accepted_original_source",
+            "value": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@1.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "stage": "accepted_original_source",
+              "owner_evidence_metadata": {
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "revision": 1,
+                "generation": 1
+              },
+              "original_input_semantic_sha256": "5768aa811d7200b2b83113974ee689daa93f88df790d01ada53264aa9f29f323",
+              "accepted_source_ref": "synthetic:accepted-original-source",
+              "accepted_source_sha256": "69f20f4d51cdb0c8e023c9668243e78fbf453f4ca18fa0fc60923b47cc712fdc",
+              "wrapper_key": "crew_board_message.application.v1:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6d6573736167655f69642d6578616d706c65",
+              "physical_record_sha256": "04516d4edc0bbdf7508771006b8f6a2f75f7cdeb623a7c98b03ae317cac49db6"
+            }
+          },
+          "current_owner_and_stop_fence": {
+            "ref": "synthetic:original-current_owner_and_stop_fence",
+            "value": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@1.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "stage": "current_owner_and_stop_fence",
+              "owner_evidence_metadata": {
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "revision": 1,
+                "generation": 1
+              },
+              "original_input_semantic_sha256": "5768aa811d7200b2b83113974ee689daa93f88df790d01ada53264aa9f29f323",
+              "accepted_source_ref": "synthetic:accepted-original-source",
+              "accepted_source_sha256": "69f20f4d51cdb0c8e023c9668243e78fbf453f4ca18fa0fc60923b47cc712fdc",
+              "wrapper_key": "crew_board_message.application.v1:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6d6573736167655f69642d6578616d706c65",
+              "physical_record_sha256": "04516d4edc0bbdf7508771006b8f6a2f75f7cdeb623a7c98b03ae317cac49db6"
+            }
+          },
+          "canonical_pending_or_reservation": {
+            "ref": "synthetic:original-canonical_pending_or_reservation",
+            "value": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@1.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "stage": "canonical_pending_or_reservation",
+              "owner_evidence_metadata": {
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "revision": 1,
+                "generation": 1
+              },
+              "original_input_semantic_sha256": "5768aa811d7200b2b83113974ee689daa93f88df790d01ada53264aa9f29f323",
+              "accepted_source_ref": "synthetic:accepted-original-source",
+              "accepted_source_sha256": "69f20f4d51cdb0c8e023c9668243e78fbf453f4ca18fa0fc60923b47cc712fdc",
+              "wrapper_key": "crew_board_message.application.v1:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6d6573736167655f69642d6578616d706c65",
+              "physical_record_sha256": "04516d4edc0bbdf7508771006b8f6a2f75f7cdeb623a7c98b03ae317cac49db6"
+            }
+          },
+          "owner_commit": {
+            "ref": "synthetic:original-owner_commit",
+            "value": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@1.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "stage": "owner_commit",
+              "owner_evidence_metadata": {
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "revision": 1,
+                "generation": 1
+              },
+              "original_input_semantic_sha256": "5768aa811d7200b2b83113974ee689daa93f88df790d01ada53264aa9f29f323",
+              "accepted_source_ref": "synthetic:accepted-original-source",
+              "accepted_source_sha256": "69f20f4d51cdb0c8e023c9668243e78fbf453f4ca18fa0fc60923b47cc712fdc",
+              "wrapper_key": "crew_board_message.application.v1:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6d6573736167655f69642d6578616d706c65",
+              "physical_record_sha256": "04516d4edc0bbdf7508771006b8f6a2f75f7cdeb623a7c98b03ae317cac49db6"
+            }
+          }
+        }
+      },
+      "expected_error": "accepted_original_source_join",
+      "expected_exit_code": 1
+    },
+    {
+      "name": "typed_accepted_source_copy:4",
+      "kind": "typed_accepted_source_copy",
+      "case": {
+        "event_type": "crew.board_messages_archived",
+        "payload": {
+          "schema_id": "pm.event_payload.crew_board_messages_archived.v1",
+          "schema_version": "1.0.0",
+          "scope": "application",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "server_id": "server_id-example",
+          "run_id": "run_id-example",
+          "thread_id": "thread_id-example",
+          "operation_id": "operation_id-example",
+          "occurrence": 1,
+          "occurred_at_utc": "2026-11-04T00:00:00Z",
+          "crew_id": "crew_id-example",
+          "archived_before_utc": "2026-11-04T00:00:00Z",
+          "message_ids": [
+            "item"
+          ],
+          "archive_reason": "archive_reason-example"
+        },
+        "source": {
+          "schema_id": "pm.application_source.coordination_append.v1",
+          "schema_version": "1.0.0",
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server_id-example"
+          },
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "server_id": "server_id-example",
+          "thread_id": "thread_id-example",
+          "original_operation_id": "operation_id-example",
+          "interface_id": "storage.coordination_append.application@1.0.0",
+          "original_input": {
+            "schema_id": "pm.coordination.agent_message.application.v1",
+            "schema_version": "1.0.0",
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "server_id-example"
+            },
+            "thread_id": "thread_id-example",
+            "crew_id": "crew_id-example",
+            "run_id": "run_id-example",
+            "message_id": "item",
+            "sender_agent_id": "agent-sender",
+            "receiver_agent_id": null,
+            "message_kind": "board",
+            "inline_text": "Retained original body.",
+            "blake3_payload_ref": null,
+            "source_sequence": 1,
+            "created_at": "2026-11-04T00:00:00Z"
+          },
+          "original_input_semantic_sha256": "be7cbc54f37b5079c4339748b570f52c199c59bd64ff7cc3e3ff053707553b69",
+          "original_output": null,
+          "original_output_semantic_sha256": null,
+          "accepted_source_ref": "synthetic:accepted-original-source",
+          "accepted_source_sha256": "d57c69c2d65d266fc25df20fd50fe6b808781229917e09d9612ebdaef038f2bd",
+          "stage_custody": {
+            "original_intent": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@1.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-original_intent",
+                "source_sha256": "273ce55253975112bf0b1f52a03ffbd5fb54092179fe47b441cc25af5f9d18cd",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "accepted_original_source": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@1.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-accepted_original_source",
+                "source_sha256": "8ff10db8e5af71e2ab77ebaa2b322dad257bb8f975d978a19bb9aadb6695844f",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "current_owner_and_stop_fence": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@1.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-current_owner_and_stop_fence",
+                "source_sha256": "00301b3405f1653b922db06f406789067ebb1eacba3743e0d5190a11dbef3f0b",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "canonical_pending_or_reservation": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@1.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-canonical_pending_or_reservation",
+                "source_sha256": "af1b3b5cb0954da827928bfdf5bb657e93034161cd02a6bfdcebe85105379bfe",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "owner_commit": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@1.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner_commit",
+                "source_sha256": "5e35034c3e87dc0147e712d9c6923fbb6e22318ba6f94475151cf95328d21b26",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "event_append_if_admitted": {
+              "status": "not_reached",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@1.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "first_receipt_custody": {
+              "status": "not_reached",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@1.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "immutable_terminal_result": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@1.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "canonical_or_derived_read": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@1.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "coherent_backup_restore": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@1.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "retention_release": {
+              "status": "not_reached",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@1.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            }
+          },
+          "source_codec_id": "pm.application.physical_messagepack.v1",
+          "semantic_hash_kind": "accepted_source",
+          "source_sha256": "1f2f51e8b153ad7b17f99a85dedd57122edef9fcf0355c5f93c2ebce17e551d3"
+        },
+        "envelope": {
+          "scope": "application",
+          "run_id": "run_id-example",
+          "thread_id": "thread_id-example",
+          "occurred_at_utc": "2026-11-04T00:00:00Z",
+          "scope_partition": "app",
+          "event_id": "evt_do_84e19035cd90c0741e3a7a717d2177a8ebbd4e43f1cbc6b8287b325ceb0626cb",
+          "idempotency_key": "application@1:7365727665725f69642d6578616d706c65:5b2265612d646f2d6f62736572766174696f6e2d7631222c226f7065726174696f6e5f69642d6578616d706c65222c227468726561645f69642d6578616d706c65222c2272756e5f69642d6578616d706c65222c22637265772e626f6172645f6d657373616765735f6172636869766564222c315d",
+          "replay_policy": "dedupe_by_idempotency_key"
+        },
+        "terminal_run": {
+          "scope": "application",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "server_id": "server_id-example",
+          "thread_id": "thread_id-example",
+          "crew_id": "crew_id-example",
+          "run_id": "run_id-example",
+          "kind": "first_durable_terminal_canonical_run"
+        },
+        "wrapper": {
+          "schema_id": "pm.storage_value.crew_board_message.application.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "server_id": "server_id-example",
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server_id-example"
+          },
+          "record": {
+            "schema_id": "pm.coordination.agent_message.application.v1",
+            "schema_version": "1.0.0",
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "server_id-example"
+            },
+            "thread_id": "thread_id-example",
+            "crew_id": "crew_id-example",
+            "run_id": "run_id-example",
+            "message_id": "item",
+            "sender_agent_id": "agent-sender",
+            "receiver_agent_id": null,
+            "message_kind": "board",
+            "inline_text": "Retained original body.",
+            "blake3_payload_ref": null,
+            "source_sequence": 1,
+            "created_at": "2026-11-04T00:00:00Z"
+          }
+        },
+        "wrapper_key": "crew_board_message.application.v1:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6974656d",
+        "event_case_id": "crew.board_messages_archived:application:5",
+        "accepted_source_witness": {
+          "ref": "synthetic:accepted-original-source",
+          "value": {
+            "schema_id": "pm.coordination.agent_message.application.v1",
+            "schema_version": "1.0.0",
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "server_id-example"
+            },
+            "thread_id": "thread_id-example",
+            "crew_id": "crew_id-example",
+            "run_id": "run_id-example",
+            "message_id": "item",
+            "sender_agent_id": "agent-sender",
+            "receiver_agent_id": null,
+            "message_kind": "board",
+            "inline_text": "Retained original body.",
+            "blake3_payload_ref": null,
+            "source_sequence": 1.0,
+            "created_at": "2026-11-04T00:00:00Z"
+          }
+        },
+        "physical_record_sha256": "790c01aa8b4c0595b9df8a3b528fc0c5d07f321e07d5b5d406ed41d79c1642c4",
+        "stage_evidence_witnesses": {
+          "original_intent": {
+            "ref": "synthetic:original-original_intent",
+            "value": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@1.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "stage": "original_intent",
+              "owner_evidence_metadata": {
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "revision": 1,
+                "generation": 1
+              },
+              "original_input_semantic_sha256": "be7cbc54f37b5079c4339748b570f52c199c59bd64ff7cc3e3ff053707553b69",
+              "accepted_source_ref": "synthetic:accepted-original-source",
+              "accepted_source_sha256": "d57c69c2d65d266fc25df20fd50fe6b808781229917e09d9612ebdaef038f2bd",
+              "wrapper_key": "crew_board_message.application.v1:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6974656d",
+              "physical_record_sha256": "790c01aa8b4c0595b9df8a3b528fc0c5d07f321e07d5b5d406ed41d79c1642c4"
+            }
+          },
+          "accepted_original_source": {
+            "ref": "synthetic:original-accepted_original_source",
+            "value": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@1.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "stage": "accepted_original_source",
+              "owner_evidence_metadata": {
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "revision": 1,
+                "generation": 1
+              },
+              "original_input_semantic_sha256": "be7cbc54f37b5079c4339748b570f52c199c59bd64ff7cc3e3ff053707553b69",
+              "accepted_source_ref": "synthetic:accepted-original-source",
+              "accepted_source_sha256": "d57c69c2d65d266fc25df20fd50fe6b808781229917e09d9612ebdaef038f2bd",
+              "wrapper_key": "crew_board_message.application.v1:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6974656d",
+              "physical_record_sha256": "790c01aa8b4c0595b9df8a3b528fc0c5d07f321e07d5b5d406ed41d79c1642c4"
+            }
+          },
+          "current_owner_and_stop_fence": {
+            "ref": "synthetic:original-current_owner_and_stop_fence",
+            "value": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@1.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "stage": "current_owner_and_stop_fence",
+              "owner_evidence_metadata": {
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "revision": 1,
+                "generation": 1
+              },
+              "original_input_semantic_sha256": "be7cbc54f37b5079c4339748b570f52c199c59bd64ff7cc3e3ff053707553b69",
+              "accepted_source_ref": "synthetic:accepted-original-source",
+              "accepted_source_sha256": "d57c69c2d65d266fc25df20fd50fe6b808781229917e09d9612ebdaef038f2bd",
+              "wrapper_key": "crew_board_message.application.v1:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6974656d",
+              "physical_record_sha256": "790c01aa8b4c0595b9df8a3b528fc0c5d07f321e07d5b5d406ed41d79c1642c4"
+            }
+          },
+          "canonical_pending_or_reservation": {
+            "ref": "synthetic:original-canonical_pending_or_reservation",
+            "value": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@1.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "stage": "canonical_pending_or_reservation",
+              "owner_evidence_metadata": {
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "revision": 1,
+                "generation": 1
+              },
+              "original_input_semantic_sha256": "be7cbc54f37b5079c4339748b570f52c199c59bd64ff7cc3e3ff053707553b69",
+              "accepted_source_ref": "synthetic:accepted-original-source",
+              "accepted_source_sha256": "d57c69c2d65d266fc25df20fd50fe6b808781229917e09d9612ebdaef038f2bd",
+              "wrapper_key": "crew_board_message.application.v1:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6974656d",
+              "physical_record_sha256": "790c01aa8b4c0595b9df8a3b528fc0c5d07f321e07d5b5d406ed41d79c1642c4"
+            }
+          },
+          "owner_commit": {
+            "ref": "synthetic:original-owner_commit",
+            "value": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@1.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "stage": "owner_commit",
+              "owner_evidence_metadata": {
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "revision": 1,
+                "generation": 1
+              },
+              "original_input_semantic_sha256": "be7cbc54f37b5079c4339748b570f52c199c59bd64ff7cc3e3ff053707553b69",
+              "accepted_source_ref": "synthetic:accepted-original-source",
+              "accepted_source_sha256": "d57c69c2d65d266fc25df20fd50fe6b808781229917e09d9612ebdaef038f2bd",
+              "wrapper_key": "crew_board_message.application.v1:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6974656d",
+              "physical_record_sha256": "790c01aa8b4c0595b9df8a3b528fc0c5d07f321e07d5b5d406ed41d79c1642c4"
+            }
+          }
+        }
+      },
+      "expected_error": "accepted_original_source_join",
+      "expected_exit_code": 1
+    },
+    {
+      "name": "typed_accepted_source_copy:6",
+      "kind": "typed_accepted_source_copy",
+      "case": {
+        "event_type": "crew.board_message_posted",
+        "payload": {
+          "schema_id": "pm.event_payload.crew_board_message_posted.v1",
+          "schema_version": "1.0.0",
+          "scope": "application",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "server_id": "server_id-example",
+          "run_id": "run_id-example",
+          "thread_id": "thread_id-example",
+          "operation_id": "operation_id-example",
+          "occurrence": 1,
+          "occurred_at_utc": "2026-11-04T00:00:00Z",
+          "crew_id": "crew_id-example",
+          "parent_run_id": "parent_run_id-example",
+          "child_run_id": "child_run_id-example",
+          "message_id": "message_id-example",
+          "from_agent_id": "from_agent_id-example",
+          "subject": "subject-example",
+          "priority": "normal",
+          "content_ref": {
+            "blake3_id": "blake3:8384cdc7ca19f0f961b2356f342e94ee0a8e0b06d36a25c2e57c084c7acf6298",
+            "byte_size": 16385,
+            "media_type": "text/plain; charset=utf-8"
+          }
+        },
+        "source": {
+          "schema_id": "pm.application_source.coordination_append.v2",
+          "schema_version": "2.0.0",
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server_id-example"
+          },
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "server_id": "server_id-example",
+          "thread_id": "thread_id-example",
+          "original_operation_id": "operation_id-example",
+          "interface_id": "storage.coordination_append.application@2.0.0",
+          "original_input": {
+            "schema_id": "pm.coordination.agent_message.application.v2",
+            "schema_version": "2.0.0",
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "server_id-example"
+            },
+            "thread_id": "thread_id-example",
+            "crew_id": "crew_id-example",
+            "run_id": "run_id-example",
+            "message_id": "message_id-example",
+            "sender_agent_id": "from_agent_id-example",
+            "receiver_agent_id": null,
+            "message_kind": "board",
+            "inline_text": null,
+            "blake3_payload_ref": "blake3:8384cdc7ca19f0f961b2356f342e94ee0a8e0b06d36a25c2e57c084c7acf6298",
+            "source_sequence": 1,
+            "created_at": "2026-11-04T00:00:00Z",
+            "subject": "subject-example",
+            "priority": "normal",
+            "from_platform": "platform-example",
+            "receiver_agent_type": null,
+            "to_node_id": null,
+            "to_lane_id": null,
+            "message_type": "Update",
+            "context": {
+              "files_mentioned": [],
+              "operations_mentioned": [],
+              "sender_node": null,
+              "related_message_ids": []
+            },
+            "in_reply_to": null,
+            "read_by": [],
+            "resolved": false
+          },
+          "original_input_semantic_sha256": "ff5dc688c2626117107e6326af21f9cd514678a60ca14ab545b75ecbad574574",
+          "original_output": null,
+          "original_output_semantic_sha256": null,
+          "accepted_source_ref": "synthetic:accepted-original-source",
+          "accepted_source_sha256": "6456228e334444c42c2db3527be765d1773bc9ac48ea27d45416397df333f754",
+          "stage_custody": {
+            "original_intent": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-original_intent",
+                "source_sha256": "c29e88b5029d9f0eefb26c1a687e081fbcdabfb1e92e4cf92c4308b1f1cdd217",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "accepted_original_source": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-accepted_original_source",
+                "source_sha256": "1ebac6573415ea4c1c16bb0a068d719c5ac850fea832cf69cc27d6f3fa14cc4c",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "current_owner_and_stop_fence": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-current_owner_and_stop_fence",
+                "source_sha256": "5c7124f6b38858b02dd549aa5fb799d9803bc55f980c4a80c0a3f56eb1638581",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "canonical_pending_or_reservation": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-canonical_pending_or_reservation",
+                "source_sha256": "f8505d1847a3460aad505c41c9b74f4d45bef86191ca7d07920f4e4cd9fbdeca",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "owner_commit": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner_commit",
+                "source_sha256": "423c7d6dea8a5ebb3d7af4da2d74bcaeb84d6319ecfde50ea9d0422903039344",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "event_append_if_admitted": {
+              "status": "not_reached",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "first_receipt_custody": {
+              "status": "not_reached",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "immutable_terminal_result": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "canonical_or_derived_read": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "coherent_backup_restore": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "retention_release": {
+              "status": "not_reached",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            }
+          },
+          "source_codec_id": "pm.crew_board_message.application.physical_messagepack.v2",
+          "semantic_hash_kind": "accepted_source",
+          "source_sha256": "3901b46347c081338c7a9d804e054014eca9cd2d8a5282b41df8f0d0b667ca12"
+        },
+        "envelope": {
+          "scope": "application",
+          "run_id": "run_id-example",
+          "thread_id": "thread_id-example",
+          "occurred_at_utc": "2026-11-04T00:00:00Z",
+          "scope_partition": "app",
+          "event_id": "evt_do_caa8976268473cbbdcc54e59edf51b9e1e5c2c98a8d492770b9cef859123dcf9",
+          "idempotency_key": "application@1:7365727665725f69642d6578616d706c65:5b2265612d646f2d6f62736572766174696f6e2d7631222c226f7065726174696f6e5f69642d6578616d706c65222c227468726561645f69642d6578616d706c65222c2272756e5f69642d6578616d706c65222c22637265772e626f6172645f6d6573736167655f706f73746564222c315d",
+          "replay_policy": "dedupe_by_idempotency_key"
+        },
+        "terminal_run": {
+          "scope": "application",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "server_id": "server_id-example",
+          "thread_id": "thread_id-example",
+          "crew_id": "crew_id-example",
+          "run_id": "run_id-example",
+          "kind": "first_durable_terminal_canonical_run"
+        },
+        "wrapper": {
+          "schema_id": "pm.storage_value.crew_board_message.application.v2",
+          "schema_version": "2.0.0",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "server_id": "server_id-example",
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server_id-example"
+          },
+          "record": {
+            "schema_id": "pm.coordination.agent_message.application.v2",
+            "schema_version": "2.0.0",
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "server_id-example"
+            },
+            "thread_id": "thread_id-example",
+            "crew_id": "crew_id-example",
+            "run_id": "run_id-example",
+            "message_id": "message_id-example",
+            "sender_agent_id": "from_agent_id-example",
+            "receiver_agent_id": null,
+            "message_kind": "board",
+            "inline_text": null,
+            "blake3_payload_ref": "blake3:8384cdc7ca19f0f961b2356f342e94ee0a8e0b06d36a25c2e57c084c7acf6298",
+            "source_sequence": 1,
+            "created_at": "2026-11-04T00:00:00Z",
+            "subject": "subject-example",
+            "priority": "normal",
+            "from_platform": "platform-example",
+            "receiver_agent_type": null,
+            "to_node_id": null,
+            "to_lane_id": null,
+            "message_type": "Update",
+            "context": {
+              "files_mentioned": [],
+              "operations_mentioned": [],
+              "sender_node": null,
+              "related_message_ids": []
+            },
+            "in_reply_to": null,
+            "read_by": [],
+            "resolved": false
+          }
+        },
+        "wrapper_key": "crew_board_message.application.v2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6d6573736167655f69642d6578616d706c65",
+        "event_case_id": "crew.board_message_posted:application:47",
+        "accepted_source_witness": {
+          "ref": "synthetic:accepted-original-source",
+          "value": {
+            "schema_id": "pm.coordination.agent_message.application.v2",
+            "schema_version": "2.0.0",
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "server_id-example"
+            },
+            "thread_id": "thread_id-example",
+            "crew_id": "crew_id-example",
+            "run_id": "run_id-example",
+            "message_id": "message_id-example",
+            "sender_agent_id": "from_agent_id-example",
+            "receiver_agent_id": null,
+            "message_kind": "board",
+            "inline_text": null,
+            "blake3_payload_ref": "blake3:8384cdc7ca19f0f961b2356f342e94ee0a8e0b06d36a25c2e57c084c7acf6298",
+            "source_sequence": 1.0,
+            "created_at": "2026-11-04T00:00:00Z",
+            "subject": "subject-example",
+            "priority": "normal",
+            "from_platform": "platform-example",
+            "receiver_agent_type": null,
+            "to_node_id": null,
+            "to_lane_id": null,
+            "message_type": "Update",
+            "context": {
+              "files_mentioned": [],
+              "operations_mentioned": [],
+              "sender_node": null,
+              "related_message_ids": []
+            },
+            "in_reply_to": null,
+            "read_by": [],
+            "resolved": false
+          }
+        },
+        "physical_record_sha256": "6edf347079035ef04b1edd39169fc21956af69853589b45324aee9b24a5ad8f7",
+        "stage_evidence_witnesses": {
+          "original_intent": {
+            "ref": "synthetic:original-original_intent",
+            "value": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "stage": "original_intent",
+              "owner_evidence_metadata": {
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "revision": 1,
+                "generation": 1
+              },
+              "original_input_semantic_sha256": "ff5dc688c2626117107e6326af21f9cd514678a60ca14ab545b75ecbad574574",
+              "accepted_source_ref": "synthetic:accepted-original-source",
+              "accepted_source_sha256": "6456228e334444c42c2db3527be765d1773bc9ac48ea27d45416397df333f754",
+              "wrapper_key": "crew_board_message.application.v2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6d6573736167655f69642d6578616d706c65",
+              "physical_record_sha256": "6edf347079035ef04b1edd39169fc21956af69853589b45324aee9b24a5ad8f7"
+            }
+          },
+          "accepted_original_source": {
+            "ref": "synthetic:original-accepted_original_source",
+            "value": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "stage": "accepted_original_source",
+              "owner_evidence_metadata": {
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "revision": 1,
+                "generation": 1
+              },
+              "original_input_semantic_sha256": "ff5dc688c2626117107e6326af21f9cd514678a60ca14ab545b75ecbad574574",
+              "accepted_source_ref": "synthetic:accepted-original-source",
+              "accepted_source_sha256": "6456228e334444c42c2db3527be765d1773bc9ac48ea27d45416397df333f754",
+              "wrapper_key": "crew_board_message.application.v2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6d6573736167655f69642d6578616d706c65",
+              "physical_record_sha256": "6edf347079035ef04b1edd39169fc21956af69853589b45324aee9b24a5ad8f7"
+            }
+          },
+          "current_owner_and_stop_fence": {
+            "ref": "synthetic:original-current_owner_and_stop_fence",
+            "value": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "stage": "current_owner_and_stop_fence",
+              "owner_evidence_metadata": {
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "revision": 1,
+                "generation": 1
+              },
+              "original_input_semantic_sha256": "ff5dc688c2626117107e6326af21f9cd514678a60ca14ab545b75ecbad574574",
+              "accepted_source_ref": "synthetic:accepted-original-source",
+              "accepted_source_sha256": "6456228e334444c42c2db3527be765d1773bc9ac48ea27d45416397df333f754",
+              "wrapper_key": "crew_board_message.application.v2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6d6573736167655f69642d6578616d706c65",
+              "physical_record_sha256": "6edf347079035ef04b1edd39169fc21956af69853589b45324aee9b24a5ad8f7"
+            }
+          },
+          "canonical_pending_or_reservation": {
+            "ref": "synthetic:original-canonical_pending_or_reservation",
+            "value": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "stage": "canonical_pending_or_reservation",
+              "owner_evidence_metadata": {
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "revision": 1,
+                "generation": 1
+              },
+              "original_input_semantic_sha256": "ff5dc688c2626117107e6326af21f9cd514678a60ca14ab545b75ecbad574574",
+              "accepted_source_ref": "synthetic:accepted-original-source",
+              "accepted_source_sha256": "6456228e334444c42c2db3527be765d1773bc9ac48ea27d45416397df333f754",
+              "wrapper_key": "crew_board_message.application.v2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6d6573736167655f69642d6578616d706c65",
+              "physical_record_sha256": "6edf347079035ef04b1edd39169fc21956af69853589b45324aee9b24a5ad8f7"
+            }
+          },
+          "owner_commit": {
+            "ref": "synthetic:original-owner_commit",
+            "value": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "stage": "owner_commit",
+              "owner_evidence_metadata": {
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "revision": 1,
+                "generation": 1
+              },
+              "original_input_semantic_sha256": "ff5dc688c2626117107e6326af21f9cd514678a60ca14ab545b75ecbad574574",
+              "accepted_source_ref": "synthetic:accepted-original-source",
+              "accepted_source_sha256": "6456228e334444c42c2db3527be765d1773bc9ac48ea27d45416397df333f754",
+              "wrapper_key": "crew_board_message.application.v2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6d6573736167655f69642d6578616d706c65",
+              "physical_record_sha256": "6edf347079035ef04b1edd39169fc21956af69853589b45324aee9b24a5ad8f7"
+            }
+          }
+        }
+      },
+      "expected_error": "accepted_original_source_join",
+      "expected_exit_code": 1
+    },
+    {
+      "name": "typed_accepted_source_copy:8",
+      "kind": "typed_accepted_source_copy",
+      "case": {
+        "event_type": "crew.board_message_read",
+        "payload": {
+          "schema_id": "pm.event_payload.crew_board_message_read.v1",
+          "schema_version": "1.0.0",
+          "scope": "application",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "server_id": "server_id-example",
+          "run_id": "run_id-example",
+          "thread_id": "thread_id-example",
+          "operation_id": "operation_id-example",
+          "occurrence": 1,
+          "occurred_at_utc": "2026-11-04T00:00:00Z",
+          "crew_id": "crew_id-example",
+          "message_id": "message_id-example",
+          "agent_id": "agent_id-example",
+          "read_at_utc": "2026-11-04T00:00:00Z"
+        },
+        "source": {
+          "schema_id": "pm.application_source.coordination_append.v2",
+          "schema_version": "2.0.0",
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server_id-example"
+          },
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "server_id": "server_id-example",
+          "thread_id": "thread_id-example",
+          "original_operation_id": "operation_id-example",
+          "interface_id": "storage.coordination_append.application@2.0.0",
+          "original_input": {
+            "schema_id": "pm.coordination.agent_message.application.v2",
+            "schema_version": "2.0.0",
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "server_id-example"
+            },
+            "thread_id": "thread_id-example",
+            "crew_id": "crew_id-example",
+            "run_id": "run_id-example",
+            "message_id": "message_id-example",
+            "sender_agent_id": "agent-sender",
+            "receiver_agent_id": null,
+            "message_kind": "board",
+            "inline_text": "Retained original body.",
+            "blake3_payload_ref": null,
+            "source_sequence": 1,
+            "created_at": "2026-11-04T00:00:00Z",
+            "subject": "subject-example",
+            "priority": "normal",
+            "from_platform": "platform-example",
+            "receiver_agent_type": null,
+            "to_node_id": null,
+            "to_lane_id": null,
+            "message_type": "Update",
+            "context": {
+              "files_mentioned": [],
+              "operations_mentioned": [],
+              "sender_node": null,
+              "related_message_ids": []
+            },
+            "in_reply_to": null,
+            "read_by": [],
+            "resolved": false
+          },
+          "original_input_semantic_sha256": "e127aae9d16ef2aa73cfa0a73ab560ec6461b87ee1d30223073cf31ce6bb6f0d",
+          "original_output": null,
+          "original_output_semantic_sha256": null,
+          "accepted_source_ref": "synthetic:accepted-original-source",
+          "accepted_source_sha256": "ed604d4ed7367c1aa2a2081967e43b7334bc47d0e1d8f141eaa71a0328f3b6ab",
+          "stage_custody": {
+            "original_intent": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-original_intent",
+                "source_sha256": "dbd5982f896e4822f93347dd92882fcf5b6a8b3eee42f1b32c7220d58a3ed112",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "accepted_original_source": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-accepted_original_source",
+                "source_sha256": "272f5f63d76684fb0f1bd1779001fec88939cd13f819d56bc2d40410b0014767",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "current_owner_and_stop_fence": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-current_owner_and_stop_fence",
+                "source_sha256": "8caff9a29e8db7797dd438d3dc9d717e83ad654fd4570113342cfd5f94c726be",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "canonical_pending_or_reservation": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-canonical_pending_or_reservation",
+                "source_sha256": "b08ea0d653a4e01bda5799858c649969250d1916a5a3cada1c18cf0a2d3ada5c",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "owner_commit": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner_commit",
+                "source_sha256": "88827aee2d01776a619e422011804d5642afc893489aa979e16958a4dd6ac222",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "event_append_if_admitted": {
+              "status": "not_reached",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "first_receipt_custody": {
+              "status": "not_reached",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "immutable_terminal_result": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "canonical_or_derived_read": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "coherent_backup_restore": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "retention_release": {
+              "status": "not_reached",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            }
+          },
+          "source_codec_id": "pm.crew_board_message.application.physical_messagepack.v2",
+          "semantic_hash_kind": "accepted_source",
+          "source_sha256": "5397ffea5aa78c266f81f9fd32c8e1b90e11f130d6d2d95c54c54d2acad56508"
+        },
+        "envelope": {
+          "scope": "application",
+          "run_id": "run_id-example",
+          "thread_id": "thread_id-example",
+          "occurred_at_utc": "2026-11-04T00:00:00Z",
+          "scope_partition": "app",
+          "event_id": "evt_do_426b480a2c3860c3367dff28a381d27802f9fc339aca1d321358fae680401e86",
+          "idempotency_key": "application@1:7365727665725f69642d6578616d706c65:5b2265612d646f2d6f62736572766174696f6e2d7631222c226f7065726174696f6e5f69642d6578616d706c65222c227468726561645f69642d6578616d706c65222c2272756e5f69642d6578616d706c65222c22637265772e626f6172645f6d6573736167655f72656164222c315d",
+          "replay_policy": "dedupe_by_idempotency_key"
+        },
+        "terminal_run": {
+          "scope": "application",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "server_id": "server_id-example",
+          "thread_id": "thread_id-example",
+          "crew_id": "crew_id-example",
+          "run_id": "run_id-example",
+          "kind": "first_durable_terminal_canonical_run"
+        },
+        "wrapper": {
+          "schema_id": "pm.storage_value.crew_board_message.application.v2",
+          "schema_version": "2.0.0",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "server_id": "server_id-example",
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server_id-example"
+          },
+          "record": {
+            "schema_id": "pm.coordination.agent_message.application.v2",
+            "schema_version": "2.0.0",
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "server_id-example"
+            },
+            "thread_id": "thread_id-example",
+            "crew_id": "crew_id-example",
+            "run_id": "run_id-example",
+            "message_id": "message_id-example",
+            "sender_agent_id": "agent-sender",
+            "receiver_agent_id": null,
+            "message_kind": "board",
+            "inline_text": "Retained original body.",
+            "blake3_payload_ref": null,
+            "source_sequence": 1,
+            "created_at": "2026-11-04T00:00:00Z",
+            "subject": "subject-example",
+            "priority": "normal",
+            "from_platform": "platform-example",
+            "receiver_agent_type": null,
+            "to_node_id": null,
+            "to_lane_id": null,
+            "message_type": "Update",
+            "context": {
+              "files_mentioned": [],
+              "operations_mentioned": [],
+              "sender_node": null,
+              "related_message_ids": []
+            },
+            "in_reply_to": null,
+            "read_by": [],
+            "resolved": false
+          }
+        },
+        "wrapper_key": "crew_board_message.application.v2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6d6573736167655f69642d6578616d706c65",
+        "event_case_id": "crew.board_message_read:application:3",
+        "accepted_source_witness": {
+          "ref": "synthetic:accepted-original-source",
+          "value": {
+            "schema_id": "pm.coordination.agent_message.application.v2",
+            "schema_version": "2.0.0",
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "server_id-example"
+            },
+            "thread_id": "thread_id-example",
+            "crew_id": "crew_id-example",
+            "run_id": "run_id-example",
+            "message_id": "message_id-example",
+            "sender_agent_id": "agent-sender",
+            "receiver_agent_id": null,
+            "message_kind": "board",
+            "inline_text": "Retained original body.",
+            "blake3_payload_ref": null,
+            "source_sequence": 1.0,
+            "created_at": "2026-11-04T00:00:00Z",
+            "subject": "subject-example",
+            "priority": "normal",
+            "from_platform": "platform-example",
+            "receiver_agent_type": null,
+            "to_node_id": null,
+            "to_lane_id": null,
+            "message_type": "Update",
+            "context": {
+              "files_mentioned": [],
+              "operations_mentioned": [],
+              "sender_node": null,
+              "related_message_ids": []
+            },
+            "in_reply_to": null,
+            "read_by": [],
+            "resolved": false
+          }
+        },
+        "physical_record_sha256": "963d4d12ad81edaefb4f3048da7cacc152227b167d5cbf394d3f4b7bdf309700",
+        "stage_evidence_witnesses": {
+          "original_intent": {
+            "ref": "synthetic:original-original_intent",
+            "value": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "stage": "original_intent",
+              "owner_evidence_metadata": {
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "revision": 1,
+                "generation": 1
+              },
+              "original_input_semantic_sha256": "e127aae9d16ef2aa73cfa0a73ab560ec6461b87ee1d30223073cf31ce6bb6f0d",
+              "accepted_source_ref": "synthetic:accepted-original-source",
+              "accepted_source_sha256": "ed604d4ed7367c1aa2a2081967e43b7334bc47d0e1d8f141eaa71a0328f3b6ab",
+              "wrapper_key": "crew_board_message.application.v2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6d6573736167655f69642d6578616d706c65",
+              "physical_record_sha256": "963d4d12ad81edaefb4f3048da7cacc152227b167d5cbf394d3f4b7bdf309700"
+            }
+          },
+          "accepted_original_source": {
+            "ref": "synthetic:original-accepted_original_source",
+            "value": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "stage": "accepted_original_source",
+              "owner_evidence_metadata": {
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "revision": 1,
+                "generation": 1
+              },
+              "original_input_semantic_sha256": "e127aae9d16ef2aa73cfa0a73ab560ec6461b87ee1d30223073cf31ce6bb6f0d",
+              "accepted_source_ref": "synthetic:accepted-original-source",
+              "accepted_source_sha256": "ed604d4ed7367c1aa2a2081967e43b7334bc47d0e1d8f141eaa71a0328f3b6ab",
+              "wrapper_key": "crew_board_message.application.v2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6d6573736167655f69642d6578616d706c65",
+              "physical_record_sha256": "963d4d12ad81edaefb4f3048da7cacc152227b167d5cbf394d3f4b7bdf309700"
+            }
+          },
+          "current_owner_and_stop_fence": {
+            "ref": "synthetic:original-current_owner_and_stop_fence",
+            "value": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "stage": "current_owner_and_stop_fence",
+              "owner_evidence_metadata": {
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "revision": 1,
+                "generation": 1
+              },
+              "original_input_semantic_sha256": "e127aae9d16ef2aa73cfa0a73ab560ec6461b87ee1d30223073cf31ce6bb6f0d",
+              "accepted_source_ref": "synthetic:accepted-original-source",
+              "accepted_source_sha256": "ed604d4ed7367c1aa2a2081967e43b7334bc47d0e1d8f141eaa71a0328f3b6ab",
+              "wrapper_key": "crew_board_message.application.v2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6d6573736167655f69642d6578616d706c65",
+              "physical_record_sha256": "963d4d12ad81edaefb4f3048da7cacc152227b167d5cbf394d3f4b7bdf309700"
+            }
+          },
+          "canonical_pending_or_reservation": {
+            "ref": "synthetic:original-canonical_pending_or_reservation",
+            "value": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "stage": "canonical_pending_or_reservation",
+              "owner_evidence_metadata": {
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "revision": 1,
+                "generation": 1
+              },
+              "original_input_semantic_sha256": "e127aae9d16ef2aa73cfa0a73ab560ec6461b87ee1d30223073cf31ce6bb6f0d",
+              "accepted_source_ref": "synthetic:accepted-original-source",
+              "accepted_source_sha256": "ed604d4ed7367c1aa2a2081967e43b7334bc47d0e1d8f141eaa71a0328f3b6ab",
+              "wrapper_key": "crew_board_message.application.v2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6d6573736167655f69642d6578616d706c65",
+              "physical_record_sha256": "963d4d12ad81edaefb4f3048da7cacc152227b167d5cbf394d3f4b7bdf309700"
+            }
+          },
+          "owner_commit": {
+            "ref": "synthetic:original-owner_commit",
+            "value": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "stage": "owner_commit",
+              "owner_evidence_metadata": {
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "revision": 1,
+                "generation": 1
+              },
+              "original_input_semantic_sha256": "e127aae9d16ef2aa73cfa0a73ab560ec6461b87ee1d30223073cf31ce6bb6f0d",
+              "accepted_source_ref": "synthetic:accepted-original-source",
+              "accepted_source_sha256": "ed604d4ed7367c1aa2a2081967e43b7334bc47d0e1d8f141eaa71a0328f3b6ab",
+              "wrapper_key": "crew_board_message.application.v2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6d6573736167655f69642d6578616d706c65",
+              "physical_record_sha256": "963d4d12ad81edaefb4f3048da7cacc152227b167d5cbf394d3f4b7bdf309700"
+            }
+          }
+        }
+      },
+      "expected_error": "accepted_original_source_join",
+      "expected_exit_code": 1
+    },
+    {
+      "name": "typed_accepted_source_copy:9",
+      "kind": "typed_accepted_source_copy",
+      "case": {
+        "event_type": "crew.board_messages_archived",
+        "payload": {
+          "schema_id": "pm.event_payload.crew_board_messages_archived.v1",
+          "schema_version": "1.0.0",
+          "scope": "application",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "server_id": "server_id-example",
+          "run_id": "run_id-example",
+          "thread_id": "thread_id-example",
+          "operation_id": "operation_id-example",
+          "occurrence": 1,
+          "occurred_at_utc": "2026-11-04T00:00:00Z",
+          "crew_id": "crew_id-example",
+          "archived_before_utc": "2026-11-04T00:00:00Z",
+          "message_ids": [
+            "item"
+          ],
+          "archive_reason": "archive_reason-example"
+        },
+        "source": {
+          "schema_id": "pm.application_source.coordination_append.v2",
+          "schema_version": "2.0.0",
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server_id-example"
+          },
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "server_id": "server_id-example",
+          "thread_id": "thread_id-example",
+          "original_operation_id": "operation_id-example",
+          "interface_id": "storage.coordination_append.application@2.0.0",
+          "original_input": {
+            "schema_id": "pm.coordination.agent_message.application.v2",
+            "schema_version": "2.0.0",
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "server_id-example"
+            },
+            "thread_id": "thread_id-example",
+            "crew_id": "crew_id-example",
+            "run_id": "run_id-example",
+            "message_id": "item",
+            "sender_agent_id": "agent-sender",
+            "receiver_agent_id": null,
+            "message_kind": "board",
+            "inline_text": "Retained original body.",
+            "blake3_payload_ref": null,
+            "source_sequence": 1,
+            "created_at": "2026-11-04T00:00:00Z",
+            "subject": "subject-example",
+            "priority": "normal",
+            "from_platform": "platform-example",
+            "receiver_agent_type": null,
+            "to_node_id": null,
+            "to_lane_id": null,
+            "message_type": "Update",
+            "context": {
+              "files_mentioned": [],
+              "operations_mentioned": [],
+              "sender_node": null,
+              "related_message_ids": []
+            },
+            "in_reply_to": null,
+            "read_by": [],
+            "resolved": false
+          },
+          "original_input_semantic_sha256": "22a2c40c6b772d133d67bd97cc962671465f1aa7cc938afddf3b37a492d4bb18",
+          "original_output": null,
+          "original_output_semantic_sha256": null,
+          "accepted_source_ref": "synthetic:accepted-original-source",
+          "accepted_source_sha256": "61ca25187f2cf373e14ce33e7ff708c0dada43edaabd44c9e73ac365a989f77a",
+          "stage_custody": {
+            "original_intent": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-original_intent",
+                "source_sha256": "7a4ce292874123c6da7eb4f91c7973881b3123bb2a89cb38dd8bab2a6d1f259c",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "accepted_original_source": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-accepted_original_source",
+                "source_sha256": "6d4106a81887ba987faa0deb5f5fee79ae6202a23bc124263cc7b8e0d8517e04",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "current_owner_and_stop_fence": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-current_owner_and_stop_fence",
+                "source_sha256": "252fba965cc94194d86f7a7b907c67dabf01cb3a036b40aff1b9dca97b7d9040",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "canonical_pending_or_reservation": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-canonical_pending_or_reservation",
+                "source_sha256": "6e7c97ac128f639a9699f5ecf5fcd6e5575b8bf80643d9efe74c1b99f64e7613",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "owner_commit": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner_commit",
+                "source_sha256": "86e6fb01e7c5b256d80314d9f690a6eac52a276b206ec3c94c029680179db171",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "event_append_if_admitted": {
+              "status": "not_reached",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "first_receipt_custody": {
+              "status": "not_reached",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "immutable_terminal_result": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "canonical_or_derived_read": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "coherent_backup_restore": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            },
+            "retention_release": {
+              "status": "not_reached",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "custody_evidence": {
+                "schema_id": "pm.owner_evidence_ref.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "source_ref": "synthetic:original-owner-custody",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              }
+            }
+          },
+          "source_codec_id": "pm.crew_board_message.application.physical_messagepack.v2",
+          "semantic_hash_kind": "accepted_source",
+          "source_sha256": "7a38ccb74f2446720ff8d6a70e423baf2a40a5a6ee8bd57d0dbdc51e2c072598"
+        },
+        "envelope": {
+          "scope": "application",
+          "run_id": "run_id-example",
+          "thread_id": "thread_id-example",
+          "occurred_at_utc": "2026-11-04T00:00:00Z",
+          "scope_partition": "app",
+          "event_id": "evt_do_84e19035cd90c0741e3a7a717d2177a8ebbd4e43f1cbc6b8287b325ceb0626cb",
+          "idempotency_key": "application@1:7365727665725f69642d6578616d706c65:5b2265612d646f2d6f62736572766174696f6e2d7631222c226f7065726174696f6e5f69642d6578616d706c65222c227468726561645f69642d6578616d706c65222c2272756e5f69642d6578616d706c65222c22637265772e626f6172645f6d657373616765735f6172636869766564222c315d",
+          "replay_policy": "dedupe_by_idempotency_key"
+        },
+        "terminal_run": {
+          "scope": "application",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "server_id": "server_id-example",
+          "thread_id": "thread_id-example",
+          "crew_id": "crew_id-example",
+          "run_id": "run_id-example",
+          "kind": "first_durable_terminal_canonical_run"
+        },
+        "wrapper": {
+          "schema_id": "pm.storage_value.crew_board_message.application.v2",
+          "schema_version": "2.0.0",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "server_id": "server_id-example",
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server_id-example"
+          },
+          "record": {
+            "schema_id": "pm.coordination.agent_message.application.v2",
+            "schema_version": "2.0.0",
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "server_id-example"
+            },
+            "thread_id": "thread_id-example",
+            "crew_id": "crew_id-example",
+            "run_id": "run_id-example",
+            "message_id": "item",
+            "sender_agent_id": "agent-sender",
+            "receiver_agent_id": null,
+            "message_kind": "board",
+            "inline_text": "Retained original body.",
+            "blake3_payload_ref": null,
+            "source_sequence": 1,
+            "created_at": "2026-11-04T00:00:00Z",
+            "subject": "subject-example",
+            "priority": "normal",
+            "from_platform": "platform-example",
+            "receiver_agent_type": null,
+            "to_node_id": null,
+            "to_lane_id": null,
+            "message_type": "Update",
+            "context": {
+              "files_mentioned": [],
+              "operations_mentioned": [],
+              "sender_node": null,
+              "related_message_ids": []
+            },
+            "in_reply_to": null,
+            "read_by": [],
+            "resolved": false
+          }
+        },
+        "wrapper_key": "crew_board_message.application.v2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6974656d",
+        "event_case_id": "crew.board_messages_archived:application:5",
+        "accepted_source_witness": {
+          "ref": "synthetic:accepted-original-source",
+          "value": {
+            "schema_id": "pm.coordination.agent_message.application.v2",
+            "schema_version": "2.0.0",
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "server_id-example"
+            },
+            "thread_id": "thread_id-example",
+            "crew_id": "crew_id-example",
+            "run_id": "run_id-example",
+            "message_id": "item",
+            "sender_agent_id": "agent-sender",
+            "receiver_agent_id": null,
+            "message_kind": "board",
+            "inline_text": "Retained original body.",
+            "blake3_payload_ref": null,
+            "source_sequence": 1.0,
+            "created_at": "2026-11-04T00:00:00Z",
+            "subject": "subject-example",
+            "priority": "normal",
+            "from_platform": "platform-example",
+            "receiver_agent_type": null,
+            "to_node_id": null,
+            "to_lane_id": null,
+            "message_type": "Update",
+            "context": {
+              "files_mentioned": [],
+              "operations_mentioned": [],
+              "sender_node": null,
+              "related_message_ids": []
+            },
+            "in_reply_to": null,
+            "read_by": [],
+            "resolved": false
+          }
+        },
+        "physical_record_sha256": "759bd9a5e3534ac6c32c1b5a480ad8177dfcd73ae7ea96b702cb8b9567464b1f",
+        "stage_evidence_witnesses": {
+          "original_intent": {
+            "ref": "synthetic:original-original_intent",
+            "value": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "stage": "original_intent",
+              "owner_evidence_metadata": {
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "revision": 1,
+                "generation": 1
+              },
+              "original_input_semantic_sha256": "22a2c40c6b772d133d67bd97cc962671465f1aa7cc938afddf3b37a492d4bb18",
+              "accepted_source_ref": "synthetic:accepted-original-source",
+              "accepted_source_sha256": "61ca25187f2cf373e14ce33e7ff708c0dada43edaabd44c9e73ac365a989f77a",
+              "wrapper_key": "crew_board_message.application.v2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6974656d",
+              "physical_record_sha256": "759bd9a5e3534ac6c32c1b5a480ad8177dfcd73ae7ea96b702cb8b9567464b1f"
+            }
+          },
+          "accepted_original_source": {
+            "ref": "synthetic:original-accepted_original_source",
+            "value": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "stage": "accepted_original_source",
+              "owner_evidence_metadata": {
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "revision": 1,
+                "generation": 1
+              },
+              "original_input_semantic_sha256": "22a2c40c6b772d133d67bd97cc962671465f1aa7cc938afddf3b37a492d4bb18",
+              "accepted_source_ref": "synthetic:accepted-original-source",
+              "accepted_source_sha256": "61ca25187f2cf373e14ce33e7ff708c0dada43edaabd44c9e73ac365a989f77a",
+              "wrapper_key": "crew_board_message.application.v2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6974656d",
+              "physical_record_sha256": "759bd9a5e3534ac6c32c1b5a480ad8177dfcd73ae7ea96b702cb8b9567464b1f"
+            }
+          },
+          "current_owner_and_stop_fence": {
+            "ref": "synthetic:original-current_owner_and_stop_fence",
+            "value": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "stage": "current_owner_and_stop_fence",
+              "owner_evidence_metadata": {
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "revision": 1,
+                "generation": 1
+              },
+              "original_input_semantic_sha256": "22a2c40c6b772d133d67bd97cc962671465f1aa7cc938afddf3b37a492d4bb18",
+              "accepted_source_ref": "synthetic:accepted-original-source",
+              "accepted_source_sha256": "61ca25187f2cf373e14ce33e7ff708c0dada43edaabd44c9e73ac365a989f77a",
+              "wrapper_key": "crew_board_message.application.v2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6974656d",
+              "physical_record_sha256": "759bd9a5e3534ac6c32c1b5a480ad8177dfcd73ae7ea96b702cb8b9567464b1f"
+            }
+          },
+          "canonical_pending_or_reservation": {
+            "ref": "synthetic:original-canonical_pending_or_reservation",
+            "value": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "stage": "canonical_pending_or_reservation",
+              "owner_evidence_metadata": {
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "revision": 1,
+                "generation": 1
+              },
+              "original_input_semantic_sha256": "22a2c40c6b772d133d67bd97cc962671465f1aa7cc938afddf3b37a492d4bb18",
+              "accepted_source_ref": "synthetic:accepted-original-source",
+              "accepted_source_sha256": "61ca25187f2cf373e14ce33e7ff708c0dada43edaabd44c9e73ac365a989f77a",
+              "wrapper_key": "crew_board_message.application.v2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6974656d",
+              "physical_record_sha256": "759bd9a5e3534ac6c32c1b5a480ad8177dfcd73ae7ea96b702cb8b9567464b1f"
+            }
+          },
+          "owner_commit": {
+            "ref": "synthetic:original-owner_commit",
+            "value": {
+              "status": "accepted",
+              "original_operation_id": "operation_id-example",
+              "owner_method_id": "storage.coordination_append.application@2.0.0",
+              "request_ref": "synthetic:original-request",
+              "result_ref": "synthetic:original-result",
+              "stage": "owner_commit",
+              "owner_evidence_metadata": {
+                "owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-440",
+                "revision": 1,
+                "generation": 1
+              },
+              "original_input_semantic_sha256": "22a2c40c6b772d133d67bd97cc962671465f1aa7cc938afddf3b37a492d4bb18",
+              "accepted_source_ref": "synthetic:accepted-original-source",
+              "accepted_source_sha256": "61ca25187f2cf373e14ce33e7ff708c0dada43edaabd44c9e73ac365a989f77a",
+              "wrapper_key": "crew_board_message.application.v2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665725f69642d6578616d706c65:7468726561645f69642d6578616d706c65:637265775f69642d6578616d706c65:72756e5f69642d6578616d706c65:6974656d",
+              "physical_record_sha256": "759bd9a5e3534ac6c32c1b5a480ad8177dfcd73ae7ea96b702cb8b9567464b1f"
+            }
+          }
+        }
+      },
+      "expected_error": "accepted_original_source_join",
+      "expected_exit_code": 1
     }
   ],
   "number_cases": [
