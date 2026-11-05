@@ -1,37 +1,37 @@
 {
-  "review_round": 7,
-  "graded_commit": "11673e1c4ae65f3b8b88de548c0a8f877e1c62c1",
+  "review_round": 8,
+  "graded_commit": "8b50753c6213e706126fbd5c13a5e08212ed5de4",
   "summary": {
-    "guard_sites": 181,
-    "negative_cases": 9307,
+    "guard_sites": 185,
+    "negative_cases": 10203,
     "suites": {
       "source": 2740,
-      "history": 450,
-      "schema": 38,
+      "history": 1090,
+      "schema": 272,
       "reference": 112,
-      "shape": 644,
+      "shape": 666,
       "numeric": 1452,
       "type": 3812,
       "score": 10,
       "helper": 40,
       "canonical": 9
     },
-    "single_site_evaluations": 1684567,
+    "single_site_evaluations": 1887555,
     "trace_scenarios": 230,
-    "trace_site_evaluations": 41630,
+    "trace_site_evaluations": 42550,
     "fresh_routes": 2,
-    "route_negative_evaluations": 18614,
+    "route_negative_evaluations": 20406,
     "route_trace_evaluations": 460,
-    "single_negative_sites": 171,
+    "single_negative_sites": 174,
     "single_trace_schema_sites": 1,
-    "named_duplicate_sites": 9,
-    "nonempty_named_sets": 19,
-    "masked_guard_case_instances": 592,
+    "named_duplicate_sites": 10,
+    "nonempty_named_sets": 22,
+    "masked_guard_case_instances": 612,
     "masked_classifications": {
       "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
-      "NAMED_DUPLICATE_SET": 418,
+      "NAMED_DUPLICATE_SET": 439,
       "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
-      "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
+      "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 29
     },
     "unproved_sites": 0,
     "unproved_guard_case_instances": 0,
@@ -42,598 +42,691 @@
   },
   "evidence": {
     "guard-matrix.json": {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/guard-matrix.json",
-      "sha256": "82fc7f7e1ba63ec6a82a6701a0f5bf6f160aec4508d9f7c4df6318ceab36b5be"
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/guard-matrix.json",
+      "sha256": "6131a0377d7b89d4e7f888c48b24387388d9fb84ad94c4b9e45f92415745fca3"
     },
     "duplicate-proofs.json": {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/duplicate-proofs.json",
-      "sha256": "f8d63cb1f8174253c9b83f3029582f796b58b9749e59f3d5cf393de83e589769"
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/duplicate-proofs.json",
+      "sha256": "04eab95ac74b75116c58b9f6ea02dd4e4b7503696c2ac24eae52b1cd00c5ef44"
     },
     "guard-assessment.json": {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/guard-assessment.json",
-      "sha256": "5e1d69bd91e075bbd1366e1724de27e83e08ff58d3c9552044ebd1afbdb4556a"
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/guard-assessment.json",
+      "sha256": "1cc2345df717481cac264a9ae62e8f5d00c70f5394ff44235f84be8bcb0357d0"
     },
     "guard-table.md": {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/guard-table.md",
-      "sha256": "426f7212d52f82fa039964e5762ea0aacca1c7a97c59d1290d247f88c23c8d5c"
-    },
-    "cache-control-comparison.json": {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/cache-control-comparison.json",
-      "sha256": "8106b5880a09b745b0e751484cd558579f5484a2f6742a1d43aa1433a451168c"
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/guard-table.md",
+      "sha256": "cea3d0df73eb4cb337d96cc52eac624f4cd314aa580d2441d13149fea22922f3"
     }
   },
   "guards": [
     {
+      "site": "sem:fix6:record_rules:require:'authenticated retained recipe binding'",
+      "path": "scripts/pm_executor_event_semantics.py",
+      "line": 62,
+      "predicate": "'authenticated retained recipe binding'",
+      "status": "SINGLE_NEGATIVE",
+      "duplicate_sets": [],
+      "still_rejected_count": 9707,
+      "flipping_negatives": 496
+    },
+    {
       "site": "sem:95:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 33,
+      "line": 105,
+      "predicate": "'payload map string keys'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:118:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 37,
+      "line": 109,
+      "predicate": "'missing payload pack'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:150:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 41,
+      "line": 113,
+      "predicate": "'source clock timezone'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [
         "source timestamp timezone"
       ],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:166:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 45,
+      "line": 117,
+      "predicate": "'no blind retry'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9294,
       "duplicate_sets": [],
+      "still_rejected_count": 10190,
       "flipping_negatives": 13
     },
     {
       "site": "sem:179:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 49,
+      "line": 121,
+      "predicate": "'classified retry policy domain'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9297,
       "duplicate_sets": [],
+      "still_rejected_count": 10193,
       "flipping_negatives": 10
     },
     {
       "site": "sem:200:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 53,
+      "line": 125,
+      "predicate": "'original Retry-After header'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:205:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 57,
+      "line": 129,
+      "predicate": "'Retry-After date timezone'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:209:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 61,
+      "line": 133,
+      "predicate": "'one successful original auth refresh'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9298,
       "duplicate_sets": [],
+      "still_rejected_count": 10194,
       "flipping_negatives": 9
     },
     {
       "site": "sem:268:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 67,
+      "line": 139,
+      "predicate": "'source record set'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9288,
       "duplicate_sets": [],
+      "still_rejected_count": 10184,
       "flipping_negatives": 19
     },
     {
       "site": "sem:308:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 71,
+      "line": 143,
+      "predicate": "'illegal predecessor'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:319:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 75,
+      "line": 147,
+      "predicate": "'missing dependency ' + field",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:fix6:validate_canonical_domain:require:'canonical integer value domain'",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 104,
+      "line": 178,
+      "predicate": "'canonical integer value domain'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9191,
       "duplicate_sets": [
         "identity integer representation",
         "shape score integer representation",
         "source score integer representation"
       ],
+      "still_rejected_count": 10087,
       "flipping_negatives": 116
     },
     {
       "site": "sem:fix6:validate_canonical_domain:require:'canonical exact binary64 integer'",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 110,
+      "line": 184,
+      "predicate": "'canonical exact binary64 integer'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9030,
       "duplicate_sets": [],
+      "still_rejected_count": 9926,
       "flipping_negatives": 277
     },
     {
       "site": "sem:45:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 147,
+      "line": 221,
+      "predicate": "'fixture repetition syntax'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
+    },
+    {
+      "site": "sem:fix6:valid_timestamp:format:'calendar validity'",
+      "path": "scripts/pm_executor_event_semantics.py",
+      "line": 258,
+      "predicate": "'calendar validity'",
+      "status": "SINGLE_NEGATIVE",
+      "duplicate_sets": [
+        "timestamp calendar duplicate format/parser"
+      ],
+      "still_rejected_count": 10077,
+      "flipping_negatives": 126
     },
     {
       "site": "sem:82:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 184,
+      "line": 276,
+      "predicate": "'replay_only_not_appendable'",
       "status": "NAMED_DUPLICATE_SET",
-      "still_rejected_count": 9307,
       "duplicate_sets": [
         "compatibility-only append"
       ],
+      "still_rejected_count": 10203,
       "flipping_negatives": 0
     },
     {
       "site": "sem:83:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 185,
+      "line": 277,
+      "predicate": "'family append replay policy'",
       "status": "NAMED_DUPLICATE_SET",
-      "still_rejected_count": 9307,
       "duplicate_sets": [
         "compatibility-only append"
       ],
+      "still_rejected_count": 10203,
       "flipping_negatives": 0
     },
     {
       "site": "sem:historical-policy:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 191,
+      "line": 283,
+      "predicate": "'historical replay policy domain'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9291,
       "duplicate_sets": [],
+      "still_rejected_count": 10187,
       "flipping_negatives": 16
     },
     {
       "site": "sem:99:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 207,
+      "line": 299,
+      "predicate": "'unsupported fixture payload value'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9259,
       "duplicate_sets": [
         "shape score integer representation",
         "source score integer representation"
       ],
+      "still_rejected_count": 10155,
       "flipping_negatives": 48
     },
     {
       "site": "sem:fix6:validate_payload_transport:require:'payload Storage string domain'",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 214,
+      "line": 306,
+      "predicate": "'payload Storage string domain'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 8987,
       "duplicate_sets": [],
+      "still_rejected_count": 9883,
       "flipping_negatives": 320
     },
     {
       "site": "sem:109:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 220,
+      "line": 312,
+      "predicate": "'inline logical payload join'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 8955,
       "duplicate_sets": [
         "original event value equality"
       ],
+      "still_rejected_count": 9851,
       "flipping_negatives": 352
     },
     {
       "site": "sem:110:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 221,
+      "line": 313,
+      "predicate": "'oversized_inline_payload'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9258,
       "duplicate_sets": [],
+      "still_rejected_count": 10154,
       "flipping_negatives": 49
     },
     {
       "site": "sem:112:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 223,
+      "line": 315,
+      "predicate": "'referenced payload cannot remain inline'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9291,
       "duplicate_sets": [],
+      "still_rejected_count": 10187,
       "flipping_negatives": 16
     },
     {
       "site": "sem:113:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 224,
+      "line": 316,
+      "predicate": "'resolved SP-337 descriptor'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:115:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 226,
+      "line": 318,
+      "predicate": "'payload ref byte size'",
       "status": "NAMED_DUPLICATE_SET",
-      "still_rejected_count": 9307,
       "duplicate_sets": [
         "descriptor/logical/stored length"
       ],
+      "still_rejected_count": 10203,
       "flipping_negatives": 0
     },
     {
       "site": "sem:116:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 227,
+      "line": 319,
+      "predicate": "'payload ref media type'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9275,
       "duplicate_sets": [],
+      "still_rejected_count": 10171,
       "flipping_negatives": 32
     },
     {
       "site": "sem:120:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 231,
+      "line": 323,
+      "predicate": "'exact normalized pack bytes'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9291,
       "duplicate_sets": [],
+      "still_rejected_count": 10187,
       "flipping_negatives": 16
     },
     {
       "site": "sem:121:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 232,
+      "line": 324,
+      "predicate": "'payload pack BLAKE3'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9259,
       "duplicate_sets": [],
+      "still_rejected_count": 10155,
       "flipping_negatives": 48
     },
     {
       "site": "sem:122:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 233,
+      "line": 325,
+      "predicate": "'payload pack byte size'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9291,
       "duplicate_sets": [
         "descriptor/logical/stored length"
       ],
+      "still_rejected_count": 10187,
       "flipping_negatives": 16
     },
     {
       "site": "sem:124:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 235,
+      "line": 327,
+      "predicate": "'payload pack media type'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9291,
       "duplicate_sets": [],
+      "still_rejected_count": 10187,
       "flipping_negatives": 16
     },
     {
       "site": "sem:125:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 236,
+      "line": 328,
+      "predicate": "'payload pack logical source body'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9291,
       "duplicate_sets": [],
+      "still_rejected_count": 10187,
       "flipping_negatives": 16
     },
     {
       "site": "sem:126:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 237,
+      "line": 329,
+      "predicate": "'payload pack Project custody'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9259,
       "duplicate_sets": [],
+      "still_rejected_count": 10155,
       "flipping_negatives": 48
     },
     {
       "site": "sem:127:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 238,
+      "line": 330,
+      "predicate": "'payload pack Storage custody'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9259,
       "duplicate_sets": [],
+      "still_rejected_count": 10155,
       "flipping_negatives": 48
     },
     {
       "site": "sem:128:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 239,
+      "line": 331,
+      "predicate": "'payload pack before referencing record'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9259,
       "duplicate_sets": [],
+      "still_rejected_count": 10155,
       "flipping_negatives": 48
     },
     {
       "site": "sem:129:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 240,
+      "line": 332,
+      "predicate": "'payload pack disclosure custody'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 8683,
       "duplicate_sets": [],
+      "still_rejected_count": 9579,
       "flipping_negatives": 624
     },
     {
       "site": "sem:148:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 260,
+      "line": 352,
+      "predicate": "'whole-string source timestamp'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [
-        "source timestamp timezone"
+        "source timestamp timezone",
+        "whole clock grammar/decoder",
+        "shape timestamp schema/grammar/decoder"
       ],
-      "flipping_negatives": 1
+      "still_rejected_count": 10192,
+      "flipping_negatives": 11
+    },
+    {
+      "site": "sem:fix6:instant:parser:'timestamp calendar parser'",
+      "path": "scripts/pm_executor_event_semantics.py",
+      "line": 353,
+      "predicate": "'timestamp calendar parser'",
+      "status": "NAMED_DUPLICATE_SET",
+      "duplicate_sets": [
+        "whole clock grammar/decoder",
+        "timestamp calendar duplicate format/parser",
+        "shape timestamp schema/grammar/decoder"
+      ],
+      "still_rejected_count": 10203,
+      "flipping_negatives": 0
     },
     {
       "site": "sem:158:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 270,
+      "line": 362,
+      "predicate": "'retry classification'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9304,
       "duplicate_sets": [],
+      "still_rejected_count": 10200,
       "flipping_negatives": 3
     },
     {
       "site": "sem:159:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 271,
+      "line": 363,
+      "predicate": "'per-error counter identity'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9304,
       "duplicate_sets": [],
+      "still_rejected_count": 10200,
       "flipping_negatives": 3
     },
     {
       "site": "sem:160:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 272,
+      "line": 364,
+      "predicate": "'original per-error retry counter'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9286,
       "duplicate_sets": [],
+      "still_rejected_count": 10182,
       "flipping_negatives": 21
     },
     {
       "site": "sem:163:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 275,
+      "line": 367,
+      "predicate": "'original failed attempt'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9305,
       "duplicate_sets": [
         "original failed attempt identity"
       ],
+      "still_rejected_count": 10201,
       "flipping_negatives": 2
     },
     {
       "site": "sem:165:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 277,
+      "line": 369,
+      "predicate": "'classified prior attempt'",
       "status": "NAMED_DUPLICATE_SET",
-      "still_rejected_count": 9307,
       "duplicate_sets": [
         "original failed attempt identity"
       ],
+      "still_rejected_count": 10203,
       "flipping_negatives": 0
     },
     {
       "site": "sem:172:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 284,
+      "line": 376,
+      "predicate": "'original Storage classification'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:173:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 285,
+      "line": 377,
+      "predicate": "'Storage retry class'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9298,
       "duplicate_sets": [
         "unsupported timed Storage class"
       ],
+      "still_rejected_count": 10194,
       "flipping_negatives": 9
     },
     {
       "site": "sem:176:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 288,
+      "line": 380,
+      "predicate": "'Storage adapter retry cannot create an Executor attempt'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9301,
       "duplicate_sets": [],
+      "still_rejected_count": 10197,
       "flipping_negatives": 6
     },
     {
       "site": "sem:180:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 292,
+      "line": 384,
+      "predicate": "'foreign Storage policy'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:182:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 294,
+      "line": 386,
+      "predicate": "'classified owner policy provenance'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9289,
       "duplicate_sets": [],
+      "still_rejected_count": 10185,
       "flipping_negatives": 18
     },
     {
       "site": "sem:183:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 295,
+      "line": 387,
+      "predicate": "'exact classified retry limit'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9286,
       "duplicate_sets": [],
+      "still_rejected_count": 10182,
       "flipping_negatives": 21
     },
     {
       "site": "sem:184:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 296,
+      "line": 388,
+      "predicate": "'per-error retry budget'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9286,
       "duplicate_sets": [],
+      "still_rejected_count": 10182,
       "flipping_negatives": 21
     },
     {
       "site": "sem:186:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 298,
+      "line": 390,
+      "predicate": "'classified retry ordinal'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9305,
       "duplicate_sets": [],
+      "still_rejected_count": 10201,
       "flipping_negatives": 2
     },
     {
       "site": "sem:191:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 303,
+      "line": 395,
+      "predicate": "'original failure/scheduling clocks'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9304,
       "duplicate_sets": [],
+      "still_rejected_count": 10200,
       "flipping_negatives": 3
     },
     {
       "site": "sem:211:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 322,
+      "line": 414,
+      "predicate": "'refresh and client rebuild before retry'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9305,
       "duplicate_sets": [],
+      "still_rejected_count": 10201,
       "flipping_negatives": 2
     },
     {
       "site": "sem:216:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 327,
+      "line": 419,
+      "predicate": "'Retry-After belongs to rate_limited'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:218:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 329,
+      "line": 421,
+      "predicate": "'refresh belongs to auth_expired'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:220:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 331,
+      "line": 423,
+      "predicate": "'original classified retry deadline'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9262,
       "duplicate_sets": [],
+      "still_rejected_count": 10158,
       "flipping_negatives": 45
     },
     {
       "site": "sem:222:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 333,
+      "line": 425,
+      "predicate": "'classified policy has no timed backoff'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9281,
       "duplicate_sets": [
         "unsupported timed Storage class"
       ],
+      "still_rejected_count": 10177,
       "flipping_negatives": 26
     },
     {
       "site": "sem:224:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 335,
+      "line": 427,
+      "predicate": "'early timer'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9305,
       "duplicate_sets": [],
+      "still_rejected_count": 10201,
       "flipping_negatives": 2
     },
     {
       "site": "sem:226:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 337,
+      "line": 429,
+      "predicate": "'original start timer join'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:227:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 338,
+      "line": 430,
+      "predicate": "'backoff deadline'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:232:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 343,
+      "line": 435,
+      "predicate": "'scheduler manual_priority integer 0..100'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9299,
       "duplicate_sets": [
         "source score integer range domain",
         "source score integer representation"
       ],
+      "still_rejected_count": 10195,
       "flipping_negatives": 8
     },
     {
       "site": "sem:234:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 345,
+      "line": 437,
+      "predicate": "'whole-string score timestamp'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9305,
       "duplicate_sets": [
         "source score timestamp whole string"
       ],
+      "still_rejected_count": 10201,
       "flipping_negatives": 2
     },
     {
       "site": "sem:244:schema",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 355,
+      "line": 447,
+      "predicate": "schema_validate(contract['schema_ref'], payload)",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9292,
       "duplicate_sets": [
         "source score integer range domain",
         "source score timestamp whole string",
@@ -641,174 +734,192 @@
         "original required/extra field presence",
         "source score integer representation"
       ],
+      "still_rejected_count": 10188,
       "flipping_negatives": 15
     },
     {
       "site": "sem:248:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 363,
+      "line": 455,
+      "predicate": "'adapter dispatch'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9291,
       "duplicate_sets": [],
+      "still_rejected_count": 10187,
       "flipping_negatives": 16
     },
     {
       "site": "sem:249:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 364,
+      "line": 456,
+      "predicate": "'family dispatch'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9291,
       "duplicate_sets": [],
+      "still_rejected_count": 10187,
       "flipping_negatives": 16
     },
     {
       "site": "sem:251:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 366,
+      "line": 458,
+      "predicate": "'scope Project'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9291,
       "duplicate_sets": [],
+      "still_rejected_count": 10187,
       "flipping_negatives": 16
     },
     {
       "site": "sem:253:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 368,
+      "line": 460,
+      "predicate": "'scope partition'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9275,
       "duplicate_sets": [],
+      "still_rejected_count": 10171,
       "flipping_negatives": 32
     },
     {
       "site": "sem:254:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 369,
+      "line": 461,
+      "predicate": "'storage root'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9275,
       "duplicate_sets": [],
+      "still_rejected_count": 10171,
       "flipping_negatives": 32
     },
     {
       "site": "sem:257:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 372,
+      "line": 464,
+      "predicate": "'envelope ' + field",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9264,
       "duplicate_sets": [],
+      "still_rejected_count": 10160,
       "flipping_negatives": 43
     },
     {
       "site": "sem:262:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 377,
+      "line": 469,
+      "predicate": "'episode attempt presence'",
       "status": "NAMED_DUPLICATE_SET",
-      "still_rejected_count": 9307,
       "duplicate_sets": [
         "attempt-backed blocked presence",
         "attempt-backed unblocked presence"
       ],
+      "still_rejected_count": 10203,
       "flipping_negatives": 0
     },
     {
       "site": "sem:265:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 380,
+      "line": 472,
+      "predicate": "'pre-attempt envelope omission'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9303,
       "duplicate_sets": [],
+      "still_rejected_count": 10199,
       "flipping_negatives": 4
     },
     {
       "site": "sem:267:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 382,
+      "line": 474,
+      "predicate": "'episode attempt record'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9305,
       "duplicate_sets": [],
+      "still_rejected_count": 10201,
       "flipping_negatives": 2
     },
     {
       "site": "sem:fix6:validate_capture:require:'source ref ' + slot",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 388,
+      "line": 480,
+      "predicate": "'source ref ' + slot",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9072,
       "duplicate_sets": [],
+      "still_rejected_count": 9968,
       "flipping_negatives": 235
     },
     {
       "site": "sem:273:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 389,
+      "line": 481,
+      "predicate": "'source owner ' + slot",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9303,
       "duplicate_sets": [],
+      "still_rejected_count": 10199,
       "flipping_negatives": 4
     },
     {
       "site": "sem:274:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 390,
+      "line": 482,
+      "predicate": "'source Project ' + slot",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9216,
       "duplicate_sets": [],
+      "still_rejected_count": 10112,
       "flipping_negatives": 91
     },
     {
       "site": "sem:275:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 391,
+      "line": 483,
+      "predicate": "'source root ' + slot",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9216,
       "duplicate_sets": [],
+      "still_rejected_count": 10112,
       "flipping_negatives": 91
     },
     {
       "site": "sem:276:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 392,
+      "line": 484,
+      "predicate": "'source revision ' + slot",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9184,
       "duplicate_sets": [],
+      "still_rejected_count": 10080,
       "flipping_negatives": 123
     },
     {
       "site": "sem:277:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 395,
+      "line": 487,
+      "predicate": "'source digest ' + slot",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9287,
       "duplicate_sets": [],
+      "still_rejected_count": 10183,
       "flipping_negatives": 20
     },
     {
       "site": "sem:278:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 396,
+      "line": 488,
+      "predicate": "'source parents ' + slot",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9087,
       "duplicate_sets": [],
+      "still_rejected_count": 9983,
       "flipping_negatives": 220
     },
     {
       "site": "sem:281:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 399,
+      "line": 491,
+      "predicate": "'source join ' + field",
       "status": "NAMED_DUPLICATE_SET",
-      "still_rejected_count": 9307,
       "duplicate_sets": [
         "complete source equality",
         "original event value equality",
         "original schema version equality/domain"
       ],
+      "still_rejected_count": 10203,
       "flipping_negatives": 0
     },
     {
       "site": "sem:283:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 401,
+      "line": 493,
+      "predicate": "'complete source observation/presence'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9251,
       "duplicate_sets": [
         "complete source equality",
         "attempt-backed blocked presence",
@@ -817,950 +928,1065 @@
         "original schema version equality/domain",
         "original required/extra field presence"
       ],
+      "still_rejected_count": 10147,
       "flipping_negatives": 56
     },
     {
       "site": "sem:290:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 408,
+      "line": 500,
+      "predicate": "'account interpretation requires original snapshots'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9305,
       "duplicate_sets": [],
+      "still_rejected_count": 10201,
       "flipping_negatives": 2
     },
     {
       "site": "sem:295:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 413,
+      "line": 505,
+      "predicate": "'installed graph join'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9283,
       "duplicate_sets": [],
+      "still_rejected_count": 10179,
       "flipping_negatives": 24
     },
     {
       "site": "sem:297:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 415,
+      "line": 507,
+      "predicate": "'materialization request join'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9295,
       "duplicate_sets": [],
+      "still_rejected_count": 10191,
       "flipping_negatives": 12
     },
     {
       "site": "sem:301:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 419,
+      "line": 511,
+      "predicate": "'conditional presence/original observation'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9291,
       "duplicate_sets": [],
+      "still_rejected_count": 10187,
       "flipping_negatives": 16
     },
     {
       "site": "sem:302:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 420,
+      "line": 512,
+      "predicate": "'reserved sequence'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9291,
       "duplicate_sets": [],
+      "still_rejected_count": 10187,
       "flipping_negatives": 16
     },
     {
       "site": "sem:303:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 421,
+      "line": 513,
+      "predicate": "'transition revision'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9291,
       "duplicate_sets": [],
+      "still_rejected_count": 10187,
       "flipping_negatives": 16
     },
     {
       "site": "sem:304:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 422,
+      "line": 514,
+      "predicate": "'source predecessor'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9291,
       "duplicate_sets": [],
+      "still_rejected_count": 10187,
       "flipping_negatives": 16
     },
     {
       "site": "sem:309:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 427,
+      "line": 519,
+      "predicate": "'illegal successor'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9291,
       "duplicate_sets": [],
+      "still_rejected_count": 10187,
       "flipping_negatives": 16
     },
     {
       "site": "sem:310:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 428,
+      "line": 520,
+      "predicate": "'post-state'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9291,
       "duplicate_sets": [],
+      "still_rejected_count": 10187,
       "flipping_negatives": 16
     },
     {
       "site": "sem:311:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 429,
+      "line": 521,
+      "predicate": "'post-state CAS'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9291,
       "duplicate_sets": [],
+      "still_rejected_count": 10187,
       "flipping_negatives": 16
     },
     {
       "site": "sem:312:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 430,
+      "line": 522,
+      "predicate": "'post-state sequence'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9291,
       "duplicate_sets": [],
+      "still_rejected_count": 10187,
       "flipping_negatives": 16
     },
     {
       "site": "sem:314:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 432,
+      "line": 524,
+      "predicate": "'post-state effects'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9290,
       "duplicate_sets": [],
+      "still_rejected_count": 10186,
       "flipping_negatives": 17
     },
     {
       "site": "sem:316:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 434,
+      "line": 526,
+      "predicate": "'owner predicate ' + path",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9271,
       "duplicate_sets": [],
+      "still_rejected_count": 10167,
       "flipping_negatives": 36
     },
     {
       "site": "sem:349:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 438,
+      "line": 530,
+      "predicate": "'terminal outcome classification'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:352:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 441,
+      "line": 533,
+      "predicate": "'pre-attempt omission'",
       "status": "NAMED_DUPLICATE_SET",
-      "still_rejected_count": 9307,
       "duplicate_sets": [
         "attempt-backed blocked presence"
       ],
+      "still_rejected_count": 10203,
       "flipping_negatives": 0
     },
     {
       "site": "sem:354:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 443,
+      "line": 535,
+      "predicate": "'restore anchor'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:357:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 446,
+      "line": 538,
+      "predicate": "'current ordered action'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9290,
       "duplicate_sets": [],
+      "still_rejected_count": 10186,
       "flipping_negatives": 17
     },
     {
       "site": "sem:358:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 447,
+      "line": 539,
+      "predicate": "'resolution evidence'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:359:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 448,
+      "line": 540,
+      "predicate": "'resolution barrier'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9305,
       "duplicate_sets": [],
+      "still_rejected_count": 10201,
       "flipping_negatives": 2
     },
     {
       "site": "sem:363:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 452,
+      "line": 544,
+      "predicate": "'child is parent'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:364:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 453,
+      "line": 545,
+      "predicate": "'parent attempt record'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9305,
       "duplicate_sets": [],
+      "still_rejected_count": 10201,
       "flipping_negatives": 2
     },
     {
       "site": "sem:365:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 454,
+      "line": 546,
+      "predicate": "'child attempt record'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9305,
       "duplicate_sets": [],
+      "still_rejected_count": 10201,
       "flipping_negatives": 2
     },
     {
       "site": "sem:366:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 455,
+      "line": 547,
+      "predicate": "'remediation root record'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9305,
       "duplicate_sets": [],
+      "still_rejected_count": 10201,
       "flipping_negatives": 2
     },
     {
       "site": "sem:367:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 456,
+      "line": 548,
+      "predicate": "'remediation ceiling'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9305,
       "duplicate_sets": [
         "same joined remediation ceiling"
       ],
+      "still_rejected_count": 10201,
       "flipping_negatives": 2
     },
     {
       "site": "sem:368:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 458,
+      "line": 550,
+      "predicate": "'normalized remediation generation'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9303,
       "duplicate_sets": [],
+      "still_rejected_count": 10199,
       "flipping_negatives": 4
     },
     {
       "site": "sem:369:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 459,
+      "line": 551,
+      "predicate": "'joined remediation generation ceiling'",
       "status": "NAMED_DUPLICATE_SET",
-      "still_rejected_count": 9307,
       "duplicate_sets": [
         "same joined remediation ceiling"
       ],
+      "still_rejected_count": 10203,
       "flipping_negatives": 0
     },
     {
       "site": "sem:371:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 461,
+      "line": 553,
+      "predicate": "'fixed without successful child'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:380:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 470,
+      "line": 562,
+      "predicate": "'scheduler source selection'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:385:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 475,
+      "line": 567,
+      "predicate": "'duplicate candidate'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:386:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 476,
+      "line": 568,
+      "predicate": "'candidate partition'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:387:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 477,
+      "line": 569,
+      "predicate": "'fill available capacity'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:390:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 480,
+      "line": 572,
+      "predicate": "'score ordering'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:393:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 483,
+      "line": 575,
+      "predicate": "'selected score'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:fix6:validate_capture:require:'scheduler wake identity/clock types'",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 485,
+      "line": 577,
+      "predicate": "'scheduler wake identity/clock types'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9284,
       "duplicate_sets": [],
+      "still_rejected_count": 10180,
       "flipping_negatives": 23
     },
     {
       "site": "sem:395:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 490,
+      "line": 582,
+      "predicate": "'primary wake'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:396:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 491,
+      "line": 583,
+      "predicate": "'coalesced wakes'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:397:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 492,
+      "line": 584,
+      "predicate": "'wake event joins'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:fix6:validate_capture:require:'scheduler recovered boolean'",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 493,
+      "line": 585,
+      "predicate": "'scheduler recovered boolean'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9298,
       "duplicate_sets": [],
+      "still_rejected_count": 10194,
       "flipping_negatives": 9
     },
     {
       "site": "sem:399:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 495,
+      "line": 587,
+      "predicate": "'first recovery wake'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:401:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 497,
+      "line": 589,
+      "predicate": "'watchdog pending event'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:403:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 499,
+      "line": 591,
+      "predicate": "'publication ordering'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9179,
       "duplicate_sets": [],
+      "still_rejected_count": 10075,
       "flipping_negatives": 128
     },
     {
       "site": "sem:320:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 510,
+      "line": 602,
+      "predicate": "'dependency payload ref ' + field",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9298,
       "duplicate_sets": [],
+      "still_rejected_count": 10194,
       "flipping_negatives": 9
     },
     {
       "site": "sem:321:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 511,
+      "line": 603,
+      "predicate": "'dependency scope ' + field",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9287,
       "duplicate_sets": [],
+      "still_rejected_count": 10183,
       "flipping_negatives": 20
     },
     {
       "site": "sem:322:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 512,
+      "line": 604,
+      "predicate": "'dependency root ' + field",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:323:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 513,
+      "line": 605,
+      "predicate": "'dependency hash ' + field",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9278,
       "duplicate_sets": [],
+      "still_rejected_count": 10174,
       "flipping_negatives": 29
     },
     {
       "site": "sem:324:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 514,
+      "line": 606,
+      "predicate": "'deleted dependency ' + field",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9287,
       "duplicate_sets": [],
+      "still_rejected_count": 10183,
       "flipping_negatives": 20
     },
     {
       "site": "sem:325:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 515,
+      "line": 607,
+      "predicate": "'dependency authorization ' + field",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 8587,
       "duplicate_sets": [],
+      "still_rejected_count": 9483,
       "flipping_negatives": 720
     },
     {
       "site": "sem:329:schema",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 519,
+      "line": 612,
+      "predicate": "schema_validate('Plans/execution_unit_context.schema.json', dependency['body'], whole_schema_refs=False)",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:334:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 524,
+      "line": 617,
+      "predicate": "'runtime subject ' + key",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:336:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 526,
+      "line": 619,
+      "predicate": "'runtime identity ' + key",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9257,
       "duplicate_sets": [],
+      "still_rejected_count": 10153,
       "flipping_negatives": 50
     },
     {
       "site": "sem:338:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 528,
+      "line": 621,
+      "predicate": "'complete dependency resolution'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "sem:342:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 532,
+      "line": 625,
+      "predicate": "'evidence list dependency ' + field",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9131,
       "duplicate_sets": [],
+      "still_rejected_count": 10027,
       "flipping_negatives": 176
     },
     {
       "site": "sem:421:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 546,
+      "line": 644,
+      "predicate": "'retained original source custody'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9291,
       "duplicate_sets": [],
+      "still_rejected_count": 10059,
+      "flipping_negatives": 144
+    },
+    {
+      "site": "sem:fix6:_validate_history:require:'retained original identity'",
+      "path": "scripts/pm_executor_event_semantics.py",
+      "line": 647,
+      "predicate": "'retained original identity'",
+      "status": "SINGLE_NEGATIVE",
+      "duplicate_sets": [],
+      "still_rejected_count": 10187,
       "flipping_negatives": 16
     },
     {
       "site": "sem:414:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 550,
+      "line": 653,
+      "predicate": "'reader_withdrawn'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 8987,
       "duplicate_sets": [],
+      "still_rejected_count": 9883,
       "flipping_negatives": 320
     },
     {
       "site": "sem:415:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 551,
+      "line": 654,
+      "predicate": "'source_unavailable'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 8987,
       "duplicate_sets": [],
+      "still_rejected_count": 9883,
       "flipping_negatives": 320
     },
     {
       "site": "sem:416:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 552,
+      "line": 655,
+      "predicate": "'event_deleted'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9275,
       "duplicate_sets": [],
+      "still_rejected_count": 10171,
       "flipping_negatives": 32
     },
     {
       "site": "sem:417:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 553,
+      "line": 656,
+      "predicate": "'event access'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 8923,
       "duplicate_sets": [],
+      "still_rejected_count": 9819,
       "flipping_negatives": 384
     },
     {
       "site": "sem:418:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 554,
+      "line": 657,
+      "predicate": "'history Project'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9275,
       "duplicate_sets": [],
+      "still_rejected_count": 10171,
       "flipping_negatives": 32
     },
     {
       "site": "sem:419:require",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 555,
+      "line": 658,
+      "predicate": "'history Storage root'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9275,
       "duplicate_sets": [],
+      "still_rejected_count": 10171,
       "flipping_negatives": 32
     },
     {
       "site": "sem:445:schema",
       "path": "scripts/pm_executor_event_semantics.py",
-      "line": 584,
+      "line": 687,
+      "predicate": "schema_validate(contract['schema_ref'], p)",
       "status": "SINGLE_TRACE_SCHEMA",
-      "still_rejected_count": 9307,
       "duplicate_sets": [],
+      "still_rejected_count": 10203,
       "flipping_negatives": 0
     },
     {
       "site": "shape:fix6:identity:require:'identity declared field domain ' + field",
       "path": "scripts/pm_executor_event_contracts.py",
       "line": 19,
+      "predicate": "'identity declared field domain ' + field",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 8499,
       "duplicate_sets": [
         "identity integer representation"
       ],
+      "still_rejected_count": 9395,
       "flipping_negatives": 808
     },
     {
       "site": "shape:fix6:identity:require:'identity Storage string domain'",
       "path": "scripts/pm_executor_event_contracts.py",
       "line": 22,
+      "predicate": "'identity Storage string domain'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9147,
       "duplicate_sets": [],
+      "still_rejected_count": 10043,
       "flipping_negatives": 160
     },
     {
       "site": "shape:27:schema",
       "path": "scripts/pm_executor_event_contracts.py",
       "line": 33,
+      "predicate": "schema_validate(contract['schema_ref'], payload)",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9128,
       "duplicate_sets": [
         "shape generation required presence",
-        "shape score integer representation"
+        "shape score integer representation",
+        "shape timestamp schema/grammar/decoder"
       ],
+      "still_rejected_count": 10024,
       "flipping_negatives": 179
     },
     {
       "site": "shape:30:raise",
       "path": "scripts/pm_executor_event_contracts.py",
       "line": 36,
+      "predicate": "field",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 8507,
       "duplicate_sets": [],
+      "still_rejected_count": 9403,
       "flipping_negatives": 800
     },
     {
       "site": "shape:32:raise",
       "path": "scripts/pm_executor_event_contracts.py",
       "line": 38,
+      "predicate": "'withdrawal/deletion fence'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 8987,
       "duplicate_sets": [],
+      "still_rejected_count": 9883,
       "flipping_negatives": 320
     },
     {
       "site": "shape:34:raise",
       "path": "scripts/pm_executor_event_contracts.py",
       "line": 40,
+      "predicate": "'Project join'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9291,
       "duplicate_sets": [],
+      "still_rejected_count": 10187,
       "flipping_negatives": 16
     },
     {
       "site": "shape:36:raise",
       "path": "scripts/pm_executor_event_contracts.py",
       "line": 42,
+      "predicate": "'generation join'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9292,
       "duplicate_sets": [
         "shape generation required presence"
       ],
+      "still_rejected_count": 10188,
       "flipping_negatives": 15
     },
     {
       "site": "shape:40:raise",
       "path": "scripts/pm_executor_event_contracts.py",
       "line": 46,
+      "predicate": "p + ' source join'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9293,
       "duplicate_sets": [],
+      "still_rejected_count": 10189,
       "flipping_negatives": 14
     },
     {
       "site": "shape:44:schema",
       "path": "scripts/pm_executor_event_contracts.py",
       "line": 50,
+      "predicate": "jsonschema.Draft202012Validator(definition).validate(context['source_facts'])",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9268,
       "duplicate_sets": [
         "node completion original state domain"
       ],
+      "still_rejected_count": 10164,
       "flipping_negatives": 39
     },
     {
       "site": "shape:48:raise",
       "path": "scripts/pm_executor_event_contracts.py",
       "line": 54,
+      "predicate": "'canonical source binding: ' + key",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9222,
       "duplicate_sets": [],
+      "still_rejected_count": 10118,
       "flipping_negatives": 85
     },
     {
       "site": "shape:51:raise",
       "path": "scripts/pm_executor_event_contracts.py",
       "line": 57,
+      "predicate": "'envelope binding: ' + key",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9266,
       "duplicate_sets": [],
+      "still_rejected_count": 10162,
       "flipping_negatives": 41
     },
     {
       "site": "shape:55:raise",
       "path": "scripts/pm_executor_event_contracts.py",
       "line": 61,
+      "predicate": "'node completion source state'",
       "status": "NAMED_DUPLICATE_SET",
-      "still_rejected_count": 9307,
       "duplicate_sets": [
         "node completion original state domain"
       ],
+      "still_rejected_count": 10203,
       "flipping_negatives": 0
     },
     {
       "site": "shape:57:raise",
       "path": "scripts/pm_executor_event_contracts.py",
       "line": 63,
+      "predicate": "'fixed without child success'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9297,
       "duplicate_sets": [],
+      "still_rejected_count": 10193,
       "flipping_negatives": 10
     },
     {
       "site": "shape:59:raise",
       "path": "scripts/pm_executor_event_contracts.py",
       "line": 65,
+      "predicate": "'child is parent'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "shape:61:raise",
       "path": "scripts/pm_executor_event_contracts.py",
       "line": 67,
+      "predicate": "'backoff before recorded observation'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "shape:63:raise",
       "path": "scripts/pm_executor_event_contracts.py",
       "line": 69,
+      "predicate": "'graph already locked'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9297,
       "duplicate_sets": [],
+      "still_rejected_count": 10193,
       "flipping_negatives": 10
     },
     {
       "site": "shape:65:raise",
       "path": "scripts/pm_executor_event_contracts.py",
       "line": 71,
+      "predicate": "'Document Set packaging'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9297,
       "duplicate_sets": [],
+      "still_rejected_count": 10193,
       "flipping_negatives": 10
     },
     {
       "site": "shape:67:raise",
       "path": "scripts/pm_executor_event_contracts.py",
       "line": 73,
+      "predicate": "'backoff not elapsed'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "shape:69:raise",
       "path": "scripts/pm_executor_event_contracts.py",
       "line": 75,
+      "predicate": "'non-retryable failure'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9305,
       "duplicate_sets": [],
+      "still_rejected_count": 10201,
       "flipping_negatives": 2
     },
     {
       "site": "shape:72:raise",
       "path": "scripts/pm_executor_event_contracts.py",
       "line": 78,
+      "predicate": "'terminal success/failure mismatch'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "shape:75:raise",
       "path": "scripts/pm_executor_event_contracts.py",
       "line": 81,
+      "predicate": "'missing restore anchor'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "shape:82:raise",
       "path": "scripts/pm_executor_event_contracts.py",
       "line": 88,
+      "predicate": "'duplicate node'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "shape:84:raise",
       "path": "scripts/pm_executor_event_contracts.py",
       "line": 90,
+      "predicate": "'capacity/partition'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9305,
       "duplicate_sets": [],
+      "still_rejected_count": 10201,
       "flipping_negatives": 2
     },
     {
       "site": "shape:88:raise",
       "path": "scripts/pm_executor_event_contracts.py",
       "line": 94,
+      "predicate": "'selection order'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "shape:92:raise",
       "path": "scripts/pm_executor_event_contracts.py",
       "line": 98,
+      "predicate": "'score join'",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9306,
       "duplicate_sets": [],
+      "still_rejected_count": 10202,
       "flipping_negatives": 1
     },
     {
       "site": "isolated-schema:attempt.completed",
       "path": "Plans/event_payload_attempt_completed.schema.json",
       "line": null,
+      "predicate": "date-time exact-end pattern",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9304,
       "duplicate_sets": [],
-      "flipping_negatives": 3
+      "still_rejected_count": 10174,
+      "flipping_negatives": 29
     },
     {
       "site": "isolated-schema:attempt.started",
       "path": "Plans/event_payload_attempt_started.schema.json",
       "line": null,
+      "predicate": "date-time exact-end pattern",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9305,
       "duplicate_sets": [],
-      "flipping_negatives": 2
+      "still_rejected_count": 10188,
+      "flipping_negatives": 15
     },
     {
       "site": "isolated-schema:node.blocked",
       "path": "Plans/event_payload_node_blocked.schema.json",
       "line": null,
+      "predicate": "date-time exact-end pattern",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9305,
       "duplicate_sets": [],
-      "flipping_negatives": 2
+      "still_rejected_count": 10188,
+      "flipping_negatives": 15
     },
     {
       "site": "isolated-schema:node.completed",
       "path": "Plans/event_payload_node_completed.schema.json",
       "line": null,
+      "predicate": "date-time exact-end pattern",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9305,
       "duplicate_sets": [],
-      "flipping_negatives": 2
+      "still_rejected_count": 10188,
+      "flipping_negatives": 15
     },
     {
       "site": "isolated-schema:node.started",
       "path": "Plans/event_payload_node_started.schema.json",
       "line": null,
+      "predicate": "date-time exact-end pattern",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9305,
       "duplicate_sets": [],
-      "flipping_negatives": 2
+      "still_rejected_count": 10188,
+      "flipping_negatives": 15
     },
     {
       "site": "isolated-schema:node.unblocked",
       "path": "Plans/event_payload_node_unblocked.schema.json",
       "line": null,
+      "predicate": "date-time exact-end pattern",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9305,
       "duplicate_sets": [],
-      "flipping_negatives": 2
+      "still_rejected_count": 10188,
+      "flipping_negatives": 15
     },
     {
       "site": "isolated-schema:plan.decomposition_degraded",
       "path": "Plans/event_payload_plan_decomposition_degraded.schema.json",
       "line": null,
+      "predicate": "date-time exact-end pattern",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9305,
       "duplicate_sets": [],
-      "flipping_negatives": 2
+      "still_rejected_count": 10188,
+      "flipping_negatives": 15
     },
     {
       "site": "isolated-schema:remediation.resolved",
       "path": "Plans/event_payload_remediation_resolved.schema.json",
       "line": null,
+      "predicate": "date-time exact-end pattern",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9305,
       "duplicate_sets": [],
-      "flipping_negatives": 2
+      "still_rejected_count": 10188,
+      "flipping_negatives": 15
     },
     {
       "site": "isolated-schema:remediation.spawned",
       "path": "Plans/event_payload_remediation_spawned.schema.json",
       "line": null,
+      "predicate": "date-time exact-end pattern",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9305,
       "duplicate_sets": [],
-      "flipping_negatives": 2
+      "still_rejected_count": 10188,
+      "flipping_negatives": 15
     },
     {
       "site": "isolated-schema:run.completed",
       "path": "Plans/event_payload_run_completed.schema.json",
       "line": null,
+      "predicate": "date-time exact-end pattern",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9305,
       "duplicate_sets": [],
-      "flipping_negatives": 2
+      "still_rejected_count": 10188,
+      "flipping_negatives": 15
     },
     {
       "site": "isolated-schema:run.graph_integrity_failed",
       "path": "Plans/event_payload_run_graph_integrity_failed.schema.json",
       "line": null,
+      "predicate": "date-time exact-end pattern",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9305,
       "duplicate_sets": [],
-      "flipping_negatives": 2
+      "still_rejected_count": 10188,
+      "flipping_negatives": 15
     },
     {
       "site": "isolated-schema:run.node_backoff_expired",
       "path": "Plans/event_payload_run_node_backoff_expired.schema.json",
       "line": null,
+      "predicate": "date-time exact-end pattern",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9305,
       "duplicate_sets": [],
-      "flipping_negatives": 2
+      "still_rejected_count": 10188,
+      "flipping_negatives": 15
     },
     {
       "site": "isolated-schema:run.node_backoff_started",
       "path": "Plans/event_payload_run_node_backoff_started.schema.json",
       "line": null,
+      "predicate": "date-time exact-end pattern",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9304,
       "duplicate_sets": [],
-      "flipping_negatives": 3
+      "still_rejected_count": 10174,
+      "flipping_negatives": 29
     },
     {
       "site": "isolated-schema:run.node_ready",
       "path": "Plans/event_payload_run_node_ready.schema.json",
       "line": null,
+      "predicate": "date-time exact-end pattern",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9304,
       "duplicate_sets": [],
-      "flipping_negatives": 3
+      "still_rejected_count": 10187,
+      "flipping_negatives": 16
     },
     {
       "site": "isolated-schema:run.node_retry_scheduled",
       "path": "Plans/event_payload_run_node_retry_scheduled.schema.json",
       "line": null,
+      "predicate": "date-time exact-end pattern",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9305,
       "duplicate_sets": [],
-      "flipping_negatives": 2
+      "still_rejected_count": 10188,
+      "flipping_negatives": 15
     },
     {
       "site": "isolated-schema:scheduler.pass",
       "path": "Plans/event_payload_scheduler_pass.schema.json",
       "line": null,
+      "predicate": "date-time exact-end pattern",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9302,
       "duplicate_sets": [],
-      "flipping_negatives": 5
+      "still_rejected_count": 10185,
+      "flipping_negatives": 18
     },
     {
       "site": "reference-admission",
       "path": "scripts/pm_executor_schema_refs.py",
       "line": 33,
+      "predicate": "whole-document $ref resolution and schema-target admission",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9195,
       "duplicate_sets": [],
+      "still_rejected_count": 10091,
       "flipping_negatives": 112
     },
     {
       "site": "numeric-json-parser",
       "path": "scripts/pm_executor_event_semantics.py",
       "line": null,
+      "predicate": "JSON number lexical admission",
       "status": "SINGLE_NEGATIVE",
-      "still_rejected_count": 9243,
       "duplicate_sets": [],
+      "still_rejected_count": 10139,
       "flipping_negatives": 64
     }
   ]

@@ -1,51 +1,50 @@
 {
-  "review_round": 7,
-  "graded_commit": "11673e1c4ae65f3b8b88de548c0a8f877e1c62c1",
+  "review_round": 8,
+  "graded_commit": "8b50753c6213e706126fbd5c13a5e08212ed5de4",
   "production_totals": {
     "source_transition_cases": 2887,
     "receipt_replay_withdrawal_traces": 230,
     "source_score_domain_cases": 16,
-    "isolated_schema_cases": 38,
+    "isolated_schema_cases": 326,
     "schema_reference_cases": 208,
-    "historical_read_cases": 564,
+    "historical_read_cases": 1345,
     "numeric_boundary_cases": 2060,
     "exact_type_cases": 3828,
-    "shape_cases": 744,
-    "identity_replay_cases": 80,
-    "shared_canonical_goldens": 21,
-    "shared_helper_cases": 56
+    "shared_helpers_per_family_process": 56,
+    "shared_goldens_per_family_process": 21,
+    "shape_cases": 766
   },
   "guard_summary": {
-    "guard_sites": 181,
-    "negative_cases": 9307,
+    "guard_sites": 185,
+    "negative_cases": 10203,
     "suites": {
       "source": 2740,
-      "history": 450,
-      "schema": 38,
+      "history": 1090,
+      "schema": 272,
       "reference": 112,
-      "shape": 644,
+      "shape": 666,
       "numeric": 1452,
       "type": 3812,
       "score": 10,
       "helper": 40,
       "canonical": 9
     },
-    "single_site_evaluations": 1684567,
+    "single_site_evaluations": 1887555,
     "trace_scenarios": 230,
-    "trace_site_evaluations": 41630,
+    "trace_site_evaluations": 42550,
     "fresh_routes": 2,
-    "route_negative_evaluations": 18614,
+    "route_negative_evaluations": 20406,
     "route_trace_evaluations": 460,
-    "single_negative_sites": 171,
+    "single_negative_sites": 174,
     "single_trace_schema_sites": 1,
-    "named_duplicate_sites": 9,
-    "nonempty_named_sets": 19,
-    "masked_guard_case_instances": 592,
+    "named_duplicate_sites": 10,
+    "nonempty_named_sets": 22,
+    "masked_guard_case_instances": 612,
     "masked_classifications": {
       "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
-      "NAMED_DUPLICATE_SET": 418,
+      "NAMED_DUPLICATE_SET": 439,
       "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
-      "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
+      "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 29
     },
     "unproved_sites": 0,
     "unproved_guard_case_instances": 0,
@@ -59,1337 +58,1079 @@
       "family": "attempt.completed",
       "step": "matrix",
       "exit_code": 0,
-      "seconds": 291.408,
-      "available_gb_before": 8,
-      "available_gb_after": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/matrix-attempt.completed.log"
-    },
-    {
-      "family": "attempt.completed",
-      "step": "duplicates",
-      "exit_code": 0,
-      "seconds": 35.699,
-      "available_gb_before": 8,
-      "available_gb_after": 10,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/duplicates-attempt.completed.log"
-    },
-    {
-      "family": "attempt.completed",
-      "step": "routes",
-      "exit_code": 0,
-      "seconds": 17.951,
-      "available_gb_before": 10,
-      "available_gb_after": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/routes-attempt.completed.log"
-    },
-    {
-      "family": "attempt.completed",
-      "step": "contracts",
-      "exit_code": 0,
-      "seconds": 4.768,
-      "available_gb_before": 8,
-      "available_gb_after": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/contracts-attempt.completed.log"
-    },
-    {
-      "family": "attempt.completed",
-      "step": "semantics",
-      "exit_code": 0,
-      "seconds": 27.089,
-      "available_gb_before": 8,
-      "available_gb_after": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/semantics-attempt.completed.log"
-    },
-    {
-      "family": "attempt.started",
-      "step": "matrix",
-      "exit_code": 0,
-      "seconds": 248.404,
-      "available_gb_before": 9,
-      "available_gb_after": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/matrix-attempt.started.log"
-    },
-    {
-      "family": "attempt.started",
-      "step": "duplicates",
-      "exit_code": 0,
-      "seconds": 63.311,
-      "available_gb_before": 8,
-      "available_gb_after": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/duplicates-attempt.started.log"
-    },
-    {
-      "family": "attempt.started",
-      "step": "routes",
-      "exit_code": 0,
-      "seconds": 29.558,
-      "available_gb_before": 8,
-      "available_gb_after": 7,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/routes-attempt.started.log"
-    },
-    {
-      "family": "attempt.started",
-      "step": "contracts",
-      "exit_code": 0,
-      "seconds": 4.247,
-      "available_gb_before": 7,
-      "available_gb_after": 7,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/contracts-attempt.started.log"
-    },
-    {
-      "family": "attempt.started",
-      "step": "semantics",
-      "exit_code": 0,
-      "seconds": 23.723,
-      "available_gb_before": 7,
-      "available_gb_after": 7,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/semantics-attempt.started.log"
-    },
-    {
-      "family": "node.blocked",
-      "step": "matrix",
-      "exit_code": 0,
-      "seconds": 111.019,
-      "available_gb_before": 7,
-      "available_gb_after": 12,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/matrix-node.blocked.log"
-    },
-    {
-      "family": "node.blocked",
-      "step": "duplicates",
-      "exit_code": 0,
-      "seconds": 43.84,
-      "available_gb_before": 12,
-      "available_gb_after": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/duplicates-node.blocked.log"
-    },
-    {
-      "family": "node.blocked",
-      "step": "routes",
-      "exit_code": 0,
-      "seconds": 13.63,
-      "available_gb_before": 9,
-      "available_gb_after": 11,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/routes-node.blocked.log"
-    },
-    {
-      "family": "node.blocked",
-      "step": "contracts",
-      "exit_code": 0,
-      "seconds": 2.36,
-      "available_gb_before": 11,
-      "available_gb_after": 11,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/contracts-node.blocked.log"
-    },
-    {
-      "family": "node.blocked",
-      "step": "semantics",
-      "exit_code": 0,
-      "seconds": 11.345,
+      "seconds": 109.065,
       "available_gb_before": 11,
       "available_gb_after": 10,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/semantics-node.blocked.log"
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/matrix-attempt.completed.log"
     },
     {
-      "family": "node.completed",
-      "step": "matrix",
+      "family": "attempt.completed",
+      "step": "duplicates",
       "exit_code": 0,
-      "seconds": 113.851,
+      "seconds": 21.668,
       "available_gb_before": 10,
-      "available_gb_after": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/matrix-node.completed.log"
-    },
-    {
-      "family": "node.completed",
-      "step": "duplicates",
-      "exit_code": 0,
-      "seconds": 19.893,
-      "available_gb_before": 9,
-      "available_gb_after": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/duplicates-node.completed.log"
-    },
-    {
-      "family": "node.completed",
-      "step": "routes",
-      "exit_code": 0,
-      "seconds": 23.262,
-      "available_gb_before": 9,
-      "available_gb_after": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/routes-node.completed.log"
-    },
-    {
-      "family": "node.completed",
-      "step": "contracts",
-      "exit_code": 0,
-      "seconds": 4.61,
-      "available_gb_before": 8,
-      "available_gb_after": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/contracts-node.completed.log"
-    },
-    {
-      "family": "node.completed",
-      "step": "semantics",
-      "exit_code": 0,
-      "seconds": 18.818,
-      "available_gb_before": 8,
-      "available_gb_after": 7,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/semantics-node.completed.log"
-    },
-    {
-      "family": "node.started",
-      "step": "matrix",
-      "exit_code": 0,
-      "seconds": 127.084,
-      "available_gb_before": 7,
-      "available_gb_after": 7,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/matrix-node.started.log"
-    },
-    {
-      "family": "node.started",
-      "step": "duplicates",
-      "exit_code": 0,
-      "seconds": 35.427,
-      "available_gb_before": 7,
-      "available_gb_after": 7,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/duplicates-node.started.log"
-    },
-    {
-      "family": "node.started",
-      "step": "routes",
-      "exit_code": 0,
-      "seconds": 19.974,
-      "available_gb_before": 7,
-      "available_gb_after": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/routes-node.started.log"
-    },
-    {
-      "family": "node.started",
-      "step": "contracts",
-      "exit_code": 0,
-      "seconds": 1.828,
-      "available_gb_before": 8,
-      "available_gb_after": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/contracts-node.started.log"
-    },
-    {
-      "family": "node.started",
-      "step": "semantics",
-      "exit_code": 0,
-      "seconds": 20.194,
-      "available_gb_before": 8,
-      "available_gb_after": 7,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/semantics-node.started.log"
-    },
-    {
-      "family": "node.unblocked",
-      "step": "matrix",
-      "exit_code": 0,
-      "seconds": 68.956,
-      "available_gb_before": 7,
-      "available_gb_after": 6,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/matrix-node.unblocked.log"
-    },
-    {
-      "family": "node.unblocked",
-      "step": "duplicates",
-      "exit_code": 0,
-      "seconds": 20.484,
-      "available_gb_before": 6,
-      "available_gb_after": 6,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/duplicates-node.unblocked.log"
-    },
-    {
-      "family": "node.unblocked",
-      "step": "routes",
-      "exit_code": 0,
-      "seconds": 14.101,
-      "available_gb_before": 6,
-      "available_gb_after": 6,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/routes-node.unblocked.log"
-    },
-    {
-      "family": "node.unblocked",
-      "step": "contracts",
-      "exit_code": 0,
-      "seconds": 4.129,
-      "available_gb_before": 6,
-      "available_gb_after": 6,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/contracts-node.unblocked.log"
-    },
-    {
-      "family": "node.unblocked",
-      "step": "semantics",
-      "exit_code": 0,
-      "seconds": 5.652,
-      "available_gb_before": 6,
-      "available_gb_after": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/semantics-node.unblocked.log"
-    },
-    {
-      "family": "plan.decomposition_degraded",
-      "step": "matrix",
-      "exit_code": 0,
-      "seconds": 61.82,
-      "available_gb_before": 8,
-      "available_gb_after": 7,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/matrix-plan.decomposition_degraded.log"
-    },
-    {
-      "family": "plan.decomposition_degraded",
-      "step": "duplicates",
-      "exit_code": 0,
-      "seconds": 20.092,
-      "available_gb_before": 7,
-      "available_gb_after": 7,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/duplicates-plan.decomposition_degraded.log"
-    },
-    {
-      "family": "plan.decomposition_degraded",
-      "step": "routes",
-      "exit_code": 0,
-      "seconds": 12.346,
-      "available_gb_before": 7,
-      "available_gb_after": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/routes-plan.decomposition_degraded.log"
-    },
-    {
-      "family": "plan.decomposition_degraded",
-      "step": "contracts",
-      "exit_code": 0,
-      "seconds": 1.668,
-      "available_gb_before": 9,
-      "available_gb_after": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/contracts-plan.decomposition_degraded.log"
-    },
-    {
-      "family": "plan.decomposition_degraded",
-      "step": "semantics",
-      "exit_code": 0,
-      "seconds": 4.484,
-      "available_gb_before": 9,
       "available_gb_after": 11,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/semantics-plan.decomposition_degraded.log"
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/duplicates-attempt.completed.log"
     },
     {
-      "family": "remediation.resolved",
-      "step": "matrix",
+      "family": "attempt.completed",
+      "step": "routes",
       "exit_code": 0,
-      "seconds": 38.975,
+      "seconds": 7.827,
       "available_gb_before": 11,
-      "available_gb_after": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/matrix-remediation.resolved.log"
+      "available_gb_after": 11,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/routes-attempt.completed.log"
     },
     {
-      "family": "remediation.resolved",
-      "step": "duplicates",
-      "exit_code": 0,
-      "seconds": 15.273,
-      "available_gb_before": 9,
-      "available_gb_after": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/duplicates-remediation.resolved.log"
-    },
-    {
-      "family": "remediation.resolved",
-      "step": "routes",
-      "exit_code": 0,
-      "seconds": 17.847,
-      "available_gb_before": 8,
-      "available_gb_after": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/routes-remediation.resolved.log"
-    },
-    {
-      "family": "remediation.resolved",
+      "family": "attempt.completed",
       "step": "contracts",
       "exit_code": 0,
-      "seconds": 2.937,
-      "available_gb_before": 8,
-      "available_gb_after": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/contracts-remediation.resolved.log"
+      "seconds": 1.05,
+      "available_gb_before": 11,
+      "available_gb_after": 11,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/contracts-attempt.completed.log"
     },
     {
-      "family": "remediation.resolved",
+      "family": "attempt.completed",
       "step": "semantics",
       "exit_code": 0,
-      "seconds": 9.87,
-      "available_gb_before": 8,
-      "available_gb_after": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/semantics-remediation.resolved.log"
+      "seconds": 5.421,
+      "available_gb_before": 11,
+      "available_gb_after": 11,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/semantics-attempt.completed.log"
     },
     {
-      "family": "remediation.spawned",
+      "family": "attempt.started",
       "step": "matrix",
       "exit_code": 0,
-      "seconds": 68.535,
-      "available_gb_before": 8,
-      "available_gb_after": 7,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/matrix-remediation.spawned.log"
+      "seconds": 116.563,
+      "available_gb_before": 11,
+      "available_gb_after": 10,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/matrix-attempt.started.log"
     },
     {
-      "family": "remediation.spawned",
+      "family": "attempt.started",
       "step": "duplicates",
       "exit_code": 0,
-      "seconds": 19.84,
-      "available_gb_before": 7,
-      "available_gb_after": 7,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/duplicates-remediation.spawned.log"
+      "seconds": 24.646,
+      "available_gb_before": 10,
+      "available_gb_after": 10,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/duplicates-attempt.started.log"
     },
     {
-      "family": "remediation.spawned",
+      "family": "attempt.started",
       "step": "routes",
       "exit_code": 0,
-      "seconds": 10.961,
-      "available_gb_before": 7,
-      "available_gb_after": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/routes-remediation.spawned.log"
-    },
-    {
-      "family": "remediation.spawned",
-      "step": "contracts",
-      "exit_code": 0,
-      "seconds": 1.779,
-      "available_gb_before": 8,
-      "available_gb_after": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/contracts-remediation.spawned.log"
-    },
-    {
-      "family": "remediation.spawned",
-      "step": "semantics",
-      "exit_code": 0,
-      "seconds": 8.902,
-      "available_gb_before": 8,
-      "available_gb_after": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/semantics-remediation.spawned.log"
-    },
-    {
-      "family": "run.completed",
-      "step": "matrix",
-      "exit_code": 0,
-      "seconds": 50.256,
-      "available_gb_before": 8,
-      "available_gb_after": 10,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/matrix-run.completed.log"
-    },
-    {
-      "family": "run.completed",
-      "step": "duplicates",
-      "exit_code": 0,
-      "seconds": 24.593,
-      "available_gb_before": 10,
-      "available_gb_after": 10,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/duplicates-run.completed.log"
-    },
-    {
-      "family": "run.completed",
-      "step": "routes",
-      "exit_code": 0,
-      "seconds": 7.242,
-      "available_gb_before": 10,
-      "available_gb_after": 10,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/routes-run.completed.log"
-    },
-    {
-      "family": "run.completed",
-      "step": "contracts",
-      "exit_code": 0,
-      "seconds": 1.297,
-      "available_gb_before": 10,
-      "available_gb_after": 10,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/contracts-run.completed.log"
-    },
-    {
-      "family": "run.completed",
-      "step": "semantics",
-      "exit_code": 0,
-      "seconds": 8.047,
-      "available_gb_before": 10,
-      "available_gb_after": 10,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/semantics-run.completed.log"
-    },
-    {
-      "family": "run.graph_integrity_failed",
-      "step": "matrix",
-      "exit_code": 0,
-      "seconds": 65.477,
-      "available_gb_before": 10,
-      "available_gb_after": 10,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/matrix-run.graph_integrity_failed.log"
-    },
-    {
-      "family": "run.graph_integrity_failed",
-      "step": "duplicates",
-      "exit_code": 0,
-      "seconds": 12.279,
+      "seconds": 10.159,
       "available_gb_before": 10,
       "available_gb_after": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/duplicates-run.graph_integrity_failed.log"
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/routes-attempt.started.log"
     },
     {
-      "family": "run.graph_integrity_failed",
-      "step": "routes",
+      "family": "attempt.started",
+      "step": "contracts",
       "exit_code": 0,
-      "seconds": 13.247,
+      "seconds": 0.834,
       "available_gb_before": 9,
       "available_gb_after": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/routes-run.graph_integrity_failed.log"
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/contracts-attempt.started.log"
     },
     {
-      "family": "run.graph_integrity_failed",
-      "step": "contracts",
+      "family": "attempt.started",
+      "step": "semantics",
       "exit_code": 0,
-      "seconds": 3.073,
+      "seconds": 6.875,
       "available_gb_before": 9,
       "available_gb_after": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/contracts-run.graph_integrity_failed.log"
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/semantics-attempt.started.log"
     },
     {
-      "family": "run.graph_integrity_failed",
-      "step": "semantics",
+      "family": "node.blocked",
+      "step": "matrix",
+      "exit_code": 0,
+      "seconds": 77.603,
+      "available_gb_before": 9,
+      "available_gb_after": 9,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/matrix-node.blocked.log"
+    },
+    {
+      "family": "node.blocked",
+      "step": "duplicates",
+      "exit_code": 0,
+      "seconds": 19.041,
+      "available_gb_before": 9,
+      "available_gb_after": 9,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/duplicates-node.blocked.log"
+    },
+    {
+      "family": "node.blocked",
+      "step": "routes",
       "exit_code": 0,
       "seconds": 7.097,
       "available_gb_before": 9,
-      "available_gb_after": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/semantics-run.graph_integrity_failed.log"
+      "available_gb_after": 8,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/routes-node.blocked.log"
     },
     {
-      "family": "run.node_backoff_expired",
-      "step": "matrix",
-      "exit_code": 0,
-      "seconds": 58.692,
-      "available_gb_before": 9,
-      "available_gb_after": 11,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/matrix-run.node_backoff_expired.log"
-    },
-    {
-      "family": "run.node_backoff_expired",
-      "step": "duplicates",
-      "exit_code": 0,
-      "seconds": 14.33,
-      "available_gb_before": 11,
-      "available_gb_after": 11,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/duplicates-run.node_backoff_expired.log"
-    },
-    {
-      "family": "run.node_backoff_expired",
-      "step": "routes",
-      "exit_code": 0,
-      "seconds": 6.518,
-      "available_gb_before": 11,
-      "available_gb_after": 11,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/routes-run.node_backoff_expired.log"
-    },
-    {
-      "family": "run.node_backoff_expired",
+      "family": "node.blocked",
       "step": "contracts",
       "exit_code": 0,
-      "seconds": 1.286,
-      "available_gb_before": 11,
-      "available_gb_after": 11,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/contracts-run.node_backoff_expired.log"
+      "seconds": 1.04,
+      "available_gb_before": 8,
+      "available_gb_after": 8,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/contracts-node.blocked.log"
     },
     {
-      "family": "run.node_backoff_expired",
+      "family": "node.blocked",
       "step": "semantics",
       "exit_code": 0,
-      "seconds": 5.472,
-      "available_gb_before": 11,
-      "available_gb_after": 11,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/semantics-run.node_backoff_expired.log"
+      "seconds": 5.535,
+      "available_gb_before": 8,
+      "available_gb_after": 8,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/semantics-node.blocked.log"
     },
     {
-      "family": "run.node_backoff_started",
+      "family": "node.completed",
       "step": "matrix",
       "exit_code": 0,
-      "seconds": 44.591,
-      "available_gb_before": 11,
-      "available_gb_after": 11,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/matrix-run.node_backoff_started.log"
+      "seconds": 149.607,
+      "available_gb_before": 8,
+      "available_gb_after": 8,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/matrix-node.completed.log"
     },
     {
-      "family": "run.node_backoff_started",
+      "family": "node.completed",
       "step": "duplicates",
       "exit_code": 0,
-      "seconds": 26.301,
-      "available_gb_before": 11,
-      "available_gb_after": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/duplicates-run.node_backoff_started.log"
+      "seconds": 22.31,
+      "available_gb_before": 8,
+      "available_gb_after": 6,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/duplicates-node.completed.log"
     },
     {
-      "family": "run.node_backoff_started",
+      "family": "node.completed",
       "step": "routes",
       "exit_code": 0,
-      "seconds": 19.571,
-      "available_gb_before": 10,
-      "available_gb_after": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/routes-run.node_backoff_started.log"
+      "seconds": 7.111,
+      "available_gb_before": 6,
+      "available_gb_after": 6,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/routes-node.completed.log"
     },
     {
-      "family": "run.node_backoff_started",
+      "family": "node.completed",
       "step": "contracts",
       "exit_code": 0,
-      "seconds": 3.136,
-      "available_gb_before": 9,
-      "available_gb_after": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/contracts-run.node_backoff_started.log"
+      "seconds": 0.752,
+      "available_gb_before": 6,
+      "available_gb_after": 6,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/contracts-node.completed.log"
     },
     {
-      "family": "run.node_backoff_started",
+      "family": "node.completed",
       "step": "semantics",
       "exit_code": 0,
-      "seconds": 12.674,
-      "available_gb_before": 9,
-      "available_gb_after": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/semantics-run.node_backoff_started.log"
+      "seconds": 5.442,
+      "available_gb_before": 6,
+      "available_gb_after": 6,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/semantics-node.completed.log"
     },
     {
-      "family": "run.node_ready",
+      "family": "node.started",
       "step": "matrix",
       "exit_code": 0,
-      "seconds": 62.95,
-      "available_gb_before": 9,
-      "available_gb_after": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/matrix-run.node_ready.log"
+      "seconds": 223.302,
+      "available_gb_before": 6,
+      "available_gb_after": 6,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/matrix-node.started.log"
     },
     {
-      "family": "run.node_ready",
+      "family": "node.started",
       "step": "duplicates",
       "exit_code": 0,
-      "seconds": 17.618,
-      "available_gb_before": 9,
-      "available_gb_after": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/duplicates-run.node_ready.log"
+      "seconds": 37.044,
+      "available_gb_before": 6,
+      "available_gb_after": 6,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/duplicates-node.started.log"
     },
     {
-      "family": "run.node_ready",
+      "family": "node.started",
       "step": "routes",
       "exit_code": 0,
-      "seconds": 10.632,
-      "available_gb_before": 9,
-      "available_gb_after": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/routes-run.node_ready.log"
-    },
-    {
-      "family": "run.node_ready",
-      "step": "contracts",
-      "exit_code": 0,
-      "seconds": 3.497,
-      "available_gb_before": 8,
-      "available_gb_after": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/contracts-run.node_ready.log"
-    },
-    {
-      "family": "run.node_ready",
-      "step": "semantics",
-      "exit_code": 0,
-      "seconds": 8.495,
-      "available_gb_before": 8,
-      "available_gb_after": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/semantics-run.node_ready.log"
-    },
-    {
-      "family": "run.node_retry_scheduled",
-      "step": "matrix",
-      "exit_code": 0,
-      "seconds": 89.457,
-      "available_gb_before": 8,
-      "available_gb_after": 10,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/matrix-run.node_retry_scheduled.log"
-    },
-    {
-      "family": "run.node_retry_scheduled",
-      "step": "duplicates",
-      "exit_code": 0,
-      "seconds": 26.64,
-      "available_gb_before": 10,
-      "available_gb_after": 10,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/duplicates-run.node_retry_scheduled.log"
-    },
-    {
-      "family": "run.node_retry_scheduled",
-      "step": "routes",
-      "exit_code": 0,
-      "seconds": 14.118,
-      "available_gb_before": 10,
-      "available_gb_after": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/routes-run.node_retry_scheduled.log"
-    },
-    {
-      "family": "run.node_retry_scheduled",
-      "step": "contracts",
-      "exit_code": 0,
-      "seconds": 2.314,
-      "available_gb_before": 9,
-      "available_gb_after": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/contracts-run.node_retry_scheduled.log"
-    },
-    {
-      "family": "run.node_retry_scheduled",
-      "step": "semantics",
-      "exit_code": 0,
-      "seconds": 11.901,
-      "available_gb_before": 9,
-      "available_gb_after": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/semantics-run.node_retry_scheduled.log"
-    },
-    {
-      "family": "scheduler.pass",
-      "step": "matrix",
-      "exit_code": 0,
-      "seconds": 107.572,
-      "available_gb_before": 9,
-      "available_gb_after": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/matrix-scheduler.pass.log"
-    },
-    {
-      "family": "scheduler.pass",
-      "step": "duplicates",
-      "exit_code": 0,
-      "seconds": 31.304,
-      "available_gb_before": 8,
-      "available_gb_after": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/duplicates-scheduler.pass.log"
-    },
-    {
-      "family": "scheduler.pass",
-      "step": "routes",
-      "exit_code": 0,
-      "seconds": 16.363,
-      "available_gb_before": 8,
-      "available_gb_after": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/routes-scheduler.pass.log"
-    },
-    {
-      "family": "scheduler.pass",
-      "step": "contracts",
-      "exit_code": 0,
-      "seconds": 3.509,
-      "available_gb_before": 8,
-      "available_gb_after": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/contracts-scheduler.pass.log"
-    },
-    {
-      "family": "scheduler.pass",
-      "step": "semantics",
-      "exit_code": 0,
-      "seconds": 19.358,
-      "available_gb_before": 8,
+      "seconds": 7.135,
+      "available_gb_before": 6,
       "available_gb_after": 7,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/semantics-scheduler.pass.log"
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/routes-node.started.log"
+    },
+    {
+      "family": "node.started",
+      "step": "contracts",
+      "exit_code": 0,
+      "seconds": 0.71,
+      "available_gb_before": 7,
+      "available_gb_after": 6,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/contracts-node.started.log"
+    },
+    {
+      "family": "node.started",
+      "step": "semantics",
+      "exit_code": 0,
+      "seconds": 5.316,
+      "available_gb_before": 6,
+      "available_gb_after": 6,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/semantics-node.started.log"
+    },
+    {
+      "family": "node.unblocked",
+      "step": "matrix",
+      "exit_code": 0,
+      "seconds": 170.438,
+      "available_gb_before": 6,
+      "available_gb_after": 6,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/matrix-node.unblocked.log"
+    },
+    {
+      "family": "node.unblocked",
+      "step": "duplicates",
+      "exit_code": 0,
+      "seconds": 10.11,
+      "available_gb_before": 6,
+      "available_gb_after": 6,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/duplicates-node.unblocked.log"
+    },
+    {
+      "family": "node.unblocked",
+      "step": "routes",
+      "exit_code": 0,
+      "seconds": 3.115,
+      "available_gb_before": 6,
+      "available_gb_after": 6,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/routes-node.unblocked.log"
+    },
+    {
+      "family": "node.unblocked",
+      "step": "contracts",
+      "exit_code": 0,
+      "seconds": 0.61,
+      "available_gb_before": 6,
+      "available_gb_after": 6,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/contracts-node.unblocked.log"
+    },
+    {
+      "family": "node.unblocked",
+      "step": "semantics",
+      "exit_code": 0,
+      "seconds": 2.957,
+      "available_gb_before": 6,
+      "available_gb_after": 6,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/semantics-node.unblocked.log"
+    },
+    {
+      "family": "plan.decomposition_degraded",
+      "step": "matrix",
+      "exit_code": 0,
+      "seconds": 39.248,
+      "available_gb_before": 6,
+      "available_gb_after": 7,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/matrix-plan.decomposition_degraded.log"
+    },
+    {
+      "family": "plan.decomposition_degraded",
+      "step": "duplicates",
+      "exit_code": 0,
+      "seconds": 7.399,
+      "available_gb_before": 7,
+      "available_gb_after": 7,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/duplicates-plan.decomposition_degraded.log"
+    },
+    {
+      "family": "plan.decomposition_degraded",
+      "step": "routes",
+      "exit_code": 0,
+      "seconds": 3.261,
+      "available_gb_before": 7,
+      "available_gb_after": 7,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/routes-plan.decomposition_degraded.log"
+    },
+    {
+      "family": "plan.decomposition_degraded",
+      "step": "contracts",
+      "exit_code": 0,
+      "seconds": 0.774,
+      "available_gb_before": 7,
+      "available_gb_after": 7,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/contracts-plan.decomposition_degraded.log"
+    },
+    {
+      "family": "plan.decomposition_degraded",
+      "step": "semantics",
+      "exit_code": 0,
+      "seconds": 2.661,
+      "available_gb_before": 7,
+      "available_gb_after": 7,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/semantics-plan.decomposition_degraded.log"
+    },
+    {
+      "family": "remediation.resolved",
+      "step": "matrix",
+      "exit_code": 0,
+      "seconds": 49.502,
+      "available_gb_before": 7,
+      "available_gb_after": 14,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/matrix-remediation.resolved.log"
+    },
+    {
+      "family": "remediation.resolved",
+      "step": "duplicates",
+      "exit_code": 0,
+      "seconds": 9.712,
+      "available_gb_before": 14,
+      "available_gb_after": 14,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/duplicates-remediation.resolved.log"
+    },
+    {
+      "family": "remediation.resolved",
+      "step": "routes",
+      "exit_code": 0,
+      "seconds": 3.754,
+      "available_gb_before": 14,
+      "available_gb_after": 14,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/routes-remediation.resolved.log"
+    },
+    {
+      "family": "remediation.resolved",
+      "step": "contracts",
+      "exit_code": 0,
+      "seconds": 0.724,
+      "available_gb_before": 14,
+      "available_gb_after": 14,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/contracts-remediation.resolved.log"
+    },
+    {
+      "family": "remediation.resolved",
+      "step": "semantics",
+      "exit_code": 0,
+      "seconds": 3.453,
+      "available_gb_before": 14,
+      "available_gb_after": 13,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/semantics-remediation.resolved.log"
+    },
+    {
+      "family": "remediation.spawned",
+      "step": "matrix",
+      "exit_code": 0,
+      "seconds": 47.677,
+      "available_gb_before": 13,
+      "available_gb_after": 14,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/matrix-remediation.spawned.log"
+    },
+    {
+      "family": "remediation.spawned",
+      "step": "duplicates",
+      "exit_code": 0,
+      "seconds": 8.963,
+      "available_gb_before": 14,
+      "available_gb_after": 14,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/duplicates-remediation.spawned.log"
+    },
+    {
+      "family": "remediation.spawned",
+      "step": "routes",
+      "exit_code": 0,
+      "seconds": 4.282,
+      "available_gb_before": 14,
+      "available_gb_after": 14,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/routes-remediation.spawned.log"
+    },
+    {
+      "family": "remediation.spawned",
+      "step": "contracts",
+      "exit_code": 0,
+      "seconds": 0.851,
+      "available_gb_before": 14,
+      "available_gb_after": 13,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/contracts-remediation.spawned.log"
+    },
+    {
+      "family": "remediation.spawned",
+      "step": "semantics",
+      "exit_code": 0,
+      "seconds": 3.321,
+      "available_gb_before": 13,
+      "available_gb_after": 13,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/semantics-remediation.spawned.log"
+    },
+    {
+      "family": "run.completed",
+      "step": "matrix",
+      "exit_code": 0,
+      "seconds": 47.204,
+      "available_gb_before": 13,
+      "available_gb_after": 13,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/matrix-run.completed.log"
+    },
+    {
+      "family": "run.completed",
+      "step": "duplicates",
+      "exit_code": 0,
+      "seconds": 9.774,
+      "available_gb_before": 13,
+      "available_gb_after": 13,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/duplicates-run.completed.log"
+    },
+    {
+      "family": "run.completed",
+      "step": "routes",
+      "exit_code": 0,
+      "seconds": 3.996,
+      "available_gb_before": 13,
+      "available_gb_after": 13,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/routes-run.completed.log"
+    },
+    {
+      "family": "run.completed",
+      "step": "contracts",
+      "exit_code": 0,
+      "seconds": 0.543,
+      "available_gb_before": 13,
+      "available_gb_after": 13,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/contracts-run.completed.log"
+    },
+    {
+      "family": "run.completed",
+      "step": "semantics",
+      "exit_code": 0,
+      "seconds": 2.746,
+      "available_gb_before": 13,
+      "available_gb_after": 13,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/semantics-run.completed.log"
+    },
+    {
+      "family": "run.graph_integrity_failed",
+      "step": "matrix",
+      "exit_code": 0,
+      "seconds": 40.453,
+      "available_gb_before": 13,
+      "available_gb_after": 12,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/matrix-run.graph_integrity_failed.log"
+    },
+    {
+      "family": "run.graph_integrity_failed",
+      "step": "duplicates",
+      "exit_code": 0,
+      "seconds": 8.919,
+      "available_gb_before": 12,
+      "available_gb_after": 14,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/duplicates-run.graph_integrity_failed.log"
+    },
+    {
+      "family": "run.graph_integrity_failed",
+      "step": "routes",
+      "exit_code": 0,
+      "seconds": 4.12,
+      "available_gb_before": 14,
+      "available_gb_after": 14,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/routes-run.graph_integrity_failed.log"
+    },
+    {
+      "family": "run.graph_integrity_failed",
+      "step": "contracts",
+      "exit_code": 0,
+      "seconds": 0.729,
+      "available_gb_before": 14,
+      "available_gb_after": 14,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/contracts-run.graph_integrity_failed.log"
+    },
+    {
+      "family": "run.graph_integrity_failed",
+      "step": "semantics",
+      "exit_code": 0,
+      "seconds": 2.888,
+      "available_gb_before": 14,
+      "available_gb_after": 14,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/semantics-run.graph_integrity_failed.log"
+    },
+    {
+      "family": "run.node_backoff_expired",
+      "step": "matrix",
+      "exit_code": 0,
+      "seconds": 49.216,
+      "available_gb_before": 14,
+      "available_gb_after": 14,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/matrix-run.node_backoff_expired.log"
+    },
+    {
+      "family": "run.node_backoff_expired",
+      "step": "duplicates",
+      "exit_code": 0,
+      "seconds": 9.587,
+      "available_gb_before": 14,
+      "available_gb_after": 15,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/duplicates-run.node_backoff_expired.log"
+    },
+    {
+      "family": "run.node_backoff_expired",
+      "step": "routes",
+      "exit_code": 0,
+      "seconds": 3.732,
+      "available_gb_before": 15,
+      "available_gb_after": 14,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/routes-run.node_backoff_expired.log"
+    },
+    {
+      "family": "run.node_backoff_expired",
+      "step": "contracts",
+      "exit_code": 0,
+      "seconds": 0.63,
+      "available_gb_before": 14,
+      "available_gb_after": 14,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/contracts-run.node_backoff_expired.log"
+    },
+    {
+      "family": "run.node_backoff_expired",
+      "step": "semantics",
+      "exit_code": 0,
+      "seconds": 3.694,
+      "available_gb_before": 14,
+      "available_gb_after": 15,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/semantics-run.node_backoff_expired.log"
+    },
+    {
+      "family": "run.node_backoff_started",
+      "step": "matrix",
+      "exit_code": 0,
+      "seconds": 52.203,
+      "available_gb_before": 14,
+      "available_gb_after": 14,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/matrix-run.node_backoff_started.log"
+    },
+    {
+      "family": "run.node_backoff_started",
+      "step": "duplicates",
+      "exit_code": 0,
+      "seconds": 10.598,
+      "available_gb_before": 14,
+      "available_gb_after": 14,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/duplicates-run.node_backoff_started.log"
+    },
+    {
+      "family": "run.node_backoff_started",
+      "step": "routes",
+      "exit_code": 0,
+      "seconds": 4.624,
+      "available_gb_before": 14,
+      "available_gb_after": 14,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/routes-run.node_backoff_started.log"
+    },
+    {
+      "family": "run.node_backoff_started",
+      "step": "contracts",
+      "exit_code": 0,
+      "seconds": 0.818,
+      "available_gb_before": 14,
+      "available_gb_after": 13,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/contracts-run.node_backoff_started.log"
+    },
+    {
+      "family": "run.node_backoff_started",
+      "step": "semantics",
+      "exit_code": 0,
+      "seconds": 3.714,
+      "available_gb_before": 13,
+      "available_gb_after": 13,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/semantics-run.node_backoff_started.log"
+    },
+    {
+      "family": "run.node_ready",
+      "step": "matrix",
+      "exit_code": 0,
+      "seconds": 38.091,
+      "available_gb_before": 14,
+      "available_gb_after": 13,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/matrix-run.node_ready.log"
+    },
+    {
+      "family": "run.node_ready",
+      "step": "duplicates",
+      "exit_code": 0,
+      "seconds": 8.143,
+      "available_gb_before": 13,
+      "available_gb_after": 14,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/duplicates-run.node_ready.log"
+    },
+    {
+      "family": "run.node_ready",
+      "step": "routes",
+      "exit_code": 0,
+      "seconds": 3.268,
+      "available_gb_before": 14,
+      "available_gb_after": 14,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/routes-run.node_ready.log"
+    },
+    {
+      "family": "run.node_ready",
+      "step": "contracts",
+      "exit_code": 0,
+      "seconds": 0.773,
+      "available_gb_before": 14,
+      "available_gb_after": 14,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/contracts-run.node_ready.log"
+    },
+    {
+      "family": "run.node_ready",
+      "step": "semantics",
+      "exit_code": 0,
+      "seconds": 2.508,
+      "available_gb_before": 14,
+      "available_gb_after": 13,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/semantics-run.node_ready.log"
+    },
+    {
+      "family": "run.node_retry_scheduled",
+      "step": "matrix",
+      "exit_code": 0,
+      "seconds": 63.385,
+      "available_gb_before": 13,
+      "available_gb_after": 15,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/matrix-run.node_retry_scheduled.log"
+    },
+    {
+      "family": "run.node_retry_scheduled",
+      "step": "duplicates",
+      "exit_code": 0,
+      "seconds": 13.116,
+      "available_gb_before": 15,
+      "available_gb_after": 16,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/duplicates-run.node_retry_scheduled.log"
+    },
+    {
+      "family": "run.node_retry_scheduled",
+      "step": "routes",
+      "exit_code": 0,
+      "seconds": 5.432,
+      "available_gb_before": 16,
+      "available_gb_after": 14,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/routes-run.node_retry_scheduled.log"
+    },
+    {
+      "family": "run.node_retry_scheduled",
+      "step": "contracts",
+      "exit_code": 0,
+      "seconds": 0.564,
+      "available_gb_before": 14,
+      "available_gb_after": 15,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/contracts-run.node_retry_scheduled.log"
+    },
+    {
+      "family": "run.node_retry_scheduled",
+      "step": "semantics",
+      "exit_code": 0,
+      "seconds": 4.094,
+      "available_gb_before": 15,
+      "available_gb_after": 15,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/semantics-run.node_retry_scheduled.log"
+    },
+    {
+      "family": "scheduler.pass",
+      "step": "matrix",
+      "exit_code": 0,
+      "seconds": 95.384,
+      "available_gb_before": 15,
+      "available_gb_after": 15,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/matrix-scheduler.pass.log"
+    },
+    {
+      "family": "scheduler.pass",
+      "step": "duplicates",
+      "exit_code": 0,
+      "seconds": 19.4,
+      "available_gb_before": 15,
+      "available_gb_after": 15,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/duplicates-scheduler.pass.log"
+    },
+    {
+      "family": "scheduler.pass",
+      "step": "routes",
+      "exit_code": 0,
+      "seconds": 7.362,
+      "available_gb_before": 15,
+      "available_gb_after": 15,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/routes-scheduler.pass.log"
+    },
+    {
+      "family": "scheduler.pass",
+      "step": "contracts",
+      "exit_code": 0,
+      "seconds": 1.195,
+      "available_gb_before": 15,
+      "available_gb_after": 15,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/contracts-scheduler.pass.log"
+    },
+    {
+      "family": "scheduler.pass",
+      "step": "semantics",
+      "exit_code": 0,
+      "seconds": 6.203,
+      "available_gb_before": 15,
+      "available_gb_after": 16,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/semantics-scheduler.pass.log"
     },
     {
       "family": "helpers",
       "step": "matrix",
       "exit_code": 0,
-      "seconds": 5.181,
-      "available_gb_before": 7,
-      "available_gb_after": 7,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/matrix-helpers.log"
+      "seconds": 1.645,
+      "available_gb_before": 16,
+      "available_gb_after": 17,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/matrix-helpers.log"
     },
     {
       "family": "helpers",
       "step": "duplicates",
       "exit_code": 0,
-      "seconds": 3.418,
-      "available_gb_before": 7,
-      "available_gb_after": 7,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/duplicates-helpers.log"
+      "seconds": 1.536,
+      "available_gb_before": 17,
+      "available_gb_after": 16,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/duplicates-helpers.log"
     },
     {
       "family": "helpers",
       "step": "routes",
       "exit_code": 0,
-      "seconds": 3.632,
-      "available_gb_before": 7,
-      "available_gb_after": 7,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/routes-helpers.log"
+      "seconds": 1.322,
+      "available_gb_before": 16,
+      "available_gb_after": 16,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/routes-helpers.log"
+    }
+  ],
+  "additional_jobs": [
+    {
+      "family": "attempt.completed",
+      "exit_code": 0
+    },
+    {
+      "family": "attempt.started",
+      "exit_code": 0
+    },
+    {
+      "family": "node.blocked",
+      "exit_code": 0
+    },
+    {
+      "family": "node.completed",
+      "exit_code": 0
+    },
+    {
+      "family": "node.started",
+      "exit_code": 0
+    },
+    {
+      "family": "node.unblocked",
+      "exit_code": 0
+    },
+    {
+      "family": "plan.decomposition_degraded",
+      "exit_code": 0
+    },
+    {
+      "family": "remediation.resolved",
+      "exit_code": 0
+    },
+    {
+      "family": "remediation.spawned",
+      "exit_code": 0
+    },
+    {
+      "family": "run.completed",
+      "exit_code": 0
+    },
+    {
+      "family": "run.graph_integrity_failed",
+      "exit_code": 0
+    },
+    {
+      "family": "run.node_backoff_expired",
+      "exit_code": 0
+    },
+    {
+      "family": "run.node_backoff_started",
+      "exit_code": 0
+    },
+    {
+      "family": "run.node_ready",
+      "exit_code": 0
+    },
+    {
+      "family": "run.node_retry_scheduled",
+      "exit_code": 0
+    },
+    {
+      "family": "scheduler.pass",
+      "exit_code": 0
+    },
+    {
+      "family": "helpers",
+      "exit_code": 0
     }
   ],
   "checks": [
     {
       "check": "astra-attempt.completed",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/astra-probes.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "attempt.completed"
-      ],
       "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 1.02,
-      "available_gb_before": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/astra-attempt.completed.log"
-    },
-    {
-      "check": "astra-attempt.started",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/astra-probes.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "attempt.started"
-      ],
-      "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 1.352,
-      "available_gb_before": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/astra-attempt.started.log"
-    },
-    {
-      "check": "astra-node.blocked",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/astra-probes.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "node.blocked"
-      ],
-      "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 1.381,
-      "available_gb_before": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/astra-node.blocked.log"
-    },
-    {
-      "check": "astra-node.completed",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/astra-probes.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "node.completed"
-      ],
-      "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 1.542,
-      "available_gb_before": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/astra-node.completed.log"
-    },
-    {
-      "check": "astra-node.started",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/astra-probes.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "node.started"
-      ],
-      "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 2.565,
-      "available_gb_before": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/astra-node.started.log"
-    },
-    {
-      "check": "astra-node.unblocked",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/astra-probes.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "node.unblocked"
-      ],
-      "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 2.922,
-      "available_gb_before": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/astra-node.unblocked.log"
-    },
-    {
-      "check": "astra-plan.decomposition_degraded",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/astra-probes.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "plan.decomposition_degraded"
-      ],
-      "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 1.673,
-      "available_gb_before": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/astra-plan.decomposition_degraded.log"
-    },
-    {
-      "check": "astra-remediation.resolved",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/astra-probes.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "remediation.resolved"
-      ],
-      "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 1.976,
-      "available_gb_before": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/astra-remediation.resolved.log"
-    },
-    {
-      "check": "astra-remediation.spawned",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/astra-probes.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "remediation.spawned"
-      ],
-      "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 2.639,
-      "available_gb_before": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/astra-remediation.spawned.log"
-    },
-    {
-      "check": "astra-run.completed",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/astra-probes.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "run.completed"
-      ],
-      "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 9.857,
-      "available_gb_before": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/astra-run.completed.log"
-    },
-    {
-      "check": "astra-run.graph_integrity_failed",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/astra-probes.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "run.graph_integrity_failed"
-      ],
-      "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 1.523,
-      "available_gb_before": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/astra-run.graph_integrity_failed.log"
-    },
-    {
-      "check": "astra-run.node_backoff_expired",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/astra-probes.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "run.node_backoff_expired"
-      ],
-      "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 2.508,
-      "available_gb_before": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/astra-run.node_backoff_expired.log"
-    },
-    {
-      "check": "astra-run.node_backoff_started",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/astra-probes.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "run.node_backoff_started"
-      ],
-      "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 5.525,
-      "available_gb_before": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/astra-run.node_backoff_started.log"
-    },
-    {
-      "check": "astra-run.node_ready",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/astra-probes.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "run.node_ready"
-      ],
-      "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 3.908,
-      "available_gb_before": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/astra-run.node_ready.log"
-    },
-    {
-      "check": "astra-run.node_retry_scheduled",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/astra-probes.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "run.node_retry_scheduled"
-      ],
-      "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 5.674,
-      "available_gb_before": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/astra-run.node_retry_scheduled.log"
-    },
-    {
-      "check": "astra-scheduler.pass",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/astra-probes.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "scheduler.pass"
-      ],
-      "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 2.353,
-      "available_gb_before": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/astra-scheduler.pass.log"
-    },
-    {
-      "check": "enum-proofs",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/enum-proofs.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7"
-      ],
-      "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 13.119,
-      "available_gb_before": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/enum-proofs.log"
+      "seconds": 0.895,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/astra-attempt.completed.log"
     },
     {
       "check": "boundaries-attempt.completed",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/boundaries-family.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "attempt.completed"
-      ],
       "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 23.691,
-      "available_gb_before": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/boundaries-attempt.completed.log"
+      "seconds": 6.604,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/boundaries-attempt.completed.log"
+    },
+    {
+      "check": "astra-attempt.started",
+      "exit_code": 0,
+      "seconds": 0.94,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/astra-attempt.started.log"
     },
     {
       "check": "boundaries-attempt.started",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/boundaries-family.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "attempt.started"
-      ],
       "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 18.531,
-      "available_gb_before": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/boundaries-attempt.started.log"
+      "seconds": 7.879,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/boundaries-attempt.started.log"
+    },
+    {
+      "check": "astra-node.blocked",
+      "exit_code": 0,
+      "seconds": 0.78,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/astra-node.blocked.log"
     },
     {
       "check": "boundaries-node.blocked",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/boundaries-family.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "node.blocked"
-      ],
       "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 12.467,
-      "available_gb_before": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/boundaries-node.blocked.log"
+      "seconds": 4.934,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/boundaries-node.blocked.log"
+    },
+    {
+      "check": "astra-node.completed",
+      "exit_code": 0,
+      "seconds": 0.989,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/astra-node.completed.log"
     },
     {
       "check": "boundaries-node.completed",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/boundaries-family.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "node.completed"
-      ],
       "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 9.274,
-      "available_gb_before": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/boundaries-node.completed.log"
+      "seconds": 5.169,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/boundaries-node.completed.log"
+    },
+    {
+      "check": "astra-node.started",
+      "exit_code": 0,
+      "seconds": 0.949,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/astra-node.started.log"
     },
     {
       "check": "boundaries-node.started",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/boundaries-family.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "node.started"
-      ],
       "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 10.259,
-      "available_gb_before": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/boundaries-node.started.log"
+      "seconds": 5.322,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/boundaries-node.started.log"
+    },
+    {
+      "check": "astra-node.unblocked",
+      "exit_code": 0,
+      "seconds": 0.869,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/astra-node.unblocked.log"
     },
     {
       "check": "boundaries-node.unblocked",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/boundaries-family.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "node.unblocked"
-      ],
       "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 5.089,
-      "available_gb_before": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/boundaries-node.unblocked.log"
+      "seconds": 3.307,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/boundaries-node.unblocked.log"
+    },
+    {
+      "check": "astra-plan.decomposition_degraded",
+      "exit_code": 0,
+      "seconds": 0.784,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/astra-plan.decomposition_degraded.log"
     },
     {
       "check": "boundaries-plan.decomposition_degraded",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/boundaries-family.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "plan.decomposition_degraded"
-      ],
       "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 5.946,
-      "available_gb_before": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/boundaries-plan.decomposition_degraded.log"
+      "seconds": 3.128,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/boundaries-plan.decomposition_degraded.log"
+    },
+    {
+      "check": "astra-remediation.resolved",
+      "exit_code": 0,
+      "seconds": 0.999,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/astra-remediation.resolved.log"
     },
     {
       "check": "boundaries-remediation.resolved",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/boundaries-family.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "remediation.resolved"
-      ],
       "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 9.873,
-      "available_gb_before": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/boundaries-remediation.resolved.log"
+      "seconds": 3.525,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/boundaries-remediation.resolved.log"
+    },
+    {
+      "check": "astra-remediation.spawned",
+      "exit_code": 0,
+      "seconds": 0.906,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/astra-remediation.spawned.log"
     },
     {
       "check": "boundaries-remediation.spawned",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/boundaries-family.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "remediation.spawned"
-      ],
       "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 10.033,
-      "available_gb_before": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/boundaries-remediation.spawned.log"
+      "seconds": 3.375,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/boundaries-remediation.spawned.log"
+    },
+    {
+      "check": "astra-run.completed",
+      "exit_code": 0,
+      "seconds": 4.11,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/astra-run.completed.log"
     },
     {
       "check": "boundaries-run.completed",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/boundaries-family.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "run.completed"
-      ],
       "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 10.446,
-      "available_gb_before": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/boundaries-run.completed.log"
+      "seconds": 3.45,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/boundaries-run.completed.log"
+    },
+    {
+      "check": "astra-run.graph_integrity_failed",
+      "exit_code": 0,
+      "seconds": 0.852,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/astra-run.graph_integrity_failed.log"
     },
     {
       "check": "boundaries-run.graph_integrity_failed",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/boundaries-family.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "run.graph_integrity_failed"
-      ],
       "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 7.805,
-      "available_gb_before": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/boundaries-run.graph_integrity_failed.log"
+      "seconds": 3.315,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/boundaries-run.graph_integrity_failed.log"
+    },
+    {
+      "check": "astra-run.node_backoff_expired",
+      "exit_code": 0,
+      "seconds": 0.842,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/astra-run.node_backoff_expired.log"
     },
     {
       "check": "boundaries-run.node_backoff_expired",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/boundaries-family.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "run.node_backoff_expired"
-      ],
       "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 9.143,
-      "available_gb_before": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/boundaries-run.node_backoff_expired.log"
+      "seconds": 3.596,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/boundaries-run.node_backoff_expired.log"
+    },
+    {
+      "check": "astra-run.node_backoff_started",
+      "exit_code": 0,
+      "seconds": 0.874,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/astra-run.node_backoff_started.log"
     },
     {
       "check": "boundaries-run.node_backoff_started",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/boundaries-family.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "run.node_backoff_started"
-      ],
       "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 9.58,
-      "available_gb_before": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/boundaries-run.node_backoff_started.log"
+      "seconds": 3.708,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/boundaries-run.node_backoff_started.log"
+    },
+    {
+      "check": "astra-run.node_ready",
+      "exit_code": 0,
+      "seconds": 0.861,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/astra-run.node_ready.log"
     },
     {
       "check": "boundaries-run.node_ready",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/boundaries-family.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "run.node_ready"
-      ],
       "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 6.184,
-      "available_gb_before": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/boundaries-run.node_ready.log"
+      "seconds": 3.27,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/boundaries-run.node_ready.log"
+    },
+    {
+      "check": "astra-run.node_retry_scheduled",
+      "exit_code": 0,
+      "seconds": 1.04,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/astra-run.node_retry_scheduled.log"
     },
     {
       "check": "boundaries-run.node_retry_scheduled",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/boundaries-family.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "run.node_retry_scheduled"
-      ],
       "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 8.255,
-      "available_gb_before": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/boundaries-run.node_retry_scheduled.log"
+      "seconds": 5.765,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/boundaries-run.node_retry_scheduled.log"
+    },
+    {
+      "check": "astra-scheduler.pass",
+      "exit_code": 0,
+      "seconds": 1.549,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/astra-scheduler.pass.log"
     },
     {
       "check": "boundaries-scheduler.pass",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/boundaries-family.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "scheduler.pass"
-      ],
       "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 8.508,
-      "available_gb_before": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/boundaries-scheduler.pass.log"
+      "seconds": 5.864,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/boundaries-scheduler.pass.log"
     },
     {
       "check": "boundaries-helpers",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/boundaries-family.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "helpers"
-      ],
       "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 2.602,
-      "available_gb_before": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/boundaries-helpers.log"
+      "seconds": 1.962,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/boundaries-helpers.log"
     },
     {
-      "check": "cache-control-matrix",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/matrix-family.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7",
-        "attempt.completed"
-      ],
+      "check": "independent-own",
       "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 91.659,
-      "available_gb_before": 7,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/cache-control-matrix.log"
+      "seconds": 14.302,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/independent-own.log"
     },
     {
-      "check": "aggregate-matrix",
-      "command": [
-        "/usr/bin/python3",
-        "/home/sittingmongoose/PM-Experiments/event-authority-DX-fix7/aggregate-matrix.py",
-        "/home/sittingmongoose/pm-worktrees/DX-fix7"
-      ],
+      "check": "format-routes",
       "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 7.1,
-      "available_gb_before": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/aggregate-matrix.log"
+      "seconds": 1.525,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/format-routes.log"
     },
     {
-      "check": "shards",
-      "command": [
-        "/usr/bin/python3",
-        "scripts/pm-shard-plans.py",
-        "--check",
-        "--config",
-        "Plans/sharding_config.json"
-      ],
+      "check": "enum-proofs",
       "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 92.194,
-      "available_gb_before": 8,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/shards.log"
+      "seconds": 3.231,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/enum-proofs.log"
     },
     {
-      "check": "index",
-      "command": [
-        "/usr/bin/python3",
-        "scripts/pm-plan-index.py",
-        "validate"
-      ],
+      "check": "shards-generate",
+      "exit_code": 0,
+      "seconds": 3.812,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/shards-generate.log"
+    },
+    {
+      "check": "index-generate",
+      "exit_code": 0,
+      "seconds": 47.122,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/index-generate.log"
+    },
+    {
+      "check": "shards-check",
+      "exit_code": 0,
+      "seconds": 24.889,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/shards-check.log"
+    },
+    {
+      "check": "index-validate",
       "exit_code": 1,
-      "expected_exit_code": 0,
-      "seconds": 128.956,
-      "available_gb_before": 7,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/index.log",
-      "classification": "pre_existing_unrelated",
-      "provenance": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/index-integration-proof.json"
+      "seconds": 52.206,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/index-validate.log"
     },
     {
-      "check": "event-index",
-      "command": [
-        "/usr/bin/python3",
-        "-m",
-        "unittest",
-        "discover",
-        "-s",
-        "tests",
-        "-p",
-        "test_pm_event_index_binding.py"
-      ],
+      "check": "event-index-tests",
       "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 2.053,
-      "available_gb_before": 10,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/event-index.log"
+      "seconds": 1.867,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/event-index-tests.log"
     },
     {
-      "check": "runtime-vocabulary",
-      "command": [
-        "/usr/bin/python3",
-        "-m",
-        "unittest",
-        "discover",
-        "-s",
-        "tests",
-        "-p",
-        "test_pm_runtime_vocabulary_migration.py"
-      ],
+      "check": "runtime-vocabulary-tests",
       "exit_code": 1,
-      "expected_exit_code": 1,
-      "seconds": 31.652,
-      "available_gb_before": 10,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/runtime-vocabulary.log"
+      "seconds": 13.763,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/runtime-vocabulary-tests.log"
     },
     {
       "check": "diff-check",
-      "command": [
-        "git",
-        "diff",
-        "--check"
-      ],
       "exit_code": 0,
-      "expected_exit_code": 0,
-      "seconds": 5.646,
-      "available_gb_before": 9,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/diff-check.log"
+      "seconds": 4.824,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix8/diff-check.log"
     }
   ],
-  "native_execution": "NOT_RUN",
-  "integration_notes": {
-    "N1": "Existing runtime-vocabulary Skia phrase assertion; no test or GUI owner edit.",
-    "N2": "Existing shared execution-context dangling goal_body_custody ref; no whole shared-graph clearance claimed.",
-    "N3": "Full-tree index validation fails on unchanged legacy ledger records and DL-302 present in newer origin/main; index-integration-proof.json pins unchanged starting-head inputs."
-  }
+  "native_execution": "NOT_RUN"
 }
