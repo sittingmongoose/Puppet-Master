@@ -1632,7 +1632,9 @@ canonical_text: The per-audit closure check of scripts/pm-audit-closure.py appli
   Plans/.audits/_legacy_format_inventory.json (pinned by SHA-256 in the validator; only repair_closure_matrix.jsonl
   may grow, by appended lines, and only its frozen rows count as historical). Appended matrix rows, files added after
   the freeze (a new report, source artifact or matrix), new content under a listed name, edited historical files and
-  any symbolically linked input get the full rules. The rule decides from what each check recorded about the error
+  any symbolically linked input get the full rules, and a run that lists the closure matrix, the audit report, the
+  effective status, the scope manifest or the impact matrix as a source artifact gets the full rules for the whole
+  directory, since each of those files is checked in its own role. The rule decides from what each check recorded about the error
   (the file it read, the row, the kind of error and the fields involved), never from the message text, so no file
   name or message content can make one error pass for another. For those directories only, it reports these format and
   schema-evolution errors as one warning per directory instead of as errors - missing or empty audit_id, ledger_id,
@@ -1664,7 +1666,8 @@ unblocks: []
 acceptance_criteria:
 - python3 scripts/pm-audit-closure.py self-test passes, covering the closed list and its pre-July dates, symlinked
   leaves and parents, external and unlisted directories, edited historical files and matrix prefixes, a changed
-  inventory pin, appended matrix rows, a historical row whose identity disagrees with its registry closure, duplicate
+  inventory pin, appended matrix rows, a historical row whose identity disagrees with its registry closure, a
+  companion file listed as a source artifact, duplicate
   validator-result names with a stated classification, every demoted and every kept kind, the conditions on report status, scope
   manifest and over-coverage, explicit versus inferred over-coverage, the single warning, and that a listed and a
   July directory with the same files produce the same messages, only classified differently.
