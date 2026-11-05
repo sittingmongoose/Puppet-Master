@@ -395,6 +395,20 @@ def evaluate(m, case, corpus):
 def run_corpus(path):
     import pm_event_numbers as m
     corpus = json.loads(Path(path).read_text(), object_pairs_hook=m._unique_object)
+    root = Path(__file__).resolve().parents[1]
+    from pm_event_datetime_inventory import check_inventory
+    inventory_check = check_inventory(root)
+    if inventory_check["status"] != "pass":
+        # Admission is a prerequisite. Do not repeatedly attempt to install
+        # invalid selections while reporting thousands of derivative failures.
+        return {"status": "fail", "corpus_cases": len(corpus["cases"]),
+                "case_passes": 0, "case_execution": "NOT_RUN_ADMISSION_REFUSED",
+                "positives": sum("output" in c for c in corpus["cases"]),
+                "negatives": sum("error" in c for c in corpus["cases"]),
+                "outcomes": {}, "datetime_inventory": inventory_check,
+                "owner_integration_checks": {"datetime_inventory_complete_and_classified": False},
+                "failures": [{"integration_check": "datetime_inventory_complete_and_classified"}],
+                "native_authority": "NOT_RUN"}
     failures, outcomes = [], {}
     for c in corpus["cases"]:
         actual, result = evaluate(m, c, corpus)
@@ -409,7 +423,6 @@ def run_corpus(path):
         if not c.get("target_predicate"):
             failures.append({"id": c["id"], "missing_target_predicate": True})
     # Real unchanged owner vectors, not self-generated expected bytes.
-    root = Path(__file__).resolve().parents[1]
     wire = json.loads((root / "Plans/seglog_frame_v2_wire_fixtures.json").read_text())
     frame = bytes.fromhex(wire["base_frame_hex"])
     header_length = int.from_bytes(frame[9:11], "little")
@@ -418,9 +431,9 @@ def run_corpus(path):
         "frozen_complete_event_bytes": m.storage_value_bytes(wire["base_event"]) == original_payload,
         "frozen_complete_event_decode": m.decode_storage_value(original_payload) == wire["base_event"],
     }
-    from pm_event_datetime_inventory import check_inventory
-    inventory_check = check_inventory(root)
     checks["datetime_inventory_complete_and_classified"] = inventory_check["status"] == "pass"
+    from pm_event_datetime_admission_checks import regression_checks
+    checks.update(regression_checks(root))
     # Reviews C6-B1 and C7-B1/B2: schema fences inside any Markdown container,
     # and fences after misleading boundaries, are discovered (CommonMark is
     # authoritative; the over-inclusive supplementary scan only adds spans).

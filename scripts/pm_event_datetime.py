@@ -112,7 +112,7 @@ def _eventrecord_storage_properties(validator, properties, instance, schema):
     """Compose CV-253 at inventory-authenticated resource/field paths only."""
     if validator.is_type(instance, "object"):
         for field in validator.storage_selection.fields(schema):
-            if field in properties and field in instance:
+            if field in instance:
                 yield from validator.descend(instance[field], {"type": "string", "format": "date-time",
                                                               "pattern": r"Z(?![\s\S])"},
                                              path=field, schema_path=field)
@@ -129,11 +129,7 @@ def _bound_validator(base):
     from attrs import fields, make_class, field
     from jsonschema import validators
 
-    def properties(validator, value, instance, schema):
-        yield from base.VALIDATORS["properties"](validator, value, instance, schema)
-        yield from _eventrecord_storage_properties(validator, value, instance, schema)
-
-    extended = validators.extend(base, {"properties": properties})
+    extended = validators.extend(base, {})
     from pm_event_datetime_inventory import StorageSelection
     bound = make_class("InventoryDatetimeValidator", {
         "storage_selection": field(factory=StorageSelection, kw_only=True),
@@ -148,6 +144,23 @@ def _bound_validator(base):
         return _bound_validator(selected)(**changes)
 
     bound.evolve = evolve
+
+    def iter_errors(self, instance, _schema=None):
+        schema = self.schema if _schema is None else _schema
+        self.storage_selection.admit(schema)
+        yield from _eventrecord_storage_properties(self, None, instance, schema)
+        yield from extended.iter_errors(self, instance, _schema)
+
+    def descend(self, instance, schema, *args, **kwargs):
+        # descend executes keywords itself; it does not call iter_errors.
+        # Admission must precede *every* fragment, including required-only or
+        # patternProperties schemas and dialect changes during reference use.
+        self.storage_selection.admit(schema)
+        yield from _eventrecord_storage_properties(self, None, instance, schema)
+        yield from extended.descend(self, instance, schema, *args, **kwargs)
+
+    bound.iter_errors = iter_errors
+    bound.descend = descend
     return bound
 
 
@@ -158,12 +171,25 @@ def datetime_validator(schema, *, profile=EVENT_RECORD, **kwargs):
     the supplied resources and their pinned hashes remain unchanged.
     """
     from jsonschema import Draft202012Validator
-    from pm_event_datetime_inventory import StorageSelection
+    from pm_event_datetime_inventory import DatetimeAdmissionError, StorageSelection
+    if any(kwargs.get(key) is not None for key in ("resolver", "_resolver")):
+        raise DatetimeAdmissionError("datetime_custom_resolver_unsupported")
     selection = StorageSelection()
     selection.install(schema)
     registry = kwargs.get("registry")
     if registry is not None:
         for resource in registry.values():
             selection.install(resource.contents)
+        # referencing returns fragments only after retrieving the complete
+        # resource. Bind it at that boundary, before any fragment is evaluated.
+        from attrs import evolve
+        retrieve = registry._retrieve
+
+        def admitted_retrieve(uri):
+            resource = retrieve(uri)
+            selection.install(resource.contents)
+            return resource
+
+        kwargs["registry"] = evolve(registry, retrieve=admitted_retrieve)
     return _bound_validator(Draft202012Validator)(
         schema, format_checker=format_checker(profile=profile), storage_selection=selection, **kwargs)
