@@ -219607,7 +219607,7 @@
         "id": "isolated-checkpoint-owner-scope",
         "operation": "checkpoint",
         "changes": {
-          "checkpoint/project_id": "other:owner"
+          "checkpoint/scope/project_id": "other:owner"
         },
         "expected": {
           "result": "REFUSE",
@@ -220535,8 +220535,8 @@
         "operation": "receipt_boundary",
         "changes": {
           "custody/event_id": "other:retained-event",
-          "custody/original_event_value_commitment/sha256": "06f5e829a901fcc9cddb6c374479794de08a8177884dcd1768d317f549e70d8e",
-          "issued_result/original_event_value_commitment/sha256": "06f5e829a901fcc9cddb6c374479794de08a8177884dcd1768d317f549e70d8e",
+          "custody/original_event_value_commitment/sha256": "1e4c4bbb767632855b65590ff8ce0e72ab524cf7dab43e019b59d58753d3a350",
+          "issued_result/original_event_value_commitment/sha256": "1e4c4bbb767632855b65590ff8ce0e72ab524cf7dab43e019b59d58753d3a350",
           "original/event/event_id": "other:retained-event"
         },
         "expected": {
@@ -220548,8 +220548,8 @@
         "id": "isolated-receipt-original-sequence_id",
         "operation": "receipt_boundary",
         "changes": {
-          "custody/original_event_value_commitment/sha256": "407e3b1a2ec7631af1dfade0eb5c4fe00ca8df738423d6ddec86e702ccbb68bf",
-          "issued_result/original_event_value_commitment/sha256": "407e3b1a2ec7631af1dfade0eb5c4fe00ca8df738423d6ddec86e702ccbb68bf",
+          "custody/original_event_value_commitment/sha256": "b083c3dd068f07faba9df92f7a262bea838ba1178d74e880f219edf7bb7c6dc9",
+          "issued_result/original_event_value_commitment/sha256": "b083c3dd068f07faba9df92f7a262bea838ba1178d74e880f219edf7bb7c6dc9",
           "original/event/sequence_id": 3
         },
         "expected": {
@@ -240776,7 +240776,7 @@
         "id": "isolated-checkpoint-owner-scope",
         "operation": "checkpoint",
         "changes": {
-          "checkpoint/project_id": "other:owner"
+          "checkpoint/scope/project_id": "other:owner"
         },
         "expected": {
           "result": "REFUSE",
@@ -241704,8 +241704,8 @@
         "operation": "receipt_boundary",
         "changes": {
           "custody/event_id": "other:retained-event",
-          "custody/original_event_value_commitment/sha256": "06f5e829a901fcc9cddb6c374479794de08a8177884dcd1768d317f549e70d8e",
-          "issued_result/original_event_value_commitment/sha256": "06f5e829a901fcc9cddb6c374479794de08a8177884dcd1768d317f549e70d8e",
+          "custody/original_event_value_commitment/sha256": "78c6cff701025bcd4827161f8056039b7de749cac9769d3e40cc4f7baf90adcf",
+          "issued_result/original_event_value_commitment/sha256": "78c6cff701025bcd4827161f8056039b7de749cac9769d3e40cc4f7baf90adcf",
           "original/event/event_id": "other:retained-event"
         },
         "expected": {
@@ -241717,8 +241717,8 @@
         "id": "isolated-receipt-original-sequence_id",
         "operation": "receipt_boundary",
         "changes": {
-          "custody/original_event_value_commitment/sha256": "407e3b1a2ec7631af1dfade0eb5c4fe00ca8df738423d6ddec86e702ccbb68bf",
-          "issued_result/original_event_value_commitment/sha256": "407e3b1a2ec7631af1dfade0eb5c4fe00ca8df738423d6ddec86e702ccbb68bf",
+          "custody/original_event_value_commitment/sha256": "e3d3a3335ab39bc5ebff481139febf845e87e6c1c1037be2b4041771250369d1",
+          "issued_result/original_event_value_commitment/sha256": "e3d3a3335ab39bc5ebff481139febf845e87e6c1c1037be2b4041771250369d1",
           "original/event/sequence_id": 3
         },
         "expected": {
