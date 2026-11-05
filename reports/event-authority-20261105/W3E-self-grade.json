@@ -5,8 +5,8 @@
   "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
   "assessed_tree": {
     "branch": "plans/ea-w3-server-remote-backup-20261105",
-    "commit": "6e019cb8cde538f2979ada4d306f19183203f824",
-    "method": "Exact owner/schema bytes at code commit; evidence line quotes and file SHA-256 values verified. This later reporting commit changes reports only."
+    "commit": "d6208c794e12dc54ed70893ac479a66c5444025b",
+    "method": "Exact owner/schema bytes at the round-1 fix commit, with F1/F2 static schema probes and phase-1 lane checks. This later reporting commit changes reports only; no behavioral oracle/native proof."
   },
   "registry": {
     "path": "Plans/event_family_registry.json",
@@ -411,7 +411,7 @@
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The exact newly authored BRS-1401 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+          "finding": "F2: original BackupRun manifest and verification reference schemas preserve the full 512-character lexical domain and nullability. PASS covers normative/schema phase-1 readiness only; criterion 12 remains PARTIAL.",
           "evidence": [
             {
               "path": "Plans/Backup_Restore_System.md",
@@ -428,18 +428,23 @@
               "line_start": 3,
               "line_end": 3,
               "quote": "\"additionalProperties\": false,",
-              "file_sha256": "9e39a8a0c916ae318b6a69614323c57cf58334abecca9ff26379ed9866477c52",
+              "file_sha256": "f52591881d30c24088170ec45da5cad1eb6f728dad5e1f553e1d87dea7ddd965",
               "quote_check": "exact"
             }
           ],
           "prior": null,
           "change": "new",
-          "change_reason": "New separate exact-family definition under deck 2 item 9.a A; no admission or runtime claim."
+          "change_reason": "Phase-1 review round 1 repairs F2: original BackupRun manifest and verification reference schemas preserve the full 512-character lexical domain and nullability.",
+          "review_round_1": {
+            "reviewed_status": "CONFLICT",
+            "fix_status": "PASS",
+            "fix_commit": "d6208c794e12dc54ed70893ac479a66c5444025b"
+          }
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The exact newly authored BRS-1401 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+          "finding": "F1: encoded Project partitions, including the 350-character boundary, fit all stored-value schemas; raw/malformed lexical forms refuse and exact owner joins remain required. PASS covers normative/schema phase-1 readiness only; criterion 12 remains PARTIAL.",
           "evidence": [
             {
               "path": "Plans/Backup_Restore_System.md",
@@ -453,7 +458,12 @@
           ],
           "prior": null,
           "change": "new",
-          "change_reason": "New separate exact-family definition under deck 2 item 9.a A; no admission or runtime claim."
+          "change_reason": "Phase-1 review round 1 repairs F1: encoded Project partitions, including the 350-character boundary, fit all stored-value schemas; raw/malformed lexical forms refuse and exact owner joins remain required.",
+          "review_round_1": {
+            "reviewed_status": "PARTIAL",
+            "fix_status": "PASS",
+            "fix_commit": "d6208c794e12dc54ed70893ac479a66c5444025b"
+          }
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -534,7 +544,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The exact newly authored BRS-1401 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+          "finding": "F1: custody/history/checkpoint schemas and six registry mirrors accept the full existing encoder output domain while SP-340 limits and exact joins remain in force. PASS covers normative/schema phase-1 readiness only; criterion 12 remains PARTIAL.",
           "evidence": [
             {
               "path": "Plans/Backup_Restore_System.md",
@@ -557,7 +567,12 @@
           ],
           "prior": null,
           "change": "new",
-          "change_reason": "New separate exact-family definition under deck 2 item 9.a A; no admission or runtime claim."
+          "change_reason": "Phase-1 review round 1 repairs F1: custody/history/checkpoint schemas and six registry mirrors accept the full existing encoder output domain while SP-340 limits and exact joins remain in force.",
+          "review_round_1": {
+            "reviewed_status": "PARTIAL",
+            "fix_status": "PASS",
+            "fix_commit": "d6208c794e12dc54ed70893ac479a66c5444025b"
+          }
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -987,7 +1002,7 @@
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The exact newly authored RAS-1403 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+          "finding": "F2: original remote_route_record.configuration_ref schema preserves its full 512-character lexical domain and nullability. PASS covers normative/schema phase-1 readiness only; criterion 12 remains PARTIAL.",
           "evidence": [
             {
               "path": "Plans/Remote_Access_System.md",
@@ -1004,13 +1019,18 @@
               "line_start": 3,
               "line_end": 3,
               "quote": "\"additionalProperties\": false,",
-              "file_sha256": "e6565f5ba9050ceed98a6b8bb09c633cdcc3e5298dd5f525d74497742c1670ce",
+              "file_sha256": "109b8a2c4ee912ac6ebabb7e48d8c35b71834035aede046042fe60ac241eef5b",
               "quote_check": "exact"
             }
           ],
           "prior": null,
           "change": "new",
-          "change_reason": "New separate exact-family definition under deck 2 item 9.a A; no admission or runtime claim."
+          "change_reason": "Phase-1 review round 1 repairs F2: original remote_route_record.configuration_ref schema preserves its full 512-character lexical domain and nullability.",
+          "review_round_1": {
+            "reviewed_status": "CONFLICT",
+            "fix_status": "PASS",
+            "fix_commit": "d6208c794e12dc54ed70893ac479a66c5444025b"
+          }
         },
         "scope_identity": {
           "status": "PASS",
@@ -1851,7 +1871,7 @@
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The exact newly authored RAS-1406 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+          "finding": "F2: original remote_route_migration_record.journal_ref preserves its full 512-character lexical domain and continues to refuse null. PASS covers normative/schema phase-1 readiness only; criterion 12 remains PARTIAL.",
           "evidence": [
             {
               "path": "Plans/Remote_Access_System.md",
@@ -1868,13 +1888,18 @@
               "line_start": 3,
               "line_end": 3,
               "quote": "\"additionalProperties\": false,",
-              "file_sha256": "a9b7fa9fbde8003c15de095064de5538616ee7981277b4e8783a7e67ccf850ef",
+              "file_sha256": "a22110b142f17f3903df94d815c1693048b4d960cc11ab82235e74c690f62ba4",
               "quote_check": "exact"
             }
           ],
           "prior": null,
           "change": "new",
-          "change_reason": "New separate exact-family definition under deck 2 item 9.a A; no admission or runtime claim."
+          "change_reason": "Phase-1 review round 1 repairs F2: original remote_route_migration_record.journal_ref preserves its full 512-character lexical domain and continues to refuse null.",
+          "review_round_1": {
+            "reviewed_status": "CONFLICT",
+            "fix_status": "PASS",
+            "fix_commit": "d6208c794e12dc54ed70893ac479a66c5444025b"
+          }
         },
         "scope_identity": {
           "status": "PASS",
@@ -3003,7 +3028,7 @@
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The exact newly authored BRS-1410 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+          "finding": "F2: original RestoreRun preview receipt field schema preserves its full 512-character lexical domain and nullability. PASS covers normative/schema phase-1 readiness only; criterion 12 remains PARTIAL.",
           "evidence": [
             {
               "path": "Plans/Backup_Restore_System.md",
@@ -3020,18 +3045,23 @@
               "line_start": 3,
               "line_end": 3,
               "quote": "\"additionalProperties\": false,",
-              "file_sha256": "3825775128c66d6061dee9914e480410ed20557e43d5ce829c0f47660ba6de7a",
+              "file_sha256": "0082f8b505c6362cc32f238cb86b7fe66d821e049e6be548b36694732cccec0a",
               "quote_check": "exact"
             }
           ],
           "prior": null,
           "change": "new",
-          "change_reason": "New separate exact-family definition under deck 2 item 9.a A; no admission or runtime claim."
+          "change_reason": "Phase-1 review round 1 repairs F2: original RestoreRun preview receipt field schema preserves its full 512-character lexical domain and nullability.",
+          "review_round_1": {
+            "reviewed_status": "CONFLICT",
+            "fix_status": "PASS",
+            "fix_commit": "d6208c794e12dc54ed70893ac479a66c5444025b"
+          }
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The exact newly authored BRS-1410 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+          "finding": "F1: encoded Project partitions, including the 350-character boundary, fit all stored-value schemas; raw/malformed lexical forms refuse and exact owner joins remain required. PASS covers normative/schema phase-1 readiness only; criterion 12 remains PARTIAL.",
           "evidence": [
             {
               "path": "Plans/Backup_Restore_System.md",
@@ -3045,7 +3075,12 @@
           ],
           "prior": null,
           "change": "new",
-          "change_reason": "New separate exact-family definition under deck 2 item 9.a A; no admission or runtime claim."
+          "change_reason": "Phase-1 review round 1 repairs F1: encoded Project partitions, including the 350-character boundary, fit all stored-value schemas; raw/malformed lexical forms refuse and exact owner joins remain required.",
+          "review_round_1": {
+            "reviewed_status": "PARTIAL",
+            "fix_status": "PASS",
+            "fix_commit": "d6208c794e12dc54ed70893ac479a66c5444025b"
+          }
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3126,7 +3161,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The exact newly authored BRS-1410 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+          "finding": "F1: custody/history/checkpoint schemas and six registry mirrors accept the full existing encoder output domain while SP-340 limits and exact joins remain in force. PASS covers normative/schema phase-1 readiness only; criterion 12 remains PARTIAL.",
           "evidence": [
             {
               "path": "Plans/Backup_Restore_System.md",
@@ -3149,7 +3184,12 @@
           ],
           "prior": null,
           "change": "new",
-          "change_reason": "New separate exact-family definition under deck 2 item 9.a A; no admission or runtime claim."
+          "change_reason": "Phase-1 review round 1 repairs F1: custody/history/checkpoint schemas and six registry mirrors accept the full existing encoder output domain while SP-340 limits and exact joins remain in force.",
+          "review_round_1": {
+            "reviewed_status": "PARTIAL",
+            "fix_status": "PASS",
+            "fix_commit": "d6208c794e12dc54ed70893ac479a66c5444025b"
+          }
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -5800,5 +5840,23 @@
       ],
       "notes": "9 PASS / 2 PARTIAL / 1 ABSENT. No native execution."
     }
-  ]
+  ],
+  "review_round_1": {
+    "reviewed_head": "fc141476bf5756ac06b77ac64690bb663bd17de0",
+    "findings": [
+      "F1",
+      "F2"
+    ],
+    "plan_clarity": "N1 fixed",
+    "touched_families": [
+      "backup.state_changed",
+      "restore.state_changed",
+      "remote_access.proxy_state_changed",
+      "remote_access.route_migration_state_changed"
+    ],
+    "retention_cells_preserved": 20,
+    "new_ids": [],
+    "native_execution": "NOT_RUN",
+    "criterion_12": "PARTIAL"
+  }
 }

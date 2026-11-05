@@ -1,6 +1,6 @@
 # W3E — Server, Remote Access, Backup and restore; phase 1
 
-Branch: `plans/ea-w3-server-remote-backup-20261105`. Base: `f9c5de6561dff0a53a48e530f2a5c6804a7e941d`. Final code head: `6e019cb8cde538f2979ada4d306f19183203f824`.
+Branch: `plans/ea-w3-server-remote-backup-20261105`. Base: `f9c5de6561dff0a53a48e530f2a5c6804a7e941d`. Final code head: `d6208c794e12dc54ed70893ac479a66c5444025b`. Reviewed phase-1 head: `fc141476bf5756ac06b77ac64690bb663bd17de0`.
 
 **Outcome:** 20 prepared, 0 merged, 0 excluded, 0 stopped. All 20 retention assignments are `PENDING_RETENTION_DECISION`; none is admission-ready. Each family grades 9 PASS / 2 PARTIAL / 1 ABSENT: membership ABSENT; retention and criterion 12 PARTIAL. Native execution and phase-2 event oracles are NOT_RUN.
 
@@ -71,7 +71,7 @@ ID allocation search: `id-allocation-search.json` in the evidence directory chec
 
 ## Oracle plan and check-11 boundary
 
-`Plans/event_authority_w3e_oracle_plan.json` contains 20 separate plans, **876** runtime/owner guard plans and **7504** exact new-schema predicate sites. Each family lists its original positive scenario, per-guard single-defect negative, zero-new-effect expectation, field-specific domain predicates, schema boundary case recipes and fixed source evidence roles. External owner resource closure also requires full site inventory in phase 2.
+`Plans/event_authority_w3e_oracle_plan.json` contains 20 separate plans, **876** runtime/owner guard plans and **7480** exact new-schema predicate sites. Each family lists its original positive scenario, per-guard single-defect negative, zero-new-effect expectation, field-specific domain predicates, schema boundary case recipes and fixed source evidence roles. External owner resource closure also requires full site inventory in phase 2.
 
 Phase 1 writes **no event-oracle code**, independent number/timestamp parser or proof script. Phase 2 must rebase onto the lead’s reviewed NUMRULE + GUARDTOOL foundation, implement cases with those helpers, resolve every schema ref eagerly and prove each actual enforcement site. A duplicate set means the same field and predicate at multiple sites; unrelated predicates sharing a refusal/keyword remain separate. Negative copies/hashes/keys/post-state are kept coherent except the one target join. A logically implied schema predicate is not falsely claimed isolated: its actual sites and admissible one-defect fixture are settled by the phase-2 inventory. No check-11 proof or criterion-12 PASS is claimed now.
 
@@ -85,7 +85,7 @@ The plan covers first append, original retry, lost acknowledgement, every source
 | Storage-assigned metadata | CV-317 semantic exclusions kept exact; receipt/sequence/time must resolve Storage’s own record. |
 | Historical/current separation | Current replay-only append refused. Genuine retained original uses authenticated original recipe and no current writer gate; current access/deletion/withdrawal still apply. |
 | Consistent types/representations | Exact type checks and full-string guards planned; no trimming, coercion or default current recipe. |
-| Eager references | Phase-1 shape check resolves all 110 reachable targets including unvisited source/checkpoint branches. Phase 2 expands actual runtime assertion inventory. |
+| Eager references | Phase-1 shape check resolves all 115 reachable targets including unvisited source/checkpoint branches. Phase 2 expands actual runtime assertion inventory. |
 | Every stored part <=16 KiB | All 60 profiles bound. Original source/result/semantic input/payload use SP-337 refs; large checkpoint has a complete body_ref branch. Ref-only oversize refuses. |
 | Custody on every path | Each owner adopts source/pending/first-full-value-result custody before retry/recovery/publication. Fixed evidence roles prevent caller-defined slot sets. |
 | Single-defect negatives | 876 semantic plans plus field/predicate schema inventory; dependent fields repaired. Actual guard-removal proof awaits shared tool. |
@@ -141,7 +141,7 @@ All existing owner text is preserved. The three semantic owners add new units at
 
 IDs: **CV-1400..1419**, **SP-1400..1419**, **BRS-1400, BRS-1401, BRS-1410**, **RAS-1402..1409**, **SRV-1411..1419**, **ATS-1240..1241**. No ids outside the assigned blocks.
 
-## Checks and handoff
+## Initial phase-1 checks and handoff
 
 | Check | Exit | Result |
 |---|---:|---|
@@ -176,3 +176,49 @@ Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3E
 Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3E/storage-profile-baseline.json`; SHA-256 `601f32b39f808409f82fc422423583ca73512c05a1fb51d89808b70cb22d02e5`.
 
 Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3E/check-phase1.py`; SHA-256 `4b47f56072227912f632a35921f04355d606d4d115a4679011d57a34d09bbf16`.
+
+
+## Phase-1 review round 1: findings and responses
+
+Reviewed head: `fc141476bf5756ac06b77ac64690bb663bd17de0`. Fix commit: `d6208c794e12dc54ed70893ac479a66c5444025b`. This round changes only F1/F2 schemas, their Storage mirrors, the affected oracle plans (including N1), the Storage registry’s regenerated shards, index generation timestamps and the edited registry’s expected hash in the existing PNC-019 staleness diagnostic, and this report/self-grade/check record. All twenty exact retention questions and `PENDING_RETENTION_DECISION` assignments remain unchanged. No IDs were minted; existing IDs remain those listed above.
+
+- **F1 — fixed (`d6208c794e12dc54ed70893ac479a66c5444025b`).** Where: Backup payload `scope_partition` at lines 193, 353 and 482; Restore at lines 201, 361 and 490, plus the six exact Storage registry mirrors. Why: a 256-character limit refused the canonical 350-character partition of a valid 256-character Project ID. Fix: remove that independent character cap and validate exactly `app` or a nonempty canonical unpadded base64url `project~` partition, including final-bit and full-consumption checks. The existing exact original/envelope/key/value joins, source-ID domain and SP-340 entire-value 16 KiB limit remain required. The schema checks lexical partition shape; phase 2 verifies actual UTF-8/source encoding and semantic joins through the existing owner recipes. Static probes exercise complete custody/history/checkpoint values and registry mirrors with every owner-valid ASCII ID length 3..256, the explicit longest `project:` ID and application scope; raw IDs, empty/malformed/padded suffixes, nonzero final bits and trailing LF refuse at the selected field.
+- **F2 — fixed (`d6208c794e12dc54ed70893ac479a66c5444025b`).** Where: `backup_state_changed.schema.json:107` / `:110`, `restore_state_changed.schema.json:118`, `remote_access_proxy_state_changed.schema.json:66`, `remote_access_route_migration_state_changed.schema.json:90`. Why: the five copied fields narrowed the original owner's 512-character domain to 256. Fix: reference each exact original owner-record field, preserving its lexical domain and nullability. Complete original-record and payload probes pass at 1, 256, 257, 300, 511 and 512 characters; 513 characters, empty/prohibited references and wrong types refuse at that field. Nullable fields keep null; `journal_ref` still refuses null. The resolved SP-337 body keeps the same logical schema and exact reference joins.
+- **N1 — fixed with F1/F2.** Each Backup/Restore plan explicitly names Project and Full Server/application append, same-original retry/lost acknowledgement, retained history, custody recovery and checkpoint advance/restart. The longest encoded Project partition and original-reference boundary positives are explicit. Boundary negatives target one source-ID, partition grammar, whole stored-byte limit, reference domain or exact join at a time, with other copies/keys/digests coherent. Imported predicate sites are inventoried in phase 2 rather than retaining obsolete copied-field length sites.
+- **S1 — retained for the shared format sweep.** Inherited stable-ID/fingerprint patterns (including `server_identity_mismatch_detected.properties.expected_fingerprint`), copied token hash patterns and generic-token UUID `format` still need the planned shared full-consumption/format enforcement. Existing `format_fullmatch` negatives remain. Schema-only PASS does not close this sweep item.
+- **S2 — retained for phase 2.** Adopt the reviewed NUMRULE and shared `pm_guard_isolation.py` foundation under ATS-1241. No lane-local number/format code, caps, serializer or proof script was added. There is no W3E behavioral checker in phase 1, so no guard-removal proof or criterion-12 PASS is claimed. The whole-lane guard inventory and single-defect recipes remain planned.
+
+### Re-grade at the fix commit
+
+| Family | Reviewed grade (PASS/PARTIAL/CONFLICT/ABSENT) | After fix |
+|---|---|---|
+| `backup.state_changed` | 6 / 4 / 1 / 1 | 9 / 2 / 0 / 1 |
+| `restore.state_changed` | 6 / 4 / 1 / 1 | 9 / 2 / 0 / 1 |
+| `remote_access.proxy_state_changed` | 8 / 2 / 1 / 1 | 9 / 2 / 0 / 1 |
+| `remote_access.route_migration_state_changed` | 8 / 2 / 1 / 1 | 9 / 2 / 0 / 1 |
+
+C4 returns from CONFLICT to PASS for all four. C5/C10 return from PARTIAL to PASS for Backup/Restore. These grades cover the normative phase-1 contract and corrected schema domains only. The other sixteen families' grades are unchanged; all twenty retain C1 ABSENT and C7/C12 PARTIAL. Outcome remains 20 prepared, 0 merged, 0 excluded, 0 stopped; none is admission-ready. The original self-grade's eight disputed cells are corrected against the review here, with the review's before/after recorded explicitly.
+
+### Round-1 verification
+
+| Check | Exit | Result |
+|---|---:|---|
+| `schema-boundary-probes` | 0 | PASS |
+| `phase1-shape-check` | 0 | PASS |
+| `shards-generate` | 0 | PASS |
+| `index-generate` | 0 | PASS |
+| `shards-check` | 0 | PASS |
+| `index-validate` | 0 | PASS |
+| `storage-profile` | 1 | PRE_EXISTING_41_PROFILE_GAPS |
+| `new-contracts` | 0 | PASS |
+| `backup-verify-depth` | 0 | PASS |
+| `server-command-gap` | 0 | PASS |
+| `whitespace` | 0 | PASS |
+| `scope-audit` | 0 | PASS |
+
+Checks ran sequentially with the under-6 GiB pause / at-least-7 GiB resume gate and two-minute paused rechecks. The 40 inherited contract pairs passed 1,658 positive and 4,021 negative cases. Storage diagnostics are byte-for-byte structurally identical to the reviewed head: exactly 41 pre-existing missing profiles, none W3E. All six edited Storage value schemas match their payload definitions. The 696 changed shard files all belong to the edited Storage registry; index changes are limited to generated timestamps and that registry’s expected hash in a pre-existing PNC-019 staleness diagnostic. The index was regenerated and validated again after the final byte-preserving formatting cleanup. No governance reseal occurred.
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3E/fix1/checks-fix1.json`; SHA-256 `d9aa6867ce128271990de689d37f1702e1d3d170d2e2729c0709e9ffdfcaa3f8`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3E/fix1/schema-boundary-probes.json`; SHA-256 `7ba982082cf3d2ec8ab7135607ae30d14f348a96548f73712f7a349ff4771c61`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3E/fix1/scope-audit.json`; SHA-256 `5afffce5ee6f00e07be1bf5a4b3d3986de11562c56a095e721821c685fbfc6c0`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3E/fix1/currentness-copy-sha256.json`; SHA-256 `b72623c6887c9cb3b53eb0da0baf1e1b8c0b5d46fe116d4f25746361bbe73b8b`.
