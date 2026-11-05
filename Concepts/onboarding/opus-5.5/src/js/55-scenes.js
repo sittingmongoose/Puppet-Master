@@ -176,9 +176,10 @@
       const n = S.sess.nas || {}, method = n.method || 'ssh', st = op(S, 'discover:ssh');
       if (method !== 'ssh') return 'method:' + method;
       if (n.manual) return 'typing';
+      if (!st || st.state === 'running') return 'enter';
       const d = O55.nas.picked(S);
       if (d) return d.pm ? 'pm' : !d.ssh ? 'sshOff' : 'selected';
-      return st && st.state === 'done' ? (S.env.devices.length ? 'found' : 'empty') : st && st.state === 'failed' ? 'failed' : 'enter';
+      return st && st.state === 'done' ? (O55.nas.discoveryCards(S).length ? 'found' : 'empty') : st && st.state === 'failed' ? 'failed' : 'enter';
     }, vars: (S) => ({ method: (S.sess.nas || {}).method || 'ssh' }) },
     'nas-identity': { props: nasWith('idcard'), state: (S) => ((S.sess.nas || {}).trusted ? 'trusted' : 'enter') },
     'nas-key': { props: nasWith('key') },

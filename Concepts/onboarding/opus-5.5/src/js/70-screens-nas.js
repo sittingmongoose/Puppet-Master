@@ -100,8 +100,7 @@
         } else if (!st || st.state !== 'done') {
           out += `<div class="o55-row o55-row-wait" data-key="scan" aria-busy="true">${C.loader(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('nas.find.looking'))}</span></span></div>`;
         } else {
-          const cards = S.env.here.sshConfigHosts.map((h) => { const d = S.env.devices.find((x) => x.address === h.host); return d && { v: d.id + '|cfg', glyph: 'key', title: h.alias + ' → ' + h.host, sub: T('nas.find.fromConfig') + ' · ' + T('nas.find.user', { user: h.user }) }; }).filter(Boolean)
-            .concat(S.env.devices.filter((d) => !(n.purpose === 'storage' && workOn(S) === d.id)).map((d) => ({ v: d.id, glyph: 'server', title: d.name, sub: d.brand + ' ' + d.model + ' · ' + d.address, tag: d.pm ? T('nas.find.pmTag') : d.ssh ? T('nas.find.sshOn') : T('nas.find.sshOff') })));
+          const cards = discoveryCards(S);
           const chosen = n.choice ? n.choice.id + (n.choice.cfg ? '|cfg' : '') : n.device ? n.device + (n.fromConfig ? '|cfg' : '') : null;
           if (!cards.length) out += C.note(T('pip.say.nas-find.empty'), 'info');
           out += C.cards('device', cards.map((c) => (c.v === chosen && about ? Object.assign(c, { under: about }) : c)), chosen, { label: T('nas.find.titleSource') });
@@ -923,5 +922,7 @@
     if (screen === 'nas-install') return n.device ? installKey(S) : null;
     return null;
   }
-  O55.nas = { dev, picked, N, pubLine, entry, transport, endPair, remember, placeLabel, checkKey };
+  const discoveryCards = (S) => S.env.here.sshConfigHosts.map((h) => { const d = S.env.devices.find((x) => x.address === h.host); return d && { v: d.id + '|cfg', glyph: 'key', title: h.alias + ' → ' + h.host, sub: T('nas.find.fromConfig') + ' · ' + T('nas.find.user', { user: h.user }) }; }).filter(Boolean)
+            .concat(S.env.devices.filter((d) => !(N(S).purpose === 'storage' && workOn(S) === d.id)).map((d) => ({ v: d.id, glyph: 'server', title: d.name, sub: d.brand + ' ' + d.model + ' · ' + d.address, tag: d.pm ? T('nas.find.pmTag') : d.ssh ? T('nas.find.sshOn') : T('nas.find.sshOff') })));
+  O55.nas = { dev, picked, discoveryCards, N, pubLine, entry, transport, endPair, remember, placeLabel, checkKey };
 })();

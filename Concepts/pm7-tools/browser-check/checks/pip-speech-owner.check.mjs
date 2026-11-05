@@ -30,6 +30,7 @@ const SAMPLER = ([root, L]) => {
 	if (window.__own) cancelAnimationFrame(window.__own.raf);
 	const O = window.O55, t = (k) => O.t(k), say = (s) => O.tx('pip.say.' + s) || {};
 	const SETS = {
+        'nas-find': () => ({ lines: say('nas-find'), op: { scanning: say('nas-find').enter }, valid: { running: ['scanning'], done: [], selected: [], method: [], failed: [] } }),
 		'nas-smb': () => ({ lines: say('nas-smb'), op: { enter: say('nas-smb').enter, checking: say('nas-smb').checking, done: say('nas-smb').done, oops: t('pip.oops.nas.smb.wrong'), cheer: t('pip.cheer.nas.smb.wrong') },
 			valid: { unchecked: ['enter'], running: ['checking'], failed: ['oops'], done: ['done', 'cheer'] } }),
 		'nas-mounted': () => ({ lines: say('nas-mounted'), op: { enter: say('nas-mounted').enter, checking: say('nas-mounted').checking, done: say('nas-mounted').done },
@@ -38,6 +39,12 @@ const SAMPLER = ([root, L]) => {
 		'nas-install': () => ({ lines: say('nas-install'), op: { enter: say('nas-install').enter, done: say('nas-install').done }, valid: { running: ['enter'], done: ['done'], failed: [] } })
 	};
 	const domState = (scr, layer) => {
+        if (scr === 'nas-find') {
+            const n = O.S.sess.nas || {};
+            if ((n.method || 'ssh') !== 'ssh' || n.manual) return 'method';
+            if (n.choice || n.device) return 'selected';
+            return layer.querySelector('[data-key="scan"]') ? 'running' : layer.querySelector('[data-o55-do="device"]') ? 'done' : 'failed';
+        }
 		const p = layer.querySelector('.o55-primary'), act = p && p.getAttribute('data-o55-do'), off = !p || p.disabled || p.getAttribute('aria-disabled') === 'true';
 		const phases = layer.querySelector('.o55-phases'), failed = !!layer.querySelector('.o55-ph-failed');
 		if (scr === 'nas-smb') return !phases ? 'unchecked' : failed ? 'failed' : act === 'use' && !off ? 'done' : 'running';
@@ -140,7 +147,7 @@ async function begin(t, f, look, mode, screen, tag) {
 	await settled(f, screen);
 	await motionHolds(t, f, tag);
 	if (await f.evaluate(() => O55.talk.mode()) !== (mode ? 'Expert' : 'ELI5')) await f.locator('#pm-o55-onboarding button.o55-talk').first().click();
-	await t.check('requested wording is applied', await f.evaluate(() => O55.talk.mode()) === (mode ? 'Expert' : 'ELI5')); 
+	await t.check('requested wording is applied', await f.evaluate(() => O55.talk.mode()) === (mode ? 'Expert' : 'ELI5'));
 	await t.page.waitForTimeout(300);
 	await take(f);
 	return true;
@@ -155,14 +162,24 @@ export default async function (t) {
 		const tag = `${look} w${mode}`;
         if (only.includes('discovery')) await t.step(`${tag} · discovery`, async () => {
             const f = await t.app.open();
-            await begin(t, f, look, mode, 'nas-find', tag);
+            await begin(t, f, look, mode, 'begin', tag);
+            await arm(f);
+            await openAt(t, f, 'nas-find');
             const scan = await tx(f, 'pip.say.nas-find.enter');
             await t.check('discovery scanning line while running', !!await typing(f, scan, 4));
             await f.waitForFunction(() => O55.S.sess.ops['discover:ssh']?.state === 'done');
             await t.mark(`${tag} discovery results`);
             await t.check('result replaces scanning line', !!await typing(f, await tx(f, 'pip.say.nas-find.found'), 8));
-            await clickIn(f, '[data-o55-do="device"]');
-            await t.check('selection replaces discovery result', !!await typing(f, await tx(f, 'pip.say.nas-find.selected'), 8));
+            await verdict(t, f, `${tag} discovery completed`, ['nas-find:running', 'nas-find:done']);
+            const id = await f.evaluate(() => O55.S.env.devices.find(d => d.ssh && !d.pm).id);
+            await clickIn(f, `[data-o55-do="device"][data-arg="${id}"]`);
+            await t.check('selection replaces discovery result', !!await typing(f, await tx(f, 'pip.say.nas-find.group:device'), 8));
+            const cases = await f.evaluate(() => {
+                const S = O55.S, scene = O55.pipScenes.SCREENS['nas-find'];
+                const state = (status, devices) => { const fake = Object.assign({}, S, { env: Object.assign({}, S.env, { devices }), sess: Object.assign({}, S.sess, { nas: { method: 'ssh' }, ops: { 'discover:ssh': { state: status } } }) }); return scene.state(fake); };
+                return [state('done', []), state('failed', S.env.devices)];
+            });
+            await t.check('empty and failed discovery have terminal speech states', JSON.stringify(cases) === '["empty","failed"]', JSON.stringify(cases));
             await clickIn(f, '[data-o55-do="method"][data-arg="smb"]');
             await t.check('method change leaves no scanning line', !!await typing(f, await tx(f, 'pip.say.nas-find.method:smb'), 8));
         });
@@ -264,7 +281,7 @@ export default async function (t) {
 			if (!(await openAt(t, f, 'nas-install'))) return t.check(`${tag}: Adding the key opens`, false, 'not opened from its row', { hard: true });
 			await motionHolds(t, f, `${tag} install`);
 			if (await f.evaluate(() => O55.talk.mode()) !== (mode ? 'Expert' : 'ELI5')) await f.locator('#pm-o55-onboarding button.o55-talk').first().click();
-	await t.check('requested wording is applied', await f.evaluate(() => O55.talk.mode()) === (mode ? 'Expert' : 'ELI5')); 
+	await t.check('requested wording is applied', await f.evaluate(() => O55.talk.mode()) === (mode ? 'Expert' : 'ELI5'));
 			await t.check(`${tag} install: the install passes`, await checkIs(f, 'nas-install', 'done'), await primaryDo(f));
 			await t.page.waitForTimeout(900);
 			await verdict(t, f, `${tag} install running, then done`, ['nas-install:done']);

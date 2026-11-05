@@ -56,8 +56,9 @@ export default async function (t) {
 	const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
 	const f = await t.app.open();
 	await t.app.resetLayout();
-	for (const look of looks) {
-		await t.step(look, async () => {
+	for (const width of (t.args.widths ? String(t.args.widths).split(',').map(Number) : [1920])) for (const look of looks) {
+        await t.page.setViewportSize({width, height: t.args.short ? 500 : 1080});
+		await t.step(`${look} ${width}`, async () => {
 			await t.app.look(look);
 			let g = await steady(t, f);
 			if (!(await t.check(`${look}: Home shows the Budget projection chart in a board scroller`, !!(g && g.scroller && g.labels.length), g ? `scroller ${g.scroller ? g.scroller.name : 'none'}, ${g.labels.length} labels` : 'no chart'))) return;
@@ -68,6 +69,8 @@ export default async function (t) {
 			await t.check(`${look}: the whole chart is in its initial window`, inside(g.plot, w), `plot ${JSON.stringify(g.plot)}, window ${JSON.stringify(w)}, scrollTop ${g.scroller.st}/${g.scroller.max}`);
 			const out = g.labels.filter((x) => !inside(x.box, w) || g.clips.some((c) => !inside(x.box, c.win)));
 			await t.check(`${look}: every axis label is wholly inside the scroller's window and every box that holds it`, !out.length, out.length ? out.map((x) => `"${x.text}" ${JSON.stringify(x.box)}`).join('; ') + ` window ${JSON.stringify(w)}` : `${g.labels.length} labels: ${g.labels.map((x) => x.text).join(', ')}`);
+			const overlaps = g.labels.flatMap((a, i) => g.labels.slice(i + 1).filter(b => Math.min(a.box.r, b.box.r) - Math.max(a.box.l, b.box.l) > 1 && Math.min(a.box.b, b.box.b) - Math.max(a.box.t, b.box.t) > 1).map(b => [a.text, b.text]));
+			await t.check(`${look}: labels do not overlap`, !overlaps.length, JSON.stringify(overlaps));
 			const covered = g.labels.filter((x) => !x.top);
 			await t.check(`${look}: nothing is laid over the labels`, !covered.length, covered.map((x) => x.text).join(', ') || 'all on top');
 			await f.evaluate((sel) => { document.querySelectorAll('[data-fo33-card]').forEach((e) => e.removeAttribute('data-fo33-card')); const c = document.querySelector(sel).closest('.pmu-cardbody'); if (c) c.setAttribute('data-fo33-card', ''); }, PLOT);

@@ -45,7 +45,7 @@ export default async function(t) {
  const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
  for (const [ix,look] of looks.entries()) for (const mode of [0,1]) {
   if(t.args.widths) {const widths=String(t.args.widths).split(',').map(Number);await t.page.setViewportSize({width:widths[(ix*2+mode)%widths.length],height:t.args.short ? 500 : 1080});}
-  if (t.args.only !== 'token') for (const action of (t.args.action ? String(t.args.action).split(',') : t.args.multi ? ['remove','key','unrelated'] : ['remove','key','checkedit'])) await t.step(`${look} w${mode} AI cheer ${action}`, async()=>{
+  if (t.args.only !== 'token') for (const action of (t.args.action ? String(t.args.action).split(',') : t.args.multi ? ['remove','key','unrelated'] : ['remove','key','checkedit','discardedit'])) await t.step(`${look} w${mode} AI cheer ${action}`, async()=>{
    const f = await t.app.open(); await t.app.look(look);
    await t.emulate({ reducedMotion:t.args.motion === 'reduced' ? 'reduce' : 'no-preference' });
    if(t.args.motion === 'reduced') await t.check('Reduced Motion is applied',await f.evaluate(()=>matchMedia('(prefers-reduced-motion: reduce)').matches));
@@ -65,7 +65,7 @@ export default async function(t) {
    await key('short-key');
    await f.waitForFunction(()=>Object.values(O55.S.sess.ops).some(x=>x.state==='failed'));
    await t.page.waitForTimeout(300);
-   if(action==='checkedit') {
+   if(action==='checkedit' || action==='discardedit') {
     /* in the app's own window (the sandbox is an opaque frame): every uncaught error from here on */
     await f.evaluate(()=>{window.__ckErr=[];addEventListener('error',(e)=>__ckErr.push(String(e.message||e.error)));addEventListener('unhandledrejection',(e)=>__ckErr.push('rejection: '+String(e.reason)));});
     await key('demo-key-0000-1111-2222');
@@ -84,7 +84,7 @@ export default async function(t) {
     await f.waitForFunction(()=>O55.S.sess.ai.list.some(x=>x.provider==='cursor'));
     await f.waitForFunction(()=>{const b=document.querySelector('#pm-o55-onboarding .pst-bt-on');return b && b.textContent.startsWith('That');});
    }
-   if(action==='checkedit') {
+   if(action==='discardedit') {
     const typed=await f.evaluate(()=>O55.S.sess.ai.accounts.cursor.keyTyped);
     await t.check('discarded replacement clears typed state',typed===false,JSON.stringify({typed}));
     await f.locator(LAYER+' '+row+'[data-o55-do="manage"]').first().click();
@@ -93,6 +93,7 @@ export default async function(t) {
     const fresh=await f.evaluate(()=>({value:document.querySelector('#o55f-key-cursor').value,typed:O55.S.sess.ai.accounts.cursor.keyTyped}));
     await t.check('Add another key opens empty and untyped',fresh.value===''&&fresh.typed===false,JSON.stringify(fresh));
     await f.locator(LAYER+' [data-o55-do="cancelAdd"]').first().click();
+    return;
    }
    const ids=await f.evaluate(()=>O55.S.sess.ai.list.filter(x=>x.provider==='cursor').map(x=>x.id));
    const targetId=ids[ids.length-1], otherId=ids.length>1 ? ids[0] : null;
