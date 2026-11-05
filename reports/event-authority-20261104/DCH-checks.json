@@ -1,58 +1,432 @@
 {
-  "review_round": 8,
-  "assessed_commit": "57bf750d97400f7c3b6877b71eb34d3c7c828951",
-  "fixture_commit": "1a61d45b2100a9990a7d469e7e5fc13eb373d0af",
-  "prepared_contracts_without_admission": 17,
-  "DCH_static_checks": 41339,
-  "ordinary_family_runs": 17,
-  "new_cases": 8313,
-  "new_negative_cases": 4284,
-  "new_positive_cases": 4029,
-  "family_grades_each": {
-    "PASS": 9,
-    "PARTIAL": 2,
-    "ABSENT": 1
+  "round": 9,
+  "kind": "deck-2 item 3.a applied",
+  "source_commit": "d2a5182a825c16ce882c86f3459a23dea4312265",
+  "family_jobs": {
+    "jobs": [
+      {
+        "name": "bundle.selection_forward_blocked",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "bundle.selection_forward_blocked"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2375,
+        "failures": 0,
+        "seconds": 258.47,
+        "output": "bundle_selection_forward_blocked.json"
+      },
+      {
+        "name": "bundle.selection_sent_to_chat",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "bundle.selection_sent_to_chat"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2409,
+        "failures": 0,
+        "seconds": 45.85,
+        "output": "bundle_selection_sent_to_chat.json"
+      },
+      {
+        "name": "chat.message",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "chat.message"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2391,
+        "failures": 0,
+        "seconds": 32.3,
+        "output": "chat_message.json"
+      },
+      {
+        "name": "chat.thread_archived",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "chat.thread_archived"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2503,
+        "failures": 0,
+        "seconds": 22.39,
+        "output": "chat_thread_archived.json"
+      },
+      {
+        "name": "chat.thread_created",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "chat.thread_created"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2369,
+        "failures": 0,
+        "seconds": 32.75,
+        "output": "chat_thread_created.json"
+      },
+      {
+        "name": "chat.thread_deleted",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "chat.thread_deleted"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2369,
+        "failures": 0,
+        "seconds": 28.61,
+        "output": "chat_thread_deleted.json"
+      },
+      {
+        "name": "chat.thread_worktree_bound",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "chat.thread_worktree_bound"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2367,
+        "failures": 0,
+        "seconds": 28.64,
+        "output": "chat_thread_worktree_bound.json"
+      },
+      {
+        "name": "chat.thread_worktree_create_failed",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "chat.thread_worktree_create_failed"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2363,
+        "failures": 0,
+        "seconds": 18.17,
+        "output": "chat_thread_worktree_create_failed.json"
+      },
+      {
+        "name": "chat.thread_worktree_merge_failed",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "chat.thread_worktree_merge_failed"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2371,
+        "failures": 0,
+        "seconds": 32.34,
+        "output": "chat_thread_worktree_merge_failed.json"
+      },
+      {
+        "name": "chat.thread_worktree_merged",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "chat.thread_worktree_merged"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2375,
+        "failures": 0,
+        "seconds": 32.67,
+        "output": "chat_thread_worktree_merged.json"
+      },
+      {
+        "name": "chat.thread_worktree_pr_created",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "chat.thread_worktree_pr_created"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2569,
+        "failures": 0,
+        "seconds": 28.3,
+        "output": "chat_thread_worktree_pr_created.json"
+      },
+      {
+        "name": "chat.thread_worktree_pr_failed",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "chat.thread_worktree_pr_failed"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2367,
+        "failures": 0,
+        "seconds": 28.39,
+        "output": "chat_thread_worktree_pr_failed.json"
+      },
+      {
+        "name": "chat.thread_worktree_pre_merge_test_failed",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "chat.thread_worktree_pre_merge_test_failed"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2733,
+        "failures": 0,
+        "seconds": 26.26,
+        "output": "chat_thread_worktree_pre_merge_test_failed.json"
+      },
+      {
+        "name": "chat.thread_worktree_pre_merge_test_passed",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "chat.thread_worktree_pre_merge_test_passed"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2683,
+        "failures": 0,
+        "seconds": 30.4,
+        "output": "chat_thread_worktree_pre_merge_test_passed.json"
+      },
+      {
+        "name": "chat.thread_worktree_pre_merge_test_started",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "chat.thread_worktree_pre_merge_test_started"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2367,
+        "failures": 0,
+        "seconds": 20.14,
+        "output": "chat_thread_worktree_pre_merge_test_started.json"
+      },
+      {
+        "name": "chat.thread_worktree_renamed",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "chat.thread_worktree_renamed"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2365,
+        "failures": 0,
+        "seconds": 28.99,
+        "output": "chat_thread_worktree_renamed.json"
+      },
+      {
+        "name": "chat.thread_worktree_unbound",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "chat.thread_worktree_unbound"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2363,
+        "failures": 0,
+        "seconds": 22.32,
+        "output": "chat_thread_worktree_unbound.json"
+      }
+    ],
+    "minimum_available_bytes": 6415417344,
+    "memory_events": [
+      {
+        "job": "bundle.selection_forward_blocked",
+        "action": "pause",
+        "at": 1793862061.258085,
+        "available": 6415417344
+      },
+      {
+        "job": "bundle.selection_forward_blocked",
+        "action": "recheck",
+        "at": 1793862181.373076,
+        "available": 7289634816
+      },
+      {
+        "job": "bundle.selection_forward_blocked",
+        "action": "recheck",
+        "at": 1793862301.62337,
+        "available": 8315039744
+      },
+      {
+        "job": "bundle.selection_forward_blocked",
+        "action": "resume",
+        "at": 1793862301.6249352,
+        "available": 8315039744
+      }
+    ]
   },
-  "positive_negative_oracles": "PARTIAL pending shared guard-isolation adoption",
-  "stop_status": "HELD_FOR_JARED_UNCHANGED",
-  "stop_grade": {
-    "PASS": 0,
-    "PARTIAL": 5,
-    "ABSENT": 7
+  "stop": {
+    "status": "pass",
+    "checks": 4540,
+    "cases": 2264,
+    "surfaces": {
+      "request": 402,
+      "retry": 116,
+      "transport": 512,
+      "outcome": 384,
+      "save": 24,
+      "read": 48,
+      "queue": 96,
+      "schema_outcome": 262,
+      "schema_request": 276,
+      "index": 108,
+      "retirement": 36
+    },
+    "failures": [],
+    "native_execution": "NOT_RUN",
+    "claim_boundary": "Synthetic original source/Store/decision observations. No native durability, authenticated provenance, SP-278 completeness/CAS or check-11 isolation certification. Shared proof and number-domain adoption remain sweep items."
   },
-  "legacy_guard_proof": "Historical round 7 only; not rerun or current certification",
-  "focused_reference_audit": {
-    "families": 17,
-    "equality_only_flips": 17,
-    "unrelated_reference_negatives_rejected_each": 14,
-    "wrong_reference_encoded_bytes": 117,
-    "exact_uint64_reference_maximum_encoded_bytes": 131
+  "verification": {
+    "jobs": [
+      {
+        "name": "shard-generate",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm-shard-plans.py",
+          "--generate",
+          "--config",
+          "Plans/sharding_config.json"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": null,
+        "failures": 0,
+        "seconds": 2.31,
+        "output": "shard-generate.json"
+      },
+      {
+        "name": "index-generate",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm-plan-index.py",
+          "generate"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": null,
+        "failures": 0,
+        "seconds": 32.05,
+        "output": "index-generate.json"
+      },
+      {
+        "name": "shard-check",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm-shard-plans.py",
+          "--check",
+          "--config",
+          "Plans/sharding_config.json"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": null,
+        "failures": 0,
+        "seconds": 12.01,
+        "output": "shard-check.json"
+      },
+      {
+        "name": "index-validate",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm-plan-index.py",
+          "validate"
+        ],
+        "exit_code": 1,
+        "status": "fail",
+        "checks": null,
+        "failures": 22,
+        "seconds": 34.03,
+        "output": "index-validate.json"
+      },
+      {
+        "name": "storage-profile",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm-storage-profile-check.py"
+        ],
+        "exit_code": 1,
+        "status": "fail",
+        "checks": null,
+        "failures": 0,
+        "seconds": 2.01,
+        "output": "storage-profile.json"
+      },
+      {
+        "name": "assistant-contract",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm-assistant-contract-check.py"
+        ],
+        "exit_code": 1,
+        "status": "gaps_found",
+        "checks": null,
+        "failures": 0,
+        "seconds": 22.04,
+        "output": "assistant-contract.json"
+      }
+    ],
+    "minimum_available_bytes": 11647356928,
+    "memory_events": []
   },
-  "defect_restoration_drivers": 4,
-  "index_generate_status": "pass",
-  "index_validate_status": "fail",
-  "index_failures": 22,
-  "base_index_failures": 23,
-  "index_new_failures": 0,
-  "storage_profile_errors": 41,
-  "storage_profile_error_list_matches_baseline": true,
-  "assistant_contract_errors": 0,
-  "assistant_changes": "Only edited source/reference hashes; complete changed-path list in verification.json",
-  "currentness_files_sha256_matched": 15,
-  "new_ids": [],
-  "evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/fix8",
+  "scope_audit": "r9/scope-audit.json",
+  "baseline_comparison": "r9/baseline-comparison.json",
+  "retirement_applications": "reports/event-authority-20261104/DCH-stop-retirement-application.json",
   "native_execution": "NOT_RUN",
-  "native_or_governance_pass_claimed": false,
-  "sweep_items": [
-    "proof identifier keys",
-    "proof shared input/type grouping",
-    "proof compound envelope/access",
-    "proof size/reference grouping",
-    "S1-NUM producer projection",
-    "S2-NUM",
-    "S3-NUM",
-    "S4-NUM"
-  ],
-  "source_fix_commit": "7c7b7abe3d665ab661f8c9a5b41246924f17e8e6",
-  "generated_shard_completion_commit": "57bf750d97400f7c3b6877b71eb34d3c7c828951"
+  "no_admission": true
 }

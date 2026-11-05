@@ -19,18 +19,12 @@
     ]
   },
   "native_execution": "NOT_RUN",
-  "assessment_id": "EA-W2-DCH-FIX8-SELF-20261105",
+  "assessment_id": "EA-W2-DCH-R9-CARDS2-SELF-20261105",
   "assessed_tree": {
     "branch": "plans/ea-w2-chat-20261104",
-    "commit": "57bf750d97400f7c3b6877b71eb34d3c7c828951",
-    "reviewed_head": "3a994263ef63354fd9e2fde754f06faec92c84be",
-    "fix_commits": [
-      "1a61d45b2100a9990a7d469e7e5fc13eb373d0af",
-      "7c7b7abe3d665ab661f8c9a5b41246924f17e8e6",
-      "57bf750d97400f7c3b6877b71eb34d3c7c828951"
-    ],
-    "final_edition": "Round 8 source and regenerated companions, including both new shard tail files. Report-pin commit follows. Shared isolation proof pending; Stop held; native NOT_RUN.",
-    "source_fix_commit": "7c7b7abe3d665ab661f8c9a5b41246924f17e8e6"
+    "commit": "d2a5182a825c16ce882c86f3459a23dea4312265",
+    "base_commit": "e34286958a9045ed9fc5fc95a4e23294bbcf1686",
+    "final_edition": "Round 9 applies DL-406/DL-427 to Stop only. Seventeen source contracts and grade rows are unchanged; fresh serial results are recorded at round level."
   },
   "rows": [
     {
@@ -8317,299 +8311,453 @@
     },
     {
       "event_type": "chat.response_stop_requested",
-      "family_id": null,
-      "family_revision": null,
-      "outcome": "blocked_on_jared",
-      "disposition": "UNDISPOSITIONED",
+      "family_id": "event-family-chat-response-stop-requested",
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared_pending_retention_and_native_cutover",
+      "disposition": "CURRENT_WRITER",
       "disposition_evidence": [
         {
           "path": "Plans/assistant-chat-design.md",
-          "unit": "section 4",
-          "line_start": 275,
-          "line_end": 275,
-          "quote": "waits up to `cancel_grace_ms = 3000`"
-        },
-        {
-          "path": "Plans/storage_value_registry.json",
-          "unit": "#/families/run_record_legacy_baseline",
-          "line_start": 7615,
-          "line_end": 7615,
-          "quote": "Migration-read only until a current run-record owner materializes a v1 value schema."
+          "unit": "ACD-627",
+          "line_start": 30287,
+          "line_end": 30287,
+          "quote": "prepared without admission."
         }
       ],
       "current_owner_units": [
-        "section 4",
-        "ACD-470",
-        "ACD-471",
-        "catalog Stop command"
+        "ACD-627",
+        "ACD-628",
+        "CV-647",
+        "SP-627",
+        "SP-628",
+        "ATS-306"
       ],
       "cells": {
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "No Stop row is registered and no family revision/schema is prepared.",
+          "finding": "Membership remains intentionally absent; revision 1.0.0 and payload editions are prepared without admission.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Stop command contract",
-              "line_start": 8581,
-              "line_end": 8581,
-              "quote": "`chat.response_stop_requested`"
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-627",
+              "line_start": 30287,
+              "line_end": 30287,
+              "quote": "prepared without admission."
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First Stop-specific assessment after card 2b A; no implementation bindings are authorized while the existing-record condition is unmet."
+          "prior": {
+            "source": "worker self-grade at e34286958a9045ed9fc5fc95a4e23294bbcf1686",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Deck-2 item 3.a option A / DL-427 authorizes the replacement record; DL-406 barriers and conditional retirement remain."
         },
         "owner_doc": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Section 4 and the catalog describe Stop under different event names; DL-406 retirement remains conditional on a missing record binding.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "ACD-627/628, CV-647 and SP-627/628 govern this exact request and its saved turn outcome, with conditional retirement.",
           "evidence": [
             {
               "path": "Plans/assistant-chat-design.md",
-              "unit": "section 4",
-              "line_start": 275,
-              "line_end": 275,
-              "quote": "waits up to `cancel_grace_ms = 3000`"
+              "unit": "ACD-627",
+              "line_start": 30287,
+              "line_end": 30287,
+              "quote": "The existing cmd.chat.stop handler is the sole producer."
+            },
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-628",
+              "line_start": 30375,
+              "line_end": 30375,
+              "quote": "The record is assistant_turn_stop_outcome"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First Stop-specific assessment after card 2b A; no implementation bindings are authorized while the existing-record condition is unmet."
+          "prior": {
+            "source": "worker self-grade at e34286958a9045ed9fc5fc95a4e23294bbcf1686",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 3.a option A / DL-427 authorizes the replacement record; DL-406 barriers and conditional retirement remain."
         },
         "producer": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "The Stop handler and cancellation wait are specified, but no complete exact-family append/receipt contract is prepared.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "The original cmd.chat.stop owner freezes actual targets, commits intent/request/first receipt before cancellation, preserves the original deadline and durably saves the result before queue release.",
           "evidence": [
             {
               "path": "Plans/assistant-chat-design.md",
-              "unit": "section 4",
-              "line_start": 275,
-              "line_end": 275,
-              "quote": "waits up to `cancel_grace_ms = 3000`"
+              "unit": "ACD-627",
+              "line_start": 30289,
+              "line_end": 30289,
+              "quote": "Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name."
+            },
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-627",
+              "line_start": 30289,
+              "line_end": 30289,
+              "quote": "append this one request-history entry and recover/read back its first receipt before delivering cancellation"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First Stop-specific assessment after card 2b A; no implementation bindings are authorized while the existing-record condition is unmet."
+          "prior": {
+            "source": "worker self-grade at e34286958a9045ed9fc5fc95a4e23294bbcf1686",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 3.a option A / DL-427 authorizes the replacement record; DL-406 barriers and conditional retirement remain."
         },
         "closed_payload_schema": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No closed Stop event payload schema is prepared; command arguments do not constitute an EventRecord schema.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Separate closed Project/application request and saved-outcome schema editions 1.0.0 are defined with exact field rosters.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Stop command contract",
-              "line_start": 8581,
-              "line_end": 8581,
-              "quote": "`chat.response_stop_requested`"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-647",
+              "line_start": 26604,
+              "line_end": 26604,
+              "quote": "Plans/dch_stop_request.schema.json selects closed Project"
+            },
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-628",
+              "line_start": 30375,
+              "line_end": 30375,
+              "quote": "The record has exactly schema_id, schema_version, storage_instance_id, scope, computer_id, thread_id, assistant_turn_id"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First Stop-specific assessment after card 2b A; no implementation bindings are authorized while the existing-record condition is unmet."
+          "prior": {
+            "source": "worker self-grade at e34286958a9045ed9fc5fc95a4e23294bbcf1686",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 3.a option A / DL-427 authorizes the replacement record; DL-406 barriers and conditional retirement remain."
         },
         "scope_identity": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "The catalog lists thread_id, optional run_id and assistant_turn_id; exact event scope joins and identity recipe remain undefined.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Actual original Storage/Server/Computer/thread/assistant-turn/work joins, reversible Project partitions, original operation identity and exact CV-366 application key are explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Stop command contract",
-              "line_start": 8581,
-              "line_end": 8581,
-              "quote": "`chat.response_stop_requested`"
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-627",
+              "line_start": 30291,
+              "line_end": 30291,
+              "quote": "Application keys adopt CV-366 exactly:"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-627",
+              "line_start": 33257,
+              "line_end": 33257,
+              "quote": "Every component joins the actual record and original request/source; the Storage instance is independently read."
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First Stop-specific assessment after card 2b A; no implementation bindings are authorized while the existing-record condition is unmet."
+          "prior": {
+            "source": "worker self-grade at e34286958a9045ed9fc5fc95a4e23294bbcf1686",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 3.a option A / DL-427 authorizes the replacement record; DL-406 barriers and conditional retirement remain."
         },
         "replay_idempotency": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "The command lists idempotency_key; it has no exact Stop event dedupe/replay and original-result custody contract.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact event/key/semantic identity returns original first receipt without new effects; conflicts and unavailable dedupe refuse. Replay reads evidence only and Storage metadata stays outside the producer projection.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Stop command contract",
-              "line_start": 8581,
-              "line_end": 8581,
-              "quote": "`chat.response_stop_requested`"
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-627",
+              "line_start": 30291,
+              "line_end": 30291,
+              "quote": "Same key and producer-semantic body returns the original result/first receipt"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-647",
+              "line_start": 26606,
+              "line_end": 26606,
+              "quote": "excluding only Storage-assigned sequence_id, observed_at_utc and persisted_at_utc"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First Stop-specific assessment after card 2b A; no implementation bindings are authorized while the existing-record condition is unmet."
+          "prior": {
+            "source": "worker self-grade at e34286958a9045ed9fc5fc95a4e23294bbcf1686",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 3.a option A / DL-427 authorizes the replacement record; DL-406 barriers and conditional retirement remain."
         },
         "retention": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No exact Stop family/record retention assignment is authored in this conditional task.",
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "DL-401 G15 binds the request to RP-CHAT-THREAD-LIFETIME@1.0.0 and the generic checkpoint retains RP-PROJECTION-3GEN. The new saved record is not assigned by a group: its exact question and PENDING_RETENTION_DECISION fence remain.",
           "evidence": [
             {
-              "path": "Plans/storage_value_registry.json",
-              "unit": "#/families/run_record_legacy_baseline",
-              "line_start": 7615,
-              "line_end": 7615,
-              "quote": "Migration-read only until a current run-record owner materializes a v1 value schema."
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-627",
+              "line_start": 33261,
+              "line_end": 33261,
+              "quote": "Request retention is already decided by DL-401 G15:"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-627",
+              "line_start": 33261,
+              "line_end": 33261,
+              "quote": "The newly authorized saved result is not named by G15"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First Stop-specific assessment after card 2b A; no implementation bindings are authorized while the existing-record condition is unmet."
+          "prior": {
+            "source": "worker self-grade at e34286958a9045ed9fc5fc95a4e23294bbcf1686",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 3.a option A / DL-427 authorizes the replacement record; DL-406 barriers and conditional retirement remain."
         },
         "redaction_custody": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No authoritative chat run/turn stop-outcome custody binding exists; the legacy run row is migration-read only.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "No-secret refs, exact canonical source/request/result/receipt/pack custody, coherent restore and current authorization/deletion/hold checks are family-specific. A missing result cannot be reconstructed from display or delivery.",
           "evidence": [
             {
-              "path": "Plans/storage_value_registry.json",
-              "unit": "#/families/run_record_legacy_baseline",
-              "line_start": 7615,
-              "line_end": 7615,
-              "quote": "Migration-read only until a current run-record owner materializes a v1 value schema."
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-647",
+              "line_start": 26604,
+              "line_end": 26604,
+              "quote": "References contain no credentials, instructions, transcript bodies, raw output or newly copied evidence."
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-627",
+              "line_start": 33255,
+              "line_end": 33255,
+              "quote": "Backup/restore must recover canonical request bytes"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First Stop-specific assessment after card 2b A; no implementation bindings are authorized while the existing-record condition is unmet."
+          "prior": {
+            "source": "worker self-grade at e34286958a9045ed9fc5fc95a4e23294bbcf1686",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 3.a option A / DL-427 authorizes the replacement record; DL-406 barriers and conditional retirement remain."
         },
         "transitions": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Section 4 keeps the 3000 ms wait and saved-outcome barrier; ACD-470 partial transcript terminal states do not distinguish cancellation completion from timeout.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Cancelled versus timeout is bound to actual original work and the 3000 ms grace, saved result/readback and separate user-action queue barriers. Immutable result CAS, repeat/conflict and unresolved recovery behavior are explicit.",
           "evidence": [
             {
               "path": "Plans/assistant-chat-design.md",
-              "unit": "ACD-470",
-              "line_start": 26479,
-              "line_end": 26479,
-              "quote": "A reply ends in exactly one terminal state: complete; stopped, when the user pressed Stop, which"
+              "unit": "ACD-628",
+              "line_start": 30377,
+              "line_end": 30377,
+              "quote": "cancelled requires verified all-target stopping within the original three-second grace"
+            },
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-627",
+              "line_start": 30289,
+              "line_end": 30289,
+              "quote": "A separate user Send, Send now, Edit or Remove under ACD-471 must still release the queue"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First Stop-specific assessment after card 2b A; no implementation bindings are authorized while the existing-record condition is unmet."
+          "prior": {
+            "source": "worker self-grade at e34286958a9045ed9fc5fc95a4e23294bbcf1686",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 3.a option A / DL-427 authorizes the replacement record; DL-406 barriers and conditional retirement remain."
         },
         "consumers_checkpoints": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No exact Stop consumer/projector/checkpoint is prepared; no sibling adoption is inferred.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "The exact passive Stop reader explicitly adopts the generic SP-278 projector, checkpoint and nine-field durable token, atomic advance, current frontier/coverage validation and side-effect-free rebuild. It creates no domain cursor and never rebuilds canonical outcomes.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Stop command contract",
-              "line_start": 8581,
-              "line_end": 8581,
-              "quote": "`chat.response_stop_requested`"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-627",
+              "line_start": 33259,
+              "line_end": 33259,
+              "quote": "The exact passive operating consumer is reader.chat.response_stop_requested@1.0.0"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-627",
+              "line_start": 33259,
+              "line_end": 33259,
+              "quote": "SP-278 owns source-order advance, complete captured coverage and frontier/predecessor CAS with index rows atomically"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First Stop-specific assessment after card 2b A; no implementation bindings are authorized while the existing-record condition is unmet."
+          "prior": {
+            "source": "worker self-grade at e34286958a9045ed9fc5fc95a4e23294bbcf1686",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 3.a option A / DL-427 authorizes the replacement record; DL-406 barriers and conditional retirement remain."
         },
         "compatibility_withdrawal": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "The three chat_run spellings are unchanged; DL-406 forbids their retirement until a usable existing record and fields are named.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Written editions and original provenance remain authoritative with current custody; writer/read publication fences and separately versioned rebuild are defined. Three conditional retirement applications preserve old bytes and do not claim native cutover.",
           "evidence": [
             {
-              "path": "Plans/assistant-chat-design.md",
-              "unit": "section 4",
-              "line_start": 275,
-              "line_end": 275,
-              "quote": "waits up to `cancel_grace_ms = 3000`"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-647",
+              "line_start": 26608,
+              "line_end": 26608,
+              "quote": "Writer withdrawal cuts this exact family off before new operations"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-628",
+              "line_start": 33367,
+              "line_end": 33367,
+              "quote": "native restart/recovery verification is NOT_RUN, so no applied runtime cutoff is claimed."
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First Stop-specific assessment after card 2b A; no implementation bindings are authorized while the existing-record condition is unmet."
+          "prior": {
+            "source": "worker self-grade at e34286958a9045ed9fc5fc95a4e23294bbcf1686",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 3.a option A / DL-427 authorizes the replacement record; DL-406 barriers and conditional retirement remain."
         },
         "positive_negative_oracles": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No Stop fixtures/oracles are prepared; the seventeen-family lane suite does not cover or admit Stop.",
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "The separate Stop suite passes its current cases, including typed outcomes, both scopes/Stores/transports, source custody, queue barriers and recovery models. Shared guard-isolation/number-rule adoption remains pending; native verification is NOT_RUN.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Stop command contract",
-              "line_start": 8581,
-              "line_end": 8581,
-              "quote": "`chat.response_stop_requested`"
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-306",
+              "line_start": 7425,
+              "line_end": 7425,
+              "quote": "Shared guard-isolation adoption/proof completeness and shared number-domain/provenance defects stay explicitly PARTIAL sweep items"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First Stop-specific assessment after card 2b A; no implementation bindings are authorized while the existing-record condition is unmet."
+          "prior": {
+            "source": "worker self-grade at e34286958a9045ed9fc5fc95a4e23294bbcf1686",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 3.a option A / DL-427 authorizes the replacement record; DL-406 barriers and conditional retirement remain."
         }
       },
       "remaining_gaps": [
-        "PRODUCT: Which existing durable chat run or turn record, with which exact fields, must preserve whether Stop cancelled the model/tool/subagent work or timed out, and the time of that outcome? The current chat and Storage owners name no such record. If none exists, do you authorize defining a run/turn outcome record and its fields before preparing chat.response_stop_requested and retiring chat_run.cancel_requested, chat_run.cancelled and chat_run.cancel_timeout? The 3-second wait and saved-outcome queue barrier stay, including ACD-471's requirement that queued messages wait for a user action after Stop."
+        "PRODUCT: Should the saved assistant-turn Stop outcome be kept and deleted with its chat under RP-CHAT-THREAD-LIFETIME@1.0.0, or have a separate lifetime? If separate, what window, count bucket, deletion behavior and hold rules apply in Project and application chats?",
+        "INTEGRATION: event admission, source storage materialization and the unlanded DL-401 G15 policy dependency remain fenced.",
+        "VERIFICATION: native restart AND coherent recovery proof are NOT_RUN; all three retirement cutovers stay pending.",
+        "SWEEP: adopt shared guard-isolation and shared number-domain/provenance rules; no lane proof script or serializer is rebuilt."
       ],
       "static_checks_seen": [
-        "scripts/pm_dch_events.py covers only the existing seventeen prepared families; Stop is not included."
+        "python3 scripts/pm_dch_stop.py"
       ],
-      "notes": "0 PASS / 5 PARTIAL / 7 ABSENT. The DL-406 record condition is unmet. This row is a blocker assessment, not a prepared family or admission. No IDs minted."
+      "notes": "Worker 9 PASS / 2 PARTIAL / 1 ABSENT. DL-427 authorizes the missing record definition; it does not certify durability. CURRENT_WRITER is the prepared writer contract only, with actual writes still unadmitted and the saved-record storage binding pending."
     }
   ],
-  "review_round": 8,
-  "review_before": {
-    "reviewer": "Sol cycle 8 (incomplete memory-limited review)",
-    "head": "3a994263ef63354fd9e2fde754f06faec92c84be",
-    "prepared_families_independently_certified": 0,
-    "established_oracle_cell_each": "PARTIAL",
-    "full_204_cell_regrade": "NOT_COMPLETED",
-    "previous_worker_counts_each": {
-      "PASS": 10,
-      "PARTIAL": 1,
-      "ABSENT": 1
+  "round": 9,
+  "round_kind": "deck-2 item 3.a answer application; not a review fix",
+  "prior_round_8": {
+    "review_round": 8,
+    "review_before": {
+      "reviewer": "Sol cycle 8 (incomplete memory-limited review)",
+      "head": "3a994263ef63354fd9e2fde754f06faec92c84be",
+      "prepared_families_independently_certified": 0,
+      "established_oracle_cell_each": "PARTIAL",
+      "full_204_cell_regrade": "NOT_COMPLETED",
+      "previous_worker_counts_each": {
+        "PASS": 10,
+        "PARTIAL": 1,
+        "ABSENT": 1
+      }
+    },
+    "review_after_self": {
+      "prepared_contracts_without_admission": 17,
+      "counts_each": {
+        "PASS": 9,
+        "PARTIAL": 2,
+        "ABSENT": 1
+      },
+      "membership": "ABSENT; no admission",
+      "retention": "PARTIAL; pending RT",
+      "positive_negative_oracles": "PARTIAL; C8-B1 fixture fixed, shared guard-isolation adoption pending",
+      "native_execution": "NOT_RUN",
+      "independent_re_review": "PENDING",
+      "full_checker_checks": 41339,
+      "ordinary_family_runs": 17,
+      "new_cases": 8313,
+      "new_negative_cases": 4284,
+      "new_positive_cases": 4029,
+      "legacy_guard_table": "Historical round 7 only; not rerun or current certification",
+      "current_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/fix8",
+      "sweep_items": [
+        "proof identifier keys",
+        "proof shared input/type grouping",
+        "proof compound envelope/access",
+        "proof size/reference grouping",
+        "S1-NUM producer projection",
+        "S2-NUM",
+        "S3-NUM",
+        "S4-NUM"
+      ]
+    },
+    "apply_2b": {
+      "decision": "DL-406 / 2b A",
+      "condition": "UNMET",
+      "question": "Which existing durable chat run or turn record, with which exact fields, must preserve whether Stop cancelled the model/tool/subagent work or timed out, and the time of that outcome? The current chat and Storage owners name no such record. If none exists, do you authorize defining a run/turn outcome record and its fields before preparing chat.response_stop_requested and retiring chat_run.cancel_requested, chat_run.cancelled and chat_run.cancel_timeout? The 3-second wait and saved-outcome queue barrier stay, including ACD-471's requirement that queued messages wait for a user action after Stop.",
+      "stop_grade": "0 PASS / 5 PARTIAL / 7 ABSENT",
+      "prepared_families": 17,
+      "stopped_families": 1,
+      "owner_passages_changed": [],
+      "new_ids": [],
+      "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/apply-2b/stop-record-search.json"
     }
   },
-  "review_after_self": {
-    "prepared_contracts_without_admission": 17,
-    "counts_each": {
+  "round_9": {
+    "authority": [
+      "DL-406",
+      "DL-427"
+    ],
+    "new_owner_units": [
+      "ACD-627",
+      "ACD-628",
+      "CV-647",
+      "SP-627",
+      "SP-628",
+      "ATS-306"
+    ],
+    "seventeen_previous_rows": "unchanged, 9 PASS / 2 PARTIAL / 1 ABSENT each; 41339 fresh assertions",
+    "stop_counts": {
+      "ABSENT": 1,
       "PASS": 9,
-      "PARTIAL": 2,
-      "ABSENT": 1
+      "PARTIAL": 2
     },
-    "membership": "ABSENT; no admission",
-    "retention": "PARTIAL; pending RT",
-    "positive_negative_oracles": "PARTIAL; C8-B1 fixture fixed, shared guard-isolation adoption pending",
-    "native_execution": "NOT_RUN",
-    "independent_re_review": "PENDING",
-    "full_checker_checks": 41339,
-    "ordinary_family_runs": 17,
-    "new_cases": 8313,
-    "new_negative_cases": 4284,
-    "new_positive_cases": 4029,
-    "legacy_guard_table": "Historical round 7 only; not rerun or current certification",
-    "current_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/fix8",
-    "sweep_items": [
-      "proof identifier keys",
-      "proof shared input/type grouping",
-      "proof compound envelope/access",
-      "proof size/reference grouping",
-      "S1-NUM producer projection",
-      "S2-NUM",
-      "S3-NUM",
-      "S4-NUM"
-    ]
-  },
-  "apply_2b": {
-    "decision": "DL-406 / 2b A",
-    "condition": "UNMET",
-    "question": "Which existing durable chat run or turn record, with which exact fields, must preserve whether Stop cancelled the model/tool/subagent work or timed out, and the time of that outcome? The current chat and Storage owners name no such record. If none exists, do you authorize defining a run/turn outcome record and its fields before preparing chat.response_stop_requested and retiring chat_run.cancel_requested, chat_run.cancelled and chat_run.cancel_timeout? The 3-second wait and saved-outcome queue barrier stay, including ACD-471's requirement that queued messages wait for a user action after Stop.",
-    "stop_grade": "0 PASS / 5 PARTIAL / 7 ABSENT",
-    "prepared_families": 17,
-    "stopped_families": 1,
-    "owner_passages_changed": [],
-    "new_ids": [],
-    "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/apply-2b/stop-record-search.json"
+    "stop_result": {
+      "status": "pass",
+      "checks": 4540,
+      "cases": 2264,
+      "surfaces": {
+        "request": 402,
+        "retry": 116,
+        "transport": 512,
+        "outcome": 384,
+        "save": 24,
+        "read": 48,
+        "queue": 96,
+        "schema_outcome": 262,
+        "schema_request": 276,
+        "index": 108,
+        "retirement": 36
+      },
+      "failures": [],
+      "native_execution": "NOT_RUN",
+      "claim_boundary": "Synthetic original source/Store/decision observations. No native durability, authenticated provenance, SP-278 completeness/CAS or check-11 isolation certification. Shared proof and number-domain adoption remain sweep items."
+    },
+    "retirement_applications": "reports/event-authority-20261104/DCH-stop-retirement-application.json",
+    "existing_record_question": "ANSWERED by DL-427; new record definition authorized",
+    "retention_question": "Should the saved assistant-turn Stop outcome be kept and deleted with its chat under RP-CHAT-THREAD-LIFETIME@1.0.0, or have a separate lifetime? If separate, what window, count bucket, deletion behavior and hold rules apply in Project and application chats?",
+    "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/r9",
+    "native_execution": "NOT_RUN"
   }
 }

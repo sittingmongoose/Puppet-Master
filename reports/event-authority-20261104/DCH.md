@@ -1,3 +1,171 @@
+# DCH — round 9
+
+Branch: `plans/ea-w2-chat-20261104`. Base: `e34286958a9045ed9fc5fc95a4e23294bbcf1686`. Assessed source bundle: `d2a5182a825c16ce882c86f3459a23dea4312265`. Report/self-grade pin commit follows; source bytes are verified separately. **This round applies an owner answer; it is not a review fix.**
+
+## Round 9: deck-2 item 3.a applied
+
+Jared's deck-2 answer, verbatim: **"i approve all of it"**. Source: `decision-answers/ANSWERS_E-CARDS-2_20261105.md`. The presented deck's fast-reply rule maps that answer to option A on item 3.a; the option is the deck writer's text, not a Jared quotation. DL-427 on `origin/plans/ea-cards2-answers-20261105` authorizes Chat and Storage to define the missing saved result, answering the prior DL-406 existing-record question. DL-406 was read on `origin/plans/ea-cards1-answers-20261104`; both decision revisions and the presented deck's exact Sources line are pinned in r9/authority-pins.json. No Decision Log bytes are imported or edited.
+
+**Outcome:** the actual assistant turn's saved Stop record and the one `chat.response_stop_requested` request contract are defined. Stop is **prepared without admission**, worker **9 PASS / 2 PARTIAL / 1 ABSENT**, versus the prior **0 PASS / 5 PARTIAL / 7 ABSENT** hold. The record-definition authorization is answered. Its retention question, storage materialization, shared proof/number sweep and native retirement cutoff remain explicit. **Native execution is NOT_RUN.**
+
+**All seventeen prepared families are unchanged:** owner bytes, schemas, fixtures, historical recipes, registries and old checker/proof scripts retain their base bytes. Each still grades **9 PASS / 2 PARTIAL / 1 ABSENT**. Fresh serial checks pass **41,339 assertions**. Their grade rows are preserved exactly; only the Stop row and round-level assessment change.
+
+## Record, request and bindings
+
+| Binding | Exact location / result |
+|---|---|
+| Request producer and barriers | `Plans/assistant-chat-design.md:30285`, **ACD-627**; existing cmd.chat.stop, original accepted target snapshot, request intent/body/first receipt before cancellation, original 3000 ms deadline, durable saved result, then separate ACD-471 user action |
+| Saved result on the actual reply | `Plans/assistant-chat-design.md:30373`, **ACD-628**; `assistant_turn_stop_outcome` |
+| Closed request payload | `Plans/Contracts_V0.md:26602`, **CV-647**; `Plans/dch_stop_request.schema.json`, separate Project/application 1.0.0 editions |
+| Saved result custody/key | `Plans/storage-plan.md:33253`, **SP-627**; `Plans/dch_stop_outcome.schema.json`, separate Project/application 1.0.0 editions |
+| Conditional retirement | `Plans/storage-plan.md:33365`, **SP-628**; three individual application records |
+| Static/native obligations | `Plans/Automated_Testing_System.md:7423`, **ATS-306**; `scripts/pm_dch_stop.py` |
+
+The saved result has exactly **schema_id, schema_version, storage_instance_id, scope, computer_id, thread_id, assistant_turn_id, stop_request_event_id, target_work, outcome, outcome_at_utc**. Each targeted work item has only kind (model/tool/subagent), work_ref and lease_ref. It preserves the exact original Stop request, actual assistant reply/work, cancellation versus timeout and actual outcome time. Display marks, delivery acknowledgements and work-list projections confer no outcome authority. Composer Stop does not stop independent background processes (ACD-471).
+
+The physical key is **assistant_turn_stop_outcome.v1:{storage_instance_id}:{stop_request_event_id}**. It reuses the existing globally unique request identity, with mandatory value-to-original-request Server/scope/Computer/thread/turn/work joins. It stays fixed in size without a new serializer or ID cap. The complete logical value and physical pointer obey SP-236/337/340, including the 16 KiB limit and verified complete-body references; the outcome is canonical and cannot be rebuilt from an event or projection. Immutable absent-to-present CAS, original-result retry, conflict refusal, first receipt/deadline custody, coherent backup/restore and unresolved-result queue fences are specified.
+
+The request independently adopts CV-365's encoded Project partition, CV-366's exact lowercase UTF-8 Server/original-operation application key, EventRecord's caller-semantic commitment excluding Storage-assigned metadata, and SP-286/CV-339 first-receipt custody. Its exact passive consumer is **reader.chat.response_stop_requested@1.0.0**, adopting **projector.storage.event_record_index@1.0.0**, **event_record_index_checkpoint.v1:{storage_instance_id}**, SP-278 and DL-076's nine-field token. It has no independently advancing domain cursor. Rebuild reads authentic retained sources and never cancels work, recreates outcomes or releases a queue. Withdrawal/unsupported-version fences and original-edition historical reads are explicit.
+
+**Search/premise evidence:** r9/binding-search.json searched 934 live non-hidden, non-generated owner/schema/registry files for this exact family and Stop records. It found only three existing mentions, no complete request contract/reader binding or writable saved assistant-turn result. The legacy run alias, ACD-470 display state, delivery outbox and ObservableWork remain unsuitable original authority, as the prior DL-406 search documented. Reused owners are CV-365/366 and SP-236/278/286/337/340 with CV-339; the new Stop-specific bindings are individually authored under DL-045/DL-406/DL-427. No sibling family supplies this contract. ACD-471's current queue/background-work scope remains valid; DL-427 closes the old record-authoring hold, not native durability verification.
+
+## Retention and retirement
+
+**Request:** DL-401 **G15** already names chat.response_stop_requested and assigns **RP-CHAT-THREAD-LIFETIME@1.0.0**, materialized on `origin/plans/ea-retention-cards2-20261105`. SP-627 binds the request's own thread in either scope: shared 250,000/thread count, linked successor, no silent eviction, deletion with the chat, immediate hiding, unheld active purge within 24 hours and backup purge within 30 days. Holds do not restore visibility. The generic index checkpoint keeps its existing RP-PROJECTION-3GEN policy. This does not refresh the seventeen siblings or choose linked-work/receipt lifetimes.
+
+**Saved result:** no existing named group assigns the newly authorized record. It remains **PENDING_RETENTION_DECISION**, with no new expiry/eviction exemption and writes/storage materialization fenced. Exact question:
+
+> Should the saved assistant-turn Stop outcome be kept and deleted with its chat under RP-CHAT-THREAD-LIFETIME@1.0.0, or have a separate lifetime? If separate, what window, count bucket, deletion behavior and hold rules apply in Project and application chats?
+
+| Old exact name | Replacement | Application outcome |
+|---|---|---|
+| chat_run.cancel_requested | One chat.response_stop_requested request-history entry | retirement specified; cutover pending |
+| chat_run.cancelled | Saved assistant-turn outcome=cancelled | retirement specified; cutover pending |
+| chat_run.cancel_timeout | Saved assistant-turn outcome=timeout | retirement specified; cutover pending |
+
+`reports/event-authority-20261104/DCH-stop-retirement-application.json` records each separately. Fields/mechanics are specified; full replacement materialization/retention and **native restart AND recovery verification** remain incomplete. Static model passes do not activate a cutoff. At verified cutover each old current producer is refused; already-written original bytes, identities, schemas, meanings and original retention/deletion/access rules remain readable, without rewriting/reminting them as the new request/result. No outcome history is dropped while the condition is unresolved. No registry, admission or denominator mutation is made.
+
+## Stop twelve-criterion self-grade
+
+| Criterion | Grade | Current evidence |
+|---|---|---|
+| membership_version | **ABSENT** | ACD-627 |
+| owner_doc | **PASS** | ACD-627; ACD-628 |
+| producer | **PASS** | ACD-627 |
+| closed_payload_schema | **PASS** | CV-647; ACD-628 |
+| scope_identity | **PASS** | ACD-627; SP-627 |
+| replay_idempotency | **PASS** | ACD-627; CV-647 |
+| retention | **PARTIAL** | SP-627 |
+| redaction_custody | **PASS** | CV-647; SP-627 |
+| transitions | **PASS** | ACD-628; ACD-627 |
+| consumers_checkpoints | **PASS** | SP-627 |
+| compatibility_withdrawal | **PASS** | CV-647; SP-628 |
+| positive_negative_oracles | **PARTIAL** | ATS-306 |
+
+Each cell has exact current path/line/quote citations in DCH-self-grade.json. Retention is PARTIAL because the new record's assignment is open. Oracle coverage is PARTIAL pending shared guard-isolation/number-rule adoption. Membership stays ABSENT. Neither native NOT_RUN nor a synthetic all-conditions retirement positive is reported as native success.
+
+## Serial checks and negative construction
+
+**Stop:** 2,264 cases, 4,540 assertions, exit 0, no failures. Both scopes, both actual Store contexts and inline/reference routes execute. Exact 16384/16385-byte complete request/result values are measured and tested. Full referenced request history, compatibility-reader originals, source/metadata forgeries, explicit type/format refusals, three-second cancelled/timeout boundaries, exact original outcome time, repeat/conflict saves, restart/coherent-recovery/lost-ack models and both queue gates execute.
+
+Schema probes target one slot without observational copies. Relational probes keep untargeted envelopes, source commitments, identities, keys and copies coherent; malformed candidate Storage UUIDs/digests are not used to mask an identity mismatch. Opposite-scope schema negatives carry a coherent opposite scope. Pack pointer negatives change one valid hex character without changing size or original bytes. Literal base/delta packaging preserves exact independent source data and recomputes no commitment during negative expansion. The older lane proof script is unchanged and no new whole-lane check-11 certificate is claimed. Entailed defensive bounds are not called duplicates.
+
+The initial environment attempt exited 1 before a family ran (`blake3` missing). An isolated external venv uses the prior round's pinned versions. The first Stop implementation pass exposed the older witness inventory's object-only `outcome` field; the new canonical record uses an enum. Its own closed-schema transport adapter now reuses existing codecs without altering the old inventory. The initial 80-failure output is retained as failure evidence, not a passing refusal. The final complete runs below execute after that correction.
+
+| Family | Exit | Assertions | Worker grade PASS / PARTIAL / ABSENT |
+|---|---:|---:|---|
+| `bundle.selection_forward_blocked` | 0 | 2,375 | 9 / 2 / 1, unchanged |
+| `bundle.selection_sent_to_chat` | 0 | 2,409 | 9 / 2 / 1, unchanged |
+| `chat.message` | 0 | 2,391 | 9 / 2 / 1, unchanged |
+| `chat.thread_archived` | 0 | 2,503 | 9 / 2 / 1, unchanged |
+| `chat.thread_created` | 0 | 2,369 | 9 / 2 / 1, unchanged |
+| `chat.thread_deleted` | 0 | 2,369 | 9 / 2 / 1, unchanged |
+| `chat.thread_worktree_bound` | 0 | 2,367 | 9 / 2 / 1, unchanged |
+| `chat.thread_worktree_create_failed` | 0 | 2,363 | 9 / 2 / 1, unchanged |
+| `chat.thread_worktree_merge_failed` | 0 | 2,371 | 9 / 2 / 1, unchanged |
+| `chat.thread_worktree_merged` | 0 | 2,375 | 9 / 2 / 1, unchanged |
+| `chat.thread_worktree_pr_created` | 0 | 2,569 | 9 / 2 / 1, unchanged |
+| `chat.thread_worktree_pr_failed` | 0 | 2,367 | 9 / 2 / 1, unchanged |
+| `chat.thread_worktree_pre_merge_test_failed` | 0 | 2,733 | 9 / 2 / 1, unchanged |
+| `chat.thread_worktree_pre_merge_test_passed` | 0 | 2,683 | 9 / 2 / 1, unchanged |
+| `chat.thread_worktree_pre_merge_test_started` | 0 | 2,367 | 9 / 2 / 1, unchanged |
+| `chat.thread_worktree_renamed` | 0 | 2,365 | 9 / 2 / 1, unchanged |
+| `chat.thread_worktree_unbound` | 0 | 2,363 | 9 / 2 / 1, unchanged |
+| `chat.response_stop_requested` | 0 | 4,540 | 9 / 2 / 1, newly prepared |
+
+| Standing check | Result / boundary |
+|---:|---|
+| 1 | Current append/retry refuses replay-only, including original/retry/both; authentic retained compatibility stays readable. |
+| 2–3 | Exact CV-366 key and reversible encoded project~ partition; coherent wrong-key/partition controls. |
+| 4 | Complete request/outcome bodies and physical pointers; exact 16 KiB boundaries and same-Store SP-337 custody, access, durability/readback model. |
+| 5 | Exact-end identifier/LF controls and mandatory existing format checker; no new date-time grammar. |
+| 6 | Existing exact caller-semantic projection; independent metadata-only retry positives and every included field. These are static projection oracles. |
+| 7 | Stop's own original event/index/source joins and exact generic token/selection/frontier/dataset. Native coverage/CAS is NOT_RUN. |
+| 8 | Outcome is an explicit cancelled/timeout enum with actual original work observation; success exit fabrication remains rejected by the unchanged applicable family suites. |
+| 9 | Eager closure of both new schema graphs and EventRecord, plus full existing family closure suites. |
+| 10 | Authentic retained history ignores later live/writer state; original source/custody/withdrawal remain required. |
+| 11 | Fixture coherence is addressed; complete site-by-site isolation remains a shared-tool sweep item. No lane proof script rebuilt. |
+
+| Astra class | How handled |
+|---|---|
+| 1 | Recomputed request ID/key and exact independent original Store/source/decision facts; foreign source/index/work/value refusals. |
+| 2 | Storage sequence/timestamps checked against original record commitment; incoming retry metadata excluded from semantic commitment. |
+| 3 | Historical read policy separated from current writer; authentic later-state positives, forged/withdrawn/access refusals. |
+| 4 | Closed schemas, exact boolean/integer observation types and canonical source equality; no coercive bool/int comparison. |
+| 5 | Complete schema reference graphs resolved eagerly. |
+| 6 | Entire request and outcome measured separately; bounded physical key and measured pointer; no inline exemption. |
+| 7 | Original request/source/first receipt/intent/deadline custody precedes accepting an outcome; current access precedes reads/queue release. |
+| 8 | Coherent one-defect fixtures; full proof machinery remains sweep-only. |
+| 9 | Nine PASS cells each, explicit PARTIAL retention/oracle and ABSENT membership; no native or aggregate pass. |
+| 10 / 10a | Shared number/provenance sweep remains open at existing pm_dch_events.py body_bytes/record_number_rule and producer route. No new caps, serializer, normalization or retained recipe rewrite. |
+| 11 | String booleans/numbers, numeric booleans, floats, null, arrays and objects tested at the applicable new type boundaries. |
+| 12 | Existing mandatory pm_dch_formats.FormatChecker reused; missing zone, bad separator/calendar/range/fraction/leap-second/LF cases and valid long fractions. |
+
+Existing sweep items PROOF-ID, PROOF-INPUT, PROOF-COMPOUND, PROOF-POINTER and S1-NUM producer/S2-NUM/S3-NUM/S4-NUM are preserved; adoption of the shared guard tool and number rule is integration work. No complete guard proof is inferred from ordinary passing cases.
+
+## Derived files, checks, resources and scope
+
+| Check | Exit / result |
+|---|---|
+| shard-generate | 0; pass |
+| index-generate | 0; pass |
+| shard-check | 0; pass |
+| index-validate | 1; fail; 22 failures exactly equal round 8 |
+| storage-profile | 1; fail; 41 errors exactly equal round 8 |
+| assistant-contract | 1; gaps_found; errors and Projects-refresh failures empty, as round 8 |
+| Scope / canonical-text / prepared-byte audit | 0; six new units exact; all prior owner bytes preserved except one section-4 Stop routing sentence; 45 old prepared schema/checker paths preserved |
+| Grade/citation audit | 0; 216 cells, current exact citations; seventeen original grade rows unchanged |
+| Whitespace check | 0 |
+
+Shard changes belong only to the four edited owner docs; no foreign owner body changes. Index generation is pass; validation is not represented as pass. Fifteen ignored currentness files were copied and SHA-256 matched before generation. No generated file is hand-edited. Source scope is six new units and the single old Stop routing sentence, new Stop schemas/fixtures/checker/contract, three application records and their derived companions. New source storage remains prepared pending retention; storage_value_registry is unchanged.
+
+Initial Nas1 capacity was 477 GB root disk free and 8 GB available RAM. Checkers ran one family/job at a time. The memory monitor suspends below 6 GiB, rechecks every 120 seconds and resumes at 7 GiB. The family campaign records a pause; an intermediate Stop run also paused before its successful retry. The final campaign files give observed minima/events. No parallel workers, subagents or pm-mail. No event admission, event registry append, Decision Log entry, governance artifact/reseal, test-file edit, landing lock or main push. The sparse local worktree and task-owned external venv are removed after both pushes and copies.
+
+**IDs used:** new **ACD-627, ACD-628, CV-647, SP-627, SP-628, ATS-306**; authority **DL-045, DL-406, DL-427**, retention **DL-401 G15**, token **DL-076**. New IDs cleared across **568 fetched origin refs / 254 distinct owner blobs**, with zero collisions. Local current case labels **DCH9-0001–DCH9-2264** are evidence only. Existing ACD-610–626/CV-630–646/SP-610–626/ATS-305 remain unchanged.
+
+**Open items:** the exact saved-record retention question above; its complete storage materialization and event admission; native restart/recovery verification before the three cutovers; shared proof/number adoption. No further owner choice is invented and the former existing-record authorization question is not reopened.
+
+## Evidence
+
+Extra evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/r9/`. SHA256SUMS pins final checks, exact authority/search/ID receipts, scope and grade audits and the retained failure evidence. Report and self-grade are copied to the parent DCH directory. Selected SHA-256 pins:
+
+| File | SHA-256 |
+|---|---|
+| `families-campaign.json` | `324f9e27a2be6ea01b291a74b358e0d16bdeb4fa41e8ee80d88e4e31013b86ab` |
+| `stop.json` | `b02e44c729de37ae3cd765ed4ef364aad9e4202f0e5089df9de737fbfed7d484` |
+| `stop-campaign.json` | `781195034a59c1b6740dcf625f88c3364c5e8f3b725b7800d03a2c64f8820c1a` |
+| `verify-campaign.json` | `daba904326e48cef5b8c35bfde544732b7cbe20c4a92d404769e42fb884eba8e` |
+| `baseline-comparison.json` | `078f8084d6e7bde02db083a4aa5de4da26b3203361ba76731ae7dd483b26ba88` |
+| `scope-audit.json` | `31a6c96550176850836f0f70a3991c70863865166d19d7061475185e74e1f5b1` |
+| `binding-search.json` | `917d59ab8dc8fc01b01d2d64f816a7117934c196ec3e720b1c26ac9bf2d03085` |
+| `id-scan.json` | `c9aa23134e9bcd2d40399ca54da2ad9d4613f4933e8a4787080c3c4a97f15214` |
+| `currentness-sha256-final.json` | `daf80cdc1395935c791eed463d54ff4d0405f90ce97f39f12e10fbb0a547f8ac` |
+| `authority-pins.json` | `45bce33d000acabfd1685ea13ad0acf7f4d6d3286376eac33f9b9ab0afc997e7` |
+
+---
+
+# Prior reports — historical; round 9 above supersedes the Stop hold and current grades
+
 # DCH — review round 8
 
 Branch: `plans/ea-w2-chat-20261104`. Reviewed head: `3a994263ef63354fd9e2fde754f06faec92c84be`. Pointer fixture commit: `1a61d45b2100a9990a7d469e7e5fc13eb373d0af`. Owner-domain fix commit: `7c7b7abe3d665ab661f8c9a5b41246924f17e8e6`. Complete assessed source bundle: `57bf750d97400f7c3b6877b71eb34d3c7c828951`. This report and grade follow those source bytes.
