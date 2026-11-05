@@ -4,12 +4,12 @@ Source: `Plans/chain-wizard-flexibility.md`
 
 Source lines: L2315-L2319
 
-Source SHA256: `15df9ed3508b90683979c3b365810cd89cba46ef428dc390c6a6e969e33f5058`
+Source SHA256: `7d656c16709718bb8e5a46619dd3507baddd341e2591db9edb092a87bba9b283`
 
 ---
 
 ## Owner / Consumer Map
 
-This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/chain-wizard-flexibility.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+This source-preserving standardization kept the owner and consumer boundaries stated in the original document body. The document has since been retired (see Plan Document Status): it owns no active behavior, and its preserved sections are source lineage only. Two live routes still point here and await an owner decision on their current owner: `Plans/DRY_Rules.md` §2.1 (`wizard_status`) and `Plans/Decision_Policy.md` §6.4 (clarification-round limits, blocked transitions and the requirements-quality Auditor loop).
 
 ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md

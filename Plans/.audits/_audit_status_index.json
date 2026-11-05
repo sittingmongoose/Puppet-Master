@@ -2,6 +2,16 @@
   "active_reopened_findings": [
     {
       "audit_ids": [
+        "audit-20260626-001-provider-updates-closed-world-semantic-fidelity",
+        "closure-reaudit-20261104"
+      ],
+      "closure_id": "closure-reaudit-20261104--closure-audit-20260626-001-provider-updates-closed-world-semantic-fidelity-repair-001",
+      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: The finding was Multi-Account usage copy still contrasting 'Gemini Direct vs Gemini CLI pages'. Section 8 now says one shared Gemini-family surface for active entries and limits retired Gemini CLI terms to source-lineage or migration diagnostics; the old contrast phrase is gone from the section (it survives only in the audit's own FINAL_REPORT). MA-035, CBP-019 and 0PI-061 keep Gemini CLI as compatibility/source-lineage only and Gemini Direct active; MA-062 lists Gemini Direct and Antigravity CLI as live account rows. A grep of Plans for other 'Gemini CLI' mentions found only retirement statements, negative constraints or preserved-token lists, and two provider-native notes outside usage copy (assistant-memory-subsystem compression threshold, MCP_Integration preserved token); none presents Gemini CLI as an active usage page. Round 2 (lead): added anchors the sol review named: Plans/usage-feature.md#unit=UF-019. Lead: changed to not_supported. Accepted UF-019 still makes Gemini CLI an active Usage distinction, contradicting the claim that retired Gemini CLI vocabulary appears only as lineage or migration diagnostics.",
+      "finding_key": "sfk-2e1b920cfabc04dc0be69949",
+      "line": 965
+    },
+    {
+      "audit_ids": [
         "fable-20260706",
         "fable-20260706-pnc019-runtime-certification-currentness"
       ],
@@ -9,6 +19,17 @@
       "closure_reason": "Reopened during the explicit 2026-08-10 governance currentness refresh because the governed PNC-019 receipt has stale source bindings, the event-family denominator is unresolved, node readiness is blocked_runtime_certification_incomplete, and buildability_gate_passed is false. Prior runtime-ready and buildable closure claims are no longer current authority.",
       "finding_key": "sfk-5e3e2e181221c2aeea675f79",
       "line": 736
+    },
+    {
+      "audit_ids": [
+        "audit-20260617-012-plans-to-code-handoff-deep-fidelity",
+        "audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair",
+        "closure-reaudit-20261104"
+      ],
+      "closure_id": "closure-reaudit-20261104--closure-audit-20260617-012-plans-to-code-handoff-deep-fidelity-015",
+      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: atom-0031 said the built-in browser is primary and Playwright 'can be optional/fallback/project-native'. The repair put 'Playwright optional' into canonical prose. The later 2026-08-13 browser terminology correction (ATS-035, T-159) removed it on purpose. PM has no Playwright runtime, facade or fallback, and a user Project's own Playwright suite runs only as a generic external process that is 'not a fallback for BrowserRuntimeService'. ATS-004's preserved_exact_tokens dropped the token too. The finding is not open: the atom's core rule (do not default native PM web testing to Playwright) holds more strongly than before. But the detail the row repaired is now retired canon, and no active Plans text brings back an optional or fallback PM Playwright path (grep of active docs finds only provider lineage in Tools.md about Firecrawl). So the right status is stale_retired, not repaired. Round 2 (lead): kept stale_retired. The row closes an exact-token finding ('Playwright optional' missing from canonical body). That token was removed on purpose by the 2026-08-13 browser decision (ATS-035, T-159), which also dropped it from ATS-004 preserved_exact_tokens, so the detail the row repaired is retired canon. The underlying atom rule (no native Playwright default) holds more strongly; 'repaired' would claim the exact-token repair is still present, which it is not by design. Round 4 (lead): changed to not_supported. Ledger pldg-20260617-001 atom-0031 is still compiled_to_plan with exact token 'Playwright optional' (outputs ATS-004, RAP-029, T-159) and is not superseded, but no Plans document contains the phrase: the 2026-08-13 browser decision (ATS-035, T-159) removed it on purpose. Under the compile-witness rule the exact-token repair no longer holds, and the retirement is not recorded in the ledger, so the closure is not backed as either repaired or stale_retired. Round 5 (lead): anchored ledger atom-0031, which still lists the exact token with outputs ATS-004, RAP-029 and T-159.",
+      "finding_key": "sfk-6c83df51a6d07e83416eb678",
+      "line": 763
     },
     {
       "audit_ids": [
@@ -21,7 +42,7 @@
       "line": 737
     }
   ],
-  "generated_at_utc": "2026-09-06T21:29:44Z",
+  "generated_at_utc": "2026-11-05T04:49:54Z",
   "reports": [
     {
       "audit_id": "audit-20260615-001-part-3-fable-cleanup",
@@ -284,11 +305,11 @@
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
           "explicitly_deferred": 2,
-          "not_for_plan": 4,
-          "repaired": 24,
-          "source_lineage_only": 16
+          "not_for_plan": 6,
+          "repaired": 26,
+          "source_lineage_only": 18
         },
-        "matching_rows": 46,
+        "matching_rows": 52,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -306,11 +327,11 @@
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
           "explicitly_deferred": 2,
-          "not_for_plan": 5,
-          "repaired": 22,
-          "source_lineage_only": 14
+          "not_for_plan": 8,
+          "repaired": 27,
+          "source_lineage_only": 16
         },
-        "matching_rows": 43,
+        "matching_rows": 53,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -328,11 +349,11 @@
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
           "explicitly_deferred": 1,
-          "not_for_plan": 3,
-          "repaired": 10,
+          "not_for_plan": 4,
+          "repaired": 12,
           "source_lineage_only": 6
         },
-        "matching_rows": 20,
+        "matching_rows": 23,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -400,9 +421,10 @@
       "closure_registry_basis": {
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
-          "repaired": 53
+          "reopened": 1,
+          "repaired": 89
         },
-        "matching_rows": 53,
+        "matching_rows": 90,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -419,9 +441,9 @@
       "closure_registry_basis": {
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
-          "repaired": 1
+          "repaired": 2
         },
-        "matching_rows": 1,
+        "matching_rows": 2,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -490,11 +512,12 @@
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
           "explicitly_deferred": 4,
-          "not_for_plan": 4,
-          "repaired": 47,
+          "not_for_plan": 6,
+          "reopened": 1,
+          "repaired": 79,
           "source_lineage_only": 12
         },
-        "matching_rows": 67,
+        "matching_rows": 102,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -511,10 +534,10 @@
       "closure_registry_basis": {
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
-          "repaired": 34,
+          "repaired": 50,
           "source_lineage_only": 24
         },
-        "matching_rows": 58,
+        "matching_rows": 74,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -548,10 +571,10 @@
       "closure_registry_basis": {
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
-          "repaired": 20,
-          "stale_retired": 2
+          "repaired": 25,
+          "stale_retired": 3
         },
-        "matching_rows": 22,
+        "matching_rows": 28,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -568,12 +591,12 @@
       "closure_registry_basis": {
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
-          "not_for_plan": 28,
-          "repaired": 144,
+          "not_for_plan": 42,
+          "repaired": 203,
           "source_lineage_only": 4,
-          "stale_retired": 12
+          "stale_retired": 13
         },
-        "matching_rows": 188,
+        "matching_rows": 262,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -590,10 +613,11 @@
       "closure_registry_basis": {
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
-          "false_positive": 4,
-          "source_lineage_only": 2
+          "false_positive": 5,
+          "repaired": 1,
+          "source_lineage_only": 3
         },
-        "matching_rows": 6,
+        "matching_rows": 9,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -610,9 +634,9 @@
       "closure_registry_basis": {
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
-          "repaired": 20
+          "repaired": 30
         },
-        "matching_rows": 20,
+        "matching_rows": 30,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -629,9 +653,9 @@
       "closure_registry_basis": {
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
-          "repaired": 32
+          "repaired": 45
         },
-        "matching_rows": 32,
+        "matching_rows": 45,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -648,10 +672,10 @@
       "closure_registry_basis": {
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
-          "repaired": 30,
-          "source_lineage_only": 2
+          "repaired": 43,
+          "source_lineage_only": 3
         },
-        "matching_rows": 32,
+        "matching_rows": 46,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -668,10 +692,10 @@
       "closure_registry_basis": {
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
-          "repaired": 26,
+          "repaired": 40,
           "source_lineage_only": 6
         },
-        "matching_rows": 32,
+        "matching_rows": 46,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -689,9 +713,9 @@
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
           "false_positive": 2,
-          "repaired": 38
+          "repaired": 53
         },
-        "matching_rows": 40,
+        "matching_rows": 55,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -708,10 +732,10 @@
       "closure_registry_basis": {
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
-          "false_positive": 2,
-          "repaired": 30
+          "false_positive": 3,
+          "repaired": 44
         },
-        "matching_rows": 32,
+        "matching_rows": 47,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -745,10 +769,10 @@
       "closure_registry_basis": {
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
-          "repaired": 6,
+          "repaired": 8,
           "stale_retired": 2
         },
-        "matching_rows": 8,
+        "matching_rows": 10,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -782,9 +806,10 @@
       "closure_registry_basis": {
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
-          "repaired": 10
+          "repaired": 11,
+          "stale_retired": 1
         },
-        "matching_rows": 10,
+        "matching_rows": 12,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -801,9 +826,10 @@
       "closure_registry_basis": {
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
-          "repaired": 12
+          "repaired": 16,
+          "stale_retired": 1
         },
-        "matching_rows": 12,
+        "matching_rows": 17,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -820,9 +846,9 @@
       "closure_registry_basis": {
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
-          "repaired": 8
+          "repaired": 10
         },
-        "matching_rows": 8,
+        "matching_rows": 10,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -839,9 +865,9 @@
       "closure_registry_basis": {
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
-          "repaired": 2
+          "repaired": 3
         },
-        "matching_rows": 2,
+        "matching_rows": 3,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -892,9 +918,10 @@
       "closure_registry_basis": {
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
-          "repaired": 16
+          "reopened": 1,
+          "repaired": 20
         },
-        "matching_rows": 16,
+        "matching_rows": 21,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -928,9 +955,9 @@
       "closure_registry_basis": {
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
-          "repaired": 10
+          "repaired": 13
         },
-        "matching_rows": 10,
+        "matching_rows": 13,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -964,9 +991,9 @@
       "closure_registry_basis": {
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
-          "repaired": 10
+          "repaired": 13
         },
-        "matching_rows": 10,
+        "matching_rows": 13,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -1000,9 +1027,9 @@
       "closure_registry_basis": {
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
-          "repaired": 6
+          "repaired": 8
         },
-        "matching_rows": 6,
+        "matching_rows": 8,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -1036,9 +1063,9 @@
       "closure_registry_basis": {
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
-          "repaired": 6
+          "repaired": 7
         },
-        "matching_rows": 6,
+        "matching_rows": 7,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -1072,9 +1099,9 @@
       "closure_registry_basis": {
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
-          "repaired": 24
+          "repaired": 29
         },
-        "matching_rows": 24,
+        "matching_rows": 29,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -1108,9 +1135,9 @@
       "closure_registry_basis": {
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
-          "repaired": 12
+          "repaired": 17
         },
-        "matching_rows": 12,
+        "matching_rows": 17,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -1127,9 +1154,9 @@
       "closure_registry_basis": {
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
-          "repaired": 8
+          "repaired": 12
         },
-        "matching_rows": 8,
+        "matching_rows": 12,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -1146,9 +1173,9 @@
       "closure_registry_basis": {
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
-          "repaired": 10
+          "repaired": 15
         },
-        "matching_rows": 10,
+        "matching_rows": 15,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -1320,9 +1347,9 @@
     "reports_glob": "Plans/.audits/audit-*/FINAL_REPORT.md"
   },
   "summary": {
-    "closure_registry_row_count": 737,
-    "current_blocker_count": 2,
-    "current_reopened_finding_count": 2,
+    "closure_registry_row_count": 1002,
+    "current_blocker_count": 4,
+    "current_reopened_finding_count": 4,
     "current_report_blocker_count": 0,
     "historical_blocked_or_fail_report_count": 25,
     "report_count": 71,

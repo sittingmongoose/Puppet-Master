@@ -89,9 +89,9 @@
     "WM-040"
   ],
   "cursor": {
-    "last_event_id": "evt-0030",
+    "last_event_id": "evt-0033",
     "next_action": "Closed-world semantic repair is certified for this ledger. Future implementation/runtime compiler work requires a new explicit phase.",
-    "next_event_id": "evt-0031"
+    "next_event_id": "evt-0034"
   },
   "future_compile_actions": [
     {
@@ -1372,7 +1372,7 @@
     }
   ],
   "last_completed_action": "Completed explicit governance seal after compile, post-compile readiness-blocker repair, and migration metadata refresh; regenerated configured shards, refreshed evidence and Spec Lock, and reran the full governance validator suite.",
-  "last_event_id": "evt-0030",
+  "last_event_id": "evt-0033",
   "last_known_good_state": "Canonical Plans contain repaired compiled PlanUnits; Plans/.plan_index validates with 5298 PlanUnits / 18946 acceptance units; migration metadata, configured shards, Spec Lock, evidence bundles, plan graph, auto decisions, run-gates, and git diff hygiene all validate. Node readiness remains intentionally blocked_compiler_contract_incomplete and runtime_disabled.",
   "latest_audit_ref": "Plans/.audits/audit-20260628-001-feature-intake-closed-world-semantic-fidelity/REPAIR_CERTIFICATION.md",
   "latest_audit_repair_report": "Plans/.audits/audit-20260628-001-feature-intake-closed-world-semantic-fidelity/repair_report.json",
@@ -1403,7 +1403,7 @@
   "ledger_id": "pldg-20260627-001-feature-intake",
   "next_action": "Closed-world semantic repair is certified for this ledger. Future implementation/runtime compiler work requires a new explicit phase.",
   "next_safe_action": "Use the repaired, sealed canonical Plans as source for future implementation planning. Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, or runtime launches until that later phase explicitly allows them.",
-  "notes": "Compile content is complete, product-readiness blockers are repaired, and pm-plan-migration validate passes after preseal metadata refresh. Governance seal and blocked_compiler_contract_incomplete remain explicit later-phase boundaries; no forbidden runtime/governance artifacts were created.",
+  "notes": "Compile content is complete, product-readiness blockers are repaired, and pm-plan-migration validate passes after preseal metadata refresh. Governance is sealed (evt-0029); blocked_compiler_contract_incomplete remains the explicit later-phase boundary; no forbidden runtime/governance artifacts were created.",
   "open_blockers": [],
   "partial_canonical_compile_detected": {
     "detected_at_utc": "2026-06-28T09:43:00Z",
@@ -1476,8 +1476,8 @@
   ],
   "source_readiness_recheck_ref_lineage_only": "state/implementation_readiness_fifth_recheck_20260628.json",
   "status": "compiled_to_plans_governance_sealed",
-  "terminal_ledger_event_id": "evt-0030",
-  "updated_at_utc": "2026-06-28T14:12:53Z",
+  "terminal_ledger_event_id": "evt-0033",
+  "updated_at_utc": "2026-11-04T19:57:05Z",
   "validation_state": {
     "bootstrap_ledger_validator": "pass",
     "git_diff_check": "pass",
