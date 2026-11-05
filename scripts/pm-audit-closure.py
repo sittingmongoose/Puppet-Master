@@ -3383,13 +3383,30 @@ def validate_audit_dir(
     scope_report = validate_scope_manifest(audit_dir, audit_refs, errors)
 
     legacy_state = legacy_audit_state(audit_dir)
-    compat_files = set((legacy_state or {}).get("frozen_files") or [])
+    reserved_inputs = reserved_source_names(audit_dir, requested_artifacts)
+    # Any input the run reads that is a symbolic link disqualifies the directory: what a
+    # diagnostic names is then not the file that was read.
+    # Every path the per-audit run reads, checked component by component as written (a source
+    # argument through a symlinked parent counts), plus the registry (Q7 Sol r7).
+    symlinked_inputs = sorted(
+        [name for name in {*requested_artifacts, "audit_report.json", "repair_closure_matrix.jsonl", SCOPE_MANIFEST, IMPACT_MATRIX,
+                           EFFECTIVE_STATUS, TERMINAL_STATE, "post_repair_audit_report.json"}
+         if path_has_symlink(audit_dir / name)]
+        + (["<registry>"] if path_has_symlink(registry_path) else [])
+    )
+    # Q-A compatibility words (DL-340) apply only when the whole run qualifies for the legacy rule:
+    # an eligible June directory, no reserved companion file requested as a source, and no input
+    # read through a symlink (Q-A Astra r1). Even then they apply only to a frozen file, never to
+    # repair_closure_matrix.jsonl, whose frozen part is only a prefix.
+    compat_files = (
+        set((legacy_state or {}).get("frozen_files") or []) - {"repair_closure_matrix.jsonl"}
+        if legacy_state is not None and not reserved_inputs and not symlinked_inputs else set()
+    )
     actionable_rows: set[tuple[str, str]] = set()
     inferred_rows: set[tuple[str, str]] = set()
     for artifact in requested_artifacts:
         inferred_keys: set[str] = set()
         explicit_keys: set[str] = set()
-        # Q-A compatibility words: a frozen file of a June directory read through no symlink.
         compat_words = artifact in compat_files and not path_has_symlink(audit_dir / artifact)
         for source_row in actionable_artifact_rows(audit_dir / artifact, artifact, errors, inferred_keys, explicit_keys,
                                                    compat_words):
@@ -3407,17 +3424,8 @@ def validate_audit_dir(
         ),
         "matrix_identity_agrees": set(),
         "source_artifacts": list(requested_artifacts),
-        "reserved_source_inputs": reserved_source_names(audit_dir, requested_artifacts),
-        # Any input the run reads that is a symbolic link disqualifies the directory: what a
-        # diagnostic names is then not the file that was read.
-        # Every path the per-audit run reads, checked component by component as written (a source
-        # argument through a symlinked parent counts), plus the registry (Q7 Sol r7).
-        "symlinked_inputs": sorted(
-            [name for name in {*requested_artifacts, "audit_report.json", "repair_closure_matrix.jsonl", SCOPE_MANIFEST, IMPACT_MATRIX,
-                               EFFECTIVE_STATUS, TERMINAL_STATE, "post_repair_audit_report.json"}
-             if path_has_symlink(audit_dir / name)]
-            + (["<registry>"] if path_has_symlink(registry_path) else [])
-        ),
+        "reserved_source_inputs": reserved_inputs,
+        "symlinked_inputs": symlinked_inputs,
         "report_has_status": isinstance(audit_report, dict) and "status" in audit_report,
         "scope_manifest_exists": (audit_dir / SCOPE_MANIFEST).exists(),
         "extra_coverage_all_inferred": False,
@@ -5472,6 +5480,31 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             moved = fifth.parent / "claims-elsewhere.jsonl"
             (fifth / "planunit_source_claims.jsonl").rename(moved)
             (fifth / "planunit_source_claims.jsonl").symlink_to(moved)
+            # Whole-run exclusions come first (Q-A Astra r1): a reserved companion requested as a source,
+            # in any spelling, or any input read through a symlink turns the words off for every file, so
+            # all 9 rows of the frozen files stay actionable (audit_report.json itself adds none).
+            check("compat_words_off_when_a_companion_is_a_source",
+                  any("missing closure rows for 9 source rows" in e for e in compat_missing(["audit_report.json"])),
+                  compat_missing(["audit_report.json"]))
+            check("compat_words_off_when_a_companion_is_a_source_respelled",
+                  any("missing closure rows for 9 source rows" in e for e in compat_missing(["./audit_report.json"])),
+                  compat_missing(["./audit_report.json"]))
+            saved_registry = legacy_registry.read_bytes() if legacy_registry.exists() else b""
+            real_registry = legacy_registry.with_name("_legacy_fixture_registry.real.jsonl")
+            real_registry.write_bytes(saved_registry)
+            legacy_registry.unlink(missing_ok=True)
+            legacy_registry.symlink_to(real_registry)
+            check("compat_words_off_when_the_registry_is_a_symlink", any("missing closure rows for 9 source rows" in e for e in compat_missing()), compat_missing())
+            legacy_registry.unlink()
+            legacy_registry.write_bytes(saved_registry)
+            real_registry.unlink()
+            # The matrix's frozen part is a prefix: a row appended to it is never read with the words.
+            (fifth / "repair_closure_matrix.jsonl").write_text(json.dumps({"claim_status": "pass"}) + "\n", encoding="utf-8")
+            _LEGACY_INVENTORY_CACHE.clear()
+            matrix_src = validate_audit_dir(fifth, require_matrix=True, require_effective_status=False,
+                                            source_artifacts=["repair_closure_matrix.jsonl"], registry_path=legacy_registry)
+            check("compat_words_never_read_the_matrix", any("missing closure rows for 1 source rows" in e for e in matrix_src["errors"]), matrix_src["errors"])
+            (fifth / "repair_closure_matrix.jsonl").write_text("", encoding="utf-8")
             # A frozen file reached through a symlink disqualifies the whole directory (legacy_audit_state).
             check("compat_words_off_through_a_symlink", any("missing closure rows for 9 source rows" in e for e in compat_missing()), compat_missing())
             (fifth / "planunit_source_claims.jsonl").unlink()
