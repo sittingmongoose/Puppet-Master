@@ -1,0 +1,91 @@
+{
+  "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+  "families": [
+    {
+      "event_type": "continuity.actor_identified",
+      "revision": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+      "scope": "all tracked live Plans markdown/JSON; excludes ledgers, audits, migration, evidence and derived files",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-F",
+        "continuity.actor_identified",
+        "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+        "--",
+        "Plans/*.md",
+        "Plans/*.json"
+      ],
+      "exit_code": 0,
+      "matches": [
+        "f9c5de6561dff0a53a48e530f2a5c6804a7e941d:Plans/orchestrator-subagent-integration.md:31730:- Required continuity event families are `continuity.actor_identified`, `continuity.provenance_recorded`, `continuity.redaction_applied`, and `continuity.replay_checkpointed`."
+      ],
+      "negative_evidence": "No own closed schema, producer, identity/idempotency recipe, SP-286 full-value adoption, exact consumer/checkpoint, or withdrawal contract in this scope. OSI names only the four audit facts and minimum logical record; CV-282 is generic. Runtime-continuity target lists no exact fact equality and uses a different key."
+    },
+    {
+      "event_type": "continuity.provenance_recorded",
+      "revision": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+      "scope": "all tracked live Plans markdown/JSON; excludes ledgers, audits, migration, evidence and derived files",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-F",
+        "continuity.provenance_recorded",
+        "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+        "--",
+        "Plans/*.md",
+        "Plans/*.json"
+      ],
+      "exit_code": 0,
+      "matches": [
+        "f9c5de6561dff0a53a48e530f2a5c6804a7e941d:Plans/orchestrator-subagent-integration.md:31730:- Required continuity event families are `continuity.actor_identified`, `continuity.provenance_recorded`, `continuity.redaction_applied`, and `continuity.replay_checkpointed`."
+      ],
+      "negative_evidence": "No own closed schema, producer, identity/idempotency recipe, SP-286 full-value adoption, exact consumer/checkpoint, or withdrawal contract in this scope. OSI names only the four audit facts and minimum logical record; CV-282 is generic. Runtime-continuity target lists no exact fact equality and uses a different key."
+    },
+    {
+      "event_type": "continuity.redaction_applied",
+      "revision": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+      "scope": "all tracked live Plans markdown/JSON; excludes ledgers, audits, migration, evidence and derived files",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-F",
+        "continuity.redaction_applied",
+        "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+        "--",
+        "Plans/*.md",
+        "Plans/*.json"
+      ],
+      "exit_code": 0,
+      "matches": [
+        "f9c5de6561dff0a53a48e530f2a5c6804a7e941d:Plans/Contracts_V0.md:20545:- Event families: `runtime_continuity.actor_bound`, `runtime_continuity.route_resolved`, `runtime_continuity.redaction_applied`, and `runtime_continuity.replay_checkpointed`.",
+        "f9c5de6561dff0a53a48e530f2a5c6804a7e941d:Plans/orchestrator-subagent-integration.md:31730:- Required continuity event families are `continuity.actor_identified`, `continuity.provenance_recorded`, `continuity.redaction_applied`, and `continuity.replay_checkpointed`."
+      ],
+      "negative_evidence": "No own closed schema, producer, identity/idempotency recipe, SP-286 full-value adoption, exact consumer/checkpoint, or withdrawal contract in this scope. OSI names only the four audit facts and minimum logical record; CV-282 is generic. Runtime-continuity target lists no exact fact equality and uses a different key."
+    },
+    {
+      "event_type": "continuity.replay_checkpointed",
+      "revision": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+      "scope": "all tracked live Plans markdown/JSON; excludes ledgers, audits, migration, evidence and derived files",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-F",
+        "continuity.replay_checkpointed",
+        "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+        "--",
+        "Plans/*.md",
+        "Plans/*.json"
+      ],
+      "exit_code": 0,
+      "matches": [
+        "f9c5de6561dff0a53a48e530f2a5c6804a7e941d:Plans/Contracts_V0.md:20545:- Event families: `runtime_continuity.actor_bound`, `runtime_continuity.route_resolved`, `runtime_continuity.redaction_applied`, and `runtime_continuity.replay_checkpointed`.",
+        "f9c5de6561dff0a53a48e530f2a5c6804a7e941d:Plans/orchestrator-subagent-integration.md:31730:- Required continuity event families are `continuity.actor_identified`, `continuity.provenance_recorded`, `continuity.redaction_applied`, and `continuity.replay_checkpointed`."
+      ],
+      "negative_evidence": "No own closed schema, producer, identity/idempotency recipe, SP-286 full-value adoption, exact consumer/checkpoint, or withdrawal contract in this scope. OSI names only the four audit facts and minimum logical record; CV-282 is generic. Runtime-continuity target lists no exact fact equality and uses a different key."
+    }
+  ]
+}

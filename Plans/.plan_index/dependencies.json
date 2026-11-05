@@ -1878,6 +1878,7 @@
     "OSI-085",
     "OSI-088",
     "OSI-091",
+    "OSI-1604",
     "P-002",
     "P-003",
     "P-004",
@@ -5789,6 +5790,10 @@
     "T-164",
     "PO-045",
     "PO-042",
+    "CV-1600",
+    "CV-1601",
+    "CV-1602",
+    "CV-1603",
     "OSI-427",
     "CWF-149",
     "RGV-011",
@@ -5834,6 +5839,10 @@
     "UF-086",
     "T-182",
     "PO-001",
+    "OSI-1600",
+    "OSI-1601",
+    "OSI-1602",
+    "OSI-1603",
     "CWF-150",
     "F-069",
     "F-070",
@@ -6135,6 +6144,10 @@
     "SP-336",
     "GRS-061",
     "GRS-065",
+    "SP-1600",
+    "SP-1601",
+    "SP-1602",
+    "SP-1603",
     "SP-265",
     "SP-271",
     "SP-285",
@@ -6177,6 +6190,10 @@
     "SP-347",
     "CV-335",
     "SP-289",
+    "ATS-1280",
+    "ATS-1281",
+    "ATS-1282",
+    "ATS-1283",
     "EP-116",
     "OP-036",
     "RGV-019",
@@ -15530,6 +15547,66 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "ATS-1280",
+      "to": "CV-1600"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1280",
+      "to": "OSI-1600"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1280",
+      "to": "SP-1600"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1281",
+      "to": "CV-1601"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1281",
+      "to": "OSI-1601"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1281",
+      "to": "SP-1601"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1282",
+      "to": "CV-1602"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1282",
+      "to": "OSI-1602"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1282",
+      "to": "SP-1602"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1283",
+      "to": "CV-1603"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1283",
+      "to": "OSI-1603"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1283",
+      "to": "SP-1603"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "BBI-001",
       "to": "FGI-001"
     },
@@ -23837,6 +23914,46 @@
       "edge_type": "depends_on",
       "from": "CV-160",
       "to": "CV-159"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1600",
+      "to": "CV-282"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1600",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1601",
+      "to": "CV-282"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1601",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1602",
+      "to": "CV-282"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1602",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1603",
+      "to": "CV-282"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1603",
+      "to": "CV-317"
     },
     {
       "edge_type": "depends_on",
@@ -47797,6 +47914,46 @@
       "edge_type": "depends_on",
       "from": "OSI-160",
       "to": "OSI-154"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "OSI-1600",
+      "to": "CV-1600"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "OSI-1600",
+      "to": "CV-282"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "OSI-1601",
+      "to": "CV-1601"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "OSI-1601",
+      "to": "CV-282"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "OSI-1602",
+      "to": "CV-1602"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "OSI-1602",
+      "to": "CV-282"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "OSI-1603",
+      "to": "CV-1603"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "OSI-1603",
+      "to": "CV-282"
     },
     {
       "edge_type": "depends_on",
@@ -78252,6 +78409,106 @@
       "edge_type": "depends_on",
       "from": "SP-160",
       "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1600",
+      "to": "CV-1600"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1600",
+      "to": "OSI-1600"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1600",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1600",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1600",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1601",
+      "to": "CV-1601"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1601",
+      "to": "OSI-1601"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1601",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1601",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1601",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1602",
+      "to": "CV-1602"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1602",
+      "to": "OSI-1602"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1602",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1602",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1602",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1603",
+      "to": "CV-1603"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1603",
+      "to": "OSI-1603"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1603",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1603",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1603",
+      "to": "SP-337"
     },
     {
       "edge_type": "depends_on",
@@ -117219,7 +117476,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-04T23:02:55Z",
+  "generated_at_utc": "2026-11-05T05:27:25Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -131332,6 +131589,74 @@
       "unit_type": "acceptance_gate"
     },
     {
+      "context_scope": "event_authority_w3i_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-1280",
+      "reasoning_tier": "high",
+      "risk_class": "continuity_source_custody_drift",
+      "source_location": {
+        "heading": "ATS-1280 — `continuity.actor_identified` criterion-12 oracle plan",
+        "heading_level": 3,
+        "heading_line": 7240,
+        "line": 7250,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3i_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-1281",
+      "reasoning_tier": "high",
+      "risk_class": "continuity_source_custody_drift",
+      "source_location": {
+        "heading": "ATS-1281 — `continuity.provenance_recorded` criterion-12 oracle plan",
+        "heading_level": 3,
+        "heading_line": 7293,
+        "line": 7303,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3i_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-1282",
+      "reasoning_tier": "high",
+      "risk_class": "continuity_source_custody_drift",
+      "source_location": {
+        "heading": "ATS-1282 — `continuity.redaction_applied` criterion-12 oracle plan",
+        "heading_level": 3,
+        "heading_line": 7346,
+        "line": 7356,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3i_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-1283",
+      "reasoning_tier": "high",
+      "risk_class": "continuity_source_custody_drift",
+      "source_location": {
+        "heading": "ATS-1283 — `continuity.replay_checkpointed` criterion-12 oracle plan",
+        "heading_level": 3,
+        "heading_line": 7399,
+        "line": 7409,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "bitbucket_provider_identity",
       "gui_related": true,
       "owner_doc": "Plans/Bitbucket_Integration.md",
@@ -140954,6 +141279,74 @@
       "unit_type": "compatibility_disposition"
     },
     {
+      "context_scope": "event_authority_w3i_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1600",
+      "reasoning_tier": "high",
+      "risk_class": "continuity_source_custody_drift",
+      "source_location": {
+        "heading": "CV-1600 — `continuity.actor_identified` closed payload and identity",
+        "heading_level": 3,
+        "heading_line": 20551,
+        "line": 20559,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3i_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1601",
+      "reasoning_tier": "high",
+      "risk_class": "continuity_source_custody_drift",
+      "source_location": {
+        "heading": "CV-1601 — `continuity.provenance_recorded` closed payload and identity",
+        "heading_level": 3,
+        "heading_line": 20605,
+        "line": 20613,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3i_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1602",
+      "reasoning_tier": "high",
+      "risk_class": "continuity_source_custody_drift",
+      "source_location": {
+        "heading": "CV-1602 — `continuity.redaction_applied` closed payload and identity",
+        "heading_level": 3,
+        "heading_line": 20659,
+        "line": 20667,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3i_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1603",
+      "reasoning_tier": "high",
+      "risk_class": "continuity_source_custody_drift",
+      "source_location": {
+        "heading": "CV-1603 — `continuity.replay_checkpointed` closed payload and identity",
+        "heading_level": 3,
+        "heading_line": 20713,
+        "line": 20721,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "uicommand_envelope_fields",
       "gui_related": false,
       "owner_doc": "Plans/Contracts_V0.md",
@@ -143581,8 +143974,8 @@
       "source_location": {
         "heading": "CV-315 - Governance Runtime Record Schemas And State Machines",
         "heading_level": 3,
-        "heading_line": 20587,
-        "line": 20589,
+        "heading_line": 20804,
+        "line": 20806,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143598,8 +143991,8 @@
       "source_location": {
         "heading": "CV-316 - GUI Usage Route Subject Payload Contract",
         "heading_level": 3,
-        "heading_line": 20646,
-        "line": 20648,
+        "heading_line": 20863,
+        "line": 20865,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143615,8 +144008,8 @@
       "source_location": {
         "heading": "CV-317 - Case L EventRecord Scope, Legacy Normalization, And Replay Contract",
         "heading_level": 3,
-        "heading_line": 20805,
-        "line": 20807,
+        "heading_line": 21022,
+        "line": 21024,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143632,8 +144025,8 @@
       "source_location": {
         "heading": "CV-318 - Case L Durable Append And Recovery Event Envelopes",
         "heading_level": 3,
-        "heading_line": 20863,
-        "line": 20865,
+        "heading_line": 21080,
+        "line": 21082,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143649,8 +144042,8 @@
       "source_location": {
         "heading": "CV-319 - Case L Retention And Quarantine Event Envelopes",
         "heading_level": 3,
-        "heading_line": 20908,
-        "line": 20910,
+        "heading_line": 21125,
+        "line": 21127,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143666,8 +144059,8 @@
       "source_location": {
         "heading": "CV-320 - Case L Restore Outcomes And Restore-Point Events",
         "heading_level": 3,
-        "heading_line": 20953,
-        "line": 20955,
+        "heading_line": 21170,
+        "line": 21172,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143683,8 +144076,8 @@
       "source_location": {
         "heading": "CV-321 - Case L Storage Compatibility And Migration Status Envelope",
         "heading_level": 3,
-        "heading_line": 21005,
-        "line": 21007,
+        "heading_line": 21222,
+        "line": 21224,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143700,8 +144093,8 @@
       "source_location": {
         "heading": "CV-322 - Case L Fallback Divergence Command Envelopes",
         "heading_level": 3,
-        "heading_line": 21062,
-        "line": 21064,
+        "heading_line": 21279,
+        "line": 21281,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143734,8 +144127,8 @@
       "source_location": {
         "heading": "CV-324 - Shared Runtime Closed Typed Envelope Catalog",
         "heading_level": 3,
-        "heading_line": 21162,
-        "line": 21164,
+        "heading_line": 21379,
+        "line": 21381,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143751,8 +144144,8 @@
       "source_location": {
         "heading": "CV-325 - Provider Permit And Durable Admission Receipt Identity",
         "heading_level": 3,
-        "heading_line": 21201,
-        "line": 21203,
+        "heading_line": 21418,
+        "line": 21420,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143768,8 +144161,8 @@
       "source_location": {
         "heading": "CV-326 - Touch Closure Registry And Static Production-Intent Boundary",
         "heading_level": 3,
-        "heading_line": 21245,
-        "line": 21247,
+        "heading_line": 21462,
+        "line": 21464,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143785,8 +144178,8 @@
       "source_location": {
         "heading": "CV-327 - Cross-Owner Route Scope, Immutable Selection, And Provenance Binding",
         "heading_level": 3,
-        "heading_line": 21305,
-        "line": 21307,
+        "heading_line": 21522,
+        "line": 21524,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143802,8 +144195,8 @@
       "source_location": {
         "heading": "CV-328 - Research Decision Questionnaire Profile And Disposition Envelope",
         "heading_level": 3,
-        "heading_line": 21514,
-        "line": 21516,
+        "heading_line": 21731,
+        "line": 21733,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143819,8 +144212,8 @@
       "source_location": {
         "heading": "CV-329 - Compaction Completion Envelope Consumer",
         "heading_level": 3,
-        "heading_line": 21597,
-        "line": 21599,
+        "heading_line": 21814,
+        "line": 21816,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143836,8 +144229,8 @@
       "source_location": {
         "heading": "CV-330 — Jujutsu Planned Action Envelope Consumer Boundary",
         "heading_level": 3,
-        "heading_line": 21730,
-        "line": 21732,
+        "heading_line": 21947,
+        "line": 21949,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143853,8 +144246,8 @@
       "source_location": {
         "heading": "CV-331 — Qualified Publication And Recovery Envelope Boundaries",
         "heading_level": 3,
-        "heading_line": 21843,
-        "line": 21845,
+        "heading_line": 22060,
+        "line": 22062,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143870,8 +144263,8 @@
       "source_location": {
         "heading": "CV-332 - Browser Event Payload Identity Scope And Replay Admission",
         "heading_level": 3,
-        "heading_line": 21646,
-        "line": 21648,
+        "heading_line": 21863,
+        "line": 21865,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143887,8 +144280,8 @@
       "source_location": {
         "heading": "CV-333 - Central UI Command Response And Typed Owner Result Join",
         "heading_level": 3,
-        "heading_line": 21689,
-        "line": 21691,
+        "heading_line": 21906,
+        "line": 21908,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143904,8 +144297,8 @@
       "source_location": {
         "heading": "CV-334 - Exact historical child-status writer exclusion",
         "heading_level": 3,
-        "heading_line": 21927,
-        "line": 21929,
+        "heading_line": 22144,
+        "line": 22146,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143921,8 +144314,8 @@
       "source_location": {
         "heading": "CV-335 - Exact historical Goal degradation writer exclusion",
         "heading_level": 3,
-        "heading_line": 21999,
-        "line": 22001,
+        "heading_line": 22216,
+        "line": 22218,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143938,8 +144331,8 @@
       "source_location": {
         "heading": "CV-336 - Exact historical Goal scheduling contract",
         "heading_level": 3,
-        "heading_line": 22097,
-        "line": 22099,
+        "heading_line": 22314,
+        "line": 22316,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143955,8 +144348,8 @@
       "source_location": {
         "heading": "CV-339 - First AppendReceipt Shared Shapes And Interfaces",
         "heading_level": 3,
-        "heading_line": 22329,
-        "line": 22331,
+        "heading_line": 22546,
+        "line": 22548,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143972,8 +144365,8 @@
       "source_location": {
         "heading": "CV-340 - Original Standard Certification Schemas And Source Bytes",
         "heading_level": 3,
-        "heading_line": 22421,
-        "line": 22423,
+        "heading_line": 22638,
+        "line": 22640,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143989,8 +144382,8 @@
       "source_location": {
         "heading": "CV-341 - Goal start original command shapes",
         "heading_level": 2,
-        "heading_line": 22487,
-        "line": 22489,
+        "heading_line": 22704,
+        "line": 22706,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144006,8 +144399,8 @@
       "source_location": {
         "heading": "CV-342 - Original Goal Update Request Result And Event Contract",
         "heading_level": 3,
-        "heading_line": 22564,
-        "line": 22565,
+        "heading_line": 22781,
+        "line": 22782,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144023,8 +144416,8 @@
       "source_location": {
         "heading": "CV-343 - Exact historical goal.progressed writer exclusion",
         "heading_level": 3,
-        "heading_line": 22634,
-        "line": 22636,
+        "heading_line": 22851,
+        "line": 22853,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144040,8 +144433,8 @@
       "source_location": {
         "heading": "CV-344 - Exact historical goal.replanned writer exclusion",
         "heading_level": 3,
-        "heading_line": 22709,
-        "line": 22711,
+        "heading_line": 22926,
+        "line": 22928,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144057,8 +144450,8 @@
       "source_location": {
         "heading": "CV-345 - Exact historical goal.stopped writer exclusion",
         "heading_level": 3,
-        "heading_line": 22784,
-        "line": 22786,
+        "heading_line": 23001,
+        "line": 23003,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144074,8 +144467,8 @@
       "source_location": {
         "heading": "CV-346 - Exact historical goal.verification_decided writer exclusion",
         "heading_level": 3,
-        "heading_line": 22859,
-        "line": 22861,
+        "heading_line": 23076,
+        "line": 23078,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144091,8 +144484,8 @@
       "source_location": {
         "heading": "CV-347 - Current cancelled-v3 and exact cancellation resource graph",
         "heading_level": 3,
-        "heading_line": 22934,
-        "line": 22936,
+        "heading_line": 23151,
+        "line": 23153,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144108,8 +144501,8 @@
       "source_location": {
         "heading": "Preparation release and original effect admission",
         "heading_level": 4,
-        "heading_line": 23048,
-        "line": 23066,
+        "heading_line": 23265,
+        "line": 23283,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144125,8 +144518,8 @@
       "source_location": {
         "heading": "Primitive, codec and original publication semantics",
         "heading_level": 4,
-        "heading_line": 23181,
-        "line": 23193,
+        "heading_line": 23398,
+        "line": 23410,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144142,8 +144535,8 @@
       "source_location": {
         "heading": "CV-350 — Whole versioned successful source composition and authority boundaries (2026-09-20)",
         "heading_level": 2,
-        "heading_line": 23254,
-        "line": 23256,
+        "heading_line": 23471,
+        "line": 23473,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144159,8 +144552,8 @@
       "source_location": {
         "heading": "CV-351 — Whole certified producer schema transport and isolated source realms (2026-09-21)",
         "heading_level": 2,
-        "heading_line": 23351,
-        "line": 23353,
+        "heading_line": 23568,
+        "line": 23570,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144176,8 +144569,8 @@
       "source_location": {
         "heading": "CV-352 — Exact whole identity/coordinator/consumer schema roots, method tuple closure and isolated literal resource banks (2026-09-21)",
         "heading_level": 2,
-        "heading_line": 23410,
-        "line": 23412,
+        "heading_line": 23627,
+        "line": 23629,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144210,8 +144603,8 @@
       "source_location": {
         "heading": "CV-355 - Approval Requested Carries Its Tool Use Id",
         "heading_level": 3,
-        "heading_line": 23492,
-        "line": 23494,
+        "heading_line": 23709,
+        "line": 23711,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144227,8 +144620,8 @@
       "source_location": {
         "heading": "CV-360 - Placement Fields On Every Open Route",
         "heading_level": 3,
-        "heading_line": 23598,
-        "line": 23600,
+        "heading_line": 23815,
+        "line": 23817,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144244,8 +144637,8 @@
       "source_location": {
         "heading": "CV-361 - The workspace.layout_changed 2.0.0 Payload",
         "heading_level": 3,
-        "heading_line": 23689,
-        "line": 23691,
+        "heading_line": 23906,
+        "line": 23908,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144261,8 +144654,8 @@
       "source_location": {
         "heading": "CV-362 - The Terminal's Attribution, Write Grant And Refusal Fields",
         "heading_level": 3,
-        "heading_line": 23790,
-        "line": 23792,
+        "heading_line": 24007,
+        "line": 24009,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144278,8 +144671,8 @@
       "source_location": {
         "heading": "CV-363 - Wonderer And Grilling Companion Shape Registry",
         "heading_level": 3,
-        "heading_line": 23890,
-        "line": 23892,
+        "heading_line": 24107,
+        "line": 24109,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144295,8 +144688,8 @@
       "source_location": {
         "heading": "CV-364 - Chat Room Pause Field And Reconfiguration Shape",
         "heading_level": 3,
-        "heading_line": 23954,
-        "line": 23956,
+        "heading_line": 24171,
+        "line": 24173,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144312,8 +144705,8 @@
       "source_location": {
         "heading": "CV-365 - Application Scope Routes And Existing Thread Facades",
         "heading_level": 3,
-        "heading_line": 24009,
-        "line": 24011,
+        "heading_line": 24226,
+        "line": 24228,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144329,8 +144722,8 @@
       "source_location": {
         "heading": "CV-366 - App Versions Semantic Hashes And Whole Source Graphs",
         "heading_level": 3,
-        "heading_line": 24086,
-        "line": 24088,
+        "heading_line": 24303,
+        "line": 24305,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144346,8 +144739,8 @@
       "source_location": {
         "heading": "CV-367 - Immutable Conversion Manifest And Destination Admission",
         "heading_level": 3,
-        "heading_line": 24281,
-        "line": 24283,
+        "heading_line": 24498,
+        "line": 24500,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144363,8 +144756,8 @@
       "source_location": {
         "heading": "CV-368 - App Assistant Plan Scheduler And Operational Pause Editions",
         "heading_level": 3,
-        "heading_line": 24391,
-        "line": 24393,
+        "heading_line": 24608,
+        "line": 24610,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -197870,6 +198263,91 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "event_authority_w3i_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "plan_unit_id": "OSI-1600",
+      "reasoning_tier": "high",
+      "risk_class": "continuity_source_custody_drift",
+      "source_location": {
+        "heading": "OSI-1600 — `continuity.actor_identified` original fact",
+        "heading_level": 3,
+        "heading_line": 31781,
+        "line": 31789,
+        "path": "Plans/orchestrator-subagent-integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3i_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "plan_unit_id": "OSI-1601",
+      "reasoning_tier": "high",
+      "risk_class": "continuity_source_custody_drift",
+      "source_location": {
+        "heading": "OSI-1601 — `continuity.provenance_recorded` original fact",
+        "heading_level": 3,
+        "heading_line": 31834,
+        "line": 31842,
+        "path": "Plans/orchestrator-subagent-integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3i_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "plan_unit_id": "OSI-1602",
+      "reasoning_tier": "high",
+      "risk_class": "continuity_source_custody_drift",
+      "source_location": {
+        "heading": "OSI-1602 — `continuity.redaction_applied` original fact",
+        "heading_level": 3,
+        "heading_line": 31888,
+        "line": 31896,
+        "path": "Plans/orchestrator-subagent-integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3i_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "plan_unit_id": "OSI-1603",
+      "reasoning_tier": "high",
+      "risk_class": "continuity_source_custody_drift",
+      "source_location": {
+        "heading": "OSI-1603 — `continuity.replay_checkpointed` original fact",
+        "heading_level": 3,
+        "heading_line": 31942,
+        "line": 31950,
+        "path": "Plans/orchestrator-subagent-integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3i_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "plan_unit_id": "OSI-1604",
+      "reasoning_tier": "high",
+      "risk_class": "continuity_source_custody_drift",
+      "source_location": {
+        "heading": "OSI-1604 — Sibling cancellation delivery only (DL-452)",
+        "heading_level": 3,
+        "heading_line": 31700,
+        "line": 31704,
+        "path": "Plans/orchestrator-subagent-integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "orchestrator_subagent_standardization",
       "gui_related": false,
       "owner_doc": "Plans/orchestrator-subagent-integration.md",
@@ -202503,8 +202981,8 @@
       "source_location": {
         "heading": "OSI-433 - Durable Thread And Agent Lineage Consumer",
         "heading_level": 3,
-        "heading_line": 31774,
-        "line": 31776,
+        "heading_line": 32036,
+        "line": 32038,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -202520,8 +202998,8 @@
       "source_location": {
         "heading": "OSI-434 - Sustainable Waves, Operational Awareness, And Truthful Work",
         "heading_level": 3,
-        "heading_line": 31820,
-        "line": 31822,
+        "heading_line": 32082,
+        "line": 32084,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -202537,8 +203015,8 @@
       "source_location": {
         "heading": "OSI-435 - Agent Requested Thread Operations",
         "heading_level": 3,
-        "heading_line": 31854,
-        "line": 31856,
+        "heading_line": 32116,
+        "line": 32118,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -202554,8 +203032,8 @@
       "source_location": {
         "heading": "Working Notebook Scopes Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 31893,
-        "line": 31897,
+        "heading_line": 32155,
+        "line": 32159,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -202571,8 +203049,8 @@
       "source_location": {
         "heading": "Working Notebook Scopes Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 31893,
-        "line": 31929,
+        "heading_line": 32155,
+        "line": 32191,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -202605,8 +203083,8 @@
       "source_location": {
         "heading": "OSI-439 - Application Thread Requests And Receiver Authority",
         "heading_level": 3,
-        "heading_line": 31959,
-        "line": 31961,
+        "heading_line": 32221,
+        "line": 32223,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -202622,8 +203100,8 @@
       "source_location": {
         "heading": "OSI-440 - Application Crew Coordination And Root Identity",
         "heading_level": 3,
-        "heading_line": 32028,
-        "line": 32030,
+        "heading_line": 32290,
+        "line": 32292,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -202639,8 +203117,8 @@
       "source_location": {
         "heading": "OSI-441 - Project Build Grant Consumption And Child Ceiling",
         "heading_level": 3,
-        "heading_line": 32099,
-        "line": 32101,
+        "heading_line": 32361,
+        "line": 32363,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -225019,6 +225497,74 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "event_authority_w3i_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1600",
+      "reasoning_tier": "high",
+      "risk_class": "continuity_source_custody_drift",
+      "source_location": {
+        "heading": "SP-1600 — `continuity.actor_identified` append, read, and custody",
+        "heading_level": 3,
+        "heading_line": 29480,
+        "line": 29498,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3i_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1601",
+      "reasoning_tier": "high",
+      "risk_class": "continuity_source_custody_drift",
+      "source_location": {
+        "heading": "SP-1601 — `continuity.provenance_recorded` append, read, and custody",
+        "heading_level": 3,
+        "heading_line": 29548,
+        "line": 29566,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3i_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1602",
+      "reasoning_tier": "high",
+      "risk_class": "continuity_source_custody_drift",
+      "source_location": {
+        "heading": "SP-1602 — `continuity.redaction_applied` append, read, and custody",
+        "heading_level": 3,
+        "heading_line": 29616,
+        "line": 29634,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3i_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1603",
+      "reasoning_tier": "high",
+      "risk_class": "continuity_source_custody_drift",
+      "source_location": {
+        "heading": "SP-1603 — `continuity.replay_checkpointed` append, read, and custody",
+        "heading_level": 3,
+        "heading_line": 29684,
+        "line": 29702,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "storage_batch_178_chat_runtime_state",
       "gui_related": true,
       "owner_doc": "Plans/storage-plan.md",
@@ -243402,10 +243948,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18750,
+    "depends_on_edge_count": 18798,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21958,
-    "node_count": 7422,
+    "edge_count": 22006,
+    "node_count": 7439,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0

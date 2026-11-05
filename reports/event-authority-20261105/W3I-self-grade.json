@@ -1,0 +1,1247 @@
+{
+  "assessment": "phase_1_prepared_contract_only",
+  "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+  "assessed_source_sha256": {
+    "Plans/orchestrator-subagent-integration.md": "167320640f25243ff4455ee1dc78947cc43665649f631ba254ae1e46da54ef20",
+    "Plans/Contracts_V0.md": "a68d9519a978a1d5ec016eb75bbc342cdab76ace654da5c93562e80732df06c8",
+    "Plans/storage-plan.md": "2fb28708857f38a7c7b4104cd89faecba36701dc1e41574139976e93f510ed5e",
+    "Plans/Automated_Testing_System.md": "ccfb27fa3d6277eb9ac8f3ff6107474a33fc9843836f7df50f44a359dbeb425f",
+    "Plans/continuity_event_contracts.schema.json": "89a618dcbc23731d072a1a21c329e0d91275158969a421452f49c6e74c1ba1c4",
+    "Plans/storage_value_registry.json": "3db9fa47ceb18c7daf9cb93c91fad510f70313317e779e2eebb47758e1ce77fc"
+  },
+  "families": [
+    {
+      "event_type": "continuity.actor_identified",
+      "family_id": "event-family-continuity-actor-identified",
+      "family_revision": "1.0.0",
+      "disposition": "UNDISPOSITIONED",
+      "draft_disposition": "PREPARED_WITHOUT_ADMISSION",
+      "current_owner_units": [
+        "OSI-1600",
+        "CV-1600",
+        "SP-1600",
+        "ATS-1280"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "ABSENT by design. No event-family registry row, family admission or selector activation is written.",
+          "evidence": [
+            {
+              "path": "Plans/orchestrator-subagent-integration.md",
+              "unit": "OSI-1600",
+              "line_start": 31787,
+              "line_end": 31787,
+              "quote": "absent from the event registry"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact semantic OSI-1600, payload CV-1600, storage SP-1600 routes govern this family, separately from runtime_continuity proposals.",
+          "evidence": [
+            {
+              "path": "Plans/orchestrator-subagent-integration.md",
+              "unit": "OSI-1600",
+              "line_start": 31783,
+              "line_end": 31783,
+              "quote": "**NEWLY AUTHORED owner contract**"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-1600",
+              "line_start": 20553,
+              "line_end": 20553,
+              "quote": "Exact payload schema:"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "OSI-1600 names its own original-fact observer; SP-1600 orders admission/source/body/append/full v2 first issuance before success and fences uncertain recovery.",
+          "evidence": [
+            {
+              "path": "Plans/orchestrator-subagent-integration.md",
+              "unit": "OSI-1600",
+              "line_start": 31785,
+              "line_end": 31785,
+              "quote": "sole semantic producer"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1600",
+              "line_start": 29484,
+              "line_end": 29484,
+              "quote": "SP-286/CV-339 full-value v2"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "CV-1600 selects a closed versioned root with bounded IDs, source snapshots and exact nullable/optional rules; all references are eagerly resolved. Format/number execution waits for the shared phase-2 helpers.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-1600",
+              "line_start": 20553,
+              "line_end": 20553,
+              "quote": "The root is closed."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "CV-1600 fixes original Project and envelope joins, a string-only canonical identity tuple and exact event/key formulas. Application scope is not widened.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-1600",
+              "line_start": 20555,
+              "line_end": 20555,
+              "quote": "scope_kind=project"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-1600",
+              "line_start": 20557,
+              "line_end": 20557,
+              "quote": "identity bytes are"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "CV-1600 uses original semantic-field digest equality and lifetime dedupe, refuses current replay-only append, and preserves original retained recipes; SP-1600 forbids replay effects.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-1600",
+              "line_start": 20557,
+              "line_end": 20557,
+              "quote": "Same tuple and body return the original full result"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1600",
+              "line_start": 29492,
+              "line_end": 29492,
+              "quote": "Rebuild reads retained authentic originals"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "retention": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SP-1600 assigns the existing source-lineage RP-AUTHORITY-INDEFINITE class and separate derived RP-PROJECTION-3GEN. G05 is rejected as GitHub-only; linked content keeps its own access/deletion rules.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1600",
+              "line_start": 29494,
+              "line_end": 29494,
+              "quote": "RP-AUTHORITY-INDEFINITE@1.0.0"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1600",
+              "line_start": 29494,
+              "line_end": 29494,
+              "quote": "RP-PROJECTION-3GEN@1.0.0"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SP-1600 requires independently resolved original facts, full original receipt/body custody and coherent mandatory backup; missing sources refuse, and current access/tombstones still apply.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1600",
+              "line_start": 29494,
+              "line_end": 29494,
+              "quote": "mandatory coherent backup/restore"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1600",
+              "line_start": 29494,
+              "line_end": 29494,
+              "quote": "Raw secrets, prompts, outputs"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "OSI-1600 records an already-completed original fact, preserves stable identity for re-observation, and SP-1600 applies matching later sequences with exact prior-value CAS; no source mutation follows.",
+          "evidence": [
+            {
+              "path": "Plans/orchestrator-subagent-integration.md",
+              "unit": "OSI-1600",
+              "line_start": 31787,
+              "line_end": 31787,
+              "quote": "Re-observing an unchanged fact is a retry"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1600",
+              "line_start": 29488,
+              "line_end": 29488,
+              "quote": "Replay of the same event is a no-op"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SP-1600 individually adopts the exact named audit reader/projector, full current generic index and nine-field durable SP-278 token, atomic prefix CAS, rebuild and final read fences.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1600",
+              "line_start": 29482,
+              "line_end": 29482,
+              "quote": "operating audit-only reader"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1600",
+              "line_start": 29490,
+              "line_end": 29490,
+              "quote": "explicitly adopt SP-278"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1600",
+              "line_start": 29490,
+              "line_end": 29490,
+              "quote": "Persist only SP-278"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SP-1600 preserves original retained edition/recipe, rejects unknown versions/aliases, cuts writers before fencing publication/readers and rebuilding a supported successor.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1600",
+              "line_start": 29496,
+              "line_end": 29496,
+              "quote": "Unknown versions are unavailable"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1600",
+              "line_start": 29496,
+              "line_end": 29496,
+              "quote": "Withdrawal first cuts off"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "ATS-1280 and W3I-oracle-plan.json contain this family's positives and predicate-level single-defect negative plans. Oracle code, shared-helper adoption and guard isolation are phase 2, NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-1280",
+              "line_start": 7242,
+              "line_end": 7242,
+              "quote": "Phase-1 grade is PARTIAL"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        }
+      },
+      "remaining_gaps": [
+        "Phase 2: reviewed shared numeric/timestamp helper adoption and authored oracle execution.",
+        "Phase 2: predicate-level guard-isolation proof with the shared tool, followed by Sol/Astra reviews.",
+        "Later: separate complete event-family admission after every criterion passes; no native/runtime activation here."
+      ],
+      "static_checks_seen": [
+        "shard-generate",
+        "shard-generate-final",
+        "phase1-structural",
+        "index-generate",
+        "shard-check",
+        "index-validate",
+        "shard-generate-dag-fix",
+        "index-generate-dag-fix",
+        "shard-check-final",
+        "index-validate-final",
+        "phase1-structural-final"
+      ],
+      "notes": "PASS cells assess explicit prepared owner contracts, not implementation or admission; no native oracle was run."
+    },
+    {
+      "event_type": "continuity.provenance_recorded",
+      "family_id": "event-family-continuity-provenance-recorded",
+      "family_revision": "1.0.0",
+      "disposition": "UNDISPOSITIONED",
+      "draft_disposition": "PREPARED_WITHOUT_ADMISSION",
+      "current_owner_units": [
+        "OSI-1601",
+        "CV-1601",
+        "SP-1601",
+        "ATS-1281"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "ABSENT by design. No event-family registry row, family admission or selector activation is written.",
+          "evidence": [
+            {
+              "path": "Plans/orchestrator-subagent-integration.md",
+              "unit": "OSI-1601",
+              "line_start": 31840,
+              "line_end": 31840,
+              "quote": "absent from the event registry"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact semantic OSI-1601, payload CV-1601, storage SP-1601 routes govern this family, separately from runtime_continuity proposals.",
+          "evidence": [
+            {
+              "path": "Plans/orchestrator-subagent-integration.md",
+              "unit": "OSI-1601",
+              "line_start": 31836,
+              "line_end": 31836,
+              "quote": "**NEWLY AUTHORED owner contract**"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-1601",
+              "line_start": 20607,
+              "line_end": 20607,
+              "quote": "Exact payload schema:"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "OSI-1601 names its own original-fact observer; SP-1601 orders admission/source/body/append/full v2 first issuance before success and fences uncertain recovery.",
+          "evidence": [
+            {
+              "path": "Plans/orchestrator-subagent-integration.md",
+              "unit": "OSI-1601",
+              "line_start": 31838,
+              "line_end": 31838,
+              "quote": "sole semantic producer"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1601",
+              "line_start": 29552,
+              "line_end": 29552,
+              "quote": "SP-286/CV-339 full-value v2"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "CV-1601 selects a closed versioned root with bounded IDs, source snapshots and exact nullable/optional rules; all references are eagerly resolved. Format/number execution waits for the shared phase-2 helpers.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-1601",
+              "line_start": 20607,
+              "line_end": 20607,
+              "quote": "The root is closed."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "CV-1601 fixes original Project and envelope joins, a string-only canonical identity tuple and exact event/key formulas. Application scope is not widened.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-1601",
+              "line_start": 20609,
+              "line_end": 20609,
+              "quote": "scope_kind=project"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-1601",
+              "line_start": 20611,
+              "line_end": 20611,
+              "quote": "identity bytes are"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "CV-1601 uses original semantic-field digest equality and lifetime dedupe, refuses current replay-only append, and preserves original retained recipes; SP-1601 forbids replay effects.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-1601",
+              "line_start": 20611,
+              "line_end": 20611,
+              "quote": "Same tuple and body return the original full result"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1601",
+              "line_start": 29560,
+              "line_end": 29560,
+              "quote": "Rebuild reads retained authentic originals"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "retention": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SP-1601 assigns the existing source-lineage RP-AUTHORITY-INDEFINITE class and separate derived RP-PROJECTION-3GEN. G05 is rejected as GitHub-only; linked content keeps its own access/deletion rules.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1601",
+              "line_start": 29562,
+              "line_end": 29562,
+              "quote": "RP-AUTHORITY-INDEFINITE@1.0.0"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1601",
+              "line_start": 29562,
+              "line_end": 29562,
+              "quote": "RP-PROJECTION-3GEN@1.0.0"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SP-1601 requires independently resolved original facts, full original receipt/body custody and coherent mandatory backup; missing sources refuse, and current access/tombstones still apply.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1601",
+              "line_start": 29562,
+              "line_end": 29562,
+              "quote": "mandatory coherent backup/restore"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1601",
+              "line_start": 29562,
+              "line_end": 29562,
+              "quote": "Raw secrets, prompts, outputs"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "OSI-1601 records an already-completed original fact, preserves stable identity for re-observation, and SP-1601 applies matching later sequences with exact prior-value CAS; no source mutation follows.",
+          "evidence": [
+            {
+              "path": "Plans/orchestrator-subagent-integration.md",
+              "unit": "OSI-1601",
+              "line_start": 31840,
+              "line_end": 31840,
+              "quote": "Re-observing an unchanged fact is a retry"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1601",
+              "line_start": 29556,
+              "line_end": 29556,
+              "quote": "Replay of the same event is a no-op"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SP-1601 individually adopts the exact named audit reader/projector, full current generic index and nine-field durable SP-278 token, atomic prefix CAS, rebuild and final read fences.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1601",
+              "line_start": 29550,
+              "line_end": 29550,
+              "quote": "operating audit-only reader"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1601",
+              "line_start": 29558,
+              "line_end": 29558,
+              "quote": "explicitly adopt SP-278"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1601",
+              "line_start": 29558,
+              "line_end": 29558,
+              "quote": "Persist only SP-278"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SP-1601 preserves original retained edition/recipe, rejects unknown versions/aliases, cuts writers before fencing publication/readers and rebuilding a supported successor.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1601",
+              "line_start": 29564,
+              "line_end": 29564,
+              "quote": "Unknown versions are unavailable"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1601",
+              "line_start": 29564,
+              "line_end": 29564,
+              "quote": "Withdrawal first cuts off"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "ATS-1281 and W3I-oracle-plan.json contain this family's positives and predicate-level single-defect negative plans. Oracle code, shared-helper adoption and guard isolation are phase 2, NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-1281",
+              "line_start": 7295,
+              "line_end": 7295,
+              "quote": "Phase-1 grade is PARTIAL"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        }
+      },
+      "remaining_gaps": [
+        "Phase 2: reviewed shared numeric/timestamp helper adoption and authored oracle execution.",
+        "Phase 2: predicate-level guard-isolation proof with the shared tool, followed by Sol/Astra reviews.",
+        "Later: separate complete event-family admission after every criterion passes; no native/runtime activation here."
+      ],
+      "static_checks_seen": [
+        "shard-generate",
+        "shard-generate-final",
+        "phase1-structural",
+        "index-generate",
+        "shard-check",
+        "index-validate",
+        "shard-generate-dag-fix",
+        "index-generate-dag-fix",
+        "shard-check-final",
+        "index-validate-final",
+        "phase1-structural-final"
+      ],
+      "notes": "PASS cells assess explicit prepared owner contracts, not implementation or admission; no native oracle was run."
+    },
+    {
+      "event_type": "continuity.redaction_applied",
+      "family_id": "event-family-continuity-redaction-applied",
+      "family_revision": "1.0.0",
+      "disposition": "UNDISPOSITIONED",
+      "draft_disposition": "PREPARED_WITHOUT_ADMISSION",
+      "current_owner_units": [
+        "OSI-1602",
+        "CV-1602",
+        "SP-1602",
+        "ATS-1282"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "ABSENT by design. No event-family registry row, family admission or selector activation is written.",
+          "evidence": [
+            {
+              "path": "Plans/orchestrator-subagent-integration.md",
+              "unit": "OSI-1602",
+              "line_start": 31894,
+              "line_end": 31894,
+              "quote": "absent from the event registry"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact semantic OSI-1602, payload CV-1602, storage SP-1602 routes govern this family, separately from runtime_continuity proposals.",
+          "evidence": [
+            {
+              "path": "Plans/orchestrator-subagent-integration.md",
+              "unit": "OSI-1602",
+              "line_start": 31890,
+              "line_end": 31890,
+              "quote": "**NEWLY AUTHORED owner contract**"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-1602",
+              "line_start": 20661,
+              "line_end": 20661,
+              "quote": "Exact payload schema:"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "OSI-1602 names its own original-fact observer; SP-1602 orders admission/source/body/append/full v2 first issuance before success and fences uncertain recovery.",
+          "evidence": [
+            {
+              "path": "Plans/orchestrator-subagent-integration.md",
+              "unit": "OSI-1602",
+              "line_start": 31892,
+              "line_end": 31892,
+              "quote": "sole semantic producer"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1602",
+              "line_start": 29620,
+              "line_end": 29620,
+              "quote": "SP-286/CV-339 full-value v2"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "CV-1602 selects a closed versioned root with bounded IDs, source snapshots and exact nullable/optional rules; all references are eagerly resolved. Format/number execution waits for the shared phase-2 helpers.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-1602",
+              "line_start": 20661,
+              "line_end": 20661,
+              "quote": "The root is closed."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "CV-1602 fixes original Project and envelope joins, a string-only canonical identity tuple and exact event/key formulas. Application scope is not widened.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-1602",
+              "line_start": 20663,
+              "line_end": 20663,
+              "quote": "scope_kind=project"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-1602",
+              "line_start": 20665,
+              "line_end": 20665,
+              "quote": "identity bytes are"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "CV-1602 uses original semantic-field digest equality and lifetime dedupe, refuses current replay-only append, and preserves original retained recipes; SP-1602 forbids replay effects.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-1602",
+              "line_start": 20665,
+              "line_end": 20665,
+              "quote": "Same tuple and body return the original full result"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1602",
+              "line_start": 29628,
+              "line_end": 29628,
+              "quote": "Rebuild reads retained authentic originals"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "retention": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SP-1602 assigns the existing source-lineage RP-AUTHORITY-INDEFINITE class and separate derived RP-PROJECTION-3GEN. G05 is rejected as GitHub-only; linked content keeps its own access/deletion rules.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1602",
+              "line_start": 29630,
+              "line_end": 29630,
+              "quote": "RP-AUTHORITY-INDEFINITE@1.0.0"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1602",
+              "line_start": 29630,
+              "line_end": 29630,
+              "quote": "RP-PROJECTION-3GEN@1.0.0"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SP-1602 requires independently resolved original facts, full original receipt/body custody and coherent mandatory backup; missing sources refuse, and current access/tombstones still apply.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1602",
+              "line_start": 29630,
+              "line_end": 29630,
+              "quote": "mandatory coherent backup/restore"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1602",
+              "line_start": 29630,
+              "line_end": 29630,
+              "quote": "Raw secrets, prompts, outputs"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "OSI-1602 records an already-completed original fact, preserves stable identity for re-observation, and SP-1602 applies matching later sequences with exact prior-value CAS; no source mutation follows.",
+          "evidence": [
+            {
+              "path": "Plans/orchestrator-subagent-integration.md",
+              "unit": "OSI-1602",
+              "line_start": 31894,
+              "line_end": 31894,
+              "quote": "Re-observing an unchanged fact is a retry"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1602",
+              "line_start": 29624,
+              "line_end": 29624,
+              "quote": "Replay of the same event is a no-op"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SP-1602 individually adopts the exact named audit reader/projector, full current generic index and nine-field durable SP-278 token, atomic prefix CAS, rebuild and final read fences.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1602",
+              "line_start": 29618,
+              "line_end": 29618,
+              "quote": "operating audit-only reader"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1602",
+              "line_start": 29626,
+              "line_end": 29626,
+              "quote": "explicitly adopt SP-278"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1602",
+              "line_start": 29626,
+              "line_end": 29626,
+              "quote": "Persist only SP-278"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SP-1602 preserves original retained edition/recipe, rejects unknown versions/aliases, cuts writers before fencing publication/readers and rebuilding a supported successor.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1602",
+              "line_start": 29632,
+              "line_end": 29632,
+              "quote": "Unknown versions are unavailable"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1602",
+              "line_start": 29632,
+              "line_end": 29632,
+              "quote": "Withdrawal first cuts off"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "ATS-1282 and W3I-oracle-plan.json contain this family's positives and predicate-level single-defect negative plans. Oracle code, shared-helper adoption and guard isolation are phase 2, NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-1282",
+              "line_start": 7348,
+              "line_end": 7348,
+              "quote": "Phase-1 grade is PARTIAL"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        }
+      },
+      "remaining_gaps": [
+        "Phase 2: reviewed shared numeric/timestamp helper adoption and authored oracle execution.",
+        "Phase 2: predicate-level guard-isolation proof with the shared tool, followed by Sol/Astra reviews.",
+        "Later: separate complete event-family admission after every criterion passes; no native/runtime activation here."
+      ],
+      "static_checks_seen": [
+        "shard-generate",
+        "shard-generate-final",
+        "phase1-structural",
+        "index-generate",
+        "shard-check",
+        "index-validate",
+        "shard-generate-dag-fix",
+        "index-generate-dag-fix",
+        "shard-check-final",
+        "index-validate-final",
+        "phase1-structural-final"
+      ],
+      "notes": "PASS cells assess explicit prepared owner contracts, not implementation or admission; no native oracle was run."
+    },
+    {
+      "event_type": "continuity.replay_checkpointed",
+      "family_id": "event-family-continuity-replay-checkpointed",
+      "family_revision": "1.0.0",
+      "disposition": "UNDISPOSITIONED",
+      "draft_disposition": "PREPARED_WITHOUT_ADMISSION",
+      "current_owner_units": [
+        "OSI-1603",
+        "CV-1603",
+        "SP-1603",
+        "ATS-1283"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "ABSENT by design. No event-family registry row, family admission or selector activation is written.",
+          "evidence": [
+            {
+              "path": "Plans/orchestrator-subagent-integration.md",
+              "unit": "OSI-1603",
+              "line_start": 31948,
+              "line_end": 31948,
+              "quote": "absent from the event registry"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact semantic OSI-1603, payload CV-1603, storage SP-1603 routes govern this family, separately from runtime_continuity proposals.",
+          "evidence": [
+            {
+              "path": "Plans/orchestrator-subagent-integration.md",
+              "unit": "OSI-1603",
+              "line_start": 31944,
+              "line_end": 31944,
+              "quote": "**NEWLY AUTHORED owner contract**"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-1603",
+              "line_start": 20715,
+              "line_end": 20715,
+              "quote": "Exact payload schema:"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "OSI-1603 names its own original-fact observer; SP-1603 orders admission/source/body/append/full v2 first issuance before success and fences uncertain recovery.",
+          "evidence": [
+            {
+              "path": "Plans/orchestrator-subagent-integration.md",
+              "unit": "OSI-1603",
+              "line_start": 31946,
+              "line_end": 31946,
+              "quote": "sole semantic producer"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1603",
+              "line_start": 29688,
+              "line_end": 29688,
+              "quote": "SP-286/CV-339 full-value v2"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "CV-1603 selects a closed versioned root with bounded IDs, source snapshots and exact nullable/optional rules; all references are eagerly resolved. Format/number execution waits for the shared phase-2 helpers.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-1603",
+              "line_start": 20715,
+              "line_end": 20715,
+              "quote": "The root is closed."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "CV-1603 fixes original Project and envelope joins, a string-only canonical identity tuple and exact event/key formulas. Application scope is not widened.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-1603",
+              "line_start": 20717,
+              "line_end": 20717,
+              "quote": "scope_kind=project"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-1603",
+              "line_start": 20719,
+              "line_end": 20719,
+              "quote": "identity bytes are"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "CV-1603 uses original semantic-field digest equality and lifetime dedupe, refuses current replay-only append, and preserves original retained recipes; SP-1603 forbids replay effects.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-1603",
+              "line_start": 20719,
+              "line_end": 20719,
+              "quote": "Same tuple and body return the original full result"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1603",
+              "line_start": 29696,
+              "line_end": 29696,
+              "quote": "Rebuild reads retained authentic originals"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "retention": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SP-1603 assigns the existing source-lineage RP-AUTHORITY-INDEFINITE class and separate derived RP-PROJECTION-3GEN. G05 is rejected as GitHub-only; linked content keeps its own access/deletion rules.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1603",
+              "line_start": 29698,
+              "line_end": 29698,
+              "quote": "RP-AUTHORITY-INDEFINITE@1.0.0"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1603",
+              "line_start": 29698,
+              "line_end": 29698,
+              "quote": "RP-PROJECTION-3GEN@1.0.0"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SP-1603 requires independently resolved original facts, full original receipt/body custody and coherent mandatory backup; missing sources refuse, and current access/tombstones still apply.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1603",
+              "line_start": 29698,
+              "line_end": 29698,
+              "quote": "mandatory coherent backup/restore"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1603",
+              "line_start": 29698,
+              "line_end": 29698,
+              "quote": "Raw secrets, prompts, outputs"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "OSI-1603 records an already-completed original fact, preserves stable identity for re-observation, and SP-1603 applies matching later sequences with exact prior-value CAS; no source mutation follows.",
+          "evidence": [
+            {
+              "path": "Plans/orchestrator-subagent-integration.md",
+              "unit": "OSI-1603",
+              "line_start": 31948,
+              "line_end": 31948,
+              "quote": "Re-observing an unchanged fact is a retry"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1603",
+              "line_start": 29692,
+              "line_end": 29692,
+              "quote": "Replay of the same event is a no-op"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SP-1603 individually adopts the exact named audit reader/projector, full current generic index and nine-field durable SP-278 token, atomic prefix CAS, rebuild and final read fences.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1603",
+              "line_start": 29686,
+              "line_end": 29686,
+              "quote": "operating audit-only reader"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1603",
+              "line_start": 29694,
+              "line_end": 29694,
+              "quote": "explicitly adopt SP-278"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1603",
+              "line_start": 29694,
+              "line_end": 29694,
+              "quote": "Persist only SP-278"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SP-1603 preserves original retained edition/recipe, rejects unknown versions/aliases, cuts writers before fencing publication/readers and rebuilding a supported successor.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1603",
+              "line_start": 29700,
+              "line_end": 29700,
+              "quote": "Unknown versions are unavailable"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-1603",
+              "line_start": 29700,
+              "line_end": 29700,
+              "quote": "Withdrawal first cuts off"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "ATS-1283 and W3I-oracle-plan.json contain this family's positives and predicate-level single-defect negative plans. Oracle code, shared-helper adoption and guard isolation are phase 2, NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-1283",
+              "line_start": 7401,
+              "line_end": 7401,
+              "quote": "Phase-1 grade is PARTIAL"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+        }
+      },
+      "remaining_gaps": [
+        "Phase 2: reviewed shared numeric/timestamp helper adoption and authored oracle execution.",
+        "Phase 2: predicate-level guard-isolation proof with the shared tool, followed by Sol/Astra reviews.",
+        "Later: separate complete event-family admission after every criterion passes; no native/runtime activation here."
+      ],
+      "static_checks_seen": [
+        "shard-generate",
+        "shard-generate-final",
+        "phase1-structural",
+        "index-generate",
+        "shard-check",
+        "index-validate",
+        "shard-generate-dag-fix",
+        "index-generate-dag-fix",
+        "shard-check-final",
+        "index-validate-final",
+        "phase1-structural-final"
+      ],
+      "notes": "PASS cells assess explicit prepared owner contracts, not implementation or admission; no native oracle was run."
+    }
+  ],
+  "native_execution": "NOT_RUN"
+}

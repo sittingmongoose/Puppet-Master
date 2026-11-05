@@ -1,0 +1,20 @@
+{
+  "event_type": "subagent.cancel_requested",
+  "bucket": null,
+  "cohort_pins": [],
+  "disposition": "RECLASSIFY_TO_EXCLUDED",
+  "disposition_rationale": "DL-452 / E-CARDS-2 item 9.c A explicitly chooses delivery only. OSI-1604 preserves cancellable sibling delivery, existing group-failure and sibling-terminal contracts, and forbids a separately persisted request family. Outside the August individual/census populations and outside the 249 recount; no legacy bucket or cohort pin exists to preserve or invent. No denominator removal is claimed.",
+  "source_citations": [
+    "Plans/orchestrator-subagent-integration.md#Required-Subagent Criticality And Parallel Failure Policy",
+    "Plans/orchestrator-subagent-integration.md#OSI-1604",
+    "origin/plans/ea-cards2-answers-20261105@7ddbd14d27b41b29d041b9db5105ff39fc2eb350:Plans/Decision_Log.md#DL-452"
+  ],
+  "application_ref": "reports/event-authority-20261105/W3I-application.json",
+  "legacy_row_present": false,
+  "august_schema_applied": false,
+  "legacy_bucket_and_cohort_pins_preserved": true,
+  "denominator_change": false,
+  "registry_change": false,
+  "new_family_contract": false,
+  "review_status": "phase_1_prepared"
+}

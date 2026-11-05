@@ -123535,6 +123535,1364 @@
           "Plans/Backup_Restore_System.md#BRS-033"
         ]
       }
+    },
+    {
+      "family_id": "continuity_actor_identified_event",
+      "storage_kind": "seglog",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "continuity.actor_identified",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.continuity.actor_identified.payload.v1",
+      "value_schema_ref": "Plans/continuity_event_contracts.schema.json#/$defs/actor_identified",
+      "owner_doc": "Plans/storage-plan.md#SP-1600",
+      "producer": [
+        "orchestrator.continuity_actor_identified.v1@1.0.0",
+        "storage.continuity_append.v1@1.0.0"
+      ],
+      "consumers": [
+        "storage.continuity_projector.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "seglog_messagepack",
+      "required_fields": [
+        "project_id",
+        "continuity_id",
+        "stream_id",
+        "fact_ref",
+        "actor_ref",
+        "actor_kind",
+        "source_event_id",
+        "provenance_ref",
+        "redaction_profile_id",
+        "redaction_decision",
+        "created_at_utc",
+        "schema_id",
+        "schema_version"
+      ],
+      "optional_fields": [
+        "replay_checkpoint_ref"
+      ],
+      "nullable_fields": [],
+      "replay_behavior": "NEWLY AUTHORED W3I; Plans/storage-plan.md#SP-1600 individually binds exact source/identity/receipt joins, SP-286 v2 and SP-278 prefix/CAS. Canonical retry returns original full receipt and never repeats source work; derived rebuild is side-effect-free. This materialized schema/value row is not Event Authority admission.",
+      "migration": "Plans/storage-plan.md#SP-1600: actual StorageMigrationCoordinator graph; unknown versions unavailable; no runtime_continuity, route or file-mirror alias.",
+      "migration_disposition": {
+        "mode": "current_schema",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1600"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1600",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1600",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/storage-plan.md#SP-278"
+        ]
+      },
+      "retention_compaction": "RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-1600. Source-lineage originals have no age/count eviction; derived same-key publications have one current plus two retired with original withdrawal anchors and holds. Linked bodies retain their own policy/access/deletion; required source evidence is actively held.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "redaction_no_secret_rule": "Plans/storage-plan.md#SP-1600: opaque refs and immutable source metadata only; no secrets or copied prompt/output/file body; current Project access and tombstones on every read.",
+      "legacy_canonical_crosswalk_status": "NEWLY AUTHORED phase-1 source/value definition, prepared without Event Authority admission; native runtime NOT_RUN.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1600",
+          "Plans/Contracts_V0.md#EventRecord"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "project_id",
+          "continuity_id",
+          "stream_id",
+          "fact_ref",
+          "actor_ref",
+          "actor_kind",
+          "source_event_id",
+          "provenance_ref",
+          "redaction_profile_id",
+          "redaction_decision",
+          "created_at_utc",
+          "schema_id",
+          "schema_version"
+        ],
+        "properties": {
+          "project_id": {
+            "$ref": "#/$defs/id"
+          },
+          "continuity_id": {
+            "$ref": "#/$defs/id"
+          },
+          "stream_id": {
+            "$ref": "#/$defs/id"
+          },
+          "fact_ref": {
+            "$ref": "#/$defs/id"
+          },
+          "actor_ref": {
+            "$ref": "#/$defs/id"
+          },
+          "actor_kind": {
+            "$ref": "#/$defs/id"
+          },
+          "source_event_id": {
+            "$ref": "#/$defs/id"
+          },
+          "provenance_ref": {
+            "$ref": "#/$defs/id"
+          },
+          "redaction_profile_id": {
+            "$ref": "#/$defs/id"
+          },
+          "redaction_decision": {
+            "$ref": "#/$defs/id"
+          },
+          "replay_checkpoint_ref": {
+            "$ref": "#/$defs/id"
+          },
+          "created_at_utc": {
+            "$ref": "#/$defs/timestamp"
+          },
+          "schema_id": {
+            "const": "pm.continuity.actor_identified.payload.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          }
+        },
+        "$comment": "NEWLY AUTHORED under DL-450, CV-1600. Records identification of the actor responsible for the original source event. Runtime equality/custody guards: actor_ref and actor_kind equal the independently resolved original source principal and principal kind. No payload carries raw source content, secrets, or caller-assigned Storage metadata.",
+        "$id": "pm.continuity.actor_identified.payload.v1",
+        "$defs": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[A-Za-z0-9_.:@/+-]+$",
+            "not": {
+              "pattern": "[\\r\\n]"
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "$comment": "Enforce the original CV-317 EventRecord time profile with the shared fail-closed timestamp helper in phase 2; format is never annotation-only."
+          }
+        }
+      }
+    },
+    {
+      "family_id": "continuity_provenance_recorded_event",
+      "storage_kind": "seglog",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "continuity.provenance_recorded",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.continuity.provenance_recorded.payload.v1",
+      "value_schema_ref": "Plans/continuity_event_contracts.schema.json#/$defs/provenance_recorded",
+      "owner_doc": "Plans/storage-plan.md#SP-1601",
+      "producer": [
+        "orchestrator.continuity_provenance_recorded.v1@1.0.0",
+        "storage.continuity_append.v1@1.0.0"
+      ],
+      "consumers": [
+        "storage.continuity_projector.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "seglog_messagepack",
+      "required_fields": [
+        "project_id",
+        "continuity_id",
+        "stream_id",
+        "fact_ref",
+        "actor_ref",
+        "actor_kind",
+        "source_event_id",
+        "provenance_ref",
+        "redaction_profile_id",
+        "redaction_decision",
+        "created_at_utc",
+        "schema_id",
+        "schema_version"
+      ],
+      "optional_fields": [
+        "replay_checkpoint_ref"
+      ],
+      "nullable_fields": [],
+      "replay_behavior": "NEWLY AUTHORED W3I; Plans/storage-plan.md#SP-1601 individually binds exact source/identity/receipt joins, SP-286 v2 and SP-278 prefix/CAS. Canonical retry returns original full receipt and never repeats source work; derived rebuild is side-effect-free. This materialized schema/value row is not Event Authority admission.",
+      "migration": "Plans/storage-plan.md#SP-1601: actual StorageMigrationCoordinator graph; unknown versions unavailable; no runtime_continuity, route or file-mirror alias.",
+      "migration_disposition": {
+        "mode": "current_schema",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1601"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1601",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1601",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/storage-plan.md#SP-278"
+        ]
+      },
+      "retention_compaction": "RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-1601. Source-lineage originals have no age/count eviction; derived same-key publications have one current plus two retired with original withdrawal anchors and holds. Linked bodies retain their own policy/access/deletion; required source evidence is actively held.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "redaction_no_secret_rule": "Plans/storage-plan.md#SP-1601: opaque refs and immutable source metadata only; no secrets or copied prompt/output/file body; current Project access and tombstones on every read.",
+      "legacy_canonical_crosswalk_status": "NEWLY AUTHORED phase-1 source/value definition, prepared without Event Authority admission; native runtime NOT_RUN.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1601",
+          "Plans/Contracts_V0.md#EventRecord"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "project_id",
+          "continuity_id",
+          "stream_id",
+          "fact_ref",
+          "actor_ref",
+          "actor_kind",
+          "source_event_id",
+          "provenance_ref",
+          "redaction_profile_id",
+          "redaction_decision",
+          "created_at_utc",
+          "schema_id",
+          "schema_version"
+        ],
+        "properties": {
+          "project_id": {
+            "$ref": "#/$defs/id"
+          },
+          "continuity_id": {
+            "$ref": "#/$defs/id"
+          },
+          "stream_id": {
+            "$ref": "#/$defs/id"
+          },
+          "fact_ref": {
+            "$ref": "#/$defs/id"
+          },
+          "actor_ref": {
+            "$ref": "#/$defs/id"
+          },
+          "actor_kind": {
+            "$ref": "#/$defs/id"
+          },
+          "source_event_id": {
+            "$ref": "#/$defs/id"
+          },
+          "provenance_ref": {
+            "$ref": "#/$defs/id"
+          },
+          "redaction_profile_id": {
+            "$ref": "#/$defs/id"
+          },
+          "redaction_decision": {
+            "$ref": "#/$defs/id"
+          },
+          "replay_checkpoint_ref": {
+            "$ref": "#/$defs/id"
+          },
+          "created_at_utc": {
+            "$ref": "#/$defs/timestamp"
+          },
+          "schema_id": {
+            "const": "pm.continuity.provenance_recorded.payload.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          }
+        },
+        "$comment": "NEWLY AUTHORED under DL-450, CV-1601. Records the original source and provenance of a continuity record. Runtime equality/custody guards: provenance_ref resolves the exact retained output or handoff version that names source_event_id; a route target is not provenance evidence. No payload carries raw source content, secrets, or caller-assigned Storage metadata.",
+        "$id": "pm.continuity.provenance_recorded.payload.v1",
+        "$defs": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[A-Za-z0-9_.:@/+-]+$",
+            "not": {
+              "pattern": "[\\r\\n]"
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "$comment": "Enforce the original CV-317 EventRecord time profile with the shared fail-closed timestamp helper in phase 2; format is never annotation-only."
+          }
+        }
+      }
+    },
+    {
+      "family_id": "continuity_redaction_applied_event",
+      "storage_kind": "seglog",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "continuity.redaction_applied",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.continuity.redaction_applied.payload.v1",
+      "value_schema_ref": "Plans/continuity_event_contracts.schema.json#/$defs/redaction_applied",
+      "owner_doc": "Plans/storage-plan.md#SP-1602",
+      "producer": [
+        "orchestrator.continuity_redaction_applied.v1@1.0.0",
+        "storage.continuity_append.v1@1.0.0"
+      ],
+      "consumers": [
+        "storage.continuity_projector.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "seglog_messagepack",
+      "required_fields": [
+        "project_id",
+        "continuity_id",
+        "stream_id",
+        "fact_ref",
+        "actor_ref",
+        "actor_kind",
+        "source_event_id",
+        "provenance_ref",
+        "redaction_profile_id",
+        "redaction_decision",
+        "created_at_utc",
+        "schema_id",
+        "schema_version"
+      ],
+      "optional_fields": [
+        "replay_checkpoint_ref"
+      ],
+      "nullable_fields": [],
+      "replay_behavior": "NEWLY AUTHORED W3I; Plans/storage-plan.md#SP-1602 individually binds exact source/identity/receipt joins, SP-286 v2 and SP-278 prefix/CAS. Canonical retry returns original full receipt and never repeats source work; derived rebuild is side-effect-free. This materialized schema/value row is not Event Authority admission.",
+      "migration": "Plans/storage-plan.md#SP-1602: actual StorageMigrationCoordinator graph; unknown versions unavailable; no runtime_continuity, route or file-mirror alias.",
+      "migration_disposition": {
+        "mode": "current_schema",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1602"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1602",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1602",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/storage-plan.md#SP-278"
+        ]
+      },
+      "retention_compaction": "RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-1602. Source-lineage originals have no age/count eviction; derived same-key publications have one current plus two retired with original withdrawal anchors and holds. Linked bodies retain their own policy/access/deletion; required source evidence is actively held.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "redaction_no_secret_rule": "Plans/storage-plan.md#SP-1602: opaque refs and immutable source metadata only; no secrets or copied prompt/output/file body; current Project access and tombstones on every read.",
+      "legacy_canonical_crosswalk_status": "NEWLY AUTHORED phase-1 source/value definition, prepared without Event Authority admission; native runtime NOT_RUN.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1602",
+          "Plans/Contracts_V0.md#EventRecord"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "project_id",
+          "continuity_id",
+          "stream_id",
+          "fact_ref",
+          "actor_ref",
+          "actor_kind",
+          "source_event_id",
+          "provenance_ref",
+          "redaction_profile_id",
+          "redaction_decision",
+          "created_at_utc",
+          "schema_id",
+          "schema_version"
+        ],
+        "properties": {
+          "project_id": {
+            "$ref": "#/$defs/id"
+          },
+          "continuity_id": {
+            "$ref": "#/$defs/id"
+          },
+          "stream_id": {
+            "$ref": "#/$defs/id"
+          },
+          "fact_ref": {
+            "$ref": "#/$defs/id"
+          },
+          "actor_ref": {
+            "$ref": "#/$defs/id"
+          },
+          "actor_kind": {
+            "$ref": "#/$defs/id"
+          },
+          "source_event_id": {
+            "$ref": "#/$defs/id"
+          },
+          "provenance_ref": {
+            "$ref": "#/$defs/id"
+          },
+          "redaction_profile_id": {
+            "$ref": "#/$defs/id"
+          },
+          "redaction_decision": {
+            "$ref": "#/$defs/id"
+          },
+          "replay_checkpoint_ref": {
+            "$ref": "#/$defs/id"
+          },
+          "created_at_utc": {
+            "$ref": "#/$defs/timestamp"
+          },
+          "schema_id": {
+            "const": "pm.continuity.redaction_applied.payload.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          }
+        },
+        "$comment": "NEWLY AUTHORED under DL-450, CV-1602. Records the actual redaction disposition attached to the original continuity source. Runtime equality/custody guards: redaction_profile_id and redaction_decision equal the actual original redaction owner result for provenance_ref, including its transform/version; a requested transform is not an applied result. No payload carries raw source content, secrets, or caller-assigned Storage metadata.",
+        "$id": "pm.continuity.redaction_applied.payload.v1",
+        "$defs": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[A-Za-z0-9_.:@/+-]+$",
+            "not": {
+              "pattern": "[\\r\\n]"
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "$comment": "Enforce the original CV-317 EventRecord time profile with the shared fail-closed timestamp helper in phase 2; format is never annotation-only."
+          }
+        }
+      }
+    },
+    {
+      "family_id": "continuity_replay_checkpointed_event",
+      "storage_kind": "seglog",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "continuity.replay_checkpointed",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.continuity.replay_checkpointed.payload.v1",
+      "value_schema_ref": "Plans/continuity_event_contracts.schema.json#/$defs/replay_checkpointed",
+      "owner_doc": "Plans/storage-plan.md#SP-1603",
+      "producer": [
+        "orchestrator.continuity_replay_checkpointed.v1@1.0.0",
+        "storage.continuity_append.v1@1.0.0"
+      ],
+      "consumers": [
+        "storage.continuity_projector.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "seglog_messagepack",
+      "required_fields": [
+        "project_id",
+        "continuity_id",
+        "stream_id",
+        "fact_ref",
+        "actor_ref",
+        "actor_kind",
+        "source_event_id",
+        "provenance_ref",
+        "redaction_profile_id",
+        "redaction_decision",
+        "replay_checkpoint_ref",
+        "created_at_utc",
+        "schema_id",
+        "schema_version"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [],
+      "replay_behavior": "NEWLY AUTHORED W3I; Plans/storage-plan.md#SP-1603 individually binds exact source/identity/receipt joins, SP-286 v2 and SP-278 prefix/CAS. Canonical retry returns original full receipt and never repeats source work; derived rebuild is side-effect-free. This materialized schema/value row is not Event Authority admission.",
+      "migration": "Plans/storage-plan.md#SP-1603: actual StorageMigrationCoordinator graph; unknown versions unavailable; no runtime_continuity, route or file-mirror alias.",
+      "migration_disposition": {
+        "mode": "current_schema",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1603"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1603",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1603",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/storage-plan.md#SP-278"
+        ]
+      },
+      "retention_compaction": "RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-1603. Source-lineage originals have no age/count eviction; derived same-key publications have one current plus two retired with original withdrawal anchors and holds. Linked bodies retain their own policy/access/deletion; required source evidence is actively held.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "redaction_no_secret_rule": "Plans/storage-plan.md#SP-1603: opaque refs and immutable source metadata only; no secrets or copied prompt/output/file body; current Project access and tombstones on every read.",
+      "legacy_canonical_crosswalk_status": "NEWLY AUTHORED phase-1 source/value definition, prepared without Event Authority admission; native runtime NOT_RUN.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1603",
+          "Plans/Contracts_V0.md#EventRecord"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "project_id",
+          "continuity_id",
+          "stream_id",
+          "fact_ref",
+          "actor_ref",
+          "actor_kind",
+          "source_event_id",
+          "provenance_ref",
+          "redaction_profile_id",
+          "redaction_decision",
+          "replay_checkpoint_ref",
+          "created_at_utc",
+          "schema_id",
+          "schema_version"
+        ],
+        "properties": {
+          "project_id": {
+            "$ref": "#/$defs/id"
+          },
+          "continuity_id": {
+            "$ref": "#/$defs/id"
+          },
+          "stream_id": {
+            "$ref": "#/$defs/id"
+          },
+          "fact_ref": {
+            "$ref": "#/$defs/id"
+          },
+          "actor_ref": {
+            "$ref": "#/$defs/id"
+          },
+          "actor_kind": {
+            "$ref": "#/$defs/id"
+          },
+          "source_event_id": {
+            "$ref": "#/$defs/id"
+          },
+          "provenance_ref": {
+            "$ref": "#/$defs/id"
+          },
+          "redaction_profile_id": {
+            "$ref": "#/$defs/id"
+          },
+          "redaction_decision": {
+            "$ref": "#/$defs/id"
+          },
+          "replay_checkpoint_ref": {
+            "$ref": "#/$defs/id"
+          },
+          "created_at_utc": {
+            "$ref": "#/$defs/timestamp"
+          },
+          "schema_id": {
+            "const": "pm.continuity.replay_checkpointed.payload.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          }
+        },
+        "$comment": "NEWLY AUTHORED under DL-450, CV-1603. Records a verified saved position reached while replaying the original audit source stream. Runtime equality/custody guards: replay_checkpoint_ref resolves the original source stream checkpoint, whose complete SP-278 durable token and examined prefix include source_event_id; it is an upstream checkpoint, never this event or its downstream continuity checkpoint. No payload carries raw source content, secrets, or caller-assigned Storage metadata.",
+        "$id": "pm.continuity.replay_checkpointed.payload.v1",
+        "$defs": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[A-Za-z0-9_.:@/+-]+$",
+            "not": {
+              "pattern": "[\\r\\n]"
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "$comment": "Enforce the original CV-317 EventRecord time profile with the shared fail-closed timestamp helper in phase 2; format is never annotation-only."
+          }
+        }
+      }
+    },
+    {
+      "family_id": "continuity_record",
+      "storage_kind": "redb_projection",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "continuity_record.v1:{project_id}:{continuity_id}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.continuity_record.v1",
+      "value_schema_ref": "Plans/continuity_event_contracts.schema.json#/$defs/projection",
+      "owner_doc": "Plans/storage-plan.md#SP-1600",
+      "producer": [
+        "storage.continuity_projector.v1@1.0.0"
+      ],
+      "consumers": [
+        "reader.orchestrator.continuity_audit.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "continuity_id",
+        "stream_id",
+        "event_type",
+        "event_id",
+        "sequence_id",
+        "publication_id",
+        "body_event_id"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [],
+      "replay_behavior": "NEWLY AUTHORED W3I; Plans/storage-plan.md#SP-1600 individually binds exact source/identity/receipt joins, SP-286 v2 and SP-278 prefix/CAS. Canonical retry returns original full receipt and never repeats source work; derived rebuild is side-effect-free. This materialized schema/value row is not Event Authority admission.",
+      "migration": "Plans/storage-plan.md#SP-1600: actual StorageMigrationCoordinator graph; unknown versions unavailable; no runtime_continuity, route or file-mirror alias.",
+      "migration_disposition": {
+        "mode": "rebuild_on_schema_change",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1600"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "rebuild_from_authority",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1600",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1600",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/storage-plan.md#SP-278"
+        ]
+      },
+      "retention_compaction": "RP-PROJECTION-3GEN@1.0.0; Plans/storage-plan.md#SP-1600. Source-lineage originals have no age/count eviction; derived same-key publications have one current plus two retired with original withdrawal anchors and holds. Linked bodies retain their own policy/access/deletion; required source evidence is actively held.",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
+      "redaction_no_secret_rule": "Plans/storage-plan.md#SP-1600: opaque refs and immutable source metadata only; no secrets or copied prompt/output/file body; current Project access and tombstones on every read.",
+      "legacy_canonical_crosswalk_status": "NEWLY AUTHORED phase-1 source/value definition, prepared without Event Authority admission; native runtime NOT_RUN.",
+      "recovery_disposition": {
+        "authority_class": "derived_rebuildable",
+        "strategy": "rebuild_from_canonical_events_and_snapshot",
+        "source_family_ids": [
+          "event_record_index",
+          "event_record_index_checkpoint",
+          "continuity_actor_identified_event",
+          "continuity_provenance_recorded_event",
+          "continuity_redaction_applied_event",
+          "continuity_replay_checkpointed_event"
+        ],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1600",
+          "Plans/Contracts_V0.md#EventRecord"
+        ],
+        "backup_required": false,
+        "data_loss_if_unavailable": false,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "project_id",
+          "continuity_id",
+          "stream_id",
+          "event_type",
+          "event_id",
+          "sequence_id",
+          "publication_id",
+          "body_event_id"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.continuity_record.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "project_id": {
+            "$ref": "#/$defs/id"
+          },
+          "continuity_id": {
+            "$ref": "#/$defs/id"
+          },
+          "stream_id": {
+            "$ref": "#/$defs/id"
+          },
+          "event_id": {
+            "$ref": "#/$defs/id"
+          },
+          "publication_id": {
+            "$ref": "#/$defs/id"
+          },
+          "event_type": {
+            "enum": [
+              "continuity.actor_identified",
+              "continuity.provenance_recorded",
+              "continuity.redaction_applied",
+              "continuity.replay_checkpointed"
+            ]
+          },
+          "sequence_id": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 18446744073709551615
+          },
+          "body_event_id": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "$comment": "Physical derived row only. body_event_id equals event_id and resolves the complete original logical continuity_record snapshot through original full-value custody. No duplicated large body or separately authoritative projected snapshot.",
+        "$id": "pm.storage_value.continuity_record.v1",
+        "$defs": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[A-Za-z0-9_.:@/+-]+$",
+            "not": {
+              "pattern": "[\\r\\n]"
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "$comment": "Enforce the original CV-317 EventRecord time profile with the shared fail-closed timestamp helper in phase 2; format is never annotation-only."
+          }
+        }
+      }
+    },
+    {
+      "family_id": "continuity_replay_checkpoint",
+      "storage_kind": "redb_checkpoint",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "continuity_replay_checkpoint.v1:{project_id}:{stream_id}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.continuity_replay_checkpoint.v1",
+      "value_schema_ref": "Plans/continuity_event_contracts.schema.json#/$defs/checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1600",
+      "producer": [
+        "storage.continuity_projector.v1@1.0.0"
+      ],
+      "consumers": [
+        "reader.orchestrator.continuity_audit.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "projection_checkpoint",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "projector_id",
+        "projector_version",
+        "storage_instance_id",
+        "project_id",
+        "stream_id",
+        "publication_id",
+        "admitted_event_types",
+        "index_read_token",
+        "index_through_sequence_id",
+        "source_cursor",
+        "filter_complete",
+        "state",
+        "withdrawn_at_utc",
+        "retired_publications",
+        "hold_refs"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "withdrawn_at_utc",
+        "source_cursor"
+      ],
+      "replay_behavior": "NEWLY AUTHORED W3I; Plans/storage-plan.md#SP-1600 individually binds exact source/identity/receipt joins, SP-286 v2 and SP-278 prefix/CAS. Canonical retry returns original full receipt and never repeats source work; derived rebuild is side-effect-free. This materialized schema/value row is not Event Authority admission.",
+      "migration": "Plans/storage-plan.md#SP-1600: actual StorageMigrationCoordinator graph; unknown versions unavailable; no runtime_continuity, route or file-mirror alias.",
+      "migration_disposition": {
+        "mode": "rebuild_on_schema_change",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1600"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "rebuild_from_authority",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1600",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1600",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/storage-plan.md#SP-278"
+        ]
+      },
+      "retention_compaction": "RP-PROJECTION-3GEN@1.0.0; Plans/storage-plan.md#SP-1600. Source-lineage originals have no age/count eviction; derived same-key publications have one current plus two retired with original withdrawal anchors and holds. Linked bodies retain their own policy/access/deletion; required source evidence is actively held.",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
+      "redaction_no_secret_rule": "Plans/storage-plan.md#SP-1600: opaque refs and immutable source metadata only; no secrets or copied prompt/output/file body; current Project access and tombstones on every read.",
+      "legacy_canonical_crosswalk_status": "NEWLY AUTHORED phase-1 source/value definition, prepared without Event Authority admission; native runtime NOT_RUN.",
+      "recovery_disposition": {
+        "authority_class": "derived_rebuildable",
+        "strategy": "rebuild_from_canonical_events_and_snapshot",
+        "source_family_ids": [
+          "event_record_index",
+          "event_record_index_checkpoint",
+          "continuity_actor_identified_event",
+          "continuity_provenance_recorded_event",
+          "continuity_redaction_applied_event",
+          "continuity_replay_checkpointed_event"
+        ],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1600",
+          "Plans/Contracts_V0.md#EventRecord"
+        ],
+        "backup_required": false,
+        "data_loss_if_unavailable": false,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "projector_id",
+          "projector_version",
+          "storage_instance_id",
+          "project_id",
+          "stream_id",
+          "publication_id",
+          "admitted_event_types",
+          "index_read_token",
+          "index_through_sequence_id",
+          "source_cursor",
+          "filter_complete",
+          "state",
+          "withdrawn_at_utc",
+          "retired_publications",
+          "hold_refs"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.continuity_replay_checkpoint.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "projector_id": {
+            "const": "storage.continuity_projector.v1"
+          },
+          "projector_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "$ref": "#/$defs/id"
+          },
+          "project_id": {
+            "$ref": "#/$defs/id"
+          },
+          "stream_id": {
+            "$ref": "#/$defs/id"
+          },
+          "publication_id": {
+            "$ref": "#/$defs/id"
+          },
+          "admitted_event_types": {
+            "type": "array",
+            "uniqueItems": true,
+            "minItems": 1,
+            "items": {
+              "enum": [
+                "continuity.actor_identified",
+                "continuity.provenance_recorded",
+                "continuity.redaction_applied",
+                "continuity.replay_checkpointed"
+              ]
+            }
+          },
+          "index_read_token": {
+            "$ref": "#/$defs/durable_read_token"
+          },
+          "index_through_sequence_id": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 18446744073709551615
+          },
+          "source_cursor": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "segment_generation",
+                  "segment_name",
+                  "byte_offset",
+                  "frame_end_offset",
+                  "last_sequence_id",
+                  "last_event_id"
+                ],
+                "properties": {
+                  "segment_generation": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "segment_name": {
+                    "type": "string",
+                    "pattern": "^seg-[0-9]{6,}-[0-9]{20}(-[0-9]{20}\\.seglog|\\.active)$"
+                  },
+                  "byte_offset": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "frame_end_offset": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "last_sequence_id": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "last_event_id": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "filter_complete": {
+            "const": true
+          },
+          "state": {
+            "enum": [
+              "current",
+              "withdrawn"
+            ]
+          },
+          "withdrawn_at_utc": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/timestamp"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "retired_publications": {
+            "type": "array",
+            "maxItems": 2,
+            "items": {
+              "$ref": "#/$defs/checkpoint_core"
+            }
+          },
+          "hold_refs": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "$ref": "#/$defs/id"
+            }
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "const": "current"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "withdrawn_at_utc": {
+                  "type": "null"
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "withdrawn_at_utc": {
+                  "$ref": "#/$defs/timestamp"
+                }
+              }
+            }
+          }
+        ],
+        "$id": "pm.storage_value.continuity_replay_checkpoint.v1",
+        "$defs": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[A-Za-z0-9_.:@/+-]+$",
+            "not": {
+              "pattern": "[\\r\\n]"
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "$comment": "Enforce the original CV-317 EventRecord time profile with the shared fail-closed timestamp helper in phase 2; format is never annotation-only."
+          },
+          "durable_read_token": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "storage_instance_id",
+              "checkpoint_key",
+              "checkpoint_ref",
+              "generation_id",
+              "generation_anchor_sha256",
+              "frontier_revision",
+              "frontier_sha256",
+              "index_dataset_name",
+              "source_selection"
+            ],
+            "properties": {
+              "storage_instance_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "checkpoint_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "checkpoint_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "generation_id": {
+                "type": "string",
+                "pattern": "^eig_[0-9a-f]{64}$"
+              },
+              "generation_anchor_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "frontier_revision": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "frontier_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "index_dataset_name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source_selection": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "storage_instance_id",
+                  "current_ref",
+                  "current_bytes_sha256",
+                  "selected_segment_generation",
+                  "manifest_ref",
+                  "manifest_bytes_sha256",
+                  "manifest_generation",
+                  "recovery_epoch",
+                  "manifest_survivor_prefix_sha256",
+                  "retained_inventory_sha256",
+                  "durable_watermarks_sha256",
+                  "excluded_ranges_sha256",
+                  "retired_inputs_sha256"
+                ],
+                "properties": {
+                  "storage_instance_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "current_ref": {
+                    "const": "storage/seglog/CURRENT"
+                  },
+                  "current_bytes_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "selected_segment_generation": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "manifest_ref": {
+                    "const": "storage/seglog/manifest.v1.msgpack"
+                  },
+                  "manifest_bytes_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "manifest_generation": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "recovery_epoch": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "manifest_survivor_prefix_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "retained_inventory_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "durable_watermarks_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "excluded_ranges_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "retired_inputs_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              }
+            }
+          },
+          "checkpoint_core": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "projector_id",
+              "projector_version",
+              "storage_instance_id",
+              "project_id",
+              "stream_id",
+              "publication_id",
+              "admitted_event_types",
+              "index_read_token",
+              "index_through_sequence_id",
+              "source_cursor",
+              "filter_complete",
+              "state",
+              "withdrawn_at_utc",
+              "hold_refs"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.continuity_replay_checkpoint.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "projector_id": {
+                "const": "storage.continuity_projector.v1"
+              },
+              "projector_version": {
+                "const": "1.0.0"
+              },
+              "storage_instance_id": {
+                "$ref": "#/$defs/id"
+              },
+              "project_id": {
+                "$ref": "#/$defs/id"
+              },
+              "stream_id": {
+                "$ref": "#/$defs/id"
+              },
+              "publication_id": {
+                "$ref": "#/$defs/id"
+              },
+              "admitted_event_types": {
+                "type": "array",
+                "uniqueItems": true,
+                "minItems": 1,
+                "items": {
+                  "enum": [
+                    "continuity.actor_identified",
+                    "continuity.provenance_recorded",
+                    "continuity.redaction_applied",
+                    "continuity.replay_checkpointed"
+                  ]
+                }
+              },
+              "index_read_token": {
+                "$ref": "#/$defs/durable_read_token"
+              },
+              "index_through_sequence_id": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "source_cursor": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "segment_generation",
+                      "segment_name",
+                      "byte_offset",
+                      "frame_end_offset",
+                      "last_sequence_id",
+                      "last_event_id"
+                    ],
+                    "properties": {
+                      "segment_generation": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 18446744073709551615
+                      },
+                      "segment_name": {
+                        "type": "string",
+                        "pattern": "^seg-[0-9]{6,}-[0-9]{20}(-[0-9]{20}\\.seglog|\\.active)$"
+                      },
+                      "byte_offset": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 18446744073709551615
+                      },
+                      "frame_end_offset": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 18446744073709551615
+                      },
+                      "last_sequence_id": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 18446744073709551615
+                      },
+                      "last_event_id": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "filter_complete": {
+                "const": true
+              },
+              "state": {
+                "enum": [
+                  "current",
+                  "withdrawn"
+                ]
+              },
+              "withdrawn_at_utc": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/timestamp"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "hold_refs": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "$ref": "#/$defs/id"
+                }
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "state": {
+                      "const": "current"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "withdrawn_at_utc": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "withdrawn_at_utc": {
+                      "$ref": "#/$defs/timestamp"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
     }
   ],
   "storage_profile": {

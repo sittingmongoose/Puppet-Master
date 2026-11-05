@@ -1,0 +1,100 @@
+{
+  "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+  "recount_rows": [
+    {
+      "name": "continuity.actor_identified",
+      "outcome": "prepared",
+      "merge_applied": false,
+      "merge_target": "runtime_continuity.actor_bound",
+      "reason": "Current owners provide no exact same-fact equivalence for proposed actor/redaction/replay pairings; WAVE3 permits separate drafting. Provenance source/output/handoff facts differ from route target resolution (CV-282 vs CV-283).",
+      "owner_units": [
+        "OSI-1600",
+        "CV-1600",
+        "SP-1600",
+        "ATS-1280"
+      ],
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "registry_membership": "ABSENT",
+      "criterion_12": "PARTIAL",
+      "question_for_jared": null
+    },
+    {
+      "name": "continuity.provenance_recorded",
+      "outcome": "prepared",
+      "merge_applied": false,
+      "merge_target": null,
+      "reason": "Current owners provide no exact same-fact equivalence for proposed actor/redaction/replay pairings; WAVE3 permits separate drafting. Provenance source/output/handoff facts differ from route target resolution (CV-282 vs CV-283).",
+      "owner_units": [
+        "OSI-1601",
+        "CV-1601",
+        "SP-1601",
+        "ATS-1281"
+      ],
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "registry_membership": "ABSENT",
+      "criterion_12": "PARTIAL",
+      "question_for_jared": null
+    },
+    {
+      "name": "continuity.redaction_applied",
+      "outcome": "prepared",
+      "merge_applied": false,
+      "merge_target": "runtime_continuity.redaction_applied",
+      "reason": "Current owners provide no exact same-fact equivalence for proposed actor/redaction/replay pairings; WAVE3 permits separate drafting. Provenance source/output/handoff facts differ from route target resolution (CV-282 vs CV-283).",
+      "owner_units": [
+        "OSI-1602",
+        "CV-1602",
+        "SP-1602",
+        "ATS-1282"
+      ],
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "registry_membership": "ABSENT",
+      "criterion_12": "PARTIAL",
+      "question_for_jared": null
+    },
+    {
+      "name": "continuity.replay_checkpointed",
+      "outcome": "prepared",
+      "merge_applied": false,
+      "merge_target": "runtime_continuity.replay_checkpointed",
+      "reason": "Current owners provide no exact same-fact equivalence for proposed actor/redaction/replay pairings; WAVE3 permits separate drafting. Provenance source/output/handoff facts differ from route target resolution (CV-282 vs CV-283).",
+      "owner_units": [
+        "OSI-1603",
+        "CV-1603",
+        "SP-1603",
+        "ATS-1283"
+      ],
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "registry_membership": "ABSENT",
+      "criterion_12": "PARTIAL",
+      "question_for_jared": null
+    }
+  ],
+  "outside_names": [
+    {
+      "name": "hitl.approved",
+      "outcome": "label_on_existing_resolution_notification"
+    },
+    {
+      "name": "hitl.rejected",
+      "outcome": "label_on_existing_resolution_notification"
+    },
+    {
+      "name": "subagent.cancel_requested",
+      "outcome": "excluded",
+      "application_ref": "reports/event-authority-20261105/W3I-application.json"
+    }
+  ],
+  "counts_recount_only": {
+    "prepared": 4,
+    "merged": 0,
+    "excluded": 0,
+    "stopped": 0
+  },
+  "counts_including_assigned_exclusion": {
+    "prepared": 4,
+    "merged": 0,
+    "excluded": 1,
+    "stopped": 0
+  }
+}
