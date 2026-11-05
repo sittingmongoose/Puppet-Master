@@ -4887,6 +4887,7 @@
     "WM-014",
     "WM-018",
     "WS-012",
+    "DL-340",
     "PSMERA-014",
     "DR-077",
     "SSYS-016",
@@ -29879,6 +29880,16 @@
       "edge_type": "depends_on",
       "from": "DL-339",
       "to": "PDS-014"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-340",
+      "to": "DL-334"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-340",
+      "to": "PLS-026"
     },
     {
       "edge_type": "depends_on",
@@ -118371,7 +118382,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-05T20:28:34Z",
+  "generated_at_utc": "2026-11-05T21:26:47Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -154170,6 +154181,23 @@
         "heading_level": 3,
         "heading_line": 28750,
         "line": 28754,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "semantic_audit_closure",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-340",
+      "reasoning_tier": "high",
+      "risk_class": "governance_integrity",
+      "source_location": {
+        "heading": "DL-340 - The June Legacy Rule Reads Four Older Words As Passed",
+        "heading_level": 3,
+        "heading_line": 28791,
+        "line": 28795,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -246883,10 +246911,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18951,
+    "depends_on_edge_count": 18953,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22161,
-    "node_count": 7559,
+    "edge_count": 22163,
+    "node_count": 7560,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3210,
     "unresolved_reference_count": 0
