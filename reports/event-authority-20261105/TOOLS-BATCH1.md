@@ -99,3 +99,65 @@ Evidence directory: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/
 | `verify-fix3.py` | `f84cb3080860af383a15e536bebad41f009b6de91423afa40c38cd284dd910d7` |
 | `mount-denied.py` | `1ed68f01e252f4611337f8330028932d53cb72e3beba5e152f0627650bafd5fc` |
 | `portability-driver.py` | `e22df2f2eca26cf0ec4078d791151e97fb7978e687a260616799a0a2ca5f8973` |
+
+## Batch 1, Sol max cycle 6: findings and responses
+
+**C6-W1, C6-W2 and C6-W3 are fixed in `6709b5891e9b709845a2d95d583ea697c2d4638f`; none is disputed.** Base: `d6b82adb1fd9d1aaf6ae0d7c5512c6dcafad4a8e`. This section supersedes the empty-coverage rules, the same-document duplicate behaviour and the 68-regression count above. No independent review of this round is claimed.
+
+| Finding | Location, cause and fix | Regression evidence |
+|---|---|---|
+| **C6-W1 — fixed** | `scripts/pm-ledger-compile-witness.py`, `run`. Vacuity meant "no registry was checked", so one nominal target gave ordinary `pass` with nothing compiled. Coverage is now the atom-to-existing-owner mappings, reported as `atom_owner_mappings`. No mapping means `vacuous`, with `vacuity_reason` `no_owner_targets` or `no_atom_reaches_an_owner`, and only `--allow-empty` permits it. `records/design_atoms.jsonl` must exist, whatever the flag. | Targets with no source atoms and atoms all mapped to `[]`: exit 2. With the flag: exit 0, labelled, and findings still block. A missing atoms file: exit 1, with or without the flag. Partial scope stays `pass` and disclosed. Compiled atoms with empty token lists stay `pass`. |
+| **C6-W2 — fixed** | `definitions_in`, `run`. `units_in` kept the first block per ID, so a duplicate in one document vanished before the uniqueness check. Every definition now keeps its path, form and lines until targeted uniqueness is validated. The first fence declaring a heading's own ID inside its section, deeper subheadings included, is its metadata. Any other heading or declaring fence is independent. | Duplicate headings, duplicate fences, a second fence under one heading, a fence in another section, a fence before its heading and a multi-ID fence: `ambiguous_owner_unit`, naming each place. Single-definition, subheading-metadata, cross-document and untargeted-duplicate controls hold. |
+| **C6-W3 — fixed** | `UNIT_ID_FORM`. Owner IDs allowed any digit count and repair IDs needed three, so a repair of `AA-01` was silently dropped. All three extractors now share one grammar. Ledger candidate IDs such as `RT-01` have the same shape, so a short ID in a `Repairs` sentence counts only when it is a declared target or has a definition; others are disclosed under `unresolved_short_ids`. | Unchanged `AA-01` and `AA-1` repairs: exit 2. Changed `AA-01`: exit 0. A short ID that exists but is not targeted fires. An unresolved `RT-01` is disclosed and is no finding. |
+
+**One exception to C6-W2: `DL-*` in one document.** `DL-*` units supply no owner evidence, and `Plans/Decision_Log.md` really does carry a log entry and a PlanUnit under 213 numbers. Failing those would raise false findings on three real ledgers that target decision units. Across documents they stay findings, as `DL-062` shows on the Azure ledger. The README states this. A reviewer may want to confirm it.
+
+**A real duplicate the survey found.** `Plans/UI_Command_Catalog.md` defines `UCC-168` twice, at lines 14574 and 14588. No current ledger targets it, so no result changes. Owner Markdown is outside this task, so it is not fixed here.
+
+**The unit text itself is unchanged.** A heading's text still ends at its first subheading, so a metadata fence under a subheading counts for uniqueness but not as registry evidence. That is existing behaviour, and 21 real units have this shape. This round did not change it.
+
+### Rerun results
+
+| Check | Result |
+|---|---|
+| **Self-test** | **103/103** in normal and optimized Python, with identical JSON. The 68 earlier regressions keep their order, expected results and witness rows, and 35 are new. |
+| **New regressions on the base tool** | 27 of the 35 new regressions fail there, and all 68 earlier ones pass. |
+| **Unit tests** | `tests/test_pm_ledger_compile_witness.py` passes. |
+| **Review driver `witness-probes.py`, scratch path changed only** | All 20 fixtures are unchanged. The seven false passes now return their expected results: exit 2 `vacuous` twice, exit 1 `error`, exit 2 `findings` four times. The other 13 keep their results. |
+| **`witness-adjacent.py` and its structured copy (cycle 5)** | All rows keep their exits and statuses. |
+| **GRS-027, read-only** | `vacuous`, exit 2, `no_owner_targets`. `--allow-empty`: exit 0, status names the flag. |
+| **Every real ledger, read-only, base tool versus this one** | Same status for all 39 entries (3 error, 11 findings, 5 no-queue, 2 pass, 18 vacuous), same configuration findings by kind and unit, same repair rows. No ledger changed. |
+| **Standalone** | Flat two-file copy from another directory: 103/103 with program paths denied. The generic `--scratch` run also passes and leaves nothing behind. |
+| **Evidence audit** | 366 assertions pass. |
+
+**Limits.** A duplicate is found by ID form only: an ID the grammar does not match, or a heading above level 4, is not a definition, and it supplies no evidence either. A `Repairs` sentence naming no unit at all is still not a finding. Tokens, IDs and accepted labels do not establish semantic fidelity, so the README's human-review requirement stands. Only Python 3.14.4/Linux was exercised.
+
+**Guard-tool figures above.** The current guard head is `df1306222bf9efe556bd34726a378177493e28ee`, reported in its own `GUARDTOOL.md`.
+
+**Resources and scope.** Commands ran serially from scratch copies of the commit, with a 1 GiB address-space cap and a 6 GiB available-memory floor. Only the tool, its corpus helper, the standalone README and these report companions change. No owner Markdown, live ledger, registry, Decision Log, Spec Lock, `.evidence` or `.gitignore` edit, no `main` push, no pm-mail and no subagent.
+
+Evidence directory: `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH1/fix4/`.
+
+| Evidence under that directory | SHA-256 |
+|---|---|
+| `self-test.json` | `5942885c5df67fefbde5d2e7705b15cef546bfe0cf5266034c268ac21ca26ce7` |
+| `self-test-optimized.json` | `5942885c5df67fefbde5d2e7705b15cef546bfe0cf5266034c268ac21ca26ce7` |
+| `cycle6/reviewlib.py` | `96248cb6b2f2a2ec0a9eb6539068944e63a6a464cc688c24fc09d848f74610f3` |
+| `cycle6/witness-probes.py` | `c93efeb6e04a6c8bdebd95d8d63606d35aef014bf076b221854bd9c2c94daf5d` |
+| `cycle6/witness-probes.json` | `04a905829093d3c029a9088cb917a17b3b3f20409864a06345fdd2ff885f9a65` |
+| `cycle6/standalone.py` | `66f44773dd486448dfb0918cc1f1b18e29faa2c5e55fdbd2605c32d9b2160216` |
+| `cycle5/witness-adjacent.json` | `8354c858baa5b7df1ccaf1bbf038bcf1c342238a1e7d8c70a7b3b8961ce9fd28` |
+| `cycle5/witness-adjacent-structured.json` | `4b6552d25089d592adeaa369fda08ca8a11b113952cafd3868b5b737dd6227ec` |
+| `grs027-current.json` | `1789c7ee18d39f14d2ff5da87caac97853b1ac1055f2b21f0970f3ca9ef3d2a7` |
+| `grs027-explicit-empty.json` | `edf4fa14a520af774caebd9218bb960193a4e2e7eeb11f24894e1c46f5c5670c` |
+| `standalone-witness.json` | `5942885c5df67fefbde5d2e7705b15cef546bfe0cf5266034c268ac21ca26ce7` |
+| `standalone-scratch.json` | `5942885c5df67fefbde5d2e7705b15cef546bfe0cf5266034c268ac21ca26ce7` |
+| `new-regressions-on-base-tool.json` | `526b8e9afa02c3f7922af76eaf7019cdcb14f6ad1ab6ba666f387eaaa193cd4e` |
+| `real-ledgers.json` | `9cd143b32fb4112a33656ea05daa3ba397e98cb9b12ccb4d3197653353226586` |
+| `real-ledgers-base-tool.json` | `d652f29ddabb68908fe8a4b9551dec7a5068eff62c9c7e1b4edcc3a4b59cfc06` |
+| `commands.json` | `e48e230f46767d113317efb948b831dd5a3afed1fa949a482867fc4ece22ccd1` |
+| `input-manifest.json` | `efe695f7f012198a61957dc57bf83eacf5b9501cdbd98308f573aae382a4a5a8` |
+| `audit-results.json` | `d11a2e618ee429c2a5be18fe606976fe41408dabf96a26e397d47d263be4b40d` |
+| `verify-fix4.py` | `4c1b9eea0a05407d614c4ad99bc21287fecb47c9cbd1914fb5d5406eb02d6cb5` |
+| `ledger-scan.py` | `a218afbf4db43ae084d1d3626d5cdb2de390bf22b7f3217f0d41f92d53452047` |
+| `prepare-report.py` | `66da6dd2bc9d22838973e0facadfd01828c76843111452f671e72bbe9e423dcd` |
