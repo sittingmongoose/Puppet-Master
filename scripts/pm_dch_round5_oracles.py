@@ -220,10 +220,16 @@ def cases(m, Case=Case):
             add(prefix+'reference/'+field, 'checkpoint', value, bad, row, c['key'], schema)
         bad = copy.deepcopy(referenced); bad['checkpoint_storage']['pack']['body']['publication_id'] = 'other'
         add(prefix+'reference/body', 'checkpoint', value, bad, row, c['key'], schema)
-        bad = copy.deepcopy(referenced); bad['checkpoint_storage']['pointer']['payload_ref'] = 'payload:v1:'+'c'*64+':1:application/msgpack'
+        bad = copy.deepcopy(referenced)
+        exact = m.payload_reference(value)
+        bad['checkpoint_storage']['pointer']['payload_ref'] = exact[:11] + ('0' if exact[11] != '0' else '1') + exact[12:]
+        assert len(m.body_bytes(bad['checkpoint_storage']['pointer'])) <= m.INLINE_LIMIT
         add(prefix+'reference/pointer', 'checkpoint', value, bad, row, c['key'], schema)
-        bad = copy.deepcopy(referenced); bad['checkpoint_storage']['pointer']['payload_ref'] += 'x'*m.INLINE_LIMIT
-        add(prefix+'reference/pointer_encoded_bound', 'checkpoint', value, bad, row, c['key'], schema)
+        # An exact pointer has a fixed digest/media type and bounded decimal
+        # length (round8 proves the uint64 bound). Oversize + wrong reference
+        # is two defects, not a size witness and not a duplicate predicate.
+        add(prefix+'reference/exact_pointer_encoded_bound', 'pointer_size',
+            referenced['checkpoint_storage']['pointer'], expected=True)
     return result
 
 def evaluate(m, c, envelope):
