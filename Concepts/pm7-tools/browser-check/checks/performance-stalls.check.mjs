@@ -32,8 +32,18 @@ export default async function(t) {
    }
   }
  });
- const f = await t.app.open();
- if(t.args.page)await t.equal('loaded requested source',new URL(f.url()).pathname,new URL(t.args.page,'file://').pathname);
+ let f = await t.app.open();
+ if(t.args.page){
+  const target=new URL(t.args.page,'file://');
+  if(new URL(f.url()).pathname!==target.pathname){
+   target.searchParams.set('o55','off');target.searchParams.set('cb',String(Date.now()));
+   if(String(t.args.sandbox)==='1'){await t.openInSandbox(target.href);f=t.root;}
+   else{await t.page.goto(target.href);f=t.page;}
+   await f.waitForFunction(()=>window.__PM56_BOOT_OK&&window.PM56_PORT?.ready&&window.PMW?.chatCol,null,{timeout:60000});
+   await f.evaluate(()=>document.fonts.ready.then(()=>true));
+  }
+  await t.equal('loaded requested source',new URL(f.url()).pathname,target.pathname);
+ }
  await t.app.look('basic-dark');
  const cdp = await t.page.context().newCDPSession(t.page);
  await cdp.send('Tracing.start', {categories:'devtools.timeline,v8.execute,blink.user_timing,disabled-by-default-devtools.timeline.stack', transferMode:'ReturnAsStream'});
