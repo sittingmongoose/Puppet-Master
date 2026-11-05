@@ -489,12 +489,24 @@ const ANSWERS = () => { const S = O55.S, canon = (v) => (Array.isArray(v) ? v.ma
     backup: [b.dest || null, b.sub || null], ui: [u.where || null, u.whereAt || null, u.begin || null, u.beginSub || null],
     server: (() => { const v = S.sess.server || {}; return [v.kind || null, v.target || null, !!v.manual, v.addr || '', v.platform || null, v.name || '', !!v.selfConfirmed]; })(), signin: (() => { const si = S.sess.signin || {}; return [si.state || null, !!si.tokenTyped, si.method || null, si.account || null]; })(),
     nasPick: [n.key || null, n.user || '', n.userEdit || false], accounts: JSON.stringify(canon(S.sess.forgeAccounts || {})) }; };
-/* the steps whose own work is a check, a sign-in, a pairing, an install or a Server's setup (60-ui-core's NO_TXN): no pick */
-const NO_PICK = ['welcome', 'look', 'review', 'nas-identity', 'nas-install', 'nas-mounted', 'r-preview', 's-ready', 'c-pair']; /* (s-wait, s-confirm, c-review, nas-pmpair and r-unlock are picked or typed on too: Astra delta3) */ /* (the key, user, token and Server kind steps are picked on too: lead 1103074359) */
+/* Exemptions audited against the renderers, not inferred from NO_TXN (which can still have inputs):
+   welcome: no answer; look: appearance applies live and is retained; review: confirmation, Edit leads to input owners.
+   nas-identity: trust/stop, settled host fact; nas-install: install/check/retry operations on this completed route.
+   nas-mounted: readability operation; its Other action navigates to nas-find, which owns the volume alternatives.
+   r-preview: apply/retry operation. s-ready: completed invite/approval route; waiting guest checkbox rollback is
+   separately asserted in row 21. c-pair: paired identity on this completed route; unfinished code entry is not exempt.
+   c-ready is deliberately absent: its project radios are pending inputs even after the connection completed. */
+const NO_PICK = ['welcome', 'look', 'review', 'nas-identity', 'nas-install', 'nas-mounted', 'r-preview', 's-ready']; /* (s-wait, s-confirm, c-review, nas-pmpair and r-unlock are picked or typed on too: Astra delta3) */ /* (the key, user, token and Server kind steps are picked on too: lead 1103074359) */
 /* NO_PICK only after completion: these owner screens replace their form with a success banner.
    Keep their unfinished forms eligible: pairing methods on c-review, name/code on s-confirm, token on online-signin. */
 const NO_PICK_DONE = (screen) => {
   const done = document.querySelector('.o55-pane > .o55-layer:not(.o55-out) [data-key="done"]');
+  /* c-pair's completed renderer returns the identity plus done note before drawing its code field.
+     An unfinished pairing with a code field must remain eligible. */
+  if (screen === 'c-pair') return !document.querySelector('.o55-pane > .o55-layer:not(.o55-out) input')
+    && !!O55.S.sess.drafts.connect.server_trust_confirmed;
+  /* With zero or one project, the selected project has no alternative. Create New navigates; it is not a pick. */
+  if (screen === 'c-ready') return document.querySelectorAll('.o55-pane > .o55-layer:not(.o55-out) [data-o55-do="pickProject"]').length < 2;
   return !!done && ((screen === 'c-review' && !!O55.S.sess.drafts.connect.server_trust_confirmed)
     || (screen === 's-confirm' && !!O55.S.sess.server.claimed)
     /* A finished sign-in similarly draws only its signed-in account banner, with no editable token. */
@@ -535,6 +547,7 @@ async function pickBackWalk(A, bad, label, judged = null) {
         if (churn) document.querySelector('.o55-pane > .o55-layer:not(.o55-out) .o55-title').textContent += ' refreshed';
       }, true); }, SELFTEST === 'ignoreback-text');
     }
+    const pendingProject = s.screen === 'c-ready' ? await A.frame().evaluate(() => O55.S.sess.connect.openProject) : null;
     const pre = await A.frame().evaluate(BACK_DISMISS);
     await pressBack(A); let n = await look(A);
     if (n.screen === s.screen) {
@@ -543,6 +556,8 @@ async function pickBackWalk(A, bad, label, judged = null) {
     }
     if (n.screen === s.screen) { bad.push(`${label} Back#${i}: Back on ${s.screen} went nowhere`); break; }
     if (judged) toReviewOk(s, n, i, run, label, bad);
+    /* Negative: retain the concrete pending project instead of the expected Back rollback. */
+    if (s.screen === 'c-ready' && SELFTEST === 'keepproject') await A.frame().evaluate((v) => { O55.S.sess.connect.openProject = v; }, pendingProject);
     if (did) { picked.push(s.screen + ' ' + did); const after = await A.frame().evaluate(ANSWERS), ch = Object.keys(before).filter((k) => JSON.stringify(before[k]) !== JSON.stringify(after[k]));
       if (ch.length) bad.push(`${label} ${s.screen}: ${did}, then Back, changed ${ch.map((k) => k === 'draft' ? 'draft(' + Object.keys(Object.assign({}, before.draft, after.draft)).filter((x) => JSON.stringify(before.draft[x]) !== JSON.stringify(after.draft[x])).slice(0, 6).join(', ') + ')' : k + ' ' + JSON.stringify(before[k]) + ' > ' + JSON.stringify(after[k])).join('; ')}`); }
     s = n;
