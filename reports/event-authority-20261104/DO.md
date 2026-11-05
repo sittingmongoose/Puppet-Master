@@ -430,6 +430,191 @@ One predicate cut at a time, for the guards this round adds or changes. This sup
 - **DO-P1F3-N3, for integration: currentness.** The readiness row for `Plans/coordination_event_payloads.schema.json` clears with the currentness refresh, like the other drift rows. `reports/event-authority-20261104/census-recount-20261104/RECEIPT.json` also records that file's old hash, as a record of its own time; no script reads it.
 - **The other 22 families keep their payload `schema_id`.** They are not keyed-composition members, so SP-320 does not reach them. The decision covers the three board members only.
 
+## DO-P1F04: findings and responses
+
+Task: `lanes/DO-P1F04.md`. Branch start `35ba68b6d0`. No rebase, and the census pins are unchanged. The fix commits are `13a0753acb` (builder and regenerated history) and `a0b3c1695a` (guard); this report and the self-grade are the next commit. Evidence: `drafts/DO/sweep-p1/p1f4/`. The JSON records named below are in its `after/` folder, and the tools are in `tools/`.
+
+**Result:** DO-P1F3-N1 is fixed on both sides. `checkpoint_errors` now calls `coverage_copy_errors`, which recomputes the four coverage copies from the covered event and refuses each one that differs, each with its own code. `recapture_history` refreshes the copies. The 560 stale positives of the 22 non-board families, and the 1,110 history negatives built from them, are regenerated with the lane's builders. Only the four copies and the read token's frontier digest changed. The three board families' fixtures are byte-identical. No Decision Log entry, event-registry append, admission, seal or reseal. `Plans/Spec_Lock.json`, `Plans/.evidence/**`, `Plans/auto_decisions.jsonl`, `.gitignore`, the frozen validator and the census pins are unchanged.
+
+### The defect
+
+- **Where the copies went stale:** `scripts/pm_orchestrator_event_oracles.py`, `recapture_history` (now `:1135`). It refreshed every copied Storage observation except four, all copies of the event's bytes:
+  - `frontier.coverage.last_frame.frame_end_offset`;
+  - the segment's `scanned_through_offset`, `source_durable_end_offset` and `source_durable_bytes_sha256`.
+- **Why nothing caught it:** `checkpoint_errors` read none of the four.
+- **Effect, measured at `35ba68b6d0`:** every one of the 406 retained and 154 compatibility positives of the 22 non-board families held the bytes of its family's base event in the same partition, not its own. So did the 450 retained and 660 compatibility history negatives built from them. The 53 event positives and all board items were already consistent.
+
+Under this round's guard, the base fixture file gives (`stale-base-fixture.json`):
+
+| Items at `35ba68b6d0` | Under the new guard |
+|---|---|
+| 406 retained + 154 compatibility positives, non-board | refused, each with exactly the four copy codes |
+| 53 event, 72 + 21 board retained and compatibility positives | accepted |
+| 270 retained negatives, non-board (`forged_id`, `forged_key`, `withdrawn`) | own code **plus** the four copy codes: masked |
+| 180 retained and 660 compatibility negatives, non-board | own code only; the recipe check refuses before the checkpoint is read |
+| 80 + 90 board negatives | own code only |
+
+### Guard
+
+`coverage_copy_errors(event, coverage)` (`scripts/pm_orchestrator_event_oracles.py:921`) is called at the end of `checkpoint_errors` (`:910`). It recomputes `packed(event)`, the event's complete canonical MessagePack bytes, and compares by exact type (`typed_tree`), so `1344.0`, `"1344"` or `true` never equals `1344`. In this lane's one-event model the coverage holds one segment, the one the last frame names, and its one frame is the event's bytes from the segment's scan start. The four copies are read from that frame and segment, so four more predicates check that the frame and segment are the ones the copies describe.
+
+| Predicate | Refusal code | Reads |
+|---|---|---|
+| one segment | `index_coverage_segment_count` | `len(segments) == 1` |
+| segment is the frame's: generation | `index_coverage_segment_generation` | `segments[0].segment_generation` = `last_frame.segment_generation` |
+| segment is the frame's: name | `index_coverage_segment_name` | `segments[0].segment_name` = `last_frame.segment_name` |
+| frame starts at the scan start | `index_coverage_frame_byte_offset` | `last_frame.byte_offset` = `segments[0].scan_start_offset` |
+| **copy 1** | `index_coverage_frame_end_offset` | `last_frame.frame_end_offset` = `len(packed(event))` |
+| **copy 2** | `index_coverage_scanned_through_offset` | `segments[0].scanned_through_offset` = `len(packed(event))` |
+| **copy 3** | `index_coverage_source_durable_end_offset` | `segments[0].source_durable_end_offset` = `len(packed(event))` |
+| **copy 4** | `index_coverage_source_durable_bytes_sha256` | `segments[0].source_durable_bytes_sha256` = `sha256(packed(event))` |
+
+The codes are the exported tuple `COVERAGE_COPY_CODES`. Each predicate is its own `if` line with its own append, so each can be cut alone.
+
+### Negatives
+
+**Single-defect negatives, one per predicate on every positive.** `coverage_copy_negatives(case)` (`:954`) builds eight from a valid case. Each changes exactly one field and re-digests the frontier into the read token's `frontier_sha256`, the one dependent copy, so the predicate is the only defect. `coverage_copy_checks` (`:1012`), run from `check_oracles`, applies them to every event, retained and compatibility positive of all 25 families.
+
+| Predicate | The one change | Positives | Refused by |
+|---|---|---:|---|
+| `segment_count` | a second copy of the segment appended | 706 | `checkpoint_errors` and the historical reader, exactly this code |
+| `segment_generation` | segment generation + 1 | 706 | same |
+| `segment_name` | another schema-valid name: first-sequence field + 1 | 706 | same |
+| `frame_byte_offset` | frame start + 1 | 706 | same |
+| `frame_end_offset` | event size + 1 | 706 | same |
+| `scanned_through_offset` | event size + 1 | 706 | same |
+| `source_durable_end_offset` | event size + 1 | 706 | same |
+| `source_durable_bytes_sha256` | SHA-256 of other bytes | 706 | same |
+
+So 5,648 negatives, each asserting `checkpoint_errors(bad) == [code]` and `historical_read_errors(bad) == [code]`. On the 53 event positives, `recover_original` also returns `historical_original_unverified` with no receipt. Per family: 8 × the family's positives, from 8 × 17 = 136 (`parser.error`, `phase.force_completed`) to 8 × 67 = 536 (`subagent.retried`). The board families are covered too, without any change to their fixtures, because the negatives are built at run time from each positive.
+
+**Wrong representations (Astra items 5 and 11).** On each event positive, every copy the guard reads takes each other form: float, string or bool for the integers; null or a trailing LF for the name; null, upper case or a trailing LF for the digest. That is 17 forms × 53 = 901.
+- `coverage_copy_errors` alone refuses each with the copy's own code.
+- Through `checkpoint_errors`, the strict checkpoint schema (exact type, full-match patterns) refuses every non-float form first, as `checkpoint_schema`.
+- An integral float passes the schema's `integer` type, but SP-278's binding codec takes no float, so `checkpoint_errors` cannot digest the frontier and raises. The checker asserts that it raises. Recorded as sweep item DO-P1F4-S1 below.
+
+### Builder and regeneration
+
+**`recapture_history`** (`:1135`) now writes the four copies from `packed(event)` before it digests the frontier. It asserts the one-segment model.
+
+**Regeneration.** `p1f4/tools/regen_coverage_fixtures.py` extends DO-P1F-03's `p1f3/tools/regen_board_fixtures.py` to the 22 non-board families. It drives the same lane builders: `recapture_history` and `numeric_history_case`, plus the round-6 and fix-round-7 negative builders with their logic unchanged. Nothing is edited by hand. Its gates:
+1. **Faithfulness:** the base commit's builders, replayed over the base file, reproduce it byte for byte. So every difference comes from this round's change.
+2. **Board families:** no board item changes. The new `recapture_history` is a fixpoint on all 8 + 72 + 21 board positives.
+3. **Only the copies:** every changed item differs at exactly the four copies and `read.read_token.frontier_sha256`, and nowhere else.
+4. **All consistent:** every checkpoint in the new file holds its own event's bytes: 53 + 478 + 175 positives and 530 + 750 negatives.
+
+| Family | Retained positives | Compatibility positives | Retained negatives | Compatibility negatives |
+|---|---:|---:|---:|---:|
+| `config.validation.failed` | 10 | 7 | 10 | 30 |
+| `parser.error` | 9 | 7 | 10 | 30 |
+| `phase.force_completed` | 9 | 7 | 10 | 30 |
+| `subagent.budget_warning` | 18 | 7 | 20 | 30 |
+| `subagent.cancelled` | 18 | 7 | 20 | 30 |
+| `subagent.completed` | 18 | 7 | 20 | 30 |
+| `subagent.context_warning` | 18 | 7 | 20 | 30 |
+| `subagent.escalated` | 18 | 7 | 20 | 30 |
+| `subagent.failed` | 18 | 7 | 20 | 30 |
+| `subagent.message_received` | 18 | 7 | 20 | 30 |
+| `subagent.message_sent` | 18 | 7 | 20 | 30 |
+| `subagent.model_switched` | 18 | 7 | 20 | 30 |
+| `subagent.output_truncated` | 18 | 7 | 20 | 30 |
+| `subagent.paused` | 18 | 7 | 20 | 30 |
+| `subagent.progress` | 18 | 7 | 20 | 30 |
+| `subagent.resumed` | 18 | 7 | 20 | 30 |
+| `subagent.retried` | 54 | 7 | 60 | 30 |
+| `subagent.spawned` | 18 | 7 | 20 | 30 |
+| `subagent.started` | 18 | 7 | 20 | 30 |
+| `subagent.timeout` | 18 | 7 | 20 | 30 |
+| `subagent.tool_called` | 18 | 7 | 20 | 30 |
+| `subagent.tool_completed` | 18 | 7 | 20 | 30 |
+| **Total, 22 families** | **406** | **154** | **450** | **660** |
+
+**Board fixtures unchanged.** Every board item in every list is byte-identical to `35ba68b6d0`. The per-list SHA-256 values of the board items are in `regen-manifest.json`, as before = after.
+
+**Every other item unchanged except the copies.** Independently of the tool, `git diff -U0 35ba68b6d0 13a0753acb -- Plans/orchestrator_event_contract_fixtures.json` changes exactly 1,670 lines of each of five keys and no other line: `frame_end_offset`, `scanned_through_offset`, `source_durable_end_offset`, `source_durable_bytes_sha256` and `frontier_sha256`. 1,670 = 406 + 154 + 450 + 660. The file stays 53,997,925 bytes. 22 of its 26 lists are untouched. SHA-256 goes from `9b51b091…ef157` to `f9eaa667…7e489`.
+
+### Checks, before and after
+
+Before is `35ba68b6d0`; after is `a0b3c1695a`, the guard commit, whose code and fixtures this report commit does not change. Run serially on the VM.
+
+| Command | Before, `35ba68b6d0` | After, `a0b3c1695a` |
+|---|---|---|
+| `python3 scripts/pm-orchestrator-event-contracts.py` | 0: 38,535 checks | **0: 52,763 checks** |
+| `python3 -m unittest tests.test_shared_runtime_storage_contracts` | 0: 17 tests | 0: 17 tests |
+| `python3 -m unittest tests.test_pm_onboarding_phases` | 0: 50 tests | 0: 50 tests |
+| round 8 `probes.py family-suite` | 0: 35,682 | 0: 49,910; every family gains, from +331 (`parser.error`, `phase.force_completed`) to +1,391 (`subagent.retried`) |
+| round 8 `probes.py responses` | 0: flips 12/60/6, stays 66/18/72 | 0: the same |
+| round 8 `probes.py cli-controls` | 0: 9 of 9 as recorded | 0: 9 of 9 as recorded |
+
+Other checks at the new head, against DO-P1F-03's run of the same code at `35ba68b6d0`:
+
+| Command | After | Against DO-P1F-03's run |
+|---|---|---|
+| `python3 -m unittest tests.test_pm_event_index_binding` | 0: 14 tests | same |
+| `python3 scripts/pm_event_numbers_corpus.py`, `pm_event_numbers.py --self-test` | 0, 0 | same |
+| `python3 scripts/pm_coordination_events.py` | 1: the 2 baseline failures | stdout byte-identical |
+| `python3 scripts/pm-implementation-readiness.py validate` | 1: 61 rows | stdout identical apart from `generated_at_utc` |
+| `python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json` | 0: 99 sources, 3,104 shards, no file changed | n/a |
+| `python3 scripts/pm-plan-index.py generate` | 0: 7,519 plan units; four index files differ only in `generated_at_utc`, so nothing is committed | n/a |
+| `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` | 0: 99 sources, 3,104 shards | same |
+| `python3 scripts/pm-plan-index.py validate`, `origin/main` `0adb197992` | 1: 25 rows, 4 `plan_unit_removed_without_ledger_decision` (DL-337..340) and 21 `plan_unit_removal_ledger_invalid` | the same 25 rows, none caused by this round |
+
+The 14,228 new complete-checker checks are 706 positive copy checks, 11,296 negatives through the checkpoint and the historical reader, 424 refused recoveries and 1,802 wrong-representation checks. The intermediate commit `13a0753acb` (builder and fixtures, no guard) also exits 0 with 38,535 checks.
+
+### Guard cut
+
+`p1f4/tools/p1f4_controls.py isolation` cuts one predicate at a time by deleting its `if` line and its append line. Each cut then runs the lane's whole complete checker, `main()` of `scripts/pm-orchestrator-event-contracts.py`, against the mutant. Only the new negatives' assertions are turned into records: own negatives must now pass, and the other seven predicates' negatives must still be refused with exactly their code. Every other assertion in the checker still runs, and `main()` must complete. So each row shows that removing the predicate flips its own negatives and nothing else in the lane. `guard-isolation.json` holds the removed lines and mutant hashes.
+
+| Predicate cut | Own negatives that now pass | Other predicates' negatives, still refused with exactly their code | Own wrong forms that now pass | Other wrong forms still refused | Complete checker under the cut |
+|---|---:|---:|---:|---:|---|
+| `segment_count` | 706 | 4,942 | 0 | 901 | completes; every other assertion holds |
+| `segment_generation` | 706 | 4,942 | 159 | 742 | completes; every other assertion holds |
+| `segment_name` | 706 | 4,942 | 106 | 795 | completes; every other assertion holds |
+| `frame_byte_offset` | 706 | 4,942 | 159 | 742 | completes; every other assertion holds |
+| `frame_end_offset` | 706 | 4,942 | 106 | 795 | completes; every other assertion holds |
+| `scanned_through_offset` | 706 | 4,942 | 106 | 795 | completes; every other assertion holds |
+| `source_durable_end_offset` | 706 | 4,942 | 106 | 795 | completes; every other assertion holds |
+| `source_durable_bytes_sha256` | 706 | 4,942 | 159 | 742 | completes; every other assertion holds |
+
+Own negatives are the 53 event, 478 retained and 175 compatibility positives' negatives for that predicate. Under every cut all 706 positives still pass. `segment_count` has no field form.
+
+**Builder cut.** Removing the refresh from `recapture_history` makes the complete checker fail: `main()` stops at `scripts/pm-orchestrator-event-contracts.py:194`, the stored-`schema_id` history negative of `crew.board_message_posted:application:1`. Its case is built at run time and now carries stale copies. Run directly, that case gives the four copy codes plus `logical_payload_schema`, where production gives `logical_payload_schema` alone. `numeric_history_case` on `config.validation.failed:project:0` with `1.0` gives the four copy codes, where production gives none (`builder-cut.json`).
+
+The predicates are distinct fields, with no duplicates, so each has a flipping negative. This is targeted proof for the guard this round adds. It supplements the complete checker, as rounds 8 and P1F-03 did; the whole-lane proof stays on the Part 2 list as P1..P3.
+
+### Cells re-graded
+
+Only `retention` and `consumers_checkpoints` of the 22 non-board families. Every other cell, and both cells of the three board families, are carried.
+
+| Cell, 22 families | Recorded before | At `35ba68b6d0`, by the rubric | After | Why |
+|---|---|---|---|---|
+| `consumers_checkpoints` | PASS (carried) | PARTIAL | **PASS** | At `35ba68b6d0` the oracle read none of the four copies, and the retained and compatibility positives held another event's bytes, so the PASS claimed more than the tests showed. The guard now refuses each copy with its own code and negative, the builder refreshes them, the positives are true, and each cut flips only its own negatives. Holds PASS. |
+| `retention` | PARTIAL (carried) | PARTIAL | **PARTIAL** | The regenerated retained positives are now true fixtures, but the cell is PARTIAL for the unlanded Storage retention integration and Q1/Q3, which no fixture reaches. Holds. |
+
+Status counts stay **250 PASS / 25 PARTIAL / 25 ABSENT**. The board families' `consumers_checkpoints` is not re-graded per the brief. Their positives were already consistent, and the new negatives cover them. Native execution stays NOT_RUN.
+
+### Recurring classes
+
+| Class | How it was ruled out |
+|---|---|
+| **Forged or contradictory inputs** | The four copies are recomputed from the event, never read as supplied. The 560 contradictory positives are refused at the base. DO-P1F3-N1 is closed. The sequence copies are open: see DO-P1F4-N1. |
+| **Masked negatives** | Each negative changes one field and keeps the frontier digest in step. Each cut flips only its own 706, under the whole checker. The 270 retained negatives that would have been masked are rebuilt and refuse with their own code alone. |
+| **One field read two ways / types** | Exact-type comparison. Every non-float form is refused by the schema and by the guard. Floats: DO-P1F4-S1. |
+| **Formats** | Name and digest with a trailing LF are refused by the strict schema's full match and by the guard. |
+| **Historical readers** | Retained and compatibility positives keep their original recipes, number types and receipts. Only the four copies and the frontier digest changed. |
+| **Grades** | `consumers_checkpoints` says what the tests show. |
+
+### Open notes
+
+- **DO-P1F4-N1, for the lead: sequence copies in the frontier and anchor are still not read.**
+  - Where: `checkpoint_errors` (`scripts/pm_orchestrator_event_oracles.py:843`) checks the coverage-level sequence facts, but not their copies at `segments[0].first_sequence_id`, `last_sequence_id` and `retained_event_count`, at `anchor.first_retained_sequence_id`, `through_sequence_id` and `retained_event_count`, or the first-sequence field of `segment_name`.
+  - Why: no builder changes `sequence_id`, so all 706 positives agree (probe in `sequence-copies.json`). A forged one is still accepted.
+  - Fix: the same pattern as this round, a predicate per copy with its own negative.
+  - Not done: the brief scoped this round to the four byte copies. It is the same class as standing check 7.
+- **DO-P1F4-S1, sweep item (number domain): integral float copies.** The checkpoint schema's `integer` admits `1344.0`. `binding_bytes` (`scripts/pm_event_index_binding.py:40`) then raises `TypeError` on the frontier digest, before any coded refusal. The guard itself refuses it by exact type, and the checker asserts the raise. Owner-declared integer slots belong to the shared number rule (CV-1100/SP-1100), so this is left for the sweep.
+- **Null `last_frame`, pre-existing.** The schema allows `last_frame: null`. `index_complete_source_coverage` (`:907`) indexes it before this guard runs, so a null raises `TypeError` rather than a code. Nothing accepts it. Recorded for the guard-table work.
+- **DO-P1F3-N2 and N3** (census text, currentness) stand as written.
+
 ## Part 2 items
 
 Number-handling, date-time, guard-table and proof-machinery items, parked for the shared-tool sweep (locations from `reviews/DO-sol/REVIEW-cycle8.md`, unchanged by this pass):
@@ -447,10 +632,12 @@ Number-handling, date-time, guard-table and proof-machinery items, parked for th
 | Guard tables | restructure lane guards as named predicate functions in a table | whole `scripts/pm_orchestrator_event_oracles.py` guard set, once `plans/ea-guardtool-20261105` passes |
 | Fixture-pass guards | `selected_definition_errors` and the row-drift negative join the guard table with the rest | `scripts/pm_orchestrator_event_oracles.py:672`; `scripts/pm-orchestrator-event-contracts.py:149` |
 | DO-P1F-03 guards | `board_member_stored_header`, the envelope join, `event_join_payload_schema_id` and `board_member_definition_failures` join the guard table with the rest | `scripts/pm-orchestrator-event-contracts.py:85`, `:89`; `scripts/pm_orchestrator_event_oracles.py:492`; `scripts/pm_coordination_events.py:419` |
+| DO-P1F04 guard | the eight `coverage_copy_errors` predicates join the guard table with the rest | `scripts/pm_orchestrator_event_oracles.py:921` |
+| DO-P1F4-S1 | integral float coverage copies refused by the SP-278 binding codec's `TypeError`, before a coded refusal; adopt the shared integer slots | `scripts/pm_event_index_binding.py:40`; `scripts/pm_orchestrator_event_oracles.py:843` |
 | Date-time gate | adopt the shared date-time gate; `scripts/pm_event_datetime.py` (byte-exact from `plans/ea-numrule-20261105` at `883af36ba4a68230e14497df86a5e4edcd38f697`) is the corpus dependency | envelope/payload format validators in `scripts/pm_orchestrator_event_oracles.py` and `scripts/pm-orchestrator-event-contracts.py` |
 
 ## Grades
 
-The last review's family grades are carried unchanged; this pass re-graded nothing (no checker, fixture or schema file changed). The fixture pass also carries them unchanged: its fixes change no cell. DO-P1F-03 bore on the `closed_payload_schema` cell of the three `crew.board_*` families. The lead answered it, the members now conform, and that cell alone was re-graded: PASS, with the reasons in "DO-P1F-03: findings and responses". The review still judges it. Cycle-8 independent regrade: **225 PASS / 50 PARTIAL / 25 ABSENT / 0 CONFLICT**; every family **9 PASS / 2 PARTIAL / 1 ABSENT** with membership ABSENT, retention PARTIAL and oracles PARTIAL (`reviews/DO-sol/REVIEW-cycle8.md` twelve-criterion table), verdict NOT_READY. Membership stays ABSENT pending admission; retention stays PARTIAL pending integration; native execution stays NOT_RUN.
+The last review's family grades are carried unchanged; this pass re-graded nothing (no checker, fixture or schema file changed). The fixture pass also carries them unchanged: its fixes change no cell. DO-P1F-03 bore on the `closed_payload_schema` cell of the three `crew.board_*` families. The lead answered it, the members now conform, and that cell alone was re-graded: PASS, with the reasons in "DO-P1F-03: findings and responses". The review still judges it. DO-P1F04 bore on the `consumers_checkpoints` and `retention` cells of the 22 non-board families. `consumers_checkpoints` holds PASS after the fix, where by the rubric it read PARTIAL at `35ba68b6d0`. `retention` holds PARTIAL. The reasons are in "DO-P1F04: findings and responses", and the review still judges them. Cycle-8 independent regrade: **225 PASS / 50 PARTIAL / 25 ABSENT / 0 CONFLICT**; every family **9 PASS / 2 PARTIAL / 1 ABSENT** with membership ABSENT, retention PARTIAL and oracles PARTIAL (`reviews/DO-sol/REVIEW-cycle8.md` twelve-criterion table), verdict NOT_READY. Membership stays ABSENT pending admission; retention stays PARTIAL pending integration; native execution stays NOT_RUN.
 
 This lane's own review of its timestamp fields is interim only until the shared date-time gate passes.
