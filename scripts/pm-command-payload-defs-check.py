@@ -27,6 +27,7 @@ from __future__ import annotations
 import argparse
 import copy
 import datetime
+import ipaddress
 import importlib.util
 import json
 import math
@@ -38,6 +39,7 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Callable
+from urllib.parse import urlsplit
 from urllib.parse import urlparse
 
 import yaml
@@ -124,7 +126,9 @@ UNIT_ID_RE = re.compile(r"UCC-(\d{3})")
 SNAKE_RE = re.compile(r"^[a-z][a-z0-9_]*$")
 NAMESPACE_RE = re.compile(r"[a-z][a-z0-9_]*(?:\.[a-z][a-z0-9_]*)*")
 BACKTICK_RE = re.compile(r"`([^`]+)`")
-DEFS_BLOCK_RE = re.compile(r"^command_payload_definitions:[ \t]*(?:#.*)?$", re.M)
+# The root key starts a definitions block whether its value follows on the next line or inline
+# (`command_payload_definitions: false` is a malformed block, not prose): C14 then checks it.
+DEFS_BLOCK_RE = re.compile(r"^command_payload_definitions:(?:[ \t]|$)", re.M)
 JSON_DEF_REF_RE = re.compile(r"^(Plans/[A-Za-z0-9_.\-/]+\.json)#/\$defs/([A-Za-z0-9_]+)$")
 DOC_UNIT_REF_RE = re.compile(r"^(Plans/[A-Za-z0-9_.\-]+\.md)#([A-Z][A-Z0-9]*-\d+)$")
 LOCAL_REF_RE = re.compile(r"^local:([A-Za-z][A-Za-z0-9_]*)$")
@@ -852,11 +856,21 @@ def constraint_value_ok(key: str, value: Any) -> bool:
     return True
 
 
-RFC3339_UTC_RE = re.compile(r"(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.\d+)?Z")
+# Primitive literal grammars (DESIGN 4.2). Each validates exactly the owner's static syntax; the
+# owners keep their runtime work (FileSafe resolves paths with realpath; webfetch normalizes before
+# routing). ASCII only: the grammars below are ASCII grammars.
+
+RFC3339_UTC_RE = re.compile(
+    r"([0-9]{4})-([0-9]{2})-([0-9]{2})[Tt]([0-9]{2}):([0-9]{2}):([0-9]{2})(?:\.[0-9]+)?(?:[Zz]|\+00:00)", re.ASCII)
 
 
 def rfc3339_utc_ok(value: str) -> bool:
-    """DESIGN 4.2: a timestamp is RFC 3339 UTC, ending in Z."""
+    """RFC 3339 date-time in UTC: section 5.6 syntax with ASCII digits, `T` or `t` (5.6 note), a
+    zero offset written `Z`, `z` or `+00:00` (4.3; `-00:00` means an unknown local offset, so it is
+    not UTC), a calendar-valid date, and a leap second (`:60`) only at 23:59 on the last day of a
+    month (5.7)."""
+    if not value.isascii():
+        return False
     match = RFC3339_UTC_RE.fullmatch(value)
     if match is None:
         return False
@@ -865,24 +879,82 @@ def rfc3339_utc_ok(value: str) -> bool:
         datetime.date(year, month, day)
     except ValueError:
         return False
-    return hour <= 23 and minute <= 59 and second <= 60  # second 60: the RFC 3339 leap second
+    if hour > 23 or minute > 59 or second > 60:
+        return False
+    if second == 60:
+        last_day = (datetime.date(year + (month == 12), month % 12 + 1, 1) - datetime.timedelta(days=1)).day
+        return hour == 23 and minute == 59 and day == last_day
+    return True
+
+
+URL_CHARS_RE = re.compile(r"[A-Za-z0-9\-._~:/?#\[\]@!$&'()*+,;=%]*", re.ASCII)
+PERCENT_RE = re.compile(r"%(?![0-9A-Fa-f]{2})")
+DNS_LABEL_RE = re.compile(r"(?!-)[a-z0-9-]{1,63}(?<!-)", re.ASCII)
 
 
 def absolute_url_ok(value: str) -> bool:
-    """DESIGN 4.2: a url is absolute — it carries a scheme and a host; normalization is UCC-082's."""
+    """An absolute URL in the normalized form the web URL rules require (DESIGN 4.2; Tools.md
+    webfetch: non-HTTP(S) schemes rejected, malformed URLs rejected, URLs normalized): scheme `http`
+    or `https` in lower case, a host that is a lower-case DNS name, an IPv4 address or a bracketed
+    IPv6 address, an optional port 1-65535, and only RFC 3986 characters with well-formed percent
+    escapes (no space, control or non-ASCII character)."""
+    if not value.isascii() or URL_CHARS_RE.fullmatch(value) is None or PERCENT_RE.search(value):
+        return False
     try:
-        parsed = urlparse(value)
+        parts = urlsplit(value)
+        port = parts.port
     except ValueError:
         return False
-    return bool(parsed.scheme) and bool(parsed.hostname)
+    if parts.scheme not in ("http", "https") or not value.startswith(parts.scheme + "://"):
+        return False
+    hostport = parts.netloc.rsplit("@", 1)[-1]
+    if hostport.endswith(":") or (port is not None and not 1 <= port <= 65535):
+        return False
+    host = hostport[: hostport.rfind("]") + 1] if hostport.startswith("[") else hostport.split(":", 1)[0]
+    if not host:
+        return False
+    if host.startswith("["):
+        try:
+            ipaddress.IPv6Address(host[1:-1])
+        except ValueError:
+            return False
+        return True
+    if host != host.lower() or len(host) > 253:
+        return False
+    labels = host.split(".")
+    if all(label.isdigit() for label in labels):
+        try:
+            ipaddress.IPv4Address(host)
+        except ValueError:
+            return False
+        return True
+    return all(DNS_LABEL_RE.fullmatch(label) for label in labels)
+
+
+WINDOWS_DRIVE_RE = re.compile(r"[A-Za-z]:[\\/]", re.ASCII)
 
 
 def normalized_absolute_path_ok(value: str) -> bool:
-    """DESIGN 4.2: a path is absolute and normalized — no ``..``, no ``.`` and no empty segments;
-    FileSafe owns whatever further normalization means."""
-    if not value.startswith("/"):
+    """A FileSafe-normalized absolute path, statically (DESIGN 4.2; FileSafe covers macOS, Linux and
+    Windows and resolves paths with realpath at run time, so no filesystem is consulted here): a
+    POSIX path from `/`, a Windows drive path (`C:\\` or `C:/`), or a UNC path (`\\\\server\\share`);
+    the root itself is allowed; no NUL or other control character; no empty, `.` or `..` segment."""
+    if not value or any(ord(ch) < 0x20 or ord(ch) == 0x7F for ch in value):
         return False
-    return all(segment not in ("", ".", "..") for segment in value.split("/")[1:])
+    if value.startswith("/") and not value.startswith("//"):
+        rest, seps = value[1:], "/"
+    elif WINDOWS_DRIVE_RE.match(value):
+        rest, seps = value[3:], "\\/"
+    elif value.startswith("\\\\"):
+        rest, seps = value[2:], "\\"
+        if len(re.split(r"\\", rest)) < 2:
+            return False  # a UNC path names a server and a share
+    else:
+        return False
+    if rest == "":
+        return not value.startswith("\\\\")
+    segments = re.split("[" + re.escape(seps) + "]", rest)
+    return all(segment not in ("", ".", "..") for segment in segments)
 
 
 def merged_constraints(spec: dict[str, Any], inherited: dict[str, Any] | None) -> dict[str, Any]:
@@ -1103,6 +1175,17 @@ def check_fields(ctx: Context, fields: dict[str, Any], where: dict[str, str], re
             widened = constraint_widening(spec, inherited)
             if widened:
                 rep.add("C05", "constraint_widens_inherited", field=name, detail="; ".join(widened), **where)
+            # Effective range sanity across inheritance, whether or not a default is present: the
+            # conjunction of inherited and local bounds must leave a usable range.
+            effective = merged_constraints(spec, inherited)
+            local = spec.get("constraints") if isinstance(spec.get("constraints"), dict) else {}
+            for low_key, high_key in (("minimum", "maximum"), ("min_length", "max_length"), ("min_items", "max_items")):
+                low, high = effective.get(low_key), effective.get(high_key)
+                local_inverted = (constraint_value_ok(low_key, local.get(low_key)) and constraint_value_ok(high_key, local.get(high_key))
+                                  and local[low_key] > local[high_key])
+                if low is not None and high is not None and low > high and not local_inverted:
+                    rep.add("C05", "constraint_value_invalid", field=name,
+                            detail=f"effective {low_key}={low!r} above inherited-or-local {high_key}={high!r}", **where)
         # C06 defaults
         if not isinstance(spec.get("required"), bool):
             rep.add("C06", "required_missing_or_not_boolean", field=name, **where)
@@ -1776,6 +1859,7 @@ class Fixture:
     schema_enum: list[str] | None = None
     catalog_kinds: list[tuple[str, str]] = field(default_factory=lambda: [("cmd.docker.image.tag", "domain_action")])
     map_unit_present: bool = True
+    doc_suffix: dict[str, str] = field(default_factory=dict)
 
     def files(self) -> dict[str, str]:
         out: dict[str, str] = {}
@@ -1816,7 +1900,7 @@ class Fixture:
                 docs[doc] += [f"### {uid} - typed payload definitions", "", fence(unit).rstrip("\n"),
                               self.between_unit_and_block.get(uid, ""), block]
         for doc, parts_ in docs.items():
-            out[doc] = "\n".join(parts_)
+            out[doc] = "\n".join(parts_) + self.doc_suffix.get(doc, "")
         out[DECISION_LOG] = "# Decision Log (fixture)\n\n### DL-333 - fixture\n\n" + fence({"plan_unit_id": "DL-333", "unit_type": "decision"})
         enum = self.schema_enum or ["invalid_route", "unknown_command", "invalid_args", "permission_denied",
                                     "blocked_state_required", "stale_projection", "handler_unavailable", "internal_error"]
@@ -2226,7 +2310,7 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
         _defs(fx, "cmd.docker.image.tag")["args"]["opened_at"] = {
             "type": "timestamp", "required": False, "default": "not a timestamp", "provenance": "canon", "source": "fixture"}
 
-    @case("fail C06: timestamp default is not UTC (no trailing Z)", 1, {"C06"})
+    @case("fail C06: timestamp default has a non-zero offset (+01:00)", 1, {"C06"})
     def _(fx: Fixture) -> None:
         _defs(fx, "cmd.docker.image.tag")["args"]["opened_at"] = {
             "type": "timestamp", "required": False, "default": "2026-11-04T12:34:56+01:00",
@@ -2268,6 +2352,76 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
         _defs(fx, "cmd.docker.image.tag")["args"]["slug"] = {
             "type": "string", "required": False, "default": "aaa",
             "constraints": {"pattern": "a{4294967296}"}, "provenance": "canon", "source": "fixture"}
+
+    # Round-3 redesign: owner grammars for timestamp, url and path; inline-root blocks; effective
+    # inherited ranges. Each primitive gets negative cases and positive controls.
+
+    def _prim(fx: Fixture, kind: str, default: Any) -> None:
+        _defs(fx, "cmd.docker.image.tag")["args"]["probe"] = {
+            "type": kind, "required": False, "default": default, "provenance": "canon", "source": "fixture"}
+
+    for label, kind, value, ok in [
+        ("timestamp +00:00 offset", "timestamp", "2026-11-04T12:34:56+00:00", True),
+        ("timestamp lower-case t and z", "timestamp", "2026-11-04t12:34:56.250z", True),
+        ("timestamp leap second at month end", "timestamp", "2016-12-31T23:59:60Z", True),
+        ("timestamp leap second mid-month", "timestamp", "2026-11-04T12:34:60Z", False),
+        ("timestamp leap second at 23:59 not month end", "timestamp", "2026-11-04T23:59:60Z", False),
+        ("timestamp -00:00 (unknown local offset)", "timestamp", "2026-11-04T12:34:56-00:00", False),
+        ("timestamp full-width digits", "timestamp", "\uff12\uff10\uff12\uff16-11-04T12:34:56Z", False),
+        ("timestamp hour 24", "timestamp", "2026-11-04T24:00:00Z", False),
+        ("timestamp invalid date", "timestamp", "2026-02-30T12:00:00Z", False),
+        ("url https with path", "url", "https://example.com/docs?x=1#top", True),
+        ("url http with port", "url", "http://example.com:8080/x", True),
+        ("url https IPv6 host", "url", "https://[2001:db8::1]/x", True),
+        ("url https IPv4 host", "url", "https://192.0.2.10/x", True),
+        ("url space in host", "url", "https://exa mple.com/docs", False),
+        ("url non-numeric port", "url", "https://example.com:bad/docs", False),
+        ("url port out of range", "url", "https://example.com:99999/docs", False),
+        ("url empty port", "url", "https://example.com:/docs", False),
+        ("url NUL in path", "url", "https://example.com/\x00", False),
+        ("url ftp scheme", "url", "ftp://example.com/docs", False),
+        ("url file scheme", "url", "file://example.com/docs", False),
+        ("url javascript scheme", "url", "javascript:alert(1)", False),
+        ("url upper-case host (not normalized)", "url", "https://Example.com/docs", False),
+        ("url bad percent escape", "url", "https://example.com/a%zz", False),
+        ("url invalid IPv4", "url", "https://999.1.1.1/x", False),
+        ("url label with leading hyphen", "url", "https://-bad.example.com/x", False),
+        ("path POSIX root", "path", "/", True),
+        ("path POSIX file", "path", "/tmp/manifest.yaml", True),
+        ("path Windows drive forward slashes", "path", "C:/work/manifest.yaml", True),
+        ("path Windows drive backslashes", "path", "C:\\work\\manifest.yaml", True),
+        ("path Windows drive root", "path", "C:\\", True),
+        ("path UNC share", "path", "\\\\server\\share\\dir\\file.txt", True),
+        ("path NUL in segment", "path", "/tmp/a\x00b", False),
+        ("path relative", "path", "relative/path", False),
+        ("path dot segment", "path", "/a/./b", False),
+        ("path empty interior segment", "path", "/a//b", False),
+        ("path trailing slash", "path", "/a/b/", False),
+        ("path Windows drive without separator", "path", "C:work", False),
+        ("path UNC without share", "path", "\\\\server", False),
+    ]:
+        @case(f"{'pass' if ok else 'fail C06'}: {label}", 0 if ok else 1, set() if ok else {"C06"})
+        def _(fx: Fixture, kind=kind, value=value) -> None:
+            _prim(fx, kind, value)
+
+    for label, text, codes in [("inline false root", "command_payload_definitions: false", {"C14"}),
+                               ("inline flow mapping with a wrong format", "command_payload_definitions: {format: nonsense}", {"C03", "C14"}),
+                               ("inline unknown tag", "command_payload_definitions: !unknown {}", {"C14"})]:
+        @case(f"fail {'/'.join(sorted(codes))}: malformed definitions block with an {label} is detected", 1, codes)
+        def _(fx: Fixture, text=text) -> None:
+            fx.doc_suffix["Plans/Containers_Registry_and_Unraid.md"] = "\n\n```yaml\n" + text + "\n```\n"
+
+    @case("fail C05: local min_length above the inherited idempotency_key maximum, no default", 1, {"C05"})
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.docker.image.tag")["args"]["idempotency_key"] = {
+            "type": "string", "required": False, "default": "none",
+            "constraints": {"min_length": 257}, "provenance": "canon", "source": "fixture"}
+
+    @case("pass: local min_length below the inherited idempotency_key maximum, no default", 0, set())
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.docker.image.tag")["args"]["idempotency_key"] = {
+            "type": "string", "required": False, "default": "none",
+            "constraints": {"min_length": 8}, "provenance": "canon", "source": "fixture"}
 
     return cases, cli_cases
 
