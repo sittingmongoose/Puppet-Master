@@ -183,7 +183,6 @@
     "b24792ae8c78",
     "b44881cf25ff",
     "b62ef72fd77b",
-    "bcdbfa4808c6",
     "beba3771a8c6",
     "bef3b7eee8bd",
     "c32ce6f9f967",
@@ -203,6 +202,7 @@
     "e1ade002c5fa",
     "e831bd4210ec",
     "e8917947a167",
+    "eb42d94cf1f4",
     "ec67ab23ed96",
     "ed888a6278e2",
     "efa93ac8292c",
@@ -230,7 +230,7 @@
   },
   {
    "check": "audit-governance",
-   "count": 20,
+   "count": 25,
    "error": "event_authority_currentness_source_drift",
    "fingerprints": [
     "022973cb2e3a",
@@ -246,11 +246,16 @@
     "9a7041d907e8",
     "9ab756ff1c91",
     "9bbda8d47e30",
+    "a23e982666fd",
+    "a30d32e5cc7b",
+    "b7cfd83316e1",
+    "bc789a50a5a6",
     "c6c40780fef1",
     "d1cb22ec6bb2",
     "d402895d586b",
     "d5be4dc5e9b9",
     "d6746b3fa60e",
+    "d94a146403ea",
     "dd3707254603",
     "e62a59ff2641"
    ],
@@ -388,7 +393,6 @@
     "b24792ae8c78",
     "b44881cf25ff",
     "b62ef72fd77b",
-    "bcdbfa4808c6",
     "beba3771a8c6",
     "bef3b7eee8bd",
     "c32ce6f9f967",
@@ -408,6 +412,7 @@
     "e1ade002c5fa",
     "e831bd4210ec",
     "e8917947a167",
+    "eb42d94cf1f4",
     "ec67ab23ed96",
     "ed888a6278e2",
     "efa93ac8292c",
@@ -570,6 +575,26 @@
    "fingerprints": [
     "271f85538f3e"
    ],
+   "path": "Plans/pm7_canon.fixtures.json",
+   "subcheck": "spec_lock"
+  },
+  {
+   "check": "audit-governance",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
+   "path": "Plans/sharding_config.json",
+   "subcheck": "spec_lock"
+  },
+  {
+   "check": "audit-governance",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
    "path": "Plans/usage-feature.md",
    "subcheck": "spec_lock"
   },
@@ -698,9 +723,9 @@
     "ca02b873fe9c",
     "cbdc4db63b6a",
     "d38f725f8c11",
-    "d94d0b542959",
     "dc273f426b58",
     "dde7b0682aa8",
+    "eb42d94cf1f4",
     "ec67ab23ed96",
     "ed888a6278e2",
     "f05eaca0cf3b",
@@ -723,7 +748,7 @@
   },
   {
    "check": "run-gates",
-   "count": 20,
+   "count": 25,
    "error": "event_authority_currentness_source_drift",
    "fingerprints": [
     "022973cb2e3a",
@@ -739,11 +764,16 @@
     "9a7041d907e8",
     "9ab756ff1c91",
     "9bbda8d47e30",
+    "a23e982666fd",
+    "a30d32e5cc7b",
+    "b7cfd83316e1",
+    "bc789a50a5a6",
     "c6c40780fef1",
     "d1cb22ec6bb2",
     "d402895d586b",
     "d5be4dc5e9b9",
     "d6746b3fa60e",
+    "d94a146403ea",
     "dd3707254603",
     "e62a59ff2641"
    ],
@@ -853,9 +883,9 @@
     "ca02b873fe9c",
     "cbdc4db63b6a",
     "d38f725f8c11",
-    "d94d0b542959",
     "dc273f426b58",
     "dde7b0682aa8",
+    "eb42d94cf1f4",
     "ec67ab23ed96",
     "ed888a6278e2",
     "f05eaca0cf3b",
@@ -1013,6 +1043,26 @@
    "fingerprints": [
     "271f85538f3e"
    ],
+   "path": "Plans/pm7_canon.fixtures.json",
+   "subcheck": "verify_spec_lock"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
+   "path": "Plans/sharding_config.json",
+   "subcheck": "verify_spec_lock"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
    "path": "Plans/usage-feature.md",
    "subcheck": "verify_spec_lock"
   },
@@ -1039,7 +1089,7 @@
  ],
  "checks": {
   "audit-governance": {
-   "failure_total": 1606,
+   "failure_total": 2033,
    "status": "fail",
    "subchecks": {
     "audit_closure": {
@@ -1047,22 +1097,22 @@
      "sampled": 100
     },
     "evidence": {
-     "exported": 672,
-     "reported": 672,
+     "exported": 882,
+     "reported": 882,
      "sampled": 100
     },
     "implementation_readiness": {
-     "reported": 44,
-     "sampled": 44
+     "reported": 49,
+     "sampled": 49
     },
     "plan_graph": {
-     "exported": 672,
-     "reported": 672,
+     "exported": 882,
+     "reported": 882,
      "sampled": 100
     },
     "spec_lock": {
-     "reported": 17,
-     "sampled": 17
+     "reported": 19,
+     "sampled": 19
     }
    }
   },
@@ -1077,7 +1127,7 @@
    }
   },
   "run-gates": {
-   "failure_total": 1606,
+   "failure_total": 2033,
    "status": "fail",
    "subchecks": {
     "validate_audit_closure": {
@@ -1085,31 +1135,31 @@
      "sampled": 50
     },
     "validate_evidence": {
-     "exported": 672,
-     "reported": 672,
+     "exported": 882,
+     "reported": 882,
      "sampled": 50
     },
     "validate_implementation_readiness": {
-     "reported": 44,
-     "sampled": 44
+     "reported": 49,
+     "sampled": 49
     },
     "validate_plan_graph": {
-     "exported": 672,
-     "reported": 672,
+     "exported": 882,
+     "reported": 882,
      "sampled": 50
     },
     "verify_spec_lock": {
-     "reported": 17,
-     "sampled": 17
+     "reported": 19,
+     "sampled": 19
     }
    }
   }
  },
- "commit": "e115946ba1681af9111acb5eb469099321ef0657",
+ "commit": "82e3204346b0aca2c996eb2e88118ac1921b4bb5",
  "export_buckets": [
   {
    "check": "audit-governance",
-   "count": 672,
+   "count": 882,
    "error": "artifact_hash_stale",
    "fingerprints": null,
    "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
@@ -1117,7 +1167,7 @@
   },
   {
    "check": "audit-governance",
-   "count": 672,
+   "count": 882,
    "error": "artifact_hash_stale",
    "fingerprints": null,
    "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
@@ -1125,7 +1175,7 @@
   },
   {
    "check": "run-gates",
-   "count": 672,
+   "count": 882,
    "error": "artifact_hash_stale",
    "fingerprints": null,
    "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
@@ -1133,7 +1183,7 @@
   },
   {
    "check": "run-gates",
-   "count": 672,
+   "count": 882,
    "error": "artifact_hash_stale",
    "fingerprints": null,
    "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
@@ -1161,8 +1211,8 @@
   },
   "schema_id": "pm.landing_check.readiness_audit_inputs.v1"
  },
- "recorded_at_utc": "2026-11-05T10:28:59Z",
- "run_dir": "Plans/.plan_migration/pds-20261105-004-current-planunit-snapshot",
+ "recorded_at_utc": "2026-11-05T13:01:55Z",
+ "run_dir": "Plans/.plan_migration/pds-20261105-005-current-planunit-snapshot",
  "schema_id": "pm.landing_check.baseline.v1",
  "untracked_inputs": [
   "tests/agent_packet_restrictions"
