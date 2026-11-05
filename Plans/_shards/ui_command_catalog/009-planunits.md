@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L1269-L7084
 
-Source SHA256: `ef95f86fa49a769bb027708fe45cc045405b2113067e63363b09aafeef83af1f`
+Source SHA256: `4e63072d696e548a13cfc5e00caf6c555470aa4715a2398bd944498cb5268d27`
 
 ---
 
@@ -2938,9 +2938,9 @@ preserved_exact_tokens:
 negative_constraints:
 - Docker Manager registry publish commands must share permission, account, receipt, and lineage checks rather than claiming a separate event family.
 preserved_contractrefs: []
-compatibility_only_notes:
-- cmd.docker.image.push is a compatibility alias for approved image push through Docker Manager registry authority.
-stale_retired_dispositions: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- 'Amended 2026-11-05 (DL-333): cmd.docker.image.push is a primary command with its own DockerImagePushV3Request (UCC-217); the earlier compatibility-alias note for it is withdrawn.'
 owner_hints:
 - Plans/UI_Command_Catalog.md
 ```

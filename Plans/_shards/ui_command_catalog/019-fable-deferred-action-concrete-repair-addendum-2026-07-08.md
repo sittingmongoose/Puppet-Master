@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8746-L10162
+Source lines: L8746-L10154
 
-Source SHA256: `ef95f86fa49a769bb027708fe45cc045405b2113067e63363b09aafeef83af1f`
+Source SHA256: `4e63072d696e548a13cfc5e00caf6c555470aa4715a2398bd944498cb5268d27`
 
 ---
 
@@ -972,14 +972,6 @@ command_payload_definition_map:
       unit: UCC-049
       field: compatibility_only_notes
       quote: cmd.docker.build/logs/exec/inspect are compatibility aliases
-  - token: cmd.docker.image.push
-    disposition: compatibility_alias
-    evidence:
-      doc: Plans/UI_Command_Catalog.md
-      unit: UCC-051
-      field: compatibility_only_notes
-      quote: cmd.docker.image.push is a compatibility alias
-    note: Q5 resolution 2 makes it a primary command; the alias note goes in a later commit.
   - token: cmd.docker.inspect
     disposition: compatibility_alias
     targets:
