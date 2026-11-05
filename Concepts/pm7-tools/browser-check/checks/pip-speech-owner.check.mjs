@@ -160,6 +160,7 @@ export default async function (t) {
 	await setMotion(t);
 	for (const [i, [look, mode]] of combos.entries()) {
 		const tag = `${look} w${mode}`;
+        if (t.args.widths) { const widths = String(t.args.widths).split(',').map(Number); await t.page.setViewportSize({ width: widths[i % widths.length], height: t.args.short ? 500 : 1080 }); }
         if (only.includes('discovery')) await t.step(`${tag} · discovery`, async () => {
             const f = await t.app.open();
             await begin(t, f, look, mode, 'begin', tag);
