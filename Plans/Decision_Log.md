@@ -28853,7 +28853,7 @@ canonical_text: >-
   sets and points each row range at those owner-doc definitions instead of "this catalog"; catalog command rows still
   hold no data shapes. UCC-230 routes every command to one of the owner units CRAU-115, CRAU-116, W-095, ACD-637,
   ACD-638, ACD-639, SMPFS-328, SMPFS-329, CS-125, AMS-141, RAP-129, F3-716, F3-717, EP-236, GRS-218, PRDB-024,
-  PWIZ-109, PNC-037 and SSYS-076, which the owner-doc packets add. Agents write the definitions, fanned out by owner
+  PWIZ-109, PNC-037, SSYS-076, OP-049, ACD-640 and F3-718, which the owner-doc packets add. Agents write the definitions, fanned out by owner
   doc, with mechanical ones allowed on a cheaper model; scripts/pm-command-payload-defs-check.py verifies coverage,
   placement, types, defaults, required identity, envelope, narrowings, results, provenance and command kinds. Jared's
   only words in this decision are "approve all". The ten questions the Q5 design left open were settled by the

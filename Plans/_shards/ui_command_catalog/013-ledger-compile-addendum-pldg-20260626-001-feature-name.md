@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L7322-L7765
+Source lines: L7322-L7800
 
-Source SHA256: `e852be3ec466cc2d357de1901153bd33a907875d4d6dfd3a3217c8e7649e4342`
+Source SHA256: `e6c168a467c0707cdb73eb8317b237ec53b076fcebb63297ff6ceaa795f288ec`
 
 ---
 
@@ -25,6 +25,7 @@ canonical_text: History command wrappers cover focus Orchestrator History, switc
   ledger/raw records, include archived, and rebuild projection. Each command carries identity-native payload refs,
   current-project scope, currentness/authority state, stale-projection gating, and non-mutating immutable-history
   semantics.
+  Amended 2026-11-05 under DL-333 (resolution 9b), the History command family is concrete in the History command rows; resume and retry of a historical run use the runtime recovery commands through allowed_action_ids.
 gui_related: true
 gui_classification_reason: Defines user-visible commands/actions for History rows and rebuild controls.
 depends_on:
@@ -130,6 +131,22 @@ preserved_exact_tokens:
 - until rebuild succeeds
 - currentness
 - authority
+- cmd.history.focus
+- cmd.history.switch_subview
+- cmd.history.set_include_archived
+- cmd.history.open_row
+- cmd.history.open_artifacts
+- cmd.history.open_evidence
+- cmd.history.compare_versions
+- cmd.history.duplicate_as_draft
+- cmd.history.reopen_in_wizard
+- cmd.history.send_forward
+- cmd.history.export_selected
+- cmd.history.export_bundle
+- cmd.history.export_filtered_view
+- cmd.history.clone_as_new_run
+- cmd.history.inspect_records
+- cmd.history.rebuild_projection
 negative_constraints:
 - Do not reduce historical runs to read-only summaries when the user needs action routes.
 - Do not omit evidence/artifact/Ledger pivots from historical run rows.
@@ -181,6 +198,7 @@ canonical_text: Vision bridge command wrappers cover explicit image source selec
   and manage remembered always-accept permission. Commands must show the selected source, avoid ambiguous screenshot
   auto-selection, preserve FileSafe and permission scope, and avoid presenting bridge-derived answers as if the
   non-vision model directly saw the image.
+  Amended 2026-11-05 under DL-333 (resolution 9b), the Vision bridge command family is concrete in the Vision bridge command rows.
 gui_related: true
 gui_classification_reason: Defines inspect/rerun/copy/attach/manage-permission controls for user-visible image bridge
   artifacts.
@@ -257,6 +275,13 @@ preserved_exact_tokens:
 - tool id
 - sensitivity/redaction class
 - revocable/resettable
+- cmd.chat.vision_bridge.select_source
+- cmd.chat.vision_bridge.pick_recent_screenshot
+- cmd.chat.vision_bridge.inspect
+- cmd.chat.vision_bridge.rerun
+- cmd.chat.vision_bridge.copy_description
+- cmd.chat.vision_bridge.attach_result
+- cmd.chat.vision_bridge.manage_permission
 negative_constraints:
 - Do not hide bridge outputs inside opaque provider logs only.
 - Do not show the non-vision model's answer as if it directly saw the image when it consumed a derived description.
@@ -296,6 +321,7 @@ canonical_text: Teach guided GUI commands include help-icon launch, /teach launc
   Amended 2026-11-05 under DL-333, following DL-127, typing /teach opens the Teach popup through cmd.chat.teach.capture
   and is not a Teacher launch; the Teacher keeps the help-icon launch and the intent-classified natural-language route
   of CS-053.
+  Amended 2026-11-05 under DL-333 (resolution 9b), the Teacher guided GUI command family is concrete in the Teacher guided GUI command rows.
 gui_related: true
 gui_classification_reason: Defines user-visible guided action commands, route/highlight controls, mutation confirmation,
   and degraded action handling.
@@ -417,6 +443,15 @@ preserved_exact_tokens:
 - help entry missing
 - model fallback/clamp
 - user stops
+- cmd.teacher.open_from_help
+- cmd.teacher.continue_in_teacher
+- cmd.teacher.guide.open_route
+- cmd.teacher.guide.focus
+- cmd.teacher.guide.highlight
+- cmd.teacher.guide.scroll_to
+- cmd.teacher.guide.inspect
+- cmd.teacher.explain_current_ui
+- cmd.teacher.guide.do_it
 negative_constraints:
 - Do not reuse an unrelated active chat thread when the help-icon contract says to open a new teaching conversation.
 - Do not launch Teacher without preserving current surface context needed for useful help.
