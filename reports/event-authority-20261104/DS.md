@@ -1,10 +1,56 @@
 # Lane DS (stream E, batch 1): clearing the frozen seal check's blockers
 
-**Branch:** `plans/ea-b1-seal-blockers-20261104`, from `origin/main` `be4766513f`. Review round 4 is current; earlier sections are historical.
+**Branch:** `plans/ea-b1-seal-blockers-20261104`, from `origin/main` `be4766513f`. Sweep part 1 is current; review-round sections below are historical.
 **Historical first-pass worktree:** Nas1 `~/pm-worktrees/ea-ds`, kept for the lead. Second pass (DS-P2): VM sparse worktree `~/pm-worktrees/DS-p2` from `600575221d`, removed after the push.
 **Inputs:** `BRIEF-DRAFT.md`, `lanes/DS.md`, D1b's `BLOCKERS.md` and `DEPTH.jsonl`. Every D1b claim used here was re-checked on this branch.
 
-## Review round 4: findings and responses (DS-FIX4, current)
+## Sweep part 1: findings and responses
+
+**Source head:** `31a1f32d8e03300f29eff851732058a78a5fbe13`. **Input head:** `da6e0aeba6aa837511cdb6094f49cbe136e03a65`. **Rebased base:** current fetched `origin/main` `e42ce235b4711325ced818c777f070c3ee0d7952`. Nas1 sparse worktree `/home/sittingmongoose/pm-worktrees/ds-sweep1`; removed after the branch push. This section supersedes the earlier terminal owner question; the review-round sections below are historical. **NOT_READY pending part 2; native execution NOT_RUN.**
+
+### Landed authority: DL-449 / deck 2 item 8.a
+
+`Plans/Decision_Log.md:5561` (landed on main) records option A exactly:
+
+> Preserve the original meaning and lifetime of any saved event, the refusal of new writes and checks that prevent old events being fabricated again. Explicitly remove the obligation to build a new terminal-history view, saved results from viewing it, saved original-move/results records and obsolete move tests from both owner documents. Keep only the checks needed to interpret and protect old data. No new history-viewing feature is built.
+
+The premise still holds: DL-181 retired workgroups, SMPFS-180 owns current terminal tabs, and the original producer never activated. No old move, event or original result is manufactured. DL-039's registration/citation condition, original membership, exact payload, RP-AUTHORITY-INDEFINITE lifetime and saved evidence remain. No further Jared choice is needed for 8.a.
+
+| Item | Response; commit and location | How to verify |
+|---|---|---|
+| **Deck 2 8.a / DL-449** | **Fixed**, `bc04b1258b` and `31a1f32d8e`. `Plans/storage-plan.md:27038`, `Plans/Section15_MVP_Promoted_Features_Spec.md:12413` and current SMPFS-180 remove the view, saved viewing results, unbuilt original-move/results custody and obsolete move-test obligations in both owners. SP-319 explicitly assigns no operating consumer or family projector/checkpoint, retains generic SP-278 protection and admits no new disclosure. Original distinct sections, complete unchanged pane/session identities, creation fact, DL-070 empty vacated source, bytes, array order and lifetime remain. | `python3 scripts/pm_terminal_workgroup_compatibility.py --self-test`: **7 positives / 25 negatives PASS**. Exact refusal lists, preserved unusual original JSON bytes/array order, invalid same-section history, eager dormant-ref refusal and actual invalid-positive CLI exit **1**. These are retained-data/contract observations, not an original move simulation or view. |
+| **SOL4-03: fixture defects** | **Fixed observed defects**, `e5d20ad993` and `40c0c265f4`. **24 original Home4 negatives** have coherent source bytes, SHA/BLAKE/size/media claims, result/capture hashes or present locator targets. `Plans/home_layout_v2_slot_receipt_fixtures.json:2453` now isolates the nested inline limit inside a valid complete-value reference; the former four-defect case has one diagnostic. `Plans/home_layout_v2_slot_receipt_fixtures.json:2498` changes only the claimed hash. Candidate revision, foreign Project, command, event id and schema-ref controls refresh their dependent observations. `scripts/pm_ds_home4_isolating.py:79` also updates producer_sequence_id with a changed new revision. No guard or acceptance rule is weakened. | Full Home4 checker/self-test: **10 positives / 30 schema negatives / 33 invariant negatives PASS**, 415 refs closed; **15 synthetic objects**. Final **128 Home4 cohort controls PASS**. `fixture-coherence-after.json` checks all 24 repaired originals and the supplemental revision/sequence copy. Every repaired invariant-negative has one final diagnostic; this is fixture evidence, not complete guard isolation. |
+| **SOL4-03: whole check-11 completeness** | **Part 2**, at `scripts/pm_ds_guard_removal.py:212`, `scripts/pm_ds_targeted_guard_matrix.py:16`/`:23`, and the review's exact `guard-ruling-374.{json,md}` catalog. Complete assertion inventory, clause/site isolation, true duplicate adjudication, captured contexts and coarse replay/sequence group separation require the shared guard-table restructure. No local replacement proof engine or new guard-proof machinery is authored. | Old targeted matrix rerun: **77 positives / 144 negatives / 33 groups PASS**; its complete flag describes that matrix only. It does not close SOL4-03 or the full source inventory. The old whole-audit numbers remain historical and all five oracle cells remain PARTIAL. |
+
+### Family re-grade
+
+| Family | Before | After | Remaining |
+|---|---:|---:|---|
+| context.compaction.completed | 11/12 | **11/12** | Oracle proof, part 2 |
+| browser.workspace.created | 11/12 | **11/12** | Oracle proof, part 2 |
+| browser.workspace.reset | 11/12 | **11/12** | Oracle proof, part 2 |
+| workspace.layout_changed | 11/12 | **11/12** | Oracle proof, part 2 |
+| terminal.workgroup_moved | 10/12 | **11/12** | Reduced oracle proof, part 2 |
+
+**55 PASS / 5 PARTIAL; 0 of 5 at 12/12.** Only terminal's consumer/checkpoint cell rises: DL-449 explicitly removes the unbuilt operating consumer/view obligation, so the absence is now the approved disposition, not an unanswered owner choice. Its reduced oracle baseline passes, while full check-11 proof remains incomplete. Native NOT_RUN is independent of these normative grades. [DS.selfgrade.json](DS.selfgrade.json) and [ds-sweep-p1-regrade.json](ds-sweep-p1-regrade.json) contain current exact citations and before/after hashes; **95 existing citations reanchored**. Historical assessment/admission pins, original receipts and audit rows remain unchanged. The parent reconciles canonical grade projections under `Plans/.audits/event-authority-2026-08-12/individual-disposition/LEDGER_WRITE_RULE.md`; this sweep does not edit a canonical audit ledger or claim a changed frozen seal result.
+
+### Verification and limits
+
+- **Current final checks:** terminal **7/25**, Home4 **10/30/33**, final affected Home4 cohorts **128/128**, fixture-coherence witness **24 originals plus the supplemental revision case**, shards and top-level index validation all pass. Index reports **7488 PlanUnits**; native readiness remains blocked. Only the two edited owner documents change derived shards. All **15** currentness input files were copied and SHA-256 matched before index generation.
+- **Preserved broader checks:** the full **686/686 supplemental controls** passed before the last ten locator/media fixture repairs; the affected 128 Home4 controls then passed at final source. The **77/144** targeted matrix, round-3 type/history sweep and round-4 retained-source/format controls pass. Created/reset/admission/PM7 suites pass **65 / 53 / 38 / 13** tests. Projects-refresh's top-level status is **pass**. No accepted input or invalid-schema result cache, new numeric cap, serializer or proof engine is introduced.
+- **Standing checks 1–10:** current replay-only/refusal and historical separation, Project-only keys/scopes, encoded Browser partitions, whole/inline/reference limits, LF identifiers, semantic retry inputs, checkpoint/source identity, nonzero failure exit, eager reference closure and valid retained history remain supported by the same full-entry suites. New terminal checks preserve bytes and lifetime and refuse write/remint/view obligations. These static adapters do not authenticate native Storage or terminal execution. **Check 11 remains incomplete**, including syntax/hash/decoder implications that need the shared tool's clause adjudication; no blanket completeness claim is made.
+- **Transient attempts:** the first final shard check saw the two owner edits before their scheduled regeneration; the final generate/check passes. A scratch fixture witness assumed a prepared slot already had an event; its optional-event assertion was corrected and its complete 24-case rerun passes. These attempts are retained in the external command records. No product guard was relaxed.
+- **Preservation:** 12 critical inputs, including the event registry, original envelope, partial assessment, three admission pins, four original application receipts and both old guard scripts, are byte-identical to `da6e0aeba6`. No new admission, registry append, Decision Log entry, audit row mutation, Spec Lock/evidence reseal, main push, mailbox, subagent, browser or server. No new PlanUnit ids; inherited **SP-400** remains unchanged.
+
+### Part 2 items
+
+1. **SOL4-03 / shared guard tables:** adopt the reviewed `scripts/pm_guard_isolation.py`, expose named field/clause predicates and rerun the exact full inventory, duplicate/site, state/representation/fault and all-other-negative obligations. Split the old replay/producer-sequence and other compound removal groups. Include the reduced terminal checker; keep the new fixture repairs. An Astra NOT_READY remains until the required review passes.
+2. **NUMRULE adoption:** adopt CV-1100/1101, SP-1100/1101 and the shared helper only after the shared tools pass. Exact lane sites include `scripts/pm_home_layout_v2_slot_receipt.py:137`/`:345`, `scripts/pm_event_payload_route.py:58`, and existing current/historical family dispatch. Preserve original physical bytes, uint64 Storage metadata, signed zero and authenticated write-time recipe selection; add no lane-local substitute.
+3. **Parent integration:** reconcile receipted terminal audit-grade projections against DL-449 under the ledger write rule; ordinary governance staleness/reseal and landing checks remain the lead's separate work. No full-depth admission or READY claim follows from this part-1 branch.
+
+**Evidence:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/sweep-p1/`. [ds-sweep-p1-verification.json](ds-sweep-p1-verification.json) pins every relevant external artifact by absolute path and SHA-256; `SHA256SUMS` in that directory covers the delivered report, self-grade, receipts and check output. No raw logs or scratch workspace is committed. Both this report and the self-grade are copied there after push, and the task worktree is removed with its literal path.
+
+## Review round 4: findings and responses (DS-FIX4, historical)
 
 **Reviewed head:** `25c568598fa3ff1028a95c326c885474ffd7dcd1`. **Code/fixture head:** `f479a6eaee994bbc34b14395aedf7a56c124b46e`. **Final base:** `57c28f706e10dd9f7c6b13ed5e962de74e9a6ea5`. The initial rebase used `fb441b27fd75440e14115fb382b15a5258ad7ea3`; the final rebase incorporates later main. DS checker sources are byte-identical across that final rebase. Main's stronger ACD-461 and CV-329 app non-emission text is retained and re-adjudicated. Generated conflicts were regenerated, never hand-merged. No admission, seal, main landing or native execution is claimed.
 
