@@ -881009,5 +881009,39 @@
       "value": "2026-11-04T00:00:00.12345678901234567890Z",
       "valid": true
     }
+  ],
+  "project_source_join_cases": [
+    {
+      "name": "1:posted_original_target:to_agent_id",
+      "board_index": 1,
+      "field": "to_agent_id",
+      "value": "foreign-target",
+      "expected_error": "message_to_agent_id",
+      "expected_exit_code": 1
+    },
+    {
+      "name": "1:posted_original_target:to_agent_type",
+      "board_index": 1,
+      "field": "to_agent_type",
+      "value": "foreign-target",
+      "expected_error": "message_to_agent_type",
+      "expected_exit_code": 1
+    },
+    {
+      "name": "7:posted_original_target:to_agent_id",
+      "board_index": 7,
+      "field": "to_agent_id",
+      "value": "foreign-target",
+      "expected_error": "message_to_agent_id",
+      "expected_exit_code": 1
+    },
+    {
+      "name": "7:posted_original_target:to_agent_type",
+      "board_index": 7,
+      "field": "to_agent_type",
+      "value": "foreign-target",
+      "expected_error": "message_to_agent_type",
+      "expected_exit_code": 1
+    }
   ]
 }

@@ -573,7 +573,7 @@ def board_source_errors(case, root, formats):
             if message['receiver_agent_type'] != payload.get('to_agent_type'):
                 errors.append('message_target_type')
         else:
-            for k in ('message_id', 'from_agent_id', 'subject', 'priority'):
+            for k in ('message_id', 'from_agent_id', 'subject', 'priority', 'to_agent_id', 'to_agent_type'):
                 if message.get(k) != payload.get(k):
                     errors.append('message_' + k)
         if payload['scope'] == 'application':
@@ -1143,6 +1143,13 @@ def check_oracles(fixtures, schema, owner_module):
             target = target[key]
         target[test['path'][-1]] = copy.deepcopy(test['value'])
         assert project_original_input_errors(bad, formats) == [test['expected_error']], test['name']
+        assert owner_module.board_join_errors(bad) == [test['expected_error']], test['name']
+        assert not failure_oracle_errors(test)
+        checks += 3
+    for test in fixtures['project_source_join_cases']:
+        bad = copy.deepcopy(fixtures['board_storage_cases'][test['board_index']])
+        bad['source']['original_input'][test['field']] = test['value']
+        assert not project_original_input_errors(bad, formats), test['name']
         assert owner_module.board_join_errors(bad) == [test['expected_error']], test['name']
         assert not failure_oracle_errors(test)
         checks += 3
