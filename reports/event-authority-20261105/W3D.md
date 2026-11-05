@@ -1,6 +1,6 @@
 # W3D — Back Seat Driver, phase 1 (2026-11-05)
 
-Branch: `plans/ea-w3-back-seat-driver-20261105`. Base: `f9c5de6561dff0a53a48e530f2a5c6804a7e941d`. Assessed code head: `c9ee26fd9e73407506a9667a90568a7ac0963227`.
+Branch: `plans/ea-w3-back-seat-driver-20261105`. Base: `f9c5de6561dff0a53a48e530f2a5c6804a7e941d`. Assessed code head: `0c32b66749473a8ebff23c4d3bdff85290d05efb`.
 
 **Outcome:** 15 prepared; 0 merged; 0 excluded; 0 stopped. These are definition drafts prepared without admission, with no runtime evidence. All 15 central event memberships remain ABSENT. Criterion 12 is PARTIAL for every row.
 
@@ -60,15 +60,15 @@ The pre-edit exact-name search scanned every root `Plans/*.md` and `Plans/*.json
 
 Every new family triple labels itself “Newly authored owner contract” and stands independently. Each has an exact producer/source transition, closed tagged payload, Project/original-operation/event/idempotency recipe, frozen producer input, SP-286/CV-339 full-value/barrier receipt order, retry/recovery behavior, no-effect replay, custody/access/redaction/restore checks, exact operating consumer/reader/projector, SP-278 complete-range/CAS/nine-field-token checkpoint, historical original-recipe reader and writer/reader withdrawal fences. No family inherits a sibling’s producer or identity.
 
-`Plans/bsd_event_payloads.schema.json` supplies fifteen individually closed payload roots. `Plans/bsd_event_storage_contracts.schema.json` supplies the corresponding operation/projection/checkpoint shapes, the nine-field durable token, six original lifecycle wrappers, six current owner heads and a ref-only finding-identity operand manifest. SP-1365 binds the original source/head/operation joins and coherent backup. Original identity operands are captured from the actual owner decision before key computation, so a supplied key/digest cannot stand in for original custody. Existing six logical BSD schemas and the adjacent completed-review summary remain unchanged.
+`Plans/bsd_event_payloads.schema.json` supplies fifteen individually closed payload roots. `Plans/bsd_event_storage_contracts.schema.json` supplies the corresponding operation/projection/checkpoint shapes, the nine-field durable token, seven original source wrappers (including pre-dispatch review admission), six current owner heads and a ref-only finding-identity operand manifest. SP-1365 binds the original source/head/operation joins and coherent backup. Original identity operands are captured from the actual owner decision before key computation, so a supplied key/digest cannot stand in for original custody. Existing six logical BSD schemas and the adjacent completed-review summary remain unchanged.
 
-`Plans/bsd_event_storage_candidates.json` stages **57** candidate rows: 45 exact-family operation/projection/checkpoint rows, 6 original lifecycle wrappers and 6 original current heads. They are reviewable value rows outside the production registry. The task prohibits registry-family append, so `Plans/storage_value_registry.json` is byte-identical to base; its families/denominators, SP-318 disposition and materialization status are not extended. Candidate keys, value schema refs, canonical/derived placement, recovery and retention are explicit; real physical admission/migration/disk budgets still require their existing owner gates.
+`Plans/bsd_event_storage_candidates.json` stages **58** candidate rows: 45 exact-family operation/projection/checkpoint rows, 6 preserved lifecycle wrappers, 1 separate pre-dispatch review-start wrapper and 6 original current heads. They are reviewable value rows outside the production registry. The task prohibits registry-family append, so `Plans/storage_value_registry.json` is byte-identical to base; its families/denominators, SP-318 disposition and materialization status are not extended. Candidate keys, value schema refs, canonical/derived placement, recovery and retention are explicit; real physical admission/migration/disk budgets still require their existing owner gates.
 
 Operation custody uses the existing lifetime identity/receipt protection; derived rows use RP-PROJECTION-3GEN. Neither extends the lifetime/access of linked transcript/output bodies. Every stored part has its own 16 KiB measurement and SP-337 reference route, including frozen producer input and lifecycle bodies. No lane-local number, timestamp, physical-byte or guard-isolation implementation was written.
 
 ## Oracle plan and self-grade
 
-`Plans/bsd_event_oracle_plan.json` contains **1859** planned field/predicate entries, each with a positive and a one-defect negative plan, plus per-family retention boundary plans. It covers exact payload fields/types/requiredness/closure, original-source and identity joins, transition-specific guards, original receipts/full values, all Storage-assigned metadata, checkpoint identities/tokens/CAS/coverage, replay-only writer refusals and historical positives, 16 KiB stored-part limits and external bytes, access/deletion/backup, retention, version/currentness and withdrawal. These are plans; they are not executable fixtures or an assertion that single-defect construction or guard removal has already passed.
+`Plans/bsd_event_oracle_plan.json` contains **2324** planned field/predicate entries, each with a positive and a one-defect negative plan, plus per-family retention boundary plans. It covers exact payload fields/types/requiredness/closure, original-source and identity joins, transition-specific guards, original receipts/full values, all Storage-assigned metadata, checkpoint identities/tokens/CAS/coverage, replay-only writer refusals and historical positives, 16 KiB stored-part limits and external bytes, access/deletion/backup, retention, version/currentness and withdrawal. These are plans; they are not executable fixtures or an assertion that single-defect construction or guard removal has already passed.
 
 Phase 2 must rebase onto the lead’s reviewed NUMRULE/date-time and GUARDTOOL foundation, implement cases using those shared helpers, expand inherited schema/union branches into actual atomic assertion sites, and prove every guard and exact duplicate site set with `pm_guard_isolation.py`. Removing a whole compound keyword, merging distinct predicates through a shared enforcement site or leaving a copy/digest/post-state stale cannot count as proof. Sol and Astra review follows that work.
 
@@ -108,12 +108,12 @@ Phase 2 must rebase onto the lead’s reviewed NUMRULE/date-time and GUARDTOOL f
 |---|---|---|
 | `Plans/Back_Seat_Driver.md` | `@@ -2632,0 +2633,1040 @@ owner_hints:` | `BSD-1350..BSD-1364` |
 | `Plans/Contracts_V0.md` | `@@ -24468,0 +24469,870 @@ The selected app request union accepts only an authenticated user actor. A malfo` | `CV-1350..CV-1364` |
-| `Plans/storage-plan.md` | `@@ -29476,0 +29477,1019 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0` | `SP-1350..SP-1365` |
+| `Plans/storage-plan.md` | `@@ -29476,0 +29477,1042 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0` | `SP-1350..SP-1365` |
 | `Plans/Automated_Testing_System.md` | `@@ -7236,0 +7237,66 @@ ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/U` | `ATS-1230` |
 
 All shared-file changes append new units; no old shared row is reordered or reflowed. Production `storage_value_registry.json` has no hunk. Shards were regenerated through the repo tool, then the plan index through its repo tool. The copied ignored currentness edition matched the shared source file-for-file by SHA-256 (15 files; manifest in evidence). Only edited source documents’ configured shard trees changed. Back_Seat_Driver and these new JSON companions are not in the base sharding_config sources; the existing configured generator was used unchanged. Index output records 47 additional PlanUnits and no WorkNodes/NodeSeeds.
 
-## Checks
+## Original phase-1 checks (before review)
 
 | Check | Exit | Result / output SHA-256 |
 |---|---:|---|
@@ -128,7 +128,7 @@ All shared-file changes append new units; no old shared row is reordered or refl
 | `baseline-three-failures-final` | 0 | top-level `BASELINE_FAILURES_REPRODUCED`; ` 98f5f07c3f615b63e2e89f36ad28f4dbb00c4c52177bb784add5aeb68cd6f0ea` |
 | `git-diff-check` | 0 | ` e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
 
-Commands, elapsed time, pre-run available memory, absolute log paths and output hashes are in `W3D-checks.json` and the copied evidence directory. Structural checks validate the two new schemas, all reachable refs, 47 new PlanUnits, 15 exact outcomes, 57 pending candidates, evidence/token consistency and unchanged protected files. The first structural attempt found missing preserved-token mentions in ATS-1230; the prose was corrected and the final structural run passes. These are static structural checks, not phase-2 event oracles. Existing BSD contract-closure and adjacent shared-runtime checks guard the preserved disabled/non-alias boundaries. No repository test file was edited.
+Commands, elapsed time, pre-run available memory, absolute log paths and output hashes are in `W3D-checks.json` and the copied evidence directory. Structural checks validate the two new schemas, all reachable refs, 47 new PlanUnits, 15 exact outcomes, 57 pending candidates, evidence/token consistency and unchanged protected files. The first structural attempt found missing preserved-token mentions in ATS-1230; the prose was corrected and the final structural run passes. These are static structural checks, not phase-2 event oracles. Existing BSD contract-closure and adjacent shared-runtime checks guard the preserved disabled/non-alias boundaries. No repository test file was edited. The current review-round results are recorded below; this table preserves the original drafting run.
 
 The lane’s generators/checkers ran one at a time. A checker start was refused below 6 GiB; work paused for two minutes and resumed at 14 GiB (above the required 7 GiB). The runner monitors its own active process group and pauses below 6/resumes at 7 on two-minute rechecks; other VM work was not interrupted.
 
@@ -143,3 +143,78 @@ Assistant inspection returns gaps_found (exit 1) because 51 pre-existing Browser
 IDs used: **BSD-1350..BSD-1364; CV-1350..CV-1364; SP-1350..SP-1365; ATS-1230**. All assigned ranges were checked free across 528 fetched origin refs (178 distinct owner-document blobs); `W3D-id-audit.json` records the base/maxima. No out-of-block ID was minted.
 
 Next: phase-2 foundation rebase, shared number/date-time helper adoption, executable oracles, shared guard-isolation proof and Sol/Astra review. The two exact retention questions remain open until owner evidence or Jared decides them. Physical registration/migration/budgets, event admission and native availability remain independently gated. No admission, registry-family append, Decision Log change, governance reseal, main push, pm-mail or subagent was performed. The dedicated W3D worktree is removed after the pushed result is copied for handoff.
+
+
+## Phase-1 review round 1: findings and responses
+
+Reviewed head: `3da70bff9cb79f563e708ff47c84385d8e27d512`. Fixed normative code commit: `0c32b66749473a8ebff23c4d3bdff85290d05efb`.
+Review: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/W3D-sol/REVIEW-phase1.md`.
+All three blockers are fixed in the phase-1 contracts/plans. None is disputed. No product decision was made.
+
+| Finding | Where / why | Fix and verification |
+|---|---|---|
+| **B1 — fixed, `0c32b66749473a8ebff23c4d3bdff85290d05efb`** | Payload `assignment_started.effective_mode` and `assignment_started.not_off` used stage-override casing in the resolved-mode field. | Exact `Auto|On` schema and positives; distinct `auto`, `on`, `off`, `Off`, `inherit` schema-only negatives. A genuine frozen `Off` source is separately refused before assignment creation. A schema-valid `Auto`→`On` substitution independently exercises the frozen-source join. No implicit conversion. Schema probes pass. |
+| **B2 — fixed, `0c32b66749473a8ebff23c4d3bdff85290d05efb`** | Review-start required the complete terminal `pm.bsd.review_cycle.v1`, whose mandatory `result` cannot exist before dispatch. | `review_admission_id` identifies the authentic accepted pre-dispatch source. Closed `pm.bsd.review_start.v1` records start facts with no result, latency or terminal body. New immutable `source_review_start` supplies `review_start_ref`; the start operation and receipt settle before dispatch. Only the later genuine terminal wrapper binds `review_start_ref` and verifies each original start fact. Original six logical schemas and completed-summary history remain byte-identical. Positive no-result schema probe and independent premature-result/source/join plans are present. |
+| **B3 — fixed, `0c32b66749473a8ebff23c4d3bdff85290d05efb`** | All fifteen plans omitted independent current-write permission/epoch/Stop/writer fences and source/envelope joins. | Every family names each applicable gate and each envelope field join with its own positive and one-defect negative. All thirteen assignment-backed events independently test envelope `run_id` and payload `primary_run_id` against the authentic assignment. Configuration events retain null run/assignment/epoch/generation. Separate payload-to-source bindings cover policy/binding/assignment/run/epoch/generation/review facts. Live-epoch negatives change only live epoch, with unrelated CAS observations refreshed; permission negatives leave reader access valid. Current replacement-control clearance and valid old-epoch historical positives are preserved. |
+
+Current fix locations:
+
+- `Plans/bsd_event_payloads.schema.json:411`
+- `Plans/bsd_event_storage_contracts.schema.json:3939`
+- `Plans/Back_Seat_Driver.md:3470`
+- `Plans/Contracts_V0.md:25170`
+- `Plans/storage-plan.md:30413`
+- `Plans/Automated_Testing_System.md:7242`
+- `Plans/bsd_event_oracle_plan.json:2138`
+
+The added review-start source is **one pending candidate**, bringing staged Storage rows from 57 to 58; it does not append a production registry family. It uses the existing actual assignment/run source-value retention rule. All **13 event-history retention bindings** and both `PENDING_RETENTION_DECISION` cells and their exact questions are unchanged. No id was minted: BSD-1350..1364, CV-1350..1364, SP-1350..1365 and ATS-1230 remain the 47 allocated units.
+
+### Whole-lane oracle-plan isolation boundary
+
+| Guard class / extent | Positive and one-defect negative construction | Guard-removal proof |
+|---|---|---|
+| Current owner/write permission/Stop/writer generation, all 15 families | Change one actual live gate only; original source remains authentic and reader access remains valid. Refresh unrelated expected CAS observations. Stop settlement uses the actual owner decision for its operation class. | NOT_RUN; phase 2, shared tool. |
+| Current epoch and run joins, 13 assignment-backed families | Change only live epoch, or only envelope run identity, in distinct cases. Preserve source/payload facts. The replacement-control-only clearance path is independently positive. | NOT_RUN; phase 2, shared tool. |
+| Source/envelope and frozen-payload joins, each applicable family/field | Use a schema-valid substituted target field; preserve authentic originals and regenerate unrelated copies/commitments. Null configuration fields remain explicit schema constraints. | NOT_RUN; phase 2, shared tool. |
+| Payload/start-body requiredness, exact type/value and closure, whole lane | Exercise the exact schema boundary independently of owner/source equality. Full-writer join cases use schema-valid alternatives. Off pre-creation admission is distinct from payload-domain validation. | NOT_RUN; phase 2 expands inherited/ref/union predicates and proves identical sites separately. |
+| Start admission, premature outcome and later terminal-to-start joins | Genuine immutable start with no outcome is positive. Invalid source kind, admission identity, extra result and each later joined field have independent plans. | NOT_RUN; phase 2, shared tool. |
+| All other existing guard plans, whole lane | Prior positives/retention remain unchanged; one-defect construction and no stale copy/digest/post-state remain mandatory. | NOT_RUN; phase 2 covers **all 2,324 entries**, not only this round's additions. |
+
+There are **465 added entries**. These are named plans, not executed event fixtures. The shared NUMRULE/date-time and GUARDTOOL dependencies remain open for phase 2. No lane-local serializer, timestamp validator, number cap, oracle implementation or proof engine was added. The recurrence checklist remains a plan-only assessment: identity/source and current-write gaps now have explicit cases; Storage metadata, old-history, exact types, reference resolution, stored-part sizes, access/custody and honest grades remain planned as before. Only static structure/schema probes run in phase 1.
+
+### Re-grade at the fixed normative head
+
+All **15 families / 180 cells** were re-graded, with corrected criterion-specific path/line/quotation evidence and eight final normative-file SHA-256 values in `W3D-self-grade.json`.
+
+| Extent | Before review round / after fix |
+|---|---|
+| `bsd.assignment_started`, C4 | Reviewer **CONFLICT → PASS**: exact resolved-mode schema and static probes now match the owner. |
+| All other C4 cells and all C2 cells | **PASS → PASS**, structural owner/schema facts only. |
+| C1, all 15 | **ABSENT → ABSENT**, intentionally unadmitted. |
+| C3 and C5–C12, all 15 | **PARTIAL → PARTIAL**. Contract/plan fixes do not claim behavioral, native or guard-isolation proof. The two pending C7 questions remain open. |
+
+### Current phase-1 checks
+
+Each command, exit code, pre-run available memory, elapsed time, absolute log path and SHA-256 is in `W3D-p1fix1-checks.json`. All generators/checkers ran one at a time using the copied, SHA-256-verified 15-file currentness edition. Only the edited configured owner shard directories changed: `automated_testing_system`, `contracts_v0`, `storage-plan`; BSD remains outside the sharding source list.
+
+| Check | Exit | Log SHA-256 |
+|---|---:|---|
+| `phase1-fix-check-complete` | 0 | `c7db0a4fe7ec5ca9d49f1eb8dc0448a469a258061dc5e9dfc006bb0dc7d5500f` |
+| `shard-generate` | 0 | `0097f44a100929b5fcc967352e31e0a28f4a8974cb0027f58fdf4df24ed776d3` |
+| `index-generate-final` | 0 | `e9cb696a1d4ee36cd9c2d9d3123d81e840a07061fc15031d7e53ab7d7437062c` |
+| `shard-check` | 0 | `d697ac77c260ee1fbe5007467d179c832c4c197ffc685d08b78f338e04ff7fdc` |
+| `index-validate` | 0 | `9ad68e6ad1aa4ff9cd3d3b070e4efee8d78efe1bd21d9ee0aca39e40bc29449b` |
+| `bsd-existing-tests` | 1 | `869b12943b6e16086d7246e0972649af23c86c5ca1c53e3d8c2ee6020f4399c2` |
+| `assistant-contract-check` | 1 | `0fbdb184c5357a0f01e053a638f6b029c270ac7b2e8f645f356f0aa780e33545` |
+| `shared-runtime-selftest` | 0 | `6064a1454776e6f9cdec906eeb1453f1652e74f79bee69ee1719fec58d184027` |
+| `baseline-three-failures` | 0 | `98f5f07c3f615b63e2e89f36ad28f4dbb00c4c52177bb784add5aeb68cd6f0ea` |
+| `structural-check-final` | 0 | `2b0a33018c85434fa886109e0a9d3ce2185e07a31bf76ef526ab41567650b7ee` |
+| `git-diff-check` | 0 | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+
+Index generate/validate top-level status is `pass`. The closure suite still runs 41 tests with exactly the three reviewed baseline failures and no errors; the three selected failures were reproduced again from exact frozen-base bytes. Assistant inspection remains the expected `gaps_found` exit 1 from the 51 unadmitted Browser candidates, with `errors=[]` and `projects_refresh_static_failures=[]`. The shared-runtime self-test passes. No test/checker was changed.
+
+Two initial scratch-audit assertions were corrected: the new-definition schema probe initially also selected the top-level union, and a plan inventory assertion initially assumed every preserved shared-rule refusal used the literal label `reject`. The final audit isolates the definition and preserves the existing documented rejection labels; it passes without changing product schemas or relaxing a repository checker for either issue. All attempts and exits remain in the check record.
+
+Evidence directory: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3D/p1fix1/`. `fix-coverage.json` records each family and its new guard ids; compact copy `W3D-p1fix1-coverage.json`. The report and complete self-grade are copied back to `drafts/W3D/`. The phase-1 evidence manifest hashes retained reproducibility scripts and logs.
+
+**Stopped:** no fix cell stopped, no finding disputed. The two existing retention questions remain pending exactly as quoted above. The next action is the lead's phase-2 foundation rebase and executable-oracle work. No admission, registry append, Decision Log change, governance reseal, `main` push, pm-mail or subagent. The fix worktree is removed with its literal path after the pushed handoff.
