@@ -15629,6 +15629,76 @@
       ],
       "enforcement": "authored",
       "single_defect": "original.datetime_profile"
+    },
+    {
+      "id": "history-verifier-result-true",
+      "op": "history",
+      "scenario": "verifier_result",
+      "verifier_result": true,
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "target_predicate": "original.verifier.exact_true",
+      "output": "original-returned-with-zero-effects"
+    },
+    {
+      "id": "history-verifier-result-false",
+      "op": "history",
+      "scenario": "verifier_result",
+      "verifier_result": false,
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "target_predicate": "original.verifier.authenticity",
+      "error": "original_verification",
+      "enforcement": "authored",
+      "single_defect": "original.verifier.authenticity"
+    },
+    {
+      "id": "history-verifier-result-string",
+      "op": "history",
+      "scenario": "verifier_result",
+      "verifier_result": "true",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "target_predicate": "original.verifier.exact_true",
+      "error": "original_verification",
+      "enforcement": "authored",
+      "single_defect": "original.verifier.exact_true"
+    },
+    {
+      "id": "history-verifier-result-integer",
+      "op": "history",
+      "scenario": "verifier_result",
+      "verifier_result": 1,
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "target_predicate": "original.verifier.exact_true",
+      "error": "original_verification",
+      "enforcement": "authored",
+      "single_defect": "original.verifier.exact_true"
+    },
+    {
+      "id": "history-verifier-result-object",
+      "op": "history",
+      "scenario": "verifier_result",
+      "verifier_result": {
+        "verified": true
+      },
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "target_predicate": "original.verifier.exact_true",
+      "error": "original_verification",
+      "enforcement": "authored",
+      "single_defect": "original.verifier.exact_true"
     }
   ],
   "guard_isolation_sweep": [

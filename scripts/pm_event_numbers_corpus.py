@@ -155,6 +155,8 @@ def _retained(m, case, corpus):
             else:
                 field = case.get("sealed_date_time_field", "occurred_at_utc")
                 date_time(json.loads(record.record_bytes)[field], profile=selected)
+        if authentic and scenario == "verifier_result":
+            return case["verifier_result"]
         return authentic
 
     dispatcher = m.RetainedDispatcher(FixtureOwner(), {
