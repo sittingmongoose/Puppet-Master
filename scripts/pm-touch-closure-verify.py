@@ -21,7 +21,7 @@ from urllib.parse import unquote
 from jsonschema import Draft202012Validator
 if str(Path(__file__).resolve().parent) not in sys.path:
     sys.path.insert(0, str(Path(__file__).resolve().parent))
-from pm_wiring_inventory import projects_refresh_action_inventory
+from pm_wiring_inventory import RETIRED_PROJECTS_REFRESH_COMMANDS, projects_refresh_action_inventory
 
 
 def find_repository_root(start: Path) -> Path:
@@ -1180,6 +1180,47 @@ def dry_guard_consumer_failures(
     return failures
 
 
+def retired_projects_refresh_failures(registry: dict[str, Any], production_actions: set[str]) -> list[str]:
+    """DL-335: a retired projects-refresh command keeps one blocked Touch row and nothing else."""
+
+    try:
+        bindings = load_json(ROOT / "Plans/projects_refresh_command_bindings.json")
+        exclusions = load_json(ROOT / "Plans/Wiring_Matrix.production.exclusions.json")
+    except (OSError, json.JSONDecodeError) as error:
+        return [f"retired projects-refresh command check failed to load: {error}"]
+    failures: list[str] = []
+    rows = [row for row in registry.get("rows", []) if isinstance(row, list) and len(row) == 6]
+    profiles = {
+        profile.get("profile_id"): profile
+        for profile in registry.get("profiles", [])
+        if isinstance(profile, dict)
+    }
+    aliases = registry.get("alias_bindings", {})
+    aliases = aliases if isinstance(aliases, dict) else {}
+    bound = {row.get("command_id") for row in bindings.get("commands", []) if isinstance(row, dict)}
+    excluded = set(exclusions.get("excluded_tokens", [])) if isinstance(exclusions, dict) else set()
+    for command, touch_id in sorted(RETIRED_PROJECTS_REFRESH_COMMANDS.items()):
+        def require(condition: bool, detail: str) -> None:
+            if not condition:
+                failures.append(f"retired projects-refresh command {command}: {detail}")
+
+        matching = [row for row in rows if row[3] == command]
+        require(len(matching) == 1 and matching[0][1:5] == [touch_id, "command", command, "blocked"],
+                f"must keep exactly one blocked Touch row under {touch_id}")
+        profile = profiles.get(touch_id, {})
+        require(profile.get("command_ids") == [command]
+                and profile.get("handler_status") == "absent"
+                and profile.get("wiring_status") == "absent",
+                f"{touch_id} must name only this command, with absent handler and wiring")
+        require(command not in bound, "must have no projects-refresh binding row")
+        require(command not in production_actions, "must have no production wiring")
+        require(command in excluded, "must be listed in Wiring_Matrix.production.exclusions.json")
+        require(command not in aliases and not any(
+            isinstance(binding, dict) and binding.get("exact_target") == command
+            for binding in aliases.values()), "cannot be an alias source or target")
+    return failures
+
+
 def forge_review_alias_failures(
     registry: dict[str, Any], production_actions: set[str]
 ) -> list[str]:
@@ -1566,6 +1607,7 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         failures.append(f"DRY guard Settings fixture failed to load: {error}")
         settings_document = {}
     failures.extend(dry_guard_consumer_failures(registry, settings_document, production_actions))
+    failures.extend(retired_projects_refresh_failures(registry, production_actions))
     failures.extend(forge_review_alias_failures(registry, production_actions))
     failures.extend(permissions_rule_reference_failures(registry))
     alias_sources_with_peer_wiring = sorted(alias_row_actions & production_actions)
@@ -1939,7 +1981,12 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         # 2026-11-05 Q5 resolution 9b (DL-333, UCC-100..102, UCC-230): +32 production-intent
         # entries for the minted History, Vision bridge and Teacher guided GUI commands (1300 ->
         # 1332). No Touch row, profile, alias, exclusion, native handler or proof is added.
-        "production_wiring_entry_count": 1332,
+        # 2026-11-05 Q5 resolution 4 (DL-335, UCC-058): -1 production row,
+        # catalog.chat_worktree_bind_existing (1332 -> 1331). UCC-058 forbids exposing
+        # cmd.chat.worktree.bind_existing, so it is retired as a non-alias. Its Touch row
+        # TOUCH-FB-162 stays under TCP-FB-259, now blocked, so row and profile counts and
+        # every TCP-FB number are unchanged; Touch exclusions and aliases are unchanged.
+        "production_wiring_entry_count": 1331,
     }
     observed_resolved_denominators = {
         "row_count": len(rows),

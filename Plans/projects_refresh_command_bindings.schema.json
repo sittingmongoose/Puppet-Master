@@ -277,7 +277,6 @@
             "cmd.chat.web.research",
             "cmd.chat.web.search",
             "cmd.chat.worktree",
-            "cmd.chat.worktree.bind_existing",
             "cmd.chat.worktree.create",
             "cmd.chat.worktree.info",
             "cmd.chat.worktree.merge",
@@ -771,7 +770,6 @@
             "handlers::chat::web_research",
             "handlers::chat::web_search",
             "handlers::chat::worktree",
-            "handlers::chat::worktree_bind_existing",
             "handlers::chat::worktree_create",
             "handlers::chat::worktree_info",
             "handlers::chat::worktree_merge",
@@ -2579,8 +2577,8 @@
           "items": {
             "$ref": "https://puppetmaster.local/schemas/projects_refresh_command_bindings/1.0.0/projects_refresh_command_bindings.schema.json#/$defs/CommandBinding"
           },
-          "minItems": 494,
-          "maxItems": 494,
+          "minItems": 493,
+          "maxItems": 493,
           "uniqueItems": true
         },
         "implementation_status": {

@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L19673-L21172
+Source lines: L19674-L21175
 
-Source SHA256: `861ac87872450ceb89a2f7922feac41e40b2b70ce7c948543553bdc11b7b804c`
+Source SHA256: `796f498459d5b977ca6c58043b719ad61743412a92639ad9b7dcf675f5e5d668`
 
 ---
 
@@ -654,7 +654,7 @@ canonical_text: 'No project is genuine application scope, with a named fixed Com
   cmd.chat.revoke_investigation_item, cmd.chat.rewind, cmd.chat.run_user_command, cmd.chat.search, cmd.chat.send,
   cmd.chat.settings, cmd.chat.stop, cmd.chat.switch_thread, cmd.chat.toggle_message_details, cmd.chat.web.cancel,
   cmd.chat.web.crawl, cmd.chat.web.extract, cmd.chat.web.fetch, cmd.chat.web.help, cmd.chat.web.map, cmd.chat.web.request_again,
-  cmd.chat.web.research, cmd.chat.web.search, cmd.chat.worktree, cmd.chat.worktree.bind_existing, cmd.chat.worktree.create,
+  cmd.chat.web.research, cmd.chat.web.search, cmd.chat.worktree, cmd.chat.worktree.create,
   cmd.chat.worktree.info, cmd.chat.worktree.merge, cmd.chat.worktree.pr, cmd.chat.worktree.remove, cmd.chat.worktree.unbind,
   cmd.file.copy_full_path, cmd.file.copy_nodes, cmd.file.copy_path, cmd.file.copy_relative_path, cmd.file.cut_nodes,
   cmd.file.delete, cmd.file.expand_capped, cmd.file.new_file, cmd.file.new_folder, cmd.file.open, cmd.file.open_in_system_default,
@@ -666,7 +666,9 @@ canonical_text: 'No project is genuine application scope, with a named fixed Com
   cmd.terminal.allow_agent_input, cmd.terminal.deny_agent_input, cmd.terminal.hand_back, cmd.terminal.interrupt,
   cmd.terminal.stop_agent, cmd.terminal.take_over, cmd.terminal.appearance.set, cmd.terminal.appearance.import_scheme,
   cmd.terminal.clear, cmd.terminal.revoke_agent_input, cmd.terminal.send_signal, cmd.chat.queue.send_now,
-  cmd.chat.processes.open. Native availability remains handler_unavailable. Resolve the selected WorkflowScopeV2:
+  cmd.chat.processes.open. cmd.chat.worktree.bind_existing is not one of them: DL-335 retires it as a non-alias
+  because UCC-058 forbids exposing it, and its Touch row TCP-FB-259 stays blocked. Native availability remains
+  handler_unavailable. Resolve the selected WorkflowScopeV2:
   application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required
   thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their
   actual Server scope without fabricating a thread; view-only and metadata reads require only their declared

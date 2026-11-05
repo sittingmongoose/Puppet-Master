@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8824-L10384
+Source lines: L8826-L10385
 
-Source SHA256: `861ac87872450ceb89a2f7922feac41e40b2b70ce7c948543553bdc11b7b804c`
+Source SHA256: `796f498459d5b977ca6c58043b719ad61743412a92639ad9b7dcf675f5e5d668`
 
 ---
 
@@ -69,10 +69,8 @@ canonical_text: >-
   command gets no definition until the coordinator rules. Owner disabled states that fall outside the closed set
   map to closed codes through owner_state_code_map and stay display detail; identity exemptions exist only where
   this map records them with a decision. The catalog stays the command-id and alias authority and its command rows
-  hold no data shapes. Fields of type timestamp, url or path take no literal default: their default is none,
-  their owners validate syntax at run time, and an owner that needs a literal default first adds its validation to
-  the checker (DL-333 coordinator resolution 11). scripts/pm-command-payload-defs-check.py checks this map against
-  the overlay and every definition against this map.
+  hold no data shapes. scripts/pm-command-payload-defs-check.py checks this map against the overlay and every
+  definition against this map.
 gui_related: false
 gui_classification_reason: Records where command payload types live and how they are checked; no GUI behavior changes.
 split_recommended: false
@@ -157,10 +155,6 @@ command_payload_definition_map:
   - Primitive:OpenSubject
   - Primitive:ExecutionContext
   - local:<Name> (a result named in the same definitions block)
-  literal_default_forbidden_types:
-  - timestamp
-  - url
-  - path
   default_sentinel: none (absent; the handler applies no implied value)
   error_narrowing:
     always:
@@ -909,6 +903,16 @@ command_payload_definition_map:
       field: preserved_exact_tokens
       quote: cmd.chat.worktree.*
     note: Thread-scoped family; its concrete rows are UCC-058's.
+  - token: cmd.chat.worktree.bind_existing
+    disposition: retired_non_alias
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-058
+      field: stale_retired_dispositions
+      quote: 'cmd.chat.worktree.bind_existing: retired non-alias; no primary handler, production-wiring row or dispatch
+        alias'
+    note: 'Q5 resolution 4 (DL-335): UCC-058 forbids exposing Bind Existing as this command, so it is retired and gets
+      no definition.'
   - token: cmd.chat.{new,archive,delete,rename,pin,export,search}
     disposition: family_alias
     targets:
@@ -1562,10 +1566,5 @@ command_payload_definition_map:
     decision: DL-333
     reason: 'Q5 resolution 8: cmd.chat.new runs before a thread exists (thread_id is minted when the first user
       message commits); it carries draft identity (ChatNewRequestScopeV2).'
-  contested:
-  - command_id: cmd.chat.worktree.bind_existing
-    question_id: Q5-resolution-4
-    reason: 'Resolution 4 (retire as non-alias) is held in P0: dropping its production wiring row also changes the
-      projects-refresh command bindings census and its Touch closure profile, which this packet may not edit. Defined
-      by nobody until the coordinator rules.'
+  contested: []
 ```

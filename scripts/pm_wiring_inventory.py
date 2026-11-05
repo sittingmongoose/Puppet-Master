@@ -4,6 +4,14 @@ import fnmatch
 import json
 import re
 
+# A retired projects-refresh command keeps the TCP-FB number its binding row held, so no
+# later number moves when the row goes. It has no binding row, production row, handler or
+# alias; its Touch row stays, blocked. DL-335: UCC-058 forbids exposing Bind Existing as
+# cmd.chat.worktree.bind_existing, which was binding row 258 of 494 (TCP-FB-259).
+RETIRED_PROJECTS_REFRESH_COMMANDS = {
+    'cmd.chat.worktree.bind_existing': 'TCP-FB-259',
+}
+
 
 def wiring_command_excluded(command_id, excluded_tokens):
     for token in excluded_tokens:
@@ -47,8 +55,21 @@ def projects_refresh_action_inventory(root, sources):
         ids = [r[key] for r in rows]
         if len(ids) != len(set(ids)) or set(ids) != sources[source]:
             raise ValueError('Projects refresh independent source inventory drift: ' + source)
-        for index, row in enumerate(rows):
-            action = row[key]
+        slots = list(ids)
+        if group == 'commands':
+            # Put each retired command back in the slot its stored TCP-FB id names, so
+            # every live row keeps the number it had before the retirement.
+            for action, touch_id in sorted(RETIRED_PROJECTS_REFRESH_COMMANDS.items(), key=lambda item: item[1]):
+                if action in ids:
+                    raise ValueError('Projects refresh retired command still has a binding row: ' + action)
+                slot = int(touch_id.rsplit('-', 1)[1]) - offset
+                if not 0 <= slot <= len(slots):
+                    raise ValueError('Projects refresh retired command slot out of range: ' + touch_id)
+                slots.insert(slot, action)
+                expected[action] = (touch_id, kind, 'blocked')
+        for index, action in enumerate(slots):
+            if group == 'commands' and action in RETIRED_PROJECTS_REFRESH_COMMANDS:
+                continue
             number = offset + index
             if group == 'commands' and action.startswith('cmd.server.ssh.'):
                 number = 561 if action == 'cmd.server.ssh.trust' else 562

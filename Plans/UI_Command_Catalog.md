@@ -4677,7 +4677,10 @@ negative_constraints:
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Commands_System.md'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'cmd.chat.worktree.bind_existing: retired non-alias; no primary handler, production-wiring row or dispatch
+  alias, and it does not route to the canonical assistant worktree commands (DL-335, under the negative constraint
+  above).'
 owner_hints:
 - Plans/UI_Command_Catalog.md
 ```
@@ -9722,6 +9725,16 @@ command_payload_definition_map:
       field: preserved_exact_tokens
       quote: cmd.chat.worktree.*
     note: Thread-scoped family; its concrete rows are UCC-058's.
+  - token: cmd.chat.worktree.bind_existing
+    disposition: retired_non_alias
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-058
+      field: stale_retired_dispositions
+      quote: 'cmd.chat.worktree.bind_existing: retired non-alias; no primary handler, production-wiring row or dispatch
+        alias'
+    note: 'Q5 resolution 4 (DL-335): UCC-058 forbids exposing Bind Existing as this command, so it is retired and gets
+      no definition.'
   - token: cmd.chat.{new,archive,delete,rename,pin,export,search}
     disposition: family_alias
     targets:
@@ -10375,12 +10388,7 @@ command_payload_definition_map:
     decision: DL-333
     reason: 'Q5 resolution 8: cmd.chat.new runs before a thread exists (thread_id is minted when the first user
       message commits); it carries draft identity (ChatNewRequestScopeV2).'
-  contested:
-  - command_id: cmd.chat.worktree.bind_existing
-    question_id: Q5-resolution-4
-    reason: 'Resolution 4 (retire as non-alias) is held in P0: dropping its production wiring row also changes the
-      projects-refresh command bindings census and its Touch closure profile, which this packet may not edit. Defined
-      by nobody until the coordinator rules.'
+  contested: []
 ```
 
 ## Usage GUI Propagation Addendum - 2026-07-09
@@ -20316,7 +20324,7 @@ canonical_text: 'No project is genuine application scope, with a named fixed Com
   cmd.chat.revoke_investigation_item, cmd.chat.rewind, cmd.chat.run_user_command, cmd.chat.search, cmd.chat.send,
   cmd.chat.settings, cmd.chat.stop, cmd.chat.switch_thread, cmd.chat.toggle_message_details, cmd.chat.web.cancel,
   cmd.chat.web.crawl, cmd.chat.web.extract, cmd.chat.web.fetch, cmd.chat.web.help, cmd.chat.web.map, cmd.chat.web.request_again,
-  cmd.chat.web.research, cmd.chat.web.search, cmd.chat.worktree, cmd.chat.worktree.bind_existing, cmd.chat.worktree.create,
+  cmd.chat.web.research, cmd.chat.web.search, cmd.chat.worktree, cmd.chat.worktree.create,
   cmd.chat.worktree.info, cmd.chat.worktree.merge, cmd.chat.worktree.pr, cmd.chat.worktree.remove, cmd.chat.worktree.unbind,
   cmd.file.copy_full_path, cmd.file.copy_nodes, cmd.file.copy_path, cmd.file.copy_relative_path, cmd.file.cut_nodes,
   cmd.file.delete, cmd.file.expand_capped, cmd.file.new_file, cmd.file.new_folder, cmd.file.open, cmd.file.open_in_system_default,
@@ -20328,7 +20336,9 @@ canonical_text: 'No project is genuine application scope, with a named fixed Com
   cmd.terminal.allow_agent_input, cmd.terminal.deny_agent_input, cmd.terminal.hand_back, cmd.terminal.interrupt,
   cmd.terminal.stop_agent, cmd.terminal.take_over, cmd.terminal.appearance.set, cmd.terminal.appearance.import_scheme,
   cmd.terminal.clear, cmd.terminal.revoke_agent_input, cmd.terminal.send_signal, cmd.chat.queue.send_now,
-  cmd.chat.processes.open. Native availability remains handler_unavailable. Resolve the selected WorkflowScopeV2:
+  cmd.chat.processes.open. cmd.chat.worktree.bind_existing is not one of them: DL-335 retires it as a non-alias
+  because UCC-058 forbids exposing it, and its Touch row TCP-FB-259 stays blocked. Native availability remains
+  handler_unavailable. Resolve the selected WorkflowScopeV2:
   application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required
   thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their
   actual Server scope without fabricating a thread; view-only and metadata reads require only their declared

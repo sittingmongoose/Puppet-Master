@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L1296-L7117
+Source lines: L1296-L7119
 
-Source SHA256: `861ac87872450ceb89a2f7922feac41e40b2b70ce7c948543553bdc11b7b804c`
+Source SHA256: `796f498459d5b977ca6c58043b719ad61743412a92639ad9b7dcf675f5e5d668`
 
 ---
 
@@ -1777,7 +1777,7 @@ plan_unit_id: UCC-032
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Project management and deferred wizard command IDs cover adding/opening projects, creating local or GitHub-backed projects, and opening deferred Planning Wizard handoff payloads with the required args, events, and affected surfaces.
+canonical_text: Project management and deferred wizard command IDs cover adding/opening projects, creating local or GitHub-backed projects, and opening deferred chain wizard payloads with the required args, events, and affected surfaces.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -1818,8 +1818,7 @@ preserved_exact_tokens:
 negative_constraints: []
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/GitHub_Integration.md#d-project-management-flows-no-chain-wizard-required, ContractName:Plans/chain-wizard-flexibility.md'
-compatibility_only_notes:
-- '`cmd.project.chain_wizard_open_deferred` and chain wizard deferred payloads are legacy compatibility names only; current surfaces route the deferred handoff to Planning Wizard.'
+compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
 - Plans/UI_Command_Catalog.md
@@ -3392,7 +3391,10 @@ negative_constraints:
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Commands_System.md'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'cmd.chat.worktree.bind_existing: retired non-alias; no primary handler, production-wiring row or dispatch
+  alias, and it does not route to the canonical assistant worktree commands (DL-335, under the negative constraint
+  above).'
 owner_hints:
 - Plans/UI_Command_Catalog.md
 ```
