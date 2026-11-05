@@ -148,6 +148,16 @@ def validate_dependency_presence(dependency, field):
     require(dependency is not None, 'missing dependency ' + field)
 
 
+def validate_workgraph_id(value, slot):
+    """Validate the owner-read ID before joining it to another owner record.
+
+    Nonempty is a string predicate; a non-string has only the type defect here.
+    Boundary fixtures exercise these predicates without an unrelated peer join.
+    """
+    require(type(value) is str, 'workgraph ID string type ' + slot)
+    require(type(value) is not str or bool(value), 'workgraph ID nonempty ' + slot)
+
+
 def canonical(value):
     # Preserve the owner's RFC8785 recipe, including ECMAScript number bytes and
     # UTF-16 property ordering. The fixture input domain still refuses floats.
@@ -517,8 +527,9 @@ def validate_capture(contract, payload, capture, *, historical=False):
                     'account interpretation requires original snapshots')
     if 'node' in records:
         node, run = records['node']['body'], records['run']['body']
-        require(all(type(body['workgraph_id']) is str and bool(body['workgraph_id'])
-                    and type(body['workgraph_revision']) is int and body['workgraph_revision'] >= 1
+        validate_workgraph_id(node['workgraph_id'], 'node')
+        validate_workgraph_id(run['workgraph_id'], 'run')
+        require(all(type(body['workgraph_revision']) is int and body['workgraph_revision'] >= 1
                     for body in (node, run))
                 and node['workgraph_id'] == run['workgraph_id']
                 and node['workgraph_revision'] == run['workgraph_revision'], 'installed graph join')
@@ -893,9 +904,23 @@ def main(family_name=None):
         if result != case['expected'] or reason != case.get('reason'):
             failures.append(['helper', case['case'], result, reason])
     count, traces, score_cases, schema_cases, ref_cases, history_cases, numeric_cases, type_cases = 0, 0, 0, 0, 0, 0, 0, 0
+    workgraph_id_cases = 0
     require(set(families) == {c['event_type'] for c in contracts}, 'fixture family closure')
     for contract in contracts:
         family = families[contract['event_type']]
+        for case in family.get('workgraph_id_cases', []):
+            workgraph_id_cases += 1
+            # These are owner-read boundary cases, not full-capture negatives.
+            # The valid seed comes from the real capture's named owner record.
+            seed = family['baseline']['capture']['records'][case['slot']]['body']['workgraph_id']
+            validate_workgraph_id(seed, case['slot'])
+            try:
+                validate_workgraph_id(case['value'], case['slot'])
+                result, reason = 'accept', None
+            except ValueError as error:
+                result, reason = 'reject', str(error)
+            if result != case['expected'] or reason != case.get('reason'):
+                failures.append([contract['event_type'], case['case'], result, reason])
         for case in type_fixtures[contract['event_type']]:
             type_cases += 1
             seed, specimen = type_case_specimens(family, [row for row in shapes if row['event_type'] == contract['event_type']], case)
@@ -1005,7 +1030,7 @@ def main(family_name=None):
                 result = 'reject'
             if result != case['expected']:
                 failures.append([contract['event_type'], case['case'], result])
-    print(json.dumps({'status': 'fail' if failures else 'pass', 'families': len(families), 'source_transition_cases': count, 'receipt_replay_withdrawal_traces': traces, 'source_score_domain_cases': score_cases, 'isolated_schema_cases': schema_cases, 'schema_reference_cases': ref_cases, 'historical_read_cases': history_cases, 'numeric_boundary_cases': numeric_cases, 'exact_type_cases': type_cases, 'canonical_golden_cases': len(fixture_doc.get('canonical_golden_cases', [])), 'helper_cases': len(helper_cases), 'failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
+    print(json.dumps({'status': 'fail' if failures else 'pass', 'families': len(families), 'source_transition_cases': count, 'receipt_replay_withdrawal_traces': traces, 'source_score_domain_cases': score_cases, 'isolated_schema_cases': schema_cases, 'schema_reference_cases': ref_cases, 'historical_read_cases': history_cases, 'numeric_boundary_cases': numeric_cases, 'exact_type_cases': type_cases, 'workgraph_id_boundary_cases': workgraph_id_cases, 'canonical_golden_cases': len(fixture_doc.get('canonical_golden_cases', [])), 'helper_cases': len(helper_cases), 'failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
     return bool(failures)
 
 

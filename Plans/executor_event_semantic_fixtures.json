@@ -12368,189 +12368,6 @@
           ]
         },
         {
-          "case": "F17-node-workgraph_id-boolean",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": true
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "facdfb37980a991737bea9d1dd6840c0a2e93d52653ecbe292a118149ae4b908"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": true
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "facdfb37980a991737bea9d1dd6840c0a2e93d52653ecbe292a118149ae4b908"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-integer",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-float",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-null",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "daef9ff6274cc6b9a7ffe26d7f2883b17bdeebafc4bfc8f3c63603520f70ed06"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "daef9ff6274cc6b9a7ffe26d7f2883b17bdeebafc4bfc8f3c63603520f70ed06"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-array",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "497eb1d796408cdd4f7e5342a1686e730e9dff38db1e1eff49100010b7e2946d"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "497eb1d796408cdd4f7e5342a1686e730e9dff38db1e1eff49100010b7e2946d"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-object",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "6ca3364817248b287b01f7a4108945b4ca3b05485bea77a554f2e9eb5cf15a6f"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "6ca3364817248b287b01f7a4108945b4ca3b05485bea77a554f2e9eb5cf15a6f"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-empty",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "49bb07d33713c755b713c22728935d129fcf4ae8ba48b25bf875cf449e86c99d"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "49bb07d33713c755b713c22728935d129fcf4ae8ba48b25bf875cf449e86c99d"
-            }
-          ]
-        },
-        {
           "case": "F17-run-workgraph_revision-boolean",
           "changes": [
             {
@@ -12709,40 +12526,40 @@
           ]
         },
         {
-          "case": "F17-run-workgraph_id-boolean",
+          "case": "F20-node-workgraph_id-peer-disagreement",
           "changes": [
             {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": true
+              "path": "capture/records/node/body/workgraph_id",
+              "value": "graph-other"
             },
             {
-              "path": "capture/records/run/sha256",
-              "value": "3b4aba3a0e361c699b7f344b37633f38a75e9f44021121546da9d0bec82f6abc"
+              "path": "capture/records/node/sha256",
+              "value": "622f49e7acca16e8d5ac4101deda3a2575ccbe93c57ad501cc266b9a2d761909"
             }
           ],
           "expected": "reject",
           "seed_changes": [],
           "defect_changes": [
             {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": true
+              "path": "capture/records/node/body/workgraph_id",
+              "value": "graph-other"
             },
             {
-              "path": "capture/records/run/sha256",
-              "value": "3b4aba3a0e361c699b7f344b37633f38a75e9f44021121546da9d0bec82f6abc"
+              "path": "capture/records/node/sha256",
+              "value": "622f49e7acca16e8d5ac4101deda3a2575ccbe93c57ad501cc266b9a2d761909"
             }
           ]
         },
         {
-          "case": "F17-run-workgraph_id-integer",
+          "case": "F20-run-workgraph_id-peer-disagreement",
           "changes": [
             {
               "path": "capture/records/run/body/workgraph_id",
-              "value": 1
+              "value": "graph-other"
             },
             {
               "path": "capture/records/run/sha256",
-              "value": "a29e1236989bc435a7f733914d2e140493cee47edcbb1d714e267b5b9b42b109"
+              "value": "b583dda44de99d641001966950cc8bf0d1977e9b41298e01289d1861e676276c"
             }
           ],
           "expected": "reject",
@@ -12750,144 +12567,11 @@
           "defect_changes": [
             {
               "path": "capture/records/run/body/workgraph_id",
-              "value": 1
+              "value": "graph-other"
             },
             {
               "path": "capture/records/run/sha256",
-              "value": "a29e1236989bc435a7f733914d2e140493cee47edcbb1d714e267b5b9b42b109"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-float",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "a29e1236989bc435a7f733914d2e140493cee47edcbb1d714e267b5b9b42b109"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "a29e1236989bc435a7f733914d2e140493cee47edcbb1d714e267b5b9b42b109"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-null",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "6bb631a4e13cd97ff81256dea528bbfbcbb081aa33e302a8ae8c383ff7e2c2b0"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "6bb631a4e13cd97ff81256dea528bbfbcbb081aa33e302a8ae8c383ff7e2c2b0"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-array",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "ac266d9eb00c40ebaceec74fce48da6fdf185a660a544712595ffb4a1741a5ab"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "ac266d9eb00c40ebaceec74fce48da6fdf185a660a544712595ffb4a1741a5ab"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-object",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "dc0bfd7ba4da4de242d67039dd5399dc44b7a9a3145d722a6ce1be1d7e2ac1ce"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "dc0bfd7ba4da4de242d67039dd5399dc44b7a9a3145d722a6ce1be1d7e2ac1ce"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-empty",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "ab0aabf91acdb323da64d27d4598c2bb4a6955a721ea13836d80f472ab37a2de"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "ab0aabf91acdb323da64d27d4598c2bb4a6955a721ea13836d80f472ab37a2de"
+              "value": "b583dda44de99d641001966950cc8bf0d1977e9b41298e01289d1861e676276c"
             }
           ]
         }
@@ -40082,6 +39766,114 @@
           "spelling": "\"\"",
           "expected": "reject"
         }
+      ],
+      "workgraph_id_cases": [
+        {
+          "case": "F17-node-workgraph_id-boolean",
+          "slot": "node",
+          "value": true,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-integer",
+          "slot": "node",
+          "value": 1,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-float",
+          "slot": "node",
+          "value": 1.0,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-null",
+          "slot": "node",
+          "value": null,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-array",
+          "slot": "node",
+          "value": [
+            "graph-001"
+          ],
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-object",
+          "slot": "node",
+          "value": {
+            "id": "graph-001"
+          },
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-empty",
+          "slot": "node",
+          "value": "",
+          "expected": "reject",
+          "reason": "workgraph ID nonempty node"
+        },
+        {
+          "case": "F17-run-workgraph_id-boolean",
+          "slot": "run",
+          "value": true,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-integer",
+          "slot": "run",
+          "value": 1,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-float",
+          "slot": "run",
+          "value": 1.0,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-null",
+          "slot": "run",
+          "value": null,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-array",
+          "slot": "run",
+          "value": [
+            "graph-001"
+          ],
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-object",
+          "slot": "run",
+          "value": {
+            "id": "graph-001"
+          },
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-empty",
+          "slot": "run",
+          "value": "",
+          "expected": "reject",
+          "reason": "workgraph ID nonempty run"
+        }
       ]
     },
     "attempt.started": {
@@ -53626,189 +53418,6 @@
           ]
         },
         {
-          "case": "F17-node-workgraph_id-boolean",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": true
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "facdfb37980a991737bea9d1dd6840c0a2e93d52653ecbe292a118149ae4b908"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": true
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "facdfb37980a991737bea9d1dd6840c0a2e93d52653ecbe292a118149ae4b908"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-integer",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-float",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-null",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "daef9ff6274cc6b9a7ffe26d7f2883b17bdeebafc4bfc8f3c63603520f70ed06"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "daef9ff6274cc6b9a7ffe26d7f2883b17bdeebafc4bfc8f3c63603520f70ed06"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-array",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "497eb1d796408cdd4f7e5342a1686e730e9dff38db1e1eff49100010b7e2946d"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "497eb1d796408cdd4f7e5342a1686e730e9dff38db1e1eff49100010b7e2946d"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-object",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "6ca3364817248b287b01f7a4108945b4ca3b05485bea77a554f2e9eb5cf15a6f"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "6ca3364817248b287b01f7a4108945b4ca3b05485bea77a554f2e9eb5cf15a6f"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-empty",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "49bb07d33713c755b713c22728935d129fcf4ae8ba48b25bf875cf449e86c99d"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "49bb07d33713c755b713c22728935d129fcf4ae8ba48b25bf875cf449e86c99d"
-            }
-          ]
-        },
-        {
           "case": "F17-run-workgraph_revision-boolean",
           "changes": [
             {
@@ -53967,40 +53576,40 @@
           ]
         },
         {
-          "case": "F17-run-workgraph_id-boolean",
+          "case": "F20-node-workgraph_id-peer-disagreement",
           "changes": [
             {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": true
+              "path": "capture/records/node/body/workgraph_id",
+              "value": "graph-other"
             },
             {
-              "path": "capture/records/run/sha256",
-              "value": "3b4aba3a0e361c699b7f344b37633f38a75e9f44021121546da9d0bec82f6abc"
+              "path": "capture/records/node/sha256",
+              "value": "622f49e7acca16e8d5ac4101deda3a2575ccbe93c57ad501cc266b9a2d761909"
             }
           ],
           "expected": "reject",
           "seed_changes": [],
           "defect_changes": [
             {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": true
+              "path": "capture/records/node/body/workgraph_id",
+              "value": "graph-other"
             },
             {
-              "path": "capture/records/run/sha256",
-              "value": "3b4aba3a0e361c699b7f344b37633f38a75e9f44021121546da9d0bec82f6abc"
+              "path": "capture/records/node/sha256",
+              "value": "622f49e7acca16e8d5ac4101deda3a2575ccbe93c57ad501cc266b9a2d761909"
             }
           ]
         },
         {
-          "case": "F17-run-workgraph_id-integer",
+          "case": "F20-run-workgraph_id-peer-disagreement",
           "changes": [
             {
               "path": "capture/records/run/body/workgraph_id",
-              "value": 1
+              "value": "graph-other"
             },
             {
               "path": "capture/records/run/sha256",
-              "value": "a29e1236989bc435a7f733914d2e140493cee47edcbb1d714e267b5b9b42b109"
+              "value": "b583dda44de99d641001966950cc8bf0d1977e9b41298e01289d1861e676276c"
             }
           ],
           "expected": "reject",
@@ -54008,144 +53617,11 @@
           "defect_changes": [
             {
               "path": "capture/records/run/body/workgraph_id",
-              "value": 1
+              "value": "graph-other"
             },
             {
               "path": "capture/records/run/sha256",
-              "value": "a29e1236989bc435a7f733914d2e140493cee47edcbb1d714e267b5b9b42b109"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-float",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "a29e1236989bc435a7f733914d2e140493cee47edcbb1d714e267b5b9b42b109"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "a29e1236989bc435a7f733914d2e140493cee47edcbb1d714e267b5b9b42b109"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-null",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "6bb631a4e13cd97ff81256dea528bbfbcbb081aa33e302a8ae8c383ff7e2c2b0"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "6bb631a4e13cd97ff81256dea528bbfbcbb081aa33e302a8ae8c383ff7e2c2b0"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-array",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "ac266d9eb00c40ebaceec74fce48da6fdf185a660a544712595ffb4a1741a5ab"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "ac266d9eb00c40ebaceec74fce48da6fdf185a660a544712595ffb4a1741a5ab"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-object",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "dc0bfd7ba4da4de242d67039dd5399dc44b7a9a3145d722a6ce1be1d7e2ac1ce"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "dc0bfd7ba4da4de242d67039dd5399dc44b7a9a3145d722a6ce1be1d7e2ac1ce"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-empty",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "ab0aabf91acdb323da64d27d4598c2bb4a6955a721ea13836d80f472ab37a2de"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "ab0aabf91acdb323da64d27d4598c2bb4a6955a721ea13836d80f472ab37a2de"
+              "value": "b583dda44de99d641001966950cc8bf0d1977e9b41298e01289d1861e676276c"
             }
           ]
         }
@@ -89937,6 +89413,114 @@
           "spelling": "\"\"",
           "expected": "reject"
         }
+      ],
+      "workgraph_id_cases": [
+        {
+          "case": "F17-node-workgraph_id-boolean",
+          "slot": "node",
+          "value": true,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-integer",
+          "slot": "node",
+          "value": 1,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-float",
+          "slot": "node",
+          "value": 1.0,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-null",
+          "slot": "node",
+          "value": null,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-array",
+          "slot": "node",
+          "value": [
+            "graph-001"
+          ],
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-object",
+          "slot": "node",
+          "value": {
+            "id": "graph-001"
+          },
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-empty",
+          "slot": "node",
+          "value": "",
+          "expected": "reject",
+          "reason": "workgraph ID nonempty node"
+        },
+        {
+          "case": "F17-run-workgraph_id-boolean",
+          "slot": "run",
+          "value": true,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-integer",
+          "slot": "run",
+          "value": 1,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-float",
+          "slot": "run",
+          "value": 1.0,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-null",
+          "slot": "run",
+          "value": null,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-array",
+          "slot": "run",
+          "value": [
+            "graph-001"
+          ],
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-object",
+          "slot": "run",
+          "value": {
+            "id": "graph-001"
+          },
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-empty",
+          "slot": "run",
+          "value": "",
+          "expected": "reject",
+          "reason": "workgraph ID nonempty run"
+        }
       ]
     },
     "node.blocked": {
@@ -103066,189 +102650,6 @@
           ]
         },
         {
-          "case": "F17-node-workgraph_id-boolean",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": true
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "facdfb37980a991737bea9d1dd6840c0a2e93d52653ecbe292a118149ae4b908"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": true
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "facdfb37980a991737bea9d1dd6840c0a2e93d52653ecbe292a118149ae4b908"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-integer",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-float",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-null",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "daef9ff6274cc6b9a7ffe26d7f2883b17bdeebafc4bfc8f3c63603520f70ed06"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "daef9ff6274cc6b9a7ffe26d7f2883b17bdeebafc4bfc8f3c63603520f70ed06"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-array",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "497eb1d796408cdd4f7e5342a1686e730e9dff38db1e1eff49100010b7e2946d"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "497eb1d796408cdd4f7e5342a1686e730e9dff38db1e1eff49100010b7e2946d"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-object",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "6ca3364817248b287b01f7a4108945b4ca3b05485bea77a554f2e9eb5cf15a6f"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "6ca3364817248b287b01f7a4108945b4ca3b05485bea77a554f2e9eb5cf15a6f"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-empty",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "49bb07d33713c755b713c22728935d129fcf4ae8ba48b25bf875cf449e86c99d"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "49bb07d33713c755b713c22728935d129fcf4ae8ba48b25bf875cf449e86c99d"
-            }
-          ]
-        },
-        {
           "case": "F17-run-workgraph_revision-boolean",
           "changes": [
             {
@@ -103407,40 +102808,40 @@
           ]
         },
         {
-          "case": "F17-run-workgraph_id-boolean",
+          "case": "F20-node-workgraph_id-peer-disagreement",
           "changes": [
             {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": true
+              "path": "capture/records/node/body/workgraph_id",
+              "value": "graph-other"
             },
             {
-              "path": "capture/records/run/sha256",
-              "value": "3b4aba3a0e361c699b7f344b37633f38a75e9f44021121546da9d0bec82f6abc"
+              "path": "capture/records/node/sha256",
+              "value": "622f49e7acca16e8d5ac4101deda3a2575ccbe93c57ad501cc266b9a2d761909"
             }
           ],
           "expected": "reject",
           "seed_changes": [],
           "defect_changes": [
             {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": true
+              "path": "capture/records/node/body/workgraph_id",
+              "value": "graph-other"
             },
             {
-              "path": "capture/records/run/sha256",
-              "value": "3b4aba3a0e361c699b7f344b37633f38a75e9f44021121546da9d0bec82f6abc"
+              "path": "capture/records/node/sha256",
+              "value": "622f49e7acca16e8d5ac4101deda3a2575ccbe93c57ad501cc266b9a2d761909"
             }
           ]
         },
         {
-          "case": "F17-run-workgraph_id-integer",
+          "case": "F20-run-workgraph_id-peer-disagreement",
           "changes": [
             {
               "path": "capture/records/run/body/workgraph_id",
-              "value": 1
+              "value": "graph-other"
             },
             {
               "path": "capture/records/run/sha256",
-              "value": "a29e1236989bc435a7f733914d2e140493cee47edcbb1d714e267b5b9b42b109"
+              "value": "b583dda44de99d641001966950cc8bf0d1977e9b41298e01289d1861e676276c"
             }
           ],
           "expected": "reject",
@@ -103448,144 +102849,11 @@
           "defect_changes": [
             {
               "path": "capture/records/run/body/workgraph_id",
-              "value": 1
+              "value": "graph-other"
             },
             {
               "path": "capture/records/run/sha256",
-              "value": "a29e1236989bc435a7f733914d2e140493cee47edcbb1d714e267b5b9b42b109"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-float",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "a29e1236989bc435a7f733914d2e140493cee47edcbb1d714e267b5b9b42b109"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "a29e1236989bc435a7f733914d2e140493cee47edcbb1d714e267b5b9b42b109"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-null",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "6bb631a4e13cd97ff81256dea528bbfbcbb081aa33e302a8ae8c383ff7e2c2b0"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "6bb631a4e13cd97ff81256dea528bbfbcbb081aa33e302a8ae8c383ff7e2c2b0"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-array",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "ac266d9eb00c40ebaceec74fce48da6fdf185a660a544712595ffb4a1741a5ab"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "ac266d9eb00c40ebaceec74fce48da6fdf185a660a544712595ffb4a1741a5ab"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-object",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "dc0bfd7ba4da4de242d67039dd5399dc44b7a9a3145d722a6ce1be1d7e2ac1ce"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "dc0bfd7ba4da4de242d67039dd5399dc44b7a9a3145d722a6ce1be1d7e2ac1ce"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-empty",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "ab0aabf91acdb323da64d27d4598c2bb4a6955a721ea13836d80f472ab37a2de"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "ab0aabf91acdb323da64d27d4598c2bb4a6955a721ea13836d80f472ab37a2de"
+              "value": "b583dda44de99d641001966950cc8bf0d1977e9b41298e01289d1861e676276c"
             }
           ]
         }
@@ -123412,6 +122680,114 @@
           "spelling": "\"\"",
           "expected": "reject"
         }
+      ],
+      "workgraph_id_cases": [
+        {
+          "case": "F17-node-workgraph_id-boolean",
+          "slot": "node",
+          "value": true,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-integer",
+          "slot": "node",
+          "value": 1,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-float",
+          "slot": "node",
+          "value": 1.0,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-null",
+          "slot": "node",
+          "value": null,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-array",
+          "slot": "node",
+          "value": [
+            "graph-001"
+          ],
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-object",
+          "slot": "node",
+          "value": {
+            "id": "graph-001"
+          },
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-empty",
+          "slot": "node",
+          "value": "",
+          "expected": "reject",
+          "reason": "workgraph ID nonempty node"
+        },
+        {
+          "case": "F17-run-workgraph_id-boolean",
+          "slot": "run",
+          "value": true,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-integer",
+          "slot": "run",
+          "value": 1,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-float",
+          "slot": "run",
+          "value": 1.0,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-null",
+          "slot": "run",
+          "value": null,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-array",
+          "slot": "run",
+          "value": [
+            "graph-001"
+          ],
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-object",
+          "slot": "run",
+          "value": {
+            "id": "graph-001"
+          },
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-empty",
+          "slot": "run",
+          "value": "",
+          "expected": "reject",
+          "reason": "workgraph ID nonempty run"
+        }
       ]
     },
     "node.completed": {
@@ -134042,189 +133418,6 @@
           ]
         },
         {
-          "case": "F17-node-workgraph_id-boolean",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": true
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "2ca3e084524f387edd90bc6763c5f38bd025f1586046013ab1e44c15daa0a718"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": true
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "2ca3e084524f387edd90bc6763c5f38bd025f1586046013ab1e44c15daa0a718"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-integer",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "c5d01698df79344c8f1004ee16fea473a9d0f7869f4dc222599b50171999e63b"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "c5d01698df79344c8f1004ee16fea473a9d0f7869f4dc222599b50171999e63b"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-float",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "c5d01698df79344c8f1004ee16fea473a9d0f7869f4dc222599b50171999e63b"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "c5d01698df79344c8f1004ee16fea473a9d0f7869f4dc222599b50171999e63b"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-null",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "83bb2e4ab907288e00469e8b1ebddc34b5f5fce05b57988927494927793f1024"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "83bb2e4ab907288e00469e8b1ebddc34b5f5fce05b57988927494927793f1024"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-array",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "c8de9bb232475b9f33684ba4adb95c92d457e554a51c3006ae671fec2c39ed28"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "c8de9bb232475b9f33684ba4adb95c92d457e554a51c3006ae671fec2c39ed28"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-object",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "6c591d687e58f3aa32d6fc341b5840861b0cd873c11ab1e7bf55abb12192831f"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "6c591d687e58f3aa32d6fc341b5840861b0cd873c11ab1e7bf55abb12192831f"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-empty",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "86357ee1df1747ea375b1e152e0037271145824ca8ba4ccec7cda19f304b8008"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "86357ee1df1747ea375b1e152e0037271145824ca8ba4ccec7cda19f304b8008"
-            }
-          ]
-        },
-        {
           "case": "F17-run-workgraph_revision-boolean",
           "changes": [
             {
@@ -134383,40 +133576,40 @@
           ]
         },
         {
-          "case": "F17-run-workgraph_id-boolean",
+          "case": "F20-node-workgraph_id-peer-disagreement",
           "changes": [
             {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": true
+              "path": "capture/records/node/body/workgraph_id",
+              "value": "graph-other"
             },
             {
-              "path": "capture/records/run/sha256",
-              "value": "00278c106ac56eea41e13f8a4fa75a7756efa0e4d5b1fab0e47d289e8d7f86ed"
+              "path": "capture/records/node/sha256",
+              "value": "571f3a8bf1a10e6c5165c63f129afa3ade8b27b241f9ecf6fd4e231dd2c4cc4f"
             }
           ],
           "expected": "reject",
           "seed_changes": [],
           "defect_changes": [
             {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": true
+              "path": "capture/records/node/body/workgraph_id",
+              "value": "graph-other"
             },
             {
-              "path": "capture/records/run/sha256",
-              "value": "00278c106ac56eea41e13f8a4fa75a7756efa0e4d5b1fab0e47d289e8d7f86ed"
+              "path": "capture/records/node/sha256",
+              "value": "571f3a8bf1a10e6c5165c63f129afa3ade8b27b241f9ecf6fd4e231dd2c4cc4f"
             }
           ]
         },
         {
-          "case": "F17-run-workgraph_id-integer",
+          "case": "F20-run-workgraph_id-peer-disagreement",
           "changes": [
             {
               "path": "capture/records/run/body/workgraph_id",
-              "value": 1
+              "value": "graph-other"
             },
             {
               "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
+              "value": "7b77a796f6891919ab472a6a237c5283fb7c01ff976315aff8af0bd9ceb2c22b"
             }
           ],
           "expected": "reject",
@@ -134424,144 +133617,11 @@
           "defect_changes": [
             {
               "path": "capture/records/run/body/workgraph_id",
-              "value": 1
+              "value": "graph-other"
             },
             {
               "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-float",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-null",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "a61cc828c302eeb4a793bba425ea17e94256d5235bf065900a23fb6bdfe60488"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "a61cc828c302eeb4a793bba425ea17e94256d5235bf065900a23fb6bdfe60488"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-array",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "b1130d556f25bd52edf57b0f9c0a9ab67bbb26c1ff6be93d6559a1ec44d481e9"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "b1130d556f25bd52edf57b0f9c0a9ab67bbb26c1ff6be93d6559a1ec44d481e9"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-object",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "886a700fe7fe5edcc1c82289baf17009cc760992c8a5f71d3f5f393f973e9f11"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "886a700fe7fe5edcc1c82289baf17009cc760992c8a5f71d3f5f393f973e9f11"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-empty",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "e0ed8413462194042184c9709bdcbb71cbcea18b9aa5ac553a2dbb89d09a1d99"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "e0ed8413462194042184c9709bdcbb71cbcea18b9aa5ac553a2dbb89d09a1d99"
+              "value": "7b77a796f6891919ab472a6a237c5283fb7c01ff976315aff8af0bd9ceb2c22b"
             }
           ]
         }
@@ -157059,6 +156119,114 @@
           "spelling": "\"\"",
           "expected": "reject"
         }
+      ],
+      "workgraph_id_cases": [
+        {
+          "case": "F17-node-workgraph_id-boolean",
+          "slot": "node",
+          "value": true,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-integer",
+          "slot": "node",
+          "value": 1,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-float",
+          "slot": "node",
+          "value": 1.0,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-null",
+          "slot": "node",
+          "value": null,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-array",
+          "slot": "node",
+          "value": [
+            "graph-001"
+          ],
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-object",
+          "slot": "node",
+          "value": {
+            "id": "graph-001"
+          },
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-empty",
+          "slot": "node",
+          "value": "",
+          "expected": "reject",
+          "reason": "workgraph ID nonempty node"
+        },
+        {
+          "case": "F17-run-workgraph_id-boolean",
+          "slot": "run",
+          "value": true,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-integer",
+          "slot": "run",
+          "value": 1,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-float",
+          "slot": "run",
+          "value": 1.0,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-null",
+          "slot": "run",
+          "value": null,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-array",
+          "slot": "run",
+          "value": [
+            "graph-001"
+          ],
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-object",
+          "slot": "run",
+          "value": {
+            "id": "graph-001"
+          },
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-empty",
+          "slot": "run",
+          "value": "",
+          "expected": "reject",
+          "reason": "workgraph ID nonempty run"
+        }
       ]
     },
     "node.started": {
@@ -167750,189 +166918,6 @@
           ]
         },
         {
-          "case": "F17-node-workgraph_id-boolean",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": true
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "9274600a88665cd79bf4b1b0190e052b7204d9958e8d543a945ca38b99a23070"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": true
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "9274600a88665cd79bf4b1b0190e052b7204d9958e8d543a945ca38b99a23070"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-integer",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "940b46207fa7a2ae3a96b4019429f8550c298713cc0dc272ebf0097c890e1f6b"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "940b46207fa7a2ae3a96b4019429f8550c298713cc0dc272ebf0097c890e1f6b"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-float",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "940b46207fa7a2ae3a96b4019429f8550c298713cc0dc272ebf0097c890e1f6b"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "940b46207fa7a2ae3a96b4019429f8550c298713cc0dc272ebf0097c890e1f6b"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-null",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "bb4c7cb0508ec0f73439bd284539f6c5b499038e8a5b6d5917aee8c5b7639c04"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "bb4c7cb0508ec0f73439bd284539f6c5b499038e8a5b6d5917aee8c5b7639c04"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-array",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "eb25e3d7417b6f5bdce45cc1da5d76e8eb88a0a3f8884ed6326b43ddabcfa628"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "eb25e3d7417b6f5bdce45cc1da5d76e8eb88a0a3f8884ed6326b43ddabcfa628"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-object",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "4c6f7eabfdacd75c261be7b3918e738084d10293edc653ced14babeecb70c3a0"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "4c6f7eabfdacd75c261be7b3918e738084d10293edc653ced14babeecb70c3a0"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-empty",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "e1b8549a783325fb000507bd236d3a9f3c4074eed2ab6f0b6e987dc778cad97b"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "e1b8549a783325fb000507bd236d3a9f3c4074eed2ab6f0b6e987dc778cad97b"
-            }
-          ]
-        },
-        {
           "case": "F17-run-workgraph_revision-boolean",
           "changes": [
             {
@@ -168091,40 +167076,40 @@
           ]
         },
         {
-          "case": "F17-run-workgraph_id-boolean",
+          "case": "F20-node-workgraph_id-peer-disagreement",
           "changes": [
             {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": true
+              "path": "capture/records/node/body/workgraph_id",
+              "value": "graph-other"
             },
             {
-              "path": "capture/records/run/sha256",
-              "value": "00278c106ac56eea41e13f8a4fa75a7756efa0e4d5b1fab0e47d289e8d7f86ed"
+              "path": "capture/records/node/sha256",
+              "value": "a5c2082560f5b8f9dd76494edd744d0906c5500d540a45191b11b6687d0ceb6d"
             }
           ],
           "expected": "reject",
           "seed_changes": [],
           "defect_changes": [
             {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": true
+              "path": "capture/records/node/body/workgraph_id",
+              "value": "graph-other"
             },
             {
-              "path": "capture/records/run/sha256",
-              "value": "00278c106ac56eea41e13f8a4fa75a7756efa0e4d5b1fab0e47d289e8d7f86ed"
+              "path": "capture/records/node/sha256",
+              "value": "a5c2082560f5b8f9dd76494edd744d0906c5500d540a45191b11b6687d0ceb6d"
             }
           ]
         },
         {
-          "case": "F17-run-workgraph_id-integer",
+          "case": "F20-run-workgraph_id-peer-disagreement",
           "changes": [
             {
               "path": "capture/records/run/body/workgraph_id",
-              "value": 1
+              "value": "graph-other"
             },
             {
               "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
+              "value": "7b77a796f6891919ab472a6a237c5283fb7c01ff976315aff8af0bd9ceb2c22b"
             }
           ],
           "expected": "reject",
@@ -168132,144 +167117,11 @@
           "defect_changes": [
             {
               "path": "capture/records/run/body/workgraph_id",
-              "value": 1
+              "value": "graph-other"
             },
             {
               "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-float",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-null",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "a61cc828c302eeb4a793bba425ea17e94256d5235bf065900a23fb6bdfe60488"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "a61cc828c302eeb4a793bba425ea17e94256d5235bf065900a23fb6bdfe60488"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-array",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "b1130d556f25bd52edf57b0f9c0a9ab67bbb26c1ff6be93d6559a1ec44d481e9"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "b1130d556f25bd52edf57b0f9c0a9ab67bbb26c1ff6be93d6559a1ec44d481e9"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-object",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "886a700fe7fe5edcc1c82289baf17009cc760992c8a5f71d3f5f393f973e9f11"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "886a700fe7fe5edcc1c82289baf17009cc760992c8a5f71d3f5f393f973e9f11"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-empty",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "e0ed8413462194042184c9709bdcbb71cbcea18b9aa5ac553a2dbb89d09a1d99"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "e0ed8413462194042184c9709bdcbb71cbcea18b9aa5ac553a2dbb89d09a1d99"
+              "value": "7b77a796f6891919ab472a6a237c5283fb7c01ff976315aff8af0bd9ceb2c22b"
             }
           ]
         }
@@ -190743,6 +189595,114 @@
           "spelling": "\"\"",
           "expected": "reject"
         }
+      ],
+      "workgraph_id_cases": [
+        {
+          "case": "F17-node-workgraph_id-boolean",
+          "slot": "node",
+          "value": true,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-integer",
+          "slot": "node",
+          "value": 1,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-float",
+          "slot": "node",
+          "value": 1.0,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-null",
+          "slot": "node",
+          "value": null,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-array",
+          "slot": "node",
+          "value": [
+            "graph-001"
+          ],
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-object",
+          "slot": "node",
+          "value": {
+            "id": "graph-001"
+          },
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-empty",
+          "slot": "node",
+          "value": "",
+          "expected": "reject",
+          "reason": "workgraph ID nonempty node"
+        },
+        {
+          "case": "F17-run-workgraph_id-boolean",
+          "slot": "run",
+          "value": true,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-integer",
+          "slot": "run",
+          "value": 1,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-float",
+          "slot": "run",
+          "value": 1.0,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-null",
+          "slot": "run",
+          "value": null,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-array",
+          "slot": "run",
+          "value": [
+            "graph-001"
+          ],
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-object",
+          "slot": "run",
+          "value": {
+            "id": "graph-001"
+          },
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-empty",
+          "slot": "run",
+          "value": "",
+          "expected": "reject",
+          "reason": "workgraph ID nonempty run"
+        }
       ]
     },
     "node.unblocked": {
@@ -200216,189 +199176,6 @@
           ]
         },
         {
-          "case": "F17-node-workgraph_id-boolean",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": true
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "facdfb37980a991737bea9d1dd6840c0a2e93d52653ecbe292a118149ae4b908"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": true
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "facdfb37980a991737bea9d1dd6840c0a2e93d52653ecbe292a118149ae4b908"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-integer",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-float",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-null",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "daef9ff6274cc6b9a7ffe26d7f2883b17bdeebafc4bfc8f3c63603520f70ed06"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "daef9ff6274cc6b9a7ffe26d7f2883b17bdeebafc4bfc8f3c63603520f70ed06"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-array",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "497eb1d796408cdd4f7e5342a1686e730e9dff38db1e1eff49100010b7e2946d"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "497eb1d796408cdd4f7e5342a1686e730e9dff38db1e1eff49100010b7e2946d"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-object",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "6ca3364817248b287b01f7a4108945b4ca3b05485bea77a554f2e9eb5cf15a6f"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "6ca3364817248b287b01f7a4108945b4ca3b05485bea77a554f2e9eb5cf15a6f"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-empty",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "49bb07d33713c755b713c22728935d129fcf4ae8ba48b25bf875cf449e86c99d"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "49bb07d33713c755b713c22728935d129fcf4ae8ba48b25bf875cf449e86c99d"
-            }
-          ]
-        },
-        {
           "case": "F17-run-workgraph_revision-boolean",
           "changes": [
             {
@@ -200557,40 +199334,40 @@
           ]
         },
         {
-          "case": "F17-run-workgraph_id-boolean",
+          "case": "F20-node-workgraph_id-peer-disagreement",
           "changes": [
             {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": true
+              "path": "capture/records/node/body/workgraph_id",
+              "value": "graph-other"
             },
             {
-              "path": "capture/records/run/sha256",
-              "value": "00278c106ac56eea41e13f8a4fa75a7756efa0e4d5b1fab0e47d289e8d7f86ed"
+              "path": "capture/records/node/sha256",
+              "value": "622f49e7acca16e8d5ac4101deda3a2575ccbe93c57ad501cc266b9a2d761909"
             }
           ],
           "expected": "reject",
           "seed_changes": [],
           "defect_changes": [
             {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": true
+              "path": "capture/records/node/body/workgraph_id",
+              "value": "graph-other"
             },
             {
-              "path": "capture/records/run/sha256",
-              "value": "00278c106ac56eea41e13f8a4fa75a7756efa0e4d5b1fab0e47d289e8d7f86ed"
+              "path": "capture/records/node/sha256",
+              "value": "622f49e7acca16e8d5ac4101deda3a2575ccbe93c57ad501cc266b9a2d761909"
             }
           ]
         },
         {
-          "case": "F17-run-workgraph_id-integer",
+          "case": "F20-run-workgraph_id-peer-disagreement",
           "changes": [
             {
               "path": "capture/records/run/body/workgraph_id",
-              "value": 1
+              "value": "graph-other"
             },
             {
               "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
+              "value": "7b77a796f6891919ab472a6a237c5283fb7c01ff976315aff8af0bd9ceb2c22b"
             }
           ],
           "expected": "reject",
@@ -200598,144 +199375,11 @@
           "defect_changes": [
             {
               "path": "capture/records/run/body/workgraph_id",
-              "value": 1
+              "value": "graph-other"
             },
             {
               "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-float",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-null",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "a61cc828c302eeb4a793bba425ea17e94256d5235bf065900a23fb6bdfe60488"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "a61cc828c302eeb4a793bba425ea17e94256d5235bf065900a23fb6bdfe60488"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-array",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "b1130d556f25bd52edf57b0f9c0a9ab67bbb26c1ff6be93d6559a1ec44d481e9"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "b1130d556f25bd52edf57b0f9c0a9ab67bbb26c1ff6be93d6559a1ec44d481e9"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-object",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "886a700fe7fe5edcc1c82289baf17009cc760992c8a5f71d3f5f393f973e9f11"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "886a700fe7fe5edcc1c82289baf17009cc760992c8a5f71d3f5f393f973e9f11"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-empty",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "e0ed8413462194042184c9709bdcbb71cbcea18b9aa5ac553a2dbb89d09a1d99"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "e0ed8413462194042184c9709bdcbb71cbcea18b9aa5ac553a2dbb89d09a1d99"
+              "value": "7b77a796f6891919ab472a6a237c5283fb7c01ff976315aff8af0bd9ceb2c22b"
             }
           ]
         }
@@ -211663,6 +210307,114 @@
           "field": "storage_instance_id",
           "spelling": "\"\"",
           "expected": "reject"
+        }
+      ],
+      "workgraph_id_cases": [
+        {
+          "case": "F17-node-workgraph_id-boolean",
+          "slot": "node",
+          "value": true,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-integer",
+          "slot": "node",
+          "value": 1,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-float",
+          "slot": "node",
+          "value": 1.0,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-null",
+          "slot": "node",
+          "value": null,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-array",
+          "slot": "node",
+          "value": [
+            "graph-001"
+          ],
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-object",
+          "slot": "node",
+          "value": {
+            "id": "graph-001"
+          },
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-empty",
+          "slot": "node",
+          "value": "",
+          "expected": "reject",
+          "reason": "workgraph ID nonempty node"
+        },
+        {
+          "case": "F17-run-workgraph_id-boolean",
+          "slot": "run",
+          "value": true,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-integer",
+          "slot": "run",
+          "value": 1,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-float",
+          "slot": "run",
+          "value": 1.0,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-null",
+          "slot": "run",
+          "value": null,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-array",
+          "slot": "run",
+          "value": [
+            "graph-001"
+          ],
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-object",
+          "slot": "run",
+          "value": {
+            "id": "graph-001"
+          },
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-empty",
+          "slot": "run",
+          "value": "",
+          "expected": "reject",
+          "reason": "workgraph ID nonempty run"
         }
       ]
     },
@@ -241381,189 +240133,6 @@
           ]
         },
         {
-          "case": "F17-node-workgraph_id-boolean",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": true
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "facdfb37980a991737bea9d1dd6840c0a2e93d52653ecbe292a118149ae4b908"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": true
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "facdfb37980a991737bea9d1dd6840c0a2e93d52653ecbe292a118149ae4b908"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-integer",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-float",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-null",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "daef9ff6274cc6b9a7ffe26d7f2883b17bdeebafc4bfc8f3c63603520f70ed06"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "daef9ff6274cc6b9a7ffe26d7f2883b17bdeebafc4bfc8f3c63603520f70ed06"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-array",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "497eb1d796408cdd4f7e5342a1686e730e9dff38db1e1eff49100010b7e2946d"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "497eb1d796408cdd4f7e5342a1686e730e9dff38db1e1eff49100010b7e2946d"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-object",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "6ca3364817248b287b01f7a4108945b4ca3b05485bea77a554f2e9eb5cf15a6f"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "6ca3364817248b287b01f7a4108945b4ca3b05485bea77a554f2e9eb5cf15a6f"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-empty",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "49bb07d33713c755b713c22728935d129fcf4ae8ba48b25bf875cf449e86c99d"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "49bb07d33713c755b713c22728935d129fcf4ae8ba48b25bf875cf449e86c99d"
-            }
-          ]
-        },
-        {
           "case": "F17-run-workgraph_revision-boolean",
           "changes": [
             {
@@ -241722,40 +240291,40 @@
           ]
         },
         {
-          "case": "F17-run-workgraph_id-boolean",
+          "case": "F20-node-workgraph_id-peer-disagreement",
           "changes": [
             {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": true
+              "path": "capture/records/node/body/workgraph_id",
+              "value": "graph-other"
             },
             {
-              "path": "capture/records/run/sha256",
-              "value": "00278c106ac56eea41e13f8a4fa75a7756efa0e4d5b1fab0e47d289e8d7f86ed"
+              "path": "capture/records/node/sha256",
+              "value": "622f49e7acca16e8d5ac4101deda3a2575ccbe93c57ad501cc266b9a2d761909"
             }
           ],
           "expected": "reject",
           "seed_changes": [],
           "defect_changes": [
             {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": true
+              "path": "capture/records/node/body/workgraph_id",
+              "value": "graph-other"
             },
             {
-              "path": "capture/records/run/sha256",
-              "value": "00278c106ac56eea41e13f8a4fa75a7756efa0e4d5b1fab0e47d289e8d7f86ed"
+              "path": "capture/records/node/sha256",
+              "value": "622f49e7acca16e8d5ac4101deda3a2575ccbe93c57ad501cc266b9a2d761909"
             }
           ]
         },
         {
-          "case": "F17-run-workgraph_id-integer",
+          "case": "F20-run-workgraph_id-peer-disagreement",
           "changes": [
             {
               "path": "capture/records/run/body/workgraph_id",
-              "value": 1
+              "value": "graph-other"
             },
             {
               "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
+              "value": "7b77a796f6891919ab472a6a237c5283fb7c01ff976315aff8af0bd9ceb2c22b"
             }
           ],
           "expected": "reject",
@@ -241763,144 +240332,11 @@
           "defect_changes": [
             {
               "path": "capture/records/run/body/workgraph_id",
-              "value": 1
+              "value": "graph-other"
             },
             {
               "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-float",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-null",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "a61cc828c302eeb4a793bba425ea17e94256d5235bf065900a23fb6bdfe60488"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "a61cc828c302eeb4a793bba425ea17e94256d5235bf065900a23fb6bdfe60488"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-array",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "b1130d556f25bd52edf57b0f9c0a9ab67bbb26c1ff6be93d6559a1ec44d481e9"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "b1130d556f25bd52edf57b0f9c0a9ab67bbb26c1ff6be93d6559a1ec44d481e9"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-object",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "886a700fe7fe5edcc1c82289baf17009cc760992c8a5f71d3f5f393f973e9f11"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "886a700fe7fe5edcc1c82289baf17009cc760992c8a5f71d3f5f393f973e9f11"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-empty",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "e0ed8413462194042184c9709bdcbb71cbcea18b9aa5ac553a2dbb89d09a1d99"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "e0ed8413462194042184c9709bdcbb71cbcea18b9aa5ac553a2dbb89d09a1d99"
+              "value": "7b77a796f6891919ab472a6a237c5283fb7c01ff976315aff8af0bd9ceb2c22b"
             }
           ]
         }
@@ -253545,6 +251981,114 @@
           "spelling": "\"\"",
           "expected": "reject"
         }
+      ],
+      "workgraph_id_cases": [
+        {
+          "case": "F17-node-workgraph_id-boolean",
+          "slot": "node",
+          "value": true,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-integer",
+          "slot": "node",
+          "value": 1,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-float",
+          "slot": "node",
+          "value": 1.0,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-null",
+          "slot": "node",
+          "value": null,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-array",
+          "slot": "node",
+          "value": [
+            "graph-001"
+          ],
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-object",
+          "slot": "node",
+          "value": {
+            "id": "graph-001"
+          },
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-empty",
+          "slot": "node",
+          "value": "",
+          "expected": "reject",
+          "reason": "workgraph ID nonempty node"
+        },
+        {
+          "case": "F17-run-workgraph_id-boolean",
+          "slot": "run",
+          "value": true,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-integer",
+          "slot": "run",
+          "value": 1,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-float",
+          "slot": "run",
+          "value": 1.0,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-null",
+          "slot": "run",
+          "value": null,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-array",
+          "slot": "run",
+          "value": [
+            "graph-001"
+          ],
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-object",
+          "slot": "run",
+          "value": {
+            "id": "graph-001"
+          },
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-empty",
+          "slot": "run",
+          "value": "",
+          "expected": "reject",
+          "reason": "workgraph ID nonempty run"
+        }
       ]
     },
     "remediation.spawned": {
@@ -263728,189 +262272,6 @@
           ]
         },
         {
-          "case": "F17-node-workgraph_id-boolean",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": true
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "facdfb37980a991737bea9d1dd6840c0a2e93d52653ecbe292a118149ae4b908"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": true
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "facdfb37980a991737bea9d1dd6840c0a2e93d52653ecbe292a118149ae4b908"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-integer",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-float",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-null",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "daef9ff6274cc6b9a7ffe26d7f2883b17bdeebafc4bfc8f3c63603520f70ed06"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "daef9ff6274cc6b9a7ffe26d7f2883b17bdeebafc4bfc8f3c63603520f70ed06"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-array",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "497eb1d796408cdd4f7e5342a1686e730e9dff38db1e1eff49100010b7e2946d"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "497eb1d796408cdd4f7e5342a1686e730e9dff38db1e1eff49100010b7e2946d"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-object",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "6ca3364817248b287b01f7a4108945b4ca3b05485bea77a554f2e9eb5cf15a6f"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "6ca3364817248b287b01f7a4108945b4ca3b05485bea77a554f2e9eb5cf15a6f"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-empty",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "49bb07d33713c755b713c22728935d129fcf4ae8ba48b25bf875cf449e86c99d"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "49bb07d33713c755b713c22728935d129fcf4ae8ba48b25bf875cf449e86c99d"
-            }
-          ]
-        },
-        {
           "case": "F17-run-workgraph_revision-boolean",
           "changes": [
             {
@@ -264069,40 +262430,40 @@
           ]
         },
         {
-          "case": "F17-run-workgraph_id-boolean",
+          "case": "F20-node-workgraph_id-peer-disagreement",
           "changes": [
             {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": true
+              "path": "capture/records/node/body/workgraph_id",
+              "value": "graph-other"
             },
             {
-              "path": "capture/records/run/sha256",
-              "value": "00278c106ac56eea41e13f8a4fa75a7756efa0e4d5b1fab0e47d289e8d7f86ed"
+              "path": "capture/records/node/sha256",
+              "value": "622f49e7acca16e8d5ac4101deda3a2575ccbe93c57ad501cc266b9a2d761909"
             }
           ],
           "expected": "reject",
           "seed_changes": [],
           "defect_changes": [
             {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": true
+              "path": "capture/records/node/body/workgraph_id",
+              "value": "graph-other"
             },
             {
-              "path": "capture/records/run/sha256",
-              "value": "00278c106ac56eea41e13f8a4fa75a7756efa0e4d5b1fab0e47d289e8d7f86ed"
+              "path": "capture/records/node/sha256",
+              "value": "622f49e7acca16e8d5ac4101deda3a2575ccbe93c57ad501cc266b9a2d761909"
             }
           ]
         },
         {
-          "case": "F17-run-workgraph_id-integer",
+          "case": "F20-run-workgraph_id-peer-disagreement",
           "changes": [
             {
               "path": "capture/records/run/body/workgraph_id",
-              "value": 1
+              "value": "graph-other"
             },
             {
               "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
+              "value": "7b77a796f6891919ab472a6a237c5283fb7c01ff976315aff8af0bd9ceb2c22b"
             }
           ],
           "expected": "reject",
@@ -264110,144 +262471,11 @@
           "defect_changes": [
             {
               "path": "capture/records/run/body/workgraph_id",
-              "value": 1
+              "value": "graph-other"
             },
             {
               "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-float",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-null",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "a61cc828c302eeb4a793bba425ea17e94256d5235bf065900a23fb6bdfe60488"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "a61cc828c302eeb4a793bba425ea17e94256d5235bf065900a23fb6bdfe60488"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-array",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "b1130d556f25bd52edf57b0f9c0a9ab67bbb26c1ff6be93d6559a1ec44d481e9"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "b1130d556f25bd52edf57b0f9c0a9ab67bbb26c1ff6be93d6559a1ec44d481e9"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-object",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "886a700fe7fe5edcc1c82289baf17009cc760992c8a5f71d3f5f393f973e9f11"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "886a700fe7fe5edcc1c82289baf17009cc760992c8a5f71d3f5f393f973e9f11"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-empty",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "e0ed8413462194042184c9709bdcbb71cbcea18b9aa5ac553a2dbb89d09a1d99"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "e0ed8413462194042184c9709bdcbb71cbcea18b9aa5ac553a2dbb89d09a1d99"
+              "value": "7b77a796f6891919ab472a6a237c5283fb7c01ff976315aff8af0bd9ceb2c22b"
             }
           ]
         }
@@ -275891,6 +274119,114 @@
           "field": "storage_instance_id",
           "spelling": "\"\"",
           "expected": "reject"
+        }
+      ],
+      "workgraph_id_cases": [
+        {
+          "case": "F17-node-workgraph_id-boolean",
+          "slot": "node",
+          "value": true,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-integer",
+          "slot": "node",
+          "value": 1,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-float",
+          "slot": "node",
+          "value": 1.0,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-null",
+          "slot": "node",
+          "value": null,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-array",
+          "slot": "node",
+          "value": [
+            "graph-001"
+          ],
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-object",
+          "slot": "node",
+          "value": {
+            "id": "graph-001"
+          },
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-empty",
+          "slot": "node",
+          "value": "",
+          "expected": "reject",
+          "reason": "workgraph ID nonempty node"
+        },
+        {
+          "case": "F17-run-workgraph_id-boolean",
+          "slot": "run",
+          "value": true,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-integer",
+          "slot": "run",
+          "value": 1,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-float",
+          "slot": "run",
+          "value": 1.0,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-null",
+          "slot": "run",
+          "value": null,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-array",
+          "slot": "run",
+          "value": [
+            "graph-001"
+          ],
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-object",
+          "slot": "run",
+          "value": {
+            "id": "graph-001"
+          },
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-empty",
+          "slot": "run",
+          "value": "",
+          "expected": "reject",
+          "reason": "workgraph ID nonempty run"
         }
       ]
     },
@@ -332887,189 +331223,6 @@
           ]
         },
         {
-          "case": "F17-node-workgraph_id-boolean",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": true
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "facdfb37980a991737bea9d1dd6840c0a2e93d52653ecbe292a118149ae4b908"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": true
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "facdfb37980a991737bea9d1dd6840c0a2e93d52653ecbe292a118149ae4b908"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-integer",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-float",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-null",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "daef9ff6274cc6b9a7ffe26d7f2883b17bdeebafc4bfc8f3c63603520f70ed06"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "daef9ff6274cc6b9a7ffe26d7f2883b17bdeebafc4bfc8f3c63603520f70ed06"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-array",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "497eb1d796408cdd4f7e5342a1686e730e9dff38db1e1eff49100010b7e2946d"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "497eb1d796408cdd4f7e5342a1686e730e9dff38db1e1eff49100010b7e2946d"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-object",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "6ca3364817248b287b01f7a4108945b4ca3b05485bea77a554f2e9eb5cf15a6f"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "6ca3364817248b287b01f7a4108945b4ca3b05485bea77a554f2e9eb5cf15a6f"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-empty",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "49bb07d33713c755b713c22728935d129fcf4ae8ba48b25bf875cf449e86c99d"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "49bb07d33713c755b713c22728935d129fcf4ae8ba48b25bf875cf449e86c99d"
-            }
-          ]
-        },
-        {
           "case": "F17-run-workgraph_revision-boolean",
           "changes": [
             {
@@ -333224,189 +331377,6 @@
             {
               "path": "capture/records/run/sha256",
               "value": "7f3f348b4f30e767ea5196a491ec644a09fbfafddc54918fab709c1ac391606e"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-boolean",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": true
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "00278c106ac56eea41e13f8a4fa75a7756efa0e4d5b1fab0e47d289e8d7f86ed"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": true
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "00278c106ac56eea41e13f8a4fa75a7756efa0e4d5b1fab0e47d289e8d7f86ed"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-integer",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": 1
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": 1
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-float",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-null",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "a61cc828c302eeb4a793bba425ea17e94256d5235bf065900a23fb6bdfe60488"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "a61cc828c302eeb4a793bba425ea17e94256d5235bf065900a23fb6bdfe60488"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-array",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "b1130d556f25bd52edf57b0f9c0a9ab67bbb26c1ff6be93d6559a1ec44d481e9"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "b1130d556f25bd52edf57b0f9c0a9ab67bbb26c1ff6be93d6559a1ec44d481e9"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-object",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "886a700fe7fe5edcc1c82289baf17009cc760992c8a5f71d3f5f393f973e9f11"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "886a700fe7fe5edcc1c82289baf17009cc760992c8a5f71d3f5f393f973e9f11"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-empty",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "e0ed8413462194042184c9709bdcbb71cbcea18b9aa5ac553a2dbb89d09a1d99"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "e0ed8413462194042184c9709bdcbb71cbcea18b9aa5ac553a2dbb89d09a1d99"
             }
           ]
         },
@@ -334693,6 +332663,56 @@
             {
               "path": "capture/transition/observed_payload/ts",
               "value": "2026-11-04T12:00:00.1234567890123456789012345678901234567890123456789012345678900Z"
+            }
+          ]
+        },
+        {
+          "case": "F20-node-workgraph_id-peer-disagreement",
+          "changes": [
+            {
+              "path": "capture/records/node/body/workgraph_id",
+              "value": "graph-other"
+            },
+            {
+              "path": "capture/records/node/sha256",
+              "value": "622f49e7acca16e8d5ac4101deda3a2575ccbe93c57ad501cc266b9a2d761909"
+            }
+          ],
+          "expected": "reject",
+          "seed_changes": [],
+          "defect_changes": [
+            {
+              "path": "capture/records/node/body/workgraph_id",
+              "value": "graph-other"
+            },
+            {
+              "path": "capture/records/node/sha256",
+              "value": "622f49e7acca16e8d5ac4101deda3a2575ccbe93c57ad501cc266b9a2d761909"
+            }
+          ]
+        },
+        {
+          "case": "F20-run-workgraph_id-peer-disagreement",
+          "changes": [
+            {
+              "path": "capture/records/run/body/workgraph_id",
+              "value": "graph-other"
+            },
+            {
+              "path": "capture/records/run/sha256",
+              "value": "7b77a796f6891919ab472a6a237c5283fb7c01ff976315aff8af0bd9ceb2c22b"
+            }
+          ],
+          "expected": "reject",
+          "seed_changes": [],
+          "defect_changes": [
+            {
+              "path": "capture/records/run/body/workgraph_id",
+              "value": "graph-other"
+            },
+            {
+              "path": "capture/records/run/sha256",
+              "value": "7b77a796f6891919ab472a6a237c5283fb7c01ff976315aff8af0bd9ceb2c22b"
             }
           ]
         }
@@ -345600,6 +343620,114 @@
           "field": "storage_instance_id",
           "spelling": "\"\"",
           "expected": "reject"
+        }
+      ],
+      "workgraph_id_cases": [
+        {
+          "case": "F17-node-workgraph_id-boolean",
+          "slot": "node",
+          "value": true,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-integer",
+          "slot": "node",
+          "value": 1,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-float",
+          "slot": "node",
+          "value": 1.0,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-null",
+          "slot": "node",
+          "value": null,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-array",
+          "slot": "node",
+          "value": [
+            "graph-001"
+          ],
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-object",
+          "slot": "node",
+          "value": {
+            "id": "graph-001"
+          },
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-empty",
+          "slot": "node",
+          "value": "",
+          "expected": "reject",
+          "reason": "workgraph ID nonempty node"
+        },
+        {
+          "case": "F17-run-workgraph_id-boolean",
+          "slot": "run",
+          "value": true,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-integer",
+          "slot": "run",
+          "value": 1,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-float",
+          "slot": "run",
+          "value": 1.0,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-null",
+          "slot": "run",
+          "value": null,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-array",
+          "slot": "run",
+          "value": [
+            "graph-001"
+          ],
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-object",
+          "slot": "run",
+          "value": {
+            "id": "graph-001"
+          },
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-empty",
+          "slot": "run",
+          "value": "",
+          "expected": "reject",
+          "reason": "workgraph ID nonempty run"
         }
       ]
     },
@@ -362223,189 +360351,6 @@
           ]
         },
         {
-          "case": "F17-node-workgraph_id-boolean",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": true
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "facdfb37980a991737bea9d1dd6840c0a2e93d52653ecbe292a118149ae4b908"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": true
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "facdfb37980a991737bea9d1dd6840c0a2e93d52653ecbe292a118149ae4b908"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-integer",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-float",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-null",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "daef9ff6274cc6b9a7ffe26d7f2883b17bdeebafc4bfc8f3c63603520f70ed06"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "daef9ff6274cc6b9a7ffe26d7f2883b17bdeebafc4bfc8f3c63603520f70ed06"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-array",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "497eb1d796408cdd4f7e5342a1686e730e9dff38db1e1eff49100010b7e2946d"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "497eb1d796408cdd4f7e5342a1686e730e9dff38db1e1eff49100010b7e2946d"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-object",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "6ca3364817248b287b01f7a4108945b4ca3b05485bea77a554f2e9eb5cf15a6f"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "6ca3364817248b287b01f7a4108945b4ca3b05485bea77a554f2e9eb5cf15a6f"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-empty",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "49bb07d33713c755b713c22728935d129fcf4ae8ba48b25bf875cf449e86c99d"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "49bb07d33713c755b713c22728935d129fcf4ae8ba48b25bf875cf449e86c99d"
-            }
-          ]
-        },
-        {
           "case": "F17-run-workgraph_revision-boolean",
           "changes": [
             {
@@ -362560,189 +360505,6 @@
             {
               "path": "capture/records/run/sha256",
               "value": "7f3f348b4f30e767ea5196a491ec644a09fbfafddc54918fab709c1ac391606e"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-boolean",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": true
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "00278c106ac56eea41e13f8a4fa75a7756efa0e4d5b1fab0e47d289e8d7f86ed"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": true
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "00278c106ac56eea41e13f8a4fa75a7756efa0e4d5b1fab0e47d289e8d7f86ed"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-integer",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": 1
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": 1
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-float",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-null",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "a61cc828c302eeb4a793bba425ea17e94256d5235bf065900a23fb6bdfe60488"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "a61cc828c302eeb4a793bba425ea17e94256d5235bf065900a23fb6bdfe60488"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-array",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "b1130d556f25bd52edf57b0f9c0a9ab67bbb26c1ff6be93d6559a1ec44d481e9"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "b1130d556f25bd52edf57b0f9c0a9ab67bbb26c1ff6be93d6559a1ec44d481e9"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-object",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "886a700fe7fe5edcc1c82289baf17009cc760992c8a5f71d3f5f393f973e9f11"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "886a700fe7fe5edcc1c82289baf17009cc760992c8a5f71d3f5f393f973e9f11"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-empty",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "e0ed8413462194042184c9709bdcbb71cbcea18b9aa5ac553a2dbb89d09a1d99"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "e0ed8413462194042184c9709bdcbb71cbcea18b9aa5ac553a2dbb89d09a1d99"
             }
           ]
         },
@@ -363643,6 +361405,56 @@
             {
               "path": "capture/records/retry/sha256",
               "value": "550a9d1e4b2a62a3509831de3ee7f1adc439d8613a3ed31c2acec8370d06d7d9"
+            }
+          ]
+        },
+        {
+          "case": "F20-node-workgraph_id-peer-disagreement",
+          "changes": [
+            {
+              "path": "capture/records/node/body/workgraph_id",
+              "value": "graph-other"
+            },
+            {
+              "path": "capture/records/node/sha256",
+              "value": "622f49e7acca16e8d5ac4101deda3a2575ccbe93c57ad501cc266b9a2d761909"
+            }
+          ],
+          "expected": "reject",
+          "seed_changes": [],
+          "defect_changes": [
+            {
+              "path": "capture/records/node/body/workgraph_id",
+              "value": "graph-other"
+            },
+            {
+              "path": "capture/records/node/sha256",
+              "value": "622f49e7acca16e8d5ac4101deda3a2575ccbe93c57ad501cc266b9a2d761909"
+            }
+          ]
+        },
+        {
+          "case": "F20-run-workgraph_id-peer-disagreement",
+          "changes": [
+            {
+              "path": "capture/records/run/body/workgraph_id",
+              "value": "graph-other"
+            },
+            {
+              "path": "capture/records/run/sha256",
+              "value": "7b77a796f6891919ab472a6a237c5283fb7c01ff976315aff8af0bd9ceb2c22b"
+            }
+          ],
+          "expected": "reject",
+          "seed_changes": [],
+          "defect_changes": [
+            {
+              "path": "capture/records/run/body/workgraph_id",
+              "value": "graph-other"
+            },
+            {
+              "path": "capture/records/run/sha256",
+              "value": "7b77a796f6891919ab472a6a237c5283fb7c01ff976315aff8af0bd9ceb2c22b"
             }
           ]
         }
@@ -375244,6 +373056,114 @@
           "spelling": "\"\"",
           "expected": "reject"
         }
+      ],
+      "workgraph_id_cases": [
+        {
+          "case": "F17-node-workgraph_id-boolean",
+          "slot": "node",
+          "value": true,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-integer",
+          "slot": "node",
+          "value": 1,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-float",
+          "slot": "node",
+          "value": 1.0,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-null",
+          "slot": "node",
+          "value": null,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-array",
+          "slot": "node",
+          "value": [
+            "graph-001"
+          ],
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-object",
+          "slot": "node",
+          "value": {
+            "id": "graph-001"
+          },
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-empty",
+          "slot": "node",
+          "value": "",
+          "expected": "reject",
+          "reason": "workgraph ID nonempty node"
+        },
+        {
+          "case": "F17-run-workgraph_id-boolean",
+          "slot": "run",
+          "value": true,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-integer",
+          "slot": "run",
+          "value": 1,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-float",
+          "slot": "run",
+          "value": 1.0,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-null",
+          "slot": "run",
+          "value": null,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-array",
+          "slot": "run",
+          "value": [
+            "graph-001"
+          ],
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-object",
+          "slot": "run",
+          "value": {
+            "id": "graph-001"
+          },
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-empty",
+          "slot": "run",
+          "value": "",
+          "expected": "reject",
+          "reason": "workgraph ID nonempty run"
+        }
       ]
     },
     "run.node_ready": {
@@ -382554,189 +380474,6 @@
           ]
         },
         {
-          "case": "F17-node-workgraph_id-boolean",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": true
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "2d9decec73f7eb781cee206eacd5fd6e44311d246e00c07bd59d21bd3f33d07d"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": true
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "2d9decec73f7eb781cee206eacd5fd6e44311d246e00c07bd59d21bd3f33d07d"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-integer",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "03d602793fa3bd59cf5330da373b289cb2ad2329cd69a44a6446217de8cef88a"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "03d602793fa3bd59cf5330da373b289cb2ad2329cd69a44a6446217de8cef88a"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-float",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "03d602793fa3bd59cf5330da373b289cb2ad2329cd69a44a6446217de8cef88a"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "03d602793fa3bd59cf5330da373b289cb2ad2329cd69a44a6446217de8cef88a"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-null",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "f65575a1fa2fb5df13ea03748ec0f2caf0d6515dc0df836558b668d305e6a74e"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "f65575a1fa2fb5df13ea03748ec0f2caf0d6515dc0df836558b668d305e6a74e"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-array",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "7d4627afdd439b7c22e9ad4bde7863abf2af54d272e61978be87e630892a7e44"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "7d4627afdd439b7c22e9ad4bde7863abf2af54d272e61978be87e630892a7e44"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-object",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "8f05a5eed640549eee319e09617b4d5e3cbf584a996a0008c970844181dccfc8"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "8f05a5eed640549eee319e09617b4d5e3cbf584a996a0008c970844181dccfc8"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-empty",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "aaeb90d7576c6255a0577d6793054bca2695153f6c12ff9dac41cc2c2daf107a"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "aaeb90d7576c6255a0577d6793054bca2695153f6c12ff9dac41cc2c2daf107a"
-            }
-          ]
-        },
-        {
           "case": "F17-run-workgraph_revision-boolean",
           "changes": [
             {
@@ -382895,40 +380632,40 @@
           ]
         },
         {
-          "case": "F17-run-workgraph_id-boolean",
+          "case": "F20-node-workgraph_id-peer-disagreement",
           "changes": [
             {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": true
+              "path": "capture/records/node/body/workgraph_id",
+              "value": "graph-other"
             },
             {
-              "path": "capture/records/run/sha256",
-              "value": "00278c106ac56eea41e13f8a4fa75a7756efa0e4d5b1fab0e47d289e8d7f86ed"
+              "path": "capture/records/node/sha256",
+              "value": "449da2cd994616a4d3beecda993f5b36827c94440d026974e2c731750c132863"
             }
           ],
           "expected": "reject",
           "seed_changes": [],
           "defect_changes": [
             {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": true
+              "path": "capture/records/node/body/workgraph_id",
+              "value": "graph-other"
             },
             {
-              "path": "capture/records/run/sha256",
-              "value": "00278c106ac56eea41e13f8a4fa75a7756efa0e4d5b1fab0e47d289e8d7f86ed"
+              "path": "capture/records/node/sha256",
+              "value": "449da2cd994616a4d3beecda993f5b36827c94440d026974e2c731750c132863"
             }
           ]
         },
         {
-          "case": "F17-run-workgraph_id-integer",
+          "case": "F20-run-workgraph_id-peer-disagreement",
           "changes": [
             {
               "path": "capture/records/run/body/workgraph_id",
-              "value": 1
+              "value": "graph-other"
             },
             {
               "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
+              "value": "7b77a796f6891919ab472a6a237c5283fb7c01ff976315aff8af0bd9ceb2c22b"
             }
           ],
           "expected": "reject",
@@ -382936,144 +380673,11 @@
           "defect_changes": [
             {
               "path": "capture/records/run/body/workgraph_id",
-              "value": 1
+              "value": "graph-other"
             },
             {
               "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-float",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-null",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "a61cc828c302eeb4a793bba425ea17e94256d5235bf065900a23fb6bdfe60488"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "a61cc828c302eeb4a793bba425ea17e94256d5235bf065900a23fb6bdfe60488"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-array",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "b1130d556f25bd52edf57b0f9c0a9ab67bbb26c1ff6be93d6559a1ec44d481e9"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "b1130d556f25bd52edf57b0f9c0a9ab67bbb26c1ff6be93d6559a1ec44d481e9"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-object",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "886a700fe7fe5edcc1c82289baf17009cc760992c8a5f71d3f5f393f973e9f11"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "886a700fe7fe5edcc1c82289baf17009cc760992c8a5f71d3f5f393f973e9f11"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-empty",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "e0ed8413462194042184c9709bdcbb71cbcea18b9aa5ac553a2dbb89d09a1d99"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "e0ed8413462194042184c9709bdcbb71cbcea18b9aa5ac553a2dbb89d09a1d99"
+              "value": "7b77a796f6891919ab472a6a237c5283fb7c01ff976315aff8af0bd9ceb2c22b"
             }
           ]
         }
@@ -393580,6 +391184,114 @@
           "field": "storage_instance_id",
           "spelling": "\"\"",
           "expected": "reject"
+        }
+      ],
+      "workgraph_id_cases": [
+        {
+          "case": "F17-node-workgraph_id-boolean",
+          "slot": "node",
+          "value": true,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-integer",
+          "slot": "node",
+          "value": 1,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-float",
+          "slot": "node",
+          "value": 1.0,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-null",
+          "slot": "node",
+          "value": null,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-array",
+          "slot": "node",
+          "value": [
+            "graph-001"
+          ],
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-object",
+          "slot": "node",
+          "value": {
+            "id": "graph-001"
+          },
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-empty",
+          "slot": "node",
+          "value": "",
+          "expected": "reject",
+          "reason": "workgraph ID nonempty node"
+        },
+        {
+          "case": "F17-run-workgraph_id-boolean",
+          "slot": "run",
+          "value": true,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-integer",
+          "slot": "run",
+          "value": 1,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-float",
+          "slot": "run",
+          "value": 1.0,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-null",
+          "slot": "run",
+          "value": null,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-array",
+          "slot": "run",
+          "value": [
+            "graph-001"
+          ],
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-object",
+          "slot": "run",
+          "value": {
+            "id": "graph-001"
+          },
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-empty",
+          "slot": "run",
+          "value": "",
+          "expected": "reject",
+          "reason": "workgraph ID nonempty run"
         }
       ]
     },
@@ -410711,189 +408423,6 @@
           ]
         },
         {
-          "case": "F17-node-workgraph_id-boolean",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": true
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "facdfb37980a991737bea9d1dd6840c0a2e93d52653ecbe292a118149ae4b908"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": true
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "facdfb37980a991737bea9d1dd6840c0a2e93d52653ecbe292a118149ae4b908"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-integer",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-float",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "141948d20a6e644aea59c80eb4fee533cc4d93a9d1ac5ddd8e960d63cb417cc6"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-null",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "daef9ff6274cc6b9a7ffe26d7f2883b17bdeebafc4bfc8f3c63603520f70ed06"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "daef9ff6274cc6b9a7ffe26d7f2883b17bdeebafc4bfc8f3c63603520f70ed06"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-array",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "497eb1d796408cdd4f7e5342a1686e730e9dff38db1e1eff49100010b7e2946d"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "497eb1d796408cdd4f7e5342a1686e730e9dff38db1e1eff49100010b7e2946d"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-object",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "6ca3364817248b287b01f7a4108945b4ca3b05485bea77a554f2e9eb5cf15a6f"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "6ca3364817248b287b01f7a4108945b4ca3b05485bea77a554f2e9eb5cf15a6f"
-            }
-          ]
-        },
-        {
-          "case": "F17-node-workgraph_id-empty",
-          "changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "49bb07d33713c755b713c22728935d129fcf4ae8ba48b25bf875cf449e86c99d"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/node/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/node/sha256",
-              "value": "49bb07d33713c755b713c22728935d129fcf4ae8ba48b25bf875cf449e86c99d"
-            }
-          ]
-        },
-        {
           "case": "F17-run-workgraph_revision-boolean",
           "changes": [
             {
@@ -411048,189 +408577,6 @@
             {
               "path": "capture/records/run/sha256",
               "value": "7f3f348b4f30e767ea5196a491ec644a09fbfafddc54918fab709c1ac391606e"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-boolean",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": true
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "00278c106ac56eea41e13f8a4fa75a7756efa0e4d5b1fab0e47d289e8d7f86ed"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": true
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "00278c106ac56eea41e13f8a4fa75a7756efa0e4d5b1fab0e47d289e8d7f86ed"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-integer",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": 1
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": 1
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-float",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": 1.0
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "fed4faf1d347b6082d9d04117a9e46566098cdf0d46c2046b7cebb1f769c6e06"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-null",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "a61cc828c302eeb4a793bba425ea17e94256d5235bf065900a23fb6bdfe60488"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": null
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "a61cc828c302eeb4a793bba425ea17e94256d5235bf065900a23fb6bdfe60488"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-array",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "b1130d556f25bd52edf57b0f9c0a9ab67bbb26c1ff6be93d6559a1ec44d481e9"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": [
-                "graph-001"
-              ]
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "b1130d556f25bd52edf57b0f9c0a9ab67bbb26c1ff6be93d6559a1ec44d481e9"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-object",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "886a700fe7fe5edcc1c82289baf17009cc760992c8a5f71d3f5f393f973e9f11"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": {
-                "id": "graph-001"
-              }
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "886a700fe7fe5edcc1c82289baf17009cc760992c8a5f71d3f5f393f973e9f11"
-            }
-          ]
-        },
-        {
-          "case": "F17-run-workgraph_id-empty",
-          "changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "e0ed8413462194042184c9709bdcbb71cbcea18b9aa5ac553a2dbb89d09a1d99"
-            }
-          ],
-          "expected": "reject",
-          "seed_changes": [],
-          "defect_changes": [
-            {
-              "path": "capture/records/run/body/workgraph_id",
-              "value": ""
-            },
-            {
-              "path": "capture/records/run/sha256",
-              "value": "e0ed8413462194042184c9709bdcbb71cbcea18b9aa5ac553a2dbb89d09a1d99"
             }
           ]
         },
@@ -415083,6 +412429,56 @@
             {
               "path": "capture/records/failure/sha256",
               "value": "74dff6a7dfd421bf2ee2f478b02c31a5c8fa507575cb6bc62a11b32df0b998b4"
+            }
+          ]
+        },
+        {
+          "case": "F20-node-workgraph_id-peer-disagreement",
+          "changes": [
+            {
+              "path": "capture/records/node/body/workgraph_id",
+              "value": "graph-other"
+            },
+            {
+              "path": "capture/records/node/sha256",
+              "value": "622f49e7acca16e8d5ac4101deda3a2575ccbe93c57ad501cc266b9a2d761909"
+            }
+          ],
+          "expected": "reject",
+          "seed_changes": [],
+          "defect_changes": [
+            {
+              "path": "capture/records/node/body/workgraph_id",
+              "value": "graph-other"
+            },
+            {
+              "path": "capture/records/node/sha256",
+              "value": "622f49e7acca16e8d5ac4101deda3a2575ccbe93c57ad501cc266b9a2d761909"
+            }
+          ]
+        },
+        {
+          "case": "F20-run-workgraph_id-peer-disagreement",
+          "changes": [
+            {
+              "path": "capture/records/run/body/workgraph_id",
+              "value": "graph-other"
+            },
+            {
+              "path": "capture/records/run/sha256",
+              "value": "7b77a796f6891919ab472a6a237c5283fb7c01ff976315aff8af0bd9ceb2c22b"
+            }
+          ],
+          "expected": "reject",
+          "seed_changes": [],
+          "defect_changes": [
+            {
+              "path": "capture/records/run/body/workgraph_id",
+              "value": "graph-other"
+            },
+            {
+              "path": "capture/records/run/sha256",
+              "value": "7b77a796f6891919ab472a6a237c5283fb7c01ff976315aff8af0bd9ceb2c22b"
             }
           ]
         }
@@ -428666,6 +426062,114 @@
           "field": "storage_instance_id",
           "spelling": "\"\"",
           "expected": "reject"
+        }
+      ],
+      "workgraph_id_cases": [
+        {
+          "case": "F17-node-workgraph_id-boolean",
+          "slot": "node",
+          "value": true,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-integer",
+          "slot": "node",
+          "value": 1,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-float",
+          "slot": "node",
+          "value": 1.0,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-null",
+          "slot": "node",
+          "value": null,
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-array",
+          "slot": "node",
+          "value": [
+            "graph-001"
+          ],
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-object",
+          "slot": "node",
+          "value": {
+            "id": "graph-001"
+          },
+          "expected": "reject",
+          "reason": "workgraph ID string type node"
+        },
+        {
+          "case": "F17-node-workgraph_id-empty",
+          "slot": "node",
+          "value": "",
+          "expected": "reject",
+          "reason": "workgraph ID nonempty node"
+        },
+        {
+          "case": "F17-run-workgraph_id-boolean",
+          "slot": "run",
+          "value": true,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-integer",
+          "slot": "run",
+          "value": 1,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-float",
+          "slot": "run",
+          "value": 1.0,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-null",
+          "slot": "run",
+          "value": null,
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-array",
+          "slot": "run",
+          "value": [
+            "graph-001"
+          ],
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-object",
+          "slot": "run",
+          "value": {
+            "id": "graph-001"
+          },
+          "expected": "reject",
+          "reason": "workgraph ID string type run"
+        },
+        {
+          "case": "F17-run-workgraph_id-empty",
+          "slot": "run",
+          "value": "",
+          "expected": "reject",
+          "reason": "workgraph ID nonempty run"
         }
       ]
     },
