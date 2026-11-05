@@ -94,11 +94,41 @@ export default async function (t) {
     if (only && ids.length !== only.length) throw Error('Requested thread not in History: ' + only.filter(id => !ids.includes(id)).join(', '));
     await t.check(`${w} has threads to inspect`, ids.length > 0, String(ids.length), { hard: true });
     threads += ids.length;
+    if (t.args.selftest === 'blocked-query') {
+      const debug = f.locator('.thread-row[data-id="debug"]').first();
+      await debug.scrollIntoViewIfNeeded(); await debug.click();
+      await f.evaluate(() => window.addEventListener('click', e => {
+        if (e.target.closest?.('.thread-row[data-id="query"]')) {
+          e.stopImmediatePropagation(); e.preventDefault();
+        }
+      }, true));
+    }
     for (const id of ids) {
       // The row itself carries data-id.
       const item = f.locator(`.thread-row[data-id=${JSON.stringify(id)}]`).first();
       await item.scrollIntoViewIfNeeded(); await item.click();
+      const selection = await f.evaluate(() => ({
+        selected: PM56_DEMO.getState().selectedThread,
+        active: [...document.querySelectorAll('.thread-row.active')].map(e => e.dataset.id)
+      }));
+      await t.check(`${w} ${id} requested thread selected`, selection.selected === id &&
+        selection.active.length === 1 && selection.active[0] === id, JSON.stringify(selection), {hard:true});
       await t.page.mouse.move(5, h - 5);
+      if (t.args.fitProbe) {
+        for (let width=480; width<=600; width+=2) {
+          await f.evaluate(width=>PMW.chatCol.setWidth(width),width);
+          await f.waitForTimeout(180);
+          const fit=await f.evaluate(()=>{
+            const wrap=document.querySelector('#pmRoot .pm56-activity-wrap, #pmRoot .activity-wrap'),bar=wrap?.querySelector('.pm56-activity-bar, .activity-bar');
+            if(!bar)return null;
+            const cs=getComputedStyle(wrap),bs=getComputedStyle(bar);
+            return {chat:PMW.chatCol.widthPx(),wrap:wrap.clientWidth,available:wrap.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight),bar:bar.clientWidth,scroll:bar.scrollWidth,classes:wrap.className,padding:bs.padding,children:[...bar.children].map(e=>e.getBoundingClientRect().width)};
+          });
+          t.log(JSON.stringify({fit}));
+          if(fit && fit.scroll>fit.bar+1) await t.shot(`fit-${width}`,'Actual activity strip overflow at fitted width');
+        }
+        continue;
+      }
       for (const pos of ['top', 'bottom']) {
         const point = await f.evaluate(() => {
           const tr = document.querySelector('.transcript'); if (!tr) return null;
@@ -125,12 +155,25 @@ export default async function (t) {
           const pod = document.getElementById('o55np-pod');
           if (!pod || getComputedStyle(pod).display === 'none') return { nopod: true };
           const P = pod.getBoundingClientRect();
-          const hit = e => { const q = e.getBoundingClientRect(); if (q.width < 1 || q.height < 1) return 0; const ix = Math.max(0, Math.min(P.right, q.right) - Math.max(P.left, q.left)), iy = Math.max(0, Math.min(P.bottom, q.bottom) - Math.max(P.top, q.top)); return ix * iy > .5 ? Math.round(ix) + 'x' + Math.round(iy) : 0; };
+          const paintedRect = e => {
+            const r = e.getBoundingClientRect();
+            const q = {left:Math.max(0,r.left), top:Math.max(0,r.top), right:Math.min(innerWidth,r.right), bottom:Math.min(innerHeight,r.bottom)};
+            for (let a=e; a; a=a.parentElement) {
+              const cs=getComputedStyle(a);
+              if (cs.visibility==='hidden' || cs.display==='none' || +cs.opacity===0) return null;
+              if (a===e) continue;
+              const b=a.getBoundingClientRect();
+              if (/(auto|scroll|hidden|clip)/.test(cs.overflowX)) {q.left=Math.max(q.left,b.left+a.clientLeft);q.right=Math.min(q.right,b.left+a.clientLeft+a.clientWidth);}
+              if (/(auto|scroll|hidden|clip)/.test(cs.overflowY)) {q.top=Math.max(q.top,b.top+a.clientTop);q.bottom=Math.min(q.bottom,b.top+a.clientTop+a.clientHeight);}
+            }
+            return q;
+          };
+          const hit = e => { const q = paintedRect(e); if (!q || q.right <= q.left || q.bottom <= q.top) return 0; const ix = Math.max(0, Math.min(P.right, q.right) - Math.max(P.left, q.left)), iy = Math.max(0, Math.min(P.bottom, q.bottom) - Math.max(P.top, q.top)); return ix * iy > .5 ? Math.round(ix) + 'x' + Math.round(iy) : 0; };
           const out = [];
           for (const e of document.querySelectorAll('.jump-bottom, .activity-item, .send-queue-row button, .decision-host button, .chat-stage > .composer')) { const k = hit(e); if (k) out.push(String(e.className).slice(0, 30) + ' ' + k); }
           const tr = document.querySelector('.transcript').getBoundingClientRect(), under = [];
           for (const e of document.querySelectorAll('.transcript button, .transcript a[href], .transcript summary')) {
-            const q = e.getBoundingClientRect(); if (q.bottom < tr.top || q.top > tr.bottom) continue;
+            const q = paintedRect(e); if (!q || q.bottom < tr.top || q.top > tr.bottom) continue;
             const cs = getComputedStyle(e); if (cs.visibility === 'hidden' || +cs.opacity === 0) continue;
             const ix = Math.min(P.right, q.right) - Math.max(P.left, q.left), iy = Math.min(P.bottom, q.bottom) - Math.max(P.top, q.top);
             if (ix >= 4 && iy >= 4) under.push((e.textContent || e.className).trim().slice(0, 24));
