@@ -161,14 +161,14 @@ expr('F02','full_value_matches','value_bytes(candidate) == value_bytes(stored)')
 expr('F03','full_value_matches',"custody['scope_partition'] == scope_partition(candidate['project_id'])")
 expr('F04','full_value_matches',"custody['event_type'] == candidate['event_type']")
 expr('F05','full_value_matches',"custody['idempotency_key'] == candidate['idempotency_key']")
-expr('F06','full_value_matches',"receipt['sequence_id'] == candidate['sequence_id']")
+expr('F06','full_value_matches',"value_bytes(receipt['sequence_id']) == value_bytes(candidate['sequence_id'])")
 expr('F07','full_value_matches',"result['original_segment_ref'] == custody['original_segment_ref']")
 expr('F08','full_value_matches',"commitment(candidate) == custody['original_event_value_commitment'] == result['original_event_value_commitment']")
 expr('F09','full_value_matches',"semantic_digest(candidate) == custody['producer_semantic_digest']")
-expr('F10','full_value_matches',"receipt == custody['first_append_receipt']")
+expr('F10','full_value_matches',"value_bytes(receipt) == value_bytes(custody['first_append_receipt'])")
 expr('F11','full_value_matches',"receipt['event_id'] == candidate['event_id'] == custody['event_id']")
-expr('F12','full_value_matches',"result == original['result']")
-expr('F13','full_value_matches',"custody == original['custody']")
+expr('F12','full_value_matches',"value_bytes(result) == value_bytes(original['result'])")
+expr('F13','full_value_matches',"value_bytes(custody) == value_bytes(original['custody'])")
 block('V01','stored_event_valid','event_validator.iter_errors')
 block('V02','stored_event_valid',"event['scope_kind']")
 expr('V03','stored_event_valid',"bool(PACK_REF.fullmatch(event['payload_ref']))")
@@ -191,16 +191,16 @@ GUARDS['C01']=('checkpoint: schema/key route and resolved checkpoint target',lam
 block('C02','checkpoint_matches',"validator(schema, 'checkpoint')")
 GUARDS['C03']=('checkpoint store/key identities, including repeated token store/key joins',
     lambda s:replace(condition(s,'checkpoint_matches',"bundle['checkpoint_key'] =="),'checkpoint_matches',
-        'token != expected_token',"{k:v for k,v in token.items() if k not in ('storage_instance_id','checkpoint_key')} != {k:v for k,v in expected_token.items() if k not in ('storage_instance_id','checkpoint_key')}"))
+        'value_bytes(token) != value_bytes(expected_token)',"value_bytes({k:v for k,v in token.items() if k not in ('storage_instance_id','checkpoint_key')}) != value_bytes({k:v for k,v in expected_token.items() if k not in ('storage_instance_id','checkpoint_key')})"))
 GUARDS['C04']=('checkpoint live selection/verification/snapshot, including the repeated token snapshot join',
     lambda s:replace(replace(condition(s,'checkpoint_matches',"node['state']"),'checkpoint_matches',
-        "anchor['source_selection'] != selection",'False'),'checkpoint_matches',
-        'token != expected_token',"{k:v for k,v in token.items() if k not in ('redb_snapshot_id','source_selection')} != {k:v for k,v in expected_token.items() if k not in ('redb_snapshot_id','source_selection')}"))
+        "value_bytes(anchor['source_selection']) != value_bytes(selection)",'False'),'checkpoint_matches',
+        'value_bytes(token) != value_bytes(expected_token)',"value_bytes({k:v for k,v in token.items() if k not in ('redb_snapshot_id','source_selection')}) != value_bytes({k:v for k,v in expected_token.items() if k not in ('redb_snapshot_id','source_selection')})"))
 block('C05','checkpoint_matches',"generation != expected_generation")
 block('C06','checkpoint_matches',"not full_value_matches")
 block('C07','checkpoint_matches',"source['scope_partition']")
 block('C08','checkpoint_matches',"selection['current_bytes_sha256']")
-block('C09','checkpoint_matches',"anchor['source_selection'] != selection")
+block('C09','checkpoint_matches',"value_bytes(anchor['source_selection']) != value_bytes(selection)")
 block('C10','checkpoint_matches',"coverage['last_frame']")
 block('C11','checkpoint_matches',"segment['scan_start_offset']")
 expr('C12','checkpoint_matches',"value_bytes(bundle['datasets']) == value_bytes({token['index_dataset_name']: dataset})")
@@ -270,7 +270,7 @@ def main():
         # unrelated negative: append uses full_value's schema precondition;
         # historical resolution uses its exact authenticated custody equality.
         linked={'F01':{'A07'},'F13':{'H06'}}.get(guard,set())
-        forwarded=lambda k: guard=='F11' and k[0]=='C06' and k[2]=='shipped_wrong_custody_event'
+        forwarded=lambda k: ((guard=='F11' and k[0]=='C06' and k[2]=='shipped_wrong_custody_event') or (guard=='D12' and k[0]=='B01' and (k[2].endswith('_decode') or k[2].endswith('_packed_append'))))
         own=[k for k in outcomes if k[0] in {guard}|linked or forwarded(k)]
         flips=[k for k in own if actual[k]==(True,True)]
         masked=[k for k in own if actual[k]!=(True,True)]
@@ -283,7 +283,7 @@ def main():
             report=json.loads(stream.getvalue())
         passed=bool(own) and not masked and not cross and not baseline_bad
         if args.full_checker:passed=passed and code==1 and report['status']=='fail'
-        linked_names=sorted(linked)+(['C06:shipped_wrong_custody_event'] if guard=='F11' else [])
+        linked_names=sorted(linked)+(['C06:shipped_wrong_custody_event'] if guard=='F11' else [])+(['B01:*_inline_decode','B01:*_packed_decode','B01:*_packed_append'] if guard=='D12' else [])
         row=dict(guard=guard,rule=label,pass_=passed,linked_same_rule_guards=linked_names,negatives_that_flip=flips,masked=masked,
             negatives_that_stay_rejected=stayed,cross_flips=cross,
             mutant_sha256=hashlib.sha256(altered.encode()).hexdigest(),

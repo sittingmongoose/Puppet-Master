@@ -233,7 +233,8 @@ def copied_pairs(payload):
             yield 'trace_settlement', body['settlement'][field], body[field]
         if body['raw_payload']['redaction_status'] in ('redacted', 'not_needed'):
             yield 'trace_flags', body['flags']['redacted'], body['raw_payload']['redaction_status'] == 'redacted'
-        if body['usage_event_ref'] is not None or body['usage_record_id'] is not None:
+        if (body['usage_event_ref'] is not None or body['usage_record_id'] is not None
+                or body['settlement']['usage_artifact_ref'] is not None):
             yield 'trace_flags', body['flags']['usage_observed'], True
         if body['settlement'].get('quota_artifact_ref') is not None or refs.get('quota_refs'):
             yield 'trace_flags', body['flags']['quota_observed'], True
@@ -468,13 +469,13 @@ def full_value_matches(candidate, original, result, custody, *, validation=CURRE
     receipt = result['first_append_receipt']
     stored = original['event']
     return (value_bytes(candidate) == value_bytes(stored)
-            and result == original['result'] and custody == original['custody']
-            and receipt == custody['first_append_receipt']
+            and value_bytes(result) == value_bytes(original['result']) and value_bytes(custody) == value_bytes(original['custody'])
+            and value_bytes(receipt) == value_bytes(custody['first_append_receipt'])
             and receipt['event_id'] == candidate['event_id'] == custody['event_id']
             and custody['scope_partition'] == scope_partition(candidate['project_id'])
             and custody['event_type'] == candidate['event_type']
             and custody['idempotency_key'] == candidate['idempotency_key']
-            and receipt['sequence_id'] == candidate['sequence_id']
+            and value_bytes(receipt['sequence_id']) == value_bytes(candidate['sequence_id'])
             and result['original_segment_ref'] == custody['original_segment_ref']
             and commitment(candidate) == custody['original_event_value_commitment'] == result['original_event_value_commitment']
             and semantic_digest(candidate) == custody['producer_semantic_digest'])
@@ -605,7 +606,7 @@ def checkpoint_matches(row, event, original, bundle):
                 or sum(n['state'] == 'current' for n in checkpoint['generations'].values()) != 1
                 or selection['storage_instance_id'] != storage
                 or anchor['source_selection']['storage_instance_id'] != storage
-                or selection != frontier['source_selection'] or selection != token['source_selection']
+                or value_bytes(selection) != value_bytes(frontier['source_selection']) or value_bytes(selection) != value_bytes(token['source_selection'])
                 or source['verified'] is not True or source['redb_snapshot_id'] != token['redb_snapshot_id']):
             return False
         expected_generation = 'eig_' + binding_digest(dict(
@@ -617,7 +618,7 @@ def checkpoint_matches(row, event, original, bundle):
             generation_anchor_sha256=binding_digest(anchor), frontier_revision=frontier['publication_revision'],
             frontier_sha256=binding_digest(frontier), index_dataset_name='event_record_index.v2@' + generation,
             source_selection=selection, redb_snapshot_id=source['redb_snapshot_id'])
-        if generation != expected_generation or token != expected_token or node['index_dataset_name'] != token['index_dataset_name']:
+        if generation != expected_generation or value_bytes(token) != value_bytes(expected_token) or node['index_dataset_name'] != token['index_dataset_name']:
             return False
         if not full_value_matches(event, original, original['result'], custody) or value_bytes(source['event']) != value_bytes(event):
             return False
@@ -637,7 +638,7 @@ def checkpoint_matches(row, event, original, bundle):
                 or manifest['manifest_generation'] != selection['manifest_generation']
                 or manifest['recovery_epoch'] != selection['recovery_epoch']
                 or manifest['survivor_prefix_sha256'] != selection['manifest_survivor_prefix_sha256']
-                or manifest['retained_inventory'] != source['segments']
+                or value_bytes(manifest['retained_inventory']) != value_bytes(source['segments'])
                 or selection['retained_inventory_sha256'] != binding_digest(manifest['retained_inventory'])
                 or selection['durable_watermarks_sha256'] != binding_digest(manifest['durable_watermarks'])
                 or selection['excluded_ranges_sha256'] != binding_digest(manifest['excluded_ranges'])
@@ -649,7 +650,7 @@ def checkpoint_matches(row, event, original, bundle):
             sequence_id=event['sequence_id'], event_id=event['event_id'], scope_partition=partition,
             source_value_bytes_sha256=source['event_value_sha256'])]))
         coverage = frontier['coverage']
-        if (anchor['source_selection'] != selection or node['translation'] is not None
+        if (value_bytes(anchor['source_selection']) != value_bytes(selection) or node['translation'] is not None
                 or anchor['retained_event_count'] != 1 or anchor['first_retained_sequence_id'] != event['sequence_id']
                 or anchor['through_sequence_id'] != event['sequence_id'] or anchor['retained_event_prefix_sha256'] != prefix
                 or anchor['sequence_gaps_sha256'] != binding_digest([])
@@ -661,7 +662,7 @@ def checkpoint_matches(row, event, original, bundle):
         last = dict(segment_generation=receipt['segment_generation'], segment_name=receipt['segment_name'],
                     byte_offset=receipt['byte_offset'], frame_end_offset=source['frame_end_offset'],
                     last_sequence_id=event['sequence_id'], last_event_id=event['event_id'])
-        if coverage['last_frame'] != last or coverage['segments'] != source['segments'] or len(source['segments']) != 1:
+        if value_bytes(coverage['last_frame']) != value_bytes(last) or value_bytes(coverage['segments']) != value_bytes(source['segments']) or len(source['segments']) != 1:
             return False
         segment = source['segments'][0]
         if (segment['segment_generation'] != receipt['segment_generation'] or segment['segment_name'] != receipt['segment_name']

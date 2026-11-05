@@ -31,6 +31,8 @@ def module(source=None):
 
 def run(name, standing, configure=None, source=None, selected=None):
     source = source or CHECKER.read_text()
+    if configure is None and source == CHECKER.read_text():
+        raise ValueError(name + ': mutation did not change checker source')
     m = module(source)
     families = [r['event_type'] for r in m.load('Plans/runtime_artifact_event_drafts.json')['rows']]
     # Expose the actual class before a trial mutates its errors() method.
@@ -182,8 +184,8 @@ def main():
         ('S10_reject_retained_history_on_live_change',10,history_rejects_live_change,None),
         ('S10_current_writer_overlay_on_historical_originals',10,None,source.replace('validation=validation','validation=CURRENT_WRITER'),['runtime_artifact.cost_usage','runtime_artifact.tool_llm_trace']),
         ('S11_remove_historical_decoder_selection',11,None,ISOLATION.GUARDS['H05'][1](source),['runtime_artifact.cost_usage','runtime_artifact.tool_llm_trace']),
-        ('S10_ignore_withdrawal',10,None,source.replace("if source['withdrawn'] or not source['authorized']:","if not source['authorized']:")),
-        ('S10_ignore_forged_source',10,None,source.replace("if not source['source_valid'] or not source['receipt_valid']:",'if False:')),
+        ('S10_ignore_withdrawal',10,None,source.replace("if source['withdrawn'] is not False or source['authorized'] is not True:","if source['authorized'] is not True:")),
+        ('S10_ignore_forged_source',10,None,source.replace("if source['source_valid'] is not True or source['receipt_valid'] is not True:",'if False:')),
         ('earlier_B1_wrong_index_retention',None,inputs(lambda m,p,v:[r.__setitem__('index_retention_policy_ref','RP-PROJECTION-3GEN') for r in v['rows']] if p=='Plans/runtime_artifact_event_drafts.json' else None),None),
     ]
     for fault in ('wrong_store_key','wrong_checkpoint_store','wrong_token_store','wrong_source_store',

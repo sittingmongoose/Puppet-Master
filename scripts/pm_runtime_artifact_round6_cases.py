@@ -48,6 +48,52 @@ def cases(m, rows, fixtures):
             first_append_receipt=copy.deepcopy(receipt),original_event_value_commitment=m.commitment(full))
         issued=dict(event=full,custody=original,result={k:copy.deepcopy(original[k]) for k in ('first_append_receipt','original_segment_ref','original_event_value_commitment')})
         bundle=fixtures['checkpoint_positives'][family]
+        def historical_value(n,o,c=None,r=None,u=None):
+            return n.full_value_matches(o['event'] if c is None else c,o,o['result'] if r is None else r,
+                o['custody'] if u is None else u,validation=n.HISTORICAL_V1)
+        # Retained schemas legitimately accept integral floats. Original copies
+        # still need exact bytes: rebind every non-targeted observational copy.
+        for guard in ('F06','F10','F12','F13'):
+            o=copy.deepcopy(issued);r=copy.deepcopy(o['result']);u=copy.deepcopy(o['custody'])
+            if guard=='F06':
+                v=float(full['sequence_id']);r['first_append_receipt']['sequence_id']=v;u['first_append_receipt']['sequence_id']=v
+                o['result']=copy.deepcopy(r);o['custody']=copy.deepcopy(u)
+            elif guard=='F10':
+                v=float(receipt['byte_offset']);u['first_append_receipt']['byte_offset']=v;o['custody']=copy.deepcopy(u)
+            elif guard=='F12':o['result']['first_append_receipt']['byte_offset']=float(receipt['byte_offset'])
+            else:o['custody']['first_append_receipt']['byte_offset']=float(receipt['byte_offset'])
+            add(guard,family,'retained_exact_receipt_type',lambda n,o=issued:historical_value(n,o),
+                lambda n,o=o,r=r,u=u:historical_value(n,o,r=r,u=u))
+        def rebind_source(b):
+            src=b['selected_source'];selection=src['source_selection']
+            selection['manifest_bytes_sha256']=hashlib.sha256(m.value_bytes(src['manifest'])).hexdigest()
+            selection['retained_inventory_sha256']=m.binding_digest(src['manifest']['retained_inventory'])
+            node=b['checkpoint']['generations'][b['checkpoint']['current_generation_id']]
+            node['anchor']['source_selection']=copy.deepcopy(selection);node['frontier']['source_selection']=copy.deepcopy(selection)
+            m.checkpoint_rebind(full,issued,b)
+        for field,value in bundle['selected_source']['source_selection'].items():
+            if type(value) is int:
+                for form,changed in [('float',float(value))]+([('boolean',bool(value))] if value in (0,1) else []):
+                    bad=copy.deepcopy(bundle);bad['selected_source']['source_selection'][field]=changed
+                    add('C04',family,'primary_selection_'+field+'_'+form,
+                        lambda n,r=row,e=full,o=issued,b=bundle:n.checkpoint_matches(r,e,o,b),
+                        lambda n,r=row,e=full,o=issued,b=bad:n.checkpoint_matches(r,e,o,b))
+        for field,value in bundle['selected_source']['segments'][0].items():
+            # SP-278's binding codec already refuses every float. Boolean
+            # 0/1 can be encoded and isolates the former equality confusion.
+            if type(value) is int and value in (0,1):
+                for form,changed in [('boolean',bool(value))]:
+                    bad=copy.deepcopy(bundle);src=bad['selected_source'];src['segments'][0][field]=changed
+                    src['manifest']['retained_inventory']=copy.deepcopy(src['segments']);rebind_source(bad)
+                    add('C10',family,'source_segment_'+field+'_'+form,
+                        lambda n,r=row,e=full,o=issued,b=bundle:n.checkpoint_matches(r,e,o,b),
+                        lambda n,r=row,e=full,o=issued,b=bad:n.checkpoint_matches(r,e,o,b))
+        bad=copy.deepcopy(bundle);bad['selected_source']['frame_end_offset']=float(bad['selected_source']['frame_end_offset'])
+        add('C10',family,'source_frame_end_type',lambda n,r=row,e=full,o=issued,b=bundle:n.checkpoint_matches(r,e,o,b),
+            lambda n,r=row,e=full,o=issued,b=bad:n.checkpoint_matches(r,e,o,b))
+        bad=copy.deepcopy(bundle);bad['selected_source']['manifest']['retained_inventory'][0]['segment_generation']=True;rebind_source(bad)
+        add('C08',family,'manifest_inventory_type',lambda n,r=row,e=full,o=issued,b=bundle:n.checkpoint_matches(r,e,o,b),
+            lambda n,r=row,e=full,o=issued,b=bad:n.checkpoint_matches(r,e,o,b))
         for label,member,field in [('current_generation','current','selected_segment_generation'),('manifest_generation','manifest','manifest_generation'),
                                   ('manifest_segment','manifest','selected_segment_generation'),('recovery_epoch','manifest','recovery_epoch')]:
             for index,value in enumerate(('0','false',True,None,[],{},1.0,-0.0)):
@@ -156,6 +202,10 @@ def cases(m, rows, fixtures):
                     agreement_case(m,result,row,payload,('type_payload','settlement',field),'foreign-'+field,'settlement_'+field)
                 for field in ('redacted','usage_observed'):
                     agreement_case(m,result,row,payload,('type_payload','flags',field),not body['flags'][field],field)
+                control=copy.deepcopy(payload)
+                for field in ('usage_event_ref','usage_record_id'):
+                    control['type_payload'][field]=None;control['type_payload']['refs'][field]=None;control['type_payload']['settlement'][field]=None
+                agreement_case(m,result,row,control,('type_payload','flags','usage_observed'),False,'usage_artifact_observed')
                 agreement_case(m,result,row,payload,('type_payload','retry','parent_trace_ref'),'trace-parent-foreign','retry_parent')
                 control=copy.deepcopy(payload);control['type_payload']['retry'].update(relation='retry_of',parent_trace_ref='trace-parent')
                 agreement_case(m,result,row,control,('type_payload','retry','parent_trace_ref'),None,'retry_missing_parent')
