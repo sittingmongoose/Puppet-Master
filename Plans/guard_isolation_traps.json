@@ -1757,6 +1757,99 @@
       "id": "C4-control-boundaries",
       "kind": "round4_control_boundaries",
       "expected": "unsupported grammar refuses registration; supported scalar comparison controls retain their per-predicate grammar"
+    },
+    {
+      "id": "C5-if-or-assert-False",
+      "kind": "round5_predicate",
+      "expected": "single and truthful aggregate proofs FAIL/unproved; any available x-only cut retains held-out y; independent narrow cuts preserve peers",
+      "source": "def check(v):\n    if v[\"x\"] < 0 or v[\"y\"] < 0:\n        assert False, \"bad\"\n    return True\n",
+      "invariants": {
+        "single": "x >= 0",
+        "aggregate": "x >= 0 AND y >= 0"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v):\n    if v[\"y\"] < 0:\n        assert False, \"bad\"\n    return True\n",
+        "y_only_cut": "def check(v):\n    if v[\"x\"] < 0:\n        assert False, \"bad\"\n    return True\n"
+      },
+      "source_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle5/new-counterexamples.json",
+        "sha256": "39c4b41c1f0c6f594dbae53ea3dd69ad4c56c5ace56c29e405feff0a8f316698",
+        "entry": "if-or-assert-False"
+      }
+    },
+    {
+      "id": "C5-if-or-assert-zero",
+      "kind": "round5_predicate",
+      "expected": "single and truthful aggregate proofs FAIL/unproved; any available x-only cut retains held-out y; independent narrow cuts preserve peers",
+      "source": "def check(v):\n    if v[\"x\"] < 0 or v[\"y\"] < 0:\n        assert 0, \"bad\"\n    return True\n",
+      "invariants": {
+        "single": "x >= 0",
+        "aggregate": "x >= 0 AND y >= 0"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v):\n    if v[\"y\"] < 0:\n        assert False, \"bad\"\n    return True\n",
+        "y_only_cut": "def check(v):\n    if v[\"x\"] < 0:\n        assert False, \"bad\"\n    return True\n"
+      },
+      "source_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle5/new-counterexamples.json",
+        "sha256": "39c4b41c1f0c6f594dbae53ea3dd69ad4c56c5ace56c29e405feff0a8f316698",
+        "entry": "if-or-assert-zero"
+      }
+    },
+    {
+      "id": "C5-if-not-and-assert-False",
+      "kind": "round5_predicate",
+      "expected": "single and truthful aggregate proofs FAIL/unproved; any available x-only cut retains held-out y; independent narrow cuts preserve peers",
+      "source": "def check(v):\n    if not (v[\"x\"] >= 0 and v[\"y\"] >= 0):\n        assert False, \"bad\"\n    return True\n",
+      "invariants": {
+        "single": "x >= 0",
+        "aggregate": "x >= 0 AND y >= 0"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v):\n    if v[\"y\"] < 0:\n        assert False, \"bad\"\n    return True\n",
+        "y_only_cut": "def check(v):\n    if v[\"x\"] < 0:\n        assert False, \"bad\"\n    return True\n"
+      },
+      "source_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle5/new-counterexamples.json",
+        "sha256": "39c4b41c1f0c6f594dbae53ea3dd69ad4c56c5ace56c29e405feff0a8f316698",
+        "entry": "if-not-and-assert-False"
+      }
+    },
+    {
+      "id": "C5-if-tuple-assert-False",
+      "kind": "round5_predicate",
+      "expected": "single and truthful aggregate proofs FAIL/unproved; any available x-only cut retains held-out y; independent narrow cuts preserve peers",
+      "source": "def check(v):\n    if (v[\"x\"], v[\"y\"]) != (0, 0):\n        assert False, \"bad\"\n    return True\n",
+      "invariants": {
+        "single": "x == 0",
+        "aggregate": "x == 0 AND y == 0"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v):\n    if v[\"y\"] != 0:\n        assert False, \"bad\"\n    return True\n",
+        "y_only_cut": "def check(v):\n    if v[\"x\"] != 0:\n        assert False, \"bad\"\n    return True\n"
+      },
+      "source_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle5/new-counterexamples.json",
+        "sha256": "39c4b41c1f0c6f594dbae53ea3dd69ad4c56c5ace56c29e405feff0a8f316698",
+        "entry": "if-tuple-assert-False"
+      }
+    },
+    {
+      "id": "C5-composition-cross-product",
+      "kind": "round5_cross_product",
+      "expected": "all census refusal kinds and controlling contexts through depth two; no credited cut admits both independent field defects"
+    },
+    {
+      "id": "C5-uncovered-kind",
+      "kind": "round5_coverage_gate",
+      "mode": "kind",
+      "expected": "self-test fails before traps when new census support lacks generated composition coverage"
+    },
+    {
+      "id": "C5-uncovered-context",
+      "kind": "round5_coverage_gate",
+      "mode": "context",
+      "expected": "self-test fails before traps when new census support lacks generated composition coverage"
     }
   ]
 }

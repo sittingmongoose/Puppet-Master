@@ -238,13 +238,13 @@ MatchStar MatchAs MatchOr
 PYTHON_AST_RULES = {
     "closed": ("fail_closed", "", "No verified per-predicate cut in this position; explicit atomic adapter required."),
     "function": ("supported", "delegate-to-refusal-leaves", "Plain top-level function only; nested, decorated and async contexts refuse."),
-    "if": ("supported", "replace-one-controlling-Boolean-leaf", "One direct if-body context; else and nested control paths refuse."),
+    "if": ("supported", "replace-one-controlling-Boolean-leaf", "One direct single-refusal if-body; compose every controller with own test; else/nested paths refuse."),
     "statement": ("supported", "delegate-to-refusal-leaves", "Standalone expression wrapper only; its calls/writes are independently inventoried."),
     "atom": ("supported", "replace-one-Boolean-leaf", "Transparent scalar read or one scalar comparison; runtime grammar and subject binding required."),
     "boolean": ("supported", "replace-one-Boolean-leaf", "Split and/or/not recursively, retaining polarity, peers and short-circuit order."),
     "operand": ("supported", "preserve-operand-cut-enclosing-comparison-only", "Scalar literal/access or allow-listed scalar view; never a display, comprehension, chain or opaque expression."),
     "return": ("supported", "replace-one-Boolean-leaf", "Direct Boolean expression or literal falsy return under one supported if; returned locals refuse."),
-    "refusal": ("supported", "skip-one-fixed-refusal-or-cut-one-control-leaf", "Fixed scalar refusal payload only; extra expressions or unsupported ancestors refuse."),
+    "refusal": ("supported", "skip-one-fixed-refusal-or-cut-one-control-leaf", "Fixed scalar payload; shared controller/own-test composition; constants never replace controlling predicates."),
     "append": ("supported", "skip-one-error-append-or-cut-one-control-leaf", "Standalone append of exactly one scalar literal error only; other mutations refuse."),
     "initialize": ("supported", "preserve-empty-list-initialization", "Only fresh empty-list initialization to local names; contributes no refusal predicate."),
 }
@@ -265,6 +265,16 @@ for _position, _rule, _names in (
 ):
     for _name in _names.split():
         PYTHON_AST_POLICY[_name][_position] = _rule
+
+
+PYTHON_REFUSAL_KINDS = {
+    "raise": ("Raise", "refusal_value"),
+    "return": ("Return", "refusal_value"),
+    "assert": ("Assert", "refusal_value"),
+    "accumulator_write": ("Call", "accumulator_write"),
+    "refusal_helper": ("Call", "refusal_value"),
+    "predicate_helper": ("Call", "refusal_value"),
+}
 
 
 def python_construct_census():
@@ -299,7 +309,8 @@ def python_construct_census():
     return {"status": "FAIL" if errors else "PASS", "python": sys.version,
             "implementation": sys.implementation.name, "positions": list(PYTHON_AST_POSITIONS),
             "node_classes": len(live), "cells": len(live) * len(PYTHON_AST_POSITIONS),
-            "totals": totals, "errors": errors, "rows": rows}
+            "totals": totals, "errors": errors, "rows": rows,
+            "refusal_kinds": {k: list(v) for k, v in PYTHON_REFUSAL_KINDS.items()}}
 
 
 def python_node_supported(node, position):
@@ -1000,6 +1011,7 @@ class CodeSite:
     action: str                    # raise | return | predicate | assert | call
     clause: tuple[int | str, ...] | None = None
     fingerprint: str = ""
+    target: dict = field(default_factory=dict)
 
 
 class AstGuards:
@@ -1041,93 +1053,145 @@ class AstGuards:
         predicate = isinstance(node, ast.Call) and ast.unparse(node.func) in self.call_predicates
         return refusal, predicate
 
+    def _compose_refusal(self, node, fn, parents):
+        """One rejection formula for EVERY refusal kind, before registration.
+
+        Rejection is all enclosing branch tests (with their branch polarity)
+        AND failure of the site's own acceptance test. Constants contribute no
+        input atom under a controller. Unsupported composition poisons the
+        entire site, never just the unfamiliar component.
+        """
+        refusal_call, checkcall = self._calls(node)
+        controls, reason = [], ""
+        child, owner = node, parents.get(node)
+        while owner is not None and owner is not fn:
+            if isinstance(owner, PYTHON_AST_BASES):
+                if not python_node_supported(owner, "controlling_context"):
+                    reason = "unsupported controlling context " + type(owner).__name__ + "; atomic adapter required"
+                if hasattr(owner, "test"):
+                    in_body = child in getattr(owner, "body", ())
+                    controls.append((owner.test, owner, "test", in_body, "control"))
+                    if not isinstance(owner, ast.If) or not in_body or len(controls) > 1:
+                        reason = reason or "else/nested control path has no verified per-predicate cut; atomic adapter required"
+                    if isinstance(owner, ast.If) and len(owner.body) != 1:
+                        reason = reason or "shared controlling body needs a refusal-local atomic adapter"
+            child, owner = owner, parents.get(owner)
+        controls.reverse()
+        if not python_node_supported(fn, "controlling_context"):
+            reason = "unsupported function context"
+        if isinstance(fn, ast.AsyncFunctionDef):
+            reason = "async guard requires an explicit atomic adapter"
+
+        # These cases describe ONLY the site's own test/payload. They never
+        # choose between the site's test and its enclosing controllers.
+        arg_index = None
+        if checkcall:
+            kind, action = "predicate_helper", "checkcall"
+            arg_index = self.call_predicates[ast.unparse(node.func)]
+            if arg_index < 0 or arg_index >= len(node.args):
+                raise IsolationError("guard call uses keyword/missing predicate: supply an explicit adapter boundary")
+            own, own_field = node.args[arg_index], "args"
+            if node.keywords or any(not isinstance(arg, ast.Constant) for i, arg in enumerate(node.args) if i != arg_index):
+                reason = "predicate helper has additional nonliteral refusal arguments; atomic adapter required"
+        elif isinstance(node, ast.Return):
+            kind, action = "return", "return" if controls else "predicate"
+            own, own_field = node.value if node.value is not None else ast.Constant(None), "value"
+            if node.value is not None and not python_node_supported(node.value, "refusal_value"):
+                reason = "return value fails closed in refusal-value position; atomic adapter required"
+            if isinstance(node.value, (ast.Name, ast.Attribute, ast.Subscript)):
+                reason = "returned name/access may carry accumulated or compound predicates; dataflow adapter required"
+            if controls and node.value is not None and not isinstance(node.value, ast.Constant):
+                reason = "conditional return value may carry additional predicates; atomic adapter required"
+        elif isinstance(node, ast.Assert):
+            kind, action, own, own_field = "assert", "assert", node.test, "test"
+            if node.msg is not None and not isinstance(node.msg, ast.Constant):
+                reason = "assert refusal message is not a fixed scalar value; atomic adapter required"
+        else:
+            own, own_field = ast.Constant(False), None
+            if isinstance(node, ast.Raise):
+                kind, action = "raise", "raise"
+                if (not isinstance(node.exc, ast.Call) or node.exc.keywords or
+                        not isinstance(node.exc.func, (ast.Name, ast.Attribute)) or
+                        not all(isinstance(arg, ast.Constant) and python_node_supported(arg, "refusal_value") for arg in node.exc.args)):
+                    reason = "refusal payload is not a fixed scalar constructor; atomic adapter required"
+                if node.cause is not None:
+                    reason = "translated/chained raise needs an atomic adapter preserving exception origin"
+            else:
+                call = node.value
+                kind = "accumulator_write" if isinstance(call.func, ast.Attribute) else "refusal_helper"
+                action = "call"
+                if isinstance(call.func, ast.Attribute):
+                    if (call.func.attr != "append" or not python_node_supported(call, "accumulator_write")
+                            or call.keywords or len(call.args) != 1 or not isinstance(call.args[0], ast.Constant)):
+                        reason = "list/container mutation is not one fixed scalar append; atomic adapter required"
+                elif call.keywords or not all(isinstance(arg, ast.Constant) for arg in call.args):
+                    reason = "refusal helper payload is not fixed scalar values; atomic adapter required"
+        if kind not in PYTHON_REFUSAL_KINDS:
+            reason = "refusal kind has no reviewed composition contract"
+        if isinstance(node, (ast.Raise, ast.Return, ast.Assert)) and not python_node_supported(node, "refusal_value"):
+            reason = "statement fails closed in refusal-value position; atomic adapter required"
+
+        own_component = (own, node, own_field, False, "own")
+        components = [*controls, own_component]
+        composition = [{"role": role, "expression": ast.unparse(expr),
+                        "line": getattr(root, "lineno", node.lineno),
+                        "rejects_when": polarity}
+                       for expr, root, _, polarity, role in components]
+        # We have not verified cuts across a nonconstant own test AND a
+        # controller. Expose both sets, but fail closed as one obligation set.
+        if controls and not isinstance(own, ast.Constant):
+            reason = reason or "controller plus nonconstant own test needs a composition-preserving atomic adapter"
+        if controls and isinstance(own, ast.Constant) and bool(own.value):
+            reason = reason or "constant accepting value under control is not a refusal predicate"
+        atoms = []
+        for expr, root, field_name, polarity, role in components:
+            if isinstance(expr, ast.Constant) and controls:
+                continue
+            for clause, atom in self._leaves(expr):
+                atom_reason = python_atom_reason(atom)
+                reason = reason or atom_reason
+                atoms.append((clause, atom, {"line": root.lineno, "column": root.col_offset, "node": type(root).__name__,
+                    "field": field_name, "argument": arg_index if role == "own" else None,
+                    "accepting": not polarity, "path": list(clause)}))
+        if not atoms:
+            reason = reason or "controlling formula has no independently cuttable input atom"
+        # Keep an explicit own-value obligation when ancestry is unsupported;
+        # it cannot replace the controlling tests or receive a cut.
+        if reason and controls and isinstance(own, ast.Constant):
+            atoms.append(((), own, {}))
+        if not atoms:
+            atoms = [((), own, {})]
+        if not controls and own_field is None:
+            # An unconditional fixed refusal has no input predicate. Retain its
+            # site obligation; only an unreachable/redundant declaration can
+            # explain how an accepting complete-path control exists.
+            atoms = [((), node, {"line": node.lineno, "column": node.col_offset, "node": type(node).__name__,
+                                  "field": None, "path": [], "accepting": True})]
+        return kind, action, atoms, reason, composition
+
     def candidates(self):
         result = []
         parents = {child: parent for parent in ast.walk(self.tree) for child in ast.iter_child_nodes(parent)}
-
-        def control_reason(node, fn):
-            # Inspect the ACTUAL ancestry, not only the last if discovered by
-            # the recursive walk. A falsy return under while must never become
-            # an unconditional predicate. Unsupported contexts block even when
-            # a nearer, otherwise-supported if has supplied a test.
-            child, owner, conditions = node, parents.get(node), 0
-            while owner is not None and owner is not fn:
-                if isinstance(owner, PYTHON_AST_BASES):
-                    if not python_node_supported(owner, "controlling_context"):
-                        return "unsupported controlling context " + type(owner).__name__ + "; atomic adapter required"
-                    if isinstance(owner, ast.If):
-                        conditions += 1
-                        if child not in owner.body or conditions > 1:
-                            return "else/nested control path has no verified per-predicate cut; atomic adapter required"
-                child, owner = owner, parents.get(owner)
-            return "" if python_node_supported(fn, "controlling_context") else "unsupported function context"
-
         for name, fn in self.functions.items():
-            def walk(node, condition=None):
+            def walk(node):
                 if node is not fn and isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda)):
                     return
                 refusal_call, checkcall = self._calls(node)
                 if isinstance(node, (ast.Raise, ast.Return, ast.Assert)) or (refusal_call and isinstance(node, ast.Expr)) or checkcall:
-                    # Non-refusal returns are inventoried too; adapter classifies them.
-                    predicate = isinstance(node, ast.Return) and condition is None
-                    arg_index = self.call_predicates[ast.unparse(node.func)] if checkcall else None
-                    if checkcall and arg_index >= len(node.args):
-                        raise IsolationError("guard call uses keyword/missing predicate: supply an explicit adapter boundary")
-                    expression = node.args[arg_index] if checkcall else (node.value if node.value is not None else ast.Constant(None)) if predicate else node.test if isinstance(node, ast.Assert) else condition.test if condition else node
-                    leaves = list(self._leaves(expression))
-                    action = ("checkcall" if checkcall else "predicate" if predicate else "raise" if isinstance(node, ast.Raise) else
-                              "assert" if isinstance(node, ast.Assert) else "call" if refusal_call else "return")
-                    for clause, expression in leaves:
+                    kind, action, atoms, reason, composition = self._compose_refusal(node, fn, parents)
+                    for clause, expression, target in atoms:
                         identity = digest([name, ast.dump(node, include_attributes=False), clause,
                                            ast.dump(expression, include_attributes=False)])[:16]
-                        reason = python_atom_reason(expression)
-                        if isinstance(node, ast.Raise) and condition is None and isinstance(node.exc, ast.Call) and all(isinstance(x, ast.Constant) for x in node.exc.args):
-                            reason = ""   # unconditional single refusal; no control will pass unless unreachable
-                        if isinstance(node, ast.Return):
-                            if node.value is not None and not python_node_supported(node.value, "refusal_value"):
-                                reason = "return value fails closed in refusal-value position; atomic adapter required"
-                            if isinstance(node.value, (ast.Name, ast.Attribute, ast.Subscript)) or (condition is None and isinstance(expression, (ast.Name, ast.Attribute, ast.Subscript))):
-                                reason = "returned name/access may carry accumulated or compound predicates; dataflow adapter required"
-                            elif condition is not None and node.value is not None and not isinstance(node.value, ast.Constant):
-                                reason = "conditional return value may carry additional predicates; atomic adapter required"
-                        if isinstance(node, ast.Raise) and (not isinstance(node.exc, ast.Call) or node.exc.keywords or
-                                not isinstance(node.exc.func, (ast.Name, ast.Attribute)) or
-                                not all(isinstance(arg, ast.Constant) and python_node_supported(arg, "refusal_value") for arg in node.exc.args)):
-                            reason = "refusal payload is not a fixed scalar constructor; atomic adapter required"
-                        if isinstance(node, ast.Assert) and node.msg is not None and not isinstance(node.msg, ast.Constant):
-                            reason = "assert refusal message is not a fixed scalar value; atomic adapter required"
-                        if checkcall and (node.keywords or any(not isinstance(arg, ast.Constant) for i, arg in enumerate(node.args) if i != arg_index)):
-                            reason = "predicate helper has additional nonliteral refusal arguments; atomic adapter required"
-                        if refusal_call and isinstance(node, ast.Expr) and isinstance(node.value.func, ast.Name) and (
-                                node.value.keywords or not all(isinstance(arg, ast.Constant) for arg in node.value.args)):
-                            reason = "refusal helper payload is not fixed scalar values; atomic adapter required"
-                        if isinstance(fn, ast.AsyncFunctionDef):
-                            reason = "async guard requires an explicit atomic adapter"
-                        if isinstance(node, ast.Raise) and node.cause is not None:
-                            reason = "translated/chained raise needs an atomic adapter preserving exception origin"
-                        if refusal_call and isinstance(node, ast.Expr) and isinstance(node.value.func, ast.Attribute) and node.value.func.attr != "append":
-                            reason = "list/container mutation may accumulate multiple refusals; atomic adapter required"
-                        if refusal_call and isinstance(node, ast.Expr) and isinstance(node.value.func, ast.Attribute) and node.value.func.attr == "append":
-                            call = node.value
-                            if (not python_node_supported(call, "accumulator_write") or call.keywords or len(call.args) != 1
-                                    or not isinstance(call.args[0], ast.Constant)):
-                                reason = "append payload is not one fixed scalar error; atomic adapter required"
-                        if isinstance(node, (ast.Raise, ast.Return, ast.Assert)) and not python_node_supported(node, "refusal_value"):
-                            reason = "statement fails closed in refusal-value position; atomic adapter required"
-                        reason = control_reason(node, fn) or reason
                         result.append({"function": name, "line": node.lineno,
-                            "column": node.col_offset, "action": action,
+                            "column": node.col_offset, "action": "unsupported" if reason else action,
                             "clause": clause or None,
                             "expression": ast.unparse(expression), "fingerprint": identity,
                             "id": f"code:{self.name}:{name}:{identity}",
                             "reason": reason, "predicate_count": None if reason else 1,
-                            "cut": "" if reason else "replace-one-Boolean-leaf" if clause or predicate or checkcall or isinstance(node, ast.Assert) else "skip-one-refusal-statement"})
-                        if reason:
-                            result[-1]["action"] = "unsupported"
+                            "cut": "" if reason else "replace-one-Boolean-leaf" if target.get("field") else "skip-one-refusal-statement",
+                            "refusal_kind": kind, "composition": composition, "cut_target": target if not reason else {}})
                 for child in ast.iter_child_nodes(node):
-                    # Else bodies are NOT governed by the if's true test.
-                    next_condition = node if isinstance(node, ast.If) and child in node.body else condition
-                    walk(child, next_condition)
+                    walk(child)
             walk(fn)
         inventoried = {(r["line"], r["column"]) for r in result}
         # Every call and mutation is either a covered refusal/predicate, a
@@ -1205,7 +1269,7 @@ class AstGuards:
                   invariant, evidence=evidence or "registered exact AST refusal predicate", refusal_code=code,
                   predicate_count=1, cut=candidate["cut"])
         self.sites[gid] = CodeSite(g, candidate["function"], candidate["line"], candidate["column"], candidate["action"],
-                                   candidate["clause"], candidate["fingerprint"])
+                                   candidate["clause"], candidate["fingerprint"], copy.deepcopy(candidate["cut_target"]))
         return gid
 
     def clone(self, cuts: frozenset[str]):
@@ -1231,46 +1295,25 @@ class AstGuards:
             sites = [s for s in selected if s.function == name]
             hit = set()
             class Cut(ast.NodeTransformer):
-                def visit_If(self, node):
-                    # Only a direct refusal body has this true-test rejection clause.
+                def generic_visit(self, node):
+                    # Discovery supplies one explicit target for every kind.
+                    # Execution never re-discovers a different controlling test.
                     for site in sites:
-                        if site.action not in ("predicate", "assert", "checkcall") and site.clause is not None and any(n.lineno == site.line and n.col_offset == site.column for n in node.body):
-                            node.test = self.atom(node.test, site.clause, False)
+                        target = site.target
+                        if (type(node).__name__, getattr(node, "lineno", None), getattr(node, "col_offset", None)) != (target["node"], target["line"], target["column"]):
+                            continue
+                        field_name = target["field"]
+                        if field_name is None:
                             hit.add(site.guard.id)
-                    return self.generic_visit(node)
-
-                def visit_Raise(self, node):
-                    return self.refusal(node, "raise")
-
-                def visit_Return(self, node):
-                    for site in sites:
-                        if site.line == node.lineno and site.column == node.col_offset and site.action == "predicate":
-                            node.value = self.accepting(node.value, site)
-                    if any(s.line == node.lineno and s.column == node.col_offset and s.action == "predicate" for s in sites):
-                        return node
-                    replacement = self.refusal(node, "return")
-                    return replacement if replacement is not node else self.generic_visit(node)
-
-                def visit_Assert(self, node):
-                    for site in sites:
-                        if site.line == node.lineno and site.column == node.col_offset and site.action == "assert":
-                            node.test = self.accepting(node.test, site)
-                    return node
-
-                def visit_Expr(self, node):
-                    replacement = self.refusal(node, "call")
-                    return replacement if replacement is not node else self.generic_visit(node)
-
-                def visit_Call(self, node):
-                    for site in sites:
-                        if site.line == node.lineno and site.column == node.col_offset and site.action == "checkcall":
-                            index = outer.call_predicates[ast.unparse(node.func)]
-                            node.args[index] = self.accepting(node.args[index], site)
-                    return self.generic_visit(node)
-
-                def accepting(self, expression, site):
-                    hit.add(site.guard.id)
-                    return self.atom(expression, site.clause or (), True)
+                            return ast.copy_location(ast.Pass(), node)
+                        expression = getattr(node, field_name)
+                        if target["argument"] is not None:
+                            index = target["argument"]
+                            expression[index] = self.atom(expression[index], target["path"], target["accepting"])
+                        else:
+                            setattr(node, field_name, self.atom(expression, target["path"], target["accepting"]))
+                        hit.add(site.guard.id)
+                    return super().generic_visit(node)
 
                 def atom(self, expression, path, accepting):
                     if not path:
@@ -1283,14 +1326,6 @@ class AstGuards:
                     else:
                         raise IsolationError("compound AST shape changed")
                     return expression
-
-                def refusal(self, node, action):
-                    for site in sites:
-                        if site.line == node.lineno and site.column == node.col_offset and site.action == action and site.clause is None:
-                            hit.add(site.guard.id)
-                            return ast.copy_location(ast.Pass(), node)
-                    return node
-            outer = self
             tree = Cut().visit(tree)
             if hit != {s.guard.id for s in sites}:
                 raise IsolationError(f"AST cuts did not match exactly: {name}")
@@ -1728,12 +1763,20 @@ def main(argv=None):
 
 # The small trap harness is below the engine so adapters import only one module.
 def self_test(memory=None):
-    from pm_guard_isolation_traps import exercise
+    from pm_guard_isolation_traps import exercise, composition_coverage
     census = python_construct_census()
     if census["errors"]:
         return {"version": 1, "status": "FAIL", "caught": 0, "traps": [], "python_census": census}
+    coverage = composition_coverage(sys.modules[__name__], census)
+    if coverage["errors"]:
+        return {"version": 1, "status": "FAIL", "caught": 0, "traps": [],
+                "python_census": census, "python_composition": coverage}
     report = exercise(sys.modules[__name__], memory or MemoryGate())
     report["python_census"] = census
+    report["python_composition"] = coverage
+    cross = next((t["report"] for t in report["traps"] if t["id"] == "C5-composition-cross-product" and "report" in t),
+                 {"status": "FAIL", "errors": ["cross-product check did not complete"]})
+    report["composition_cross_product"] = {k: v for k, v in cross.items() if k != "cells"}
     return report
 
 
@@ -1746,6 +1789,15 @@ def self_test_markdown(report):
         census = report["python_census"]
         lines += ["", f"Python construct census gate: **{census['status']}**, {census['node_classes']} classes × {len(census['positions'])} positions."]
         lines += ["- " + error for error in census["errors"]]
+    if report.get("python_composition"):
+        coverage = report["python_composition"]
+        lines += ["", "Refusal/context coverage gate: **" + coverage["status"] + "**."]
+        lines += ["- " + error for error in coverage["errors"]]
+    if "generated" in report.get("composition_cross_product", {}):
+        cross = report["composition_cross_product"]
+        lines += ["", f"Composition cross-product: **{cross['generated']} cells**, "
+                  f"{cross['credited_with_per_atom_cuts']} with verified per-atom cuts, "
+                  f"{cross['unclassified']} unclassified."]
     return "\n".join(lines) + "\n"
 
 

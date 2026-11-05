@@ -11,6 +11,32 @@
     "accumulator_write"
   ],
   "python": "3.14.4 (main, Aug 20 2026, 10:41:58) [GCC 15.2.0]",
+  "refusal_kinds": {
+    "accumulator_write": [
+      "Call",
+      "accumulator_write"
+    ],
+    "assert": [
+      "Assert",
+      "refusal_value"
+    ],
+    "predicate_helper": [
+      "Call",
+      "refusal_value"
+    ],
+    "raise": [
+      "Raise",
+      "refusal_value"
+    ],
+    "refusal_helper": [
+      "Call",
+      "refusal_value"
+    ],
+    "return": [
+      "Return",
+      "refusal_value"
+    ]
+  },
   "rows": [
     {
       "base": "boolop",
@@ -113,7 +139,7 @@
           "rule": "closed"
         },
         "refusal_value": {
-          "constraint": "Fixed scalar refusal payload only; extra expressions or unsupported ancestors refuse.",
+          "constraint": "Fixed scalar payload; shared controller/own-test composition; constants never replace controlling predicates.",
           "cut": "skip-one-fixed-refusal-or-cut-one-control-leaf",
           "disposition": "supported",
           "rule": "refusal"
@@ -509,7 +535,7 @@
           "rule": "closed"
         },
         "refusal_value": {
-          "constraint": "Fixed scalar refusal payload only; extra expressions or unsupported ancestors refuse.",
+          "constraint": "Fixed scalar payload; shared controller/own-test composition; constants never replace controlling predicates.",
           "cut": "skip-one-fixed-refusal-or-cut-one-control-leaf",
           "disposition": "supported",
           "rule": "refusal"
@@ -617,7 +643,7 @@
           "rule": "closed"
         },
         "refusal_value": {
-          "constraint": "Fixed scalar refusal payload only; extra expressions or unsupported ancestors refuse.",
+          "constraint": "Fixed scalar payload; shared controller/own-test composition; constants never replace controlling predicates.",
           "cut": "skip-one-fixed-refusal-or-cut-one-control-leaf",
           "disposition": "supported",
           "rule": "refusal"
@@ -1151,7 +1177,7 @@
           "rule": "closed"
         },
         "controlling_context": {
-          "constraint": "One direct if-body context; else and nested control paths refuse.",
+          "constraint": "One direct single-refusal if-body; compose every controller with own test; else/nested paths refuse.",
           "cut": "replace-one-controlling-Boolean-leaf",
           "disposition": "supported",
           "rule": "if"
@@ -2309,7 +2335,7 @@
           "rule": "closed"
         },
         "refusal_value": {
-          "constraint": "Fixed scalar refusal payload only; extra expressions or unsupported ancestors refuse.",
+          "constraint": "Fixed scalar payload; shared controller/own-test composition; constants never replace controlling predicates.",
           "cut": "skip-one-fixed-refusal-or-cut-one-control-leaf",
           "disposition": "supported",
           "rule": "refusal"
