@@ -145,7 +145,11 @@ export default async function (t) {
           return { out, atEnd: t.scrollTop + t.clientHeight >= t.scrollHeight - 2, atTop: t.scrollTop <= 2 };
         }, pos);
         views++;
-        if (r.nopod || r.out?.length || (pos === 'bottom' ? !r.atEnd : !r.atTop)) bad.push(`${w} ${id} ${pos}: ${JSON.stringify(r)}`);
+        if (r.nopod || r.out?.length || (pos === 'bottom' ? !r.atEnd : !r.atTop)) {
+          bad.push(`${w} ${id} ${pos}: ${JSON.stringify(r)}`);
+          t.log(JSON.stringify({failure:r,geometry:await f.evaluate(()=>({chat:document.querySelector('#chatPanel')?.getBoundingClientRect().width,history:document.querySelector('.history-flyout')?.getBoundingClientRect().width,mode:document.body.dataset.phDrawer,themeBusy:window.PM_THEME_TRANSITION?.busy?.()}))}));
+          await t.shot(`pod-${w}-${id}-${pos}`, 'Pod clearance failure at its actual size, thread and scroll position');
+        }
       }
     }
     t.log(`${w}x${h}: inspected ${ids.length} threads at top and bottom`);
