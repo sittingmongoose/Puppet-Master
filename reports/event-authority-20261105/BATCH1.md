@@ -1,3 +1,75 @@
+# Event Authority batch 1 — review round 1 fixes, 2026-11-05
+
+**Status: F1, F2 and F3 fixed; citation recheck and regeneration pass. Re-review and the lead’s landing check remain separate.**
+
+Destination: `plans/ea-batch1-20261105`. Fix input head: `3304fae93ef11246717134e80a0ddcbc6221d8a6`. Integration base remains `57c28f706e10dd9f7c6b13ed5e962de74e9a6ea5`; no rebase. Regenerated content head: `3882550aa2640f5c488bb1cd4b8ea32472cc9f91`. This report is a subsequent report-only commit. Delivery pushes only the named integration branch and removes `/home/sittingmongoose/pm-worktrees/ea-batch1-fix1` after push.
+
+## Review round 1: findings and responses
+
+Review: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/BATCH1-sol/REVIEW.md`. Fix scope: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/BATCH1-FIX1.md`. No finding is disputed.
+
+| Finding | Response and commit | Paths and verification |
+|---|---|---|
+| **F1 — blocking citation provenance** | **Fixed**, `c7d0ffcf8878ead50899122e823cf2106b266b47`. Restore all 25 prior citation edits (24 Decision Log occurrences and one CA-RET occurrence). Preserve the frozen `MAIN` alias at `16acf7594a3fe8559af89491b895f440b314b99e`; publish live locators separately as `BATCH1_CURRENT` at `3304fae93ef11246717134e80a0ddcbc6221d8a6`. All three mapped owner files are unchanged by these fixes. | `Plans/Decision_Log.md:4852` and duplicated PlanUnit at `:7417`; `reports/event-authority-20261104/CA-RET.md:86`, `:255`; `reports/event-authority-20261105/BATCH1-citation-locators.md:3`, `:11`, `:291`; companion `BATCH1-citation-locators.json:1`. Run the reviewer scratch-copy command below: **0 wrong-source mappings, 0 wrong live locators**. Its assertions require all 273 original mapping keys and all 25 original edit use sites. |
+| **F2 — obsolete current retention addenda** | **Fixed**, `8fa6c84693ecda4a264a695ab79ad31eac71b448`. Verify the final integration coordinates and point CA-RET to CA-RET2’s superseding Card 1 clock/count status. | `reports/event-authority-20260911/step-09-storage-retention-20261104.md:228` and `reports/event-authority-20261104/CA-RET.md:252`. Verify `Plans/storage-plan.md:20278`, `:23875`, `:23950`, `:23960`, `:29110`, `:29310`; `Plans/storage_value_registry.json:71067`; supersession at `reports/event-authority-20261105/CA-RET2.md:40`. Historical application hashes and lane facts are intact. |
+| **F3 — four inherited row locators** | **Fixed**, `dc5ab3bfd14a9930dfabfe08837b3b7683838ebc`. Two roster citations now read `Collaborative_Workflows.md:464`; two census spawn citations now read `assistant-chat-design.md:1849-1849`. | `Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.member_added.json:100`, `ROW_crew.member_removed.json:100`, corresponding `individual-disposition/LEDGER.jsonl:89` and `:90`, and `census-adjudication/LEDGER.jsonl:273` and `:274`. Run the integrity command below: all four individual row objects equal their ledger copies; only the requested locator bytes changed, including preservation of original CRLF. Grades, dispositions, and no-current-writer-authority notes are unchanged. |
+
+The revised mapping key is `(source_revision, path, source_lines)`. Every mapping records the frozen file SHA-256, exact source excerpt, excerpt SHA-256, current revision/file SHA-256 and exact current excerpt. Frozen recount owner hashes are checked against its RECEIPT. **272 spans have byte-identical live matches. One has no live match:** frozen `UI_Command_Catalog.md:10411` is the removed `panels.git_commit` alias row. The current-locator table marks it **removed; frozen source only** at `BATCH1-citation-locators.md:183`, with `current_lines=null` in JSON. It supplies no substitute current premise. This corrects the old blanket preservation claim without changing a product answer or owner meaning.
+
+The Decision Log is byte-identical to its version before the faulty citation follow-up (`84f360e95f^:Plans/Decision_Log.md`). All deck/recount captures and hashes remain frozen, including the recount’s original model-refresh citation at line 8578. The separate live model-refresh row is line **8581**, verified as `cmd.model.refresh` / `model.catalog_refreshed`.
+
+The reviewer’s `citation_provenance.py` was copied to the fix evidence directory and adapted only as a scratch harness: select this worktree’s HEAD/output directory, read restored use sites plus the separate live-locator manifest, require all 273 keys/all 25 original edits, check full source/current hashes and exact bytes, and permit the explicitly removed row only after proving its frozen excerpt absent from the current owner. The original reviewer script is unchanged; `citation_provenance-adaptation.diff` records the changes. The check reads HEAD, so rerunning it after the report-only commit binds the final pushed head.
+
+```bash
+python3 /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/fix1/citation_provenance.py
+python3 /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/fix1/integrity.py
+```
+
+## Review-round verification and delivery scope
+
+The required fifteen-file currentness edition was copied from the shared checkout before index generation; **15/15 SHA-256 pairs match**. All **57** external decision-source pins match. Initial disk availability was **101 GB**, available RAM **11 GB**; generators/checkers ran one at a time with at least 6 GiB available at launch.
+
+Derived commit: **`3882550aa2640f5c488bb1cd4b8ea32472cc9f91`**, separate from the three finding commits. Only the Decision Log shard namespace changes. Index content changes only Decision Log canonical citation text/source hashes and its document hash; four index build clocks also refresh. Other owner documents and PlanUnit identities are preserved.
+
+| Check | Exit | Parsed top-level status / result |
+|---|---:|---|
+| `shard-generate` | 0 | pass |
+| `shard-check` | 0 | pass |
+| `index-generate` | 0 | pass |
+| `index-validate` | 0 | pass |
+| `citation-recheck` | 0 | 0 wrong-source mappings; 0 wrong live locators; 273 records / 25 use sites |
+| `integrity` | 0 | pass |
+
+Commands, stdout/stderr and JSON receipts are in `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/fix1/`. Generator commands: `python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json`, then `--check`; `python3 scripts/pm-plan-index.py generate`, then `validate`. Both index results were parsed at the top level. An initial integrity-probe assertion omitted leading JSON indentation; the corrected probe passes and the original failed attempt is retained as `integrity-probe-error.*`. CRLF-aware diff verification passes with `git -c core.whitespace=cr-at-eol diff 3304fae93e --check`; inherited CRLF was preserved.
+
+No full dry landing check was run this round, as BATCH1-FIX1 explicitly defers it to the lead. The reviewer’s prior completed dry check reported exit 1 and zero automatic blockers; that does not constitute a landing of this fix. Existing product/denominator/depth/admission open items and the 41-path reseal list below remain. No main push, landing lock, reseal, protected governance edit, frozen-validator edit, pm-mail, or subagent work occurred. The lead handles the eventual main rebase/check/landing and separate snapshot/baseline follow-up.
+
+## Review-round evidence hashes
+
+All paths in this table are relative to `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/fix1/` unless absolute.
+
+| Artifact | SHA-256 |
+|---|---|
+| `citation_provenance.py` | `294eb852456e748668d7221677425702bcb07d0ed7dc9bcfabf72262f09e0d50` |
+| `citation_provenance-adaptation.diff` | `dd397110f71cae5dd1bb2031caa206639a50e4e09990947c9b3aa574fe36e49f` |
+| `citation-recheck.stdout` | `83b7538fe47c5e90be8f84be089176c887dd439d7b5af576d69b17570e384506` |
+| `integrity.py` | `e5b0d9cc7b7524f285e38478266b6c09c88bf8ecf84a05299f10931ba62bebe8` |
+| `currentness-copy.json` | `5c99f673f4396a206bc852dafe6ba4c976ec1cb26b3a3ce75cdad69d6e4db75a` |
+| `shard-generate.stdout` | `fafb1c33a567c68de84f9f26c3cbd2828d5f49a400771374af7218463f00b5d2` |
+| `shard-check.stdout` | `10cde07211161ba5007ce9acf94b977462852fb760eea82736b42c96996d0c85` |
+| `index-generate.stdout` | `dd2dd245a9f8ed23191d553e15871df825128e51a42af1ba9444ed01005d5117` |
+| `index-validate.stdout` | `ee3ec3e89215e37283c75a678e1b5fdaa3bab660c39cd1cc461905f3571768a5` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/BATCH1-sol/REVIEW.md` | `bba70a348d8c83692a5c728c36164c35a4c4b1b3e7b278a0ab9da79ec04326b5` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/BATCH1-FIX1.md` | `93c365fae35fe20556520e5a3e8f97d052b8432d7962d8db23df99c54c13e0c0` |
+
+The current report and citation outputs are copied to the parent `drafts/BATCH1/` directory. The fix directory’s final `delivery.json` and `SHA256SUMS` bind the pushed head, final HEAD recheck, report copy and retained outputs.
+
+---
+
+## Historical integration report at 3304fae93e (superseded where noted above)
+
+The following report is preserved as recorded before review round 1. Its STOPPED delivery state, the unsupported 940-span/273-mapping preservation claim, and its in-place citation-correction claims are historical and superseded by the responses above. Its incomplete initial dry check remains historical; this fix does not rerun or recertify it. Historical source hashes remain unchanged.
+
 # Event Authority batch 1 — nine branches rebased after stream C, 2026-11-05
 
 **Status: STOPPED_BASE_MOVED_DURING_DRY_CHECK — main moved outside Concepts; no branch push. Lead reviews and landing remain separate.**
