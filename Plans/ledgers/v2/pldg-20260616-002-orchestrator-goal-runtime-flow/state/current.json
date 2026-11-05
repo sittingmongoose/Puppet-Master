@@ -81,7 +81,7 @@
   "deferred_questions_count": 0,
   "design_atoms_total": 104,
   "governance_status": "sealed",
-  "last_event_id": "evt-0016",
+  "last_event_id": "evt-0018",
   "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
   "must_not_do": [
     "Do not include old unrelated test-chain material as part of this Orchestrator design.",
@@ -124,7 +124,7 @@
   ],
   "status": "sealed",
   "title": "Orchestrator Goal Runtime Flow Rewrite",
-  "updated_at_utc": "2026-07-02T20:35:00Z",
+  "updated_at_utc": "2026-11-05T17:10:37Z",
   "validation_state": {
     "forbidden_artifacts": "not_created",
     "governance_status": "sealed",
@@ -136,6 +136,6 @@
     "pm_plan_migration_validate": "pass_after_archive17_hash_refresh",
     "strict_canonical_plan_target": "Plans/Goal_Runtime_System.md",
     "pm_plan_index_generate": "pass_5354_planunits_19198_acceptance_units",
-    "pm_bootstrap_ledger_validate_summary": "104_atoms_16_events_1_compile_queue_item_2629_planunits_checked"
+    "pm_bootstrap_ledger_validate_summary": "104_atoms_18_events_1_compile_queue_item_3306_planunits_checked"
   }
 }

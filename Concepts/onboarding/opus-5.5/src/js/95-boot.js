@@ -72,6 +72,13 @@
     el.innerHTML = `<button type="button" data-o55-chip="resume" title="${U.esc(title)}" data-pm-hover-exempt="true">${O55.c.small('history', 14)}<span>${U.esc(label)}</span></button>`
       + `<button type="button" class="o55-resume-x" data-o55-chip="hide" aria-label="${U.esc(T('chrome.hide'))}" data-pm-hover-exempt="true">${closeMark()}</button>`;
   }
+  /* Update only an existing chip; changing wording must not restore a dismissed chip. */
+  window.addEventListener('o55:talk', () => {
+    const button = document.querySelector('#o55-resume [data-o55-chip="resume"]');
+    if (!button) return;
+    const tip = O55.tips && O55.tips.of('resume', 'chrome');
+    button.title = button.textContent.trim() + (tip ? '\n' + tip.text : '');
+  });
   /* A tour interrupted by a reload offers to carry on from its last safe step. */
   function tourChip() {
     const t = O55.store.get('tour', null);

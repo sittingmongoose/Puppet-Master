@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18844,
+    "depends_on_edge_count": 18865,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22054,
-    "node_count": 7485,
+    "edge_count": 22075,
+    "node_count": 7492,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3210,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-05T13:13:42Z",
+  "generated_at_utc": "2026-11-05T20:41:40Z",
   "gui_related_units": {
-    "count": 3813,
+    "count": 3814,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -8679,8 +8679,8 @@
         "source_location": {
           "heading": "CV-290 - Planning Runtime Events, Packs, Records, And Exceptions",
           "heading_level": 3,
-          "heading_line": 18336,
-          "line": 18338,
+          "heading_line": 18339,
+          "line": 18341,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -8690,8 +8690,8 @@
         "source_location": {
           "heading": "CV-306 - P0-WEBSOCKET-SECURITY-BOUNDARIES",
           "heading_level": 3,
-          "heading_line": 19869,
-          "line": 19871,
+          "heading_line": 19872,
+          "line": 19874,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -8701,8 +8701,8 @@
         "source_location": {
           "heading": "CV-307 - P0-RUNTIME-SURFACE-READINESS-PROBE",
           "heading_level": 3,
-          "heading_line": 19944,
-          "line": 19946,
+          "heading_line": 19947,
+          "line": 19949,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -8712,8 +8712,8 @@
         "source_location": {
           "heading": "CV-308 - prompt_admission_execution",
           "heading_level": 3,
-          "heading_line": 20016,
-          "line": 20018,
+          "heading_line": 20019,
+          "line": 20021,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -8723,8 +8723,8 @@
         "source_location": {
           "heading": "CV-314 - FABLE Residual Contracts Feature Boundary",
           "heading_level": 3,
-          "heading_line": 20443,
-          "line": 20445,
+          "heading_line": 20446,
+          "line": 20448,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -8734,8 +8734,8 @@
         "source_location": {
           "heading": "CV-316 - GUI Usage Route Subject Payload Contract",
           "heading_level": 3,
-          "heading_line": 20660,
-          "line": 20662,
+          "heading_line": 20663,
+          "line": 20665,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -8745,8 +8745,8 @@
         "source_location": {
           "heading": "CV-320 - Case L Restore Outcomes And Restore-Point Events",
           "heading_level": 3,
-          "heading_line": 20967,
-          "line": 20969,
+          "heading_line": 20970,
+          "line": 20972,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -8756,8 +8756,8 @@
         "source_location": {
           "heading": "CV-321 - Case L Storage Compatibility And Migration Status Envelope",
           "heading_level": 3,
-          "heading_line": 21019,
-          "line": 21021,
+          "heading_line": 21022,
+          "line": 21024,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -8767,8 +8767,8 @@
         "source_location": {
           "heading": "CV-322 - Case L Fallback Divergence Command Envelopes",
           "heading_level": 3,
-          "heading_line": 21076,
-          "line": 21078,
+          "heading_line": 21079,
+          "line": 21081,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -8789,8 +8789,8 @@
         "source_location": {
           "heading": "CV-326 - Touch Closure Registry And Static Production-Intent Boundary",
           "heading_level": 3,
-          "heading_line": 21259,
-          "line": 21261,
+          "heading_line": 21262,
+          "line": 21264,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -8800,8 +8800,8 @@
         "source_location": {
           "heading": "CV-327 - Cross-Owner Route Scope, Immutable Selection, And Provenance Binding",
           "heading_level": 3,
-          "heading_line": 21319,
-          "line": 21321,
+          "heading_line": 21322,
+          "line": 21324,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -8811,8 +8811,8 @@
         "source_location": {
           "heading": "CV-360 - Placement Fields On Every Open Route",
           "heading_level": 3,
-          "heading_line": 23612,
-          "line": 23614,
+          "heading_line": 23615,
+          "line": 23617,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -8822,8 +8822,8 @@
         "source_location": {
           "heading": "CV-361 - The workspace.layout_changed 2.0.0 Payload",
           "heading_level": 3,
-          "heading_line": 23703,
-          "line": 23705,
+          "heading_line": 23706,
+          "line": 23708,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -8833,8 +8833,8 @@
         "source_location": {
           "heading": "CV-362 - The Terminal's Attribution, Write Grant And Refusal Fields",
           "heading_level": 3,
-          "heading_line": 23804,
-          "line": 23806,
+          "heading_line": 23807,
+          "line": 23809,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -12426,6 +12426,17 @@
       },
       {
         "owner_doc": "Plans/Decision_Log.md",
+        "plan_unit_id": "DL-338",
+        "source_location": {
+          "heading": "DL-338 - An Exhausted Repair Budget Stops The Run Or Asks For An Approved Exception",
+          "heading_level": 3,
+          "heading_line": 28698,
+          "line": 28702,
+          "path": "Plans/Decision_Log.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Decision_Log.md",
         "plan_unit_id": "DL-402",
         "source_location": {
           "heading": "DL-402 - Monthly summary and prune archive memories only",
@@ -13475,8 +13486,8 @@
         "source_location": {
           "heading": "EP-101 - Automated Test Binding Intake",
           "heading_level": 3,
-          "heading_line": 6256,
-          "line": 6258,
+          "heading_line": 6264,
+          "line": 6266,
           "path": "Plans/Executor_Protocol.md"
         }
       },
@@ -13486,8 +13497,8 @@
         "source_location": {
           "heading": "EP-110 - P0-STREAM-HISTORY-COALESCER",
           "heading_level": 3,
-          "heading_line": 6857,
-          "line": 6859,
+          "heading_line": 6897,
+          "line": 6899,
           "path": "Plans/Executor_Protocol.md"
         }
       },
@@ -13497,8 +13508,8 @@
         "source_location": {
           "heading": "EP-111 - P0-WEBSOCKET-TRANSPORT-POLICY",
           "heading_level": 3,
-          "heading_line": 6929,
-          "line": 6931,
+          "heading_line": 6969,
+          "line": 6971,
           "path": "Plans/Executor_Protocol.md"
         }
       },
@@ -13508,8 +13519,8 @@
         "source_location": {
           "heading": "EP-112 - P1-WEBSOCKET-BACKPRESSURE-DIAGNOSTICS",
           "heading_level": 3,
-          "heading_line": 7002,
-          "line": 7004,
+          "heading_line": 7042,
+          "line": 7044,
           "path": "Plans/Executor_Protocol.md"
         }
       },
@@ -13519,8 +13530,8 @@
         "source_location": {
           "heading": "EP-129 - Collaboration Helper Message In Progress",
           "heading_level": 3,
-          "heading_line": 8832,
-          "line": 8834,
+          "heading_line": 8872,
+          "line": 8874,
           "path": "Plans/Executor_Protocol.md"
         }
       },
@@ -28666,8 +28677,8 @@
         "source_location": {
           "heading": "OSI-434 - Sustainable Waves, Operational Awareness, And Truthful Work",
           "heading_level": 3,
-          "heading_line": 31820,
-          "line": 31822,
+          "heading_line": 31827,
+          "line": 31829,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -28677,8 +28688,8 @@
         "source_location": {
           "heading": "Working Notebook Scopes Addendum (2026-09-05)",
           "heading_level": 2,
-          "heading_line": 31893,
-          "line": 31929,
+          "heading_line": 31900,
+          "line": 31936,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -28688,8 +28699,8 @@
         "source_location": {
           "heading": "OSI-439 - Application Thread Requests And Receiver Authority",
           "heading_level": 3,
-          "heading_line": 31959,
-          "line": 31961,
+          "heading_line": 31966,
+          "line": 31968,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -28699,8 +28710,8 @@
         "source_location": {
           "heading": "OSI-440 - Application Crew Coordination And Root Identity",
           "heading_level": 3,
-          "heading_line": 32028,
-          "line": 32030,
+          "heading_line": 32035,
+          "line": 32037,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -28710,8 +28721,8 @@
         "source_location": {
           "heading": "OSI-441 - Project Build Grant Consumption And Child Ceiling",
           "heading_level": 3,
-          "heading_line": 32099,
-          "line": 32101,
+          "heading_line": 32106,
+          "line": 32108,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -28930,8 +28941,8 @@
         "source_location": {
           "heading": "PDS-016 - Planning Implementation Readiness And Claim Traceability",
           "heading_level": 3,
-          "heading_line": 799,
-          "line": 801,
+          "heading_line": 800,
+          "line": 802,
           "path": "Plans/Plan_Document_System.md"
         }
       },
@@ -28941,8 +28952,8 @@
         "source_location": {
           "heading": "PDS-022 - Scoped Unit To-Do Mapping And Explicit Promotion Only",
           "heading_level": 3,
-          "heading_line": 1282,
-          "line": 1284,
+          "heading_line": 1283,
+          "line": 1285,
           "path": "Plans/Plan_Document_System.md"
         }
       },
@@ -41967,12 +41978,12 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 7485,
+  "plan_unit_count": 7492,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2804,
+      "high": 2810,
       "low": 9,
-      "medium": 32,
+      "medium": 33,
       "standard": 4640
     },
     "risk_class_counts": {
@@ -43309,7 +43320,7 @@
       "false_certainty": 2,
       "false_certification_or_lost_original_decision_authority": 3,
       "false_compaction_phase_or_repeated_original_effect": 1,
-      "false_completion": 7,
+      "false_completion": 8,
       "false_completion_claim": 1,
       "false_dap_lifecycle_proof": 1,
       "false_durability": 2,
@@ -43522,7 +43533,7 @@
       "governance_boundary": 2,
       "governance_false_buildability": 1,
       "governance_gap_loss": 1,
-      "governance_integrity": 1,
+      "governance_integrity": 5,
       "governance_label_copy_drift": 1,
       "governance_role_conflation": 1,
       "governance_runtime_record_schema_gap": 1,
@@ -44864,6 +44875,7 @@
       "reopen_revocation_policy_gap": 1,
       "reopen_state_loss": 1,
       "repack_config_source": 1,
+      "repair_strategy_owner_drift": 1,
       "repeated_audit_loop": 1,
       "repeated_modal_or_retroactive_binding_rewrite": 1,
       "repeated_node_reference_breaks_selection_anchoring": 1,
@@ -44979,6 +44991,7 @@
       "review_gate_bypass": 1,
       "review_gate_drift": 1,
       "review_pass_persona_key_drift": 1,
+      "review_policy_drift": 1,
       "review_preset_gap": 1,
       "review_results_merged_across_targets": 1,
       "review_roster_count_inconsistency": 1,
@@ -46116,7 +46129,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 7266,
+      "accepted": 7273,
       "retired": 196,
       "superseded": 23
     },
@@ -46149,7 +46162,7 @@
       "contract": 5,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 231,
+      "decision": 237,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,
@@ -46186,7 +46199,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5621,
+      "requirement": 5622,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,
@@ -46295,7 +46308,7 @@
       {
         "actual": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8",
         "error": "pnc019_source_hash_stale",
-        "expected": "25e1a7941289d3f647a8a0d558b6ffea5d143be8cea1d7595d75fdfeb108a31b",
+        "expected": "18ef187b558dadb4f429dd076afc8327f6d4522c80f1c9ff103a560d89754636",
         "source_path": "Plans/Executor_Protocol.md"
       },
       {
@@ -46380,6 +46393,10 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Executor_Protocol.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/FinalGUISpec.md"
       },
       {
@@ -46389,6 +46406,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Media_Generation_and_Capabilities.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Plan_Document_System.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
