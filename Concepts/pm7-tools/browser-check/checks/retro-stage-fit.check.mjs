@@ -479,13 +479,7 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 		const props = [...s2.props.values()].filter((p) => p.state === 'out' ? +p.el.getAttribute('opacity') > .05 : p.op > .95 && +p.el.getAttribute('opacity') > .95);
 		const now = { tilt: Math.abs(ps.tiltv) > 1.5, swing: Math.abs(ps.thv) > .25, hop: ps.dyv < -80, cheer: s2.moodOverride === 'happy' && s2.moodUntil > s2.t, kick: props.some((p) => Math.abs(p.av) > .12) };
 		for (const k of Object.keys(now)) { if (now[k] && !was[k]) out.kinds[k === 'kick' ? 'propKick' : k]++; was[k] = now[k]; }
-		try {
-			const v = pose(s2);
-			if (previousPose && v.some((x,i) => Math.abs(x-previousPose[i]) > .0001)) {
-				out.moving++; out.movingMs += Math.min(50, tNow-lastPoseChange); lastPoseChange=tNow;
-			}
-			previousPose = v;
-		} catch(e) { out.geometryError = e.message; break; }
+
 		// No comparison is eligible during the props' entrance fade. Coverage below must still become positive.
 		if (!props.length) continue;
 		try {
@@ -496,6 +490,11 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 				if (selftest === 'head-detached') s2.gHead.remove();
 			}
 			const hb = R(s2.gHead, 'head');
+			const v = pose(s2);
+			if (previousPose && v.some((x,i) => Math.abs(x-previousPose[i]) > .0001)) {
+				out.moving++; out.movingMs += Math.min(50, tNow-lastPoseChange); lastPoseChange=tNow;
+			}
+			previousPose = v;
 			if (props.length) out.validFrames++;
 			for (const p of props) {
 				const q = R(p.el, `prop ${p.spec.kind}:${p.spec.slot || ''}`), x0 = Math.max(hb.left, q.left), x1 = Math.min(hb.right, q.right), y0 = Math.max(hb.top, q.top), y1 = Math.min(hb.bottom, q.bottom);
