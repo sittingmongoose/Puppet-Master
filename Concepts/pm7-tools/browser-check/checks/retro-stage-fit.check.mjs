@@ -375,16 +375,58 @@ async function noReplay(t, mode) {
 // visible fills and strokes of both (isPointInFill / isPointInStroke in the GPU browser's own geometry), so a
 // transparent box corner is not overlap. Normal motion must stay on all the while (no Reduced Motion, no adaptive
 // low-resource mode, sway and idle life on), and each cell must show Pip moving. A failure crops the stage.
-const MOTION = async (ms) => {
-	const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage'));
-	if (!st) return { err: 'no stage' };
-	const PH = O55.pipStage.h;
+// Shared by the product sampler and controlled fixtures: sampled fill/stroke intersection area in CSS px².
+const INK_OVERLAP = (head, prop) => {
 	const shown = (e, top) => { for (let a = e; a && a !== top.parentElement; a = a.parentElement) { const c = getComputedStyle(a); if (c.display === 'none' || c.visibility === 'hidden' || +c.opacity < .05) return false; } return true; };
 	const shapes = (g) => [...g.querySelectorAll('path,circle,ellipse,rect,polygon,polyline,line')].filter((e) => shown(e, g)).map((e) => {
 		const c = getComputedStyle(e), m = e.getScreenCTM();
 		return { e, m: m && m.inverse(), fill: c.fill !== 'none' && +c.fillOpacity > .05, stroke: c.stroke !== 'none' && parseFloat(c.strokeWidth) > 0 && +c.strokeOpacity > .05 };
 	}).filter((k) => k.m && (k.fill || k.stroke));
 	const ink = (list, x, y) => list.some((k) => { const p = new DOMPoint(x, y).matrixTransform(k.m); return (k.fill && k.e.isPointInFill(p)) || (k.stroke && k.e.isPointInStroke(p)); });
+	const hb = head.getBoundingClientRect(), q = prop.getBoundingClientRect();
+	const x0 = Math.max(hb.left, q.left), x1 = Math.min(hb.right, q.right), y0 = Math.max(hb.top, q.top), y1 = Math.min(hb.bottom, q.bottom);
+	if (x1 <= x0 || y1 <= y0) return 0;
+	const hs = shapes(head), ps = shapes(prop);
+	let hit = 0;
+	for (let y = y0 + 1; y < y1; y += 2) for (let x = x0 + 1; x < x1; x += 2) {
+		if (ink(hs, x, y) && ink(ps, x, y)) hit++;
+	}
+	return hit * 4;
+};
+
+// Independent fixture groups; never alter the product rig or force a product collision. Run on each surface.
+const PROBE_FIXTURE = (probeSource) => {
+	const probe = (0, eval)(`(${probeSource})`), ns = 'http://www.w3.org/2000/svg';
+	const svg = document.createElementNS(ns, 'svg');
+	svg.setAttribute('width', '160'); svg.setAttribute('height', '100');
+	svg.style.cssText = 'position:fixed;left:0;top:0;pointer-events:none;z-index:2147483647';
+	const group = (tag, attrs, transform = '') => {
+		const g = document.createElementNS(ns, 'g'), e = document.createElementNS(ns, tag);
+		if (transform) g.setAttribute('transform', transform);
+		for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+		g.append(e); svg.append(g); return g;
+	};
+	const fillA = group('rect', { x: 0, y: 0, width: 20, height: 20, fill: '#000', stroke: 'none' }, 'translate(10 10)');
+	const fillB = group('rect', { x: 0, y: 0, width: 20, height: 20, fill: '#000', stroke: 'none' }, 'translate(20 20)');
+	// The rectangles' fill is absent; only their coincident 6 px strokes can intersect.
+	const strokeA = group('rect', { x: 0, y: 0, width: 20, height: 20, fill: 'none', stroke: '#000', 'stroke-width': 6 }, 'translate(60 10)');
+	const strokeB = group('rect', { x: 0, y: 0, width: 20, height: 20, fill: 'none', stroke: '#000', 'stroke-width': 6 }, 'translate(60 10)');
+	document.body.append(svg);
+	try { return { fill: probe(fillA, fillB), stroke: probe(strokeA, strokeB), disjoint: probe(fillA, strokeA) }; }
+	finally { svg.remove(); }
+};
+async function probeFixture(t, f, mode) {
+	const r = await f.evaluate(PROBE_FIXTURE, INK_OVERLAP.toString());
+	await t.check(`${mode}: ink probe detects controlled fill overlap`, r.fill === 100, JSON.stringify(r), { hard: true });
+	await t.check(`${mode}: ink probe detects controlled stroke-only overlap`, r.stroke > 4, JSON.stringify(r), { hard: true });
+	await t.check(`${mode}: ink probe accepts disjoint fixture boxes`, r.disjoint === 0, JSON.stringify(r), { hard: true });
+}
+
+const MOTION = async (ms, probeSource) => {
+	const overlap = (0, eval)(`(${probeSource})`);
+	const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage'));
+	if (!st) return { err: 'no stage' };
+	const PH = O55.pipStage.h;
 	const R = (e) => e.getBoundingClientRect();
 	const out = { n: 0, off: 0, offWhy: '', moving: 0, boxFrames: 0, worstBox: 0, worst: 0, at: null, kinds: { tilt: 0, swing: 0, hop: 0, cheer: 0, propKick: 0 } };
 	const was = { tilt: false, swing: false, hop: false, cheer: false, kick: false };
@@ -402,19 +444,11 @@ const MOTION = async (ms) => {
 		for (const k of Object.keys(now)) { if (now[k] && !was[k]) out.kinds[k === 'kick' ? 'propKick' : k]++; was[k] = now[k]; }
 		if (Math.abs(ps.tilt - ps.tiltT) > .02 || Math.abs(ps.th) > .02 || Math.abs(ps.dy) > 1 || props.some((p) => Math.abs(p.a) > .02)) out.moving++;
 		const hb = R(s2.gHead);
-		let hs = null;
 		for (const p of props) {
 			const q = R(p.el), x0 = Math.max(hb.left, q.left), x1 = Math.min(hb.right, q.right), y0 = Math.max(hb.top, q.top), y1 = Math.min(hb.bottom, q.bottom);
 			if (x1 <= x0 || y1 <= y0) continue;
 			out.boxFrames++; out.worstBox = Math.max(out.worstBox, Math.min(x1 - x0, y1 - y0));
-			hs = hs || shapes(s2.gHead);
-			let ps2 = null, hit = 0;
-			for (let y = y0 + 1; y < y1; y += 2) for (let x = x0 + 1; x < x1; x += 2) {
-				if (!ink(hs, x, y)) continue;
-				ps2 = ps2 || shapes(p.el);
-				if (ink(ps2, x, y)) hit++;
-			}
-			const area = hit * 4;
+			const area = overlap(s2.gHead, p.el);
 			if (area > out.worst) out.worst = area, out.at = { prop: `${p.spec.kind}:${p.spec.slot || ''}`, t: Math.round(performance.now() - t0), tilt: Math.round(ps.tilt * 100) / 100, th: Math.round(ps.th * 100) / 100, dy: Math.round(ps.dy), propA: Math.round(p.a * 100) / 100 };
 		}
 	}
@@ -425,6 +459,8 @@ const MOTION_SIZES = [[860, 768], [740, 768], [1280, 500]];
 async function awakeMotion(t, mode) {
 	if (t.args.motion === 'reduce') return t.check('not run: this case is about normal motion', true);
 	const looks = t.args.looks ? String(t.args.looks).split(',') : ALL_LOOKS, total = { tilt: 0, swing: 0, hop: 0, cheer: 0, propKick: 0, boxFrames: 0 };
+	const fixtureFrame = await frameFor(t, mode);
+	await probeFixture(t, fixtureFrame, mode);
 	for (const look of looks) {
 		for (const [w, h] of sizesArg(t) || MOTION_SIZES) {
 			await t.viewport(w, h);
@@ -437,7 +473,7 @@ async function awakeMotion(t, mode) {
 				const tag = `${mode} ${look} ${scr} ${w}x${h} awake`;
 				if (!ok) { await t.check(`${tag}: the screen opens on a stage`, false, 'no stage within 15 s'); continue; }
 				// watched from the screen's entrance on, through the wake, the person's input and the idle that follows
-				const watch = f.evaluate(`(${MOTION.toString()})(14000)`);
+				const watch = f.evaluate(`(${MOTION.toString()})(14000, ${JSON.stringify(INK_OVERLAP.toString())})`);
 				await f.waitForTimeout(250);
 				await t.check(`${tag}: Pip wakes on the pointer's arrival`, await arrive(t, f), 'still asleep after 4 s');
 				if (scr === 'name') {
@@ -469,7 +505,7 @@ async function awakeMotion(t, mode) {
 	await t.check(`${mode}: hops (wake, cheer) seen`, total.hop > 0, JSON.stringify(total));
 	await t.check(`${mode}: cheers seen`, total.cheer > 0, JSON.stringify(total));
 	await t.check(`${mode}: props kicked swinging seen`, total.propKick > 0, JSON.stringify(total));
-	await t.check(`${mode}: head and prop boxes met (the painted test ran)`, total.boxFrames > 0, JSON.stringify(total));
+	await t.check(`${mode}: Pip swings seen`, total.swing > 0, JSON.stringify(total));
 	await t.viewport(1920, 1080);
 }
 
@@ -546,6 +582,8 @@ async function filmRelayout(t, mode) {
 }
 
 export const tests = {
+	'ink overlap probe normal': on('normal', async (t, mode) => probeFixture(t, await frameFor(t, mode), mode)),
+	'ink overlap probe sandbox': on('sandbox', async (t, mode) => probeFixture(t, await frameFor(t, mode), mode)),
 	'retro stage fit normal': (t) => (t.args.film === 'relayout' ? on('normal', filmRelayout)(t) : t.args.film ? film(t) : on('normal', fit)(t)),
 	'retro stage fit sandbox': (t) => (t.args.film === 'relayout' ? on('sandbox', filmRelayout)(t) : t.args.film ? t.check('not run: the film is of the normal surface', true) : on('sandbox', fit)(t)),
 	'retro props every screen normal': (t) => (t.args.film ? t.check('not run under film', true) : on('normal', everyScreen)(t)),
