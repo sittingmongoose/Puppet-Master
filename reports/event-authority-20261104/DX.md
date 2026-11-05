@@ -1,38 +1,37 @@
-# DX-FIX6 — Current-reader custody, isolated enums and numeric representations
+# DX-FIX7 — RFC8785 bytes and exact typed admission
 
-Branch: `plans/ea-w2-executor-20261104`. Reviewed head: `72444d93ee5af84f67101d4af718efbf1192b9ca`. Graded code/fixture head: `c56f378b88082a2bfc960d00cf3d8f611585add4`. The following report-only commit preserves those bytes; `drafts/DX/head.txt` records the final pushed head. Round 6 is the second and last authorized technical round after the extra round. Prepared without admission; native execution **NOT_RUN**.
+Branch: `plans/ea-w2-executor-20261104`. Reviewed head: `141bc8edfc5196be62ba5caf6290978cd2bab50e`. Graded code/fixture head: `11673e1c4ae65f3b8b88de548c0a8f877e1c62c1`. A following report-only commit preserves these bytes; `drafts/DX/head.txt` names the final pushed head. Prepared without admission. Native execution **NOT_RUN**.
 
-**Outcome:** F1–F10 remain fixed. F11/F12/F13 are fixed in the finite static model. Every prior semantic source case is preserved exactly; only the two named prior shape cases changed. Existing histories gain explicit fresh body-read observations. No owner markdown, schema, registry, retention policy or generated governance artifact changed.
+**Outcome:** F1–F12 retain their passing authored regressions. F13 and F14 are fixed in the finite static model. Fifteen families self-grade PASS_AS_PREPARED_WITHOUT_ADMISSION. `plan.decomposition_degraded` keeps its Jared-only retention hold; all sixteen membership cells remain ABSENT.
 
-**Grades:** 159 PASS / 17 PARTIAL / 16 ABSENT → 175 PASS / 1 PARTIAL / 16 ABSENT. Fifteen families pass as prepared without admission. `plan.decomposition_degraded` retains `PENDING_RETENTION_DECISION` for Jared; all sixteen membership cells remain ABSENT.
+## Review round 7: findings and responses
 
-## Review round 6: findings and responses
-
-| Finding | Response at graded head | Verification |
+| Finding | Response | Verification |
 |---|---|---|
-| F1 | Fixed previously; retained. Original presence, mirror and actual/pre-attempt distinction. | 37/37 independent controls; all prior source cases unchanged. |
-| F2 | Fixed previously; retained. Actual/normalized remediation generations and ceilings. | 8/8 controls; typed generation joins strengthen existing equality. |
-| F3 | Fixed previously; retained. Classified retry budgets, provenance and original timing. | 6 original controls and 250 classified-policy controls match. |
-| F4 | Fixed previously; retained. Integer priority bounds, boolean/fraction refusals. | 7 coherent source and 4 isolated schema controls match; original witnesses remain sensitive. |
-| F5 | Fixed previously; retained. Compatibility-only current writes/retries refuse before effects. | All 48 fresh/retry/replay controls; retained replay-only history uses its own read route. |
-| F6 | Fixed previously; retained. Exact MessagePack limit and SP-337 body custody. | All 208 transport corruption/custody controls and exact-size boundaries match. |
-| F7 | Fixed previously; retained. Whole-string identifier/timestamp validation. | All 22 coherent LF positions and schema/trace controls remain refused. |
-| F8 | Fixed previously; retained. Eager references and same-process resource freshness. | 64 complete-CLI missing-ref refusals; 16 valid-ref controls; 48 freshness controls; two proof-schema refusals. |
-| F9 | Fixed previously; retained. Successor/post-state, policy, bool/hash and forged-history repairs. | Whole matrix and all prior 29 witnesses; exact original source cases retained. |
-| F10 | Fixed previously; retained. Formerly unproved prerequisites and other guard sites. | 29/29 supplied witnesses and 22 trace-schema controls retain sensitivity; zero unproved sites. |
-| F11 | Fixed (c56f378b88). Enum negatives rebuilt from valid failure seeds; inline copies, success absence and verify_pending facts coherent. Two enum/state sets removed from duplicate claims. | Each exact enum-only mutant makes the complete shape CLI fail with exactly its one authored negative accepted; restored production passes. |
-| F12 | Fixed (c56f378b88). Authenticate original first; use current viewer plus separate fresh pack/dependency reads for each disclosure. Original lifecycle remains historical. | 82 current-only-reader positives and 82 one-viewer-change negatives, across both retained policies and every linked target; 128 fresh pack custody negatives. Removing just the fresh pack/dependency route exposes 160/50 negatives. |
-| F13 / Astra 10 | Fixed (c56f378b88). Integer-domain validation precedes identities/digests; typed source equality refuses bool/int aliasing. No native numeric range or owner recipe is changed. | 448 permanent boundary cases cover 1, 1.0, 1e0, -0, 0, 0.0, 01. Forty-eight new source float/bool/revision negatives; 308 fresh numeric probes cover every numeric identity field. |
-| N1 | Pre-existing integration item; unchanged. Runtime-vocabulary test expects the missing GUI phrase. | Nine tests, one failure. Both test and FinalGUISpec bytes equal origin/main. |
-| N2 | Pre-existing shared-schema integration item; unchanged. Missing goal_body_custody.schema.json#/$defs/body_application_v1. | Relevant shared schema bytes equal main. Lane gate covers the sixteen payloads and proof schema, not the whole shared graph. |
+| F1 | Retained PASS from `141bc8edfc`: original presence/mirror. | All original F1–F12 fixture values remain intact; production family CLIs and the whole matrix rerun. |
+| F2 | Retained PASS from `141bc8edfc`: remediation generations. | All original F1–F12 fixture values remain intact; production family CLIs and the whole matrix rerun. |
+| F3 | Retained PASS from `141bc8edfc`: classified retries and original timing. | All original F1–F12 fixture values remain intact; production family CLIs and the whole matrix rerun. |
+| F4 | Retained PASS from `141bc8edfc`: integer scheduler priorities. | All original F1–F12 fixture values remain intact; production family CLIs and the whole matrix rerun. |
+| F5 | Retained PASS from `141bc8edfc`: replay-only append refusal. | All original F1–F12 fixture values remain intact; production family CLIs and the whole matrix rerun. |
+| F6 | Retained PASS from `141bc8edfc`: SP-337 transport/custody. | All original F1–F12 fixture values remain intact; production family CLIs and the whole matrix rerun. |
+| F7 | Retained PASS from `141bc8edfc`: whole-string identifiers/timestamps. | All original F1–F12 fixture values remain intact; production family CLIs and the whole matrix rerun. |
+| F8 | Retained PASS from `141bc8edfc`: eager lane refs and resource freshness. | All original F1–F12 fixture values remain intact; production family CLIs and the whole matrix rerun. |
+| F9 | Retained PASS from `141bc8edfc`: successor/policy/history controls. | All original F1–F12 fixture values remain intact; production family CLIs and the whole matrix rerun. |
+| F10 | Retained PASS from `141bc8edfc`: prerequisite and guard witnesses. | All original F1–F12 fixture values remain intact; production family CLIs and the whole matrix rerun. |
+| F11 | Retained PASS from `141bc8edfc`: isolated enum negatives. | All original F1–F12 fixture values remain intact; production family CLIs and the whole matrix rerun. |
+| F12 | Retained PASS from `141bc8edfc`: fresh current-reader authorization. | All original F1–F12 fixture values remain intact; production family CLIs and the whole matrix rerun. |
+| F13 | Fixed at `11673e1c4a`. `scripts/pm_executor_event_semantics.py:78` uses RFC8785 serialization; the exact finite binary64 domain is checked before hashing. `scripts/pm_executor_event_contracts.py:13` keeps the owner-selected formula. | Literal ECMAScript byte/hash goldens; complete inline/referenced captures; ±(2^53−1), ±2^53, ±2^60 and unrepresentable neighbours. The former JSON serializer fails a full production family CLI. |
+| F14 | Fixed at `11673e1c4a`. `scripts/pm_executor_event_semantics.py:119`, `:212`, `:348`, `:539` and `scripts/pm_executor_event_contracts.py:13` enforce typed values before interpreting them. | String booleans/numbers, null, arrays, nested objects, mixed grant members, inline bool/int aliases, identity fields, Storage/source references, action grants and wake clocks/identities. |
 
-**Owner authority for F12:** SP-500..515 explicitly say: “At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime.” Each family’s exact line is in `owner-access-evidence.json`. This decides current-reader access; no owner conflict or product choice was inferred. The original viewer is authenticated historical evidence. Fresh body permission lists can exclude that original viewer while permitting the current reader, and those reads accept.
+F13 preserves the owner's RFC8785 recipe in SP-500..515. Exactly representable `2^60` remains valid and emits `1152921504606847000`; unrepresentable integers refuse before identity/digest construction. No numeric maximum or owner prose was changed. The recipe follows [RFC8785 number serialization](https://www.rfc-editor.org/rfc/rfc8785.html#section-3.2.2.3) and its input representation requirement. The pure MessagePack byte helper is a separate transport codec. Both actual inline and referenced validation routes apply canonical-domain admission.
 
-**Jared-only cell, unchanged:** Should `plan.decomposition_degraded` use `RP-OPERATIONAL-2555D@1.0.0` as operational history with an approved original durable decomposition-result terminal anchor, or `RP-AUTHORITY-INDEFINITE@1.0.0` as authority/source lineage? SP-506 leaves both candidates and the proposed anchor unselected. No expiry, deletion behavior or anchor was selected.
+F14 uses exact booleans, typed lists/members, typed inline equality and each identity field's declared string/nonnegative-integer domain. Source metadata copies stay coherent in negatives. Source hashes are rebuilt only when the source body changes. Sixteen earlier F13 float-alias cases replace their old Python `.0` authoring digest with the proper RFC bytes; their original defect and expectation remain. Every other previously supplied source case, all old shape cases, baselines, traces and histories are preserved by `preservation.json`.
+
+**Jared-only question, unchanged:** Should `plan.decomposition_degraded` use `RP-OPERATIONAL-2555D@1.0.0` as operational history with an approved original durable decomposition-result terminal anchor, or `RP-AUTHORITY-INDEFINITE@1.0.0` as authority/source lineage? SP-506 leaves both candidates and the proposed anchor unselected. No expiry, deletion behavior or anchor was selected.
 
 ## Family grades before and after
 
-Counts are PASS / PARTIAL / ABSENT against the independent cycle-6 review. The oracle cell changes from PARTIAL to PASS in each family; normative cells are carried with exact current quotations. Native NOT_RUN is not converted into native clearance.
+Counts are PASS / PARTIAL / ABSENT against independent cycle 7. The oracle cell upgrades from PARTIAL to PASS; current normative quotations are revalidated. Native NOT_RUN remains.
 
 | Family | Before | After | Verdict |
 |---|---|---|---|
@@ -53,306 +52,292 @@ Counts are PASS / PARTIAL / ABSENT against the independent cycle-6 review. The o
 | `run.node_retry_scheduled` | 10 / 1 / 1 | 11 / 0 / 1 | PASS_AS_PREPARED_WITHOUT_ADMISSION |
 | `scheduler.pass` | 10 / 1 / 1 | 11 / 0 / 1 | PASS_AS_PREPARED_WITHOUT_ADMISSION |
 
+Overall: **159 PASS / 17 PARTIAL / 16 ABSENT → 175 PASS / 1 PARTIAL / 16 ABSENT**.
+
 ## Whole-lane guard-removal proof
 
-**3741 authored negatives; 175 individual boundaries; two fresh-read routes. 662157 negative evaluations and 40710 trace evaluations.** There are 163 singleton-negative sites, one singleton trace-schema site, eleven duplicate-only sites, twenty necessary nonempty named sets, and zero unproved sites or guard/case instances. All eight additional trace mutations are detected. Every duplicate witness refuses when any member is restored. Two exact enum-keyword CLI proofs are separate from aggregated schema-call boundaries.
+**181 sites × 9307 authored negative instances = 1684567 evaluations**; 41630 site/trace evaluations. Both fresh owner-read routes add 18614 negative and 460 trace evaluations. 19 necessary nonempty named sets; all eight additional trace mutations are detected. Zero unproved sites, zero unproved guard/case instances, zero unrelated flips.
 
-Each row deletes exactly one predicate/schema/parser boundary or one named duplicate set. No require-wide bypass is used. Every negative is actually rerun. Exact flip IDs are in `DX.guard-removal.json`; still-rejected IDs are the complete inventory minus each row’s flip IDs, with changed refusal reasons retained. Schema calls are aggregate boundaries, not a universal proof of every keyword. Thirty missing/invalid-field schema controls, four timestamp/schema/parser controls and 140 exact missing-object prerequisite outcomes remain explicitly distinguished from full-capture acceptance.
+Each exact predicate/schema/parser boundary or named duplicate set is removed alone. Every other negative actually reruns. Every named witness refuses when any member is restored. Schema calls are aggregate boundaries; exact missing-object/schema prerequisite proofs are distinguished from full-capture acceptance. All flip IDs and changed rejection reasons remain in the hashed external matrix. Still-rejected IDs are the complete negative inventory minus each row's flip IDs, preserving duplicate authored instances. Stable AST IDs retain the review harness namespace; current lines and input hashes bind this round.
 
-Matrix-only caches hold immutable fixture values and schemas and key every result by the exact encoder guard state. Fresh traces are not cached as immutable captures. Production CLIs, both exact enum mutations, route regressions and external-resource freshness tests run separately without those caches. No cache is part of production checker behavior.
+Memory is bounded by a separate process for each family, with no parallel verification in the final run. `free -g` gates each job; guard/set loops sample the equivalent MemAvailable value and pause under 6 GiB. Matrix-only caches use pristine schema results and exact immutable input/snapshot keys, including every affected encoder guard state. Changed values or guard states cannot reuse an old result. Production CLIs, the wrong-serializer CLI and own probes are uncached. `cache-control-comparison.json` reproduces the first family's complete cases, rows, reasons, traces and code hashes across the cache refinement with zero differences. The scheduler-only recovery-seed repair changes the whole fixture-file hash; the archived prior corpus and exact first-family/shared-input comparison preserve that distinction.
 
-| Guard (current line) | Negatives that flip | Negatives that stay rejected | Proof |
+| Guard (line) | Negatives that flip | Negatives still rejected | Proof |
 |---|---:|---:|---|
-| `sem:95:require` (31) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:118:require` (35) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:150:require` (39) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:166:require` (43) | 4 | 3737 | SINGLE_NEGATIVE |
-| `sem:179:require` (47) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:200:require` (51) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:205:require` (55) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:209:require` (59) | 3 | 3738 | SINGLE_NEGATIVE |
-| `sem:268:require` (64) | 19 | 3722 | SINGLE_NEGATIVE |
-| `sem:308:require` (68) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:319:require` (72) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:fix6:validate_canonical_domain:require:'canonical integer value domain'` (91) | 96 | 3645 | SINGLE_NEGATIVE |
-| `sem:45:require` (120) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:82:require` (157) | 0 | 3741 | NAMED_DUPLICATE_SET |
-| `sem:83:require` (158) | 0 | 3741 | NAMED_DUPLICATE_SET |
-| `sem:historical-policy:require` (164) | 16 | 3725 | SINGLE_NEGATIVE |
-| `sem:99:require` (180) | 48 | 3693 | SINGLE_NEGATIVE |
-| `sem:109:require` (190) | 16 | 3725 | SINGLE_NEGATIVE |
-| `sem:110:require` (191) | 49 | 3692 | SINGLE_NEGATIVE |
-| `sem:112:require` (193) | 16 | 3725 | SINGLE_NEGATIVE |
-| `sem:113:require` (194) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:115:require` (196) | 0 | 3741 | NAMED_DUPLICATE_SET |
-| `sem:116:require` (197) | 32 | 3709 | SINGLE_NEGATIVE |
-| `sem:120:require` (201) | 16 | 3725 | SINGLE_NEGATIVE |
-| `sem:121:require` (202) | 48 | 3693 | SINGLE_NEGATIVE |
-| `sem:122:require` (203) | 16 | 3725 | SINGLE_NEGATIVE |
-| `sem:124:require` (205) | 16 | 3725 | SINGLE_NEGATIVE |
-| `sem:125:require` (206) | 16 | 3725 | SINGLE_NEGATIVE |
-| `sem:126:require` (207) | 48 | 3693 | SINGLE_NEGATIVE |
-| `sem:127:require` (208) | 48 | 3693 | SINGLE_NEGATIVE |
-| `sem:128:require` (209) | 48 | 3693 | SINGLE_NEGATIVE |
-| `sem:129:require` (210) | 96 | 3645 | SINGLE_NEGATIVE |
-| `sem:148:require` (229) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:158:require` (239) | 3 | 3738 | SINGLE_NEGATIVE |
-| `sem:159:require` (240) | 3 | 3738 | SINGLE_NEGATIVE |
-| `sem:160:require` (241) | 21 | 3720 | SINGLE_NEGATIVE |
-| `sem:163:require` (244) | 2 | 3739 | SINGLE_NEGATIVE |
-| `sem:165:require` (246) | 0 | 3741 | NAMED_DUPLICATE_SET |
-| `sem:172:require` (253) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:173:require` (254) | 9 | 3732 | SINGLE_NEGATIVE |
-| `sem:176:require` (257) | 6 | 3735 | SINGLE_NEGATIVE |
-| `sem:180:require` (261) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:182:require` (263) | 18 | 3723 | SINGLE_NEGATIVE |
-| `sem:183:require` (264) | 21 | 3720 | SINGLE_NEGATIVE |
-| `sem:184:require` (265) | 21 | 3720 | SINGLE_NEGATIVE |
-| `sem:186:require` (267) | 2 | 3739 | SINGLE_NEGATIVE |
-| `sem:191:require` (272) | 3 | 3738 | SINGLE_NEGATIVE |
-| `sem:211:require` (291) | 2 | 3739 | SINGLE_NEGATIVE |
-| `sem:216:require` (296) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:218:require` (298) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:220:require` (300) | 45 | 3696 | SINGLE_NEGATIVE |
-| `sem:222:require` (302) | 26 | 3715 | SINGLE_NEGATIVE |
-| `sem:224:require` (304) | 2 | 3739 | SINGLE_NEGATIVE |
-| `sem:226:require` (306) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:227:require` (307) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:232:require` (312) | 8 | 3733 | SINGLE_NEGATIVE |
-| `sem:234:require` (314) | 2 | 3739 | SINGLE_NEGATIVE |
-| `sem:244:schema` (324) | 15 | 3726 | SINGLE_NEGATIVE |
-| `sem:248:require` (332) | 16 | 3725 | SINGLE_NEGATIVE |
-| `sem:249:require` (333) | 16 | 3725 | SINGLE_NEGATIVE |
-| `sem:251:require` (335) | 16 | 3725 | SINGLE_NEGATIVE |
-| `sem:253:require` (337) | 32 | 3709 | SINGLE_NEGATIVE |
-| `sem:254:require` (338) | 32 | 3709 | SINGLE_NEGATIVE |
-| `sem:257:require` (341) | 43 | 3698 | SINGLE_NEGATIVE |
-| `sem:262:require` (346) | 0 | 3741 | NAMED_DUPLICATE_SET |
-| `sem:265:require` (349) | 4 | 3737 | SINGLE_NEGATIVE |
-| `sem:267:require` (351) | 2 | 3739 | SINGLE_NEGATIVE |
-| `sem:273:require` (357) | 4 | 3737 | SINGLE_NEGATIVE |
-| `sem:274:require` (358) | 91 | 3650 | SINGLE_NEGATIVE |
-| `sem:275:require` (359) | 91 | 3650 | SINGLE_NEGATIVE |
-| `sem:276:require` (360) | 107 | 3634 | SINGLE_NEGATIVE |
-| `sem:277:require` (361) | 20 | 3721 | SINGLE_NEGATIVE |
-| `sem:278:require` (362) | 220 | 3521 | SINGLE_NEGATIVE |
-| `sem:281:require` (365) | 0 | 3741 | NAMED_DUPLICATE_SET |
-| `sem:283:require` (367) | 56 | 3685 | SINGLE_NEGATIVE |
-| `sem:290:require` (374) | 2 | 3739 | SINGLE_NEGATIVE |
-| `sem:295:require` (379) | 24 | 3717 | SINGLE_NEGATIVE |
-| `sem:297:require` (381) | 12 | 3729 | SINGLE_NEGATIVE |
-| `sem:301:require` (385) | 16 | 3725 | SINGLE_NEGATIVE |
-| `sem:302:require` (386) | 16 | 3725 | SINGLE_NEGATIVE |
-| `sem:303:require` (387) | 16 | 3725 | SINGLE_NEGATIVE |
-| `sem:304:require` (388) | 16 | 3725 | SINGLE_NEGATIVE |
-| `sem:309:require` (393) | 16 | 3725 | SINGLE_NEGATIVE |
-| `sem:310:require` (394) | 16 | 3725 | SINGLE_NEGATIVE |
-| `sem:311:require` (395) | 16 | 3725 | SINGLE_NEGATIVE |
-| `sem:312:require` (396) | 16 | 3725 | SINGLE_NEGATIVE |
-| `sem:314:require` (398) | 17 | 3724 | SINGLE_NEGATIVE |
-| `sem:316:require` (400) | 36 | 3705 | SINGLE_NEGATIVE |
-| `sem:349:require` (404) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:352:require` (407) | 0 | 3741 | NAMED_DUPLICATE_SET |
-| `sem:354:require` (409) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:357:require` (412) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:358:require` (413) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:359:require` (414) | 2 | 3739 | SINGLE_NEGATIVE |
-| `sem:363:require` (418) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:364:require` (419) | 2 | 3739 | SINGLE_NEGATIVE |
-| `sem:365:require` (420) | 2 | 3739 | SINGLE_NEGATIVE |
-| `sem:366:require` (421) | 2 | 3739 | SINGLE_NEGATIVE |
-| `sem:367:require` (422) | 0 | 3741 | NAMED_DUPLICATE_SET |
-| `sem:368:require` (423) | 4 | 3737 | SINGLE_NEGATIVE |
-| `sem:369:require` (424) | 0 | 3741 | NAMED_DUPLICATE_SET |
-| `sem:371:require` (426) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:380:require` (435) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:385:require` (440) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:386:require` (441) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:387:require` (442) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:390:require` (445) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:393:require` (448) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:395:require` (450) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:396:require` (451) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:397:require` (452) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:399:require` (454) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:401:require` (456) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:403:require` (458) | 128 | 3613 | SINGLE_NEGATIVE |
-| `sem:320:require` (469) | 9 | 3732 | SINGLE_NEGATIVE |
-| `sem:321:require` (470) | 20 | 3721 | SINGLE_NEGATIVE |
-| `sem:322:require` (471) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:323:require` (472) | 29 | 3712 | SINGLE_NEGATIVE |
-| `sem:324:require` (473) | 20 | 3721 | SINGLE_NEGATIVE |
-| `sem:325:require` (474) | 60 | 3681 | SINGLE_NEGATIVE |
-| `sem:329:schema` (478) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:334:require` (483) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:336:require` (485) | 50 | 3691 | SINGLE_NEGATIVE |
-| `sem:338:require` (487) | 1 | 3740 | SINGLE_NEGATIVE |
-| `sem:342:require` (491) | 11 | 3730 | SINGLE_NEGATIVE |
-| `sem:421:require` (505) | 16 | 3725 | SINGLE_NEGATIVE |
-| `sem:414:require` (509) | 32 | 3709 | SINGLE_NEGATIVE |
-| `sem:415:require` (510) | 32 | 3709 | SINGLE_NEGATIVE |
-| `sem:416:require` (511) | 32 | 3709 | SINGLE_NEGATIVE |
-| `sem:417:require` (512) | 32 | 3709 | SINGLE_NEGATIVE |
-| `sem:418:require` (513) | 32 | 3709 | SINGLE_NEGATIVE |
-| `sem:419:require` (514) | 32 | 3709 | SINGLE_NEGATIVE |
-| `sem:445:schema` (543) | 0 | 3741 | SINGLE_TRACE_SCHEMA |
-| `shape:fix6:identity:require:'identity string/nonnegative integer domain'` (17) | 0 | 3741 | NAMED_DUPLICATE_SET |
-| `shape:27:schema` (29) | 179 | 3562 | SINGLE_NEGATIVE |
-| `shape:30:raise` (32) | 80 | 3661 | SINGLE_NEGATIVE |
-| `shape:32:raise` (34) | 32 | 3709 | SINGLE_NEGATIVE |
-| `shape:34:raise` (36) | 16 | 3725 | SINGLE_NEGATIVE |
-| `shape:36:raise` (38) | 15 | 3726 | SINGLE_NEGATIVE |
-| `shape:40:raise` (42) | 14 | 3727 | SINGLE_NEGATIVE |
-| `shape:44:schema` (46) | 39 | 3702 | SINGLE_NEGATIVE |
-| `shape:48:raise` (50) | 85 | 3656 | SINGLE_NEGATIVE |
-| `shape:51:raise` (53) | 41 | 3700 | SINGLE_NEGATIVE |
-| `shape:55:raise` (57) | 0 | 3741 | NAMED_DUPLICATE_SET |
-| `shape:57:raise` (59) | 1 | 3740 | SINGLE_NEGATIVE |
-| `shape:59:raise` (61) | 1 | 3740 | SINGLE_NEGATIVE |
-| `shape:61:raise` (63) | 1 | 3740 | SINGLE_NEGATIVE |
-| `shape:63:raise` (65) | 1 | 3740 | SINGLE_NEGATIVE |
-| `shape:65:raise` (67) | 1 | 3740 | SINGLE_NEGATIVE |
-| `shape:67:raise` (69) | 1 | 3740 | SINGLE_NEGATIVE |
-| `shape:69:raise` (71) | 2 | 3739 | SINGLE_NEGATIVE |
-| `shape:72:raise` (74) | 1 | 3740 | SINGLE_NEGATIVE |
-| `shape:75:raise` (77) | 1 | 3740 | SINGLE_NEGATIVE |
-| `shape:82:raise` (84) | 1 | 3740 | SINGLE_NEGATIVE |
-| `shape:84:raise` (86) | 2 | 3739 | SINGLE_NEGATIVE |
-| `shape:88:raise` (90) | 1 | 3740 | SINGLE_NEGATIVE |
-| `shape:92:raise` (94) | 1 | 3740 | SINGLE_NEGATIVE |
-| `numeric-json-parser` (None) | 64 | 3677 | SINGLE_NEGATIVE |
-| `isolated-schema:attempt.completed` (None) | 3 | 3738 | SINGLE_NEGATIVE |
-| `reference-admission` (33) | 112 | 3629 | SINGLE_NEGATIVE |
-| `isolated-schema:attempt.started` (None) | 2 | 3739 | SINGLE_NEGATIVE |
-| `isolated-schema:node.blocked` (None) | 2 | 3739 | SINGLE_NEGATIVE |
-| `isolated-schema:node.completed` (None) | 2 | 3739 | SINGLE_NEGATIVE |
-| `isolated-schema:node.started` (None) | 2 | 3739 | SINGLE_NEGATIVE |
-| `isolated-schema:node.unblocked` (None) | 2 | 3739 | SINGLE_NEGATIVE |
-| `isolated-schema:plan.decomposition_degraded` (None) | 2 | 3739 | SINGLE_NEGATIVE |
-| `isolated-schema:remediation.resolved` (None) | 2 | 3739 | SINGLE_NEGATIVE |
-| `isolated-schema:remediation.spawned` (None) | 2 | 3739 | SINGLE_NEGATIVE |
-| `isolated-schema:run.completed` (None) | 2 | 3739 | SINGLE_NEGATIVE |
-| `isolated-schema:run.graph_integrity_failed` (None) | 2 | 3739 | SINGLE_NEGATIVE |
-| `isolated-schema:run.node_backoff_expired` (None) | 2 | 3739 | SINGLE_NEGATIVE |
-| `isolated-schema:run.node_backoff_started` (None) | 3 | 3738 | SINGLE_NEGATIVE |
-| `isolated-schema:run.node_ready` (None) | 3 | 3738 | SINGLE_NEGATIVE |
-| `isolated-schema:run.node_retry_scheduled` (None) | 2 | 3739 | SINGLE_NEGATIVE |
-| `isolated-schema:scheduler.pass` (None) | 5 | 3736 | SINGLE_NEGATIVE |
-| fresh payload pack owner read | 160 | 3581 | SINGLE_ROUTE |
-| fresh linked dependency owner reads | 50 | 3691 | SINGLE_ROUTE |
-| Trace: idempotency body comparison | 16 changed | 214 unchanged | SINGLE_TRACE |
-| Trace: original receipt dedupe | 80 changed | 150 unchanged | SINGLE_TRACE |
-| Trace: writer cutoff | 16 changed | 214 unchanged | SINGLE_TRACE |
-| Trace: reader cutoff | 16 changed | 214 unchanged | SINGLE_TRACE |
-| Trace: current read token | 16 changed | 214 unchanged | SINGLE_TRACE |
-| Trace: replay cannot mint original | 16 changed | 214 unchanged | SINGLE_TRACE |
-| Trace: unavailable receipt refusal | 16 changed | 214 unchanged | SINGLE_TRACE |
-| Trace: rebuild source custody | 16 changed | 214 unchanged | SINGLE_TRACE |
+| `sem:95:require` (33) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:118:require` (37) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:150:require` (41) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:166:require` (45) | 13 | 9294 | SINGLE_NEGATIVE |
+| `sem:179:require` (49) | 10 | 9297 | SINGLE_NEGATIVE |
+| `sem:200:require` (53) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:205:require` (57) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:209:require` (61) | 9 | 9298 | SINGLE_NEGATIVE |
+| `sem:268:require` (67) | 19 | 9288 | SINGLE_NEGATIVE |
+| `sem:308:require` (71) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:319:require` (75) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:fix6:validate_canonical_domain:require:'canonical integer value domain'` (104) | 116 | 9191 | SINGLE_NEGATIVE |
+| `sem:fix6:validate_canonical_domain:require:'canonical exact binary64 integer'` (110) | 277 | 9030 | SINGLE_NEGATIVE |
+| `sem:45:require` (147) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:82:require` (184) | 0 | 9307 | NAMED_DUPLICATE_SET |
+| `sem:83:require` (185) | 0 | 9307 | NAMED_DUPLICATE_SET |
+| `sem:historical-policy:require` (191) | 16 | 9291 | SINGLE_NEGATIVE |
+| `sem:99:require` (207) | 48 | 9259 | SINGLE_NEGATIVE |
+| `sem:fix6:validate_payload_transport:require:'payload Storage string domain'` (214) | 320 | 8987 | SINGLE_NEGATIVE |
+| `sem:109:require` (220) | 352 | 8955 | SINGLE_NEGATIVE |
+| `sem:110:require` (221) | 49 | 9258 | SINGLE_NEGATIVE |
+| `sem:112:require` (223) | 16 | 9291 | SINGLE_NEGATIVE |
+| `sem:113:require` (224) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:115:require` (226) | 0 | 9307 | NAMED_DUPLICATE_SET |
+| `sem:116:require` (227) | 32 | 9275 | SINGLE_NEGATIVE |
+| `sem:120:require` (231) | 16 | 9291 | SINGLE_NEGATIVE |
+| `sem:121:require` (232) | 48 | 9259 | SINGLE_NEGATIVE |
+| `sem:122:require` (233) | 16 | 9291 | SINGLE_NEGATIVE |
+| `sem:124:require` (235) | 16 | 9291 | SINGLE_NEGATIVE |
+| `sem:125:require` (236) | 16 | 9291 | SINGLE_NEGATIVE |
+| `sem:126:require` (237) | 48 | 9259 | SINGLE_NEGATIVE |
+| `sem:127:require` (238) | 48 | 9259 | SINGLE_NEGATIVE |
+| `sem:128:require` (239) | 48 | 9259 | SINGLE_NEGATIVE |
+| `sem:129:require` (240) | 624 | 8683 | SINGLE_NEGATIVE |
+| `sem:148:require` (260) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:158:require` (270) | 3 | 9304 | SINGLE_NEGATIVE |
+| `sem:159:require` (271) | 3 | 9304 | SINGLE_NEGATIVE |
+| `sem:160:require` (272) | 21 | 9286 | SINGLE_NEGATIVE |
+| `sem:163:require` (275) | 2 | 9305 | SINGLE_NEGATIVE |
+| `sem:165:require` (277) | 0 | 9307 | NAMED_DUPLICATE_SET |
+| `sem:172:require` (284) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:173:require` (285) | 9 | 9298 | SINGLE_NEGATIVE |
+| `sem:176:require` (288) | 6 | 9301 | SINGLE_NEGATIVE |
+| `sem:180:require` (292) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:182:require` (294) | 18 | 9289 | SINGLE_NEGATIVE |
+| `sem:183:require` (295) | 21 | 9286 | SINGLE_NEGATIVE |
+| `sem:184:require` (296) | 21 | 9286 | SINGLE_NEGATIVE |
+| `sem:186:require` (298) | 2 | 9305 | SINGLE_NEGATIVE |
+| `sem:191:require` (303) | 3 | 9304 | SINGLE_NEGATIVE |
+| `sem:211:require` (322) | 2 | 9305 | SINGLE_NEGATIVE |
+| `sem:216:require` (327) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:218:require` (329) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:220:require` (331) | 45 | 9262 | SINGLE_NEGATIVE |
+| `sem:222:require` (333) | 26 | 9281 | SINGLE_NEGATIVE |
+| `sem:224:require` (335) | 2 | 9305 | SINGLE_NEGATIVE |
+| `sem:226:require` (337) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:227:require` (338) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:232:require` (343) | 8 | 9299 | SINGLE_NEGATIVE |
+| `sem:234:require` (345) | 2 | 9305 | SINGLE_NEGATIVE |
+| `sem:244:schema` (355) | 15 | 9292 | SINGLE_NEGATIVE |
+| `sem:248:require` (363) | 16 | 9291 | SINGLE_NEGATIVE |
+| `sem:249:require` (364) | 16 | 9291 | SINGLE_NEGATIVE |
+| `sem:251:require` (366) | 16 | 9291 | SINGLE_NEGATIVE |
+| `sem:253:require` (368) | 32 | 9275 | SINGLE_NEGATIVE |
+| `sem:254:require` (369) | 32 | 9275 | SINGLE_NEGATIVE |
+| `sem:257:require` (372) | 43 | 9264 | SINGLE_NEGATIVE |
+| `sem:262:require` (377) | 0 | 9307 | NAMED_DUPLICATE_SET |
+| `sem:265:require` (380) | 4 | 9303 | SINGLE_NEGATIVE |
+| `sem:267:require` (382) | 2 | 9305 | SINGLE_NEGATIVE |
+| `sem:fix6:validate_capture:require:'source ref ' + slot` (388) | 235 | 9072 | SINGLE_NEGATIVE |
+| `sem:273:require` (389) | 4 | 9303 | SINGLE_NEGATIVE |
+| `sem:274:require` (390) | 91 | 9216 | SINGLE_NEGATIVE |
+| `sem:275:require` (391) | 91 | 9216 | SINGLE_NEGATIVE |
+| `sem:276:require` (392) | 123 | 9184 | SINGLE_NEGATIVE |
+| `sem:277:require` (395) | 20 | 9287 | SINGLE_NEGATIVE |
+| `sem:278:require` (396) | 220 | 9087 | SINGLE_NEGATIVE |
+| `sem:281:require` (399) | 0 | 9307 | NAMED_DUPLICATE_SET |
+| `sem:283:require` (401) | 56 | 9251 | SINGLE_NEGATIVE |
+| `sem:290:require` (408) | 2 | 9305 | SINGLE_NEGATIVE |
+| `sem:295:require` (413) | 24 | 9283 | SINGLE_NEGATIVE |
+| `sem:297:require` (415) | 12 | 9295 | SINGLE_NEGATIVE |
+| `sem:301:require` (419) | 16 | 9291 | SINGLE_NEGATIVE |
+| `sem:302:require` (420) | 16 | 9291 | SINGLE_NEGATIVE |
+| `sem:303:require` (421) | 16 | 9291 | SINGLE_NEGATIVE |
+| `sem:304:require` (422) | 16 | 9291 | SINGLE_NEGATIVE |
+| `sem:309:require` (427) | 16 | 9291 | SINGLE_NEGATIVE |
+| `sem:310:require` (428) | 16 | 9291 | SINGLE_NEGATIVE |
+| `sem:311:require` (429) | 16 | 9291 | SINGLE_NEGATIVE |
+| `sem:312:require` (430) | 16 | 9291 | SINGLE_NEGATIVE |
+| `sem:314:require` (432) | 17 | 9290 | SINGLE_NEGATIVE |
+| `sem:316:require` (434) | 36 | 9271 | SINGLE_NEGATIVE |
+| `sem:349:require` (438) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:352:require` (441) | 0 | 9307 | NAMED_DUPLICATE_SET |
+| `sem:354:require` (443) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:357:require` (446) | 17 | 9290 | SINGLE_NEGATIVE |
+| `sem:358:require` (447) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:359:require` (448) | 2 | 9305 | SINGLE_NEGATIVE |
+| `sem:363:require` (452) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:364:require` (453) | 2 | 9305 | SINGLE_NEGATIVE |
+| `sem:365:require` (454) | 2 | 9305 | SINGLE_NEGATIVE |
+| `sem:366:require` (455) | 2 | 9305 | SINGLE_NEGATIVE |
+| `sem:367:require` (456) | 2 | 9305 | SINGLE_NEGATIVE |
+| `sem:368:require` (458) | 4 | 9303 | SINGLE_NEGATIVE |
+| `sem:369:require` (459) | 0 | 9307 | NAMED_DUPLICATE_SET |
+| `sem:371:require` (461) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:380:require` (470) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:385:require` (475) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:386:require` (476) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:387:require` (477) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:390:require` (480) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:393:require` (483) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:fix6:validate_capture:require:'scheduler wake identity/clock types'` (485) | 23 | 9284 | SINGLE_NEGATIVE |
+| `sem:395:require` (490) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:396:require` (491) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:397:require` (492) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:fix6:validate_capture:require:'scheduler recovered boolean'` (493) | 9 | 9298 | SINGLE_NEGATIVE |
+| `sem:399:require` (495) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:401:require` (497) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:403:require` (499) | 128 | 9179 | SINGLE_NEGATIVE |
+| `sem:320:require` (510) | 9 | 9298 | SINGLE_NEGATIVE |
+| `sem:321:require` (511) | 20 | 9287 | SINGLE_NEGATIVE |
+| `sem:322:require` (512) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:323:require` (513) | 29 | 9278 | SINGLE_NEGATIVE |
+| `sem:324:require` (514) | 20 | 9287 | SINGLE_NEGATIVE |
+| `sem:325:require` (515) | 720 | 8587 | SINGLE_NEGATIVE |
+| `sem:329:schema` (519) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:334:require` (524) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:336:require` (526) | 50 | 9257 | SINGLE_NEGATIVE |
+| `sem:338:require` (528) | 1 | 9306 | SINGLE_NEGATIVE |
+| `sem:342:require` (532) | 176 | 9131 | SINGLE_NEGATIVE |
+| `sem:421:require` (546) | 16 | 9291 | SINGLE_NEGATIVE |
+| `sem:414:require` (550) | 320 | 8987 | SINGLE_NEGATIVE |
+| `sem:415:require` (551) | 320 | 8987 | SINGLE_NEGATIVE |
+| `sem:416:require` (552) | 32 | 9275 | SINGLE_NEGATIVE |
+| `sem:417:require` (553) | 384 | 8923 | SINGLE_NEGATIVE |
+| `sem:418:require` (554) | 32 | 9275 | SINGLE_NEGATIVE |
+| `sem:419:require` (555) | 32 | 9275 | SINGLE_NEGATIVE |
+| `sem:445:schema` (584) | 0 | 9307 | SINGLE_TRACE_SCHEMA |
+| `shape:fix6:identity:require:'identity declared field domain ' + field` (19) | 808 | 8499 | SINGLE_NEGATIVE |
+| `shape:fix6:identity:require:'identity Storage string domain'` (22) | 160 | 9147 | SINGLE_NEGATIVE |
+| `shape:27:schema` (33) | 179 | 9128 | SINGLE_NEGATIVE |
+| `shape:30:raise` (36) | 800 | 8507 | SINGLE_NEGATIVE |
+| `shape:32:raise` (38) | 320 | 8987 | SINGLE_NEGATIVE |
+| `shape:34:raise` (40) | 16 | 9291 | SINGLE_NEGATIVE |
+| `shape:36:raise` (42) | 15 | 9292 | SINGLE_NEGATIVE |
+| `shape:40:raise` (46) | 14 | 9293 | SINGLE_NEGATIVE |
+| `shape:44:schema` (50) | 39 | 9268 | SINGLE_NEGATIVE |
+| `shape:48:raise` (54) | 85 | 9222 | SINGLE_NEGATIVE |
+| `shape:51:raise` (57) | 41 | 9266 | SINGLE_NEGATIVE |
+| `shape:55:raise` (61) | 0 | 9307 | NAMED_DUPLICATE_SET |
+| `shape:57:raise` (63) | 10 | 9297 | SINGLE_NEGATIVE |
+| `shape:59:raise` (65) | 1 | 9306 | SINGLE_NEGATIVE |
+| `shape:61:raise` (67) | 1 | 9306 | SINGLE_NEGATIVE |
+| `shape:63:raise` (69) | 10 | 9297 | SINGLE_NEGATIVE |
+| `shape:65:raise` (71) | 10 | 9297 | SINGLE_NEGATIVE |
+| `shape:67:raise` (73) | 1 | 9306 | SINGLE_NEGATIVE |
+| `shape:69:raise` (75) | 2 | 9305 | SINGLE_NEGATIVE |
+| `shape:72:raise` (78) | 1 | 9306 | SINGLE_NEGATIVE |
+| `shape:75:raise` (81) | 1 | 9306 | SINGLE_NEGATIVE |
+| `shape:82:raise` (88) | 1 | 9306 | SINGLE_NEGATIVE |
+| `shape:84:raise` (90) | 2 | 9305 | SINGLE_NEGATIVE |
+| `shape:88:raise` (94) | 1 | 9306 | SINGLE_NEGATIVE |
+| `shape:92:raise` (98) | 1 | 9306 | SINGLE_NEGATIVE |
+| `isolated-schema:attempt.completed` (None) | 3 | 9304 | SINGLE_NEGATIVE |
+| `isolated-schema:attempt.started` (None) | 2 | 9305 | SINGLE_NEGATIVE |
+| `isolated-schema:node.blocked` (None) | 2 | 9305 | SINGLE_NEGATIVE |
+| `isolated-schema:node.completed` (None) | 2 | 9305 | SINGLE_NEGATIVE |
+| `isolated-schema:node.started` (None) | 2 | 9305 | SINGLE_NEGATIVE |
+| `isolated-schema:node.unblocked` (None) | 2 | 9305 | SINGLE_NEGATIVE |
+| `isolated-schema:plan.decomposition_degraded` (None) | 2 | 9305 | SINGLE_NEGATIVE |
+| `isolated-schema:remediation.resolved` (None) | 2 | 9305 | SINGLE_NEGATIVE |
+| `isolated-schema:remediation.spawned` (None) | 2 | 9305 | SINGLE_NEGATIVE |
+| `isolated-schema:run.completed` (None) | 2 | 9305 | SINGLE_NEGATIVE |
+| `isolated-schema:run.graph_integrity_failed` (None) | 2 | 9305 | SINGLE_NEGATIVE |
+| `isolated-schema:run.node_backoff_expired` (None) | 2 | 9305 | SINGLE_NEGATIVE |
+| `isolated-schema:run.node_backoff_started` (None) | 3 | 9304 | SINGLE_NEGATIVE |
+| `isolated-schema:run.node_ready` (None) | 3 | 9304 | SINGLE_NEGATIVE |
+| `isolated-schema:run.node_retry_scheduled` (None) | 2 | 9305 | SINGLE_NEGATIVE |
+| `isolated-schema:scheduler.pass` (None) | 5 | 9302 | SINGLE_NEGATIVE |
+| `reference-admission` (33) | 112 | 9195 | SINGLE_NEGATIVE |
+| `numeric-json-parser` (None) | 64 | 9243 | SINGLE_NEGATIVE |
 
-### Necessary named sets
-
-| Set | Exact guards removed | Necessary witnesses | Still rejected |
+| Named duplicate set | Guards removed | Necessary witnesses | Still rejected |
 |---|---|---:|---:|
-| compatibility-only append | `sem:82:require`, `sem:83:require` | 32 | 3709 |
-| descriptor/logical/stored length | `sem:115:require`, `sem:122:require` | 16 | 3709 |
-| original failed attempt identity | `sem:163:require`, `sem:165:require` | 1 | 3738 |
-| unsupported timed Storage class | `sem:173:require`, `sem:222:require` | 18 | 3688 |
-| same joined remediation ceiling | `sem:367:require`, `sem:369:require` | 2 | 3739 |
-| node completion original state domain | `shape:44:schema`, `shape:55:raise` | 1 | 3701 |
-| source score integer range domain | `sem:244:schema`, `sem:232:require` | 3 | 3715 |
-| source score timestamp whole string | `sem:244:schema`, `sem:234:require` | 3 | 3721 |
-| source timestamp timezone | `sem:148:require`, `sem:150:require` | 1 | 3738 |
-| complete source equality | `sem:281:require`, `sem:283:require` | 197 | 3488 |
-| attempt-backed blocked presence | `sem:262:require`, `sem:283:require`, `sem:352:require` | 4 | 3677 |
-| attempt-backed unblocked presence | `sem:262:require`, `sem:283:require` | 4 | 3681 |
-| original event value equality | `sem:109:require`, `sem:281:require`, `sem:283:require` | 16 | 3456 |
-| original schema version equality/domain | `sem:244:schema`, `sem:281:require`, `sem:283:require` | 16 | 3439 |
-| original required/extra field presence | `sem:244:schema`, `sem:283:require` | 18 | 3652 |
-| shape generation required presence | `shape:27:schema`, `shape:36:raise` | 15 | 3532 |
-| identity integer representation | `shape:fix6:identity:require:'identity string/nonnegative integer domain'`, `sem:fix6:validate_canonical_domain:require:'canonical integer value domain'` | 48 | 3597 |
-| source integer representation | `sem:fix6:validate_canonical_domain:require:'canonical integer value domain'`, `sem:281:require`, `sem:283:require` | 16 | 3376 |
-| shape score integer representation | `sem:99:require`, `shape:27:schema`, `sem:fix6:validate_canonical_domain:require:'canonical integer value domain'` | 2 | 3416 |
-| source score integer representation | `sem:244:schema`, `sem:99:require`, `sem:232:require`, `sem:fix6:validate_canonical_domain:require:'canonical integer value domain'` | 1 | 3570 |
-
-The 588 secondary refusal instances classify as 414 necessary same-defect named-set witnesses, 140 exact missing-object predicate proofs, 30 pure schema boundaries and four timestamp/schema/parser boundaries. Zero are unproved. The two former enum/state pairs are rejected classifications, not reused evidence: the repaired negatives now flip under their enum rule alone.
+| compatibility-only append | `sem:82:require`, `sem:83:require` | 32 | 9275 |
+| descriptor/logical/stored length | `sem:115:require`, `sem:122:require` | 16 | 9275 |
+| original failed attempt identity | `sem:163:require`, `sem:165:require` | 1 | 9304 |
+| unsupported timed Storage class | `sem:173:require`, `sem:222:require` | 18 | 9254 |
+| same joined remediation ceiling | `sem:367:require`, `sem:369:require` | 2 | 9303 |
+| node completion original state domain | `shape:44:schema`, `shape:55:raise` | 1 | 9267 |
+| source score integer range domain | `sem:244:schema`, `sem:232:require` | 3 | 9281 |
+| source score timestamp whole string | `sem:244:schema`, `sem:234:require` | 3 | 9287 |
+| source timestamp timezone | `sem:148:require`, `sem:150:require` | 1 | 9304 |
+| complete source equality | `sem:281:require`, `sem:283:require` | 197 | 9054 |
+| attempt-backed blocked presence | `sem:262:require`, `sem:283:require`, `sem:352:require` | 4 | 9243 |
+| attempt-backed unblocked presence | `sem:262:require`, `sem:283:require` | 4 | 9247 |
+| original event value equality | `sem:109:require`, `sem:281:require`, `sem:283:require` | 16 | 8686 |
+| original schema version equality/domain | `sem:244:schema`, `sem:281:require`, `sem:283:require` | 16 | 9005 |
+| original required/extra field presence | `sem:244:schema`, `sem:283:require` | 18 | 9218 |
+| shape generation required presence | `shape:27:schema`, `shape:36:raise` | 15 | 9098 |
+| identity integer representation | `shape:fix6:identity:require:'identity declared field domain ' + field`, `sem:fix6:validate_canonical_domain:require:'canonical integer value domain'` | 68 | 8315 |
+| shape score integer representation | `sem:99:require`, `shape:27:schema`, `sem:fix6:validate_canonical_domain:require:'canonical integer value domain'` | 2 | 8962 |
+| source score integer representation | `sem:244:schema`, `sem:99:require`, `sem:232:require`, `sem:fix6:validate_canonical_domain:require:'canonical integer value domain'` | 1 | 9116 |
 
 ## All eleven standing checks
 
-| Check | Result and scope for all sixteen families |
+| Check | Result for all sixteen families |
 |---|---|
-| 1 — replay-only | Current writer/capture and all fresh/retry/replay traces refuse projector_replay_only before effects or receipt return. Retained read route accepts it. |
-| 2 — application key | Project-only families refuse application scope, including a valid CV-366 application spelling. No application identity recipe is invented. |
-| 3 — Project partition | Positive captures use project~ plus unpadded base64url UTF-8 Project ID. Raw Project ID negatives reject. |
-| 4 — inline/ref | Exact 16,384 inline boundary accepts, 16,385 rejects; larger bodies use SP-337. Encoded logical, pack and inline parts are measured. |
-| 5 — trailing LF | Original exact-end identifier/timestamp schemas and all 22 coherent source timestamp negatives remain effective. |
-| 6 — retries | Only original caller semantic bytes affect idempotency comparison. Storage-assigned metadata-only retries return one original receipt/effect. |
-| 7 — Storage/checkpoint | Foreign event/source roots reject. SP-278 nine-field durable-token ownership is preserved; actual native checkpoint/CAS remains NOT_RUN. |
-| 8 — exit status | No subprocess-exit family here. Closed schemas reject exit_code=0; no process-success oracle is fabricated. |
-| 9 — references | Lane payload/proof graph resolves eagerly, including dormant refs and changing external resources. N2 remains a shared-graph integration note. |
-| 10 — retained history | Original custody/lifecycle stays historical; fresh event, pack and every dependency disclosure authorize today’s reader. Forged/withdrawn/deleted/foreign reads refuse. |
-| 11 — isolation | Whole inventory rerun under every individual/named-set mutant. Each repaired/new disclosure negative validates its positive seed; exact enum mutants expose their own negatives. |
+| 1 | Current capture/shape/fresh/retry/replay projector_replay_only refusal; retained read route separate. |
+| 2 | Project-only contracts reject application scope; no application key recipe authored. |
+| 3 | Encoded project~ unpadded base64url partition in positives; raw-ID negatives refuse. |
+| 4 | Exact 16,384/16,385 and large SP-337 references; measured logical/pack parts and custody. |
+| 5 | Whole-string identifier/timestamp checks and independent schema/parser controls retained. |
+| 6 | Caller semantic body only; Storage metadata-only retries retain one original receipt/effect. |
+| 7 | Storage/source joins and typed identities; SP-278 nine-field token adopted; native CAS NOT_RUN. |
+| 8 | No subprocess-exit family; closed schemas refuse injected success exit_code=0. |
+| 9 | Every lane payload/proof ref eagerly checked, including dormant refs; shared N2 remains. |
+| 10 | Immutable then-valid originals; current typed grants, availability, access/deletion/withdrawal fences. |
+| 11 | Whole 181-site matrix and named necessary sets; both fresh routes; exact prerequisite/schema scope explicit. |
 
-## What Astra keeps finding — all ten classes
+## What Astra keeps finding — all eleven classes
 
-| Class | Own mutation and result |
+| Item | Own mutation and result |
 |---|---|
-| 1 — forged/contradictory | 198 fresh controls forge source digests/parents or contradict the original mirror; all refuse, valid seeds accept. |
-| 2 — Storage metadata | 48 fresh controls cover forged reservation, injected persisted time and metadata-only retries. Refusals or original-receipt/one-effect results match. |
-| 3 — history direction | 272 fresh current/replay-only lifecycle, forged-custody and disclosure controls match; 564 permanent historical cases and later-live writer refusals pass. |
-| 4 — representation | 64 fresh integer/uppercase/space/LF digest mutations refuse. Typed canonical source comparisons also distinguish boolean from integer. |
-| 5 — dormant refs | Sixteen fresh unvisited anyOf/dangling mutations refuse. Full CLI and same-process resource probes retain F8. |
-| 6 — every stored part | 48 fresh large-ref/inline/measurement controls agree on complete MessagePack pack bytes and empty referenced inline body. No new stored operation value or owner prose contradiction. |
-| 7 — every custody path | 403 fresh wrong-family/root and current-only-reader/access/deletion/scope/root probes match. Original and current snapshots are independent. Native concurrency remains NOT_RUN. |
-| 8 — masked negatives | Complete guard matrix, necessary member-restoration tests, two exact enum rules and both fresh-read call deletions pass. Prerequisite/schema-only scope stays explicit. |
-| 9 — grades | All 192 cells regraded from independent cycle 6. Every quotation checked against current text. Membership remains ABSENT; decomposition retention PARTIAL; native NOT_RUN preserved. |
-| 10 — numbers two ways | 308 fresh probes cover each numeric identity field, 1/1.0/1e0/-0/0/0.0/01 and coherent original-source float splits. Floats refuse, -0 parses/canonicalizes exactly as 0, 01 fails JSON parsing; no double identity/digest. Forty-eight permanent source float/bool/revision negatives and 448 boundary cases pass. |
-
-The fresh mutation artifact contains **1,357 matched rows**. Classes 8/9 are additionally supported by the full matrix and quotation/grade audits. This is a finite integer-domain fixture adapter, not certification of a native RFC8785/full EventRecord codec or a new numeric product limit.
+| 1 forged/contradictory inputs | Forged source digest and contradictory original observation refuse; valid owner captures accept. |
+| 2 Storage metadata | Forged post-state reservation refuses; metadata-only retry returns one original receipt/effect. |
+| 3 historical direction | Valid retained lifecycle accepts; forged custody, withdrawal/unavailability and wrong-type disclosure flags refuse. Both retained policies remain in the permanent suite. |
+| 4 one field read two ways | Upper-case source digests refuse; typed inline and identity domains prevent alternate numeric/type interpretations. |
+| 5 dormant refs | Own unvisited anyOf/dangling-ref mutation refuses for every payload schema; lane graph checks and all reference fixtures pass. |
+| 6 every stored part | Measured complete MessagePack body and referenced pack; the same large body refuses inline. Full native envelope/receipt codecs remain NOT_RUN. |
+| 7 custody on every path | Foreign family/Project custody and independent fresh dependency denials refuse; both fresh read-route deletions expose their own negatives. |
+| 8 masked negatives | Whole exact-site matrix, all necessary-member restoration tests, prerequisite/schema proofs and cache-control reproduction. |
+| 9 truthful grades | All 192 cells regraded; exact current source quotations checked. Membership ABSENT and decomposition retention PARTIAL remain. |
+| 10 numbers written two ways | Literal Node/ECMAScript goldens; representable binary64 boundaries, unrepresentable neighbours, alternate spellings and a failing former-serializer full CLI. |
+| 11 confused types | Permanent exact-type cases plus own string-boolean, substring-grant, inline alias and direct identity mutations. Grant lists validate every member. |
 
 ## Checks and limits
 
-| Check | Exit / result |
+| Check | Result |
 |---|---|
-| Shape / identity / ref CLI | 0; 664 / 80 / 208 |
-| Semantic CLI | 0; 2345 sources / 230 traces / 564 histories / 448 numeric / 16 scores / 38 isolated schemas / 208 refs / 32 helpers |
-| Independent full-CLI injection | 0; 3029 sources / 364 traces; other suites retained |
-| Retained independent F1–F7 / standing 1–8 | 0; 908/908 |
-| Whole matrix / route matrix / necessary sets | 0; zero unproved sites/instances; exact counts above |
-| Exact enum and fresh-route full CLIs | 0 for restored production; expected failures with exactly one enum keyword or fresh route removed |
-| Prior reviewer witnesses | 0; 29/29 isolated; 22 trace-schema controls |
-| Whole-CLI references / external resource freshness | 0; 64 expected refusals, 16 valid controls, 48 freshness outcomes, two proof-schema refusals |
-| Shard check / parsed top-level index validate | 0 / pass; 99 docs, 7477 units, 29988 acceptance units; readiness blocked_runtime_certification_incomplete |
-| Event-index tests / runtime vocabulary | 0, 14/14 / 1, unchanged N1 (9 tests, one failure) |
-| Whitespace / source-preservation audits | 0; only two old shape fixtures rebuilt; all 2297 old source cases retained; old require boundaries retained or strengthened |
+| Shape / identity / refs | All 16 per-family CLIs exit 0; 744 shape / 80 identity-replay cases. |
+| Semantic production CLIs | All 16 exit 0; source_transition_cases=2887, receipt_replay_withdrawal_traces=230, source_score_domain_cases=16, isolated_schema_cases=38, schema_reference_cases=208, historical_read_cases=564, numeric_boundary_cases=2060, exact_type_cases=3828, shared_canonical_goldens=21, shared_helper_cases=56. Shared helper/golden suites repeat per family. |
+| Guard matrix / sets / routes / cache control | All sequential jobs exit 0; exact summary above. |
+| Independent own probes / schema prerequisites | All per-family jobs exit 0; expected refusals and bad-serializer CLI exit 1 are recorded separately. |
+| Shards / top-level index | Shards exit 0. Index exits 1, top-level fail: 22 pre-existing unrelated findings (N3); coverage passes. Ignored currentness inputs are copied and SHA-256 matched. |
+| Event-index tests | Exit 0; 14 tests. |
+| Runtime vocabulary | Exit 1; existing N1 Skia phrase assertion. |
+| Whitespace / preservation / quotations | Pass; only the sixteen named old F13 authoring digests changed. |
 
-No Plans markdown changed, so no shard/index regeneration is needed. All fifteen ignored currentness inputs were copied and SHA-256 matched before index validation. No unrelated derived body changed. Frozen validator, registry, Decision Log, retention catalog, value registry, .gitignore, tests, Spec Lock, auto decisions and governance artifacts are unchanged.
+N1 is the existing runtime-vocabulary assertion; N2 is the existing shared execution-context dangling `goal_body_custody.schema.json#/$defs/body_application_v1`. N3 is the full-tree index result: 21 legacy decision-ledger input errors and DL-302 present in newer origin/main but absent on this older draft. Every named ledger/Decision Log input and the index validator is byte-identical to the starting head; no indexed owner, ledger or index file changed. `index-integration-proof.json` preserves the actual exit 1 and top-level fail. These unrelated paths are not repaired by this DX worker. No GUI owner, runtime-vocabulary test or shared goal schema was edited, and no shared-graph clearance is claimed. Native owner reads, complete EventRecord/receipt codecs, Storage/checkpoint/CAS/source translation, crash/restore and concurrent withdrawal/deletion remain NOT_RUN. Existing runtime readiness is not upgraded.
 
-**IDs used:** EP-210..225, CV-500..515, SP-500..515, ATS-250..257 — 56 existing PlanUnit IDs, **zero minted**. No new producer, consumer, projector, checkpoint, persisted family, retention policy or identity binding. No pm-mail, subagent, admission, registry append, Decision Log entry, landing lock, main push or reseal.
+No owner markdown changed; no shard/index regeneration is required. No generated body, registry, admission, Decision Log, value registry, retention catalog, .gitignore, frozen validator, Spec Lock, auto decisions or governance evidence was edited. The brief's two named local memory files were unavailable on this machine; assigned blocks and current branch evidence were read instead. One read-only mailbox query occurred before the no-mail brief was loaded; no mail was sent. Diagnostic cancellation briefly overlapped two small processes; they were stopped, and every final verification job is recorded sequentially. No subagent, browser or server was started.
 
-Initial resources were 10 GB available RAM and 116 GB free disk; subsequent samples remained above the 6 GB / 50 GB stop. The worktree is sparse and removed after the final push. Matrix/probe reproduction scripts remain outside the repository. Temporary guard experiments never persist altered checker/schema behavior; schema/fixture byte restoration is checked. Reconstructible injection inputs and uncited progress logs are removed. No browser or server was started.
+**IDs used:** EP-210..225, CV-500..515, SP-500..515, ATS-250..257 — 56 existing PlanUnit IDs; **zero minted**. No new technical product binding, producer, consumer, checkpoint, persisted family, retention policy or identity formula.
 
 ## Evidence
 
-Paths below are accompanied by SHA-256. `DX.checks.json` records the remaining evidence. The harness’s inherited revision fields refer to the starting head with a modified worktree; `input-manifest.json` pins the exact final graded bytes and supersedes that descriptive parent label.
+Paths below include SHA-256. The full input manifest and executable reproduction harness are retained outside the repository. Uncited diagnostics and temporary dependencies/worktree are removed after the final push. The report-only commit does not change graded code or fixture bytes.
 
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix6/guard-matrix-cycle6.json` — `0816a80f392b399a79fe9266cf6dc7d6653e7a80b940cdfcb7da97b1661828a7`.
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix6/route-matrix.json` — `5316a6103ec7ff133c8bfe33db65494b035fc13242f1a63ca6366905b4af35c0`.
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix6/duplicate-proofs-cycle6.json` — `0929357864d77847c6fb1bc7eaa6f05605887b0dbb4c48ad2e7772472931567e`.
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix6/numeric-duplicate-proofs.json` — `705e570a82a73ff1caecd63e59468dd0078f026aed377c790c96d6fc38cfc28c`.
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix6/guard-assessment-cycle6.json` — `7c9abf27cd6530feb45344e0cb4156aff79121111e978a92d424a5b01eccca19`.
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix6/enum-proofs.json` — `de402560cdd4bbd2968ac4a7685abb7c31e3ac9b783147ea99d40fb092db211a`.
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix6/fresh-route-proofs.json` — `0c1323ea8cdab4ba4618050f245cc9d99d0d8c815ca747f4e065e840869889db`.
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix6/astra-classes.json` — `ba3edfc668d04b603bf335712b5586f325c37a1f2cdc362157c582240a348599`.
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix6/quote-audit.json` — `f67fe69e6853b043327349e72ddc03a01e69f7724b355ed4656dab2c9bf639f4`.
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix6/owner-access-evidence.json` — `6dea5fb50dff89932bd0ac94253d1d346f02545750cd8f3cab87f25033cb315b`.
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix6/predicate-and-baseline-audit.json` — `2d38df7580ef1a97a0e3c9d1767537f1ca0b0e3f7161e8552a8de623da386ff6`.
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix6/probes-cycle6.json` — `8ba3c0c5247b88449395c2baef9db5fb3ba7bae82da6d9d2fe6c7524c2da6d64`.
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix6/injected-check-cycle6.json` — `430af95576fb6e9496bcb5897d8b4bec866ee8330255f706aa86ce0b4f3717e1`.
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix6/refs-cycle6.json` — `3dee8900a8cba772f371aa101c6f18a9722282502d33dd60e64d933333238296`.
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix6/ref-resource-cycle6.json` — `205ab03a8c0f77128e9dfdf9cc934dddb1f057efb18a01d8c9807a431d9209c0`.
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix6/boundary-refusals-cycle6.json` — `b8e5d385fc949672d6c864adfb62d84d20e9652650d61994a4070e00a048f3c7`.
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix6/new-witnesses-cycle6.json` — `36ee668079b1073e05d158c268374e7733373dcb84000b4868e333a7b309e2c8`.
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix6/currentness.json` — `d509feb987c108bc388c76e45560986cd3536255c35eb914a76f07977b982e84`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/guard-matrix.json` — `82fc7f7e1ba63ec6a82a6701a0f5bf6f160aec4508d9f7c4df6318ceab36b5be`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/duplicate-proofs.json` — `f8d63cb1f8174253c9b83f3029582f796b58b9749e59f3d5cf393de83e589769`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/guard-assessment.json` — `5e1d69bd91e075bbd1366e1724de27e83e08ff58d3c9552044ebd1afbdb4556a`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/guard-table.md` — `426f7212d52f82fa039964e5762ea0aacca1c7a97c59d1290d247f88c23c8d5c`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/cache-control-comparison.json` — `8106b5880a09b745b0e751484cd558579f5484a2f6742a1d43aa1433a451168c`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/preservation.json` — `0c784f98e826a7039ca9151d4295f436324d9c8f60ac4c367760fc323416f714`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/quote-audit.json` — `4f935299a7da8092433e6a6786972c9ada5ef11536b6751191dd3d7e54f3b478`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/family-jobs.json` — `3b1a85600f338d58cb31f2dbb97081ffcceaa2d995b6fef913c54f9e8f557603`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/final-checks.json` — `14e2fbbe5a458816aee9476f9796ca5b0c50c82135e15d8e659bc64d06cea597`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/currentness.json` — `d509feb987c108bc388c76e45560986cd3536255c35eb914a76f07977b982e84`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/index-integration-proof.json` — `6518512edef1ec546a6be66d8e685b9a5e605b9000a67c4b2b919a26793b4e4c`.
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/input-manifest.json` — `ce21794a2f723789a8fbdf44aceabb02f34f31b4d822db584f023d346a3560f1`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/evidence-manifest.json` — `b20d32288c17f820d74463315358b9b8c1af5115b0a3028c5c3ada1a0a99c352`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix7/README.md` — `3c48d28dd504a96b8f6f2dc2deacc847db49849e22c3557e1612385fe3dae132`.
 
 ## Original contract binding/search lineage
 
