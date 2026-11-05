@@ -449,7 +449,7 @@ const pickOther = async (A, which = 'first', revealed = false) => {
     document.querySelectorAll('[data-kit-pick]').forEach((x) => x.removeAttribute('data-kit-pick'));
     /* (which: 'first' or 'last' of the alternatives; 'last' answers only when there is a second one: SW-41) */
     if (which === 'last' && all.length < 2) return null;
-    const b = which === 'last' ? all[all.length - 1] : all[0]; if (b) { b.setAttribute('data-kit-pick', '1'); return { do: b.getAttribute('data-o55-do'), arg: b.getAttribute('data-arg') }; }
+    const b = which === 'last' ? all[all.length - 1] : all[0]; if (b) { b.setAttribute('data-kit-pick', '1'); return { do: b.getAttribute('data-o55-do'), arg: b.getAttribute('data-arg'), sheet: !!sheet && sheet.contains(b) }; }
     if (which === 'last') return null;
     const f = [...(l || document).querySelectorAll('input[type="text"], input[type="password"], input:not([type])')].find((i) => shown(i) && !i.disabled && !i.readOnly);
     return f ? { field: f.id, value: f.value } : null; }, which);
@@ -467,11 +467,15 @@ const pickOther = async (A, which = 'first', revealed = false) => {
   if (c.field) { await A.fill(c.field, (c.value || '') + ' changed'); await A.sleep(400); return 'typed ' + c.field; }
   /* (the exact element chosen, wherever it is; when something on the page keeps it from a real click, its click event is
      sent instead: this row judges what a pick does, the click-reachability of every control is the audit's) */
-  const el = A.frame().locator('[data-kit-pick="1"]').first();
+  /* A refresh strips test-only attributes. Re-find this same action/argument inside its original surface, so a
+     successful pick followed by a redraw cannot strand the existing click fallback on a vanished marker. */
+  const selector = (c.sheet ? '.o55-sheet[data-open="true"]' : '.o55-pane > .o55-layer:not(.o55-out)')
+    + ' [data-o55-do=' + JSON.stringify(c.do) + ']' + (c.arg === null ? '' : '[data-arg=' + JSON.stringify(c.arg) + ']');
+  const el = A.frame().locator(selector).filter({ visible: true }).first();
   let how = '';
   await el.click({ timeout: 4000 }).catch(async () => {
-    how = ' (sent; at its centre: ' + await A.frame().evaluate(() => { const b = document.querySelector('[data-kit-pick="1"]'); if (!b) return 'gone'; const r = b.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2, h = document.elementFromPoint(x, y);
-      return h ? (h === b || b.contains(h) ? 'itself' : h.tagName.toLowerCase() + '.' + String(h.className || '').replace(/\s+/g, '.') + (h.closest('[data-key]') ? ' in ' + h.closest('[data-key]').getAttribute('data-key') : '')) + ' @' + Math.round(x) + ',' + Math.round(y) + ' in ' + innerWidth + 'x' + innerHeight : 'nothing @' + Math.round(x) + ',' + Math.round(y); }) + ')';
+    how = ' (sent; at its centre: ' + await A.frame().evaluate((selector) => { const b = document.querySelector(selector); if (!b) return 'gone'; const r = b.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2, h = document.elementFromPoint(x, y);
+      return h ? (h === b || b.contains(h) ? 'itself' : h.tagName.toLowerCase() + '.' + String(h.className || '').replace(/\s+/g, '.') + (h.closest('[data-key]') ? ' in ' + h.closest('[data-key]').getAttribute('data-key') : '')) + ' @' + Math.round(x) + ',' + Math.round(y) + ' in ' + innerWidth + 'x' + innerHeight : 'nothing @' + Math.round(x) + ',' + Math.round(y); }, selector) + ')';
     await el.dispatchEvent('click'); });
   await A.sleep(500); return 'picked ' + c.do + ':' + c.arg + how; };
 /* the answers as the session holds them: the plan (but its revision counter), and what each picker keeps of its choice */
