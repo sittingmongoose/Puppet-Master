@@ -58,8 +58,26 @@ function changed(a, b, mask) {
 function grow(m, w, h, k) { const o = new Uint8Array(m.length); for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) { if (!m[y * w + x]) continue; for (let dy = -k; dy <= k; dy++) for (let dx = -k; dx <= k; dx++) { const yy = y + dy, xx = x + dx; if (yy >= 0 && yy < h && xx >= 0 && xx < w) o[yy * w + xx] = 1; } } return o; }
 function motionMask(a, b) { const m = new Uint8Array(a.data.length / 4); for (let i = 0, p = 0; i < a.data.length; i += 4, p++) if (Math.max(Math.abs(a.data[i] - b.data[i]), Math.abs(a.data[i + 1] - b.data[i + 1]), Math.abs(a.data[i + 2] - b.data[i + 2])) > THRESHOLD / 2) m[p] = 1; return m; }
 
+// Compare independent own-ink silhouettes, not their aggregate coverage. A small row
+// must not move inside a large panel just because 95% of its other glyphs still match.
+// Check both original paints against the reference and the outside-only/all-hidden pair.
+// Two pixels allow the existing glyph-edge rasterisation margin; no unmatched ink is accepted.
+export function ownInkStability({a1,a2,reference,b,c}) {
+ const images=[a1,a2,reference,b,c], witness=new Uint8Array(a1.width*a1.height);
+ for(const im of images) for(let i=0;i<witness.length;i++) if(im.outlineMask[i]) witness[i]=1;
+ const masks=[motionMask(a1,reference),motionMask(a2,reference),motionMask(b,c)];
+ for(const m of masks) for(let i=0;i<m.length;i++) if(witness[i]) m[i]=0;
+ const padded=masks.map(m=>grow(m,a1.width,a1.height,2)), pairs=[];
+ for(const [from,to] of [[0,1],[0,2],[1,2]]) {
+  let forward=0,reverse=0;
+  for(let i=0;i<witness.length;i++) { if(masks[from][i]&&!padded[to][i]) forward++;if(masks[to][i]&&!padded[from][i]) reverse++; }
+  pairs.push({from:['a1/reference','a2/reference','b/c'][from],to:['a1/reference','a2/reference','b/c'][to],forward,reverse});
+ }
+ return {stable:pairs.every(p=>p.forward===0&&p.reverse===0),pairs};
+}
+
 // how much of the page's content reads through the surface sel (null when it isn't on screen)
-export async function readThrough(t, f, sel, { loseOwnInk = false, resizeAfterMeasure = false, moveDuringCaptures = false, inputDir = null } = {}) {
+export async function readThrough(t, f, sel, { loseOwnInk = false, resizeAfterMeasure = false, moveDuringCaptures = false, moveOwnRow = false, inputDir = null } = {}) {
 	const measured = await f.evaluate((s) => {
 		const e = document.querySelector(s); if (!e) return null;
 		const b = e.getBoundingClientRect(), x = Math.max(0, b.left), y = Math.max(0, b.top);
@@ -87,6 +105,11 @@ export async function readThrough(t, f, sel, { loseOwnInk = false, resizeAfterMe
 		const a1 = await capturePaint(t, r, measured); await f.waitForTimeout(300); const a2 = await capturePaint(t, r, measured);
 		if (t.args.only === 'agents') await t.mark('backing original captured');
 		const mask = motionMask(a1, a2);
+		let movedRow = null;
+		if (moveOwnRow) {
+			movedRow = await f.evaluate(s=>{const e=document.querySelector(s).querySelector('[data-bc-own-row]');const b=e.getBoundingClientRect();e.__bcRowStyle=e.getAttribute('style');e.style.transform='translateY(-15px)';return b.toJSON();},sel);
+			await f.waitForTimeout(250); // Fault injection only; verify the actual glyph translation below.
+		}
 		await f.evaluate((css) => { const st = document.createElement('style'); st.id = 'bc-own-reference'; st.textContent = css; document.head.appendChild(st); }, hideOwn);
 		await f.waitForTimeout(350);
 		const reference = await capturePaint(t, r, measured);
@@ -134,9 +157,18 @@ export async function readThrough(t, f, sel, { loseOwnInk = false, resizeAfterMe
 		const captures = Object.entries({a1,a2,reference,b,c}).map(([name,im])=>({name,...im.capture}));
 		let retainedInk = 0; const residual = motionMask(b, reference);
 		for(let i=0;i<expectedOwn.length;i++) if(expectedOwn[i]&&!mask[i]&&residual[i]) retainedInk++;
-		const faults = { ownInkLoss: loseOwnInk ? expected>0 && retainedInk/expected<.05 : null };
+		let rowInk=0,rowMatched=0;
+		if(movedRow) {
+			const scale=measured.dpr, dy=Math.round(15*scale), x0=Math.ceil((movedRow.left-r.x)*scale), x1=Math.floor((movedRow.right-r.x)*scale), y0=Math.ceil((movedRow.top-r.y)*scale), y1=Math.floor((movedRow.bottom-r.y)*scale);
+			for(let y=Math.max(dy,y0);y<Math.min(a2.height,y1);y++) for(let x=Math.max(0,x0);x<Math.min(a2.width,x1);x++) {
+				const i=(y*a2.width+x)*4,j=((y-dy)*b.width+x)*4;
+				if(Math.max(a2.data[i],a2.data[i+1],a2.data[i+2])<100) {rowInk++;if([0,1,2].every(k=>Math.abs(a2.data[i+k]-b.data[j+k])<=6))rowMatched++;}
+			}
+		}
+		const faults = { ownInkLoss: loseOwnInk ? expected>0 && retainedInk/expected<.05 : null, ownRowMove: moveOwnRow ? rowInk>50&&rowMatched/rowInk>.995 : null };
+		const ownStability=ownInkStability({a1,a2,reference,b,c});
 		const geometryStable = stable.sourceRect === stable.setupRect && stable.sourceRect === stable.endRect && captures.every(c=>c.valid);
-		if (!geometryStable || (expected > 0 && covered / expected < 0.95)) return { invalid: true, reason: `geometry stable=${geometryStable}; own glyph exclusion ${covered}/${expected}`, rect: r, geometry: stable, captures, faults };
+		if (!geometryStable || !ownStability.stable || (expected > 0 && covered / expected < 0.95)) return { invalid: true, reason: `geometry stable=${geometryStable}; own ink stable=${ownStability.stable}; own glyph exclusion ${covered}/${expected}`, rect: r, geometry: stable, captures, ownStability, faults };
 		// Exclude both captures' glyphs, including the few edge pixels that re-rasterised.
 		const referenceOwn = grow(expectedOwn, a2.width, a2.height, 2);
 		for (let i = 0; i < own.length; i++) if (own[i] || referenceOwn[i]) mask[i] = 1;
@@ -144,8 +176,9 @@ export async function readThrough(t, f, sel, { loseOwnInk = false, resizeAfterMe
 		const counted = mask.reduce((s, v) => s + (v ? 0 : 1), 0);
 		if (counted < mask.length * 0.1) return { invalid: true, reason: `only ${counted}/${mask.length} unmasked pixels` };
 		const m = changed(a2, b, mask);
-		return { rect: r, geometry: stable, captures, faults, ownExpected: expected, ownCovered: covered, n: m.n, mx: m.mx, share: m.n / Math.max(1, counted), motion: 1 - counted / mask.length };
+		return { rect: r, geometry: stable, captures, ownStability, faults, ownExpected: expected, ownCovered: covered, n: m.n, mx: m.mx, share: m.n / Math.max(1, counted), motion: 1 - counted / mask.length };
 	} finally {
+	if(moveOwnRow) await f.evaluate(s=>{const e=document.querySelector(s)?.querySelector('[data-bc-own-row]');if(e&&Object.prototype.hasOwnProperty.call(e,'__bcRowStyle')) {if(e.__bcRowStyle==null)e.removeAttribute('style');else e.setAttribute('style',e.__bcRowStyle);delete e.__bcRowStyle;}},sel);
 	await f.evaluate((s) => { const st = document.getElementById('bc-through'); if (st) st.remove(); document.getElementById('bc-own-reference')?.remove(); document.querySelectorAll('[data-bc-in]').forEach((n) => n.removeAttribute('data-bc-in')); const e = document.querySelector(s); if (e && Object.prototype.hasOwnProperty.call(e, '__bcStyle')) { if (e.__bcStyle == null) e.removeAttribute('style'); else e.setAttribute('style', e.__bcStyle); delete e.__bcStyle; delete e.__bcCapture; } }, sel);
 	}
 }
@@ -170,6 +203,12 @@ export default async function (t) {
 		}
 		return;
 	}
+	const sample = async (look, name, sel) => {
+		const inputDir=t.args.inputs ? path.join(String(t.args.inputs),`${look}-${String(rows.length).padStart(3,'0')}-${name.replace(/[^a-z0-9-]+/gi,'_')}`) : null;
+		const m=await readThrough(t,f,sel,{inputDir});
+		if(inputDir&&m) await writeFile(path.join(inputDir,'sample.json'),JSON.stringify({look,name,...m},null,2));
+		return m;
+	};
 	const judge = (look, name, m) => {
 		if (!m) { bad.push(`${look} ${name}: not on screen`); rows.push(`${look} ${name}: not on screen`); return; }
 		if (m.invalid) { bad.push(`${look} ${name}: invalid sample (${m.reason})`); rows.push(bad.at(-1)); return; }
@@ -221,7 +260,7 @@ export default async function (t) {
 			return out;
 		}, now);
 		if (!top.length) { bad.push(`${look} ${name}: nothing new on screen`); rows.push(`${look} ${name}: nothing new on screen`); return; }
-		for (const x of top) judge(look, `${name} (${x.label})`, await readThrough(t, f, `[data-bc-float="${x.id}"]`));
+		for (const x of top) judge(look, `${name} (${x.label})`, await sample(look, `${name} (${x.label})`, `[data-bc-float="${x.id}"]`));
 	};
 	const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;   // --set looks=glass-dark: one look per run
 	for (const look of looks) {
@@ -238,7 +277,7 @@ export default async function (t) {
 				await f.waitForTimeout(800);
 				const fold = await f.evaluate(() => document.getElementById('sidePanelSlot').getAttribute('data-pm-rail-fold') || 'docked');
 				if ((mode === 'overlay') !== (fold === 'overlay')) { rows.push(`${look} rail ${target} (${mode}): the rail is ${fold}`); if (mode === 'overlay') bad.push(`${look} rail ${target}: no overlay at ${w}x${h} (${fold})`); continue; }
-				judge(look, `rail ${target.replace('panel-', '')} (${mode})`, await readThrough(t, f, '#sidePanelSlot'));
+				judge(look, `rail ${target.replace('panel-', '')} (${mode})`, await sample(look, `rail ${target.replace('panel-', '')} (${mode})`, '#sidePanelSlot'));
 			}
 		}
 		await t.viewport(1390, 900);

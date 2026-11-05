@@ -31,6 +31,11 @@ async function once(t) {
   const moved = await readThrough(t, f, '#exclusion-fixture', { moveDuringCaptures: true });
   await t.check('move-and-return fault reached all five PNGs', moved?.captures?.length===5 && moved.captures.every(c=>c.bounds?.left===140) && moved.geometry.sourceRect===moved.geometry.setupRect && moved.geometry.sourceRect===moved.geometry.endRect, JSON.stringify(moved));
   await t.check('move-and-return is invalid, never a backing pass', moved?.invalid===true && moved.share===undefined, JSON.stringify(moved));
+  await f.evaluate(()=>{const row=document.createElement('div');row.setAttribute('data-bc-own-row','');row.style.cssText='position:absolute;left:12px;bottom:20px;font:20px monospace';row.textContent='◆ Own moving row';document.getElementById('exclusion-fixture').appendChild(row);});
+  const row = await readThrough(t, f, '#exclusion-fixture', { moveOwnRow: true });
+  await t.check('own row moved 15px in the captured ink while panel geometry stayed fixed', row?.faults?.ownRowMove===true && row.captures.every(c=>c.valid) && row.geometry.sourceRect===row.geometry.endRect,JSON.stringify(row));
+  await t.check('own-row churn is invalid, never a backing verdict', row?.invalid===true && row.share===undefined && row.ownStability?.stable===false,JSON.stringify(row));
+  await f.evaluate(()=>document.querySelector('[data-bc-own-row]').remove());
   await f.evaluate(() => document.getElementById('exclusion-fixture').style.background = 'transparent');
   const leaking = await readThrough(t, f, '#exclusion-fixture');
   await t.check('real outside ink still fails the backing limit', leaking && !leaking.invalid && leaking.share > .002, JSON.stringify(leaking));
