@@ -7,6 +7,9 @@ import copy
 import inspect
 import json
 import textwrap
+import sys
+from functools import lru_cache
+from contextlib import ExitStack
 from pathlib import Path
 from unittest.mock import patch
 import pm_event_authority_ds_round2 as round2
@@ -16,6 +19,8 @@ import pm_browser_workspace_created_v2 as v2
 import pm_browser_workspace_reset as reset
 
 ROOT=Path(__file__).resolve().parents[1]
+INHERITED_SUMMARY={}
+POSITIVE_CONTROLS=[]
 
 def load(p):return json.loads((ROOT/p).read_text())
 
@@ -91,50 +96,84 @@ def cohort():
             for fn in functions:
                 if id(fn) not in seen:
                     groups.append((module,fn,[]));seen.add(id(fn))
+    import pm_ds_guard_cases as inherited
+    inherited_groups,positives,summary=inherited.capture()
+    INHERITED_SUMMARY.update(summary)
+    POSITIVE_CONTROLS.extend(positives)
+    groups.extend(inherited_groups)
+    import pm_event_authority_ds_round3 as round3
+    targeted=round3.build()
+    cases=[(name,fn) for name,_,fn in targeted.negatives]
+    # Feed new controls to every real checker they reach, selected by actual baseline traces below.
+    groups.extend((module,fn,cases) for module,fn,_ in list(groups) if cases)
     return groups
 
 def audit():
     table=[];baseline_failures=[]
     modules=[home,created,v2,reset,round2]
     source_hashes={str(Path(m.__file__).relative_to(ROOT)):__import__('hashlib').sha256(Path(m.__file__).read_bytes()).hexdigest() for m in modules}
-    for relative in ('scripts/pm_ds_guard_removal.py','scripts/pm_event_payload_route.py','scripts/pm-browser-event-admission.py'):
+    for relative in ('scripts/pm_ds_guard_removal.py','scripts/pm_ds_guard_cases.py','scripts/pm_event_authority_ds_round3.py','scripts/pm_event_payload_route.py','scripts/pm-browser-event-admission.py','scripts/pm-implementation-readiness.py'):
         source_hashes[relative]=__import__('hashlib').sha256((ROOT/relative).read_bytes()).hexdigest()
     groups=cohort()
-    checked=set()
-    for _,_,cases in groups:
-        for name,test in cases:
-            if name in checked:continue
-            checked.add(name)
-            try:
-                if test():baseline_failures.append({'case':name,'accepted_before_weakening':True})
-            except Exception as exc:baseline_failures.append({'case':name,'exception':repr(exc)})
+    # A source-condition mutation cannot affect a case that never calls that function.
+    # Trace each baseline; keep every unrelated negative in the reported stay-rejected set.
+    all_cases={name:test for _,_,cases in groups for name,test in cases}
+    traces={}
+    for ordinal,(name,test) in enumerate(all_cases.items()):
+        if ordinal%25==0:print('baseline '+str(ordinal)+'/'+str(len(all_cases)),flush=True)
+        calls=set()
+        def trace(frame,event,arg):
+            if event=='call':calls.add((frame.f_code.co_filename,frame.f_code.co_firstlineno,id(frame.f_globals)))
+        old=sys.getprofile();sys.setprofile(trace)
+        try:
+            if test():baseline_failures.append({'case':name,'accepted_before_weakening':True})
+        except Exception as exc:baseline_failures.append({'case':name,'exception':repr(exc)})
+        finally:sys.setprofile(old)
+        traces[name]=calls
     if baseline_failures:
         return {'status':'fail','baseline_failures':baseline_failures,'guard_count':0,'witnessed_guard_count':0,'guard_removal_table':[],'source_sha256':source_hashes,'claim':'No ablation is valid until every negative rejects before weakening.'}
+    unique={}
     for module,fn,cases in groups:
+        unique.setdefault((id(module),id(fn)),(module,fn))
+    for module,fn in unique.values():
+        code=inspect.unwrap(fn).__code__;identity=(code.co_filename,code.co_firstlineno,id(inspect.unwrap(fn).__globals__))
+        cases=[(name,test) for name,test in all_cases.items() if identity in traces[name]]
+        unrelated=sorted(set(all_cases)-{n for n,_ in cases})
         print('audit '+fn.__qualname__+' cases='+str(len(cases)),flush=True)
-        baseline={}
-        for name,test in cases:
-            try:baseline[name]=bool(test())
-            except Exception as exc:baseline_failures.append({'case':name,'exception':repr(exc)});continue
-            if baseline[name]:baseline_failures.append({'case':name,'accepted_before_weakening':True})
         for line,condition,tree in guards(fn):
+            import pm_event_payload_route as route
+            route._eager_done.clear()
             altered=weaken(fn,line,tree);flipped=[];stayed=[];exceptions=[]
             owner=fn.__qualname__.split('.')[0]
             target=getattr(module,owner) if '.' in fn.__qualname__ and inspect.isclass(getattr(module,owner,None)) else module
-            with patch.object(target,fn.__name__,altered):
+            aliases=[]
+            with ExitStack() as stack:
+                stack.enter_context(patch.object(target,fn.__name__,altered))
+                if fn in (home._exact_numeric_type,home._ecma_pattern):
+                    keyword='type' if fn is home._exact_numeric_type else 'pattern'
+                    stack.enter_context(patch.dict(home.Home4Validator.VALIDATORS,{keyword:altered}))
+                    aliases.append('Home4Validator.VALIDATORS['+keyword+'] (same captured function)')
+                for class_name in ('ReplayOracle','CandidateReplayOracle'):
+                    cls=getattr(module,class_name,None)
+                    if cls is not None and getattr(cls,'contract_failures',None) is fn:
+                        stack.enter_context(patch.object(cls,'contract_failures',staticmethod(altered)))
+                        aliases.append(class_name+'.contract_failures (same captured function)')
                 for name,test in cases:
                     try:(flipped if test() else stayed).append(name)
                     except Exception as exc:exceptions.append({'case':name,'exception':repr(exc)})
+            route._eager_done.clear()
             table.append({'guard':str(Path(inspect.getsourcefile(inspect.unwrap(fn))).relative_to(ROOT))+':'+str(inspect.getsourcelines(fn)[1]+line-1),
-                          'function':fn.__qualname__,'condition':condition,'negatives_that_flip':flipped,'negatives_that_stay_rejected':stayed,
+                          'function':fn.__qualname__,'condition':condition,'negatives_that_flip':flipped,'negatives_that_stay_rejected':sorted(stayed+unrelated),
+                          'affected_case_count':len(cases),'unchanged_noncallers':len(unrelated),'named_alias_set':aliases,'namespace':inspect.unwrap(fn).__globals__.get('__name__'),
                           'exceptions':exceptions,'status':'witnessed' if flipped and not exceptions else 'partial',
-                          'limit':'Flips are observed, not automatically assigned as this guard\'s own defect. Empty/exception rows remain open.'})
+                          'limit':"Actual source-condition ablation. Noncallers are unchanged by construction; flips need refusal ownership adjudication. Empty/exception rows remain open."})
     for path,digest in source_hashes.items():
         if __import__('hashlib').sha256((ROOT/path).read_bytes()).hexdigest()!=digest:
             baseline_failures.append({'source_changed_during_audit':path})
-    return {'source_sha256':source_hashes,'schema_id':'pm.ds.whole_lane_guard_removal.v1','status':'partial','baseline_failures':baseline_failures,
+    return {'source_sha256':source_hashes,'schema_id':'pm.ds.whole_lane_guard_removal.v2','status':'partial','baseline_failures':baseline_failures,
+            'inherited_case_reuse':INHERITED_SUMMARY,'distinct_negative_count':len(all_cases),'guard_removal_complete':False,
             'guard_count':len(table),'witnessed_guard_count':sum(r['status']=='witnessed' for r in table),
-            'guard_removal_table':table,'claim':'Inventory and actual source-condition ablations; no complete check-11 claim while any row is partial or ownership unadjudicated.'}
+            'guard_removal_table':table,'claim':'Inventory plus inherited checker/state-machine cases and actual source-condition ablations; no complete check-11 claim while any row is partial or ownership unadjudicated.'}
 
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--output',type=Path);parser.add_argument('--self-test',action='store_true');args=parser.parse_args()
@@ -144,5 +183,10 @@ def main():
         good=bad['status']=='fail' and bad['guard_count']==0 and bool(bad['baseline_failures'])
         print(json.dumps({'status':'pass' if good else 'fail','injected_accepted_negative_refused_before_ablation':good}));return not good
     if args.output is None:parser.error('--output is required unless --self-test')
-    result=audit();args.output.write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({k:v for k,v in result.items() if k!='guard_removal_table'},indent=2));return bool(result['baseline_failures'])
+    # Pure hash memoization only; keys are exact bytes and no check is disabled.
+    import pm_event_payload_route as route
+    cached=lru_cache(maxsize=128)(home.blake3_hex)
+    with patch.object(home,'blake3_hex',cached),patch.object(route,'blake3_hex',cached):
+        result=audit()
+    args.output.write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({k:v for k,v in result.items() if k!='guard_removal_table'},indent=2));return bool(result['baseline_failures'])
 if __name__=='__main__':raise SystemExit(main())
