@@ -82,6 +82,7 @@ FAMILIES = (
 SEVEN = tuple(event_type for event_type, _definition, _entry in FAMILIES)
 MIRROR = "coordination.debug_mirror_exported"
 BOARD_FAMILIES = ("crew.board_message_posted", "crew.board_message_read", "crew.board_messages_archived")
+BOARD_MEMBERS = tuple(event_type.replace(".", "_") for event_type in BOARD_FAMILIES)
 BOARD_PAYLOAD_PATH = "Plans/orchestrator_event_payloads.schema.json"
 TERMINAL = ("coordination.agent_unregistered", "coordination.agent_crashed", "coordination.agent_aborted")
 DEF_BY_TYPE = {event_type: definition for event_type, definition, _entry in FAMILIES}
@@ -364,7 +365,7 @@ def payload_schema_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
         failures.append({"error": "payload_schema_uri"})
     defs = payloads.get("$defs", {})
     members = [DEF_BY_TYPE[event_type] for event_type in SEVEN] + ["debug_mirror_exported"]
-    if set(defs) != {"lineage_envelope", "non_secret_ref", *members}:
+    if set(defs) != {"lineage_envelope", "non_secret_ref", *members, *BOARD_MEMBERS}:
         failures.append({"error": "payload_schema_definition_census", "detail": sorted(defs)})
         return failures
     if payloads.get("oneOf") != [{"$ref": f"{PAYLOAD_SCHEMA_URI}#/$defs/{name}"} for name in members]:
@@ -413,6 +414,28 @@ def payload_schema_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
     if nulls:
         failures.append({"error": "payload_schema_admits_null", "detail": nulls[:5]})
     return failures
+
+
+def board_member_definition_failures(owner_defs: dict[str, Any], orchestrator_defs: dict[str, Any]) -> list[dict[str, Any]]:
+    """SP-320 and SP-720..722: each board member lives in the owner file value_schema_ref names, carries no stored schema_id, and equals the Orchestrator's closed definition."""
+    failures: list[dict[str, Any]] = []
+    for name in BOARD_MEMBERS:
+        label = {"definition": name}
+        definition, orchestrator = owner_defs.get(name), orchestrator_defs.get(name)
+        if not isinstance(definition, dict) or not isinstance(orchestrator, dict):
+            failures.append({"error": "board_member_definition_missing", **label})
+            continue
+        if "schema_id" in definition.get("properties", {}) or "schema_id" in definition.get("required", []):
+            failures.append({"error": "board_member_stored_header", **label})
+        if definition.get("$id") != f"pm.event_payload.{name}.v1":
+            failures.append({"error": "board_member_schema_id", **label})
+        if {key: value for key, value in definition.items() if key not in ("$schema", "$id")} != orchestrator:
+            failures.append({"error": "board_member_copy_drift", **label})
+    return failures
+
+
+def board_member_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
+    return board_member_definition_failures(load(PAYLOAD_PATH, root)["$defs"], load(BOARD_PAYLOAD_PATH, root)["$defs"])
 
 
 # --- Projection values, checkpoint and the binding record (SP-320) ------------------------------------------------
@@ -778,20 +801,15 @@ def event_records_bundle(root: Path = ROOT) -> dict[str, Any]:
     payloads = load(PAYLOAD_PATH, root)
     defs = payloads["$defs"]
     mapping = {f"{PAYLOAD_SCHEMA_URI}#/$defs/{name}": f"#/$defs/{name}" for name in defs}
-    members = [DEF_BY_TYPE[event_type] for event_type in SEVEN] + ["debug_mirror_exported"]
+    # SP-720..722 append three exact board members. Never relax or replace an
+    # existing agent definition, its codec, or its own closed member selection.
+    members = [DEF_BY_TYPE[event_type] for event_type in SEVEN] + ["debug_mirror_exported"] + list(BOARD_MEMBERS)
     bundle_defs = {}
     for name in ["lineage_envelope", "non_secret_ref"] + members:
         definition = copy.deepcopy(defs[name])
         definition.pop("$schema", None)
         definition.pop("$id", None)
         bundle_defs[name] = rewrite_refs(definition, mapping)
-    # SP-720..722 append three exact board members. Never relax or replace an
-    # existing agent definition, its codec, or its own closed member selection.
-    board_defs = load(BOARD_PAYLOAD_PATH, root)["$defs"]
-    for event_type in BOARD_FAMILIES:
-        name = event_type.replace(".", "_")
-        members.append(name)
-        bundle_defs[name] = copy.deepcopy(board_defs[name])
     return {
         "$id": "pm.storage_value.coordination_event_records.v1",
         "$comment": (
@@ -799,9 +817,9 @@ def event_records_bundle(root: Path = ROOT) -> dict[str, Any]:
             "2.3.1): one closed member per key shape, in key-shape order, copied from "
             "Plans/coordination_event_payloads.schema.json with its $schema and $id removed and its references "
             "made local. A stored value is the EventRecord payload; the envelope's payload_schema_id names its "
-            "member, so the original eight members carry no stored schema_id. SP-720..722 append the three "
-            "closed board members from Plans/orchestrator_event_payloads.schema.json, retaining their own "
-            "literal stored schema_id and scope editions. The composition identity is never stored."
+            "member, so no member carries a stored schema_id. SP-720..722 append the three closed board members "
+            "with their scope editions; each equals its definition in "
+            "Plans/orchestrator_event_payloads.schema.json. The composition identity is never stored."
         ),
         "oneOf": [{"$ref": f"#/$defs/{name}"} for name in members],
         "$defs": bundle_defs,
@@ -881,8 +899,9 @@ def expected_svr_rows(root: Path = ROOT) -> dict[str, dict[str, Any]]:
             "storage.coordination_append.v1@1.0.0. StorageMigrationCoordinator installs the family through the "
             "actual migration graph and ceilings, and no store-version integer is invented. A later payload "
             "version needs a new CV-353 definition and version; readers reject an unsupported one. "
-            "SP-720..722 prepare only the three explicit board members from the Orchestrator schema; "
-            "their Project/app source editions are adopted independently without event admission."
+            "SP-720..722 prepare only the three explicit board members, whose definitions equal the "
+            "Orchestrator schema's; their Project/app source editions are adopted independently without "
+            "event admission."
         ),
         "retention_compaction": (
             "Exact RP-COORDINATION-180D@1.0.0, the structured retention_policy_ref, which governs this text "
@@ -1458,6 +1477,7 @@ def validate(*, root: Path = ROOT) -> dict[str, Any]:
     failures: list[dict[str, Any]] = []
     sections = (
         ("payload_schema", payload_schema_failures),
+        ("board_members", board_member_failures),
         ("projection_schema", projection_schema_failures),
         ("ledger", ledger_failures),
         ("registry_membership", registry_membership_failures),

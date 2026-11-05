@@ -112,7 +112,6 @@
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "schema_id",
         "schema_version",
         "scope",
         "storage_instance_id",
@@ -131,9 +130,6 @@
         "priority"
       ],
       "properties": {
-        "schema_id": {
-          "const": "pm.event_payload.crew_board_message_posted.v1"
-        },
         "schema_version": {
           "const": "1.0.0"
         },
@@ -302,7 +298,6 @@
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "schema_id",
         "schema_version",
         "scope",
         "storage_instance_id",
@@ -318,9 +313,6 @@
         "read_at_utc"
       ],
       "properties": {
-        "schema_id": {
-          "const": "pm.event_payload.crew_board_message_read.v1"
-        },
         "schema_version": {
           "const": "1.0.0"
         },
@@ -407,7 +399,6 @@
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "schema_id",
         "schema_version",
         "scope",
         "storage_instance_id",
@@ -423,9 +414,6 @@
         "archive_reason"
       ],
       "properties": {
-        "schema_id": {
-          "const": "pm.event_payload.crew_board_messages_archived.v1"
-        },
         "schema_version": {
           "const": "1.0.0"
         },
