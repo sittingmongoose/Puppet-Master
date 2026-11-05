@@ -160,7 +160,7 @@ The complete per-family lists and mutant SHA-256 values are in `complete-guard-r
 
 ## Verification, scope and retained authority
 
-The separate previous-review independent suite still passes 836 assertions with zero failed expectations (four fewer conditional join probes are skipped because the new cost source schema now rejects those contradictions earlier). All 45 standing mutations are caught. Shard generate/check, index generate and parsed top-level validation, runtime-artifact schema checks and whitespace checks pass. Fifteen ignored currentness files match the shared edition by SHA-256. Generated changes stay under the three edited owner shard directories and the six global index files. Readiness remains `blocked_runtime_certification_incomplete`; no seal follows.
+The reused prior driver retains its old provenance head label; its independently recorded checker_sha256 identifies the current implementation actually executed. The separate previous-review independent suite still passes 836 assertions with zero failed expectations (four fewer conditional join probes are skipped because the new cost source schema now rejects those contradictions earlier). All 45 standing mutations are caught. Shard generate/check, index generate and parsed top-level validation, runtime-artifact schema checks and whitespace checks pass. Fifteen ignored currentness files match the shared edition by SHA-256. Generated changes stay under the three edited owner shard directories and the six global index files. Readiness remains `blocked_runtime_certification_incomplete`; no seal follows.
 
 Current-main per-family source searches are in `source-searches.json` and three source-hashed search outputs: Runtime Artifacts, Usage, Browser/Section15, Contracts and Storage were searched independently for each family. Existing owner roles are reused first; these exact joins are explicitly newly authored technical contracts under DL-045. No Decision Log answer is newly applied; DL-075, DL-270, source/body/Usage policies, SP-278/SP-286/CV-339 and SP-337 remain as previously premise-checked. No premise failed. The sixteen passing families have no owner-unit changes; their shared numeric/type helpers and retained regressions were rerun.
 
@@ -189,3 +189,5 @@ All paths are under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/
 | `index-validate.json` | `49f00e48b560f6ac105a1992fa88f0fb48e7ac330da1828976970316fe079961` |
 | `runtime-schemas.json` | `3625990b5e6e8951366dff2c64f47ea9f9aad6ff39023bd5c65b6640586885db` |
 | `binding-codec-type-proof.json` | `0f0af4226460f12324bb219ce789a0363519eada6f2fa7cfa78b19711ae03259` |
+
+Exact verification argv and working directories are recorded in `DR.checks.json`. Recreate a venv from `scripts/requirements-runtime-artifact-drafts.txt` before reproduction; the task removes its temporary environment after delivery.

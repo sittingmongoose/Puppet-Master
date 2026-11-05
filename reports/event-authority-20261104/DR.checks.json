@@ -4,64 +4,74 @@
   "status": "pass",
   "commands": [
     {
-      "command": "runtime artifact complete model",
+      "command": "/home/sittingmongoose/pm-worktrees/DR-fix6-venv/bin/python /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-6/run-complete.py /home/sittingmongoose/pm-worktrees/DR-fix6",
       "exit_code": 0,
       "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-6/full-checker.json",
-      "sha256": "f6f1b8ff74679bd068c62a7e7896cbfaea641203e8944eb59aeb8375024572d7"
+      "sha256": "f6f1b8ff74679bd068c62a7e7896cbfaea641203e8944eb59aeb8375024572d7",
+      "working_directory": "/home/sittingmongoose/pm-worktrees/DR-fix6"
     },
     {
-      "command": "pm-runtime-artifact-guard-isolation.py --full-checker; focused D12 forwarding recheck",
+      "command": "/home/sittingmongoose/pm-worktrees/DR-fix6-venv/bin/python /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-6/run-complete.py /home/sittingmongoose/pm-worktrees/DR-fix6",
       "exit_code": 0,
       "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-6/complete-guard-removal.json",
-      "sha256": "d6905b85dec7559a220afae651c64679fb4d315571d58a8fa056e239eeeaaa8e"
+      "sha256": "d6905b85dec7559a220afae651c64679fb4d315571d58a8fa056e239eeeaaa8e",
+      "working_directory": "/home/sittingmongoose/pm-worktrees/DR-fix6"
     },
     {
-      "command": "raw production modules; all baseline and own-rule witnesses, plus focused D12 forwarding",
+      "command": "/home/sittingmongoose/pm-worktrees/DR-fix6-venv/bin/python /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-6/raw-guard-proof.py /home/sittingmongoose/pm-worktrees/DR-fix6",
       "exit_code": 0,
       "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-6/complete-raw-guard-proof.json",
-      "sha256": "2e7a8608326217b8a09ef17adc1cf613917c8a128b8bc6ebbd5cf73f941b213a"
+      "sha256": "2e7a8608326217b8a09ef17adc1cf613917c8a128b8bc6ebbd5cf73f941b213a",
+      "working_directory": "/home/sittingmongoose/pm-worktrees/DR-fix6"
     },
     {
-      "command": "pm-runtime-artifact-standing-checks.py; focused exact-type selector repair",
+      "command": "/home/sittingmongoose/pm-worktrees/DR-fix6-venv/bin/python scripts/pm-runtime-artifact-standing-checks.py --output /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-6/standing-mutations.json",
       "exit_code": 0,
       "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-6/complete-standing-mutations.json",
-      "sha256": "935cdceca2a9acdf14b6335713c4f83ab834c01423a3dcd94f6969a0bf1c749a"
+      "sha256": "935cdceca2a9acdf14b6335713c4f83ab834c01423a3dcd94f6969a0bf1c749a",
+      "working_directory": "/home/sittingmongoose/pm-worktrees/DR-fix6"
     },
     {
-      "command": "raw schema/number/type sweep",
+      "command": "/home/sittingmongoose/pm-worktrees/DR-fix6-venv/bin/python /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-6/type-number-sweep.py /home/sittingmongoose/pm-worktrees/DR-fix6",
       "exit_code": 0,
       "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-6/type-number-sweep.json",
-      "sha256": "b153d84f251c0476a23dc14702c2bb9f0474d177e25e8dec598417dbcce03dd9"
+      "sha256": "b153d84f251c0476a23dc14702c2bb9f0474d177e25e8dec598417dbcce03dd9",
+      "working_directory": "/home/sittingmongoose/pm-worktrees/DR-fix6"
     },
     {
-      "command": "verify numeric originals against original issuer",
+      "command": "/home/sittingmongoose/pm-worktrees/DR-fix6-venv/bin/python /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-6/verify-numeric-history.py /home/sittingmongoose/pm-worktrees/DR-fix6",
       "exit_code": 0,
       "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-6/numeric-history-provenance.json",
-      "sha256": "e28e57b17c8d82fc26abf8646a5cc627f15e6ebd8d27bf4cb45a9da6d4d020be"
+      "sha256": "e28e57b17c8d82fc26abf8646a5cc627f15e6ebd8d27bf4cb45a9da6d4d020be",
+      "working_directory": "/home/sittingmongoose/pm-worktrees/DR-fix6"
     },
     {
-      "command": "distinct source-role controls and isolated B01 contradictions",
+      "command": "/home/sittingmongoose/pm-worktrees/DR-fix6-venv/bin/python /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-6/distinct-source-role-probes.py /home/sittingmongoose/pm-worktrees/DR-fix6",
       "exit_code": 0,
       "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-6/distinct-source-role-probes.json",
-      "sha256": "4387642c3f89e230c7aca7f8d7c71f8457bf2e0586ee36009ecce53fd53e1dac"
+      "sha256": "4387642c3f89e230c7aca7f8d7c71f8457bf2e0586ee36009ecce53fd53e1dac",
+      "working_directory": "/home/sittingmongoose/pm-worktrees/DR-fix6"
     },
     {
-      "command": "pm-plans-verify.py validate-runtime-artifact-schemas",
+      "command": "/home/sittingmongoose/pm-worktrees/DR-fix6-venv/bin/python scripts/pm-plans-verify.py validate-runtime-artifact-schemas",
       "exit_code": 0,
       "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-6/runtime-schemas.json",
-      "sha256": "3625990b5e6e8951366dff2c64f47ea9f9aad6ff39023bd5c65b6640586885db"
+      "sha256": "3625990b5e6e8951366dff2c64f47ea9f9aad6ff39023bd5c65b6640586885db",
+      "working_directory": "/home/sittingmongoose/pm-worktrees/DR-fix6"
     },
     {
-      "command": "pm-shard-plans.py --check --config Plans/sharding_config.json",
+      "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
       "exit_code": 0,
       "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-6/shard-check.json",
-      "sha256": "10cde07211161ba5007ce9acf94b977462852fb760eea82736b42c96996d0c85"
+      "sha256": "10cde07211161ba5007ce9acf94b977462852fb760eea82736b42c96996d0c85",
+      "working_directory": "/home/sittingmongoose/pm-worktrees/DR-fix6"
     },
     {
-      "command": "pm-plan-index.py validate",
+      "command": "python3 scripts/pm-plan-index.py validate",
       "exit_code": 0,
       "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-6/index-validate.json",
-      "sha256": "49f00e48b560f6ac105a1992fa88f0fb48e7ac330da1828976970316fe079961"
+      "sha256": "49f00e48b560f6ac105a1992fa88f0fb48e7ac330da1828976970316fe079961",
+      "working_directory": "/home/sittingmongoose/pm-worktrees/DR-fix6"
     }
   ],
   "static_assertions": 17964,
@@ -77,5 +87,6 @@
   "numeric_history_originals": 38,
   "distinct_role_cases": 36,
   "native_execution": "NOT_RUN",
-  "admission": "NONE"
+  "admission": "NONE",
+  "reproduction_note": "Install scripts/requirements-runtime-artifact-drafts.txt into a venv. run-complete.py invokes the unmodified main() before the guard table. Complete-prefixed evidence files are byte-for-byte delivery copies of each driver output. The temporary worktree and venv are removed after delivery."
 }
