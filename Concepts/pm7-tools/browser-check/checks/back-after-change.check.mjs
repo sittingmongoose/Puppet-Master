@@ -607,9 +607,27 @@ const settledKeep = async (A, legacy = false) => {
   });
   return A.frame().evaluate(KEEP);
 };
+// Equality cannot detect two equally committed Later selections: assert the route's absolute contract too.
+const laterUncommitted = async (A, bad, label, when) => {
+  const state = await A.frame().evaluate(() => ({ commit: O55.S.sess.commit || null,
+    confirmed: !!O55.S.sess.drafts.main.review_confirmed }));
+  if (state.confirmed || (state.commit && (state.commit.state !== 'none' || Number(state.commit.attempt || 0) !== 0)))
+    bad.push(`${label} FO-61 row 13a Later ${when}: must never commit or confirm: ${JSON.stringify(state)}`);
+};
 async function keptUnchanged(t, label, establish, later = false) {
   await flow(t, label, async (A, bad) => {
+    // Fault injection invokes the real commit handler after real Later selections, retaining only Review navigation.
+    if (later && ['latercommit-every', 'latercommit-second'].includes(SELFTEST)) await A.frame().evaluate((every) => {
+      const original = O55.screens.defs.begin.do.later; let count = 0;
+      O55.screens.defs.begin.do.later = function (S, ...args) {
+        const out = original.call(this, S, ...args); count++;
+        if (every || count === 2) { const go = O55.ui.go; O55.ui.go = () => {};
+          try { O55.screens.defs.review.do.commit(S); } finally { O55.ui.go = go; } }
+        return out;
+      };
+    }, SELFTEST === 'latercommit-every');
     await establish(A, bad); await A.screen('review');
+    if (later) await laterUncommitted(A, bad, label, 'before first snapshot');
     const before = await settledKeep(A, t.args.selftest === 'earlyreview');
     t.log('FO-61 Review snapshot ' + JSON.stringify({ snapshot:before, state:await A.frame().evaluate(() => { const s=O55.S.sess, d=s.drafts.main; return { recheck:s.ops['recheck:'+d.project_draft_revision], operation:s.commit || null }; }) }));
     if (label.startsWith('FO-61')) await A.frame().evaluate(() => O55.motion.setTimeScale(1));
@@ -617,6 +635,7 @@ async function keptUnchanged(t, label, establish, later = false) {
     if (later) await A.click('later'); else { await A.waitEnabled('next'); await A.click('next'); } await A.sleep(1000);
     await goOnToReview(A);
     const after = await settledKeep(A, t.args.selftest === 'earlyreview');
+    if (later) await laterUncommitted(A, bad, label, 'after second snapshot');
     const lost = Object.keys(before).filter((k) => JSON.stringify(before[k]) !== JSON.stringify(after[k])).map((k) => k + ' ' + JSON.stringify(before[k]).slice(0, 60) + ' > ' + JSON.stringify(after[k]).slice(0, 60));
     if (lost.length) bad.push(`${label}: kept unchanged, yet ${lost.join('; ')}`);
   });

@@ -2,7 +2,7 @@
 
 Checks for the published page `Concepts/PMConcept7.html` (or a private build), run with browser-check (`browser-check guide`, or `Agent-Guides/browser-check.md` on the Cursor share). Follows the PM7 plan's browser rules:
 - loads the page as `file://` with a cache-buster on every load, and `?o55=off` unless asked;
-- re-applies and confirms Reduced Motion after each navigation;
+- re-applies and confirms explicit stored media requests after each navigation; Reduced Motion has no default;
 - uses one GPU browser per run. A lane gets at most 2 browsers and 1 recording unless the lead gives it more, and `browser-check slots` shows what the machines have free.
 
 The default page is the committed one, which moves only at milestones. To test your change, build it (`python3 Concepts/onboarding/opus-5.5/tools/build.py --out <scratch>.html`) and pass `--set page=`.
@@ -67,7 +67,7 @@ The R6 checks keep the original fields test assertions through `helpers/onboardi
 
 SW-41: the shared rows 20/21 Back walk retries only when an open sheet or look menu is observed closing. Ordinary screens must navigate on the first press. `--set selftest=ignoreback-text` swallows Back at `where` and refreshes unrelated title text; both rows must fail naming `where` (`ignoreback` is the no-refresh control). The connected-server walk picks a different project on `c-ready` and captures `connect.openProject`; `--set selftest=keepproject --set rich='connected existing'` retains that pending pick after Back and must fail naming `c-ready`. The `NO_PICK` comments document the renderer audit; completed pairing is exempt only while its code input is absent and trust is confirmed.
 
-FO-61: `back-after-change --grep FO-61` repeats the Later Edit route (`--set repeat=30`). It stretches the first revision recheck with the public concept clock, then restores normal speed; `--set clock=1` uses natural timing. The snapshots wait for that revision's completed recheck and matching footer, and compare the actual commit state too. `--set selftest=earlyreview` restores the old premature snapshot and must fail the default slow-first case.
+FO-61: Later must remain uncommitted and unconfirmed before the first comparison snapshot and after the second; equality alone is insufficient. `--set selftest=latercommit-every` and `latercommit-second` invoke the real commit handler after every Later or only the second Later, and must fail naming row 13a on both surfaces. `back-after-change --grep FO-61` repeats the Later Edit route (`--set repeat=30`). It stretches the first revision recheck with the public concept clock, then restores normal speed; `--set clock=1` uses natural timing. The snapshots wait for that revision's completed recheck and matching footer, and compare the actual commit state too. `--set selftest=earlyreview` restores the old premature snapshot and must fail the default slow-first case.
 
 ## Helpers for lane checks
 
