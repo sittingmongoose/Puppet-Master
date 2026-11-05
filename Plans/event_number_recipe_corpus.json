@@ -1,0 +1,3384 @@
+{
+  "schema_id": "pm.event_number_recipe_corpus.v1",
+  "qualification": "Finite shared adapter oracles; no family, native custody, durability or admission proof. Conflicts C01-C10 and probes N01-N11 apply by actual profile, not one universal reject list. Library parser/codec refusal checks have exact reason oracles; authored guards are weakened in the separate table.",
+  "historical_originals": {
+    "integral_float": "{\"producer_sequence_id\":1.0,\"sequence_id\":18446744073709551615,\"replay_policy\":\"projector_replay_only\"}",
+    "exponent": "{\"producer_sequence_id\":1e0,\"sequence_id\":18446744073709551615}",
+    "negative_zero": "{\"producer_sequence_id\":-0,\"sequence_id\":18446744073709551615}",
+    "large_decimal": "{\"producer_sequence_id\":1152921504606846976,\"sequence_id\":18446744073709551615}",
+    "large_metadata": "{\"producer_sequence_id\":1,\"sequence_id\":18446744073709551615,\"recovery_epoch\":9223372036854775808}"
+  },
+  "guard_removal": [
+    {
+      "guards": [
+        "integer_token"
+      ],
+      "case_ids": [
+        "bad-token-'-0'",
+        "current-nested-minuszero"
+      ]
+    },
+    {
+      "guards": [
+        "integer_type"
+      ],
+      "case_ids": [
+        "int-string",
+        "int-bool",
+        "int-float"
+      ]
+    },
+    {
+      "guards": [
+        "integer_range"
+      ],
+      "case_ids": [
+        "range--1",
+        "uint64-overflow-18446744073709551616"
+      ]
+    },
+    {
+      "guards": [
+        "boolean_type"
+      ],
+      "case_ids": [
+        "bool-number",
+        "bool-string"
+      ]
+    },
+    {
+      "guards": [
+        "duplicate_key"
+      ],
+      "case_ids": [
+        "duplicate-json"
+      ]
+    },
+    {
+      "guards": [
+        "jcs_binary64",
+        "jcs_decimal"
+      ],
+      "case_ids": [
+        "jcs-9007199254740993"
+      ]
+    },
+    {
+      "guards": [
+        "jcs_decimal"
+      ],
+      "case_ids": [
+        "jcs-1152921504606846976"
+      ]
+    },
+    {
+      "guards": [
+        "jcs_primitive"
+      ],
+      "case_ids": [
+        "jcs-typed--0.0",
+        "jcs-typed-1.0"
+      ]
+    },
+    {
+      "guards": [
+        "physical_integer_range"
+      ],
+      "case_ids": [
+        "physical-overflow--9223372036854775809"
+      ]
+    },
+    {
+      "guards": [
+        "physical_nonfinite"
+      ],
+      "case_ids": [
+        "physical-nan"
+      ]
+    },
+    {
+      "guards": [
+        "physical_type"
+      ],
+      "case_ids": [
+        "physical-decimal"
+      ]
+    },
+    {
+      "guards": [
+        "physical_noncanonical"
+      ],
+      "case_ids": [
+        "decode-uint-nonminimal",
+        "decode-float-nonminimal"
+      ]
+    },
+    {
+      "guards": [
+        "caller_recipe_override"
+      ],
+      "case_ids": [
+        "history-caller_override"
+      ]
+    },
+    {
+      "guards": [
+        "original_binding"
+      ],
+      "case_ids": [
+        "history-foreign-storage_instance_id",
+        "history-foreign-event_id"
+      ]
+    },
+    {
+      "guards": [
+        "recipe_unknown",
+        "original_verification"
+      ],
+      "case_ids": [
+        "history-unknown_recipe",
+        "history-rewritten_resources"
+      ]
+    },
+    {
+      "guards": [
+        "original_verification"
+      ],
+      "case_ids": [
+        "history-downgrade",
+        "history-forged_bytes_selfhash"
+      ]
+    },
+    {
+      "guards": [
+        "current_disclosure"
+      ],
+      "case_ids": [
+        "history-denied",
+        "history-truthy_disclosure"
+      ]
+    },
+    {
+      "guards": [
+        "replay_only_not_appendable",
+        "replay_policy"
+      ],
+      "case_ids": [
+        "append-replay-only"
+      ]
+    },
+    {
+      "guards": [
+        "payload_size"
+      ],
+      "case_ids": [
+        "payload-size"
+      ]
+    },
+    {
+      "guards": [
+        "payload_digest"
+      ],
+      "case_ids": [
+        "payload-same-size-different-bytes"
+      ]
+    },
+    {
+      "guards": [
+        "payload_media"
+      ],
+      "case_ids": [
+        "payload-media"
+      ]
+    },
+    {
+      "guards": [
+        "payload_inline_limit"
+      ],
+      "case_ids": [
+        "payload-inline-limit"
+      ]
+    },
+    {
+      "guards": [
+        "recipe_resource_hash"
+      ],
+      "case_ids": [
+        "recipe-hash-trailing-lf",
+        "recipe-hash-upper"
+      ]
+    },
+    {
+      "guards": [
+        "recipe_tuple"
+      ],
+      "case_ids": [
+        "recipe-type"
+      ]
+    },
+    {
+      "guards": [
+        "payload_id_type",
+        "payload_digest"
+      ],
+      "case_ids": [
+        "payload-id-trailing-lf"
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "token-0",
+      "op": "token",
+      "raw": "0",
+      "conflicts": [
+        "C03",
+        "C06",
+        "C07"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "token-1",
+      "op": "token",
+      "raw": "1",
+      "conflicts": [
+        "C03",
+        "C06",
+        "C07"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "token--1",
+      "op": "token",
+      "raw": "-1",
+      "conflicts": [
+        "C03",
+        "C06",
+        "C07"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "token-9007199254740991",
+      "op": "token",
+      "raw": "9007199254740991",
+      "conflicts": [
+        "C03",
+        "C06",
+        "C07"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "token-9007199254740992",
+      "op": "token",
+      "raw": "9007199254740992",
+      "conflicts": [
+        "C03",
+        "C06",
+        "C07"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "token-9007199254740993",
+      "op": "token",
+      "raw": "9007199254740993",
+      "conflicts": [
+        "C03",
+        "C06",
+        "C07"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "token-1152921504606846976",
+      "op": "token",
+      "raw": "1152921504606846976",
+      "conflicts": [
+        "C03",
+        "C06",
+        "C07"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "token-9223372036854775808",
+      "op": "token",
+      "raw": "9223372036854775808",
+      "conflicts": [
+        "C03",
+        "C06",
+        "C07"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "token-18446744073709551615",
+      "op": "token",
+      "raw": "18446744073709551615",
+      "conflicts": [
+        "C03",
+        "C06",
+        "C07"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "token-18446744073709551616",
+      "op": "token",
+      "raw": "18446744073709551616",
+      "conflicts": [
+        "C03",
+        "C06",
+        "C07"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "token--9223372036854775808",
+      "op": "token",
+      "raw": "-9223372036854775808",
+      "conflicts": [
+        "C03",
+        "C06",
+        "C07"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "token--9223372036854775809",
+      "op": "token",
+      "raw": "-9223372036854775809",
+      "conflicts": [
+        "C03",
+        "C06",
+        "C07"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "bad-token-'1.0'",
+      "op": "token",
+      "raw": "1.0",
+      "conflicts": [
+        "C07"
+      ],
+      "error": "integer_token"
+    },
+    {
+      "id": "bad-token-'1e0'",
+      "op": "token",
+      "raw": "1e0",
+      "conflicts": [
+        "C07"
+      ],
+      "error": "integer_token"
+    },
+    {
+      "id": "bad-token-'-0'",
+      "op": "token",
+      "raw": "-0",
+      "conflicts": [
+        "C07"
+      ],
+      "error": "integer_token"
+    },
+    {
+      "id": "bad-token-'-0.0'",
+      "op": "token",
+      "raw": "-0.0",
+      "conflicts": [
+        "C07"
+      ],
+      "error": "integer_token"
+    },
+    {
+      "id": "bad-token-'+1'",
+      "op": "token",
+      "raw": "+1",
+      "conflicts": [
+        "C07"
+      ],
+      "error": "integer_token"
+    },
+    {
+      "id": "bad-token-'01'",
+      "op": "token",
+      "raw": "01",
+      "conflicts": [
+        "C07"
+      ],
+      "error": "integer_token"
+    },
+    {
+      "id": "bad-token-'1\\n'",
+      "op": "token",
+      "raw": "1\n",
+      "conflicts": [
+        "C07"
+      ],
+      "error": "integer_token"
+    },
+    {
+      "id": "bad-token-' 1'",
+      "op": "token",
+      "raw": " 1",
+      "conflicts": [
+        "C07"
+      ],
+      "error": "integer_token"
+    },
+    {
+      "id": "bad-token-'\u0661'",
+      "op": "token",
+      "raw": "\u0661",
+      "conflicts": [
+        "C07"
+      ],
+      "error": "integer_token"
+    },
+    {
+      "id": "bad-token-'1e-7'",
+      "op": "token",
+      "raw": "1e-7",
+      "conflicts": [
+        "C07"
+      ],
+      "error": "integer_token"
+    },
+    {
+      "id": "bad-token-'1e20'",
+      "op": "token",
+      "raw": "1e20",
+      "conflicts": [
+        "C07"
+      ],
+      "error": "integer_token"
+    },
+    {
+      "id": "slot-1.0",
+      "op": "slot",
+      "raw": "1.0",
+      "conflicts": [
+        "C01",
+        "C07",
+        "C08"
+      ],
+      "error": "integer_type"
+    },
+    {
+      "id": "slot-1e0",
+      "op": "slot",
+      "raw": "1e0",
+      "conflicts": [
+        "C01",
+        "C07",
+        "C08"
+      ],
+      "error": "integer_type"
+    },
+    {
+      "id": "slot--0",
+      "op": "slot",
+      "raw": "-0",
+      "conflicts": [
+        "C01",
+        "C07",
+        "C08"
+      ],
+      "error": "integer_token"
+    },
+    {
+      "id": "slot--0.0",
+      "op": "slot",
+      "raw": "-0.0",
+      "conflicts": [
+        "C01",
+        "C07",
+        "C08"
+      ],
+      "error": "integer_type"
+    },
+    {
+      "id": "slot-+1",
+      "op": "slot",
+      "raw": "+1",
+      "conflicts": [
+        "C01",
+        "C07",
+        "C08"
+      ],
+      "error": "json_syntax"
+    },
+    {
+      "id": "slot-01",
+      "op": "slot",
+      "raw": "01",
+      "conflicts": [
+        "C01",
+        "C07",
+        "C08"
+      ],
+      "error": "json_syntax"
+    },
+    {
+      "id": "slot-9007199254740993.0",
+      "op": "slot",
+      "raw": "9007199254740993.0",
+      "conflicts": [
+        "C01",
+        "C07",
+        "C08"
+      ],
+      "error": "integer_type"
+    },
+    {
+      "id": "slot-9.007199254740993e15",
+      "op": "slot",
+      "raw": "9.007199254740993e15",
+      "conflicts": [
+        "C01",
+        "C07",
+        "C08"
+      ],
+      "error": "integer_type"
+    },
+    {
+      "id": "slot-ok-0",
+      "op": "slot",
+      "raw": "0",
+      "conflicts": [
+        "C07",
+        "C08"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "slot-ok-1",
+      "op": "slot",
+      "raw": "1",
+      "conflicts": [
+        "C07",
+        "C08"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "slot-ok-9007199254740993",
+      "op": "slot",
+      "raw": "9007199254740993",
+      "conflicts": [
+        "C07",
+        "C08"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "slot-ok-18446744073709551615",
+      "op": "slot",
+      "raw": "18446744073709551615",
+      "conflicts": [
+        "C07",
+        "C08"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "int-string",
+      "op": "integer",
+      "value": "1",
+      "conflicts": [
+        "C07"
+      ],
+      "error": "integer_type"
+    },
+    {
+      "id": "int-string-zero",
+      "op": "integer",
+      "value": "0",
+      "conflicts": [
+        "C07"
+      ],
+      "error": "integer_type"
+    },
+    {
+      "id": "int-string-false",
+      "op": "integer",
+      "value": "false",
+      "conflicts": [
+        "C07"
+      ],
+      "error": "integer_type"
+    },
+    {
+      "id": "int-bool",
+      "op": "integer",
+      "value": true,
+      "conflicts": [
+        "C07"
+      ],
+      "error": "integer_type"
+    },
+    {
+      "id": "int-false",
+      "op": "integer",
+      "value": false,
+      "conflicts": [
+        "C07"
+      ],
+      "error": "integer_type"
+    },
+    {
+      "id": "int-null",
+      "op": "integer",
+      "value": null,
+      "conflicts": [
+        "C07"
+      ],
+      "error": "integer_type"
+    },
+    {
+      "id": "int-array",
+      "op": "integer",
+      "value": [],
+      "conflicts": [
+        "C07"
+      ],
+      "error": "integer_type"
+    },
+    {
+      "id": "int-object",
+      "op": "integer",
+      "value": {
+        "n": 1
+      },
+      "conflicts": [
+        "C07"
+      ],
+      "error": "integer_type"
+    },
+    {
+      "id": "int-float",
+      "op": "integer",
+      "value": {
+        "@float": "1.0"
+      },
+      "conflicts": [
+        "C07"
+      ],
+      "error": "integer_type"
+    },
+    {
+      "id": "int-decimal",
+      "op": "integer",
+      "value": {
+        "@decimal": "1"
+      },
+      "conflicts": [
+        "C07"
+      ],
+      "error": "integer_type"
+    },
+    {
+      "id": "range--1",
+      "op": "integer",
+      "value": -1,
+      "bounds": {
+        "minimum": 0,
+        "maximum": 10
+      },
+      "conflicts": [
+        "C03"
+      ],
+      "error": "integer_range"
+    },
+    {
+      "id": "range-11",
+      "op": "integer",
+      "value": 11,
+      "bounds": {
+        "minimum": 0,
+        "maximum": 10
+      },
+      "conflicts": [
+        "C03"
+      ],
+      "error": "integer_range"
+    },
+    {
+      "id": "bool-number",
+      "op": "boolean",
+      "value": 1,
+      "conflicts": [
+        "C07"
+      ],
+      "error": "boolean_type"
+    },
+    {
+      "id": "bool-zero",
+      "op": "boolean",
+      "value": 0,
+      "conflicts": [
+        "C07"
+      ],
+      "error": "boolean_type"
+    },
+    {
+      "id": "bool-string",
+      "op": "boolean",
+      "value": "false",
+      "conflicts": [
+        "C07"
+      ],
+      "error": "boolean_type"
+    },
+    {
+      "id": "bool-string-zero",
+      "op": "boolean",
+      "value": "0",
+      "conflicts": [
+        "C07"
+      ],
+      "error": "boolean_type"
+    },
+    {
+      "id": "bool-null",
+      "op": "boolean",
+      "value": null,
+      "conflicts": [
+        "C07"
+      ],
+      "error": "boolean_type"
+    },
+    {
+      "id": "bool-array",
+      "op": "boolean",
+      "value": [],
+      "conflicts": [
+        "C07"
+      ],
+      "error": "boolean_type"
+    },
+    {
+      "id": "bool-object",
+      "op": "boolean",
+      "value": {},
+      "conflicts": [
+        "C07"
+      ],
+      "error": "boolean_type"
+    },
+    {
+      "id": "bool-ok-True",
+      "op": "boolean",
+      "value": true,
+      "conflicts": [
+        "C07"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "bool-ok-False",
+      "op": "boolean",
+      "value": false,
+      "conflicts": [
+        "C07"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "raw-preserved-1.0",
+      "op": "parse_token",
+      "raw": "1.0",
+      "conflicts": [
+        "C08"
+      ],
+      "output": "1.0"
+    },
+    {
+      "id": "raw-preserved-1e0",
+      "op": "parse_token",
+      "raw": "1e0",
+      "conflicts": [
+        "C08"
+      ],
+      "output": "1e0"
+    },
+    {
+      "id": "raw-preserved--0",
+      "op": "parse_token",
+      "raw": "-0",
+      "conflicts": [
+        "C08"
+      ],
+      "output": "-0"
+    },
+    {
+      "id": "raw-preserved--0.0",
+      "op": "parse_token",
+      "raw": "-0.0",
+      "conflicts": [
+        "C08"
+      ],
+      "output": "-0.0"
+    },
+    {
+      "id": "raw-preserved-9007199254740993.0",
+      "op": "parse_token",
+      "raw": "9007199254740993.0",
+      "conflicts": [
+        "C08"
+      ],
+      "output": "9007199254740993.0"
+    },
+    {
+      "id": "raw-preserved-1e-7",
+      "op": "parse_token",
+      "raw": "1e-7",
+      "conflicts": [
+        "C08"
+      ],
+      "output": "1e-7"
+    },
+    {
+      "id": "raw-preserved-1e20",
+      "op": "parse_token",
+      "raw": "1e20",
+      "conflicts": [
+        "C08"
+      ],
+      "output": "1e20"
+    },
+    {
+      "id": "raw-preserved-1e9999",
+      "op": "parse_token",
+      "raw": "1e9999",
+      "conflicts": [
+        "C08"
+      ],
+      "output": "1e9999"
+    },
+    {
+      "id": "raw-preserved-1e-9999",
+      "op": "parse_token",
+      "raw": "1e-9999",
+      "conflicts": [
+        "C08"
+      ],
+      "output": "1e-9999"
+    },
+    {
+      "id": "parse-NaN",
+      "op": "parse",
+      "raw": "NaN",
+      "conflicts": [
+        "C08"
+      ],
+      "error": "json_nonfinite"
+    },
+    {
+      "id": "parse-Infinity",
+      "op": "parse",
+      "raw": "Infinity",
+      "conflicts": [
+        "C08"
+      ],
+      "error": "json_nonfinite"
+    },
+    {
+      "id": "parse--Infinity",
+      "op": "parse",
+      "raw": "-Infinity",
+      "conflicts": [
+        "C08"
+      ],
+      "error": "json_nonfinite"
+    },
+    {
+      "id": "json-syntax-01",
+      "op": "parse",
+      "raw": "01",
+      "conflicts": [
+        "C07"
+      ],
+      "error": "json_syntax"
+    },
+    {
+      "id": "json-syntax-+1",
+      "op": "parse",
+      "raw": "+1",
+      "conflicts": [
+        "C07"
+      ],
+      "error": "json_syntax"
+    },
+    {
+      "id": "json-syntax-1 2",
+      "op": "parse",
+      "raw": "1 2",
+      "conflicts": [
+        "C07"
+      ],
+      "error": "json_syntax"
+    },
+    {
+      "id": "json-syntax-{\"a\":1,}",
+      "op": "parse",
+      "raw": "{\"a\":1,}",
+      "conflicts": [
+        "C07"
+      ],
+      "error": "json_syntax"
+    },
+    {
+      "id": "json-syntax-[1,]",
+      "op": "parse",
+      "raw": "[1,]",
+      "conflicts": [
+        "C07"
+      ],
+      "error": "json_syntax"
+    },
+    {
+      "id": "duplicate-json",
+      "op": "parse",
+      "raw": "{\"a\":1,\"a\":2}",
+      "conflicts": [
+        "C08"
+      ],
+      "error": "duplicate_key"
+    },
+    {
+      "id": "surrogate-json",
+      "op": "parse",
+      "raw": "\"\\ud800\"",
+      "conflicts": [
+        "C08"
+      ],
+      "error": "unicode_scalar"
+    },
+    {
+      "id": "current-nested-minuszero",
+      "op": "current_json",
+      "raw": "{\"n\":[{\"v\":-0}]}",
+      "conflicts": [
+        "C07",
+        "C08"
+      ],
+      "error": "integer_token"
+    },
+    {
+      "id": "current-large-exact",
+      "op": "current_json",
+      "raw": "{\"n\":[9007199254740993]}",
+      "conflicts": [
+        "C06",
+        "C08"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "token-unbounded",
+      "op": "token",
+      "raw": "99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999",
+      "conflicts": [
+        "C03",
+        "C08"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "jcs-1",
+      "op": "jcs",
+      "raw": "1",
+      "conflicts": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C08"
+      ],
+      "output": "1"
+    },
+    {
+      "id": "jcs-1.0",
+      "op": "jcs",
+      "raw": "1.0",
+      "conflicts": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C08"
+      ],
+      "output": "1"
+    },
+    {
+      "id": "jcs-1e0",
+      "op": "jcs",
+      "raw": "1e0",
+      "conflicts": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C08"
+      ],
+      "output": "1"
+    },
+    {
+      "id": "jcs--0",
+      "op": "jcs",
+      "raw": "-0",
+      "conflicts": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C08"
+      ],
+      "output": "0"
+    },
+    {
+      "id": "jcs--0.0",
+      "op": "jcs",
+      "raw": "-0.0",
+      "conflicts": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C08"
+      ],
+      "output": "0"
+    },
+    {
+      "id": "jcs-1e-7",
+      "op": "jcs",
+      "raw": "1e-7",
+      "conflicts": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C08"
+      ],
+      "output": "1e-7"
+    },
+    {
+      "id": "jcs-1e20",
+      "op": "jcs",
+      "raw": "1e20",
+      "conflicts": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C08"
+      ],
+      "output": "100000000000000000000"
+    },
+    {
+      "id": "jcs-9007199254740991",
+      "op": "jcs",
+      "raw": "9007199254740991",
+      "conflicts": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C08"
+      ],
+      "output": "9007199254740991"
+    },
+    {
+      "id": "jcs-9007199254740992",
+      "op": "jcs",
+      "raw": "9007199254740992",
+      "conflicts": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C08"
+      ],
+      "output": "9007199254740992"
+    },
+    {
+      "id": "jcs-9007199254740993",
+      "op": "jcs",
+      "raw": "9007199254740993",
+      "conflicts": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C08"
+      ],
+      "error": "jcs_binary64"
+    },
+    {
+      "id": "jcs-1152921504606846976",
+      "op": "jcs",
+      "raw": "1152921504606846976",
+      "conflicts": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C08"
+      ],
+      "error": "jcs_decimal"
+    },
+    {
+      "id": "jcs-9223372036854775808",
+      "op": "jcs",
+      "raw": "9223372036854775808",
+      "conflicts": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C08"
+      ],
+      "error": "jcs_decimal"
+    },
+    {
+      "id": "jcs-18446744073709551615",
+      "op": "jcs",
+      "raw": "18446744073709551615",
+      "conflicts": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C08"
+      ],
+      "error": "jcs_binary64"
+    },
+    {
+      "id": "jcs-18446744073709551616",
+      "op": "jcs",
+      "raw": "18446744073709551616",
+      "conflicts": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C08"
+      ],
+      "error": "jcs_decimal"
+    },
+    {
+      "id": "jcs-9007199254740993.0",
+      "op": "jcs",
+      "raw": "9007199254740993.0",
+      "conflicts": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C08"
+      ],
+      "error": "jcs_decimal"
+    },
+    {
+      "id": "jcs-1e9999",
+      "op": "jcs",
+      "raw": "1e9999",
+      "conflicts": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C08"
+      ],
+      "error": "jcs_binary64"
+    },
+    {
+      "id": "jcs-1e-9999",
+      "op": "jcs",
+      "raw": "1e-9999",
+      "conflicts": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C08"
+      ],
+      "error": "jcs_decimal"
+    },
+    {
+      "id": "jcs--9007199254740992",
+      "op": "jcs",
+      "raw": "-9007199254740992",
+      "conflicts": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C08"
+      ],
+      "output": "-9007199254740992"
+    },
+    {
+      "id": "jcs--1152921504606846976",
+      "op": "jcs",
+      "raw": "-1152921504606846976",
+      "conflicts": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C08"
+      ],
+      "error": "jcs_decimal"
+    },
+    {
+      "id": "jcs-nonascii-order",
+      "op": "jcs",
+      "raw": "{\"\ue000\":1,\"\ud800\udc00\":2}",
+      "conflicts": [
+        "C02"
+      ],
+      "output": "{\"\ud800\udc00\":2,\"\ue000\":1}"
+    },
+    {
+      "id": "jcs-nan",
+      "op": "jcs_value",
+      "value": {
+        "@float": "nan"
+      },
+      "conflicts": [
+        "C02"
+      ],
+      "error": "jcs_nonfinite"
+    },
+    {
+      "id": "jcs-inf",
+      "op": "jcs_value",
+      "value": {
+        "@float": "inf"
+      },
+      "conflicts": [
+        "C02"
+      ],
+      "error": "jcs_nonfinite"
+    },
+    {
+      "id": "jcs-minusinf",
+      "op": "jcs_value",
+      "value": {
+        "@float": "-inf"
+      },
+      "conflicts": [
+        "C02"
+      ],
+      "error": "jcs_nonfinite"
+    },
+    {
+      "id": "jcs-typed-1.0",
+      "op": "jcs_value",
+      "value": {
+        "@float": "1.0"
+      },
+      "typed": true,
+      "conflicts": [
+        "C01",
+        "C05"
+      ],
+      "error": "jcs_primitive"
+    },
+    {
+      "id": "jcs-typed--0.0",
+      "op": "jcs_value",
+      "value": {
+        "@float": "-0.0"
+      },
+      "typed": true,
+      "conflicts": [
+        "C01",
+        "C05"
+      ],
+      "error": "jcs_primitive"
+    },
+    {
+      "id": "physical-int-0",
+      "op": "physical",
+      "value": {
+        "@int": "0"
+      },
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "00"
+    },
+    {
+      "id": "physical-int-1",
+      "op": "physical",
+      "value": {
+        "@int": "1"
+      },
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "01"
+    },
+    {
+      "id": "physical-int-127",
+      "op": "physical",
+      "value": {
+        "@int": "127"
+      },
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "7f"
+    },
+    {
+      "id": "physical-int-128",
+      "op": "physical",
+      "value": {
+        "@int": "128"
+      },
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "cc80"
+    },
+    {
+      "id": "physical-int-255",
+      "op": "physical",
+      "value": {
+        "@int": "255"
+      },
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "ccff"
+    },
+    {
+      "id": "physical-int-256",
+      "op": "physical",
+      "value": {
+        "@int": "256"
+      },
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "cd0100"
+    },
+    {
+      "id": "physical-int-65535",
+      "op": "physical",
+      "value": {
+        "@int": "65535"
+      },
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "cdffff"
+    },
+    {
+      "id": "physical-int-65536",
+      "op": "physical",
+      "value": {
+        "@int": "65536"
+      },
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "ce00010000"
+    },
+    {
+      "id": "physical-int-4294967295",
+      "op": "physical",
+      "value": {
+        "@int": "4294967295"
+      },
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "ceffffffff"
+    },
+    {
+      "id": "physical-int-4294967296",
+      "op": "physical",
+      "value": {
+        "@int": "4294967296"
+      },
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "cf0000000100000000"
+    },
+    {
+      "id": "physical-int-9007199254740991",
+      "op": "physical",
+      "value": {
+        "@int": "9007199254740991"
+      },
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "cf001fffffffffffff"
+    },
+    {
+      "id": "physical-int-9007199254740992",
+      "op": "physical",
+      "value": {
+        "@int": "9007199254740992"
+      },
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "cf0020000000000000"
+    },
+    {
+      "id": "physical-int-9007199254740993",
+      "op": "physical",
+      "value": {
+        "@int": "9007199254740993"
+      },
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "cf0020000000000001"
+    },
+    {
+      "id": "physical-int-1152921504606846976",
+      "op": "physical",
+      "value": {
+        "@int": "1152921504606846976"
+      },
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "cf1000000000000000"
+    },
+    {
+      "id": "physical-int-9223372036854775808",
+      "op": "physical",
+      "value": {
+        "@int": "9223372036854775808"
+      },
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "cf8000000000000000"
+    },
+    {
+      "id": "physical-int-18446744073709551615",
+      "op": "physical",
+      "value": {
+        "@int": "18446744073709551615"
+      },
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "cfffffffffffffffff"
+    },
+    {
+      "id": "physical-int--1",
+      "op": "physical",
+      "value": {
+        "@int": "-1"
+      },
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "ff"
+    },
+    {
+      "id": "physical-int--32",
+      "op": "physical",
+      "value": {
+        "@int": "-32"
+      },
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "e0"
+    },
+    {
+      "id": "physical-int--33",
+      "op": "physical",
+      "value": {
+        "@int": "-33"
+      },
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "d0df"
+    },
+    {
+      "id": "physical-int--128",
+      "op": "physical",
+      "value": {
+        "@int": "-128"
+      },
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "d080"
+    },
+    {
+      "id": "physical-int--129",
+      "op": "physical",
+      "value": {
+        "@int": "-129"
+      },
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "d1ff7f"
+    },
+    {
+      "id": "physical-int--32768",
+      "op": "physical",
+      "value": {
+        "@int": "-32768"
+      },
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "d18000"
+    },
+    {
+      "id": "physical-int--32769",
+      "op": "physical",
+      "value": {
+        "@int": "-32769"
+      },
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "d2ffff7fff"
+    },
+    {
+      "id": "physical-int--2147483648",
+      "op": "physical",
+      "value": {
+        "@int": "-2147483648"
+      },
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "d280000000"
+    },
+    {
+      "id": "physical-int--2147483649",
+      "op": "physical",
+      "value": {
+        "@int": "-2147483649"
+      },
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "d3ffffffff7fffffff"
+    },
+    {
+      "id": "physical-int--9223372036854775808",
+      "op": "physical",
+      "value": {
+        "@int": "-9223372036854775808"
+      },
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "d38000000000000000"
+    },
+    {
+      "id": "physical-overflow--9223372036854775809",
+      "op": "physical",
+      "value": {
+        "@int": "-9223372036854775809"
+      },
+      "conflicts": [
+        "C06"
+      ],
+      "error": "physical_integer_range"
+    },
+    {
+      "id": "physical-overflow-18446744073709551616",
+      "op": "physical",
+      "value": {
+        "@int": "18446744073709551616"
+      },
+      "conflicts": [
+        "C06"
+      ],
+      "error": "physical_integer_range"
+    },
+    {
+      "id": "physical-float-1.0",
+      "op": "physical",
+      "value": {
+        "@float": "1.0"
+      },
+      "conflicts": [
+        "C05"
+      ],
+      "output": "ca3f800000"
+    },
+    {
+      "id": "app-float-1.0",
+      "op": "physical",
+      "value": {
+        "@float": "1.0"
+      },
+      "profile": "pm.application.physical_messagepack.v1",
+      "conflicts": [
+        "C05"
+      ],
+      "output": "cb3ff0000000000000"
+    },
+    {
+      "id": "physical-float-0.0",
+      "op": "physical",
+      "value": {
+        "@float": "0.0"
+      },
+      "conflicts": [
+        "C05"
+      ],
+      "output": "ca00000000"
+    },
+    {
+      "id": "app-float-0.0",
+      "op": "physical",
+      "value": {
+        "@float": "0.0"
+      },
+      "profile": "pm.application.physical_messagepack.v1",
+      "conflicts": [
+        "C05"
+      ],
+      "output": "cb0000000000000000"
+    },
+    {
+      "id": "physical-float--0.0",
+      "op": "physical",
+      "value": {
+        "@float": "-0.0"
+      },
+      "conflicts": [
+        "C05"
+      ],
+      "output": "ca80000000"
+    },
+    {
+      "id": "app-float--0.0",
+      "op": "physical",
+      "value": {
+        "@float": "-0.0"
+      },
+      "profile": "pm.application.physical_messagepack.v1",
+      "conflicts": [
+        "C05"
+      ],
+      "output": "cb8000000000000000"
+    },
+    {
+      "id": "physical-float-0.5",
+      "op": "physical",
+      "value": {
+        "@float": "0.5"
+      },
+      "conflicts": [
+        "C05"
+      ],
+      "output": "ca3f000000"
+    },
+    {
+      "id": "app-float-0.5",
+      "op": "physical",
+      "value": {
+        "@float": "0.5"
+      },
+      "profile": "pm.application.physical_messagepack.v1",
+      "conflicts": [
+        "C05"
+      ],
+      "output": "cb3fe0000000000000"
+    },
+    {
+      "id": "physical-float-1e-7",
+      "op": "physical",
+      "value": {
+        "@float": "1e-7"
+      },
+      "conflicts": [
+        "C05"
+      ],
+      "output": "cb3e7ad7f29abcaf48"
+    },
+    {
+      "id": "app-float-1e-7",
+      "op": "physical",
+      "value": {
+        "@float": "1e-7"
+      },
+      "profile": "pm.application.physical_messagepack.v1",
+      "conflicts": [
+        "C05"
+      ],
+      "output": "cb3e7ad7f29abcaf48"
+    },
+    {
+      "id": "physical-float-1e20",
+      "op": "physical",
+      "value": {
+        "@float": "1e20"
+      },
+      "conflicts": [
+        "C05"
+      ],
+      "output": "cb4415af1d78b58c40"
+    },
+    {
+      "id": "app-float-1e20",
+      "op": "physical",
+      "value": {
+        "@float": "1e20"
+      },
+      "profile": "pm.application.physical_messagepack.v1",
+      "conflicts": [
+        "C05"
+      ],
+      "output": "cb4415af1d78b58c40"
+    },
+    {
+      "id": "physical-float-1.7976931348623157e308",
+      "op": "physical",
+      "value": {
+        "@float": "1.7976931348623157e308"
+      },
+      "conflicts": [
+        "C05"
+      ],
+      "output": "cb7fefffffffffffff"
+    },
+    {
+      "id": "app-float-1.7976931348623157e308",
+      "op": "physical",
+      "value": {
+        "@float": "1.7976931348623157e308"
+      },
+      "profile": "pm.application.physical_messagepack.v1",
+      "conflicts": [
+        "C05"
+      ],
+      "output": "cb7fefffffffffffff"
+    },
+    {
+      "id": "physical-nan",
+      "op": "physical",
+      "value": {
+        "@float": "nan"
+      },
+      "conflicts": [
+        "C05"
+      ],
+      "error": "physical_nonfinite"
+    },
+    {
+      "id": "physical-inf",
+      "op": "physical",
+      "value": {
+        "@float": "inf"
+      },
+      "conflicts": [
+        "C05"
+      ],
+      "error": "physical_nonfinite"
+    },
+    {
+      "id": "physical--inf",
+      "op": "physical",
+      "value": {
+        "@float": "-inf"
+      },
+      "conflicts": [
+        "C05"
+      ],
+      "error": "physical_nonfinite"
+    },
+    {
+      "id": "physical-decimal",
+      "op": "physical",
+      "value": {
+        "@decimal": "1.0"
+      },
+      "conflicts": [
+        "C05"
+      ],
+      "error": "physical_type"
+    },
+    {
+      "id": "physical-binary",
+      "op": "physical",
+      "value": {
+        "@binary": "0102"
+      },
+      "conflicts": [
+        "C05"
+      ],
+      "error": "physical_type"
+    },
+    {
+      "id": "app-binary",
+      "op": "physical",
+      "value": {
+        "@binary": "0102"
+      },
+      "profile": "pm.application.physical_messagepack.v1",
+      "conflicts": [
+        "C05"
+      ],
+      "output": "c4020102"
+    },
+    {
+      "id": "unknown-physical-profile",
+      "op": "physical",
+      "value": 1,
+      "profile": "unregistered",
+      "conflicts": [
+        "C05"
+      ],
+      "error": "physical_profile"
+    },
+    {
+      "id": "metadata-sequence_id-9007199254740991",
+      "op": "uint64",
+      "value": {
+        "@int": "9007199254740991"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-sequence_id-9007199254740992",
+      "op": "uint64",
+      "value": {
+        "@int": "9007199254740992"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-sequence_id-9007199254740993",
+      "op": "uint64",
+      "value": {
+        "@int": "9007199254740993"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-sequence_id-1152921504606846976",
+      "op": "uint64",
+      "value": {
+        "@int": "1152921504606846976"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-sequence_id-9223372036854775808",
+      "op": "uint64",
+      "value": {
+        "@int": "9223372036854775808"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-sequence_id-18446744073709551615",
+      "op": "uint64",
+      "value": {
+        "@int": "18446744073709551615"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-segment_generation-9007199254740991",
+      "op": "uint64",
+      "value": {
+        "@int": "9007199254740991"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-segment_generation-9007199254740992",
+      "op": "uint64",
+      "value": {
+        "@int": "9007199254740992"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-segment_generation-9007199254740993",
+      "op": "uint64",
+      "value": {
+        "@int": "9007199254740993"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-segment_generation-1152921504606846976",
+      "op": "uint64",
+      "value": {
+        "@int": "1152921504606846976"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-segment_generation-9223372036854775808",
+      "op": "uint64",
+      "value": {
+        "@int": "9223372036854775808"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-segment_generation-18446744073709551615",
+      "op": "uint64",
+      "value": {
+        "@int": "18446744073709551615"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-selected_segment_generation-9007199254740991",
+      "op": "uint64",
+      "value": {
+        "@int": "9007199254740991"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-selected_segment_generation-9007199254740992",
+      "op": "uint64",
+      "value": {
+        "@int": "9007199254740992"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-selected_segment_generation-9007199254740993",
+      "op": "uint64",
+      "value": {
+        "@int": "9007199254740993"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-selected_segment_generation-1152921504606846976",
+      "op": "uint64",
+      "value": {
+        "@int": "1152921504606846976"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-selected_segment_generation-9223372036854775808",
+      "op": "uint64",
+      "value": {
+        "@int": "9223372036854775808"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-selected_segment_generation-18446744073709551615",
+      "op": "uint64",
+      "value": {
+        "@int": "18446744073709551615"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-manifest_generation-9007199254740991",
+      "op": "uint64",
+      "value": {
+        "@int": "9007199254740991"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-manifest_generation-9007199254740992",
+      "op": "uint64",
+      "value": {
+        "@int": "9007199254740992"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-manifest_generation-9007199254740993",
+      "op": "uint64",
+      "value": {
+        "@int": "9007199254740993"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-manifest_generation-1152921504606846976",
+      "op": "uint64",
+      "value": {
+        "@int": "1152921504606846976"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-manifest_generation-9223372036854775808",
+      "op": "uint64",
+      "value": {
+        "@int": "9223372036854775808"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-manifest_generation-18446744073709551615",
+      "op": "uint64",
+      "value": {
+        "@int": "18446744073709551615"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-recovery_epoch-9007199254740991",
+      "op": "uint64",
+      "value": {
+        "@int": "9007199254740991"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-recovery_epoch-9007199254740992",
+      "op": "uint64",
+      "value": {
+        "@int": "9007199254740992"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-recovery_epoch-9007199254740993",
+      "op": "uint64",
+      "value": {
+        "@int": "9007199254740993"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-recovery_epoch-1152921504606846976",
+      "op": "uint64",
+      "value": {
+        "@int": "1152921504606846976"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-recovery_epoch-9223372036854775808",
+      "op": "uint64",
+      "value": {
+        "@int": "9223372036854775808"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-recovery_epoch-18446744073709551615",
+      "op": "uint64",
+      "value": {
+        "@int": "18446744073709551615"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-frontier_revision-9007199254740991",
+      "op": "uint64",
+      "value": {
+        "@int": "9007199254740991"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-frontier_revision-9007199254740992",
+      "op": "uint64",
+      "value": {
+        "@int": "9007199254740992"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-frontier_revision-9007199254740993",
+      "op": "uint64",
+      "value": {
+        "@int": "9007199254740993"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-frontier_revision-1152921504606846976",
+      "op": "uint64",
+      "value": {
+        "@int": "1152921504606846976"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-frontier_revision-9223372036854775808",
+      "op": "uint64",
+      "value": {
+        "@int": "9223372036854775808"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-frontier_revision-18446744073709551615",
+      "op": "uint64",
+      "value": {
+        "@int": "18446744073709551615"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-retained_event_count-9007199254740991",
+      "op": "uint64",
+      "value": {
+        "@int": "9007199254740991"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-retained_event_count-9007199254740992",
+      "op": "uint64",
+      "value": {
+        "@int": "9007199254740992"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-retained_event_count-9007199254740993",
+      "op": "uint64",
+      "value": {
+        "@int": "9007199254740993"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-retained_event_count-1152921504606846976",
+      "op": "uint64",
+      "value": {
+        "@int": "1152921504606846976"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-retained_event_count-9223372036854775808",
+      "op": "uint64",
+      "value": {
+        "@int": "9223372036854775808"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-retained_event_count-18446744073709551615",
+      "op": "uint64",
+      "value": {
+        "@int": "18446744073709551615"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-byte_offset-9007199254740991",
+      "op": "uint64",
+      "value": {
+        "@int": "9007199254740991"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-byte_offset-9007199254740992",
+      "op": "uint64",
+      "value": {
+        "@int": "9007199254740992"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-byte_offset-9007199254740993",
+      "op": "uint64",
+      "value": {
+        "@int": "9007199254740993"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-byte_offset-1152921504606846976",
+      "op": "uint64",
+      "value": {
+        "@int": "1152921504606846976"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-byte_offset-9223372036854775808",
+      "op": "uint64",
+      "value": {
+        "@int": "9223372036854775808"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-byte_offset-18446744073709551615",
+      "op": "uint64",
+      "value": {
+        "@int": "18446744073709551615"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-frame_end_offset-9007199254740991",
+      "op": "uint64",
+      "value": {
+        "@int": "9007199254740991"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-frame_end_offset-9007199254740992",
+      "op": "uint64",
+      "value": {
+        "@int": "9007199254740992"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-frame_end_offset-9007199254740993",
+      "op": "uint64",
+      "value": {
+        "@int": "9007199254740993"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-frame_end_offset-1152921504606846976",
+      "op": "uint64",
+      "value": {
+        "@int": "1152921504606846976"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-frame_end_offset-9223372036854775808",
+      "op": "uint64",
+      "value": {
+        "@int": "9223372036854775808"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-frame_end_offset-18446744073709551615",
+      "op": "uint64",
+      "value": {
+        "@int": "18446744073709551615"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-byte_size-9007199254740991",
+      "op": "uint64",
+      "value": {
+        "@int": "9007199254740991"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-byte_size-9007199254740992",
+      "op": "uint64",
+      "value": {
+        "@int": "9007199254740992"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-byte_size-9007199254740993",
+      "op": "uint64",
+      "value": {
+        "@int": "9007199254740993"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-byte_size-1152921504606846976",
+      "op": "uint64",
+      "value": {
+        "@int": "1152921504606846976"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-byte_size-9223372036854775808",
+      "op": "uint64",
+      "value": {
+        "@int": "9223372036854775808"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "metadata-byte_size-18446744073709551615",
+      "op": "uint64",
+      "value": {
+        "@int": "18446744073709551615"
+      },
+      "conflicts": [
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "uint64-overflow--1",
+      "op": "uint64",
+      "value": {
+        "@int": "-1"
+      },
+      "conflicts": [
+        "C06"
+      ],
+      "error": "integer_range"
+    },
+    {
+      "id": "uint64-overflow-18446744073709551616",
+      "op": "uint64",
+      "value": {
+        "@int": "18446744073709551616"
+      },
+      "conflicts": [
+        "C06"
+      ],
+      "error": "integer_range"
+    },
+    {
+      "id": "uint64-type-bool",
+      "op": "uint64",
+      "value": true,
+      "conflicts": [
+        "C06"
+      ],
+      "error": "integer_type"
+    },
+    {
+      "id": "uint64-type-string",
+      "op": "uint64",
+      "value": "1",
+      "conflicts": [
+        "C06"
+      ],
+      "error": "integer_type"
+    },
+    {
+      "id": "uint64-type-float",
+      "op": "uint64",
+      "value": {
+        "@float": "1.0"
+      },
+      "conflicts": [
+        "C06"
+      ],
+      "error": "integer_type"
+    },
+    {
+      "id": "uint64-type-null",
+      "op": "uint64",
+      "value": null,
+      "conflicts": [
+        "C06"
+      ],
+      "error": "integer_type"
+    },
+    {
+      "id": "binding-1",
+      "op": "physical",
+      "value": {
+        "@int": "1"
+      },
+      "profile": "pm.event_index.binding.msgpack_sha256.v1",
+      "conflicts": [
+        "C06"
+      ],
+      "output": "01"
+    },
+    {
+      "id": "binding-18446744073709551615",
+      "op": "physical",
+      "value": {
+        "@int": "18446744073709551615"
+      },
+      "profile": "pm.event_index.binding.msgpack_sha256.v1",
+      "conflicts": [
+        "C06"
+      ],
+      "output": "cfffffffffffffffff"
+    },
+    {
+      "id": "binding-bad-float",
+      "op": "physical",
+      "value": {
+        "@float": "1.0"
+      },
+      "profile": "pm.event_index.binding.msgpack_sha256.v1",
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "error": "binding_domain"
+    },
+    {
+      "id": "binding-bad-negative",
+      "op": "physical",
+      "value": -1,
+      "profile": "pm.event_index.binding.msgpack_sha256.v1",
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "error": "binding_domain"
+    },
+    {
+      "id": "binding-bad-overflow",
+      "op": "physical",
+      "value": {
+        "@int": "18446744073709551616"
+      },
+      "profile": "pm.event_index.binding.msgpack_sha256.v1",
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "error": "binding_domain"
+    },
+    {
+      "id": "decode-uint-nonminimal",
+      "op": "decode",
+      "hex": "cc01",
+      "conflicts": [
+        "C05"
+      ],
+      "error": "physical_noncanonical"
+    },
+    {
+      "id": "decode-positive-signed",
+      "op": "decode",
+      "hex": "d001",
+      "conflicts": [
+        "C05"
+      ],
+      "error": "physical_noncanonical"
+    },
+    {
+      "id": "decode-float-nonminimal",
+      "op": "decode",
+      "hex": "cb3ff0000000000000",
+      "conflicts": [
+        "C05"
+      ],
+      "error": "physical_noncanonical"
+    },
+    {
+      "id": "decode-binary",
+      "op": "decode",
+      "hex": "c40100",
+      "conflicts": [
+        "C05"
+      ],
+      "error": "physical_type"
+    },
+    {
+      "id": "decode-extension",
+      "op": "decode",
+      "hex": "d40000",
+      "conflicts": [
+        "C05"
+      ],
+      "error": "physical_tag"
+    },
+    {
+      "id": "decode-timestamp",
+      "op": "decode",
+      "hex": "d6ff00000000",
+      "conflicts": [
+        "C05"
+      ],
+      "error": "physical_type"
+    },
+    {
+      "id": "decode-trailing",
+      "op": "decode",
+      "hex": "0101",
+      "conflicts": [
+        "C05"
+      ],
+      "error": "physical_decode"
+    },
+    {
+      "id": "decode-duplicate-map",
+      "op": "decode",
+      "hex": "82a16101a16102",
+      "conflicts": [
+        "C05"
+      ],
+      "error": "duplicate_key"
+    },
+    {
+      "id": "decode-unordered-map",
+      "op": "decode",
+      "hex": "82a16201a16102",
+      "conflicts": [
+        "C05"
+      ],
+      "error": "physical_noncanonical"
+    },
+    {
+      "id": "decode-nan",
+      "op": "decode",
+      "hex": "cb7ff8000000000000",
+      "conflicts": [
+        "C05"
+      ],
+      "error": "physical_nonfinite"
+    },
+    {
+      "id": "decode-invalid-utf8",
+      "op": "decode",
+      "hex": "a1ff",
+      "conflicts": [
+        "C05"
+      ],
+      "error": "physical_decode"
+    },
+    {
+      "id": "decode-good-int",
+      "op": "decode",
+      "hex": "01",
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "decode-good-float",
+      "op": "decode",
+      "hex": "ca3f800000",
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "decode-good-negative-zero",
+      "op": "decode",
+      "hex": "ca80000000",
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "decode-good-uint64",
+      "op": "decode",
+      "hex": "cfffffffffffffffff",
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "append-append_once",
+      "op": "append_policy",
+      "value": "append_once",
+      "conflicts": [
+        "C09"
+      ],
+      "output": "append_once"
+    },
+    {
+      "id": "append-dedupe_by_event_id",
+      "op": "append_policy",
+      "value": "dedupe_by_event_id",
+      "conflicts": [
+        "C09"
+      ],
+      "output": "dedupe_by_event_id"
+    },
+    {
+      "id": "append-dedupe_by_idempotency_key",
+      "op": "append_policy",
+      "value": "dedupe_by_idempotency_key",
+      "conflicts": [
+        "C09"
+      ],
+      "output": "dedupe_by_idempotency_key"
+    },
+    {
+      "id": "append-replay-only",
+      "op": "append_policy",
+      "value": "projector_replay_only",
+      "conflicts": [
+        "C09"
+      ],
+      "error": "replay_only_not_appendable"
+    },
+    {
+      "id": "history-integral_float",
+      "op": "history",
+      "original": "integral_float",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "output": "original-returned-with-zero-effects"
+    },
+    {
+      "id": "history-exponent",
+      "op": "history",
+      "original": "exponent",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "output": "original-returned-with-zero-effects"
+    },
+    {
+      "id": "history-negative_zero",
+      "op": "history",
+      "original": "negative_zero",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "output": "original-returned-with-zero-effects"
+    },
+    {
+      "id": "history-large_decimal",
+      "op": "history",
+      "original": "large_decimal",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "output": "original-returned-with-zero-effects"
+    },
+    {
+      "id": "history-large_metadata",
+      "op": "history",
+      "original": "large_metadata",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "output": "original-returned-with-zero-effects"
+    },
+    {
+      "id": "history-current-original",
+      "op": "history",
+      "scenario": "current_original",
+      "conflicts": [
+        "C10"
+      ],
+      "output": "original-returned-with-zero-effects"
+    },
+    {
+      "id": "history-caller_override",
+      "op": "history",
+      "scenario": "caller_override",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "caller_recipe_override"
+    },
+    {
+      "id": "history-downgrade",
+      "op": "history",
+      "scenario": "downgrade",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "original_verification"
+    },
+    {
+      "id": "history-unknown_recipe",
+      "op": "history",
+      "scenario": "unknown_recipe",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "recipe_unknown"
+    },
+    {
+      "id": "history-rewritten_resources",
+      "op": "history",
+      "scenario": "rewritten_resources",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "recipe_unknown"
+    },
+    {
+      "id": "history-ambiguous",
+      "op": "history",
+      "scenario": "ambiguous",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "original_authority"
+    },
+    {
+      "id": "history-missing",
+      "op": "history",
+      "scenario": "missing",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "original_authority"
+    },
+    {
+      "id": "history-self_authenticated_dict",
+      "op": "history",
+      "scenario": "self_authenticated_dict",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "original_authority"
+    },
+    {
+      "id": "history-verified_string",
+      "op": "history",
+      "scenario": "verified_string",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "original_authority"
+    },
+    {
+      "id": "history-forged_bytes_selfhash",
+      "op": "history",
+      "scenario": "forged_bytes_selfhash",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "original_verification"
+    },
+    {
+      "id": "history-forged_result",
+      "op": "history",
+      "scenario": "forged_result",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "original_verification"
+    },
+    {
+      "id": "history-forged_receipt",
+      "op": "history",
+      "scenario": "forged_receipt",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "original_verification"
+    },
+    {
+      "id": "history-string_record_bytes",
+      "op": "history",
+      "scenario": "string_record_bytes",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "original_bytes_type"
+    },
+    {
+      "id": "history-denied",
+      "op": "history",
+      "scenario": "denied",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "current_disclosure"
+    },
+    {
+      "id": "history-deleted",
+      "op": "history",
+      "scenario": "deleted",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "current_disclosure"
+    },
+    {
+      "id": "history-withdrawn",
+      "op": "history",
+      "scenario": "withdrawn",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "current_disclosure"
+    },
+    {
+      "id": "history-hold_denied",
+      "op": "history",
+      "scenario": "hold_denied",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "current_disclosure"
+    },
+    {
+      "id": "history-truthy_disclosure",
+      "op": "history",
+      "scenario": "truthy_disclosure",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "current_disclosure"
+    },
+    {
+      "id": "history-foreign-storage_instance_id",
+      "op": "history",
+      "scenario": "foreign_storage_instance_id",
+      "conflicts": [
+        "C10"
+      ],
+      "error": "original_binding"
+    },
+    {
+      "id": "history-foreign-scope_kind",
+      "op": "history",
+      "scenario": "foreign_scope_kind",
+      "conflicts": [
+        "C10"
+      ],
+      "error": "original_binding"
+    },
+    {
+      "id": "history-foreign-server_id",
+      "op": "history",
+      "scenario": "foreign_server_id",
+      "conflicts": [
+        "C10"
+      ],
+      "error": "original_binding"
+    },
+    {
+      "id": "history-foreign-project_id",
+      "op": "history",
+      "scenario": "foreign_project_id",
+      "conflicts": [
+        "C10"
+      ],
+      "error": "original_binding"
+    },
+    {
+      "id": "history-foreign-event_type",
+      "op": "history",
+      "scenario": "foreign_event_type",
+      "conflicts": [
+        "C10"
+      ],
+      "error": "original_binding"
+    },
+    {
+      "id": "history-foreign-event_id",
+      "op": "history",
+      "scenario": "foreign_event_id",
+      "conflicts": [
+        "C10"
+      ],
+      "error": "original_binding"
+    },
+    {
+      "id": "history-foreign-idempotency_key",
+      "op": "history",
+      "scenario": "foreign_idempotency_key",
+      "conflicts": [
+        "C10"
+      ],
+      "error": "original_binding"
+    },
+    {
+      "id": "history-foreign-owner_operation_id",
+      "op": "history",
+      "scenario": "foreign_owner_operation_id",
+      "conflicts": [
+        "C10"
+      ],
+      "error": "original_binding"
+    },
+    {
+      "id": "history-foreign-source_commitment",
+      "op": "history",
+      "scenario": "foreign_source_commitment",
+      "conflicts": [
+        "C10"
+      ],
+      "error": "original_binding"
+    },
+    {
+      "id": "payload-inline-limit",
+      "op": "payload",
+      "length": 16385,
+      "conflicts": [
+        "C05",
+        "C06",
+        "C09"
+      ],
+      "error": "payload_inline_limit"
+    },
+    {
+      "id": "payload-inline-boundary",
+      "op": "payload",
+      "length": 16384,
+      "conflicts": [
+        "C05",
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "payload-reference-boundary",
+      "op": "payload",
+      "length": 16385,
+      "route": "reference",
+      "conflicts": [
+        "C05",
+        "C06",
+        "C09"
+      ],
+      "output": "accepted"
+    },
+    {
+      "id": "payload-size",
+      "op": "payload",
+      "length": 6,
+      "descriptor": {
+        "byte_size": 7
+      },
+      "conflicts": [
+        "C05",
+        "C06",
+        "C09"
+      ],
+      "error": "payload_size"
+    },
+    {
+      "id": "payload-same-size-different-bytes",
+      "op": "payload",
+      "length": 6,
+      "raw": "y",
+      "original_raw": "x",
+      "conflicts": [
+        "C05",
+        "C06",
+        "C09"
+      ],
+      "error": "payload_digest"
+    },
+    {
+      "id": "payload-media",
+      "op": "payload",
+      "length": 6,
+      "descriptor": {
+        "media_type": "text/plain"
+      },
+      "conflicts": [
+        "C05",
+        "C06",
+        "C09"
+      ],
+      "error": "payload_media"
+    },
+    {
+      "id": "payload-size-string",
+      "op": "payload",
+      "length": 6,
+      "descriptor": {
+        "byte_size": "6"
+      },
+      "conflicts": [
+        "C05",
+        "C06",
+        "C09"
+      ],
+      "error": "integer_type"
+    },
+    {
+      "id": "payload-size-bool",
+      "op": "payload",
+      "length": 1,
+      "descriptor": {
+        "byte_size": true
+      },
+      "conflicts": [
+        "C05",
+        "C06",
+        "C09"
+      ],
+      "error": "integer_type"
+    },
+    {
+      "id": "recipe-hash-valid",
+      "op": "recipe_constructor",
+      "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "output": "accepted",
+      "conflicts": [
+        "C07",
+        "C10"
+      ]
+    },
+    {
+      "id": "recipe-hash-trailing-lf",
+      "op": "recipe_constructor",
+      "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n",
+      "error": "recipe_resource_hash",
+      "conflicts": [
+        "C07",
+        "C10"
+      ]
+    },
+    {
+      "id": "recipe-hash-upper",
+      "op": "recipe_constructor",
+      "value": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "error": "recipe_resource_hash",
+      "conflicts": [
+        "C07",
+        "C10"
+      ]
+    },
+    {
+      "id": "recipe-hash-short",
+      "op": "recipe_constructor",
+      "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "error": "recipe_resource_hash",
+      "conflicts": [
+        "C07",
+        "C10"
+      ]
+    },
+    {
+      "id": "recipe-hash-int",
+      "op": "recipe_constructor",
+      "value": 1,
+      "error": "recipe_tuple",
+      "conflicts": [
+        "C07",
+        "C10"
+      ]
+    },
+    {
+      "id": "recipe-type",
+      "op": "recipe_constructor",
+      "field_index": 7,
+      "value": true,
+      "error": "recipe_tuple",
+      "conflicts": [
+        "C07",
+        "C10"
+      ]
+    },
+    {
+      "id": "payload-id-trailing-lf",
+      "op": "payload",
+      "length": 6,
+      "descriptor": {
+        "id": "26bebb121169d80246a4531d34864f8092849462dd92d2f2bc88800f23fdbac7\n"
+      },
+      "error": "payload_id_type",
+      "conflicts": [
+        "C07",
+        "C10"
+      ]
+    }
+  ]
+}

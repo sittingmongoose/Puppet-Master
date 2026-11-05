@@ -1,0 +1,103 @@
+{
+  "schema_id": "pm.event_authority.numrule_checks.v1",
+  "branch": "plans/ea-numrule-20261105",
+  "base": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+  "status": "pass",
+  "commands": [
+    {
+      "command": "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/shards-generate.json",
+      "sha256": "0097f44a100929b5fcc967352e31e0a28f4a8974cb0027f58fdf4df24ed776d3"
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py generate",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/index-generate.json",
+      "sha256": "adf8d4e0a49d8ea4fe2e2084a0b5de06f99ac73563981b17a15e92f0c76d4f76"
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/shards-check.json",
+      "sha256": "d697ac77c260ee1fbe5007467d179c832c4c197ffc685d08b78f338e04ff7fdc"
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py validate",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/index-validate.json",
+      "sha256": "8c710b3b26a7587573250c61e5da8f788236856abf120905b772fca547e55c40"
+    },
+    {
+      "command": "venv/python scripts/pm_event_numbers.py --self-test",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/self-test.json",
+      "sha256": "92d496669bfd01cf7c8bbf5821d1bea1af4dbba7fc316b74bd665b5c98d91fdf"
+    },
+    {
+      "command": "venv/python -m unittest discover -s tests -p test_pm_event_index_binding.py",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/binding-tests.txt",
+      "sha256": "7b2bbf4e293374aca08366c6ac82ff71f02f6a4426f40356acc78bbd25dd6c41"
+    },
+    {
+      "command": "venv/python -m unittest discover -s tests -p test_shared_runtime_storage_contracts.py",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/runtime-storage-tests.txt",
+      "sha256": "e0f188d4a233ef0dc8876193a746e607a0c1f6e1637b06d3d8f0daddd2841f76"
+    },
+    {
+      "command": "venv/python scripts/pm-projects-refresh-contracts.py",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/projects-refresh-check.json",
+      "sha256": "34adc1f8a1426086b8f76507c87cb93a9aebfa4cbbd0f4b80acd1460c518a89a"
+    },
+    {
+      "command": "venv/python scripts/pm_event_numbers.py --self-test --corpus <deliberately wrong oracle>",
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/failure-oracle-output.json",
+      "sha256": "7421bbf09dbdd2822d756bd697dbe0c47b2d5aa8a43bba8f936d4c46d128eeeb"
+    }
+  ],
+  "self_test": {
+    "cases": 289,
+    "guard_groups": 25,
+    "owner_integration_checks": 57
+  },
+  "derived_scope": {
+    "changed_shard_groups": [
+      "Plans/_shards/contracts_v0",
+      "Plans/_shards/storage-plan"
+    ],
+    "plan_units.jsonl": {
+      "changed_rows": 705,
+      "owners": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ]
+    },
+    "acceptance_units.jsonl": {
+      "changed_rows": 2647,
+      "owners": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ]
+    },
+    "doc_cards_changed": [
+      "Plans/Contracts_V0.md",
+      "Plans/storage-plan.md"
+    ]
+  },
+  "forbidden_path_changes": [],
+  "governance_reseal": "NOT_RUN",
+  "native_authority": "NOT_RUN"
+}

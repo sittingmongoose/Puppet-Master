@@ -1,0 +1,58 @@
+{
+  "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
+  "assessment_id": "EA-NUMRULE-SHARED-20261105",
+  "assessment_kind": "author_shared_prerequisite_scope_assessment",
+  "assessed_tree": {
+    "branch": "plans/ea-numrule-20261105",
+    "base": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+    "commit": "commit containing this report; exact pushed head in external pushed-head.json"
+  },
+  "native_execution": "NOT_RUN",
+  "registry": {
+    "path": "Plans/event_family_registry.json",
+    "changed": false,
+    "new_membership": "ABSENT"
+  },
+  "rows": [],
+  "family_grade_scope": "No event family is drafted by this lane; no twelve-criterion family PASS is claimed.",
+  "shared_units": [
+    {
+      "plan_unit_id": "CV-1100",
+      "owner_specification": "PASS",
+      "bounded_adapter_oracles": "PASS",
+      "native_route_qualification": "NOT_RUN"
+    },
+    {
+      "plan_unit_id": "SP-1100",
+      "owner_specification": "PASS",
+      "frozen_byte_vector_oracles": "PASS",
+      "native_codec_durability": "NOT_RUN"
+    },
+    {
+      "plan_unit_id": "SP-1101",
+      "owner_specification": "PASS",
+      "bounded_selector_oracles": "PASS",
+      "native_original_authentication": "NOT_RUN",
+      "integration_status": "PARTIAL"
+    }
+  ],
+  "corpus": {
+    "cases": 289,
+    "passed": 289,
+    "guard_removal_groups": 25,
+    "owner_integration_checks": 57,
+    "result": "PASS"
+  },
+  "failed_premise_checks": [],
+  "owner_questions": [],
+  "ids_used": [
+    "CV-1100",
+    "SP-1100",
+    "SP-1101"
+  ],
+  "open_items": [
+    "Native original-owner custody/recipe installation and resource authentication",
+    "Complete actual schema/successor route qualification and family-specific adoption across 19 lanes",
+    "Integration/governance work belongs to the lead, outside this drafting task"
+  ]
+}

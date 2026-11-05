@@ -1034,7 +1034,7 @@ Rules:
 - Migration is forward-only. A schema change requires a governed successor schema/version and a storage-owned upgrader. A `1.0.0` reader/writer encountering `2.0.0` performs no mutation; metadata-only compatibility diagnostics are allowed, but live read-only project/viewer access requires a validating `2.0.0` reader and is otherwise refused.
 - No validator, schema file, or doc reference by itself makes Puppet Master buildable. This closes only the EventRecord envelope materialization slice; provider stream, runtime lifecycle, clean-room harness, GUI, security, behavioral acceptance, and broader storage value schemas remain blockers.
 
-ContractRef: ContractName:Plans/storage-plan.md, SchemaID:pm.event.v0, ContractName:Plans/event_record.schema.json
+ContractRef: ContractName:Plans/storage-plan.md, SchemaID:pm.event.v0, ContractName:Plans/event_record.schema.json, ContractName:Plans/Contracts_V0.md#CV-1100, ContractName:Plans/storage-plan.md#SP-1101
 
 ### 1.3 EventEnvelopeV1 -- minimal compatibility envelope
 `EventEnvelopeV1` is the minimal event envelope used by some plans as an intermediate format.
@@ -1084,6 +1084,65 @@ The normalized field formulas are closed:
 | `migration.compatibility_event_type` | Exact original legacy `type` before alias normalization. |
 
 Conflicting identity candidates quarantine as `legacy_identity_conflict`. Invalid/ambiguous timestamps, unknown scope or alias, missing payload registration, and raw-secret content quarantine without checkpoint advance. For a fixed `(legacy envelope, verified header/cursor, registry revision)`, two runs and two conforming implementations produce byte-identical canonical JSON, MessagePack, identity, index row, and one idempotent projection effect. Changing a registered alias, identity pointer, scope policy, payload schema, or redaction transform is a governed migration revision, never a silent reinterpretation.
+
+### CV-1100 - Exact Numbers And Versioned Hash-Recipe Selection
+
+```yaml
+plan_unit_id: CV-1100
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: |-
+  Each numeric value is first validated as the exact primitive and mathematical value of its original field owner. No decoder may narrow an integer through binary64, silently coerce a float/string/bool into an integer, erase typed signed zero, round an exact decimal, add a global maximum-safe ceiling, or use a field’s occurrence in a joined record to change its owner domain. Current JSON integer inputs use exactly `0` or `-?[1-9][0-9]*` (negative only where the field owner allows it), with no plus, leading zero, negative zero, fraction or exponent. Current typed integer inputs require an exact integer primitive, excluding booleans and runtime floats. This current-input grammar does not replace an older retained reader’s admitted grammar. Field-specific minima/maxima still apply. Generic integer schemas remain their existing mathematical domains, and canonical-byte/type checks are independent of JSON Schema.
+  A digest or identity selects its existing exact registered recipe by purpose and owner edition. EventRecord producer semantics and legacy normalized identity use their existing RFC8785 input projections; complete EventRecord bytes and full-value commitments use SP-236/CV-339; SP-278 binding hashes use only their declared uint64 domain; CV-366 app semantic kinds use the existing lossless typed tree and app physical wrappers their own physical profile; Goal/certification/local source contracts keep their named exact recipes. A local decimal/JSON helper, payload-store hash or physical hash is never a substitute for another domain. Strings, null presence, array order, key order, prefixes and preimage field lists remain exactly owner-defined.
+  New JCS inputs are qualified against their actual field owner’s required semantics, including the original exact mathematical number, its primitive type where the source distinguishes types, and the emitted decimal where that owner requires exact mathematical preservation. A mere `int(float(n)) == n`, successful reencode, present small fixture or package-imposed safe bound is insufficient proof of the whole route. For the EventRecord number domain, apply actual RFC8785 canonicalization; for an exact integer source that the selected JCS route cannot preserve, use its existing unavailable/refusal contract before effects. Do not create a different digest, typed-tree successor, cap, string substitution, fabricated original or corruption claim to work around an unsupported route. Current integer representation refusals do not retire valid history.
+  The profile dispatch is closed by purpose: EventRecord producer semantic and legacy identity = existing RFC8785 projections; EventRecord physical/full-value = pm.seglog_frame_v2.event_value.canonical_msgpack.v1 and unchanged CV-339 tuple; index binding = pm.event_index.binding.msgpack_sha256.v1; app semantic = pm.application.semantic_hash.v1 lossless typed tree; app physical = pm.application.physical_messagepack.v1; Goal/certification/local source = their exact named owner recipes. Signed float zero and int/float differences remain meaningful in typed domains. The guaranteed interoperable integer subset ±9007199254740991 is not a product cap: 2^53 has an exact JCS decimal, 2^53+1 loses its binary64 value, and 2^60 has an exact binary64 value but its usual JCS decimal is mathematically different. Broader logical source schemas remain valid when a physical or semantic route is unavailable. Existing numeric positions explicitly encoded as canonical decimal strings and :020 Storage keys keep those recipes.
+  SP-1100 owns exact Storage physical domains; SP-1101 owns authenticated original recipe selection. These are newly authored shared technical owner contracts for existing behavior under DL-045, with applicable DL-046/DL-090 scope preserved. They confer no new family-specific binding, event admission or implementation proof. Every local recipe ID and preimage stays with its original owner.
+gui_related: false
+gui_classification_reason: Defines exact numbers, byte profiles and original recipe custody; no visual presentation.
+depends_on:
+- CV-309
+- CV-339
+- CV-366
+unblocks: []
+acceptance_criteria:
+- Raw current integer slots reject fractions, exponents, leading zeros, plus signs, negative zero, booleans, strings
+  and runtime floats before any binary64 conversion.
+- Exact owner ranges and distinct JCS, typed semantic, physical, payload and local source domains remain unchanged.
+- JCS route qualification compares original integer and emitted exact decimal, including 2^53, successor +1 and
+  2^60; refusal precedes effects.
+- Authenticated supported retained recipes remain readable under SP-1101, independently of current numeric or format
+  guards.
+validation_surfaces:
+- python3 scripts/pm_event_numbers.py --self-test
+- Plans/event_number_recipe_corpus.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: numeric_identity_or_retained_recipe_drift
+reasoning_tier: high
+context_scope: event_authority_shared_number_recipe_contract
+implementation_surfaces:
+- Plans/Contracts_V0.md
+- scripts/pm_event_numbers.py
+- Plans/event_number_recipe_corpus.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/NUMRULE/REPORT.md#4-proposed-owner-rule
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- CV-1100
+negative_constraints:
+- No global numeric ceiling, alternate hash domain, envelope field, registry service, family admission or native
+  proof.
+- No rehash, restamp, backfill, current-then-legacy fallback or fabricated original custody.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-1100, ContractName:Plans/storage-plan.md#SP-1101, ContractName:Plans/Contracts_V0.md#CV-339, ContractName:Plans/Contracts_V0.md#CV-366
 
 ## Provider/Model Capability Snapshot Reference Envelope
 
@@ -20811,6 +20870,7 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: |-
   EventRecord 2.0 requires scope_kind application or project and conditionally null/non-empty project_id; enforces app-root-global event identity and scope-partition/event-type lifetime idempotency; normalizes admitted EventEnvelopeV1 values deterministically in memory only; and makes projector_replay_only non-appendable, idempotent, checkpoint-atomic, and incapable of external or canonical side effects. CV-366’s exact per-family scope/version table selects current app payloads; historical normalization remains registry-revision bound and replay-only. Existing scope policies are not globally flipped and no original Project event is restamped.
+  CV-1100 owns current exact integer inputs and purpose-specific recipe qualification; SP-1101 selects the authenticated frozen original recipe for retained reads and retries without narrowing this envelope schema.
 gui_related: false
 gui_classification_reason: Defines durable event identity, compatibility normalization, and replay safety.
 depends_on: [CV-087, CV-088, CV-309]
@@ -24098,6 +24158,7 @@ canonical_text: |-
   App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage’s project~base64url rule, never a new project:hex scheme.
   The attached table is the closed event/app-source selection policy. Its CompactionCompletionApplicationV1 shape and source are non-emitting candidates only: context.compaction.completed remains project_only, DL-300 admits no app edition, and missing_event_registration persists until separate Event Authority admission and complete owner adoption. A schema/source row is not an append or event-checkpoint grant. settings.layer.changed is application-only; normal chat/history/run/tool/Usage/recovery/Goal/Crew/Plan/schedule/attention/layout app variants are application_or_project only for their actual admitted writer. Every selected variant must join full original source, commit/append/first-receipt, canonical or derived read/checkpoint, backup/restore and retention. New approval.chat_tool_requested/resolved payloads are thread/tool/target bound, distinct from Project Orchestrator node approval events. Wizard handoff, PRD/PlanningRun/NamedPlan/WorkNode/gates and frozen Workflow/certified sources stay Project-only. Unknown/missing source, version or family is unavailable/quarantined; a registry or all-true fixture boolean cannot admit native writes. Existing notebook/plugin/auth/pause/scheduler candidate/non-emitting dispositions remain until their own complete admission. goal.paused/resumed or any other required unregistered semantic name cannot emit by inference; missing_event_registration is preserved. App support is an accepted requirement, while native availability and exact source adoption remain evidence-bounded.
   The developer-session resources are separately selected in Plans/developer_session_application_contracts.schema.json: DebugSessionRecordApplicationV1 and EvalSessionRecordApplicationV1 plus their physical wrappers. OriginalDebugSessionSource and OriginalEvalSessionSource select owner.debug.session.application@1.0.0 and owner.eval.session.application@1.0.0 under the existing DebugSessionBroker/EvalSessionBroker. The two added ordered source graphs cover original intent, pending/lease/Stop fence, commit, receipt/result/read, coherent backup and retention; both stay specified_unimplemented. Browser sources/profile/page/controller records belong only to the browser owner. Project dev_session_record/eval_session_record codecs and sources retain exact bytes.
+  CV-1100 and SP-1101 govern exact input and authenticated original-recipe dispatch; this unit retains its typed semantic tree, app float64/binary physical profile, closed kinds, exact prefixes and original Project codecs.
 gui_related: false
 gui_classification_reason: Defines data, identity, custody, version or source contracts; no presentation ownership.
 depends_on:

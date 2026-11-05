@@ -3960,6 +3960,7 @@ canonical_text: >-
   separate reader/source-lineage compatibility; JSON diagnostics remain non-authoritative mirrors. Amended
   2026-10-31 (DL-270): SP-335 compresses sealed segments as whole blocks in a sealed container (SP-346), SP-347 adds the group commit control frame, and SP-339 retires the always-on JSON
   mirrors; the active segment keeps flags zero.
+  SP-1100 preserves the exact physical numeric/profile domain and original payload bytes; CV-1100 qualifies only the selected semantic preimage, and SP-1101 authenticates frozen original-recipe selection for retained reads and retries.
 gui_related: false
 gui_classification_reason: "This unit preserves backend on-disk seglog wire-format requirements."
 split_recommended: false
@@ -17782,6 +17783,7 @@ canonical_text: >-
   Amended 2026-10-31 (DL-270): SP-336 acknowledges an ordinary group after one data sync of its segment, keeps the
   watermark in the segment, syncs the manifest at rotation, gives barrier-class events a full flush, and creates
   stores atomically.
+  SP-1100 preserves the exact physical numeric/profile domain and original payload bytes; CV-1100 qualifies only the selected semantic preimage, and SP-1101 authenticates frozen original-recipe selection for retained reads and retries.
 gui_related: true
 gui_classification_reason: Integrity loss and recovery create persistent blocked/read-only disclosure and recovery-report actions.
 split_recommended: false
@@ -17815,6 +17817,63 @@ negative_constraints:
   - Do not acknowledge on write or buffer flush alone.
 owner_hints: [Plans/storage-plan.md]
 ```
+
+### SP-1100 - Exact Storage Numbers And Physical Domains
+
+```yaml
+plan_unit_id: SP-1100
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  The canonical EventRecord MessagePack integer representation is the existing signed/unsigned exact range −2^63 through 2^64−1, with minimal type-preserving widths; physical sequence/generation and owner-defined checkpoint/receipt uint fields retain 0 through 2^64−1. A source field with a broader logical schema remains valid source data when this physical route is unavailable. General EventRecord floats are finite IEEE754 values, retain float type even when integral, retain signed zero, and use float32 only with exact value and zero-sign preservation, otherwise float64. SP-278’s uint-only binding codec and CV-366’s app physical profile remain separate, exact selected profiles. Canonical stored byte decoding rejects alternate/nonminimal tags, duplicate/unordered keys, forbidden tags, invalid Unicode and trailing values according to that selected profile. Payload-pack IDs and byte sizes cover the actual exact original media/profile bytes, never a newly normalized substitute.
+  CV-1100 supplies current integer-token/type admission separately from the physical codec and separately from historical validation. Keep sequence_id, segment_generation, selected_segment_generation, manifest_generation, recovery_epoch and any owner-declared uint64 receipt/checkpoint/count/offset/byte-size fields exact; a field's inclusion in a joined witness does not impose a JCS range. Byte arithmetic is checked in its declared domain before allocation or publication, and :020 key padding is unchanged. Source schemas with broader mathematical domains are never capped by this route. SP-1101 selects the authenticated original profile for retained values, including CV-366's distinct declared-binary and float64 profile.
+  The shared reference helper and corpus are bounded static codec evidence only. They supply no native parser/resource qualification, Storage metadata assignment, CURRENT/manifest authority, append, durability, custody, payload admission or Event Authority clearance.
+gui_related: false
+gui_classification_reason: Defines exact numbers, byte profiles and original recipe custody; no visual presentation.
+depends_on:
+- SP-026
+- SP-236
+- CV-1100
+unblocks: []
+acceptance_criteria:
+- Storage uint64 fields include 2^53+1, 2^60, 2^63 and 2^64-1 without float narrowing; physical integer endpoints
+  and overflow are checked exactly.
+- EventRecord MessagePack preserves integral float type and positive/negative zero, with minimal lossless float32
+  or float64.
+- Selected profile rejects nonminimal/forbidden tags, duplicate/unordered maps, invalid Unicode and trailing data;
+  app and SP-278 profiles retain their distinct restrictions.
+- Payload sizes and hashes use exact original selected media/profile bytes, including retained payloads.
+validation_surfaces:
+- python3 scripts/pm_event_numbers.py --self-test
+- Plans/event_number_recipe_corpus.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: numeric_identity_or_retained_recipe_drift
+reasoning_tier: high
+context_scope: event_authority_shared_number_recipe_contract
+implementation_surfaces:
+- Plans/storage-plan.md
+- scripts/pm_event_numbers.py
+- Plans/event_number_recipe_corpus.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/NUMRULE/REPORT.md#4-proposed-owner-rule
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- SP-1100
+negative_constraints:
+- No global numeric ceiling, alternate hash domain, envelope field, registry service, family admission or native
+  proof.
+- No rehash, restamp, backfill, current-then-legacy fallback or fabricated original custody.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-1100, ContractName:Plans/Contracts_V0.md#CV-339, ContractName:Plans/storage-plan.md#SP-236, ContractName:Plans/storage-plan.md#SP-1101
 
 ### SP-237 - Case L Retention Compaction Deletion And Quarantine
 
@@ -21232,6 +21291,7 @@ owner_doc: Plans/storage-plan.md
 canonical_text: Storage materializes one generic EventRecord index checkpoint whose immutable generation
   anchors resolve existing row publication references and whose atomic advancing frontier proves complete
   CURRENT-selected canonical coverage, with exact rebuild, translation and retention semantics.
+  SP-1100 preserves the exact physical numeric/profile domain and original payload bytes; CV-1100 qualifies only the selected semantic preimage, and SP-1101 authenticates frozen original-recipe selection for retained reads and retries.
 gui_related: false
 gui_classification_reason: Defines backend derived custody, source coverage and durable publication.
 depends_on:
@@ -22293,6 +22353,7 @@ canonical_text: >-
   shared technical prerequisite only; event-specific adoption and native proof remain separate. New strict stored
   v2 retains the original complete EventRecord value commitment, exact v1/v2 read dispatch and explicit
   legacy-selector compatibility; full-value resolution is independently adopted.
+  SP-1100 preserves the exact physical numeric/profile domain and original payload bytes; CV-1100 qualifies only the selected semantic preimage, and SP-1101 authenticates frozen original-recipe selection for retained reads and retries.
 gui_related: false
 gui_classification_reason: Defines Storage receipt custody and internal restore admission; existing recovery-shell disclosure remains separately owned.
 depends_on: [SP-230, SP-235, SP-236, CV-318, DL-045]
@@ -22332,6 +22393,69 @@ negative_constraints:
   - No new EventRecord fields, events, retention policy, generic journal/service, event-specific adoption, native proof or automatic depth closure.
   - No critical/MVP-array change, WorkNode, NodeSeed, readiness or governance seal.
 ```
+
+### SP-1101 - Authenticated Write-Time Recipe And Retained-Reader Dispatch
+
+```yaml
+plan_unit_id: SP-1101
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  The native original Storage/producer owner selects and authenticates one immutable recipe tuple for the original accepted record: original envelope and payload schema IDs/versions, original owner/source and registered family edition or registry revision, identity recipe, producer-semantic recipe, physical/full-value profile and any separately owned local source/payload profile needed to verify that record. Existing semantic-version/field-context recipe definitions are reused. Bind the selection through the existing actual original issuance/source/admission custody to the Storage instance, exact scope/Server/Project, event type and original event/idempotency identity, original owner operation and original value/source commitment. Copying a recipe name, hashing a caller-supplied tuple, setting `verified=true` or presenting an index checkpoint does not authenticate that binding.
+  Every retained reader and retry resolver first obtains that selection from the authenticated original owner. It uses exactly the frozen original schemas, lexical/type/number rules and hash preimages to verify and return the original bytes/results. A current caller cannot select the old recipe; a historical record cannot be validated by trying current then legacy until one passes. Current access/deletion/hold/withdrawal gates still control disclosure, and original currentness/receipt/source controls still apply to the actual downstream action. A later current writer’s numeric, format or live-state guard never runs on a retained original merely because the same event name is read.
+  A new incompatible number/format/hash rule receives an explicit governed successor recipe/edition and coordinated writer/reader adoption before current activation. Closed EventRecord fields are not extended ad hoc. Use an existing immutable schema/edition discriminator where it uniquely selects the recipe, otherwise the authentic original issuance/registry custody must select it; an old event timestamp alone is not sufficient. If an older original lacks enough authentic provenance to select exactly one supported recipe, retain its exact bytes and use the existing unavailable/unsupported contract; do not rehash/restamp/backfill, falsely mark it corrupt, fabricate provenance or select a weaker recipe. Valid authentic supported old originals remain readable. Unknown/foreign/ambiguous/forged selection refuses with zero append or canonical/domain effects.
+  This is a newly authored shared technical owner contract for existing identity/replay behavior under DL-045 and the separately permitted family scopes; family-specific adoption remains necessary. The recipe tuple also pins the exact original resource/edition bytes through the existing authenticated custody (including their original hashes); a rewritten URI, registry revision or same-named replacement resource is not the original recipe. No permanent owner-request mirror, new durable recipe family or new EventRecord field is introduced. CV-339's original eleven receipt fields and full-value tuple, SP-286's first issuance/replay interfaces, and SP-278's source/currentness/read-token controls remain unchanged.
+  A reference dispatcher installs the trusted original-owner resolver and supported exact tuple-to-frozen-verifier mapping at composition, outside untrusted request data. The owner authenticates original custody; each frozen verifier checks the complete original schema/identity/source/value/result/receipt joins with its original recipes. Unknown or ambiguous tuples cannot be probed through alternative verifiers. Ordinary current append and current retry inputs retain their current admission gates, including replay_only_not_appendable, while original receipt/history resolution applies frozen original validation. Current disclosure permission/deletion/hold/withdrawal is checked independently, and no retained read/retry remints first time, sequence, identity, bytes or effects. Missing provenance preserves exact bytes under the existing unavailable contract and is not a corruption finding.
+  Finite fixtures use an independent sealed lookup to model that boundary; a caller-controlled dictionary, historical flag, original_recipe field, verified boolean or recomputed self-hash is never a native custody proof. Native installation/activation, original owner authentication, durability, restore/withdrawal and every family adoption remain NOT_RUN here.
+gui_related: false
+gui_classification_reason: Defines exact numbers, byte profiles and original recipe custody; no visual presentation.
+depends_on:
+- CV-1100
+- SP-1100
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- |-
+  One exact supported recipe tuple resolves from authentic immutable original issuance/source/edition custody with Storage, scope, family, schema, operation, event, key and source/value joins.
+- Authentic old integral-float/exponent/negative-zero and large-metadata originals remain readable by their frozen
+  recipe after current grammar or live state changes.
+- Caller overrides, downgrade, foreign/forged/ambiguous/missing/unknown recipe or replaced resources refuse without
+  alternate dispatch, append or domain effects.
+- Current access/deletion/hold/withdrawal gates still apply; original result/receipt/bytes remain exact, with no
+  restamp, backfill or fabricated provenance.
+validation_surfaces:
+- python3 scripts/pm_event_numbers.py --self-test
+- Plans/event_number_recipe_corpus.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: numeric_identity_or_retained_recipe_drift
+reasoning_tier: high
+context_scope: event_authority_shared_number_recipe_contract
+implementation_surfaces:
+- Plans/storage-plan.md
+- scripts/pm_event_numbers.py
+- Plans/event_number_recipe_corpus.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/NUMRULE/REPORT.md#4-proposed-owner-rule
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- SP-1101
+negative_constraints:
+- No global numeric ceiling, alternate hash domain, envelope field, registry service, family admission or native
+  proof.
+- No rehash, restamp, backfill, current-then-legacy fallback or fabricated original custody.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-1100, ContractName:Plans/Contracts_V0.md#CV-339, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
 
 ContractRef: ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Contracts_V0.md#CV-339, ContractName:Plans/event_append_receipt_contracts.schema.json, ContractName:Plans/storage_value_registry.json, ContractName:Plans/Decision_Log.md#DL-045
 
@@ -28241,6 +28365,7 @@ status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: |-
   DL-270 card 3. An EventRecord carries at most 16 KiB of inline body. Larger tool output, file reads, images and other payloads go to a content-addressed payload store, and the record carries a reference: BLAKE3 id, byte size and media type. Base64 payloads are decoded to binary at ingest, and a base64 body inline in a record is an admission error. Payloads live in append-only pack files, not one file per payload. Identical payloads are stored once and reference-counted; garbage collection honours retention holds, legal holds and backups. Forks, summaries and conversation compaction keep parent record/payload references. Approved N13 chat conversion is the precise exception to the former universal no-event-copy move rule: preserve immutable source events/results/Usage, seal the source conversation for Undo, and materialize full destination-owned conversation records with explicit origin lineage. Same-store records share payload refs; cross-Server transfer verifies exact payload bytes before cutover. A destination copy is not a new execution, billing event or rewritten historical source. Independent Goal/Plan/Crew/schedule/permission custody follows its own source/hold/backup rules beyond chat Undo expiry. A payload's bytes and index entry are durable before any record that references it is acknowledged: the group either syncs the pack first or carries the new bytes in its own segment frames and moves them into packs at seal, so a crash never leaves a reference to missing bytes, and pack bytes no durable record references are dropped once no hold applies. Deleting content releases its references at once, and payload bytes that no live record or hold still references are physically removed within the deleting owner's deadline, 24 hours for a deleted thread, by rewriting the packs that hold them; a removal that fails is disclosed and retried. Text payloads are compressed with zstd level 3; already-compressed media is stored as is. Content-defined chunking is used only for large files that change and for safe-point snapshots. This sets SP-227's ManagedOutputRef cap at 16 KiB. Evidence: images were 1.4 GB, 46% of one T3 Code user's database within a week; six Codex subagent files reached 62.8 GB, 97.8% of it repeated records; base64 was 53-67% of session bytes in this machine's samples.
+  SP-1100 preserves the exact physical numeric/profile domain and original payload bytes; CV-1100 qualifies only the selected semantic preimage, and SP-1101 authenticates frozen original-recipe selection for retained reads and retries.
 gui_related: false
 gui_classification_reason: "Defines payload storage and references; no visible surface."
 split_recommended: false

@@ -4479,10 +4479,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 285,
+        "False": 286,
         "True": 76
       },
-      "heading_count": 561,
+      "heading_count": 562,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -4539,6 +4539,7 @@
         "Plans/collaborative_workflows_contracts.schema.json",
         "Plans/event_append_receipt_contracts.schema.json",
         "Plans/event_family_registry.json",
+        "Plans/event_number_recipe_corpus.json",
         "Plans/event_payloads/terminal_workgroup_moved.schema.json",
         "Plans/event_payloads/workspace_layout_changed.schema.json",
         "Plans/event_payloads/workspace_layout_changed_v2.schema.json",
@@ -4584,12 +4585,14 @@
         "future vision_bridge result records",
         "scripts/pm-implementation-readiness.py",
         "scripts/pm-new-contracts-verify.py",
-        "scripts/pm-plans-verify.py"
+        "scripts/pm-plans-verify.py",
+        "scripts/pm_event_numbers.py"
       ],
-      "line_count": 24468,
+      "line_count": 24529,
       "path": "Plans/Contracts_V0.md",
-      "plan_unit_count": 361,
+      "plan_unit_count": 362,
       "plan_unit_ids": [
+        "CV-1100",
         "CV-292",
         "CV-293",
         "CV-294",
@@ -5133,6 +5136,7 @@
         "node_blocked_payload_loss",
         "node_unblocked_payload_drift",
         "notification_contract_secret_or_retry_drift",
+        "numeric_identity_or_retained_recipe_drift",
         "oauth_callback_token_overwrite",
         "offline_cached_blocked_identity_drift",
         "onboarding_handoff_state_drift",
@@ -5311,10 +5315,10 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "03b09cc13847139ac3c5ead7d952532de3895983c0e8a4be88def5e2b86b963d",
+      "sha256": "ef2eb04565a8faa6a1caa20ce0cdbc645ed5b6c0469b75875941becb6b7efdec",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 361
+        "accepted": 362
       },
       "title": "Contracts V0 (Canonical)",
       "unit_type_counts": {
@@ -5323,7 +5327,7 @@
         "consumer_requirement": 1,
         "future_scope_decision": 1,
         "integration_contract": 3,
-        "interface_contract": 6,
+        "interface_contract": 7,
         "owner_boundary": 1,
         "requirement": 230,
         "schema_contract": 28,
@@ -5361,6 +5365,7 @@
         "Plans/event_append_receipt_contracts.schema.json",
         "Plans/event_append_receipt_full_value_fixtures.json",
         "Plans/event_family_registry.json",
+        "Plans/event_number_recipe_corpus.json",
         "Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json",
         "Plans/event_payloads/goal_runtime/goal_created.schema.json",
         "Plans/event_payloads/goal_runtime/goal_degraded.schema.json",
@@ -5468,6 +5473,7 @@
         "python3 scripts/pm-shared-runtime-storage-materialize.py check",
         "python3 scripts/pm-touch-closure-verify.py --json",
         "python3 scripts/pm_coordination_events.py",
+        "python3 scripts/pm_event_numbers.py --self-test",
         "reports/event-authority-20260911/step-06-contract-validation.md",
         "reports/event-authority-20260911/step-08-append-receipt-validation.md",
         "reports/event-authority-20260911/step-08-certified-custody-validation.md",
@@ -18591,10 +18597,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 231,
+        "False": 233,
         "True": 110
       },
-      "heading_count": 817,
+      "heading_count": 819,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -18634,6 +18640,7 @@
         "Plans/collaborative_workflows_contracts.schema.json",
         "Plans/event_append_receipt_contracts.schema.json",
         "Plans/event_family_registry.json",
+        "Plans/event_number_recipe_corpus.json",
         "Plans/event_record.schema.json",
         "Plans/goal_body_custody.schema.json",
         "Plans/goal_certified_event_coordinator_contracts",
@@ -18687,11 +18694,12 @@
         "future sound asset records",
         "future taught memory records",
         "future visualizer artifact records",
-        "scripts/pm-implementation-readiness.py"
+        "scripts/pm-implementation-readiness.py",
+        "scripts/pm_event_numbers.py"
       ],
-      "line_count": 29476,
+      "line_count": 29601,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 341,
+      "plan_unit_count": 343,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -18929,6 +18937,7 @@
         "SP-234",
         "SP-235",
         "SP-236",
+        "SP-1100",
         "SP-237",
         "SP-238",
         "SP-239",
@@ -18969,6 +18978,7 @@
         "SP-270",
         "SP-273",
         "SP-286",
+        "SP-1101",
         "SP-287",
         "SP-268",
         "SP-272",
@@ -19094,6 +19104,7 @@
         "media_storage_bloat",
         "migration_backup_canonical_redb_recovery",
         "notification_storage_secret_leak",
+        "numeric_identity_or_retained_recipe_drift",
         "original_authority_currentness_and_false_runtime_claim",
         "original_cancelled_source_or_combined_projection_currentness_drift",
         "original_goal_inspection_source_or_disclosure_drift",
@@ -19156,10 +19167,10 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "52804c7f1ff7d43a63636a254cb2fd8c66b921f208f3604faf2c6cf1d2d708b5",
+      "sha256": "6438f16839a59808d93f01e615d6db9990aeadec05da0faef75b3a5bc88095b2",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 337,
+        "accepted": 339,
         "retired": 3,
         "superseded": 1
       },
@@ -19173,7 +19184,7 @@
         "requirement": 277,
         "schema_contract": 23,
         "security_contract": 1,
-        "storage_contract": 27,
+        "storage_contract": 29,
         "storage_security_contract": 1
       },
       "validation_surfaces": [
@@ -19235,6 +19246,7 @@
         "Plans/event_family_registry.json",
         "Plans/event_index_consumer_adoption.schema.json",
         "Plans/event_index_consumer_adoption_fixtures.json",
+        "Plans/event_number_recipe_corpus.json",
         "Plans/event_payload_storage_boot_recovery.schema.json",
         "Plans/event_payload_storage_integrity_detected.schema.json",
         "Plans/event_payload_storage_recovery_applied.schema.json",
@@ -19436,6 +19448,7 @@
         "python3 scripts/pm-working-notebook-contracts.py validate",
         "python3 scripts/pm_browser_workspace_created_v2.py",
         "python3 scripts/pm_coordination_events.py",
+        "python3 scripts/pm_event_numbers.py --self-test",
         "reports/event-authority-20260911/step-06-contract-validation.md",
         "reports/event-authority-20260911/step-08-append-receipt-validation.md",
         "reports/event-authority-20260911/step-08-certified-custody-validation.md",
@@ -21536,7 +21549,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-04T23:02:56Z",
+  "generated_at_utc": "2026-11-05T03:54:18Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -21544,13 +21557,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3631,
+      "False": 3634,
       "True": 3791
     },
-    "plan_unit_count": 7422,
+    "plan_unit_count": 7425,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 7204,
+      "accepted": 7207,
       "retired": 195,
       "superseded": 23
     },
@@ -21600,7 +21613,7 @@
       "implementation_reference": 1,
       "integration_contract": 130,
       "interaction_contract": 6,
-      "interface_contract": 6,
+      "interface_contract": 7,
       "invariant": 33,
       "migration": 1,
       "migration_contract": 2,
@@ -21639,7 +21652,7 @@
       "source_lineage_reconciliation": 2,
       "source_lineage_residual_disposition": 2,
       "ssot_rule": 3,
-      "storage_contract": 27,
+      "storage_contract": 29,
       "storage_security_contract": 1,
       "structural_anchor": 5,
       "supersession_amendment": 1,
