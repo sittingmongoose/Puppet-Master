@@ -790,17 +790,20 @@ STORAGE_VALUE_REGISTRY_SCHEMA_URI = (
 # DL-092): the Storage owner's reuse check did not reuse RP-GOAL-THREAD-LIFETIME and materialized the Chat content
 # class as RP-CHAT-THREAD-LIFETIME@1.0.0, so the retention-policy count moves from 27 to 28. The family, status
 # and tier counts are unchanged.
-STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 344
+# Re-pinned on plans/ea-w2-orchestrator-20261104 (SP-723, CV-740): crew_board_message_application_v2 adds one
+# materialized tier_0_launch_critical family to main's 344, so 345 families, 321 materialized and 62 tier-0. No
+# event admission follows. The lane's three SP-720..722 board members are members of an existing family and add none.
+STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 345
 # Re-pinned 2026-11-05 (DL-401, DL-415..DL-421): telemetry plus six independent no-project
 # policies are materialized; existing policies and every family/status/tier count remain unchanged.
 STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 35
 STORAGE_VALUE_REGISTRY_EXPECTED_STATUS_COUNTS = {
-    "materialized": 320,
+    "materialized": 321,
     "deferred_not_build_blocking": 23,
     "compatibility_alias": 1,
 }
 STORAGE_VALUE_REGISTRY_EXPECTED_TIER_COUNTS = {
-    "tier_0_launch_critical": 61,
+    "tier_0_launch_critical": 62,
     "later_gui_or_feature_projection": 273,
     "migration_only": 10,
 }
@@ -986,6 +989,9 @@ STORAGE_VALUE_KEYED_COMPOSITION_MEMBERS = {
         "agent_crashed",
         "agent_aborted",
         "debug_mirror_exported",
+        "crew_board_message_posted",
+        "crew_board_message_read",
+        "crew_board_messages_archived",
     ),
     "coordination_read_model_projections": (
         "agent_projection",
@@ -1008,6 +1014,9 @@ STORAGE_VALUE_KEYED_COMPOSITION_KEY_SHAPES = {
         "coordination.agent_crashed",
         "coordination.agent_aborted",
         "coordination.debug_mirror_exported",
+        "crew.board_message_posted",
+        "crew.board_message_read",
+        "crew.board_messages_archived",
     ),
     "coordination_read_model_projections": (
         "coordination_agent_projection.v1:{project_id}:{agent_id}",

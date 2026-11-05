@@ -363,8 +363,10 @@ class OnboardingStorageTests(unittest.TestCase):
         # Re-pinned 2026-11-04 to the live registry at 2d749bee0e and the
         # STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT readiness census:
         # 344 families = 320 materialized + 23 deferred + 1 alias.
-        self.assertEqual(len(families), 344)
-        self.assertEqual(len({row["family_id"] for row in families}), 344)
+        # Re-pinned on plans/ea-w2-orchestrator-20261104: SP-723/CV-740 adds crew_board_message_application_v2,
+        # one materialized family: 345 families = 321 materialized + 23 deferred + 1 alias.
+        self.assertEqual(len(families), 345)
+        self.assertEqual(len({row["family_id"] for row in families}), 345)
         added = [row for row in families if row["family_id"] == "run_started_index_checkpoint"]
         browser_checkpoint = [row for row in families if row["family_id"] == "browser_workspace_created_index_checkpoint"]
         self.assertEqual(len(browser_checkpoint), 1)
@@ -372,7 +374,7 @@ class OnboardingStorageTests(unittest.TestCase):
         # Re-pinned 2026-11-04: the live registry is no longer append-ordered
         # by the historical 88-row snapshot. Check its exact current status
         # census and the named checkpoint owners instead of obsolete offsets.
-        self.assertEqual(sum(row["status"] == "materialized" for row in families), 320)
+        self.assertEqual(sum(row["status"] == "materialized" for row in families), 321)
         self.assertEqual(sum(row["status"] == "deferred_not_build_blocking" for row in families), 23)
         self.assertEqual(sum(row["status"] == "compatibility_alias" for row in families), 1)
         def canonical_digest(value):
