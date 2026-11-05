@@ -1,7 +1,7 @@
 # W3I — phase 1, continuity and HITL (2026-11-05)
 
-**Branch:** `plans/ea-w3-continuity-hitl-20261105`  
-**Base:** `f9c5de6561dff0a53a48e530f2a5c6804a7e941d` (`origin/main` fetched before branching).  
+**Branch:** `plans/ea-w3-continuity-hitl-20261105`
+**Base:** `f9c5de6561dff0a53a48e530f2a5c6804a7e941d` (`origin/main` fetched before branching).
 **Status:** four separately prepared contracts; no admission. Criterion 12 is **PARTIAL** for every family. Shared number/timestamp adoption, oracle code, predicate-level guard isolation, and Sol/Astra review belong to phase 2.
 
 ## Per-name outcomes
