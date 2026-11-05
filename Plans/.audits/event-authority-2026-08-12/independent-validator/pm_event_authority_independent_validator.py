@@ -236,14 +236,23 @@ def multi_family_receipt_state():
 
 
 def post_august_validator_pin() -> str:
-    """Observe DL-077's frozen validator bytes without invoking DL-412 judgment.
+    """Bridge live bytes to DL-077 only through the two validator hash links.
 
-    This is the SHA-256 of the original DL-077 validator, not a receipt-supplied
-    value. DL-077 retains its predicate order, messages and returned receipt pin.
-    DL-412's current/prior byte and authority checks run separately for steps.
+    DL-077 keeps its original predicate order, messages and returned receipt pin.
+    Full DL-412 authority and receipt semantics are checked separately for steps.
+    A missing, unreadable or broken byte chain exposes the live hash to DL-077.
     """
-    return "190a86f23e06362bdb98e27eb23268c9691db46cc41bc9f97e1fbb6bde1abc20"
-
+    live_hash = sha256_file(Path(__file__))
+    try:
+        receipt = load_json(REPO / MULTI_FAMILY_RECEIPT)
+        dl077 = load_json(REPO / POST_AUGUST_RECEIPT)
+        if (isinstance(receipt, dict) and isinstance(dl077, dict)
+                and receipt.get("validator_after_sha256") == live_hash
+                and receipt.get("validator_before_sha256") == dl077.get("validator_after_sha256")):
+            return "190a86f23e06362bdb98e27eb23268c9691db46cc41bc9f97e1fbb6bde1abc20"
+    except (OSError, ValueError, TypeError, RecursionError):
+        pass
+    return live_hash
 
 def registry_step_shape_ok(step, event_type) -> bool:
     """DL-412: a multi-family step lists two or more distinct event types, sorted, including its own."""

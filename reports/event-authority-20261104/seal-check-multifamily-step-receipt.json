@@ -28,11 +28,11 @@
  "contract_depth_complete": false,
  "validator_path": "Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py",
  "validator_before_sha256": "190a86f23e06362bdb98e27eb23268c9691db46cc41bc9f97e1fbb6bde1abc20",
- "validator_after_sha256": "48ab44d79d097ec921dceeb7830c267afa1aaaf0ed871e1cf10912cbf3c8f782",
+ "validator_after_sha256": "0cb2bd07a500d4314c678c0ee0cd1eae267accfb5a02e3f686f5210f92dd80d6",
  "prior_receipt": {
   "path": "reports/event-authority-20260911/step-10-post-august-admission-receipt.json",
   "sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
-  "note": "Unchanged, and pinned here for multi-family steps. Its validator_after_sha256 is this receipt's validator_before_sha256. The separate DL-077 predicate observes the frozen DL-077 validator hash without reading this receipt, preserving its legacy judgment and the Step 3 holding judgment."
+  "note": "Unchanged. The live validator hash must equal this receipt's validator_after_sha256, and this receipt's validator_before_sha256 must equal DL-077's validator_after_sha256. Only then does the old predicate observe the frozen DL-077 hash. Any broken byte link exposes the live hash and preserves DL-077's original failure. Full DL-412 receipt semantics remain separate for steps."
  },
  "record_dir": "reports/event-authority-20260911/admission-records",
  "record_schema_id": "pm.assurance.event_authority.post_august_admission_record.v1",
@@ -50,7 +50,7 @@
  "changes": [
   "Constants for DL-412: the receipt location and schema id, the DL-412 required tokens (Jared's verbatim answer, the approved option's words and the presented cards' SHA-256), the author identity and the record field registry_step_event_types.",
   "multi_family_receipt_state: this receipt must pin DL-412's prose section, the DL-077 receipt's validator_after_sha256 as its before, the current validator bytes as its after, the DL-077 receipt's exact bytes, the record directory and schema, the author, a named lander, both of them as forbidden seal appliers, and false seal, admission and depth flags.",
-  "post_august_validator_pin and post_august_receipt_state: observe the frozen DL-077 validator SHA-256 at the original current-file comparison, preserving the original predicate order, messages and returned DL-077 receipt pin. No DL-412 receipt check runs inside that predicate or the holding judgment. The full DL-412 receipt integrity check runs separately for step records and adds only their own result; legacy-only runs retain all original results apart from the added input pin.",
+  "post_august_validator_pin and post_august_receipt_state: recompute the live SHA-256 of the validator's own bytes on every call. Only when it equals DL-412's validator_after_sha256 and DL-412's validator_before_sha256 equals DL-077's validator_after_sha256, present the frozen DL-077 after-hash at the original comparison. Otherwise present the live hash so the original predicate fails with its unchanged message and null returned pin. No full DL-412 semantic predicate runs inside DL-077 or holding; step records still require it separately.",
   "admission_record_problems: a record carrying registry_step_event_types is judged by the step-size rule above instead of the one-family rule, pins this receipt and cannot cite DL-412 as its decision entry. A record without the field is judged exactly as before: the one-family rule, the DL-077 receipt and the unchanged DL-077 and DL-078 decision exclusion.",
   "strict_step_record, registry_step_record_scan, registry_step_claim, registry_step_problems and validate_post_august_admissions: strict fail-closed directory inspection and recursive either-digest discovery apply only to multi-family steps; every member needs its own strictly read canonical record. Ambiguity invalidates every potentially affected step, naming the file. Step problems never reach no-field records; their legacy reader, rules, diagnostics and ordering are preserved.",
   "The check's own output receipt pins this receipt's SHA-256 (multi_family_step_receipt_sha256), as it pins DL-077's.",
@@ -76,7 +76,7 @@
  ],
  "notes": [
   "DL-412 authorizes this change only. It admits no family, registers nothing, grants no depth pass, turns on no writer and makes no family pass by itself.",
-  "Author and lander are agent tasks, not a claimed human identity. Neither may apply the seal. Procedurally, CA-SEAL-FIX1, CA-SEAL-FIX2, CA-SEAL-FIX3, CA-SEAL-FIX4, stream lead claude-opus-5.5:pm-ea-lead (session b29da1b5-9877-474f-8a4c-e7a57ab7f899, responsible for 616345d688), and every other fix worker are also excluded. The checked forbidden-task list remains exactly the author and lander.",
+  "Author and lander are agent tasks, not a claimed human identity. Neither may apply the seal. Procedurally, CA-SEAL-FIX1, CA-SEAL-FIX2, CA-SEAL-FIX3, CA-SEAL-FIX4, CA-SEAL-FIX5, stream lead claude-opus-5.5:pm-ea-lead (session b29da1b5-9877-474f-8a4c-e7a57ab7f899, responsible for 616345d688), and every other fix worker are also excluded. The checked forbidden-task list remains exactly the author and lander.",
   "No record using registry_step_event_types is written with this change. The records for settings.layer.changed, approval.chat_tool_requested and approval.chat_tool_resolved are written later, when each family's contract reaches twelve of twelve."
  ]
 }
