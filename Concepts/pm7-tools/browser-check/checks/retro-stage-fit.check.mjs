@@ -457,24 +457,24 @@ const MOTION = async (ms, probeSource, geometrySource, selftest) => {
 		for (const k of Object.keys(now)) { if (now[k] && !was[k]) out.kinds[k === 'kick' ? 'propKick' : k]++; was[k] = now[k]; }
 		if (Math.abs(ps.tilt - ps.tiltT) > .02 || Math.abs(ps.th) > .02 || Math.abs(ps.dy) > 1 || props.some((p) => Math.abs(p.a) > .02)) out.moving++;
 		try {
-		// Test-only controls fire after valid sampling has begun, exercising loss during a cell.
-		if (selftest && out.validPairs > 0 && performance.now() - t0 > 1000) {
-			if (selftest === 'head-hidden') s2.gHead.style.display = 'none';
-			if (selftest === 'head-zero') s2.gHead.getBoundingClientRect = () => new DOMRect();
-			if (selftest === 'head-detached') s2.gHead.remove();
-		}
-		const hb = R(s2.gHead, 'head');
-		if (props.length) out.validFrames++;
-		for (const p of props) {
-			const q = R(p.el, `prop ${p.spec.kind}:${p.spec.slot || ''}`), x0 = Math.max(hb.left, q.left), x1 = Math.min(hb.right, q.right), y0 = Math.max(hb.top, q.top), y1 = Math.min(hb.bottom, q.bottom);
-			// Invoke the shared reader even for disjoint boxes; coverage is independent of intersection.
-			const area = overlap(s2.gHead, p.el);
-			if (!Number.isFinite(area) || area < 0) throw new Error('ink reader: invalid area');
-			out.validPairs++;
-			if (x1 <= x0 || y1 <= y0) continue;
-			out.boxFrames++; out.worstBox = Math.max(out.worstBox, Math.min(x1 - x0, y1 - y0));
-			if (area > out.worst) out.worst = area, out.at = { prop: `${p.spec.kind}:${p.spec.slot || ''}`, t: Math.round(performance.now() - t0), tilt: Math.round(ps.tilt * 100) / 100, th: Math.round(ps.th * 100) / 100, dy: Math.round(ps.dy), propA: Math.round(p.a * 100) / 100 };
-		}
+			// Test-only controls fire after valid sampling has begun, exercising loss during a cell.
+			if (selftest && out.validPairs > 0 && performance.now() - t0 > 1000) {
+				if (selftest === 'head-hidden') s2.gHead.style.display = 'none';
+				if (selftest === 'head-zero') s2.gHead.getBoundingClientRect = () => new DOMRect();
+				if (selftest === 'head-detached') s2.gHead.remove();
+			}
+			const hb = R(s2.gHead, 'head');
+			if (props.length) out.validFrames++;
+			for (const p of props) {
+				const q = R(p.el, `prop ${p.spec.kind}:${p.spec.slot || ''}`), x0 = Math.max(hb.left, q.left), x1 = Math.min(hb.right, q.right), y0 = Math.max(hb.top, q.top), y1 = Math.min(hb.bottom, q.bottom);
+				// Invoke the shared reader even for disjoint boxes; coverage is independent of intersection.
+				const area = overlap(s2.gHead, p.el);
+				if (!Number.isFinite(area) || area < 0) throw new Error('ink reader: invalid area');
+				out.validPairs++;
+				if (x1 <= x0 || y1 <= y0) continue;
+				out.boxFrames++; out.worstBox = Math.max(out.worstBox, Math.min(x1 - x0, y1 - y0));
+				if (area > out.worst) out.worst = area, out.at = { prop: `${p.spec.kind}:${p.spec.slot || ''}`, t: Math.round(performance.now() - t0), tilt: Math.round(ps.tilt * 100) / 100, th: Math.round(ps.th * 100) / 100, dy: Math.round(ps.dy), propA: Math.round(p.a * 100) / 100 };
+			}
 		} catch (e) { out.geometryError = `${e.message} at frame ${out.n}`; break; }
 	}
 	return out;
