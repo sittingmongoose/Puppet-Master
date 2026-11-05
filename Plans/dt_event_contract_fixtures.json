@@ -103128,7 +103128,7 @@
           "expected": "transition_refused"
         },
         {
-          "case": "filesafe_owner_conflict_fences_only_this_facet",
+          "case": "filesafe_block_never_emits_tool_denied",
           "prepared": {
             "schema_id": "pm.storage_value.dt_tool_denied_source.v1",
             "schema_version": "1.0.0",

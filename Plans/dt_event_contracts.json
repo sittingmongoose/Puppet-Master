@@ -1132,14 +1132,19 @@
       "retention_runtime_minimum_ref": "RP-RUNTIME-365D for runtime-linked population only; runless facet remains fenced"
     }
   ],
-  "blocked": [
+  "blocked": [],
+  "external_family_owners": [
     {
       "event_type": "tool.custom_headless.skipped",
-      "question": "Is skipped eligible only on a Project's first-ever Doctor invocation, or on the first invocation that observes `tools.custom_headless` absent? If the first invocation has the key, may a later absence emit? What resets eligibility across a configuration revision, key removal/re-addition, Project import/clone or older restore?",
-      "evidence": [
-        "Plans/newtools.md:494-513"
-      ],
-      "retention_policy_ref": "PENDING_RETENTION_DECISION"
+      "lane": "DS15",
+      "decision_ref": "Plans/Decision_Log.md#DL-436",
+      "branch": "origin/plans/ea-w2-section15-newtools-20261104",
+      "commit": "8791f549ae15b84d3d3583cdd7c21c6f65788127",
+      "semantic_contract": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-326",
+      "manifest": "Plans/ds15_deck2_contracts.json",
+      "oracle_owner": "Plans/Automated_Testing_System.md#ATS-329",
+      "status": "prepared_without_admission_by_DS15",
+      "dt_contract": "none; DT drops its blocked row and cites DS15 under DL-436"
     }
   ]
 }
