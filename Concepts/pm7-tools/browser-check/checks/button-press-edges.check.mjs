@@ -100,7 +100,7 @@ export default async function(t) {
     await t.check(`FO-73 link underline retained ${tag}`,!undecorated.length,JSON.stringify(undecorated));
     await t.check(`FO-73 pressed target stays at rest box ${tag}`,!moved.length,JSON.stringify(moved.slice(0,3)));
     if(motion!=='no-preference')await t.check(`FO-73 no press scale with Reduced Motion ${tag}`,!scaled.length,JSON.stringify(scaled.slice(0,3)));
-    
+
    }
    const inventory=await f.evaluate(()=>window.__pressInventory);
    await t.check(`FO-73 representative inventory ${look} ${motion}`,inventory.length>0);
