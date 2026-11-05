@@ -284,7 +284,7 @@
              says pat_ref (normalize) with the credential's reference. */
           onDone: () => {
             const cur = SI(S);
-            if (cur.service !== mine.service || !mine.identity || resolvedKey(S, cur) !== mine.identity || (cur.attempt || 0) !== mine.attempt || cur.state !== 'token') return;
+            if (cur.service !== mine.service || !mine.identity || resolvedKey(S, cur) !== mine.identity || (cur.attempt || 0) !== mine.attempt || cur.state === 'done') return;
             completeSignIn(S, world(S).login || 'jared', 'sign_in_during_setup', false, 'token');
           }
         });
