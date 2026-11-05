@@ -734,8 +734,6 @@ def retained_revision_cases(kind, owner, family, fixture, reader, observations=N
                 ('mismatched_edition', ['retry_payload', 'schema_version'], '9.0.0', [retry_guard]),
                 ('mismatched_source', ['append_resolution', 'source_selection', 'current_bytes_sha256'], 'b' * 64,
                  ['resolved original append evidence mismatch']),
-                ('missing_admission', ['append_original', 'valid_when_written'], False,
-                 [retry_guard, 'resolved original append evidence mismatch']),
                 ('forged_original_digest', ['request_digest'], 'b' * 64, [retry_guard])):
             altered, original = copy.deepcopy(proof), copy.deepcopy(operation)
             target = original if path == ['request_digest'] else altered
@@ -743,6 +741,16 @@ def retained_revision_cases(kind, owner, family, fixture, reader, observations=N
             assert changed_leaves((operation if target is original else proof), target) == 1
             assert owner.protocol_errors(altered, original) == guards, name
             results.append(dict(name='retry_' + name, valid=False, changed_leaves=1, guards=guards))
+        # Missing admission is a different invariant from resolver equality:
+        # keep the resolver's observational copy coherent with the original.
+        altered = copy.deepcopy(proof)
+        for key in ('append_original', 'append_resolution'):
+            altered[key]['valid_when_written'] = False
+        assert changed_leaves(proof, altered) == 2
+        assert not append_result_errors(operation, altered['append_resolution'], altered['append_original'], family['event_type'])
+        assert owner.protocol_errors(altered, operation) == [retry_guard]
+        results.append(dict(name='retry_missing_admission', valid=False, semantic_defects=1,
+                            reconciled_copies=2, guards=[retry_guard]))
         # One unsupported original edition, with EVERY observational copy and
         # its old-codec digest reconciled. No stale body/digest masks selection.
         altered, original = copy.deepcopy(proof), copy.deepcopy(operation)
