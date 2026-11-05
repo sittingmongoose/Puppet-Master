@@ -325,6 +325,40 @@ def run(repo, output, source_map, apply_cut=None):
             bad = copy.deepcopy(doc)
             bad['rows'][0]['card']['sha256'] = '0' * 64
             record('negative_card_fingerprint', lambda: outcomes(bad), True, 'card fingerprint')
+            # Cycle 5 B02: require the malformed-card diagnostic while the
+            # independent terminal unresolved-card rule remains enabled.
+            card_parent = copy.deepcopy(doc)
+            card_alias = root / 'Plans/fixture-card.md'
+            card_alias.symlink_to(root / card_path)
+            try:
+                for label, mutate, message in [
+                    ('extra_row_key', lambda d: d['rows'][0].__setitem__('extra', 'not allowed'),
+                     'recount decision card incomplete: '),
+                    ('Plans_symlink_path', lambda d: d['rows'][0]['card'].__setitem__(
+                        'path', 'Plans/fixture-card.md'), 'recount decision card path invalid: '),
+                    ('extra_pin_key', lambda d: d['rows'][0]['card'].__setitem__(
+                        'extra', 'not allowed'), 'recount decision card path invalid: '),
+                    ('missing_event_name', lambda d: d['rows'][0]['card'].__setitem__(
+                        'sha256', sha(b'Decision required.')), 'recount decision card fingerprint/name mismatch: '),
+                ]:
+                    bad = copy.deepcopy(card_parent)
+                    mutate(bad)
+                    def malformed_card(bad=bad, label=label):
+                        put(card_path, card_raw)
+                        try:
+                            outcomes(card_parent)
+                        except ValueError as exc:
+                            assert str(exc) == 'recount decision cards unresolved: ' + json.dumps([names[0]])
+                        else:
+                            raise AssertionError('valid diagnostic card must remain unresolved')
+                        if label == 'missing_event_name':
+                            put(card_path, b'Decision required.')  # Observational SHA follows the bytes.
+                        return outcomes(bad)
+                    record('negative_card_' + label, malformed_card,
+                           True, message + names[0])
+            finally:
+                card_alias.unlink()
+                put(card_path, card_raw)
             # Existing exclusion vocabulary: own decision and exact hashed owner span.
             own_section = ('### DL-998: Exclusion for ' + names[0] + '\n\n' + names[0] + ' is excluded.\n\n').encode()
             decision_path = root / 'Plans/Decision_Log.md'
@@ -339,6 +373,21 @@ def run(repo, output, source_map, apply_cut=None):
                 'source_citations': [{'path': 'Plans/fixture-owner.md', 'sha256': sha(evidence_raw), 'line_start': 1, 'line_end': 1}]}
             admitted_rest = set(names[1:])
             record('positive_exclusion_own_decision_and_evidence', lambda: outcomes(excluded, admitted_rest))
+            # Cycle 5 B01: a reversed negative slice end can retain the event
+            # token. Only line_end changes from this coherent two-line parent.
+            two_line_raw = evidence_raw + b'Second evidence line.\n'
+            two_line_parent = copy.deepcopy(excluded)
+            two_line_parent['rows'][0]['source_citations'][0]['sha256'] = sha(two_line_raw)
+            put('Plans/fixture-owner.md', two_line_raw)
+            try:
+                record('positive_exclusion_two_line_order_parent',
+                       lambda: outcomes(two_line_parent, admitted_rest))
+                bad = copy.deepcopy(two_line_parent)
+                bad['rows'][0]['source_citations'][0]['line_end'] = -1
+                record('negative_exclusion_line_end_negative', lambda: outcomes(bad, admitted_rest),
+                       True, 'recount exclusion evidence fingerprint/span mismatch: ' + names[0])
+            finally:
+                put('Plans/fixture-owner.md', evidence_raw)
             for label, mutate in [
                 ('extra_field', lambda d: d['rows'][0].__setitem__('extra', 'not allowed')),
                 ('disposition', lambda d: d['rows'][0].__setitem__('disposition', 'KEEP_REGISTERED')),
