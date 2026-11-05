@@ -125,7 +125,13 @@
     const done = () => v.removeAttribute('data-warm');
     if (a) a.finished.then(done, done); else done();
   }
-  const whenIdle = (fn) => (typeof requestIdleCallback === 'function' ? requestIdleCallback(fn, { timeout: 4000 }) : setTimeout(fn, 1500));
+  /* the covers' paint and warm go through the page's one admission for idle work (PM_BUSY.idle, 11-motion-start.js):
+     never inside a held drag (SW-17) */
+  const whenIdle = (fn) => {
+    const B = window.PM_BUSY;
+    if (B && typeof B.idle === 'function') return B.idle(fn, 4000);
+    return typeof requestIdleCallback === 'function' ? requestIdleCallback(fn, { timeout: 4000 }) : setTimeout(fn, 1500);
+  };
   let painting = false;
   const paintSoon = () => {
     if (painting) return;

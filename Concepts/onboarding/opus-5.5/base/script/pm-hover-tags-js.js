@@ -434,12 +434,16 @@
     censusWatch();
   }
   function censusRun(token,deadline){token.id=0;if(token.dead)return;if(censusDragging()){censusPark(token);return;}censusDeadline=deadline||null;try{token.fn();}finally{censusDeadline=null;}}
+  /* O55: in PMConcept7 a step asks the page's one admission for idle work (PM_BUSY.idle): it never lands in a held drag of
+     any kind, and one asked before the drag is taken back for it rather than running there to park itself (SW-17) */
   function censusSchedule(token){
     if(censusDragging()){censusPark(token);return;}
+    var B=window.PM_BUSY;
+    if(B&&typeof B.idle==='function'){token.h=B.idle(function(deadline){token.h=null;censusRun(token,deadline);},900);token.id=token.h?-1:0;return;}
     token.id=typeof requestIdleCallback==='function'?requestIdleCallback(function(deadline){censusRun(token,deadline);},{timeout:900}):requestAnimationFrame(function(){censusRun(token,null);});
   }
   function censusFrame(fn){var token={fn:fn,id:0,dead:false};censusSchedule(token);return token;}
-  function cancelCensusFrame(token){if(!token)return;token.dead=true;if(!token.id)return;if(typeof cancelIdleCallback==='function')cancelIdleCallback(token.id);else cancelAnimationFrame(token.id);token.id=0;}
+  function cancelCensusFrame(token){if(!token)return;token.dead=true;if(token.h){token.h.cancel();token.h=null;token.id=0;return;}if(!token.id)return;if(typeof cancelIdleCallback==='function')cancelIdleCallback(token.id);else cancelAnimationFrame(token.id);token.id=0;}
   function censusTime(started,ms){if(performance.now()-started>=ms)return false;return !censusDeadline||censusDeadline.didTimeout||censusDeadline.timeRemaining()>1;}
   HoverTagController.prototype.scheduleScan=function(scope){
     var self=this,next=scope&&scope.isConnected?scope:document;

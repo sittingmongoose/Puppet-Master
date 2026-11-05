@@ -161,6 +161,16 @@
               "type": "string"
             }
           },
+          "presentation_options": {
+            "type": "array",
+            "items": { "type": "string" },
+            "uniqueItems": true,
+            "description": "Family names offered by Theme; options retains the compatible composite storage values (DL-301)."
+          },
+          "presentation_contract": {
+            "type": "string",
+            "description": "Mapping and compatibility rules for the visible presentation choices (DL-301)."
+          },
           "option_labels": {
             "type": "object",
             "description": "Display words for stored option values (F3-441, DL-230); a value without an entry shows as stored.",

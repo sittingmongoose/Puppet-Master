@@ -4,7 +4,7 @@ Source: `Plans/orchestrator-subagent-integration.md`
 
 Source lines: L6580-L31225
 
-Source SHA256: `50897a3ae37c1829176411dbf7276fc7da1b8fc4b02ee4556631e7154378e0d7`
+Source SHA256: `a5ff69d2472c5d5935bc2f9da119c526ab5bbbf3d86eeff28e50426a28d98928`
 
 ---
 
@@ -24172,7 +24172,7 @@ compatibility_only_notes:
 - Draft fallback applies only before graph lock.
 stale_retired_dispositions: []
 owner_boundary_notes:
-- Chain wizard, interview, progression gate, executor, and decision policy owners retain graph-lock semantics.
+- Planning Wizard (legacy Chain Wizard compatibility), interview, progression gate, executor, and decision policy owners retain graph-lock semantics.
 owner_hints:
 - Plans/orchestrator-subagent-integration.md
 preserved_contractrefs:

@@ -553,6 +553,134 @@
       "hold_eligible": true,
       "expiry_action": "delete_sidecar",
       "policy_version": "1.0.0"
+    },
+    {
+      "policy_id": "RP-CHAT-THREAD-LIFETIME",
+      "retention_mode": "indefinite",
+      "anchor_kind": "explicit_delete",
+      "retain_indefinitely": true,
+      "ttl_seconds": null,
+      "source_policy_ref": null,
+      "max_cardinality": 250000,
+      "cardinality_scope": "thread",
+      "additional_cardinality_limits": [],
+      "max_bytes": null,
+      "overflow_action": "roll_successor",
+      "hold_eligible": true,
+      "expiry_action": "tombstone_then_compact",
+      "policy_version": "1.0.0"
+    },
+    {
+      "policy_id": "RP-TELEMETRY-90D",
+      "retention_mode": "fixed_ttl",
+      "anchor_kind": "creation",
+      "retain_indefinitely": false,
+      "ttl_seconds": 7776000,
+      "source_policy_ref": null,
+      "max_cardinality": 2000000,
+      "cardinality_scope": "project",
+      "additional_cardinality_limits": [],
+      "max_bytes": null,
+      "overflow_action": "fail_closed",
+      "hold_eligible": true,
+      "expiry_action": "compact",
+      "policy_version": "1.0.0"
+    },
+    {
+      "policy_id": "RP-DEBUG-APPLICATION-2555D",
+      "retention_mode": "fixed_ttl",
+      "anchor_kind": "terminal_transition",
+      "retain_indefinitely": false,
+      "ttl_seconds": 220752000,
+      "source_policy_ref": null,
+      "max_cardinality": 2000000,
+      "cardinality_scope": "instance",
+      "additional_cardinality_limits": [],
+      "max_bytes": null,
+      "overflow_action": "fail_closed",
+      "hold_eligible": true,
+      "expiry_action": "compact",
+      "policy_version": "1.0.0"
+    },
+    {
+      "policy_id": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D",
+      "retention_mode": "fixed_ttl",
+      "anchor_kind": "terminal_transition",
+      "retain_indefinitely": false,
+      "ttl_seconds": 220752000,
+      "source_policy_ref": null,
+      "max_cardinality": 2000000,
+      "cardinality_scope": "instance",
+      "additional_cardinality_limits": [],
+      "max_bytes": null,
+      "overflow_action": "fail_closed",
+      "hold_eligible": true,
+      "expiry_action": "compact",
+      "policy_version": "1.0.0"
+    },
+    {
+      "policy_id": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D",
+      "retention_mode": "fixed_ttl",
+      "anchor_kind": "terminal_transition",
+      "retain_indefinitely": false,
+      "ttl_seconds": 220752000,
+      "source_policy_ref": null,
+      "max_cardinality": 2000000,
+      "cardinality_scope": "instance",
+      "additional_cardinality_limits": [],
+      "max_bytes": null,
+      "overflow_action": "fail_closed",
+      "hold_eligible": true,
+      "expiry_action": "compact",
+      "policy_version": "1.0.0"
+    },
+    {
+      "policy_id": "RP-PLUGIN-HOOK-APPLICATION-90D",
+      "retention_mode": "fixed_ttl",
+      "anchor_kind": "creation",
+      "retain_indefinitely": false,
+      "ttl_seconds": 7776000,
+      "source_policy_ref": null,
+      "max_cardinality": 2000000,
+      "cardinality_scope": "instance",
+      "additional_cardinality_limits": [],
+      "max_bytes": null,
+      "overflow_action": "fail_closed",
+      "hold_eligible": true,
+      "expiry_action": "compact",
+      "policy_version": "1.0.0"
+    },
+    {
+      "policy_id": "RP-MODEL-CATALOG-APPLICATION-90D",
+      "retention_mode": "fixed_ttl",
+      "anchor_kind": "creation",
+      "retain_indefinitely": false,
+      "ttl_seconds": 7776000,
+      "source_policy_ref": null,
+      "max_cardinality": 2000000,
+      "cardinality_scope": "instance",
+      "additional_cardinality_limits": [],
+      "max_bytes": null,
+      "overflow_action": "fail_closed",
+      "hold_eligible": true,
+      "expiry_action": "compact",
+      "policy_version": "1.0.0"
+    },
+    {
+      "policy_id": "RP-PREVIEW-APPLICATION-90D",
+      "retention_mode": "fixed_ttl",
+      "anchor_kind": "creation",
+      "retain_indefinitely": false,
+      "ttl_seconds": 7776000,
+      "source_policy_ref": null,
+      "max_cardinality": 2000000,
+      "cardinality_scope": "instance",
+      "additional_cardinality_limits": [],
+      "max_bytes": null,
+      "overflow_action": "fail_closed",
+      "hold_eligible": true,
+      "expiry_action": "compact",
+      "policy_version": "1.0.0"
     }
   ],
   "redaction_transform_registry_ref": "Plans/redaction_transform_registry.json",
@@ -70936,7 +71064,7 @@
           "Plans/storage-plan.md#boot-earliest-receipt-continuity-and-activation"
         ]
       },
-      "retention_compaction": "Unsettled controls remain protected until actual original resolution. Settled/no-obligation terminal transition uses unchanged RP-OPERATIONAL-2555D@1.0.0 plus stronger refs/holds. Existing 2000000/project cardinality is not a new application-root bucket; the application aggregate policy-owner adapter remains unproved and fails closed. No policy value is changed.",
+      "retention_compaction": "Unsettled controls remain protected until actual original resolution. Settled/no-obligation terminal transition uses unchanged RP-OPERATIONAL-2555D@1.0.0 plus stronger refs/holds. Settled/no-obligation controls count in the application-wide bucket app:storage_operational together with the storage.boot_recovery, storage.recovery_applied and storage.compaction_lifecycle_changed records (DL-083; Plans/storage-plan.md, Application-wide count buckets under the operational policy): at most 2000000 records, fail-closed overflow, no invented project. No policy value is changed.",
       "retention_policy_ref": "RP-OPERATIONAL-2555D",
       "redaction_no_secret_rule": "Closed non-secret identity, hash, original receipt, typed result and source references only; no raw recovery/source bytes, credentials, machine path, log/error text or copied source body.",
       "legacy_canonical_crosswalk_status": "NEW first-native Boot custody under SP-291/SP-292. Existing event/payload readers and all previous families/policies remain unchanged. No reconstructive legacy backfill or fixture production migration edge.",
@@ -119940,7 +120068,7 @@
       "nullable_fields": [],
       "replay_behavior": "Exact original-result read only; no current source recapture, scope substitution or effect.",
       "migration": "Explicit new application family; Project resource/key/hash unchanged.",
-      "retention_compaction": "canonical; `RP-RUNTIME-365D` Independent owner/source/backup/legal/recovery/maintenance holds apply, including after chat Undo expiry.",
+      "retention_compaction": "canonical; `RP-CHAT-THREAD-LIFETIME` (DL-404, 2026-11-04: kept as long as the run's chat exists, with the chat's holds and deletion deadlines; replaces `RP-RUNTIME-365D`). Independent owner/source/backup/legal/recovery/maintenance holds apply, including after chat Undo expiry.",
       "redaction_no_secret_rule": "Protected credential/screen/private cross-thread data never exposed; SP-337 refs for values above 16 KiB.",
       "legacy_canonical_crosswalk_status": "CV-366/SP-349/351/352 exact app edition; native unavailable until complete adoption.",
       "value_schema": {
@@ -120020,7 +120148,7 @@
           "Plans/storage-plan.md#SP-351"
         ]
       },
-      "retention_policy_ref": "RP-RUNTIME-365D"
+      "retention_policy_ref": "RP-CHAT-THREAD-LIFETIME"
     },
     {
       "family_id": "collaboration_participant_application",
@@ -120051,7 +120179,7 @@
       "nullable_fields": [],
       "replay_behavior": "Exact original-result read only; no current source recapture, scope substitution or effect.",
       "migration": "Explicit new application family; Project resource/key/hash unchanged.",
-      "retention_compaction": "canonical; `RP-RUNTIME-365D` Independent owner/source/backup/legal/recovery/maintenance holds apply, including after chat Undo expiry.",
+      "retention_compaction": "canonical; `RP-CHAT-THREAD-LIFETIME` (DL-404, 2026-11-04: kept as long as the run's chat exists, with the chat's holds and deletion deadlines; replaces `RP-RUNTIME-365D`). Independent owner/source/backup/legal/recovery/maintenance holds apply, including after chat Undo expiry.",
       "redaction_no_secret_rule": "Protected credential/screen/private cross-thread data never exposed; SP-337 refs for values above 16 KiB.",
       "legacy_canonical_crosswalk_status": "CV-366/SP-349/351/352 exact app edition; native unavailable until complete adoption.",
       "value_schema": {
@@ -120131,7 +120259,7 @@
           "Plans/storage-plan.md#SP-351"
         ]
       },
-      "retention_policy_ref": "RP-RUNTIME-365D"
+      "retention_policy_ref": "RP-CHAT-THREAD-LIFETIME"
     },
     {
       "family_id": "collaboration_transcript_application",
@@ -120162,7 +120290,7 @@
       "nullable_fields": [],
       "replay_behavior": "Exact original-result read only; no current source recapture, scope substitution or effect.",
       "migration": "Explicit new application family; Project resource/key/hash unchanged.",
-      "retention_compaction": "canonical; `RP-RUNTIME-365D` Independent owner/source/backup/legal/recovery/maintenance holds apply, including after chat Undo expiry.",
+      "retention_compaction": "canonical; `RP-CHAT-THREAD-LIFETIME` (DL-404, 2026-11-04: kept as long as the run's chat exists, with the chat's holds and deletion deadlines; replaces `RP-RUNTIME-365D`). Independent owner/source/backup/legal/recovery/maintenance holds apply, including after chat Undo expiry.",
       "redaction_no_secret_rule": "Protected credential/screen/private cross-thread data never exposed; SP-337 refs for values above 16 KiB.",
       "legacy_canonical_crosswalk_status": "CV-366/SP-349/351/352 exact app edition; native unavailable until complete adoption.",
       "value_schema": {
@@ -120242,7 +120370,7 @@
           "Plans/storage-plan.md#SP-351"
         ]
       },
-      "retention_policy_ref": "RP-RUNTIME-365D"
+      "retention_policy_ref": "RP-CHAT-THREAD-LIFETIME"
     },
     {
       "family_id": "crew_auto_application",

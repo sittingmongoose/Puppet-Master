@@ -7,7 +7,7 @@ This brief is the source seed for Codex so it does not rediscover the design fro
 Build a linked bootstrap/native system:
 
 ```text
-conversation / Chain Wizard design discussion
+conversation / Planning Wizard design discussion
   -> structured bootstrap planning ledger
   -> standardized canonical Plans docs
   -> PlanUnit index
@@ -22,13 +22,13 @@ The current package must not create WorkNodes. WorkNodes are future executable b
 
 Bootstrap now:
 - file-backed JSONL/JSON under `Plans/ledgers/v2/`;
-- used by Jared and Codex before native Chain Wizard exists;
+- used by Jared and Codex before the native Planning Wizard exists;
 - Codex can use normal chat for ledger-building conversations;
 - Codex Goal Mode is used for artifact transformations: ledger-to-Plans, Plan conversion, indexing, audits, and governance seal.
 
 Native later:
 - a Puppet Master service/API-backed ledger and Goal state system;
-- Chain Wizard uses it invisibly for planning/transfer/audit;
+- the Planning Wizard uses it invisibly for planning/transfer/audit;
 - Assistant chat can expose Goal Mode visibly for arbitrary long-running tasks;
 - native storage may be DB-backed but must import/export the bootstrap record concepts.
 
