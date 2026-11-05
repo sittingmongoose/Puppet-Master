@@ -587,7 +587,157 @@
           "maximum": 10
         }
       },
-      "expected": "a negated compound shortcut flips unrelated targets and fails the proof"
+      "expected": "compound negated clauses remain unproved before unsafe cuts"
+    },
+    {
+      "id": "review-DG6B-C8B2",
+      "kind": "review_overlap",
+      "expected": "DG6B C8-B2: independent clauses pass; different-field overlap union fails"
+    },
+    {
+      "id": "review-DG-C3F1",
+      "kind": "review_non_type",
+      "expected": "DG C3-F1: consumed minimum and maxLength remain unproved without witnesses"
+    },
+    {
+      "id": "review-DG-C3F3",
+      "kind": "review_required",
+      "expected": "DG C3-F3: each required member flips only its own negative"
+    },
+    {
+      "id": "review-DCH-C8B1",
+      "kind": "review_pointer",
+      "expected": "DCH C8-B1: pointer-size cut stays masked by exact-reference predicate"
+    },
+    {
+      "id": "review-DM-C8CB1",
+      "kind": "review_foreign_pair",
+      "expected": "DM C8C-B1: family cut retains independent schema-id refusal"
+    },
+    {
+      "id": "review-DFM-group",
+      "kind": "review_duplicate_peer",
+      "expected": "DFM Astra-2: genuine duplicate minimum proves with maximum peer retained"
+    },
+    {
+      "id": "review-stale-copy",
+      "kind": "review_stale",
+      "expected": "DG6B C8-B1: value-domain cut retains exact masking code copy"
+    },
+    {
+      "id": "F1-negated-raise",
+      "kind": "review_negated_raise",
+      "expected": "two negated raise atoms cut independently, retaining their peer"
+    },
+    {
+      "id": "F1-negated-return",
+      "kind": "review_negated_return",
+      "expected": "two negated return atoms cut independently, retaining their peer"
+    },
+    {
+      "id": "F1-single-negative",
+      "kind": "review_single_negative",
+      "expected": "held-out y remains rejected under x cut; missing y inventory prevents PASS"
+    },
+    {
+      "id": "F1-nested-not",
+      "kind": "review_nested_not",
+      "expected": "nested odd/even negations preserve two independent atoms"
+    },
+    {
+      "id": "F2-class-require",
+      "kind": "review_class_require",
+      "expected": "class require rejection stays visible, unsupported and unproved"
+    },
+    {
+      "id": "F2-class-append",
+      "kind": "review_class_append",
+      "expected": "self-contained class append rejection stays visible, unsupported and unproved"
+    },
+    {
+      "id": "F2-module-require",
+      "kind": "review_module_require",
+      "expected": "module predicate call stays visible and unproved"
+    },
+    {
+      "id": "F2-nested-append",
+      "kind": "review_nested_append",
+      "expected": "nested function append stays visible and unproved"
+    },
+    {
+      "id": "F3-consumed-fragment",
+      "kind": "review_consumed_entry",
+      "expected": "primary root consumed; undeclared fragment minimum becomes unproved, never unreachable"
+    },
+    {
+      "id": "F3-mutant-fragment",
+      "kind": "review_mutant_entry",
+      "expected": "mutant-only consumption of undeclared fragment prevents PASS"
+    },
+    {
+      "id": "F3-entry-alias",
+      "kind": "review_entry_alias",
+      "expected": "approved URI alias consumes its declared root"
+    },
+    {
+      "id": "F3-declared-fragment",
+      "kind": "review_declared_fragment",
+      "expected": "declared pointer root and equivalent anchor yield complete independent proof"
+    },
+    {
+      "id": "F4-negated-conjunction",
+      "kind": "review_negated_schema",
+      "expected": "compound negative schema context is unproved before any misleading atomic cut"
+    },
+    {
+      "id": "F5-dynamic-target",
+      "kind": "review_dynamic",
+      "expected": "dynamic target assertions validate and remain context-bound unproved, never unreachable"
+    },
+    {
+      "id": "F5-draft7-sibling",
+      "kind": "review_draft7_sibling",
+      "expected": "draft-07 ignores ref sibling with explicit dialect evidence; no witness obligation"
+    },
+    {
+      "id": "review-type-const",
+      "kind": "review_type_const",
+      "expected": "type cut preserves correctly typed const membership"
+    },
+    {
+      "id": "review-conditional-four-peers",
+      "kind": "review_conditional_four",
+      "expected": "all four then/else bound cuts retain their peers and null control"
+    },
+    {
+      "id": "review-W3B-implied-maxItems",
+      "kind": "review_implied_max",
+      "expected": "unwitnessed implied maximum fails; explicit pigeonhole evidence gives PARTIAL"
+    },
+    {
+      "id": "review-test-assertion",
+      "kind": "review_assert_crash",
+      "expected": "test AssertionError is a checker error, never an accepted refusal"
+    },
+    {
+      "id": "review-success-exit-zero",
+      "kind": "review_success_zero",
+      "expected": "integer exit zero is a checker error, never acceptance"
+    },
+    {
+      "id": "review-memory-timeout-reset",
+      "kind": "review_memory_reset",
+      "expected": "low-memory timeout resets at threshold without early resume"
+    },
+    {
+      "id": "F5-recursive-context",
+      "kind": "review_recursive",
+      "expected": "recursive target assertions remain context-bound unproved"
+    },
+    {
+      "id": "F4-negated-allof",
+      "kind": "review_negated_allof",
+      "expected": "allOf inside negation has no unsupported broad atomic cut"
     }
   ]
 }

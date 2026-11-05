@@ -38,6 +38,8 @@ def example_suite():
 def probe(g, trap, memory):
     kind = trap["kind"]
     uri = "https://pm.invalid/traps/" + trap["id"] + ".json"
+    if kind.startswith("review_"):
+        return review_probe(g, trap, memory, uri)
     if kind == "native_schema_alias":
         shared = {"minimum": 0}
         synthetic = {**trap, "kind": "shared_fields", "schema": {"properties": {"a": shared, "b": shared}}}
@@ -68,7 +70,7 @@ def probe(g, trap, memory):
         return {"sleeps": sleeps}, kind == "memory_resume" and sleeps == [120, 120]
     if "schema" in trap:
         try:
-            catalog = g.SchemaCatalog({uri: trap["schema"]})
+            catalog = g.SchemaCatalog({uri: trap["schema"]}, roots=(uri + "#/definitions/tuple",) if kind == "dialect" else None)
         except g.IsolationError as exc:
             return {"error": str(exc)}, kind == "dangling" and "unresolved" in str(exc)
         def gid(keyword, path=(), member=None):
@@ -190,9 +192,9 @@ def probe(g, trap, memory):
             return report, report["status"] == "PASS" and report["duplicates"][0]["proved"]
         if kind == "negated_compound":
             lo, hi = gid("minimum", ("not",)), gid("maximum", ("not",))
-            s = suite(11, [("minimum-labelled", 0, lo), ("maximum-labelled", 10, hi)])
+            s = suite(11, [])
             report = g.run(s, memory=memory)
-            return report, report["status"] == "FAIL" and any(r["unrelated_changes"] for r in report["rows"])
+            return report, report["status"] == "FAIL" and all(target in report["unproved_guards"] for target in (lo, hi)) and not report["rows"]
         if kind == "dialect":
             v = catalog.mutated(frozenset()).validator(uri + "#/definitions/tuple")
             return {"validator": type(v).__name__}, v.is_valid([1]) and not v.is_valid(["wrong"])
@@ -348,3 +350,231 @@ def check(v):
     if kind == "changed_code":
         return report, any(m["actual"] == {"accepted": False, "code": "bad_y"} for m in report["masked_negatives"])
     return report, report["status"] == "PASS" and all(r["proved"] for r in report["rows"])
+
+
+def review_probe(g, trap, memory, uri):
+    """Round-1 reviewer counterexamples, with assertions on specific report rows."""
+    kind = trap['kind']
+    def failure(report, name):
+        return any(f['kind'] == name for f in report['failures'])
+    def schema_case(schema, control, cases, roots=None):
+        cat = g.SchemaCatalog({uri: schema}, roots=roots)
+        def select(keyword, path=(), member=None):
+            return next(x.id for x in cat.guards.values() if x.keyword == keyword and x.path == path and x.member == member)
+        def runner(v, state):
+            return g.Outcome.accept() if state.schema.validator(uri).is_valid(v) else g.Outcome.refuse('schema')
+        suite = g.Suite(trap['id'], runner, [g.Control('c', control, 'synthetic')],
+            [g.Negative(n, v, select(k, p, m), 'schema', 'c', n) for n,v,k,p,m in cases], cat)
+        return cat, suite, select
+    def row(report, target):
+        return next(r for r in report['rows'] if r['id'] == target)
+    if kind=='review_memory_reset':
+        now=[0]; samples=[]; sequence=iter([5,6,5,6,7])
+        def available():
+            value=next(sequence); samples.append(value); return value
+        def sleep(seconds): now[0]+=seconds
+        gate=g.MemoryGate(max_rss=0,pause_when_low=6,resume_at=7,poll=120,low_timeout=240,
+            available=available,sleep=sleep,clock=lambda:now[0])
+        gate.check()
+        return dict(samples=samples,elapsed=now[0]), samples==[5,6,5,6,7] and now[0]==480
+    if kind in ('review_type_const','review_conditional_four'):
+        if kind=='review_type_const':
+            cat,s,select=schema_case({'type':'string','const':'red'},'red',[
+                ('type',17,'type',(),None),('const','blue','const',(),None)])
+        else:
+            cat,s,select=schema_case({'if':{'type':'string'},'then':{'minLength':1,'maxLength':3},'else':{'minimum':0,'maximum':2}},'a',[
+                ('short','','minLength',('then',),None),('long','abcd','maxLength',('then',),None),
+                ('low',-1,'minimum',('else',),None),('high',3,'maximum',('else',),None)])
+            s.controls.append(g.Control('null',None,'synthetic'))
+        report=g.run(s,memory=memory)
+        return report, report['status']=='PASS' and all(r['proved'] and len(r['flips'])==1 for r in report['rows'])
+    if kind=='review_implied_max':
+        import itertools
+        cat,s,select=schema_case({'type':'array','items':{'enum':['a','b']},'uniqueItems':True,'maxItems':2},['a'],[
+            ('array','a','type',(),None),('enum',['c'],'enum',('items',),None),('unique',['a','a'],'uniqueItems',(),None)])
+        maximum=select('maxItems'); raw=g.run(s,memory=memory)
+        stock=cat.mutated(frozenset()).validator(uri); cut=cat.mutated(frozenset([maximum])).validator(uri)
+        values=[list(v) for length in range(5) for v in itertools.product(['a','b','c'],repeat=length)]
+        equivalent=all(stock.is_valid(v)==cut.is_valid(v) for v in values)
+        s.classifications=[g.Classification(maximum,'redundant','exactly two item enum values and uniqueness imply length <= 2 by the pigeonhole principle')]
+        evidenced=g.run(s,memory=memory)
+        return dict(raw=raw,with_evidence=evidenced,bounded_equivalence=equivalent,count=len(values)), (
+            raw['status']=='FAIL' and maximum in raw['unproved_guards'] and evidenced['status']=='PARTIAL' and equivalent and len(values)==121)
+    if kind in ('review_assert_crash','review_success_zero'):
+        cat,s,select=schema_case({'minimum':0},0,[('low',-1,'minimum',(),None)])
+        original=s.runner
+        def runner(v,state):
+            if v==0:return original(v,state)
+            if kind=='review_assert_crash':raise AssertionError('test failure')
+            return 0
+        s.runner=runner; report=g.run(s,memory=memory)
+        return report, report['status']=='FAIL' and any(f['kind']=='wrong_baseline_refusal' and 'error' in f['actual'] for f in report['failures'])
+    if kind=='review_recursive':
+        cat,s,select=schema_case({'type':'object','properties':{'next':{'$ref':'#'}}},{'next':{}},[])
+        report=g.run(s,memory=memory)
+        assertions=[x for x in cat.guards.values() if x.keyword=='type']
+        return report, report['status']=='FAIL' and bool(assertions) and all(x.classification=='unclassified' and x.id in report['unproved_guards'] for x in assertions)
+    if kind=='review_negated_allof':
+        cat,s,select=schema_case({'not':{'allOf':[{'minimum':0},{'maximum':10}]}},11,[])
+        report=g.run(s,memory=memory)
+        assertions=[x for x in cat.guards.values() if x.keyword in ('minimum','maximum')]
+        return report, report['status']=='FAIL' and len(assertions)==2 and all(x.classification=='unclassified' and x.id in report['unproved_guards'] for x in assertions) and not report['rows']
+    if kind in ('review_negated_raise', 'review_negated_return', 'review_single_negative', 'review_nested_not'):
+        source = ("def check(v):\n    if not (v['x'] >= 0 and v['y'] >= 0):\n        raise Refusal('bad')\n    return True\n"
+                  if kind == 'review_negated_raise' else
+                  "def check(v):\n    return not (not (v['x'] >= 0) or not not (v['y'] < 0))\n"
+                  if kind == 'review_nested_not' else
+                  "def check(v):\n    return not (v['x'] < 0 or v['y'] < 0)\n")
+        class Refusal(Exception): pass
+        ns = {'Refusal': Refusal}; exec(source, ns)
+        backend = g.AstGuards('review', source, ns); ids = {}; dispositions = {}
+        for c in backend.candidates():
+            if c['expression'] == 'True':
+                dispositions[c['id']] = g.Classification(c['id'], 'selector', 'accepting terminal return')
+            else:
+                field = 'x' if "['x']" in c['expression'] else 'y'
+                if kind == 'review_single_negative' and field == 'y':
+                    continue
+                ids[field] = backend.register(c, 'bad', g.Invariant('/'+field, 'nonnegative'))
+        def run(v, state):
+            try:
+                return g.Outcome.accept() if state.modules['review'].check(v) is True else g.Outcome.refuse('bad')
+            except Refusal as exc: return g.Outcome.refuse(str(exc))
+        s = g.Suite(trap['id'], run, [g.Control('c', dict(x=0,y=0), 'synthetic')],
+            [g.Negative(field, dict(x=-1 if field=='x' else 0, y=-1 if field=='y' else 0), target, 'bad', 'c', field)
+             for field,target in ids.items()], modules=[backend], code_dispositions=dispositions)
+        report = g.run(s, memory=memory)
+        held = g.asdict(run(dict(x=0,y=-1), s.state(frozenset([ids['x']]))))
+        if kind == 'review_single_negative':
+            caught = report['status']=='FAIL' and failure(report,'uninventoried_code_site') and held==g.asdict(g.Outcome.refuse('bad'))
+        else:
+            caught = report['status']=='PASS' and len(ids)==2 and all(row(report,target)['flips']==[field] and row(report,target)['proved'] for field,target in ids.items())
+        return dict(report=report, candidates=backend.candidates(), held_out_y_under_x_cut=held), caught
+    if kind in ('review_class_require', 'review_class_append', 'review_module_require', 'review_nested_append'):
+        source = ("class Checker:\n    def check(self, v):\n        require(v['x'] >= 0, 'bad')\n" if kind=='review_class_require' else
+                  "class Checker:\n    def check(self, v, errors):\n        if v['x'] < 0:\n            errors.append('bad')\n" if kind=='review_class_append' else
+                  "require(value['x'] >= 0, 'bad')\n" if kind=='review_module_require' else
+                  "def outer(v, errors):\n    def inner():\n        if v['x'] < 0:\n            errors.append('bad')\n    inner()\n")
+        class Refusal(Exception): pass
+        def require(ok, code):
+            if not ok: raise Refusal(code)
+        ns = {'require': require, 'value': {'x': 0}}; exec(source, ns)
+        backend = g.AstGuards('hidden', source, ns)
+        def runner(v, state):
+            try:
+                errors = []
+                if kind=='review_class_require': state.modules['hidden'].Checker().check(v)
+                elif kind=='review_class_append': state.modules['hidden'].Checker().check(v, errors)
+                elif kind=='review_nested_append': state.modules['hidden'].outer(v, errors)
+                else: exec(source, {'require': require, 'value': v})
+                return g.Outcome.refuse(errors[0]) if errors else g.Outcome.accept()
+            except Refusal as exc: return g.Outcome.refuse(str(exc))
+        s = g.Suite(trap['id'], runner, [g.Control('c',dict(x=0),'synthetic')], [], modules=[backend])
+        report = g.run(s, memory=memory); independent = g.asdict(runner(dict(x=-1),s.state()))
+        return dict(report=report, candidates=backend.candidates(), independently_invalid=independent), (
+            report['status']=='FAIL' and bool(report['unproved_guards']) and failure(report,'uninventoried_code_site') and
+            all(c.get('reason') for c in backend.candidates() if c['action']=='unsupported') and independent==g.asdict(g.Outcome.refuse('bad')))
+    if kind in ('review_consumed_entry', 'review_mutant_entry', 'review_entry_alias', 'review_declared_fragment'):
+        schema = {'$id': uri, 'type':'object', '$defs':{'used_directly':{'$anchor':'used','minimum':0}}}
+        fragment = uri+'#/$defs/used_directly'
+        roots = (uri, fragment) if kind=='review_declared_fragment' else (uri,)
+        cat = g.SchemaCatalog({uri:schema}, roots=roots)
+        target = next(x.id for x in cat.guards.values() if x.keyword=='type')
+        def runner(v, state):
+            first = state.schema.validator(uri+'#' if kind=='review_entry_alias' else uri).is_valid(v['root'])
+            second = True
+            if kind!='review_entry_alias' and (kind!='review_mutant_entry' or state.cuts):
+                second = state.schema.validator(uri+'#used').is_valid(v['hidden'])
+            return g.Outcome.accept() if first and second else g.Outcome.refuse('schema')
+        s = g.Suite(trap['id'], runner, [g.Control('c',dict(root={},hidden=0),'synthetic')],
+            [g.Negative('root',dict(root=[],hidden=0),target,'schema','c','root type')],cat)
+        if kind=='review_declared_fragment':
+            minimum = next(x.id for x in cat.guards.values() if x.keyword=='minimum' and x.entry_uri==fragment)
+            s.negatives.append(g.Negative('hidden',dict(root={},hidden=-1),minimum,'schema','c','hidden minimum'))
+        report = g.run(s,memory=memory)
+        if kind in ('review_entry_alias','review_declared_fragment'):
+            caught = report['status']=='PASS'
+        else:
+            hidden = [x for x in report['inventory'] if x.get('keyword')=='minimum']
+            caught = report['status']=='FAIL' and failure(report,'consumed_entry_not_declared') and bool(hidden) and all(
+                x['classification']=='unclassified' and x['id'] in report['unproved_guards'] for x in hidden)
+            if kind=='review_mutant_entry': caught = caught and all(f['cuts'] for f in report['failures'] if f['kind']=='consumed_entry_not_declared')
+        return report, caught
+    if kind=='review_dynamic':
+        cat = g.SchemaCatalog({uri:{'$defs':{'n':{'$dynamicAnchor':'n','type':'integer','minimum':0}},'$dynamicRef':'#n'}})
+        def runner(v,state): return g.Outcome.accept() if state.schema.validator(uri).is_valid(v) else g.Outcome.refuse('schema')
+        s = g.Suite(trap['id'],runner,[g.Control('c',0,'synthetic')],[],cat)
+        report = g.run(s,memory=memory)
+        v = cat.mutated(frozenset()).validator(uri)
+        assertions = [x for x in cat.guards.values() if x.keyword in ('type','minimum')]
+        return dict(report=report, invalid=v.is_valid(-1), valid=v.is_valid(0)), (report['status']=='FAIL' and not v.is_valid(-1) and v.is_valid(0) and
+            len(assertions)==2 and all(x.classification=='unclassified' and x.id in report['unproved_guards'] and x.dialect=='Draft202012Validator' for x in assertions))
+    if kind=='review_draft7_sibling':
+        cat,s,select = schema_case({'$schema':'http://json-schema.org/draft-07/schema#','definitions':{'n':{'minimum':0}},'$ref':'#/definitions/n','maximum':2},0,
+            [('low',-1,'minimum',('definitions','n'),None)])
+        report = g.run(s,memory=memory); ignored = cat.guards[select('maximum')]
+        return dict(report=report, accepted_three=cat.mutated(frozenset()).validator(uri).is_valid(3)), (report['status']=='PASS' and
+            ignored.classification=='unreachable' and 'siblings are ignored' in ignored.evidence and ignored.dialect=='Draft7Validator' and
+            ignored.id not in report['unproved_guards'] and cat.mutated(frozenset()).validator(uri).is_valid(3))
+    if kind=='review_negated_schema':
+        cat,s,select = schema_case({'not':{'minimum':0,'maximum':10}},11,[])
+        report = g.run(s,memory=memory)
+        blocked = []
+        for x in cat.guards.values():
+            if x.keyword in ('minimum','maximum'):
+                try: cat.mutated(frozenset([x.id]))
+                except g.IsolationError: blocked.append(x.id)
+        return report, report['status']=='FAIL' and len(blocked)==2 and all(x in report['unproved_guards'] for x in blocked) and not report['rows']
+    if kind=='review_non_type':
+        cat,s,select = schema_case({'properties':{'user_stop_epoch':{'minimum':0},'body_receipt_ref':{'maxLength':256}}},
+            dict(user_stop_epoch=0,body_receipt_ref='ok'),[])
+        report = g.run(s,memory=memory)
+        return report, report['status']=='FAIL' and all(select(k,p) in report['unproved_guards'] for k,p in (
+            ('minimum',('properties','user_stop_epoch')),('maxLength',('properties','body_receipt_ref'))))
+    if kind=='review_required':
+        cat,s,select = schema_case({'required':['x','y']},dict(x=1,y=1),[
+            ('x',dict(y=1),'required',(),'x'),('y',dict(x=1),'required',(),'y')])
+        report = g.run(s,memory=memory)
+        return report, report['status']=='PASS' and all(row(report,select('required',member=f))['flips']==[f] for f in ('x','y'))
+    if kind=='review_foreign_pair':
+        cat,s,select = schema_case({'properties':{'event_type':{'const':'own'},'payload_schema_id':{'const':'own.schema'}}},
+            dict(event_type='own',payload_schema_id='own.schema'),[
+                ('foreign-pair',dict(event_type='other',payload_schema_id='other.schema'),'const',('properties','event_type'),None)])
+        report = g.run(s,memory=memory)
+        return report, report['status']=='FAIL' and any(x['negative']=='foreign-pair' and x['actual']==g.asdict(g.Outcome.refuse('schema')) for x in report['masked_negatives'])
+    if kind=='review_duplicate_peer':
+        cat,s,select = schema_case({'allOf':[{'minimum':0},{'minimum':0}],'maximum':10},1,[('upper',11,'maximum',(),None)])
+        sites = tuple(x.id for x in cat.guards.values() if x.keyword=='minimum')
+        s.duplicates = [g.Duplicate('same-minimum',sites,cat.guards[sites[0]].invariant,'same root field and minimum enforced at two sites')]
+        s.negatives.append(g.Negative('lower',-1,'same-minimum','schema','c','lower bound'))
+        report = g.run(s,memory=memory)
+        return report, report['status']=='PASS' and report['duplicates'][0]['proved'] and row(report,'same-minimum')['flips']==['lower'] and row(report,select('maximum'))['flips']==['upper']
+    if kind in ('review_overlap','review_pointer','review_stale'):
+        class Refusal(Exception): pass
+        source = ("def check(v):\n    if v['x'] < 0 or v['y'] < 0:\n        raise Refusal('bad')\n    return True\n" if kind=='review_overlap' else
+                  "def check(v):\n    if len(v['x']) > 8:\n        raise Refusal('bad')\n    if v['x'] != 'ref:ok':\n        raise Refusal('bad')\n    return True\n" if kind=='review_pointer' else
+                  "def check(v):\n    if v['x'] < 0:\n        raise Refusal('bad')\n    if v['x'] != v['y']:\n        raise Refusal('copy')\n    return True\n")
+        ns = {'Refusal':Refusal}; exec(source,ns); backend = g.AstGuards('review',source,ns); ids=[]; dispositions={}
+        for c in backend.candidates():
+            if c['action']=='raise':
+                field = '/y' if "['y']" in c['expression'] and kind=='review_overlap' else '/x'
+                predicate = 'nonnegative' if kind=='review_overlap' else c['expression']
+                ids.append(backend.register(c,'copy' if kind=='review_stale' and '!=' in c['expression'] else 'bad',g.Invariant(field,predicate)))
+            else: dispositions[c['id']]=g.Classification(c['id'],'selector','accepting terminal')
+        def runner(v,state):
+            try: state.modules['review'].check(v); return g.Outcome.accept()
+            except Refusal as exc: return g.Outcome.refuse(str(exc))
+        control = dict(x='ref:ok' if kind=='review_pointer' else 0,y=0)
+        bad = dict(x='ref:ok'+'x'*9 if kind=='review_pointer' else -1,y=0)
+        s = g.Suite(trap['id'],runner,[g.Control('c',control,'synthetic')],[g.Negative('x',bad,ids[0],'bad','c','target defect')],
+            modules=[backend],code_dispositions=dispositions)
+        if kind=='review_overlap':
+            s.negatives.append(g.Negative('y',dict(x=0,y=-1),ids[1],'bad','c','y defect'))
+            independent = g.run(s,memory=memory)
+            s.duplicates=[g.Duplicate('invalid-overlap',tuple(ids),backend.sites[ids[0]].guard.invariant,'shared site/code does not prove a duplicate')]
+            report = g.run(s,memory=memory)
+            return dict(independent=independent,invalid_union=report), independent['status']=='PASS' and report['status']=='FAIL' and any('merges distinct' in f.get('error','') for f in report['failures'])
+        report = g.run(s,memory=memory)
+        masking_code = 'copy' if kind=='review_stale' else 'bad'
+        return report, report['status']=='FAIL' and any(x['negative']=='x' and x['actual']==g.asdict(g.Outcome.refuse(masking_code)) for x in report['masked_negatives'])
+    raise AssertionError('unimplemented review trap: '+kind)
