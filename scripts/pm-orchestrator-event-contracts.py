@@ -8,22 +8,11 @@ import json
 import re
 import rfc8785
 from pathlib import Path
-from datetime import datetime
-from jsonschema import Draft202012Validator, FormatChecker
+from jsonschema import Draft202012Validator
 import pm_orchestrator_event_oracles as oracles
 
 ROOT = Path(__file__).resolve().parents[1]
-UTC_FORMAT = FormatChecker()
-@UTC_FORMAT.checks('date-time', raises=(ValueError, TypeError))
-def utc(value):
-    if not isinstance(value, str) or not value.endswith('Z'):
-        return False
-    datetime.fromisoformat(value.replace('Z', '+00:00'))
-    return True
-
-@UTC_FORMAT.checks('pm-utf8-body-16k', raises=(ValueError, TypeError, UnicodeError))
-def inline_body(value):
-    return isinstance(value, str) and len(value.encode('utf-8')) <= 16384
+UTC_FORMAT = oracles.UTC_FORMAT
 
 
 def observation_component(family, payload):
@@ -85,7 +74,7 @@ BOARD = ('crew.board_message_posted', 'crew.board_message_read', 'crew.board_mes
 def board_join_errors(case):
     """Exact source/append/run joins, using supplied canonical-source fixtures only."""
     payload, source, envelope = case['payload'], case['source'], case['envelope']
-    if oracles.number_domain_errors(payload) or oracles.number_domain_errors(envelope):
+    if oracles.record_number_errors(payload) or oracles.record_number_errors(envelope):
         return ['number_domain']
     errors = []
     errors += oracles.board_source_errors(case, ROOT, UTC_FORMAT)

@@ -10,11 +10,12 @@ import json
 import re
 from functools import lru_cache
 from pathlib import Path
+from datetime import datetime
 
 import blake3
 import msgpack
 import rfc8785
-from jsonschema import Draft202012Validator, ValidationError, validators
+from jsonschema import Draft202012Validator, FormatChecker, ValidationError, validators
 from referencing import Registry, Resource
 from referencing.jsonschema import DRAFT202012
 from referencing.exceptions import Unresolvable
@@ -33,6 +34,7 @@ SEMANTIC_FIELDS = (
 LIMIT = 16384
 LEGACY_RECIPE = 'ea-do-json-v1'
 CURRENT_RECIPE = 'ea-do-rfc8785-v2'
+CURRENT_NUMBER_RULE = 'current_input'
 BODY_FIELDS = {
     'subagent.completed': 'result_summary', 'subagent.failed': 'error_message',
     'subagent.message_received': 'response_preview', 'subagent.message_sent': 'message_preview',
@@ -49,6 +51,23 @@ PROJECT_SOURCE_FIELDS = frozenset((
     'operation_id', 'project_id', 'edition', 'interface', 'message_schema', 'message_ids',
     'original_input',
 ))
+UTC_FORMAT = FormatChecker()
+
+
+@UTC_FORMAT.checks('date-time', raises=(ValueError, TypeError))
+def utc(value):
+    # RFC3339 UTC, preserving arbitrary decimal precision and original bytes.
+    if type(value) is not str or re.fullmatch(
+            r'[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])T'
+            r'(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](?:\.[0-9]+)?Z', value) is None:
+        return False
+    datetime.fromisoformat(value[:-1] + '+00:00')
+    return True
+
+
+@UTC_FORMAT.checks('pm-utf8-body-16k', raises=(ValueError, TypeError, UnicodeError))
+def inline_body(value):
+    return type(value) is str and len(value.encode('utf-8')) <= LIMIT
 
 
 def exact_pattern(validator, pattern, instance, schema):
@@ -84,10 +103,38 @@ def number_domain_errors(value):
     return []
 
 
+def number_rule_for_record(case=None, *, retained=False):
+    """Select the write-time rule; a caller's recipe label alone grants nothing.
+
+    Current inputs always use the strict domain. Both supported original
+    editions keep their originally valid number types. The verified adapter
+    binds the edition to this exact original receipt, never to live state.
+    """
+    if not retained:
+        return CURRENT_NUMBER_RULE, []
+    state = case['historical_reader_state']
+    recipe = state['original_identity_recipe']
+    proof = state['original_recipe_evidence']
+    expected = recipe_witness_value(case, recipe)
+    errors = []
+    if (recipe not in (LEGACY_RECIPE, CURRENT_RECIPE) or proof['verified'] is not True
+            or proof['value'] != expected
+            or proof['source_ref'] != 'writer-recipe:' + case['event']['event_id']
+            or proof['source_sha256'] != hashlib.sha256(packed(expected)).hexdigest()):
+        errors.append('historical_original_recipe')
+    return recipe, errors
+
+
+def record_number_errors(value, case=None, *, retained=False):
+    rule, errors = number_rule_for_record(case, retained=retained)
+    return errors or (list(dict.fromkeys(number_domain_errors(value)))
+                      if rule == CURRENT_NUMBER_RULE else [])
+
+
 def number_token_errors(token):
     try:
         value = json.loads(token)
-        if number_domain_errors(value) or rfc8785.dumps(value).decode('utf-8') != token:
+        if record_number_errors(value) or rfc8785.dumps(value).decode('utf-8') != token:
             return ['number_token_canonical']
     except (ValueError, OverflowError):
         return ['number_token_canonical']
@@ -392,9 +439,10 @@ def selected_validators(root, format_checker):
 
 def event_errors(case, schema, identity, retry_allowed, root, formats, *, historical=False):
     event, payload = case['event'], case['logical_payload']
-    if not historical and (number_domain_errors(event) or number_domain_errors(payload)
-                           or number_domain_errors(case['producer_context'])):
-        return ['number_domain']
+    numeric_errors = record_number_errors([event, payload, case['producer_context']],
+                                          case, retained=historical)
+    if numeric_errors:
+        return numeric_errors
     refs = reference_errors(schema, '#/$defs/' + case['definition'], selected_documents(root))
     if refs:
         return ['unresolved_schema_reference']
@@ -445,14 +493,15 @@ def board_source_errors(case, root, formats):
     if payload['scope'] != 'application':
         # Project source is the unchanged original codec behind an explicit
         # synthetic adapter; the canonical board message itself is joined below.
+        shape_errors = project_original_input_errors(case, formats)
+        if shape_errors:
+            return shape_errors
         for k in ('scope', 'storage_instance_id', 'server_id', 'thread_id', 'crew_id', 'run_id', 'operation_id', 'project_id'):
             if source.get(k) != payload.get(k):
                 errors.append('source_' + k)
         if source.get('edition') != 'original_project_coordination_source' or source.get('interface') != 'storage.coordination_append.v1@1.0.0':
             errors.append('source_edition')
         message = source.get('original_input', {})
-        if set(source) != PROJECT_SOURCE_FIELDS or set(message) != PROJECT_MESSAGE_FIELDS:
-            return errors + ['project_original_input_shape']
         if source.get('message_ids') != payload.get('message_ids', [payload.get('message_id')]):
             errors.append('message_source')
     else:
@@ -541,6 +590,53 @@ def board_source_errors(case, root, formats):
     return errors
 
 
+def project_original_input_errors(case, formats):
+    """Validate the unchanged Project adapter before reading any joined value.
+
+    OSI-247/299/301 supply the types/enums. This adapter's context names are
+    files/operations/sender_node/related_message_ids; no original is rewritten.
+    JSON integer semantics on reference sizes retain valid original floats.
+    """
+    source = case['source']
+    message = source.get('original_input') if type(source) is dict else None
+    if (type(source) is not dict or set(source) != PROJECT_SOURCE_FIELDS
+            or type(message) is not dict or set(message) != PROJECT_MESSAGE_FIELDS):
+        return ['project_original_input_shape']
+    types = {key: str for key in PROJECT_MESSAGE_FIELDS}
+    types.update({key: (str, type(None)) for key in (
+        'to_agent_id', 'to_agent_type', 'to_node_id', 'to_lane_id', 'thread_id',
+        'in_reply_to', 'content')})
+    types.update(content_ref=(dict, type(None)), context=dict, read_by=list, resolved=bool)
+    if (any(type(source[key]) is not str for key in PROJECT_SOURCE_FIELDS - {'original_input', 'message_ids'})
+            or type(source['message_ids']) is not list
+            or any(type(item) is not str for item in source['message_ids'])
+            or any(type(message[key]) not in (kind if type(kind) is tuple else (kind,))
+                   for key, kind in types.items())
+            or any(type(item) is not str for item in message['read_by'])):
+        return ['project_original_input_type']
+    context = message['context']
+    if (set(context) != {'files', 'operations', 'sender_node', 'related_message_ids'}
+            or type(context['sender_node']) not in (str, type(None))
+            or any(type(context[key]) is not list or any(type(item) is not str for item in context[key])
+                   for key in ('files', 'operations', 'related_message_ids'))):
+        return ['project_original_input_type']
+    ref = message['content_ref']
+    if ref is not None and (set(ref) != {'blake3_id', 'byte_size', 'media_type'}
+            or type(ref['blake3_id']) is not str or type(ref['media_type']) is not str
+            or not integer_value(ref['byte_size'])):
+        return ['project_original_input_type']
+    if (message['message_type'] not in ('Question', 'Answer', 'Update', 'Request', 'Decision', 'Warning', 'Announcement')
+            or message['priority'] not in ('low', 'normal', 'high', 'urgent')
+            or source['message_schema'] != 'original_project_agent_message'
+            or not formats.conforms(message['created_at'], 'date-time')
+            or (message['content'] is None) == (ref is None)
+            or (message['content'] is not None and not inline_body(message['content']))
+            or (ref is not None and (re.fullmatch(r'blake3:[0-9a-f]{64}', ref['blake3_id']) is None
+                or ref['byte_size'] <= LIMIT or ref['media_type'] != 'text/plain; charset=utf-8'))):
+        return ['project_original_input_value']
+    return []
+
+
 def successor_errors(root):
     """Pin the whole live successor selection without rewriting frozen graphs."""
     doc = json.loads((root / 'Plans/application_board_message_v2.schema.json').read_text())
@@ -612,9 +708,9 @@ def successor_errors(root):
 @lru_cache(maxsize=1)
 def retry_schemas():
     plans = Path(__file__).resolve().parents[1] / 'Plans'
-    event = StrictValidator(json.loads((plans / 'event_record.schema.json').read_text()))
+    event = StrictValidator(json.loads((plans / 'event_record.schema.json').read_text()), format_checker=UTC_FORMAT)
     payloads = json.loads((plans / 'orchestrator_event_payloads.schema.json').read_text())
-    return event, {name: StrictValidator(value) for name, value in payloads['$defs'].items()}
+    return event, {name: StrictValidator(value, format_checker=UTC_FORMAT) for name, value in payloads['$defs'].items()}
 
 
 def retry_shape_valid(event):
@@ -627,7 +723,7 @@ def retry_shape_valid(event):
 
 
 def retry_outcome(original, candidate):
-    if number_domain_errors(candidate):
+    if record_number_errors(candidate):
         return {'status': 'number_domain', 'appended': False, 'receipt': None}
     if not retry_shape_valid(original) or not retry_shape_valid(candidate):
         return {'status': 'retry_value_schema', 'appended': False, 'receipt': None}
@@ -649,6 +745,9 @@ def historical_read_errors(case, schema, owner_module):
     validators = selected_validators(root, formats)
     if not validators['historical'].is_valid(state):
         return ['historical_state_schema']
+    recipe, recipe_errors = number_rule_for_record(case, retained=True)
+    if recipe_errors:
+        return recipe_errors
     errors = checkpoint_errors(case, root, formats)
     family, payload, event = case['event_type'], case['logical_payload'], case['event']
     expected_reader = 'reader.orchestrator.' + family.replace('.', '_') + '.history.v1@1.0.0'
@@ -672,13 +771,6 @@ def historical_read_errors(case, schema, owner_module):
     # child/phase/model/board/Stop/deadline/permission state cannot recapture them.
     original = copy.deepcopy(case)
     original['producer_context'] = state['original_producer_context']
-    recipe = state['original_identity_recipe']
-    proof = state['original_recipe_evidence']
-    expected_recipe = recipe_witness_value(case, recipe)
-    if (not proof['verified'] or proof['value'] != expected_recipe
-            or proof['source_ref'] != 'writer-recipe:' + event['event_id']
-            or proof['source_sha256'] != hashlib.sha256(packed(expected_recipe)).hexdigest()):
-        errors.append('historical_original_recipe')
     selected_identity = lambda family, payload: owner_module.historical_identity(family, payload, recipe)
     errors += event_errors(original, schema, selected_identity, owner_module.retry_allowed,
                            root, formats, historical=True)
@@ -697,6 +789,9 @@ def recover_original(case, schema, owner_module, candidate=None):
 
 
 def checkpoint_errors(case, root, formats):
+    _, recipe_errors = number_rule_for_record(case, retained=True)
+    if recipe_errors:
+        return recipe_errors
     read = case['read']; cp, token, row = read['checkpoint'], read['read_token'], read['row']
     v = selected_validators(root, formats)
     if list(v['checkpoint'].iter_errors(cp)) or list(v['read_token'].iter_errors(token)):
@@ -989,6 +1084,11 @@ def check_oracles(fixtures, schema, owner_module):
             'status': 'historical_original_unverified', 'appended': False, 'receipt': None}, case['case_id']
         assert not failure_oracle_errors(test)
         checks += 3
+    for test in fixtures['compatibility_history_negatives']:
+        assert historical_read_errors(test['case'], schema, owner_module) == [test['expected_error']], test['name']
+        assert recover_original(test['case'], schema, owner_module)['status'] == 'historical_original_unverified'
+        assert not failure_oracle_errors(test)
+        checks += 3
     for case in fixtures['retained_board_cases']:
         assert not owner_module.board_join_errors(case)
         checks += 1
@@ -1034,7 +1134,26 @@ def check_oracles(fixtures, schema, owner_module):
         bad = custody_case(base, test)
         assert owner_module.board_join_errors(bad) == [test['expected_error']], (
             test['name'], owner_module.board_join_errors(bad))
-        assert test['expected_exit_code'] == 1
+        assert not failure_oracle_errors(test)
+        checks += 2
+    for test in fixtures['project_source_cases']:
+        bad = copy.deepcopy(fixtures['board_storage_cases'][test['board_index']])
+        target = bad
+        for key in test['path'][:-1]:
+            target = target[key]
+        target[test['path'][-1]] = copy.deepcopy(test['value'])
+        assert project_original_input_errors(bad, formats) == [test['expected_error']], test['name']
+        assert owner_module.board_join_errors(bad) == [test['expected_error']], test['name']
+        assert not failure_oracle_errors(test)
+        checks += 3
+    for test in fixtures['format_cases']:
+        base = by_id[test['case_id']]
+        payload = copy.deepcopy(base['logical_payload'])
+        payload[test['field']] = test['value']
+        assert StrictValidator(schema['$defs'][base['definition']], format_checker=formats).is_valid(payload) == test['valid'], test['name']
+        event = copy.deepcopy(base['event'])
+        event['payload'] = payload
+        assert retry_shape_valid(event) == test['valid'], test['name']
         checks += 2
     for test in fixtures['retry_cases']:
         original = by_id[test['case_id']]['event']
@@ -1103,14 +1222,19 @@ def check_oracles(fixtures, schema, owner_module):
         assert case['historical_reader_state']['reader_status'] == 'compatibility'
         assert case['event']['replay_policy'] == 'projector_replay_only'
         assert not historical_read_errors(case, schema, owner_module), case['case_id']
-        assert 'replay_only_not_appendable' in event_errors(case, schema, owner_module.identity,
-            owner_module.retry_allowed, root, formats)
-        assert retry_outcome(case['event'], case['event'])['status'] == 'replay_only_not_appendable'
+        # The retained positive keeps its original numeric bytes/recipe. A
+        # current-write refusal must have exactly one defect: replay policy.
+        current = copy.deepcopy(next(c for c in cases if c['event_type'] == case['event_type']
+            and c['scope_partition'] == case['scope_partition']))
+        current['event']['replay_policy'] = 'projector_replay_only'
+        assert event_errors(current, schema, owner_module.identity,
+            owner_module.retry_allowed, root, formats) == ['replay_only_not_appendable']
+        assert retry_outcome(current['event'], current['event'])['status'] == 'replay_only_not_appendable'
         checks += 3
     assert {x['event_type'] for x in fixtures['compatibility_event_cases']} == {x['event_type'] for x in fixtures['contracts']}
     for test in fixtures['board_successor_cases']:
         actual = owner_module.board_join_errors(test['case'])
-        assert test['expected_error'] in actual and test['expected_exit_code'] == 1, (test['name'], actual)
+        assert test['expected_error'] in actual and not failure_oracle_errors(test), (test['name'], actual)
         checks += 1
     for test in fixtures['historical_cases']:
         bad = copy.deepcopy(by_id[test['case_id']])
@@ -1121,7 +1245,7 @@ def check_oracles(fixtures, schema, owner_module):
         actual = historical_read_errors(bad, schema, owner_module)
         assert (not actual) == test['valid'], (test['name'], actual)
         if not test['valid']:
-            assert test['expected_error'] in actual and test['expected_exit_code'] == 1, (test['name'], actual)
+            assert test['expected_error'] in actual and not failure_oracle_errors(test), (test['name'], actual)
         checks += 1
     for contract in fixtures['contracts']:
         selected = [x for x in fixtures['historical_cases'] if x['event_type'] == contract['event_type']]
