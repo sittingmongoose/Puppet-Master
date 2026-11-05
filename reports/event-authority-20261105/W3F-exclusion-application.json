@@ -1,0 +1,93 @@
+{
+  "operation": "RECLASSIFY_TO_EXCLUDED",
+  "event_type": "planning.question_budget_exhausted",
+  "authority": "Deck 2 item 9.a A conditional owner-proof application; DL-450 receipt remains integration-owned",
+  "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+  "source_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3F-rows.jsonl",
+  "source_file_sha256": "77c7f0de26008af1f6751ad8e9d09b78f0ba133f292e633b30b6026d322ed749",
+  "before": {
+    "bucket": "e",
+    "citations": [
+      "Plans/Contracts_V0.md:21402-21408"
+    ],
+    "classification": "persisted_event_candidate",
+    "closest_card1_retention_group": "G17",
+    "closest_card1_retention_rule": "No age or count expiry; project-data deletion only; no count limit; refuse new records under storage pressure.",
+    "in_august_ledger": false,
+    "in_live_registry": false,
+    "name": "planning.question_budget_exhausted",
+    "owner_document": "Plans/Contracts_V0.md",
+    "owner_section": "Typed results added to existing error enumerations",
+    "recommendation": {
+      "action": "exclude",
+      "reason": "CV-323 makes this event optional and already requires the owner result/record. Prefer that mandatory durable result over a second event; Jared must accept the exclusion.",
+      "status": "recommendation only; Jared has not excluded the name; remains counted"
+    },
+    "records": "Optionally records exhaustion of the planning question allowance while the run continues to synthesis.",
+    "retention_citation": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md:81-81",
+    "retention_status": "Analogy/proposal only; exact counting scope and any real-run anchor still require owner/Jared adjudication",
+    "technical_authority": "Returns to Jared under DL-411; no extension of technical authority or retention inferred"
+  },
+  "after": {
+    "event_type": "planning.question_budget_exhausted",
+    "source_row": {
+      "bucket": "e",
+      "citations": [
+        "Plans/Contracts_V0.md:21402-21408"
+      ],
+      "classification": "persisted_event_candidate",
+      "closest_card1_retention_group": "G17",
+      "closest_card1_retention_rule": "No age or count expiry; project-data deletion only; no count limit; refuse new records under storage pressure.",
+      "in_august_ledger": false,
+      "in_live_registry": false,
+      "name": "planning.question_budget_exhausted",
+      "owner_document": "Plans/Contracts_V0.md",
+      "owner_section": "Typed results added to existing error enumerations",
+      "recommendation": {
+        "action": "exclude",
+        "reason": "CV-323 makes this event optional and already requires the owner result/record. Prefer that mandatory durable result over a second event; Jared must accept the exclusion.",
+        "status": "recommendation only; Jared has not excluded the name; remains counted"
+      },
+      "records": "Optionally records exhaustion of the planning question allowance while the run continues to synthesis.",
+      "retention_citation": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md:81-81",
+      "retention_status": "Analogy/proposal only; exact counting scope and any real-run anchor still require owner/Jared adjudication",
+      "technical_authority": "Returns to Jared under DL-411; no extension of technical authority or retention inferred"
+    },
+    "source_row_sha256": "31cf12e4ab46a65f0fb02fc46f489224b6992e356d0e9dc5f8fd533f3650464a",
+    "outcome": "excluded",
+    "ledger_disposition": "RECLASSIFY_TO_EXCLUDED",
+    "registry_membership": "ABSENT",
+    "denominator_removal_claimed": false,
+    "owner_units": [
+      "CV-1459"
+    ],
+    "retention_policy_ref": null,
+    "question": null
+  },
+  "touched_adjudication_paths": [
+    "reports/event-authority-20261105/W3F-row-outcomes.jsonl",
+    "reports/event-authority-20261105/W3F-census-adjudication.jsonl"
+  ],
+  "before_file_hashes": {
+    "reports/event-authority-20261105/W3F-row-outcomes.jsonl": null,
+    "reports/event-authority-20261105/W3F-census-adjudication.jsonl": null
+  },
+  "after_file_hashes": {
+    "reports/event-authority-20261105/W3F-row-outcomes.jsonl": "f515672e4c115fbd1f85e899ae9c781e88d7d1f91624a26aad5a0f9025c977bb",
+    "reports/event-authority-20261105/W3F-census-adjudication.jsonl": "f515672e4c115fbd1f85e899ae9c781e88d7d1f91624a26aad5a0f9025c977bb"
+  },
+  "evidence_refs": [
+    "Plans/Contracts_V0.md#CV-323",
+    "Plans/Assistant_Plan_Runtime.md#QMAX-006",
+    "Plans/Assistant_Plan_Runtime.md#QMAX-014..015",
+    "Plans/Assistant_Plan_Runtime.md#QMAX-016",
+    "Plans/Contracts_V0.md#CV-1459"
+  ],
+  "frozen_recount_modified": false,
+  "august_ledger_row": "NOT_PRESENT_NEW_RECOUNT_BUCKET_E",
+  "legacy_bucket_or_cohort_changed": false,
+  "denominator_removal_claimed": false,
+  "admission_record": false,
+  "before_row_sha256": "31cf12e4ab46a65f0fb02fc46f489224b6992e356d0e9dc5f8fd533f3650464a",
+  "after_row_sha256": "1f733125392a7ece1bcaa8faa768a78c63dbeb587a1832d6e3eddeec35fddb84"
+}

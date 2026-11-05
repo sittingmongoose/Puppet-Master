@@ -1,0 +1,394 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.event_payload.autonomy.ceiling_checked.v1",
+  "title": "autonomy.ceiling_checked newly authored payload 1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "owner_operation_id",
+    "context",
+    "receipt_id",
+    "attempt_id",
+    "run_id",
+    "requested_mode",
+    "effective_mode",
+    "ceiling_source_ref",
+    "tool_call_ref",
+    "provider_message_ref",
+    "mutation_class",
+    "decision",
+    "blocked_reason_code",
+    "permission_snapshot_id",
+    "created_at_utc",
+    "enforcement_point",
+    "decision_source_ref"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.event_payload.autonomy.ceiling_checked.v1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "owner_operation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096,
+      "not": {
+        "pattern": "[\u0000\r\n]"
+      }
+    },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope_kind",
+        "project_id",
+        "server_id",
+        "thread_id",
+        "host_id",
+        "working_root_ref",
+        "worktree_id",
+        "remote_identity_ref"
+      ],
+      "properties": {
+        "scope_kind": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "project_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+              "not": {
+                "pattern": "[\r\n]"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+          "not": {
+            "pattern": "[\r\n]"
+          }
+        },
+        "thread_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+              "not": {
+                "pattern": "[\r\n]"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "host_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+          "not": {
+            "pattern": "[\r\n]"
+          }
+        },
+        "working_root_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048,
+              "not": {
+                "pattern": "[\u0000\r\n]"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "worktree_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+              "not": {
+                "pattern": "[\r\n]"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "remote_identity_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048,
+              "not": {
+                "pattern": "[\u0000\r\n]"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "application"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "project_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+                "not": {
+                  "pattern": "[\r\n]"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "receipt_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+      "not": {
+        "pattern": "[\r\n]"
+      }
+    },
+    "attempt_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+      "not": {
+        "pattern": "[\r\n]"
+      }
+    },
+    "run_id": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+          "not": {
+            "pattern": "[\r\n]"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "requested_mode": {
+      "enum": [
+        "ask",
+        "plan",
+        "regular",
+        "yolo"
+      ]
+    },
+    "effective_mode": {
+      "enum": [
+        "ask",
+        "plan",
+        "regular",
+        "yolo"
+      ]
+    },
+    "ceiling_source_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048,
+      "not": {
+        "pattern": "[\u0000\r\n]"
+      }
+    },
+    "tool_call_ref": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048,
+          "not": {
+            "pattern": "[\u0000\r\n]"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "provider_message_ref": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048,
+          "not": {
+            "pattern": "[\u0000\r\n]"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "mutation_class": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+      "not": {
+        "pattern": "[\r\n]"
+      }
+    },
+    "decision": {
+      "enum": [
+        "allow",
+        "block",
+        "require_approval"
+      ]
+    },
+    "blocked_reason_code": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+          "not": {
+            "pattern": "[\r\n]"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "permission_snapshot_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+      "not": {
+        "pattern": "[\r\n]"
+      }
+    },
+    "created_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "enforcement_point": {
+      "const": "post_parse_pre_execution"
+    },
+    "decision_source_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048,
+      "not": {
+        "pattern": "[\u0000\r\n]"
+      }
+    }
+  },
+  "anyOf": [
+    {
+      "properties": {
+        "tool_call_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048,
+          "not": {
+            "pattern": "[\u0000\r\n]"
+          }
+        }
+      }
+    },
+    {
+      "properties": {
+        "provider_message_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048,
+          "not": {
+            "pattern": "[\u0000\r\n]"
+          }
+        }
+      }
+    }
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "decision": {
+            "const": "allow"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "blocked_reason_code": {
+            "type": "null"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "blocked_reason_code": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+            "not": {
+              "pattern": "[\r\n]"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

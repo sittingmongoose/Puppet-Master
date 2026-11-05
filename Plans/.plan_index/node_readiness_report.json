@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18750,
+    "depends_on_edge_count": 18841,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21958,
-    "node_count": 7422,
+    "edge_count": 22049,
+    "node_count": 7454,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-05T01:50:32Z",
+  "generated_at_utc": "2026-11-05T05:33:00Z",
   "gui_related_units": {
-    "count": 3791,
+    "count": 3796,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -8362,6 +8362,50 @@
           "heading_level": 3,
           "heading_line": 10444,
           "line": 10446,
+          "path": "Plans/Contracts_V0.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Contracts_V0.md",
+        "plan_unit_id": "CV-1461",
+        "source_location": {
+          "heading": "CV-1461 - session_prompt.admitted Resolved Payload And Owner Contract",
+          "heading_level": 3,
+          "heading_line": 25365,
+          "line": 25367,
+          "path": "Plans/Contracts_V0.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Contracts_V0.md",
+        "plan_unit_id": "CV-1462",
+        "source_location": {
+          "heading": "CV-1462 - session_prompt.cancelled Resolved Payload And Owner Contract",
+          "heading_level": 3,
+          "heading_line": 25453,
+          "line": 25455,
+          "path": "Plans/Contracts_V0.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Contracts_V0.md",
+        "plan_unit_id": "CV-1463",
+        "source_location": {
+          "heading": "CV-1463 - session_prompt.expired Resolved Payload And Owner Contract",
+          "heading_level": 3,
+          "heading_line": 25541,
+          "line": 25543,
+          "path": "Plans/Contracts_V0.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Contracts_V0.md",
+        "plan_unit_id": "CV-1464",
+        "source_location": {
+          "heading": "CV-1464 - session_prompt.rejected Resolved Payload And Owner Contract",
+          "heading_level": 3,
+          "heading_line": 25629,
+          "line": 25631,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -30554,6 +30598,17 @@
       },
       {
         "owner_doc": "Plans/Permissions_System.md",
+        "plan_unit_id": "PS-1450",
+        "source_location": {
+          "heading": "PS-1450 - Autonomy Ceiling Receipt Event Adoption",
+          "heading_level": 3,
+          "heading_line": 11104,
+          "line": 11106,
+          "path": "Plans/Permissions_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Permissions_System.md",
         "plan_unit_id": "PS-146",
         "source_location": {
           "heading": "PS-146 - YOLO Publication And Y1 Leased Force-Push",
@@ -41725,10 +41780,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 7422,
+  "plan_unit_count": 7454,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2743,
+      "high": 2775,
       "low": 9,
       "medium": 30,
       "standard": 4640
@@ -42939,6 +42994,7 @@
       "event_authority_checkpoint_drift": 2,
       "event_authority_decision_drift": 1,
       "event_authority_drift": 1,
+      "event_authority_original_custody_and_scope": 32,
       "event_authority_payload_depth_drift": 1,
       "event_authority_registration_checkpoint_drift": 1,
       "event_authority_seal_check_drift": 1,
@@ -45863,7 +45919,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 7204,
+      "accepted": 7236,
       "retired": 195,
       "superseded": 23
     },
@@ -45913,7 +45969,7 @@
       "implementation_reference": 1,
       "integration_contract": 130,
       "interaction_contract": 6,
-      "interface_contract": 6,
+      "interface_contract": 38,
       "invariant": 33,
       "migration": 1,
       "migration_contract": 2,
@@ -46024,7 +46080,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "8b6ea945950d76f83a5aa741148e3a238e782cb74d36cc575a1817ce566ca944",
+        "expected": "e25320922ae187ec5300e5cc23aa4c20aa9b6a96fa60b1595c69608d845e3b33",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -46042,7 +46098,7 @@
       {
         "actual": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8",
         "error": "pnc019_source_hash_stale",
-        "expected": "25e1a7941289d3f647a8a0d558b6ffea5d143be8cea1d7595d75fdfeb108a31b",
+        "expected": "1e3f6b0f41beba75f41b7d228924f4911814c6902486d176a5321f58d4272a96",
         "source_path": "Plans/Executor_Protocol.md"
       },
       {
@@ -46060,7 +46116,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "76ba098f914899db177bae3445d45612d22b6b60c5e3f02f84a3a3bd2f7a0647",
+        "expected": "396ebf00ee308bb868851f7bd59b9f4484895f4d5bae96a879aa8b480eab96bb",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {
@@ -46098,6 +46154,30 @@
         "error": "pnc019_source_hash_stale",
         "expected": "aa8aaa943e27ffc9be79cc62049dbc4bc36ccd2b3955891b8ecfa9b1b5f6230d",
         "source_path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Automated_Testing_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Contracts_V0.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Executor_Protocol.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Permissions_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/storage-plan.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/storage_value_registry.json"
       },
       {
         "bulk_registration_allowed": false,

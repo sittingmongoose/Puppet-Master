@@ -1,0 +1,267 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.event_payload.run.graph_canonical_locked.v1",
+  "title": "run.graph_canonical_locked newly authored payload 1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "owner_operation_id",
+    "context",
+    "run_id",
+    "lock_id",
+    "canonical_graph_ref",
+    "graph_sha256",
+    "source_approval_ref",
+    "replan_generation",
+    "previous_generation",
+    "previous_lock_event_id",
+    "graph_commit_receipt_ref"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.event_payload.run.graph_canonical_locked.v1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "owner_operation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096,
+      "not": {
+        "pattern": "[\u0000\r\n]"
+      }
+    },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope_kind",
+        "project_id",
+        "server_id",
+        "thread_id",
+        "host_id",
+        "working_root_ref",
+        "worktree_id",
+        "remote_identity_ref"
+      ],
+      "properties": {
+        "scope_kind": {
+          "const": "project"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+          "not": {
+            "pattern": "[\r\n]"
+          }
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+          "not": {
+            "pattern": "[\r\n]"
+          }
+        },
+        "thread_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+              "not": {
+                "pattern": "[\r\n]"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "host_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+          "not": {
+            "pattern": "[\r\n]"
+          }
+        },
+        "working_root_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048,
+              "not": {
+                "pattern": "[\u0000\r\n]"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "worktree_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+              "not": {
+                "pattern": "[\r\n]"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "remote_identity_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048,
+              "not": {
+                "pattern": "[\u0000\r\n]"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "application"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "type": "null"
+              },
+              "thread_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+                "not": {
+                  "pattern": "[\r\n]"
+                }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "project_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+                "not": {
+                  "pattern": "[\r\n]"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+      "not": {
+        "pattern": "[\r\n]"
+      }
+    },
+    "lock_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+      "not": {
+        "pattern": "[\r\n]"
+      }
+    },
+    "canonical_graph_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048,
+      "not": {
+        "pattern": "[\u0000\r\n]"
+      }
+    },
+    "graph_sha256": {
+      "type": "string",
+      "minLength": 64,
+      "maxLength": 64,
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "source_approval_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048,
+      "not": {
+        "pattern": "[\u0000\r\n]"
+      }
+    },
+    "replan_generation": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 4294967295
+    },
+    "previous_generation": {
+      "anyOf": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "previous_lock_event_id": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+          "not": {
+            "pattern": "[\r\n]"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "graph_commit_receipt_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048,
+      "not": {
+        "pattern": "[\u0000\r\n]"
+      }
+    }
+  }
+}
