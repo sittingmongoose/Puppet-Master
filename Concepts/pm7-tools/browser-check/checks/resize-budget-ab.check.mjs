@@ -10,7 +10,10 @@ export default async function(t){
   await t.viewport(1920,1080); const rows=[]; let startup;
   for(const [i,kind] of ['A','B','B','A'].entries()){
     const f=await t.app.open(); await t.app.resetLayout(); await f.locator('#tab-dashboard').click(); await t.app.look('friendly-dark');
-    await f.evaluate(sampler); const p=await f.evaluate(target,'left');
+    await f.evaluate(sampler);
+    if(!await f.locator('#leftPanelResizer').isVisible())await f.locator('#activityBar .icon[data-target="panel-files"]').click();
+    await f.locator('#leftPanelResizer').waitFor({state:'visible'});
+    const p=await f.evaluate(target,'left');
     if(!p)throw Error('Left Rail divider not reachable');
     await f.waitForTimeout(2500);
     if(startup===undefined){const raw=await f.evaluate(()=>window.__rz.stop());startup=q(gaps(raw.frames));await f.evaluate(target,'left');await f.waitForTimeout(2500);}
