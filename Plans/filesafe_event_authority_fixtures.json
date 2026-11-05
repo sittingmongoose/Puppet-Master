@@ -15738,10 +15738,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_command_denied:project:0/writer_epoch",
               "value": true
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_command_denied:project:0/accepted_source_sha256",
+              "value": "ce54e7b9dc8879ada9811f136cac48106664134e35b7c3d57d8530f9ad5741e1"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_command_denied.fix7.selected_epoch.project.float",
@@ -15754,7 +15760,8 @@
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "Project original recipe cannot encode a float source epoch; it has no valid own commitment. Refuse that original recipe boundary, without new serializer or coercion."
         },
         {
           "id": "filesafe_command_denied.fix7.selected_epoch.project.string",
@@ -15764,10 +15771,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_command_denied:project:0/writer_epoch",
               "value": "1"
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_command_denied:project:0/accepted_source_sha256",
+              "value": "3f662b329813628ab1a5687d686c8d9d5c025516cbdeabf4444424fedca59b00"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_command_denied.fix7.selected_epoch.project.null",
@@ -15777,10 +15790,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_command_denied:project:0/writer_epoch",
               "value": null
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_command_denied:project:0/accepted_source_sha256",
+              "value": "18159632b8fdbe8a2b13898849e3874274ea442e7a7c567fed2013d7c9e0f209"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_command_denied.fix7.selected_epoch.project.array",
@@ -15792,10 +15811,16 @@
               "value": [
                 1
               ]
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_command_denied:project:0/accepted_source_sha256",
+              "value": "05792b30f37412c524608ffea78f41da1cd0e5eb0cbecf78cb02bb151dca46aa"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_command_denied.fix7.selected_epoch.project.object",
@@ -15807,10 +15832,16 @@
               "value": {
                 "epoch": 1
               }
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_command_denied:project:0/accepted_source_sha256",
+              "value": "45e7c6461771b9bb9f21e61900727a8767818dc357280fb84b78123809a33421"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_command_denied.fix7.selected_join.project",
@@ -15851,10 +15882,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_command_denied:application:1/writer_epoch",
               "value": true
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_command_denied:application:1/accepted_source_sha256",
+              "value": "3052fa9ca72ba129471515e3d32176a971568214b30ff710f7a24c4480de6b02"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_command_denied.fix7.selected_epoch.application.float",
@@ -15864,10 +15901,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_command_denied:application:1/writer_epoch",
               "value": 1.0
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_command_denied:application:1/accepted_source_sha256",
+              "value": "564029ec1e298403c87ed4dce0c54c07af538d3d03c1a96a9e94d5fbe6df100a"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_command_denied.fix7.selected_epoch.application.string",
@@ -15877,10 +15920,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_command_denied:application:1/writer_epoch",
               "value": "1"
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_command_denied:application:1/accepted_source_sha256",
+              "value": "cda574f1888b92c7e0d1a915d502a34deb2cf78c2a806e9db75791411af59032"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_command_denied.fix7.selected_epoch.application.null",
@@ -15890,10 +15939,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_command_denied:application:1/writer_epoch",
               "value": null
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_command_denied:application:1/accepted_source_sha256",
+              "value": "c1eff6a0cf4b4256e11397fdb05f13c4d858e871bd1ac53a33894f7063e8f1b5"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_command_denied.fix7.selected_epoch.application.array",
@@ -15905,10 +15960,16 @@
               "value": [
                 1
               ]
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_command_denied:application:1/accepted_source_sha256",
+              "value": "afa8b39ad557eafb635081772ddd72a6eff6e16b68665bfaeb3da4b2b502ff6a"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_command_denied.fix7.selected_epoch.application.object",
@@ -15920,10 +15981,16 @@
               "value": {
                 "epoch": 1
               }
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_command_denied:application:1/accepted_source_sha256",
+              "value": "2ddc436d51ceb209730db862747378921c24515e8f298093690079aecd29dab3"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_command_denied.fix7.selected_join.application",
@@ -23381,6 +23448,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_command_denied:project:0/accepted_source_sha256",
+                "value": "ce54e7b9dc8879ada9811f136cac48106664134e35b7c3d57d8530f9ad5741e1"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -23431,6 +23505,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_command_denied:project:0/accepted_source_sha256",
+                "value": "3f662b329813628ab1a5687d686c8d9d5c025516cbdeabf4444424fedca59b00"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -23453,6 +23534,13 @@
                 "target": "bank",
                 "path": "/sources/original:filesafe_command_denied:project:0/writer_epoch",
                 "value": null
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_command_denied:project:0/accepted_source_sha256",
+                "value": "18159632b8fdbe8a2b13898849e3874274ea442e7a7c567fed2013d7c9e0f209"
               }
             },
             {
@@ -23483,6 +23571,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_command_denied:project:0/accepted_source_sha256",
+                "value": "05792b30f37412c524608ffea78f41da1cd0e5eb0cbecf78cb02bb151dca46aa"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -23507,6 +23602,13 @@
                 "value": {
                   "epoch": 1
                 }
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_command_denied:project:0/accepted_source_sha256",
+                "value": "45e7c6461771b9bb9f21e61900727a8767818dc357280fb84b78123809a33421"
               }
             },
             {
@@ -23565,6 +23667,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_command_denied:application:1/accepted_source_sha256",
+                "value": "3052fa9ca72ba129471515e3d32176a971568214b30ff710f7a24c4480de6b02"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -23587,6 +23696,13 @@
                 "target": "bank",
                 "path": "/sources/original:filesafe_command_denied:application:1/writer_epoch",
                 "value": 1.0
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_command_denied:application:1/accepted_source_sha256",
+                "value": "564029ec1e298403c87ed4dce0c54c07af538d3d03c1a96a9e94d5fbe6df100a"
               }
             },
             {
@@ -23615,6 +23731,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_command_denied:application:1/accepted_source_sha256",
+                "value": "cda574f1888b92c7e0d1a915d502a34deb2cf78c2a806e9db75791411af59032"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -23637,6 +23760,13 @@
                 "target": "bank",
                 "path": "/sources/original:filesafe_command_denied:application:1/writer_epoch",
                 "value": null
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_command_denied:application:1/accepted_source_sha256",
+                "value": "c1eff6a0cf4b4256e11397fdb05f13c4d858e871bd1ac53a33894f7063e8f1b5"
               }
             },
             {
@@ -23667,6 +23797,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_command_denied:application:1/accepted_source_sha256",
+                "value": "afa8b39ad557eafb635081772ddd72a6eff6e16b68665bfaeb3da4b2b502ff6a"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -23691,6 +23828,13 @@
                 "value": {
                   "epoch": 1
                 }
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_command_denied:application:1/accepted_source_sha256",
+                "value": "2ddc436d51ceb209730db862747378921c24515e8f298093690079aecd29dab3"
               }
             },
             {
@@ -39403,10 +39547,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_destructive_override_denied:project:0/writer_epoch",
               "value": true
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_destructive_override_denied:project:0/accepted_source_sha256",
+              "value": "21e1d156b8f95e0e55752774cfe47128a7e7815ec3ea0724de02a7525817917b"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_destructive_override_denied.fix7.selected_epoch.project.float",
@@ -39419,7 +39569,8 @@
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "Project original recipe cannot encode a float source epoch; it has no valid own commitment. Refuse that original recipe boundary, without new serializer or coercion."
         },
         {
           "id": "filesafe_destructive_override_denied.fix7.selected_epoch.project.string",
@@ -39429,10 +39580,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_destructive_override_denied:project:0/writer_epoch",
               "value": "1"
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_destructive_override_denied:project:0/accepted_source_sha256",
+              "value": "69484f3066e2fbcd98d3cede983c54f067d4bf31133b358ec6bd0ee96e54a787"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_destructive_override_denied.fix7.selected_epoch.project.null",
@@ -39442,10 +39599,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_destructive_override_denied:project:0/writer_epoch",
               "value": null
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_destructive_override_denied:project:0/accepted_source_sha256",
+              "value": "71d9fe064699226172258efd76eb5679691839d2c7e6c5ee707083ef4ef353e2"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_destructive_override_denied.fix7.selected_epoch.project.array",
@@ -39457,10 +39620,16 @@
               "value": [
                 1
               ]
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_destructive_override_denied:project:0/accepted_source_sha256",
+              "value": "7530cee16a9a29a3ff1cb15c8cb91e6b12723d4d52e8e9da8edfd5a7687ff7da"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_destructive_override_denied.fix7.selected_epoch.project.object",
@@ -39472,10 +39641,16 @@
               "value": {
                 "epoch": 1
               }
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_destructive_override_denied:project:0/accepted_source_sha256",
+              "value": "b3410b50654b45899904d0ec5e2f51bf0bdf2acf8afe6804d5648827d7795107"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_destructive_override_denied.fix7.selected_join.project",
@@ -39516,10 +39691,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_destructive_override_denied:application:1/writer_epoch",
               "value": true
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_destructive_override_denied:application:1/accepted_source_sha256",
+              "value": "dc6fcb2a27d6d3f01397b29d85933fa92dee5e514c6206938b0cca19ce821996"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_destructive_override_denied.fix7.selected_epoch.application.float",
@@ -39529,10 +39710,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_destructive_override_denied:application:1/writer_epoch",
               "value": 1.0
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_destructive_override_denied:application:1/accepted_source_sha256",
+              "value": "5867e34170ea82080d1b238971e75c548216ecc810f59b08f8764093b01fecd4"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_destructive_override_denied.fix7.selected_epoch.application.string",
@@ -39542,10 +39729,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_destructive_override_denied:application:1/writer_epoch",
               "value": "1"
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_destructive_override_denied:application:1/accepted_source_sha256",
+              "value": "0630538a9a78b566899df4eb74c136413bf33612a8cb0349f3a6a697d839a1fa"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_destructive_override_denied.fix7.selected_epoch.application.null",
@@ -39555,10 +39748,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_destructive_override_denied:application:1/writer_epoch",
               "value": null
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_destructive_override_denied:application:1/accepted_source_sha256",
+              "value": "34dc590b45e8a84be1a670b4ecbf121963446cca39f441d72cfbe33880adf063"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_destructive_override_denied.fix7.selected_epoch.application.array",
@@ -39570,10 +39769,16 @@
               "value": [
                 1
               ]
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_destructive_override_denied:application:1/accepted_source_sha256",
+              "value": "16d836bbec40d0cd0e001066a370b7d47517c12e6730d47770701dfc66eb75cc"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_destructive_override_denied.fix7.selected_epoch.application.object",
@@ -39585,10 +39790,16 @@
               "value": {
                 "epoch": 1
               }
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_destructive_override_denied:application:1/accepted_source_sha256",
+              "value": "ba967047278388b40e71c2cdfbc7a46a67f0dac370982eb20eabad76fcccbe7b"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_destructive_override_denied.fix7.selected_join.application",
@@ -46998,6 +47209,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_destructive_override_denied:project:0/accepted_source_sha256",
+                "value": "21e1d156b8f95e0e55752774cfe47128a7e7815ec3ea0724de02a7525817917b"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -47048,6 +47266,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_destructive_override_denied:project:0/accepted_source_sha256",
+                "value": "69484f3066e2fbcd98d3cede983c54f067d4bf31133b358ec6bd0ee96e54a787"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -47070,6 +47295,13 @@
                 "target": "bank",
                 "path": "/sources/original:filesafe_destructive_override_denied:project:0/writer_epoch",
                 "value": null
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_destructive_override_denied:project:0/accepted_source_sha256",
+                "value": "71d9fe064699226172258efd76eb5679691839d2c7e6c5ee707083ef4ef353e2"
               }
             },
             {
@@ -47100,6 +47332,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_destructive_override_denied:project:0/accepted_source_sha256",
+                "value": "7530cee16a9a29a3ff1cb15c8cb91e6b12723d4d52e8e9da8edfd5a7687ff7da"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -47124,6 +47363,13 @@
                 "value": {
                   "epoch": 1
                 }
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_destructive_override_denied:project:0/accepted_source_sha256",
+                "value": "b3410b50654b45899904d0ec5e2f51bf0bdf2acf8afe6804d5648827d7795107"
               }
             },
             {
@@ -47182,6 +47428,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_destructive_override_denied:application:1/accepted_source_sha256",
+                "value": "dc6fcb2a27d6d3f01397b29d85933fa92dee5e514c6206938b0cca19ce821996"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -47204,6 +47457,13 @@
                 "target": "bank",
                 "path": "/sources/original:filesafe_destructive_override_denied:application:1/writer_epoch",
                 "value": 1.0
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_destructive_override_denied:application:1/accepted_source_sha256",
+                "value": "5867e34170ea82080d1b238971e75c548216ecc810f59b08f8764093b01fecd4"
               }
             },
             {
@@ -47232,6 +47492,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_destructive_override_denied:application:1/accepted_source_sha256",
+                "value": "0630538a9a78b566899df4eb74c136413bf33612a8cb0349f3a6a697d839a1fa"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -47254,6 +47521,13 @@
                 "target": "bank",
                 "path": "/sources/original:filesafe_destructive_override_denied:application:1/writer_epoch",
                 "value": null
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_destructive_override_denied:application:1/accepted_source_sha256",
+                "value": "34dc590b45e8a84be1a670b4ecbf121963446cca39f441d72cfbe33880adf063"
               }
             },
             {
@@ -47284,6 +47558,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_destructive_override_denied:application:1/accepted_source_sha256",
+                "value": "16d836bbec40d0cd0e001066a370b7d47517c12e6730d47770701dfc66eb75cc"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -47308,6 +47589,13 @@
                 "value": {
                   "epoch": 1
                 }
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_destructive_override_denied:application:1/accepted_source_sha256",
+                "value": "ba967047278388b40e71c2cdfbc7a46a67f0dac370982eb20eabad76fcccbe7b"
               }
             },
             {
@@ -66048,10 +66336,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_destructive_override_granted:project:0/writer_epoch",
               "value": true
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_destructive_override_granted:project:0/accepted_source_sha256",
+              "value": "fd46a895c12fb429ffd5f4d34095f245bd46122d60f6ece131fb297f0c39f098"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_destructive_override_granted.fix7.selected_epoch.project.float",
@@ -66064,7 +66358,8 @@
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "Project original recipe cannot encode a float source epoch; it has no valid own commitment. Refuse that original recipe boundary, without new serializer or coercion."
         },
         {
           "id": "filesafe_destructive_override_granted.fix7.selected_epoch.project.string",
@@ -66074,10 +66369,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_destructive_override_granted:project:0/writer_epoch",
               "value": "1"
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_destructive_override_granted:project:0/accepted_source_sha256",
+              "value": "cda283e659b6e7fd1e4f4e8052f3b1c749b5b3c16f953ef11efa47c74bfeaa69"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_destructive_override_granted.fix7.selected_epoch.project.null",
@@ -66087,10 +66388,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_destructive_override_granted:project:0/writer_epoch",
               "value": null
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_destructive_override_granted:project:0/accepted_source_sha256",
+              "value": "6262addb183c52e073776c632b0a095802ce13a21dbf5dfc46c51b829e41ebc0"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_destructive_override_granted.fix7.selected_epoch.project.array",
@@ -66102,10 +66409,16 @@
               "value": [
                 1
               ]
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_destructive_override_granted:project:0/accepted_source_sha256",
+              "value": "e1b0bbefdce16f80e48b54d3c5e3c03dd61d4c7e4631c438a095a76b2e871b7c"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_destructive_override_granted.fix7.selected_epoch.project.object",
@@ -66117,10 +66430,16 @@
               "value": {
                 "epoch": 1
               }
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_destructive_override_granted:project:0/accepted_source_sha256",
+              "value": "207dc5ec99967a20faab58764694411e7ff38e0e2cb0d6ca0262f2c769d23f6d"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_destructive_override_granted.fix7.selected_join.project",
@@ -66161,10 +66480,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_destructive_override_granted:application:1/writer_epoch",
               "value": true
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_destructive_override_granted:application:1/accepted_source_sha256",
+              "value": "28618025aadb885119328bc4c6e625dc6b6aad09153b238b1f7ae9f7cb02f186"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_destructive_override_granted.fix7.selected_epoch.application.float",
@@ -66174,10 +66499,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_destructive_override_granted:application:1/writer_epoch",
               "value": 1.0
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_destructive_override_granted:application:1/accepted_source_sha256",
+              "value": "081c3cd32d85a61f1f196c3b8268bba2fe4c8b15dbf0982c9937d7a05600e7db"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_destructive_override_granted.fix7.selected_epoch.application.string",
@@ -66187,10 +66518,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_destructive_override_granted:application:1/writer_epoch",
               "value": "1"
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_destructive_override_granted:application:1/accepted_source_sha256",
+              "value": "59da8e476dba5b578cce67cf724d8f69b9284016d9372523d6d4fe69096c7293"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_destructive_override_granted.fix7.selected_epoch.application.null",
@@ -66200,10 +66537,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_destructive_override_granted:application:1/writer_epoch",
               "value": null
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_destructive_override_granted:application:1/accepted_source_sha256",
+              "value": "100f8d5782ac5046c771b2c894fe6f2f68af90bfe4319b3e24181378a940e8ce"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_destructive_override_granted.fix7.selected_epoch.application.array",
@@ -66215,10 +66558,16 @@
               "value": [
                 1
               ]
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_destructive_override_granted:application:1/accepted_source_sha256",
+              "value": "4f0d8949ac9b181e1465d0a23ec2e48efb027fe44519c3c52f0644366bc96d22"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_destructive_override_granted.fix7.selected_epoch.application.object",
@@ -66230,10 +66579,16 @@
               "value": {
                 "epoch": 1
               }
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_destructive_override_granted:application:1/accepted_source_sha256",
+              "value": "275927e738f09bb3f53c36261310721fb916ae33e90180012822e59e56be865c"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_destructive_override_granted.fix7.selected_join.application",
@@ -73916,6 +74271,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_destructive_override_granted:project:0/accepted_source_sha256",
+                "value": "fd46a895c12fb429ffd5f4d34095f245bd46122d60f6ece131fb297f0c39f098"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -73966,6 +74328,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_destructive_override_granted:project:0/accepted_source_sha256",
+                "value": "cda283e659b6e7fd1e4f4e8052f3b1c749b5b3c16f953ef11efa47c74bfeaa69"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -73988,6 +74357,13 @@
                 "target": "bank",
                 "path": "/sources/original:filesafe_destructive_override_granted:project:0/writer_epoch",
                 "value": null
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_destructive_override_granted:project:0/accepted_source_sha256",
+                "value": "6262addb183c52e073776c632b0a095802ce13a21dbf5dfc46c51b829e41ebc0"
               }
             },
             {
@@ -74018,6 +74394,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_destructive_override_granted:project:0/accepted_source_sha256",
+                "value": "e1b0bbefdce16f80e48b54d3c5e3c03dd61d4c7e4631c438a095a76b2e871b7c"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -74042,6 +74425,13 @@
                 "value": {
                   "epoch": 1
                 }
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_destructive_override_granted:project:0/accepted_source_sha256",
+                "value": "207dc5ec99967a20faab58764694411e7ff38e0e2cb0d6ca0262f2c769d23f6d"
               }
             },
             {
@@ -74100,6 +74490,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_destructive_override_granted:application:1/accepted_source_sha256",
+                "value": "28618025aadb885119328bc4c6e625dc6b6aad09153b238b1f7ae9f7cb02f186"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -74122,6 +74519,13 @@
                 "target": "bank",
                 "path": "/sources/original:filesafe_destructive_override_granted:application:1/writer_epoch",
                 "value": 1.0
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_destructive_override_granted:application:1/accepted_source_sha256",
+                "value": "081c3cd32d85a61f1f196c3b8268bba2fe4c8b15dbf0982c9937d7a05600e7db"
               }
             },
             {
@@ -74150,6 +74554,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_destructive_override_granted:application:1/accepted_source_sha256",
+                "value": "59da8e476dba5b578cce67cf724d8f69b9284016d9372523d6d4fe69096c7293"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -74172,6 +74583,13 @@
                 "target": "bank",
                 "path": "/sources/original:filesafe_destructive_override_granted:application:1/writer_epoch",
                 "value": null
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_destructive_override_granted:application:1/accepted_source_sha256",
+                "value": "100f8d5782ac5046c771b2c894fe6f2f68af90bfe4319b3e24181378a940e8ce"
               }
             },
             {
@@ -74202,6 +74620,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_destructive_override_granted:application:1/accepted_source_sha256",
+                "value": "4f0d8949ac9b181e1465d0a23ec2e48efb027fe44519c3c52f0644366bc96d22"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -74226,6 +74651,13 @@
                 "value": {
                   "epoch": 1
                 }
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_destructive_override_granted:application:1/accepted_source_sha256",
+                "value": "275927e738f09bb3f53c36261310721fb916ae33e90180012822e59e56be865c"
               }
             },
             {
@@ -92493,10 +92925,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_destructive_override_requested:project:0/writer_epoch",
               "value": true
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_destructive_override_requested:project:0/accepted_source_sha256",
+              "value": "24bb1983723d6279f73dc9e1c1b5b10e7de8dd490f5e228012ce5ef90a3eec81"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_destructive_override_requested.fix7.selected_epoch.project.float",
@@ -92509,7 +92947,8 @@
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "Project original recipe cannot encode a float source epoch; it has no valid own commitment. Refuse that original recipe boundary, without new serializer or coercion."
         },
         {
           "id": "filesafe_destructive_override_requested.fix7.selected_epoch.project.string",
@@ -92519,10 +92958,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_destructive_override_requested:project:0/writer_epoch",
               "value": "1"
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_destructive_override_requested:project:0/accepted_source_sha256",
+              "value": "b9e7cb312497566a7f2a19942d93c52578a6f877a57dda4f1f194490c183cd21"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_destructive_override_requested.fix7.selected_epoch.project.null",
@@ -92532,10 +92977,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_destructive_override_requested:project:0/writer_epoch",
               "value": null
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_destructive_override_requested:project:0/accepted_source_sha256",
+              "value": "53183434ea62f42be3e6b7c6ffe9da4e1b898efcdb83cce62d5f0e932194516d"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_destructive_override_requested.fix7.selected_epoch.project.array",
@@ -92547,10 +92998,16 @@
               "value": [
                 1
               ]
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_destructive_override_requested:project:0/accepted_source_sha256",
+              "value": "3d99335bc01b69fb4ffcc15c09c57501d4879b26e53af53bd56eb1ca2759d2e5"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_destructive_override_requested.fix7.selected_epoch.project.object",
@@ -92562,10 +93019,16 @@
               "value": {
                 "epoch": 1
               }
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_destructive_override_requested:project:0/accepted_source_sha256",
+              "value": "8761970b231a94d24ea6940b31494fb3a9da0043207ebb7276a0cda3dcc705aa"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_destructive_override_requested.fix7.selected_join.project",
@@ -92606,10 +93069,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_destructive_override_requested:application:1/writer_epoch",
               "value": true
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_destructive_override_requested:application:1/accepted_source_sha256",
+              "value": "700b347e0dc3f43469e2a1d29a0ac26e353c1335eb7cae34185955b87f3cb043"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_destructive_override_requested.fix7.selected_epoch.application.float",
@@ -92619,10 +93088,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_destructive_override_requested:application:1/writer_epoch",
               "value": 1.0
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_destructive_override_requested:application:1/accepted_source_sha256",
+              "value": "80e715ad824318319e4e7588ca2c75152972b3ec91a15048380700f7f950beba"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_destructive_override_requested.fix7.selected_epoch.application.string",
@@ -92632,10 +93107,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_destructive_override_requested:application:1/writer_epoch",
               "value": "1"
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_destructive_override_requested:application:1/accepted_source_sha256",
+              "value": "04b7084e66f1a2bcc0f40157a9e70828e3de8aaefad6c89a130f9bb1eb154f7a"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_destructive_override_requested.fix7.selected_epoch.application.null",
@@ -92645,10 +93126,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_destructive_override_requested:application:1/writer_epoch",
               "value": null
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_destructive_override_requested:application:1/accepted_source_sha256",
+              "value": "ed6dfd89e4444ed75cd0ecb7c05e685e5dff91f374bbbf57da313538657cd06e"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_destructive_override_requested.fix7.selected_epoch.application.array",
@@ -92660,10 +93147,16 @@
               "value": [
                 1
               ]
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_destructive_override_requested:application:1/accepted_source_sha256",
+              "value": "2c83af7d69029d8f748a90a1b09e91facf600c1ab784470682179a421ae346d2"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_destructive_override_requested.fix7.selected_epoch.application.object",
@@ -92675,10 +93168,16 @@
               "value": {
                 "epoch": 1
               }
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_destructive_override_requested:application:1/accepted_source_sha256",
+              "value": "08a979aea754b30c8e148a3d08540753763d4805c6c99def91901eec80baa79c"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_destructive_override_requested.fix7.selected_join.application",
@@ -100345,6 +100844,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_destructive_override_requested:project:0/accepted_source_sha256",
+                "value": "24bb1983723d6279f73dc9e1c1b5b10e7de8dd490f5e228012ce5ef90a3eec81"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -100395,6 +100901,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_destructive_override_requested:project:0/accepted_source_sha256",
+                "value": "b9e7cb312497566a7f2a19942d93c52578a6f877a57dda4f1f194490c183cd21"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -100417,6 +100930,13 @@
                 "target": "bank",
                 "path": "/sources/original:filesafe_destructive_override_requested:project:0/writer_epoch",
                 "value": null
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_destructive_override_requested:project:0/accepted_source_sha256",
+                "value": "53183434ea62f42be3e6b7c6ffe9da4e1b898efcdb83cce62d5f0e932194516d"
               }
             },
             {
@@ -100447,6 +100967,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_destructive_override_requested:project:0/accepted_source_sha256",
+                "value": "3d99335bc01b69fb4ffcc15c09c57501d4879b26e53af53bd56eb1ca2759d2e5"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -100471,6 +100998,13 @@
                 "value": {
                   "epoch": 1
                 }
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_destructive_override_requested:project:0/accepted_source_sha256",
+                "value": "8761970b231a94d24ea6940b31494fb3a9da0043207ebb7276a0cda3dcc705aa"
               }
             },
             {
@@ -100529,6 +101063,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_destructive_override_requested:application:1/accepted_source_sha256",
+                "value": "700b347e0dc3f43469e2a1d29a0ac26e353c1335eb7cae34185955b87f3cb043"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -100551,6 +101092,13 @@
                 "target": "bank",
                 "path": "/sources/original:filesafe_destructive_override_requested:application:1/writer_epoch",
                 "value": 1.0
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_destructive_override_requested:application:1/accepted_source_sha256",
+                "value": "80e715ad824318319e4e7588ca2c75152972b3ec91a15048380700f7f950beba"
               }
             },
             {
@@ -100579,6 +101127,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_destructive_override_requested:application:1/accepted_source_sha256",
+                "value": "04b7084e66f1a2bcc0f40157a9e70828e3de8aaefad6c89a130f9bb1eb154f7a"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -100601,6 +101156,13 @@
                 "target": "bank",
                 "path": "/sources/original:filesafe_destructive_override_requested:application:1/writer_epoch",
                 "value": null
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_destructive_override_requested:application:1/accepted_source_sha256",
+                "value": "ed6dfd89e4444ed75cd0ecb7c05e685e5dff91f374bbbf57da313538657cd06e"
               }
             },
             {
@@ -100631,6 +101193,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_destructive_override_requested:application:1/accepted_source_sha256",
+                "value": "2c83af7d69029d8f748a90a1b09e91facf600c1ab784470682179a421ae346d2"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -100655,6 +101224,13 @@
                 "value": {
                   "epoch": 1
                 }
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_destructive_override_requested:application:1/accepted_source_sha256",
+                "value": "08a979aea754b30c8e148a3d08540753763d4805c6c99def91901eec80baa79c"
               }
             },
             {
@@ -116486,10 +117062,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_guard_init_failed:project:0/writer_epoch",
               "value": true
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_guard_init_failed:project:0/accepted_source_sha256",
+              "value": "6030e943ee19f96552576f0908b8170445967612c43ff1c9f22661c7458ec862"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_guard_init_failed.fix7.selected_epoch.project.float",
@@ -116502,7 +117084,8 @@
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "Project original recipe cannot encode a float source epoch; it has no valid own commitment. Refuse that original recipe boundary, without new serializer or coercion."
         },
         {
           "id": "filesafe_guard_init_failed.fix7.selected_epoch.project.string",
@@ -116512,10 +117095,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_guard_init_failed:project:0/writer_epoch",
               "value": "1"
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_guard_init_failed:project:0/accepted_source_sha256",
+              "value": "ef382c275407b5ffb6d8339464c1315deb2aaa09906211dd8f6dbd36954428ae"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_guard_init_failed.fix7.selected_epoch.project.null",
@@ -116525,10 +117114,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_guard_init_failed:project:0/writer_epoch",
               "value": null
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_guard_init_failed:project:0/accepted_source_sha256",
+              "value": "d2e9b312f969a3e8fa5a2a48e4252d11ff0d8f74f21bc93e01dcd31666d3f9c1"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_guard_init_failed.fix7.selected_epoch.project.array",
@@ -116540,10 +117135,16 @@
               "value": [
                 1
               ]
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_guard_init_failed:project:0/accepted_source_sha256",
+              "value": "d6e1d906d9802b69739a12b3640441b9c260350750bc6edf6819e0d85bf37b0a"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_guard_init_failed.fix7.selected_epoch.project.object",
@@ -116555,10 +117156,16 @@
               "value": {
                 "epoch": 1
               }
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_guard_init_failed:project:0/accepted_source_sha256",
+              "value": "cbabe1ada12f5f7b79a13ea46c4f74ba6c04df50f8fa25f91023cc1d96778181"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_guard_init_failed.fix7.selected_join.project",
@@ -116599,10 +117206,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_guard_init_failed:application:1/writer_epoch",
               "value": true
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_guard_init_failed:application:1/accepted_source_sha256",
+              "value": "ec306c34685ed2fce8462d2cc73dda5e8a6ca18c82ed4255ce64a55ca405a4aa"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_guard_init_failed.fix7.selected_epoch.application.float",
@@ -116612,10 +117225,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_guard_init_failed:application:1/writer_epoch",
               "value": 1.0
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_guard_init_failed:application:1/accepted_source_sha256",
+              "value": "7d9aef07ca59e30e991baae3277f017331e5dc8c14b91f93c266fa0295a0ff32"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_guard_init_failed.fix7.selected_epoch.application.string",
@@ -116625,10 +117244,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_guard_init_failed:application:1/writer_epoch",
               "value": "1"
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_guard_init_failed:application:1/accepted_source_sha256",
+              "value": "a16ba7a5bdd9cc6eb96b3c812515919fd7dfa96cc7b8b98b155f840e7a9c30e1"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_guard_init_failed.fix7.selected_epoch.application.null",
@@ -116638,10 +117263,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_guard_init_failed:application:1/writer_epoch",
               "value": null
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_guard_init_failed:application:1/accepted_source_sha256",
+              "value": "35dccc75445e282ad8bc5bbb83b901b6429f5eacef5f2cff41217d47e96431da"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_guard_init_failed.fix7.selected_epoch.application.array",
@@ -116653,10 +117284,16 @@
               "value": [
                 1
               ]
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_guard_init_failed:application:1/accepted_source_sha256",
+              "value": "80458015b57fee947b9a7517b74fd403031e5a5512e0e32e686db20b95314b55"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_guard_init_failed.fix7.selected_epoch.application.object",
@@ -116668,10 +117305,16 @@
               "value": {
                 "epoch": 1
               }
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_guard_init_failed:application:1/accepted_source_sha256",
+              "value": "c4f0f964ae4ccb58bdffccbbdbdab1fba3946d279c50b8e26da4f8bb6f9a4471"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_guard_init_failed.fix7.selected_join.application",
@@ -124041,6 +124684,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_guard_init_failed:project:0/accepted_source_sha256",
+                "value": "6030e943ee19f96552576f0908b8170445967612c43ff1c9f22661c7458ec862"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -124091,6 +124741,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_guard_init_failed:project:0/accepted_source_sha256",
+                "value": "ef382c275407b5ffb6d8339464c1315deb2aaa09906211dd8f6dbd36954428ae"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -124113,6 +124770,13 @@
                 "target": "bank",
                 "path": "/sources/original:filesafe_guard_init_failed:project:0/writer_epoch",
                 "value": null
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_guard_init_failed:project:0/accepted_source_sha256",
+                "value": "d2e9b312f969a3e8fa5a2a48e4252d11ff0d8f74f21bc93e01dcd31666d3f9c1"
               }
             },
             {
@@ -124143,6 +124807,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_guard_init_failed:project:0/accepted_source_sha256",
+                "value": "d6e1d906d9802b69739a12b3640441b9c260350750bc6edf6819e0d85bf37b0a"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -124167,6 +124838,13 @@
                 "value": {
                   "epoch": 1
                 }
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_guard_init_failed:project:0/accepted_source_sha256",
+                "value": "cbabe1ada12f5f7b79a13ea46c4f74ba6c04df50f8fa25f91023cc1d96778181"
               }
             },
             {
@@ -124225,6 +124903,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_guard_init_failed:application:1/accepted_source_sha256",
+                "value": "ec306c34685ed2fce8462d2cc73dda5e8a6ca18c82ed4255ce64a55ca405a4aa"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -124247,6 +124932,13 @@
                 "target": "bank",
                 "path": "/sources/original:filesafe_guard_init_failed:application:1/writer_epoch",
                 "value": 1.0
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_guard_init_failed:application:1/accepted_source_sha256",
+                "value": "7d9aef07ca59e30e991baae3277f017331e5dc8c14b91f93c266fa0295a0ff32"
               }
             },
             {
@@ -124275,6 +124967,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_guard_init_failed:application:1/accepted_source_sha256",
+                "value": "a16ba7a5bdd9cc6eb96b3c812515919fd7dfa96cc7b8b98b155f840e7a9c30e1"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -124297,6 +124996,13 @@
                 "target": "bank",
                 "path": "/sources/original:filesafe_guard_init_failed:application:1/writer_epoch",
                 "value": null
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_guard_init_failed:application:1/accepted_source_sha256",
+                "value": "35dccc75445e282ad8bc5bbb83b901b6429f5eacef5f2cff41217d47e96431da"
               }
             },
             {
@@ -124327,6 +125033,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_guard_init_failed:application:1/accepted_source_sha256",
+                "value": "80458015b57fee947b9a7517b74fd403031e5a5512e0e32e686db20b95314b55"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -124351,6 +125064,13 @@
                 "value": {
                   "epoch": 1
                 }
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_guard_init_failed:application:1/accepted_source_sha256",
+                "value": "c4f0f964ae4ccb58bdffccbbdbdab1fba3946d279c50b8e26da4f8bb6f9a4471"
               }
             },
             {
@@ -140376,10 +141096,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_path_denied:project:0/writer_epoch",
               "value": true
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_path_denied:project:0/accepted_source_sha256",
+              "value": "9ecd142421a53748ec2bfab22d4d7a80095e159d4bd99ad3db3ed383976f8ed2"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_path_denied.fix7.selected_epoch.project.float",
@@ -140392,7 +141118,8 @@
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "Project original recipe cannot encode a float source epoch; it has no valid own commitment. Refuse that original recipe boundary, without new serializer or coercion."
         },
         {
           "id": "filesafe_path_denied.fix7.selected_epoch.project.string",
@@ -140402,10 +141129,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_path_denied:project:0/writer_epoch",
               "value": "1"
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_path_denied:project:0/accepted_source_sha256",
+              "value": "addcf9a46d00e41141f451e068c1532e9269067592efc8562284d9c17b0a6adf"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_path_denied.fix7.selected_epoch.project.null",
@@ -140415,10 +141148,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_path_denied:project:0/writer_epoch",
               "value": null
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_path_denied:project:0/accepted_source_sha256",
+              "value": "199eeedb473a7111d4a3191e50274974ed71601f1a332c97377f06f937f1787d"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_path_denied.fix7.selected_epoch.project.array",
@@ -140430,10 +141169,16 @@
               "value": [
                 1
               ]
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_path_denied:project:0/accepted_source_sha256",
+              "value": "beee0fb1b2bfdc427544b2b3aa380f19f6cb4b268accb101b2a84656c41f4fb7"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_path_denied.fix7.selected_epoch.project.object",
@@ -140445,10 +141190,16 @@
               "value": {
                 "epoch": 1
               }
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_path_denied:project:0/accepted_source_sha256",
+              "value": "7e8176a232c638d39ce61b4168cc94fd12fc19578f73fdb2b6912a38ffb10a0f"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_path_denied.fix7.selected_join.project",
@@ -140489,10 +141240,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_path_denied:application:1/writer_epoch",
               "value": true
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_path_denied:application:1/accepted_source_sha256",
+              "value": "70ae14709566ea022acd59e97011bdb3da33a293e23c11d79cb1ccd1bb6f39ef"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_path_denied.fix7.selected_epoch.application.float",
@@ -140502,10 +141259,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_path_denied:application:1/writer_epoch",
               "value": 1.0
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_path_denied:application:1/accepted_source_sha256",
+              "value": "561d2e0e20acd9caec77c35105f83ae81f3e44d4d69303e1b1c30618fbc1557f"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_path_denied.fix7.selected_epoch.application.string",
@@ -140515,10 +141278,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_path_denied:application:1/writer_epoch",
               "value": "1"
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_path_denied:application:1/accepted_source_sha256",
+              "value": "cfb1beda983fc92c6bbb48a5b271c2e3d790a09c45c847f4fd7c5cc8d8ac979b"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_path_denied.fix7.selected_epoch.application.null",
@@ -140528,10 +141297,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_path_denied:application:1/writer_epoch",
               "value": null
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_path_denied:application:1/accepted_source_sha256",
+              "value": "1299ed598ef90641be0ca4a215aadff5ff6831bd8d5df42456175706094c2318"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_path_denied.fix7.selected_epoch.application.array",
@@ -140543,10 +141318,16 @@
               "value": [
                 1
               ]
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_path_denied:application:1/accepted_source_sha256",
+              "value": "978fd1b4338010d7e8d41ca4f18efda2ea7f96534fe5f0b59e60d04d593cd07d"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_path_denied.fix7.selected_epoch.application.object",
@@ -140558,10 +141339,16 @@
               "value": {
                 "epoch": 1
               }
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_path_denied:application:1/accepted_source_sha256",
+              "value": "9fae38eba3f9fa96060760ed11c108444fbd290c5f05292e719fd4494064c273"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_path_denied.fix7.selected_join.application",
@@ -148045,6 +148832,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_path_denied:project:0/accepted_source_sha256",
+                "value": "9ecd142421a53748ec2bfab22d4d7a80095e159d4bd99ad3db3ed383976f8ed2"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -148095,6 +148889,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_path_denied:project:0/accepted_source_sha256",
+                "value": "addcf9a46d00e41141f451e068c1532e9269067592efc8562284d9c17b0a6adf"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -148117,6 +148918,13 @@
                 "target": "bank",
                 "path": "/sources/original:filesafe_path_denied:project:0/writer_epoch",
                 "value": null
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_path_denied:project:0/accepted_source_sha256",
+                "value": "199eeedb473a7111d4a3191e50274974ed71601f1a332c97377f06f937f1787d"
               }
             },
             {
@@ -148147,6 +148955,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_path_denied:project:0/accepted_source_sha256",
+                "value": "beee0fb1b2bfdc427544b2b3aa380f19f6cb4b268accb101b2a84656c41f4fb7"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -148171,6 +148986,13 @@
                 "value": {
                   "epoch": 1
                 }
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_path_denied:project:0/accepted_source_sha256",
+                "value": "7e8176a232c638d39ce61b4168cc94fd12fc19578f73fdb2b6912a38ffb10a0f"
               }
             },
             {
@@ -148229,6 +149051,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_path_denied:application:1/accepted_source_sha256",
+                "value": "70ae14709566ea022acd59e97011bdb3da33a293e23c11d79cb1ccd1bb6f39ef"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -148251,6 +149080,13 @@
                 "target": "bank",
                 "path": "/sources/original:filesafe_path_denied:application:1/writer_epoch",
                 "value": 1.0
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_path_denied:application:1/accepted_source_sha256",
+                "value": "561d2e0e20acd9caec77c35105f83ae81f3e44d4d69303e1b1c30618fbc1557f"
               }
             },
             {
@@ -148279,6 +149115,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_path_denied:application:1/accepted_source_sha256",
+                "value": "cfb1beda983fc92c6bbb48a5b271c2e3d790a09c45c847f4fd7c5cc8d8ac979b"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -148301,6 +149144,13 @@
                 "target": "bank",
                 "path": "/sources/original:filesafe_path_denied:application:1/writer_epoch",
                 "value": null
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_path_denied:application:1/accepted_source_sha256",
+                "value": "1299ed598ef90641be0ca4a215aadff5ff6831bd8d5df42456175706094c2318"
               }
             },
             {
@@ -148331,6 +149181,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_path_denied:application:1/accepted_source_sha256",
+                "value": "978fd1b4338010d7e8d41ca4f18efda2ea7f96534fe5f0b59e60d04d593cd07d"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -148355,6 +149212,13 @@
                 "value": {
                   "epoch": 1
                 }
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_path_denied:application:1/accepted_source_sha256",
+                "value": "9fae38eba3f9fa96060760ed11c108444fbd290c5f05292e719fd4494064c273"
               }
             },
             {
@@ -163774,10 +164638,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_policy_degraded:project:0/writer_epoch",
               "value": true
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_policy_degraded:project:0/accepted_source_sha256",
+              "value": "0d99f8f37b692e4a2bce084c7a6a584d90d140ff86f03ac020a4690fda1e5a39"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_policy_degraded.fix7.selected_epoch.project.float",
@@ -163790,7 +164660,8 @@
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "Project original recipe cannot encode a float source epoch; it has no valid own commitment. Refuse that original recipe boundary, without new serializer or coercion."
         },
         {
           "id": "filesafe_policy_degraded.fix7.selected_epoch.project.string",
@@ -163800,10 +164671,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_policy_degraded:project:0/writer_epoch",
               "value": "1"
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_policy_degraded:project:0/accepted_source_sha256",
+              "value": "f57b18f90eee027f1e1230a1f4c8197f59c9d6dab7932033ddc1ba3ed4b73a99"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_policy_degraded.fix7.selected_epoch.project.null",
@@ -163813,10 +164690,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_policy_degraded:project:0/writer_epoch",
               "value": null
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_policy_degraded:project:0/accepted_source_sha256",
+              "value": "423ff3e048ae339235fa230fe03cc155784a12662508afb46079cb5fafe52a92"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_policy_degraded.fix7.selected_epoch.project.array",
@@ -163828,10 +164711,16 @@
               "value": [
                 1
               ]
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_policy_degraded:project:0/accepted_source_sha256",
+              "value": "9b449a5143b6721c7ec5107c43f11e258e59a15e3ae1dae43fd1433afbab72ee"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_policy_degraded.fix7.selected_epoch.project.object",
@@ -163843,10 +164732,16 @@
               "value": {
                 "epoch": 1
               }
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_policy_degraded:project:0/accepted_source_sha256",
+              "value": "7de681aa30582fe89e1d0aab5b9693ada0614c518b5c86d2acd60307b6181aa1"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_policy_degraded.fix7.selected_join.project",
@@ -163887,10 +164782,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_policy_degraded:application:1/writer_epoch",
               "value": true
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_policy_degraded:application:1/accepted_source_sha256",
+              "value": "b9aa453821cb6becd610e4098bd9948d2817c0cddb2fadfd9e9d35b131e0ccc2"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_policy_degraded.fix7.selected_epoch.application.float",
@@ -163900,10 +164801,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_policy_degraded:application:1/writer_epoch",
               "value": 1.0
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_policy_degraded:application:1/accepted_source_sha256",
+              "value": "77b570d6da37afb56fc273b9c7233bbfcb520bb43f18448c383c33ece054a656"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_policy_degraded.fix7.selected_epoch.application.string",
@@ -163913,10 +164820,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_policy_degraded:application:1/writer_epoch",
               "value": "1"
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_policy_degraded:application:1/accepted_source_sha256",
+              "value": "edd621c41234aec296e99480bd01edf2cce3bc0fe5d140ab947c65bfafe5216c"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_policy_degraded.fix7.selected_epoch.application.null",
@@ -163926,10 +164839,16 @@
               "target": "bank",
               "path": "/sources/original:filesafe_policy_degraded:application:1/writer_epoch",
               "value": null
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_policy_degraded:application:1/accepted_source_sha256",
+              "value": "7810a0059ea79f3ab3af0cf1d4ae86a4bb49f52ae05b1854adb6dd342a4a9419"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_policy_degraded.fix7.selected_epoch.application.array",
@@ -163941,10 +164860,16 @@
               "value": [
                 1
               ]
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_policy_degraded:application:1/accepted_source_sha256",
+              "value": "384b5373103065082a8e760c0317c7518377648bcca2ff7098d18d4eeb55f297"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_policy_degraded.fix7.selected_epoch.application.object",
@@ -163956,10 +164881,16 @@
               "value": {
                 "epoch": 1
               }
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:filesafe_policy_degraded:application:1/accepted_source_sha256",
+              "value": "35e932593d1bf62864672e912618ea9a8dc74b160d0d7466da94be81f907d535"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "filesafe_policy_degraded.fix7.selected_join.application",
@@ -171279,6 +172210,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_policy_degraded:project:0/accepted_source_sha256",
+                "value": "0d99f8f37b692e4a2bce084c7a6a584d90d140ff86f03ac020a4690fda1e5a39"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -171329,6 +172267,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_policy_degraded:project:0/accepted_source_sha256",
+                "value": "f57b18f90eee027f1e1230a1f4c8197f59c9d6dab7932033ddc1ba3ed4b73a99"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -171351,6 +172296,13 @@
                 "target": "bank",
                 "path": "/sources/original:filesafe_policy_degraded:project:0/writer_epoch",
                 "value": null
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_policy_degraded:project:0/accepted_source_sha256",
+                "value": "423ff3e048ae339235fa230fe03cc155784a12662508afb46079cb5fafe52a92"
               }
             },
             {
@@ -171381,6 +172333,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_policy_degraded:project:0/accepted_source_sha256",
+                "value": "9b449a5143b6721c7ec5107c43f11e258e59a15e3ae1dae43fd1433afbab72ee"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -171405,6 +172364,13 @@
                 "value": {
                   "epoch": 1
                 }
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_policy_degraded:project:0/accepted_source_sha256",
+                "value": "7de681aa30582fe89e1d0aab5b9693ada0614c518b5c86d2acd60307b6181aa1"
               }
             },
             {
@@ -171463,6 +172429,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_policy_degraded:application:1/accepted_source_sha256",
+                "value": "b9aa453821cb6becd610e4098bd9948d2817c0cddb2fadfd9e9d35b131e0ccc2"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -171485,6 +172458,13 @@
                 "target": "bank",
                 "path": "/sources/original:filesafe_policy_degraded:application:1/writer_epoch",
                 "value": 1.0
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_policy_degraded:application:1/accepted_source_sha256",
+                "value": "77b570d6da37afb56fc273b9c7233bbfcb520bb43f18448c383c33ece054a656"
               }
             },
             {
@@ -171513,6 +172493,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_policy_degraded:application:1/accepted_source_sha256",
+                "value": "edd621c41234aec296e99480bd01edf2cce3bc0fe5d140ab947c65bfafe5216c"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -171535,6 +172522,13 @@
                 "target": "bank",
                 "path": "/sources/original:filesafe_policy_degraded:application:1/writer_epoch",
                 "value": null
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_policy_degraded:application:1/accepted_source_sha256",
+                "value": "7810a0059ea79f3ab3af0cf1d4ae86a4bb49f52ae05b1854adb6dd342a4a9419"
               }
             },
             {
@@ -171565,6 +172559,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_policy_degraded:application:1/accepted_source_sha256",
+                "value": "384b5373103065082a8e760c0317c7518377648bcca2ff7098d18d4eeb55f297"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -171589,6 +172590,13 @@
                 "value": {
                   "epoch": 1
                 }
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:filesafe_policy_degraded:application:1/accepted_source_sha256",
+                "value": "35e932593d1bf62864672e912618ea9a8dc74b160d0d7466da94be81f907d535"
               }
             },
             {
@@ -200560,10 +201568,16 @@
               "target": "bank",
               "path": "/sources/original:safe_point_created:project:0/writer_epoch",
               "value": true
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:safe_point_created:project:0/accepted_source_sha256",
+              "value": "4ede8dd52de1ebc6c1c5bffba4ad105be3d5c62230f0dcdafd4a8efac883083a"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "safe_point_created.fix7.selected_epoch.project.float",
@@ -200576,7 +201590,8 @@
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "Project original recipe cannot encode a float source epoch; it has no valid own commitment. Refuse that original recipe boundary, without new serializer or coercion."
         },
         {
           "id": "safe_point_created.fix7.selected_epoch.project.string",
@@ -200586,10 +201601,16 @@
               "target": "bank",
               "path": "/sources/original:safe_point_created:project:0/writer_epoch",
               "value": "1"
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:safe_point_created:project:0/accepted_source_sha256",
+              "value": "bec65bccbb4cfa3ea086611b605112445e5570969724178f9a83633f5cf92165"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "safe_point_created.fix7.selected_epoch.project.null",
@@ -200599,10 +201620,16 @@
               "target": "bank",
               "path": "/sources/original:safe_point_created:project:0/writer_epoch",
               "value": null
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:safe_point_created:project:0/accepted_source_sha256",
+              "value": "674fefd27a0a235b7fb97cfac783a6907db67443de43fb6a01dc39e05561b0e2"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "safe_point_created.fix7.selected_epoch.project.array",
@@ -200614,10 +201641,16 @@
               "value": [
                 1
               ]
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:safe_point_created:project:0/accepted_source_sha256",
+              "value": "3f3e9a80c04c36c1cdb43aeac82c569e6d9b82c786956fc6a0787069169d877d"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "safe_point_created.fix7.selected_epoch.project.object",
@@ -200629,10 +201662,16 @@
               "value": {
                 "epoch": 1
               }
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:safe_point_created:project:0/accepted_source_sha256",
+              "value": "58dedbbe9c6d68d551d46d72b43153a64d2a03735a2f1cefd0d53e8281df4812"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "safe_point_created.fix7.selected_join.project",
@@ -200673,10 +201712,16 @@
               "target": "bank",
               "path": "/sources/original:safe_point_created:application:1/writer_epoch",
               "value": true
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:safe_point_created:application:1/accepted_source_sha256",
+              "value": "d1b857d5745f4c0ca22e8453357c05739b2a584fa98e00abdf0b73db6b11f9fe"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "safe_point_created.fix7.selected_epoch.application.float",
@@ -200686,10 +201731,16 @@
               "target": "bank",
               "path": "/sources/original:safe_point_created:application:1/writer_epoch",
               "value": 1.0
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:safe_point_created:application:1/accepted_source_sha256",
+              "value": "1e7e05d534f37ed79ed99f9a8f38eff7dd30f2588bc41229bdd10faacf122618"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "safe_point_created.fix7.selected_epoch.application.string",
@@ -200699,10 +201750,16 @@
               "target": "bank",
               "path": "/sources/original:safe_point_created:application:1/writer_epoch",
               "value": "1"
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:safe_point_created:application:1/accepted_source_sha256",
+              "value": "c5a88507323a0481c213dcf7ccb836449ff27cd814f41c0b2ca97d238b1d13d7"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "safe_point_created.fix7.selected_epoch.application.null",
@@ -200712,10 +201769,16 @@
               "target": "bank",
               "path": "/sources/original:safe_point_created:application:1/writer_epoch",
               "value": null
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:safe_point_created:application:1/accepted_source_sha256",
+              "value": "073c3f101938e113f5f609f277e339700ef4fa9a1cb4f94d5622e33db654ee75"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "safe_point_created.fix7.selected_epoch.application.array",
@@ -200727,10 +201790,16 @@
               "value": [
                 1
               ]
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:safe_point_created:application:1/accepted_source_sha256",
+              "value": "5e42e901ae93078485adaec4fc0977de3d5fe836fef95e5a106b33dbc6293aa9"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "safe_point_created.fix7.selected_epoch.application.object",
@@ -200742,10 +201811,16 @@
               "value": {
                 "epoch": 1
               }
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:safe_point_created:application:1/accepted_source_sha256",
+              "value": "93dee5e77764a6b5afeb50da8d5320d71ea93ae083e899b4f623bac18f3fee2b"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "safe_point_created.fix7.selected_join.application",
@@ -208698,6 +209773,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:safe_point_created:project:0/accepted_source_sha256",
+                "value": "4ede8dd52de1ebc6c1c5bffba4ad105be3d5c62230f0dcdafd4a8efac883083a"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -208748,6 +209830,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:safe_point_created:project:0/accepted_source_sha256",
+                "value": "bec65bccbb4cfa3ea086611b605112445e5570969724178f9a83633f5cf92165"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -208770,6 +209859,13 @@
                 "target": "bank",
                 "path": "/sources/original:safe_point_created:project:0/writer_epoch",
                 "value": null
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:safe_point_created:project:0/accepted_source_sha256",
+                "value": "674fefd27a0a235b7fb97cfac783a6907db67443de43fb6a01dc39e05561b0e2"
               }
             },
             {
@@ -208800,6 +209896,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:safe_point_created:project:0/accepted_source_sha256",
+                "value": "3f3e9a80c04c36c1cdb43aeac82c569e6d9b82c786956fc6a0787069169d877d"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -208824,6 +209927,13 @@
                 "value": {
                   "epoch": 1
                 }
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:safe_point_created:project:0/accepted_source_sha256",
+                "value": "58dedbbe9c6d68d551d46d72b43153a64d2a03735a2f1cefd0d53e8281df4812"
               }
             },
             {
@@ -208882,6 +209992,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:safe_point_created:application:1/accepted_source_sha256",
+                "value": "d1b857d5745f4c0ca22e8453357c05739b2a584fa98e00abdf0b73db6b11f9fe"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -208904,6 +210021,13 @@
                 "target": "bank",
                 "path": "/sources/original:safe_point_created:application:1/writer_epoch",
                 "value": 1.0
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:safe_point_created:application:1/accepted_source_sha256",
+                "value": "1e7e05d534f37ed79ed99f9a8f38eff7dd30f2588bc41229bdd10faacf122618"
               }
             },
             {
@@ -208932,6 +210056,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:safe_point_created:application:1/accepted_source_sha256",
+                "value": "c5a88507323a0481c213dcf7ccb836449ff27cd814f41c0b2ca97d238b1d13d7"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -208954,6 +210085,13 @@
                 "target": "bank",
                 "path": "/sources/original:safe_point_created:application:1/writer_epoch",
                 "value": null
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:safe_point_created:application:1/accepted_source_sha256",
+                "value": "073c3f101938e113f5f609f277e339700ef4fa9a1cb4f94d5622e33db654ee75"
               }
             },
             {
@@ -208984,6 +210122,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:safe_point_created:application:1/accepted_source_sha256",
+                "value": "5e42e901ae93078485adaec4fc0977de3d5fe836fef95e5a106b33dbc6293aa9"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -209008,6 +210153,13 @@
                 "value": {
                   "epoch": 1
                 }
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:safe_point_created:application:1/accepted_source_sha256",
+                "value": "93dee5e77764a6b5afeb50da8d5320d71ea93ae083e899b4f623bac18f3fee2b"
               }
             },
             {
@@ -288064,10 +289216,16 @@
               "target": "bank",
               "path": "/sources/original:safe_point_restored:project:0/writer_epoch",
               "value": true
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:safe_point_restored:project:0/accepted_source_sha256",
+              "value": "c7cc6092e438e45a6a50c4dcfefd57c5e19182a1691d52053913900aca08a3e7"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "safe_point_restored.fix7.selected_epoch.project.float",
@@ -288080,7 +289238,8 @@
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "Project original recipe cannot encode a float source epoch; it has no valid own commitment. Refuse that original recipe boundary, without new serializer or coercion."
         },
         {
           "id": "safe_point_restored.fix7.selected_epoch.project.string",
@@ -288090,10 +289249,16 @@
               "target": "bank",
               "path": "/sources/original:safe_point_restored:project:0/writer_epoch",
               "value": "1"
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:safe_point_restored:project:0/accepted_source_sha256",
+              "value": "ae63a82438f0742da43f8b752bda8a0771e47f77f80a22eb8630f44145c46dbd"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "safe_point_restored.fix7.selected_epoch.project.null",
@@ -288103,10 +289268,16 @@
               "target": "bank",
               "path": "/sources/original:safe_point_restored:project:0/writer_epoch",
               "value": null
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:safe_point_restored:project:0/accepted_source_sha256",
+              "value": "fd663e3dc6be1a422c3c5f16f86bf20506466f638fe03a2c6e7e3d3429511dc7"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "safe_point_restored.fix7.selected_epoch.project.array",
@@ -288118,10 +289289,16 @@
               "value": [
                 1
               ]
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:safe_point_restored:project:0/accepted_source_sha256",
+              "value": "1c4a42840bc31b032ceb36ef30d76664566600c77ea40bf97cc13c5499e0910f"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "safe_point_restored.fix7.selected_epoch.project.object",
@@ -288133,10 +289310,16 @@
               "value": {
                 "epoch": 1
               }
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:safe_point_restored:project:0/accepted_source_sha256",
+              "value": "5c42d16788cbec0efa1129fb09da20ab743d6f7626934ecf615a9c4c6704bcd0"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "safe_point_restored.fix7.selected_join.project",
@@ -288177,10 +289360,16 @@
               "target": "bank",
               "path": "/sources/original:safe_point_restored:application:1/writer_epoch",
               "value": true
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:safe_point_restored:application:1/accepted_source_sha256",
+              "value": "02d6ed5bb8b5a8982389a7520cd94d7713c85684a27c32a0f9d52e0c12fb766c"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "safe_point_restored.fix7.selected_epoch.application.float",
@@ -288190,10 +289379,16 @@
               "target": "bank",
               "path": "/sources/original:safe_point_restored:application:1/writer_epoch",
               "value": 1.0
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:safe_point_restored:application:1/accepted_source_sha256",
+              "value": "09336ad70b054367fa92a3361f44932a679740efe491149d89b7d0a0c865c63b"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "safe_point_restored.fix7.selected_epoch.application.string",
@@ -288203,10 +289398,16 @@
               "target": "bank",
               "path": "/sources/original:safe_point_restored:application:1/writer_epoch",
               "value": "1"
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:safe_point_restored:application:1/accepted_source_sha256",
+              "value": "5456d2d4e804b35485639ace31c052d4b37e48f485d80169530e1d40088457b5"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "safe_point_restored.fix7.selected_epoch.application.null",
@@ -288216,10 +289417,16 @@
               "target": "bank",
               "path": "/sources/original:safe_point_restored:application:1/writer_epoch",
               "value": null
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:safe_point_restored:application:1/accepted_source_sha256",
+              "value": "ea0492d88031c02c0f25a04731ae61a383bcfb23dcaf79261b235edded146d80"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "safe_point_restored.fix7.selected_epoch.application.array",
@@ -288231,10 +289438,16 @@
               "value": [
                 1
               ]
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:safe_point_restored:application:1/accepted_source_sha256",
+              "value": "5966d4078d6cd7b0a54761659312c6f97bcd36f370a019c455a014f808dbd1f7"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "safe_point_restored.fix7.selected_epoch.application.object",
@@ -288246,10 +289459,16 @@
               "value": {
                 "epoch": 1
               }
+            },
+            {
+              "target": "bank",
+              "path": "/sources/original:safe_point_restored:application:1/accepted_source_sha256",
+              "value": "bb07e7e29a7d7ae283ee656c8fbdb1bed922ab9d2ac06a43c407898932bf1579"
             }
           ],
           "expected_error": "original_source_not_selected",
-          "isolation_layer": "selected_original_custody"
+          "isolation_layer": "selected_original_custody",
+          "repair_note": "The selected record own commitment is recomputed under its unchanged original recipe; only selected epoch type is invalid."
         },
         {
           "id": "safe_point_restored.fix7.selected_join.application",
@@ -296562,6 +297781,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:safe_point_restored:project:0/accepted_source_sha256",
+                "value": "c7cc6092e438e45a6a50c4dcfefd57c5e19182a1691d52053913900aca08a3e7"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -296612,6 +297838,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:safe_point_restored:project:0/accepted_source_sha256",
+                "value": "ae63a82438f0742da43f8b752bda8a0771e47f77f80a22eb8630f44145c46dbd"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -296634,6 +297867,13 @@
                 "target": "bank",
                 "path": "/sources/original:safe_point_restored:project:0/writer_epoch",
                 "value": null
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:safe_point_restored:project:0/accepted_source_sha256",
+                "value": "fd663e3dc6be1a422c3c5f16f86bf20506466f638fe03a2c6e7e3d3429511dc7"
               }
             },
             {
@@ -296664,6 +297904,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:safe_point_restored:project:0/accepted_source_sha256",
+                "value": "1c4a42840bc31b032ceb36ef30d76664566600c77ea40bf97cc13c5499e0910f"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -296688,6 +297935,13 @@
                 "value": {
                   "epoch": 1
                 }
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:safe_point_restored:project:0/accepted_source_sha256",
+                "value": "5c42d16788cbec0efa1129fb09da20ab743d6f7626934ecf615a9c4c6704bcd0"
               }
             },
             {
@@ -296746,6 +298000,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:safe_point_restored:application:1/accepted_source_sha256",
+                "value": "02d6ed5bb8b5a8982389a7520cd94d7713c85684a27c32a0f9d52e0c12fb766c"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -296768,6 +298029,13 @@
                 "target": "bank",
                 "path": "/sources/original:safe_point_restored:application:1/writer_epoch",
                 "value": 1.0
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:safe_point_restored:application:1/accepted_source_sha256",
+                "value": "09336ad70b054367fa92a3361f44932a679740efe491149d89b7d0a0c865c63b"
               }
             },
             {
@@ -296796,6 +298064,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:safe_point_restored:application:1/accepted_source_sha256",
+                "value": "5456d2d4e804b35485639ace31c052d4b37e48f485d80169530e1d40088457b5"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -296818,6 +298093,13 @@
                 "target": "bank",
                 "path": "/sources/original:safe_point_restored:application:1/writer_epoch",
                 "value": null
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:safe_point_restored:application:1/accepted_source_sha256",
+                "value": "ea0492d88031c02c0f25a04731ae61a383bcfb23dcaf79261b235edded146d80"
               }
             },
             {
@@ -296848,6 +298130,13 @@
               }
             },
             {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:safe_point_restored:application:1/accepted_source_sha256",
+                "value": "5966d4078d6cd7b0a54761659312c6f97bcd36f370a019c455a014f808dbd1f7"
+              }
+            },
+            {
               "action": "owner_commit",
               "expected": "source_unavailable"
             },
@@ -296872,6 +298161,13 @@
                 "value": {
                   "epoch": 1
                 }
+              }
+            },
+            {
+              "edit": {
+                "target": "bank",
+                "path": "/sources/original:safe_point_restored:application:1/accepted_source_sha256",
+                "value": "bb07e7e29a7d7ae283ee656c8fbdb1bed922ab9d2ac06a43c407898932bf1579"
               }
             },
             {
