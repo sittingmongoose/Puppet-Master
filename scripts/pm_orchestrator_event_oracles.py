@@ -9,6 +9,7 @@ import hashlib
 import json
 import re
 from functools import lru_cache
+from pathlib import Path
 
 import blake3
 import msgpack
@@ -30,6 +31,8 @@ SEMANTIC_FIELDS = (
     'redaction_profile', 'migration',
 )
 LIMIT = 16384
+LEGACY_RECIPE = 'ea-do-json-v1'
+CURRENT_RECIPE = 'ea-do-rfc8785-v2'
 BODY_FIELDS = {
     'subagent.completed': 'result_summary', 'subagent.failed': 'error_message',
     'subagent.message_received': 'response_preview', 'subagent.message_sent': 'message_preview',
@@ -100,6 +103,53 @@ def canonical_loads(text):
     return json.loads(text, parse_int=parse, parse_float=parse, parse_constant=parse)
 
 
+def fixture_loads(text):
+    """Decode original domains intact; check raw tokens only at current inputs.
+
+    Retained events, Storage receipts and typed sources are observations, not
+    current writer input. No recursive key-name or numeric-rewriting exemption.
+    """
+    class Number:
+        def __init__(self, token):
+            self.token = token
+    current = {
+        'valid_payloads': {'payload'}, 'event_cases': {'event', 'logical_payload', 'producer_context'},
+        'body_cases': {'payload'}, 'board_storage_cases': {'payload', 'envelope'},
+        'retry_cases': {'candidate'}, 'retry_transition_cases': {'context'},
+    }
+    raw = json.loads(text, parse_int=Number, parse_float=Number, parse_constant=Number)
+    def decode(value, path=()):
+        if isinstance(value, Number):
+            is_current = (len(path) >= 3 and path[0] in current and path[2] in current[path[0]])
+            if is_current and number_token_errors(value.token):
+                raise ValueError('number_token_canonical:' + value.token)
+            return json.loads(value.token)
+        if isinstance(value, dict):
+            return {key: decode(child, path + (key,)) for key, child in value.items()}
+        if isinstance(value, list):
+            return [decode(child, path + (index,)) for index, child in enumerate(value)]
+        return value
+    return decode(raw)
+
+
+def integer_value(value):
+    """JSON integer semantics, preserving originally valid integral floats."""
+    return type(value) in (int, float) and (type(value) is int or value.is_integer())
+
+
+def retry_context_errors(context):
+    if not isinstance(context, dict):
+        return ['retry_context_type']
+    expected = {key: bool for key in ('interruption_fence', 'permission_current',
+        'parent_ceiling_current', 'stop_latched', 'deadline_expired', 'same_child_lineage')}
+    expected.update({key: (int, float) for key in ('attempt_number', 'prior_attempt_number')})
+    expected.update({key: str for key in ('retry_cause', 'prior_state', 'operation_kind')})
+    return ['retry_context_type'] if (any(type(context.get(key)) not in (kind if isinstance(kind, tuple) else (kind,))
+        for key, kind in expected.items()) or 'prior_terminal_reason' not in context
+        or type(context['prior_terminal_reason']) not in (str, type(None))
+        or any(not integer_value(context[key]) for key in ('attempt_number', 'prior_attempt_number'))) else []
+
+
 REQUIRED_ORIGINAL_STAGES = (
     'original_intent', 'accepted_original_source', 'current_owner_and_stop_fence',
     'canonical_pending_or_reservation', 'owner_commit',
@@ -146,10 +196,22 @@ def pack_entry(value, media_type='application/msgpack'):
             'bytes_durable': True, 'index_durable': True}
 
 
+def pack_type_errors(entry):
+    if (not integer_value(entry['byte_size']) or type(entry['bytes_durable']) is not bool
+            or type(entry['index_durable']) is not bool
+            or (entry['media_type'] == 'application/msgpack' and type(entry['value']) is not dict)
+            or (entry['media_type'] == 'text/plain; charset=utf-8' and type(entry['value']) is not str)):
+        return ['payload_pack_types']
+    return []
+
+
 def pack_errors(entry, *, large=False):
     if not isinstance(entry, dict) or set(entry) != {
             'blake3_id', 'byte_size', 'media_type', 'value', 'bytes_durable', 'index_durable'}:
         return ['payload_pack_shape']
+    type_errors = pack_type_errors(entry)
+    if type_errors:
+        return type_errors
     if (entry['media_type'] not in ('application/msgpack', 'text/plain; charset=utf-8')
             or not isinstance(entry['blake3_id'], str)
             or re.fullmatch(r'blake3:[0-9a-f]{64}', entry['blake3_id']) is None):
@@ -163,8 +225,18 @@ def pack_errors(entry, *, large=False):
     return []
 
 
+def transport_type_errors(event, logical, packs):
+    if (type(event) is not dict or type(logical) is not dict or type(packs) is not dict
+            or type(event.get('payload')) is not dict):
+        return ['payload_types']
+    return []
+
+
 def transport_errors(event, logical, packs, *, ingest_encoding='decoded'):
     errors = []
+    type_errors = transport_type_errors(event, logical, packs)
+    if type_errors:
+        return type_errors
     try:
         if len(packed(event['payload'])) > LIMIT:
             errors.append('inline_payload_over_16k')
@@ -193,8 +265,19 @@ def transport_errors(event, logical, packs, *, ingest_encoding='decoded'):
     return errors
 
 
+def phase_context_errors(context):
+    if (type(context) is not dict or not integer_value(context.get('max_questions'))
+            or type(context.get('completion_signal')) is not bool
+            or type(context.get('phase_state')) is not str):
+        return ['phase_context_type']
+    return []
+
+
 def predicate_errors(family, payload, context, retry_allowed):
     if family == 'phase.force_completed':
+        type_errors = phase_context_errors(context)
+        if type_errors:
+            return type_errors
         if (context.get('phase_state') != 'active' or context.get('completion_signal') is not False
                 or payload['question_count'] <= payload['max_questions'] + 1
                 or context.get('max_questions') != payload['max_questions']):
@@ -309,7 +392,8 @@ def selected_validators(root, format_checker):
 
 def event_errors(case, schema, identity, retry_allowed, root, formats, *, historical=False):
     event, payload = case['event'], case['logical_payload']
-    if not historical and (number_domain_errors(event) or number_domain_errors(payload)):
+    if not historical and (number_domain_errors(event) or number_domain_errors(payload)
+                           or number_domain_errors(case['producer_context'])):
         return ['number_domain']
     refs = reference_errors(schema, '#/$defs/' + case['definition'], selected_documents(root))
     if refs:
@@ -525,9 +609,28 @@ def successor_errors(root):
     return errors
 
 
+@lru_cache(maxsize=1)
+def retry_schemas():
+    plans = Path(__file__).resolve().parents[1] / 'Plans'
+    event = StrictValidator(json.loads((plans / 'event_record.schema.json').read_text()))
+    payloads = json.loads((plans / 'orchestrator_event_payloads.schema.json').read_text())
+    return event, {name: StrictValidator(value) for name, value in payloads['$defs'].items()}
+
+
+def retry_shape_valid(event):
+    envelope, payloads = retry_schemas()
+    if not envelope.is_valid(event):
+        return False
+    definition = event['event_type'].replace('.', '_')
+    return (definition in payloads and (event['payload_ref'] is not None
+            or payloads[definition].is_valid(event['payload'])))
+
+
 def retry_outcome(original, candidate):
     if number_domain_errors(candidate):
         return {'status': 'number_domain', 'appended': False, 'receipt': None}
+    if not retry_shape_valid(original) or not retry_shape_valid(candidate):
+        return {'status': 'retry_value_schema', 'appended': False, 'receipt': None}
     # Refuse replay-only even if event/key and semantic fields are identical.
     if candidate['replay_policy'] == 'projector_replay_only':
         return {'status': 'replay_only_not_appendable', 'appended': False, 'receipt': None}
@@ -569,11 +672,28 @@ def historical_read_errors(case, schema, owner_module):
     # child/phase/model/board/Stop/deadline/permission state cannot recapture them.
     original = copy.deepcopy(case)
     original['producer_context'] = state['original_producer_context']
-    errors += event_errors(original, schema, owner_module.identity, owner_module.retry_allowed,
+    recipe = state['original_identity_recipe']
+    proof = state['original_recipe_evidence']
+    expected_recipe = recipe_witness_value(case, recipe)
+    if (not proof['verified'] or proof['value'] != expected_recipe
+            or proof['source_ref'] != 'writer-recipe:' + event['event_id']
+            or proof['source_sha256'] != hashlib.sha256(packed(expected_recipe)).hexdigest()):
+        errors.append('historical_original_recipe')
+    selected_identity = lambda family, payload: owner_module.historical_identity(family, payload, recipe)
+    errors += event_errors(original, schema, selected_identity, owner_module.retry_allowed,
                            root, formats, historical=True)
     if not state['current_access_allowed'] or state['source_deleted'] or not state['hold_allows_disclosure']:
         errors.append('historical_disclosure_fence')
     return errors
+
+
+def recover_original(case, schema, owner_module, candidate=None):
+    """Resolve verified original bytes before a retry; never remint an old ID."""
+    if historical_read_errors(case, schema, owner_module):
+        return {'status': 'historical_original_unverified', 'appended': False, 'receipt': None}
+    if candidate is not None:
+        return retry_outcome(case['event'], candidate)
+    return {'status': 'original_result', 'appended': False, 'receipt': copy.deepcopy(case['event'])}
 
 
 def checkpoint_errors(case, root, formats):
@@ -650,7 +770,7 @@ def index_row_schema(root):
 
 
 def failure_oracle_errors(test):
-    return [] if test.get('expected_exit_code') == 1 else ['failure_oracle_success_code']
+    return [] if type(test.get('expected_exit_code')) is int and test['expected_exit_code'] == 1 else ['failure_oracle_success_code']
 
 
 def refresh_stage_witnesses(case):
@@ -696,32 +816,67 @@ def numeric_board_original_case(base):
     return case
 
 
-def numeric_history_case(base, token):
-    """A retained, originally valid JCS event; recapture every storage observation."""
-    case = copy.deepcopy(base)
-    case['logical_payload']['occurrence'] = json.loads(token)
-    event = case['event']; event['payload'] = copy.deepcopy(case['logical_payload'])
-    case['producer_semantic_digest'] = semantic_digest(event)
-    read = case['read']; node = read['checkpoint']['generations'][read['checkpoint']['current_generation_id']]
+def recipe_witness_value(case, recipe):
+    event = case['event']
+    return {'identity_recipe': recipe, 'event_type': case['event_type'],
+            'event_id': event['event_id'], 'idempotency_key': event['idempotency_key'],
+            'payload_schema_id': event['payload_schema_id'], 'scope_partition': case['scope_partition'],
+            'storage_instance_id': case['logical_payload']['storage_instance_id'],
+            'original_source_sha256': hashlib.sha256(packed(event)).hexdigest()}
+
+
+def record_recipe(case, recipe):
+    """Synthetic verified adapter observation; never native authentication."""
+    state = case['historical_reader_state']
+    state['original_identity_recipe'] = recipe
+    value = recipe_witness_value(case, recipe)
+    state['original_recipe_evidence'] = {'source_ref': 'writer-recipe:' + case['event']['event_id'],
+        'source_sha256': hashlib.sha256(packed(value)).hexdigest(), 'verified': True, 'value': value}
+
+
+def recapture_history(case):
+    """Refresh copied Storage observations after changing a synthetic original."""
+    event = case['event']; read = case['read']; row = read['row']
+    node = read['checkpoint']['generations'][read['checkpoint']['current_generation_id']]
     frontier = node['frontier']
+    case['producer_semantic_digest'] = semantic_digest(event)
+    row.update(event_id=event['event_id'], idempotency_key=event['idempotency_key'],
+               producer_semantic_digest=semantic_digest(event))
+    read['row_key'] = f"event_record_index.v2:{case['scope_partition']}:{event['sequence_id']:020}:{event['event_id']}"
     read['source_event'] = copy.deepcopy(event)
     read['source_value_sha256'] = hashlib.sha256(packed(event)).hexdigest()
-    read['row']['producer_semantic_digest'] = semantic_digest(event)
     prefix = binding_digest({'domain': 'pm.event_index.retained_prefix.v1', 'entries': [{
         'sequence_id': event['sequence_id'], 'event_id': event['event_id'],
         'scope_partition': case['scope_partition'], 'source_value_sha256': read['source_value_sha256']}]})
     node['anchor']['retained_event_prefix_sha256'] = frontier['coverage']['retained_event_prefix_sha256'] = prefix
     node['anchor']['source_selection']['manifest_survivor_prefix_sha256'] = prefix
     frontier['source_selection']['manifest_survivor_prefix_sha256'] = prefix
-    read['row']['publication_locator']['survivor_prefix_sha256'] = prefix
+    row['publication_locator']['survivor_prefix_sha256'] = prefix
+    frontier['coverage']['last_frame']['last_event_id'] = event['event_id']
     read['current_source_selection'] = copy.deepcopy(frontier['source_selection'])
     read['read_token']['source_selection'] = copy.deepcopy(frontier['source_selection'])
     frontier['index_row_set_sha256'] = binding_digest({'domain': 'pm.event_index.row_set.v1', 'entries': [
-        {'key': read['row_key'], 'value': read['row']}]})
+        {'key': read['row_key'], 'value': row}]})
     read['read_token']['generation_anchor_sha256'] = binding_digest(node['anchor'])
     read['read_token']['frontier_sha256'] = binding_digest(frontier)
-    case['historical_reader_state']['original_source_sha256'] = read['source_value_sha256']
+    state = case['historical_reader_state']
+    state['original_source_sha256'] = read['source_value_sha256']
+    state['original_source_ref'] = 'seglog:' + event['event_id']
+    state['original_admission']['event_id'] = event['event_id']
+    record_recipe(case, state['original_identity_recipe'])
     return case
+
+
+def numeric_history_case(base, token, owner_module=None, recipe=CURRENT_RECIPE):
+    """Build a retained original with the actual writing recipe and exact bytes."""
+    case = copy.deepcopy(base)
+    case['logical_payload']['occurrence'] = json.loads(token)
+    event = case['event']; event['payload'] = copy.deepcopy(case['logical_payload'])
+    if owner_module is not None:
+        event['idempotency_key'], event['event_id'] = owner_module.historical_identity(
+            case['event_type'], case['logical_payload'], recipe)
+    case['historical_reader_state']['original_identity_recipe'] = recipe
+    return recapture_history(case)
 
 
 def check_oracles(fixtures, schema, owner_module):
@@ -774,7 +929,8 @@ def check_oracles(fixtures, schema, owner_module):
                 candidate[field] = 'other-semantic-value'
             assert semantic_digest(candidate) != semantic_digest(original), field
             if field not in ('scope_kind', 'project_id', 'event_type', 'idempotency_key'):
-                assert retry_outcome(original, candidate)['status'] == 'idempotency_conflict', field
+                assert retry_outcome(original, candidate)['status'] == (
+                    'idempotency_conflict' if retry_shape_valid(candidate) else 'retry_value_schema'), field
             checks += 1
         checks += 6
     by_id = {c['case_id']: c for c in cases}
@@ -811,6 +967,68 @@ def check_oracles(fixtures, schema, owner_module):
         if base['payload']['scope'] == 'application':
             assert not owner_module.board_join_errors(numeric_board_original_case(base))
             checks += 1
+    # File-backed retained vectors exercise the loader before historical dispatch.
+    retained = {case['case_id']: case for case in fixtures['retained_event_cases']}
+    assert {case['event_type'] for case in retained.values()} == {c['event_type'] for c in cases}
+    for case in retained.values():
+        assert not historical_read_errors(case, schema, owner_module), case['case_id']
+        resolved = recover_original(case, schema, owner_module)
+        assert resolved['status'] == 'original_result' and resolved['appended'] is False
+        assert packed(resolved['receipt']) == packed(case['event']), case['case_id']
+        checks += 3
+    for test in fixtures['retained_retries']:
+        case = retained[test['case_id']]
+        result = recover_original(case, schema, owner_module, test['candidate'])
+        assert result == {'status': 'original_result', 'appended': False, 'receipt': case['event']}, test['case_id']
+        assert packed(result['receipt']) == packed(case['event'])
+        checks += 2
+    for test in fixtures['retained_history_negatives']:
+        case = test['case']
+        assert historical_read_errors(case, schema, owner_module) == [test['expected_error']], case['case_id']
+        assert recover_original(case, schema, owner_module) == {
+            'status': 'historical_original_unverified', 'appended': False, 'receipt': None}, case['case_id']
+        assert not failure_oracle_errors(test)
+        checks += 3
+    for case in fixtures['retained_board_cases']:
+        assert not owner_module.board_join_errors(case)
+        checks += 1
+    for test in fixtures['type_cases']:
+        base = by_id[test['case_id']]; payload = copy.deepcopy(base['logical_payload'])
+        payload[test['field']] = copy.deepcopy(test['value'])
+        assert not StrictValidator(schema['$defs'][base['definition']], format_checker=formats).is_valid(payload), test
+        assert not failure_oracle_errors(test)
+        checks += 2
+    for test in fixtures['type_boundary_cases']:
+        domain = test['domain']
+        value = copy.deepcopy(test['value'])
+        if domain == 'pack':
+            entry = pack_entry({'large': 'x' * 17000}); entry[test['field']] = value
+            errors = pack_errors(entry, large=True)
+        elif domain == 'transport':
+            base = by_id[test['case_id']]; event = copy.deepcopy(base['event'])
+            event['payload'] = value
+            errors = transport_errors(event, value, {})
+        elif domain == 'retry':
+            event = copy.deepcopy(by_id[test['case_id']]['event']); event[test['field']] = value
+            errors = [retry_outcome(event, event)['status']]
+        elif domain == 'history':
+            base = copy.deepcopy(by_id[test['case_id']])
+            base['historical_reader_state'][test['field']] = value
+            errors = historical_read_errors(base, schema, owner_module)
+        else:
+            errors = failure_oracle_errors({'expected_exit_code': value})
+        assert errors == [test['expected_error']], test
+        assert not failure_oracle_errors(test)
+        checks += 2
+    for test in fixtures['context_type_cases']:
+        if test['domain'] == 'retry':
+            assert retry_context_errors(test['context']) == ['retry_context_type']
+            assert owner_module.retry_allowed(test['context']) is False
+        else:
+            base = by_id[test['case_id']]
+            assert predicate_errors(base['event_type'], base['logical_payload'], test['context'],
+                                    owner_module.retry_allowed) == ['phase_context_type']
+        checks += 2
     for test in fixtures['board_custody_cases']:
         base = fixtures['board_storage_cases'][test['board_index']]
         bad = custody_case(base, test)

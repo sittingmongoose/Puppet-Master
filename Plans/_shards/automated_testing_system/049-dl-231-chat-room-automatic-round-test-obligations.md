@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L6715-L7308
+Source lines: L6715-L7319
 
-Source SHA256: `b181bad023e65ae533dd837777c430a63de630b75fedcd20d1883537b92c237c`
+Source SHA256: `74e08935317099611852be8e770f35267919a304f6d8fd77a220701a1401e8c3`
 
 ---
 
@@ -570,7 +570,18 @@ canonical_text: >-
   Admission-dependent event append/first receipt stays not_reached until actual admission.
   Every family/scope runs 1.0, -0, 1e0 and 01 number-input refusals, synchronized event/retry controls,
   actual RFC8785 identity/observation preimages and equal-semantic JCS digest checks.
-  Apply the same canonical numeric domain before schema, source hash and retry comparison.
+  Apply the canonical numeric domain only at current input boundaries before schema, identity,
+  source hash and retry comparison. The fixture loader preserves retained EventRecords, receipts and
+  typed source/wrapper values under their original selected codec without rewriting their numbers.
+  For every family, file-backed retained originals select verified ea-do-json-v1 or ea-do-rfc8785-v2
+  writing-recipe evidence bound to the exact original receipt bytes, family/schema/Storage/partition
+  and lifetime key/ID. Recompute with that recipe only; unknown or unproven fallback refuses.
+  Exercise old 1.0, 1e0 and 1e20 originals, both recipes and compatibility reads through complete main,
+  exact original-result recovery/retry bytes, and forged IDs/keys with every Storage observation synced.
+  Foreign/unverified recipe evidence, withdrawn readers and invalid current number inputs still refuse.
+  Sweep all families for exact types before comparisons: string booleans/numbers, null, arrays and
+  nested objects; include payload/schema, producer context, receipt, durability and exit-code boundaries.
+  Join each board's declared family/schema/envelope to its unchanged selected complete EventRecord.
   Eagerly resolve every declared selected $ref, including dormant optional branches and actual stored
   compositions, with exact offline URIs and scoped JSON Pointers; unresolved resources/fragments refuse.
   Every family runs retained originally-valid history after live producer state/writer admission changes,

@@ -45,8 +45,27 @@ def identity(family, payload):
     return key, 'evt_do_' + digest
 
 
+def historical_identity(family, payload, recipe):
+    if recipe == oracles.CURRENT_RECIPE:
+        return identity(family, payload)
+    if recipe != oracles.LEGACY_RECIPE:
+        raise ValueError('unsupported original identity recipe')
+    encode = lambda value: json.dumps(value, separators=(',', ':'), ensure_ascii=False).encode('utf-8')
+    parts = ['ea-do-v1', oracles.partition(payload), payload['server_id'], payload['thread_id'],
+             payload['run_id'], family, payload['operation_id'], payload['occurrence']]
+    digest = hashlib.sha256(encode(parts)).hexdigest()
+    key = 'do1:' + digest
+    if payload['scope'] == 'application':
+        observation = ['ea-do-observation-v1', payload['operation_id'], payload['thread_id'],
+                       payload['run_id'], family, payload['occurrence']]
+        key = 'application@1:' + payload['server_id'].encode().hex() + ':' + encode(observation).hex()
+    return key, 'evt_do_' + digest
+
+
 def retry_allowed(context):
     """OSI-699 static transition oracle, never a native attempt dispatcher."""
+    if oracles.retry_context_errors(context):
+        return False
     cause = context['retry_cause']
     prior = context['prior_state']
     source_allowed = ((cause == 'failure' and prior == 'failed')
@@ -73,6 +92,9 @@ def board_join_errors(case):
     app = payload['scope'] == 'application'
     expected_partition = ('app' if app else 'project~' + base64.urlsafe_b64encode(
         payload['project_id'].encode()).decode().rstrip('='))
+    if (case['event_type'] not in BOARD or payload.get('schema_id') !=
+            'pm.event_payload.' + case['event_type'].replace('.', '_') + '.v1'):
+        errors.append('board_family_payload_join')
     if envelope.get('scope_partition') != expected_partition:
         errors.append('scope_partition')
     for field in ('scope', 'run_id', 'thread_id', 'occurred_at_utc', 'project_id'):
@@ -132,7 +154,12 @@ def board_storage_checks(schema, fixtures, storage, owner):
             checks += 1
     for case in fixtures['board_storage_cases']:
         selected = [c for c in fixtures['event_cases'] if c['case_id'] == case['event_case_id']]
-        assert len(selected) == 1 and selected[0]['logical_payload'] == case['payload'], 'board_full_append_payload_join'
+        assert (len(selected) == 1 and selected[0]['logical_payload'] == case['payload']
+                and selected[0]['event_type'] == case['event_type']
+                and all(selected[0]['event'].get(key) == case['envelope'].get(key)
+                        for key in ('event_id', 'idempotency_key', 'run_id', 'thread_id',
+                                    'occurred_at_utc', 'project_id', 'replay_policy'))
+                and selected[0]['scope_partition'] == case['envelope']['scope_partition']), 'board_full_append_payload_join'
         assert not oracles.transport_errors(selected[0]['event'], case['payload'], selected[0]['payload_packs']), 'board_full_append_transport'
         validator.validate(case['payload'])
         expected_errors = []
@@ -180,7 +207,7 @@ def board_storage_checks(schema, fixtures, storage, owner):
 
 def main():
     schema = json.loads((ROOT / 'Plans/orchestrator_event_payloads.schema.json').read_text())
-    fixtures = oracles.canonical_loads((ROOT / 'Plans/orchestrator_event_contract_fixtures.json').read_text())
+    fixtures = oracles.fixture_loads((ROOT / 'Plans/orchestrator_event_contract_fixtures.json').read_text())
     owner = (ROOT / 'Plans/orchestrator-subagent-integration.md').read_text()
     registry = json.loads((ROOT / 'Plans/event_family_registry.json').read_text())
     storage = json.loads((ROOT / 'Plans/storage_value_registry.json').read_text())
