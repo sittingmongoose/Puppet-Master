@@ -3,7 +3,7 @@
 // was painted in, in its own look.
 //   node pip-steady-negatives.mjs --page <build.html> --out <fresh-dir> [--looks a,b] [--phases welcome]
 //        [--astra <astra mutation-friendly.html>] [--url-base http://host:port/dir/ --serve-dir <dir served there>]
-//        [-- <browser-check args, e.g. --host windows --profile 1080p120>]
+//        [-- <browser-check args, e.g. --sole>]
 // A page on another machine's browser (--host) must be served: --serve-dir is where the mutants are written and
 // --url-base the URL that serves it. Surfaces alternate (normal, sandbox, ...) unless --sandbox is given.
 // One negative passes only when: the mutation fired (PIP_MUTANT / REVIEW_ONE_FRAME in the console) in exactly the

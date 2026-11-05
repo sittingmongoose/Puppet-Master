@@ -1,6 +1,8 @@
 // The complete FO-30 gate: the structural check AND the paint scan of every film frame, per surface, on one GPU recording.
 //   node pip-steady-gate.mjs --page <build.html> --out <fresh-dir> [--sandbox 0|1] [--reps 1] [--looks a,b] [--phases p,q]
-//        [--min-coverage 0.9] [-- <more browser-check run arguments, e.g. --host windows --sole>]
+//        [--min-coverage 0.9] [-- <more browser-check run arguments, e.g. --sole>]
+// Film where the page renders at the capture rate (VM, Nas1: 60 Hz, 60 fps). A faster page (Windows ~100 Hz) leaves
+// page frames off the film and fails the coverage floor, by design: a one-frame loss there could go unfilmed.
 //   node pip-steady-gate.mjs --rescan <gate out-dir> [--min-coverage 0.9]   (scan again the films and logs a gate kept)
 // Per surface (both by default, one after the other): browser-check records checks/pip-steady.check.mjs, which writes
 // the run's witness log (pip-witness-<surface>.jsonl in the run folder); then pip_body_scan.mjs judges every frame of
