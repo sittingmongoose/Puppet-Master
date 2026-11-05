@@ -16,6 +16,27 @@ export default async function(t) {
   await t.equal('header modes share one row', await f.locator('.o55-lookmodes button').evaluateAll(bs => new Set(bs.map(b => Math.round(b.getBoundingClientRect().top))).size), 1);
   await click('lookMenu');
   if (!await f.locator('[data-o55-do="pickMode"][data-arg="auto"]').count()) return;
+  // The two Auto help buttons share copy in both wordings, including their accessible names.
+  for (const wording of ['ELI5', 'Expert']) {
+    await f.evaluate(wording => O55.talk.set(wording), wording);
+    let screenTip;
+    for (const id of ['pickMode:auto', 'lookMode:auto']) {
+      if (id.startsWith('lookMode')) await click('lookMenu');
+      const help = f.locator(`[data-o55-do="tip"][data-arg="${id}"]`).filter({visible:true}).first();
+      await t.equal(`${wording} ${id}: accessible help name`, await help.getAttribute('aria-label'), 'About Follow your computer');
+      await help.click();
+      const note = f.locator('#pm7ob-explainer');
+      await note.waitFor({state:'visible'});
+      await t.equal(`${wording} ${id}: note heading`, await note.getAttribute('aria-label'), 'Follow your computer');
+      const text = await note.locator('.o55-sr').textContent();
+      await t.check(`${wording} ${id}: explains Auto and system following`, /Auto/.test(text) && /computer|system/i.test(text) && /follows|live/i.test(text) && !/starts in Basic Dark/.test(text));
+      if (screenTip) await t.equal(`${wording}: both surfaces share Auto copy`, text, screenTip);
+      else screenTip = text;
+      await f.locator('#pm7ob-explainer [data-o55-do="tip"]').click();
+      if (await f.evaluate(() => O55.S.lookOpen)) await click('lookMenu');
+    }
+  }
+  await f.evaluate(() => O55.talk.set('ELI5'));
   for (const family of ['basic','friendly','retro','glass','nier']) {
     await click('pickFamily',family);
     for (const os of ['dark','light']) {

@@ -28,7 +28,7 @@ SETTINGS = 'Plans/settings_system_contracts.schema.json'
 def load_repo_json(rel):
     path = os.path.join(REPO, rel)
     if os.path.exists(path):
-        return json.load(open(path)), path
+        return json.load(open(path)), rel
     for rev in ('origin/main', 'HEAD'):
         r = subprocess.run(['git', '-C', REPO, 'show', f'{rev}:{rel}'], capture_output=True, text=True)
         if r.returncode == 0:
