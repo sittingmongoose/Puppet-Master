@@ -1,10 +1,60 @@
 # Lane DS (stream E, batch 1): clearing the frozen seal check's blockers
 
-**Branch:** `plans/ea-b1-seal-blockers-20261104`, from `origin/main` `be4766513f`. Review round 2 is current; earlier sections are historical.
+**Branch:** `plans/ea-b1-seal-blockers-20261104`, from `origin/main` `be4766513f`. Review round 3 is current; earlier sections are historical.
 **Historical first-pass worktree:** Nas1 `~/pm-worktrees/ea-ds`, kept for the lead. Second pass (DS-P2): VM sparse worktree `~/pm-worktrees/DS-p2` from `600575221d`, removed after the push.
 **Inputs:** `BRIEF-DRAFT.md`, `lanes/DS.md`, D1b's `BLOCKERS.md` and `DEPTH.jsonl`. Every D1b claim used here was re-checked on this branch.
 
-## Review round 2: findings and responses (DS-FIX2, current)
+## Review round 3: findings and responses (DS-FIX3, current)
+
+**Source revision:** `3f762144faf6edc258e070d680aab2a14fe79d8e`. **Repairs:** `c75ecbfc2faba6dc0120126f0856199857f17d9a` (pushed). **Review base:** `35dc107d9121c43ad035de82cde1fddb8e3602e3`. VM worktree `/home/sittingmongoose/pm-worktrees/DS-fix3`, removed after the final push. No native execution, full-depth admission, seal or landing is claimed.
+
+| Finding | Where / cause / fix | Verification |
+|---|---|---|
+| DS-SOL3-01 — fixed | `pm_home_layout_v2_slot_receipt.py:344`, `pm_event_payload_route.py:57`: Python's mathematical integer accepted integral floats before distinct physical hashes. Current typed validators and the encoder refuse alternative integral forms before hashing. Original codecs and retained external-body bytes are preserved; no original digest is restamped. | `pm_event_authority_ds_round3.py`: 1, 1.0, 1e0, 01, 0, -0, -0.0; compaction counts, Home4 generation, inline/external Browser generations, original envelope sequences, fresh/retry and encoder boundaries. |
+| DS-SOL3-02 — fixed | `pm-browser-event-admission.py:468` and `:492`, both family history readers and shared projector: writer-only sequence/replay/migration guards reached historical originals. Verified normalized history now uses the existing Case-L formula through an offline selected-payload validator. Exact canonical bytes, not Python's int/float equality, join the complete normalized result to the source. | Both normalized family readers and projector pass; current writers refuse. Forged ids/keys, foreign coherent Project, unsupported migration, changed numeric type, missing source and individual access/deletion/source/token/reset-admission flags refuse. Retained external numeric bytes stay readable without changing their pins. |
+| DS-SOL3-03 — fixed | `pm_event_authority_ds_round2.py:352`: standalone layout omitted family/schema/Project/id/key joins. It now validates an explicit Home4 operation binding, recomputes its digest from source, checks family/schema, and reuses complete Home4 event joins. Historical reads require explicit custody flags. | One isolated negative per missing join, plus well-formed compaction receipt, Home4 digest and event-id controls; actual own-guard removals flip their expected cases. Oracle remains PARTIAL. |
+| Check 11 — targeted gaps fixed; whole-lane proof PARTIAL | Missing references are proved at the availability seam and refused by full readers. Hash/size/media/encoding guards, both historical-authenticity predicates and non-null producer sequence have actual proofs. Existing checkpoint/CAS/generation/replacement/hold/cleanup/pending/original-result cases are wired into the source audit. | **30 combined targeted groups / 109 negatives pass**, with every other negative rejecting in each table row and no exceptions. Full source inventory and remaining ownership/routing/schema implications are explicitly partial in `ds-fix3-guard-removal.md`. |
+| Item 11 type sweep — fixed observed holes | String admission flags in both Browser append models and string access flags in creation's old checkpoint reader were truthy. They now require exact booleans; creation's witness generation also requires an actual integer. | **156 full-entry/schema probes**, using string booleans/numbers, null, arrays and nested objects across all five families. Terminal coverage is retained-schema-only; no operating reader or producer is invented. |
+
+### Re-grade
+
+| Family | Before | After |
+|---|---:|---:|
+| context.compaction.completed | 11/12 | **11/12** |
+| browser.workspace.created | 11/12 | **11/12** |
+| browser.workspace.reset | 11/12 | **11/12** |
+| workspace.layout_changed | 11/12 | **11/12** |
+| terminal.workgroup_moved | 10/12 | **10/12** |
+
+All **54 PASS / 6 PARTIAL** cells are preserved. The four active-family oracle cells remain PARTIAL while whole-lane proof is unadjudicated; terminal's consumer and oracle remain PARTIAL for its unchanged held question. The new self-grade metadata is receipted in `ds-fix3-regrade-application.json`. The corrected depth assessment and three admission pins are byte-identical to the review base. The prior receipted correction, all historical application records, EventRecord successor, SP-273/Home4 amendment and the entire terminal question are retained.
+
+### Eleven standing checks and Astra items 1–11
+
+| Check / item | Fresh probe or preserved evidence |
+|---|---|
+| Replay-only writers and retries / custody on every path | All active-family current writers refuse replay-only before reuse. Both Browser known-retry controls and non-null producer-sequence controls pass. Source/CAS/recovery/cleanup cases are reused in the full audit; remaining unproved source rows are not promoted. |
+| CV-366 app keys / encoded Project partitions | All five registered editions remain Project-only. No app writer/key is invented. Existing encoded `project~` positives and foreign/raw scope negatives remain intact. |
+| Complete sizes / partial measurements | Exact 16384/16385-byte MessagePack controls, complete resolved event, all 1208 layout affected ids and complete Home4 value references pass. No cap, truncation, split, omitted event or null-only regression is introduced. |
+| Full-match identifiers / forged identities | Strict ECMA end-of-input tests remain; source-derived compaction/Home4/layout identities and Browser normalized identities refuse well-formed false claims. |
+| Semantic retries / Storage-assigned metadata | Original sequence and observed/persisted metadata remain excluded from producer-semantic comparisons; frozen physical refs/results are retained. No Storage-native frame/timestamp authentication is claimed; verified-source observations remain explicit adapter assumptions. |
+| Checkpoint source identity / custody | Existing nine-field token, Storage instance, source/hash, exact prior CAS and live snapshot joins remain. The standalone layout uses its actual binding, not a caller digest. |
+| Failure exits / harness | All final checker and test commands exit 0. Injected bad-positive, nonflipping-guard and accepted-baseline-negative controls are required by the passing self-tests. Empty test discovery refused with exit 5 during setup and was rerun with the correct PM7 file; no zero-test result is credited. |
+| Eager references / dormant branches | The actual unresolved-ref refusal is ablated; all five dormant-ref negatives flip. Every normal schema closure remains offline and resolving. Baseline eager caches are cold; immutable schema-context constructors are cleared for every mutation. Only successful standard-library schema-definition checks are memoized by complete JSON content; malformed/non-JSON forms are checked without coercion. No event or value validation result is cached. |
+| Historical validity in both directions | Retained ordinary and normalized replay-only Browser records pass independently of live writer policy/witnesses. Source/access/deletion/withdrawal/foreign/forged/unsupported controls refuse. Compaction later-head/deleted-thread audit remains content-free. Terminal disclosure is not decided. |
+| Own-defect coverage / masked negatives / honest grades | The combined targeted table passes; its shared predicates include both prior cohorts. The full audit runs single source conditions, names captured aliases and preserves all unproved/exception rows. Its partial status and the unchanged grades prevent a full-depth claim. |
+| Alternate numbers / confused types | Numeric alternatives are refused at current typed boundaries, with isolated external and retry controls. Canonical source joins distinguish float/int forgeries. Retained physical bytes/digests are not rewritten. The 156 wrong-type controls all refuse. |
+
+### Verification, preservation and open work
+
+Browser created/v2/reset/shared CLIs, Home4 checker/self-test, both guard-harness self-tests, PM7 and shared-runtime validators, **118 Browser / 38 admission / 13 PM7 tests** pass. Shards: **99 sources / 3093 shards**, pass. Index: top-level **pass**. Currentness inputs were copied and all 15 SHA-256 values verified before index validation. No Plans source was edited, so no regeneration or governance reseal was needed or performed.
+
+The frozen validator remains `190a86f23e06362bdb98e27eb23268c9691db46cc41bc9f97e1fbb6bde1abc20` and exits **1 before / 1 after**, with the same **five** categories and all seal/depth flags false. It ran only in a scratch copy with a separately unlinked receipt. No August fingerprint, frozen validator, Decision Log, registry, admission record or canonical owner text changed in this fix round. `git diff --check` passes.
+
+**Open technical work:** the exact whole-lane partial rows in `ds-fix3-guard-removal.md` still need ownership/duplicate/routing/fault adjudication. This is not a claim that every source condition is an independent missing negative, and no complete check-11 or 12/12 proof is asserted. **Owner hold:** terminal.workgroup_moved's original withdrawal/read-disclosure question below is byte-unchanged. **Ids used:** none new; existing SP-400 and its SP-273/CV-361 context remain unchanged.
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/`; exact paths and SHA-256 values are in `ds-fix3-verification.json` and the guard report. Final report and self-grade are copied there after push.
+
+## Review round 2: findings and responses (DS-FIX2, historical)
 
 **Current fix worktree:** VM `/home/sittingmongoose/pm-worktrees/DS-fix2`, removed after the final push.
 

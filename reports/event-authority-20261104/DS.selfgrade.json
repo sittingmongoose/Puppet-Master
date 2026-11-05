@@ -8,8 +8,8 @@
   },
   "assessed_tree": {
     "branch": "plans/ea-b1-seal-blockers-20261104",
-    "commit": "9f83b5ed566206585dcff5a22ac4db94feaf3cee",
-    "note": "Cycle-2 normative regrade after the technical fixes. Native NOT_RUN alone lowers no cell; incomplete whole-lane check-11 witnesses do."
+    "commit": "3f762144faf6edc258e070d680aab2a14fe79d8e",
+    "note": "Round-3 source regrade. Normative owner text is unchanged; targeted defects are fixed, and unadjudicated whole-lane proof remains PARTIAL. Native NOT_RUN alone lowers no cell."
   },
   "registry": {
     "path": "Plans/event_family_registry.json",
@@ -29,7 +29,7 @@
   },
   "native_execution": "NOT_RUN",
   "static_suites_run_by_grader": true,
-  "note": "Honest cycle-2 regrade: producer repairs PASS; four oracle cells stay PARTIAL for incomplete full check-11 proof; terminal consumer/oracles remain PARTIAL for Jared. No registration or membership decisions change.",
+  "note": "Round 3: DS-SOL3-01/02/03 repaired; targeted own-defect proofs and wrong-type sweep pass. 54 PASS / 6 PARTIAL retained. Whole-lane guard ownership is not certified complete; terminal owner hold is unchanged.",
   "rows": [
     {
       "event_type": "context.compaction.completed",
@@ -53,10 +53,10 @@
         "ATS-040"
       ],
       "remaining_gaps": [
-        "Full standing-check-11 guard-removal proof remains incomplete; see ds-fix2-guard-removal.md."
+        "Whole-lane source-guard ownership/duplicate/routing adjudication remains incomplete; combined 30-group proof is complete. See ds-fix3-guard-removal.md."
       ],
-      "grading_batch": "DS-FIX2",
-      "notes": "Cycle-2 correction and technical follow-through. No 12/12 or complete admission-depth claim. See ds-fix2-depth-retraction.json and ds-fix2-regrade-application.json.",
+      "grading_batch": "DS-FIX3",
+      "notes": "Round-3 regrade at 3f762144faf6edc258e070d680aab2a14fe79d8e. Criterion statuses preserved after the numeric/history/layout repairs; see ds-fix3-verification.json and ds-fix3-guard-removal.md.",
       "cells": {
         "membership_version": {
           "status": "PASS",
@@ -690,7 +690,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Compaction payload/event fixtures, exact replay-only writer refusal, four LF identifier controls, eager dormant-$ref refusal and retained/deleted-thread/forged/withdrawn historical controls are authored and pass. Existing native oracle obligations remain NOT_RUN. PARTIAL for incomplete full legacy/source guard-removal witnesses, enumerated in ds-fix2-guard-removal.md; no complete-depth claim.",
+          "finding": "Round 3: Current compaction counts reject alternate integral forms; a well-formed false completion-receipt identity has an isolated actual-guard witness. Its later-head and content-free deleted-thread audit controls remain intact. Whole-lane source inventory remains PARTIAL. Earlier passing evidence retained: Compaction payload/event fixtures, exact replay-only writer refusal, four LF identifier controls, eager dormant-$ref refusal and retained/deleted-thread/forged/withdrawn historical controls are authored and pass. Existing native oracle obligations remain NOT_RUN. PARTIAL for incomplete full legacy/source guard-removal witnesses, enumerated in ds-fix2-guard-removal.md; no complete-depth claim.",
           "evidence": [
             {
               "path": "Plans/context_compaction_completion_contract_fixtures.json",
@@ -805,10 +805,10 @@
         "DL-076"
       ],
       "remaining_gaps": [
-        "Full standing-check-11 guard-removal proof remains incomplete; see ds-fix2-guard-removal.md."
+        "Whole-lane source-guard ownership/duplicate/routing adjudication remains incomplete; combined 30-group proof is complete. See ds-fix3-guard-removal.md."
       ],
-      "grading_batch": "DS-FIX2",
-      "notes": "Cycle-2 correction and technical follow-through. No 12/12 or complete admission-depth claim. See ds-fix2-depth-retraction.json and ds-fix2-regrade-application.json.",
+      "grading_batch": "DS-FIX3",
+      "notes": "Round-3 regrade at 3f762144faf6edc258e070d680aab2a14fe79d8e. Criterion statuses preserved after the numeric/history/layout repairs; see ds-fix3-verification.json and ds-fix3-guard-removal.md.",
       "cells": {
         "membership_version": {
           "status": "PASS",
@@ -1450,7 +1450,7 @@
               "unit": "SP-266",
               "line_start": 20199,
               "line_end": 20199,
-              "quote": "**Admission as the current definition — 2026-09-25.**",
+              "quote": "**Admission as the current definition \u2014 2026-09-25.**",
               "excerpt_sha256": "b984d79be6cfcd0af9c703b3c17523e73d50ca49496de9d6329cdc1e3821fb21",
               "quote_check": "exact"
             },
@@ -1541,7 +1541,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "This exact family has passing fresh/known-retry replay-only refusals, artifact/checkpoint LF cases, eager dormant-$ref cases, exact encoded inline boundary, resolved reference, missing/hash/size/media/encoding negatives, original-result retry and retained historical controls. PARTIAL for incomplete full legacy/source guard-removal witnesses, enumerated in ds-fix2-guard-removal.md. Native NOT_RUN.",
+          "finding": "Round 3: This creation model rejects alternate inline/external/envelope numeric forms on fresh and known retries; its non-null producer sequence and individual history flags have own-defect controls. Its exact normalized and retained numeric-byte history passes; false/foreign/unsupported/numeric-type source joins refuse. Whole-lane source inventory remains PARTIAL. Earlier passing evidence retained: This exact family has passing fresh/known-retry replay-only refusals, artifact/checkpoint LF cases, eager dormant-$ref cases, exact encoded inline boundary, resolved reference, missing/hash/size/media/encoding negatives, original-result retry and retained historical controls. PARTIAL for incomplete full legacy/source guard-removal witnesses, enumerated in ds-fix2-guard-removal.md. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/browser_workspace_created_contract_fixtures.json",
@@ -1665,10 +1665,10 @@
         "DL-076"
       ],
       "remaining_gaps": [
-        "Full standing-check-11 guard-removal proof remains incomplete; see ds-fix2-guard-removal.md."
+        "Whole-lane source-guard ownership/duplicate/routing adjudication remains incomplete; combined 30-group proof is complete. See ds-fix3-guard-removal.md."
       ],
-      "grading_batch": "DS-FIX2",
-      "notes": "Cycle-2 correction and technical follow-through. No 12/12 or complete admission-depth claim. See ds-fix2-depth-retraction.json and ds-fix2-regrade-application.json.",
+      "grading_batch": "DS-FIX3",
+      "notes": "Round-3 regrade at 3f762144faf6edc258e070d680aab2a14fe79d8e. Criterion statuses preserved after the numeric/history/layout repairs; see ds-fix3-verification.json and ds-fix3-guard-removal.md.",
       "cells": {
         "membership_version": {
           "status": "PASS",
@@ -2365,7 +2365,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "This exact family has passing fresh/known-retry replay-only refusals, artifact/checkpoint LF cases, eager dormant-$ref cases, exact encoded inline boundary, resolved reference, missing/hash/size/media/encoding negatives, original-result retry and retained historical controls. PARTIAL for incomplete full legacy/source guard-removal witnesses, enumerated in ds-fix2-guard-removal.md. Native NOT_RUN.",
+          "finding": "Round 3: This reset model rejects alternate inline/external/envelope numeric forms on fresh and known retries; its non-null producer sequence and all five historical proof flags, including admission, have own-defect controls. Its own normalized and retained numeric-byte history passes and false/foreign/unsupported/numeric-type source joins refuse. Whole-lane source inventory remains PARTIAL. Earlier passing evidence retained: This exact family has passing fresh/known-retry replay-only refusals, artifact/checkpoint LF cases, eager dormant-$ref cases, exact encoded inline boundary, resolved reference, missing/hash/size/media/encoding negatives, original-result retry and retained historical controls. PARTIAL for incomplete full legacy/source guard-removal witnesses, enumerated in ds-fix2-guard-removal.md. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/browser_workspace_reset_contract_fixtures.json",
@@ -2489,9 +2489,9 @@
         "SP-400"
       ],
       "remaining_gaps": [
-        "Full standing-check-11 guard-removal proof remains incomplete; see ds-fix2-guard-removal.md."
+        "Whole-lane source-guard ownership/duplicate/routing adjudication remains incomplete; combined 30-group proof is complete. See ds-fix3-guard-removal.md."
       ],
-      "grading_batch": "DS-FIX2",
+      "grading_batch": "DS-FIX3",
       "cells": {
         "membership_version": {
           "status": "PASS",
@@ -3008,7 +3008,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "The exact inclusive boundary, one-byte-over refusal, complete 1208-affected-id event/reference (1200 added tabs plus every original tab), whole Home4 value reference, missing/corrupt payload, frozen retry, replay-only refusal and exact historical 2.0.0/current-reference controls pass. PARTIAL for incomplete full legacy/source guard-removal witnesses, enumerated in ds-fix2-guard-removal.md. Native NOT_RUN.",
+          "finding": "Round 3: The standalone layout oracle now validates its exact operation binding, recomputes identity from source, checks family/schema/Project/event/key joins and requires historical custody flags. Home4 integral slot values and well-formed operation/event forgeries have isolated controls; complete event and whole-value overflow controls remain intact. Whole-lane source inventory remains PARTIAL. Earlier passing evidence retained: The exact inclusive boundary, one-byte-over refusal, complete 1208-affected-id event/reference (1200 added tabs plus every original tab), whole Home4 value reference, missing/corrupt payload, frozen retry, replay-only refusal and exact historical 2.0.0/current-reference controls pass. PARTIAL for incomplete full legacy/source guard-removal witnesses, enumerated in ds-fix2-guard-removal.md. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -3127,7 +3127,7 @@
           "change_reason": "Review DS-SOL-01/02: the Home4 fixtures missed the whole-value limit and the reference branch. Repaired in 31cd37713c; the event-body boundary is missing from the contract, so it cannot be tested."
         }
       },
-      "notes": "Cycle-2 correction and technical follow-through. No 12/12 or complete admission-depth claim. See ds-fix2-depth-retraction.json and ds-fix2-regrade-application.json."
+      "notes": "Round-3 regrade at 3f762144faf6edc258e070d680aab2a14fe79d8e. Criterion statuses preserved after the numeric/history/layout repairs; see ds-fix3-verification.json and ds-fix3-guard-removal.md."
     },
     {
       "event_type": "terminal.workgroup_moved",
@@ -3150,7 +3150,7 @@
       "remaining_gaps": [
         "OWNER QUESTION (stopped for Jared, see DS.md): for this withdrawn family whose producer never activated, does SP-319 keep a reader that discloses recorded 1.0.0 events, and which oracle set does it require (A, B or C)? Until answered, consumers_checkpoints (no named operating consumer; SMPFS-170 and SP-319 disagree on the reader) and positive_negative_oracles stay non-PASS."
       ],
-      "grading_batch": "DS-FIX1-selfgrade",
+      "grading_batch": "DS-FIX3",
       "cells": {
         "membership_version": {
           "status": "PASS",
@@ -3597,7 +3597,7 @@
           "change_reason": "Stopped on an owner question; no fixture written."
         }
       },
-      "notes": "Re-graded by lane DS-FIX1 at 2b671a1605 after review DS-SOL-03: consumers_checkpoints back to PARTIAL (ledger OWNER_REQUIRED, ds-fix1-terminal-consumer-regrade.json); the oracle cell stays stopped on the owner question."
+      "notes": "Round-3 regrade at 3f762144faf6edc258e070d680aab2a14fe79d8e. Criterion statuses preserved after the numeric/history/layout repairs; see ds-fix3-verification.json and ds-fix3-guard-removal.md."
     }
   ]
 }
