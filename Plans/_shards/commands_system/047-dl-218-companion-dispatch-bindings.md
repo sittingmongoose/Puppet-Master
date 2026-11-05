@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L8589-L9216
+Source lines: L8590-L9218
 
-Source SHA256: `8ab326bfb35da2c0a2f6f1d36d29f9588417e2c2adf56226782399e4a0e97013`
+Source SHA256: `1ebba8041d1bc249c11e05ec4464a7571e6151d82e9a8745f28b802b1ca94f82`
 
 ---
 
@@ -131,7 +131,7 @@ canonical_text: 'Hosted chat producers use UCC-208''s closed mapping (DL-232). D
   role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon. Q16:
   You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette
   cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express
-  the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates,
+  the plate’s result/topology, not puppet strings. The one shared person-silhouette renderer owned by F3-594 serves crew diagrams, cast plates,
   run cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning.'
 gui_related: true
 gui_classification_reason: Defines shared dispatch, alias normalization and local actions for the hosted chat
@@ -160,12 +160,11 @@ acceptance_criteria:
   own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its sheet
   head; do not fork a second wand or fallback icon. Q16: You is the person alone, head and shoulders in each family’s
   materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross,
-  and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou
-  drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive
+  and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one shared person-silhouette renderer owned by F3-594 serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive
   retain their existing meaning.'
 validation_surfaces:
-- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-- python3 scripts/pm-plan-index.py validate
+  - scripts/pm-shard-plans.py
+  - scripts/pm-plan-index.py
 risk_class: hosted_chat_owner_drift
 reasoning_tier: high
 context_scope: chat56_pmconcept7_port
@@ -186,6 +185,7 @@ source_lineage:
   source; not native or final visual verification)
 - 'PM7 final FS-1: chatpip fc1aa3f503 / deliverable 8ae180658e; pmx-system generatedCss and scheduling linkStyle are
   source evidence, not native APIs.'
+- "DL-260 source lineage only (no product API or implementation obligation): ppYou/PX_YOU/pnYou were the concept person-rendering helpers and pixel table; the shared product renderer is owned by F3-594."
 preserved_exact_tokens:
 - cmd.editor.close_tab
 - cmd.panel_tab.close
@@ -363,7 +363,7 @@ canonical_text: 'D8–D13, G5–G7/G10. UCC-210 declares cmd.work.stop, cmd.work
   and ScheduledMessageCancelResult plus the scheduling owner’s closed error code. Its admitted source_surface
   vocabulary is unchanged; Work delegates to the scheduling-owned cancellation context rather than inventing
   a source or PID target. Precise per-command profiles and fixtures bind these distinctions; no owner adopts
-  a new PM7 result. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider
+  a new PM7 result. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the owner-backed work dock provider
   gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure
   in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint
   or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At
@@ -405,7 +405,7 @@ acceptance_criteria:
 - Prompt input is current safe yes/no only, quit defaults keep-running, clear is view-local and candidate events
   remain non-emitting.
 - All declared local prefixes write no runtime state and release focus/subscriptions/copies on close.
-- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the owner-backed work dock provider gives a live process
   and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s
   dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning
   to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000
@@ -423,10 +423,10 @@ acceptance_criteria:
   refusal and the exact command/local/tool binding from UCC-216; no native/event/governance proof follows from
   static closure.
 validation_surfaces:
-- python3 scripts/pm-shard-plans.py --check
-- python3 scripts/pm-plan-index.py validate
-- python3 scripts/pm7-build-check.py
-- python3 scripts/pm-plans-verify.py run-gates
+- "scripts/pm-shard-plans.py"
+- "scripts/pm-plan-index.py"
+- "scripts/pm7-build-check.py"
+- "scripts/pm-plans-verify.py"
 risk_class: owner_drift
 reasoning_tier: high
 context_scope: pm7_build_20261029
@@ -441,6 +441,7 @@ source_lineage:
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)
 - source_ref:chat:2026-11-03-projects-pass2-approved
+- "DL-260 source lineage only (no product API or implementation obligation): PM_WORK was the concept work-projection adapter; dock eligibility and lifetime are DR-078/ACD-476 product presentation rules."
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.

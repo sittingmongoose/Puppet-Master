@@ -2,9 +2,9 @@
 
 Source: `Plans/interview-subagent-integration.md`
 
-Source lines: L62-L983
+Source lines: L62-L984
 
-Source SHA256: `4710bbe6b870afdf54d816fa9d13f83fe92722e1a2840ea8412de9d44f85966e`
+Source SHA256: `8226743db705a889683a4d00fce308fa29e13002f3f70345455e8249c35fffa4`
 
 ---
 
@@ -200,13 +200,14 @@ preserved_exact_tokens:
 - SchemaID:pm.requirements_quality_report.schema.v1
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Amended 2026-11-05 (DL-330): the requirements-quality contract this gate consumes moved from retired Plans/chain-wizard-flexibility.md to Plans/Decision_Policy.md#DP-066 (section 6.4); the source span keeps the old reference as lineage only.'
 owner_boundary_notes:
 - Plans/interview-subagent-integration.md owns interview integration behavior while referenced SSOT documents retain implementation ownership.
 owner_hints:
 - Plans/interview-subagent-integration.md
 preserved_contractrefs:
-- 'ContractRef: `Plans/chain-wizard-flexibility.md`, `SchemaID:pm.requirements_quality_report.schema.v1`.'
+- 'ContractRef: `ContractName:Plans/Decision_Policy.md#DP-066`, `SchemaID:pm.requirements_quality_report.schema.v1`.'
 split_recommendation_reason: The source span contains multiple separable interview integration concerns; repeated source lineage preserves exact source provenance without inventing subspans.
 ```
 

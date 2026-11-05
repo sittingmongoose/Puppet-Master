@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L43335-L43567
+Source lines: L43141-L43374
 
-Source SHA256: `5219317d3f6de37616de475f8713f24e8d655c778fdc8df3544ad7e22bd18a4d`
+Source SHA256: `4cc841071214af7f59a3f0bb3156dfa4d7b7c3e42564e13f9b8b24a742ced53c`
 
 ---
 
@@ -124,7 +124,8 @@ preserved_exact_tokens:
 negative_constraints:
 - Do not retain an independent NieR override; list family nier and its two variants as ordinary choices (Q22).
 - Do not open the NieR Mode editor as a dialog over the onboarding window.
-- Do not write a NieR choice durably before the Project binding exists.
+- Do not persist a NieR choice outside the explicitly accepted admissible Settings level; a Project own write needs
+  its real binding, while Later/No project may commit at admitted app levels and only pre-claim/unbound preview is ephemeral.
 - Do not use a game asset, game audio or a character likeness.
 - Q22 adds family nier and two variants. Do not add a NieR part, settings key, command, route, tour action or onboarding action
   other than ui.onboarding.choose_look.

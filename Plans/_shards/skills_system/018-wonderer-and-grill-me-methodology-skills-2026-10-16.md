@@ -4,7 +4,7 @@ Source: `Plans/Skills_System.md`
 
 Source lines: L2716-L2972
 
-Source SHA256: `3991b8ab1648e297aa22614fd680256e74b0f67915ae13cde762545eb44e50d8`
+Source SHA256: `00b7117cc361f317a2ee0f87f70f6157a97b841c02bef53c090b206497929c7b`
 
 ---
 
@@ -218,8 +218,8 @@ acceptance_criteria:
 - Copy/rollback preserves exact package identity and reaches only previewed targets, with no hidden source
   roots.
 validation_surfaces:
-- Phase 2 F companion/schema and semantic fixtures (not run in phase 1).
-- Post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.
+- scripts/pm-projects-refresh-contracts.py
+- future post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.
 risk_class: scope_authority_or_custody_drift
 reasoning_tier: high
 context_scope: project_and_application_scope

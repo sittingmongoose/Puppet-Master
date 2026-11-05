@@ -18,6 +18,7 @@ GATE = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(GATE)
 from pm_onboarding_semantics import (
     onboarding_action_join_failures,
+    onboarding_application_auth_join_failures,
     onboarding_precommit_join_failures,
     onboarding_semantic_failures,
     project_commit_binding_failures,
@@ -84,6 +85,51 @@ class OnboardingPhaseTests(unittest.TestCase):
                     self.assertIn(row["semantic_rule"], onboarding_semantic_failures(row["definition"], value))
                 else:
                     self.assertFalse(valid(row["definition"], value))
+
+    def test_later_app_ai_joins_actual_owner_binding_without_a_project(self):
+        for phase in ("provider", "free_models"):
+            with self.subTest(phase=phase):
+                session = CASES["sweep.valid.session.later_application_" + phase]
+                request = CASES["sweep.valid.request.later_application_" + phase]
+                result = CASES["sweep.valid.result.later_application_" + phase]
+                ref = session["app_auth_binding_ref"]
+                owner = PACK["resolved_owner_inputs"][ref]
+                schema = json.loads((ROOT / owner["owner_schema"]).read_text())
+                self.assertTrue(valid(owner["definition"], owner["value"], schema))
+                self.assertEqual(onboarding_action_join_failures(
+                    session, request, result, application_auth_binding=owner["value"],
+                    resolved_app_auth_binding_ref=ref), [])
+                self.assertIn("onboarding_application_auth_owner_binding_missing",
+                              onboarding_action_join_failures(session, request, result))
+
+    def test_later_app_ai_rejects_foreign_computer_client_provider_and_scope(self):
+        session = CASES["sweep.valid.session.later_application_provider"]
+        request = CASES["sweep.valid.request.later_application_provider"]
+        ref = session["app_auth_binding_ref"]
+        binding = PACK["resolved_owner_inputs"][ref]["value"]
+        for field in ("server_id", "execution_host_id", "execution_environment_id", "initiating_client_id",
+                      "provider_id", "operation_id", "return_context_ref"):
+            changed = copy.deepcopy(binding)
+            changed[field] = "foreign:context"
+            with self.subTest(field=field):
+                self.assertTrue(onboarding_application_auth_join_failures(
+                    session, request, changed, resolved_binding_ref=ref))
+        changed = copy.deepcopy(binding)
+        changed["scope"].update(scope_kind="project", project_id="project:fake")
+        self.assertIn("onboarding_application_auth_scope_mismatch",
+                      onboarding_application_auth_join_failures(session, request, changed, resolved_binding_ref=ref))
+        self.assertIn("onboarding_application_auth_binding_ref_mismatch",
+                      onboarding_application_auth_join_failures(session, request, binding, resolved_binding_ref="app-auth:foreign"))
+        for field, value in (("reviewed_setup_plan_revision", 999), ("approved_setup_plan_sha256", "0" * 64)):
+            changed = copy.deepcopy(session)
+            changed[field] = value
+            with self.subTest(field=field):
+                self.assertIn("onboarding_application_auth_without_reviewed_later",
+                              onboarding_application_auth_join_failures(changed, request, binding, resolved_binding_ref=ref))
+        changed = copy.deepcopy(binding)
+        changed["protected_broker_evidence"] = None
+        self.assertIn("onboarding_application_auth_protected_broker_missing",
+                      onboarding_application_auth_join_failures(session, request, changed, resolved_binding_ref=ref))
 
     def test_exact_fourteen_actions_and_phase_dependency_order(self):
         actions = SCHEMA["$defs"]["onboarding_action_request"]["properties"]["action_id"]["enum"]
@@ -204,7 +250,9 @@ class OnboardingPhaseTests(unittest.TestCase):
         value = CASES["valid.result.applied.finish"]["continuation_snapshot"]
         self.assertEqual(value["project_disposition"], "deferred")
         self.assertIsNone(value["project_commit_binding"])
-        self.assertEqual(value["provider_phase_status"], "deferred")
+        self.assertEqual(value["provider_phase_status"], "skipped")
+        self.assertEqual(value["free_models_phase_status"], "skipped")
+        self.assertEqual(value["history"], SCHEMA["$defs"]["deferred_project_stage_order"]["const"])
 
     def test_committed_provider_resume_preserves_exact_owner_binding(self):
         value = CASES["valid.session.deferred_with_active_branch"]
@@ -312,28 +360,23 @@ class OnboardingStorageTests(unittest.TestCase):
         #   plans/ea-s09-coord-registered-20260925.
         families = self.registry["families"]
         # SP-322 adds the Release-owned application_update_check_schedule family.
-        # The refresh preserves the 301-row integration pin and appends 41
-        # explicitly selected app/Settings/permission physical counterparts.
-        self.assertEqual(len(families), 342)
-        self.assertEqual(len({row["family_id"] for row in families}), 342)
+        # Re-pinned 2026-11-04 to the live registry at 2d749bee0e and the
+        # STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT readiness census:
+        # 344 families = 320 materialized + 23 deferred + 1 alias.
+        self.assertEqual(len(families), 344)
+        self.assertEqual(len({row["family_id"] for row in families}), 344)
         added = [row for row in families if row["family_id"] == "run_started_index_checkpoint"]
         browser_checkpoint = [row for row in families if row["family_id"] == "browser_workspace_created_index_checkpoint"]
         self.assertEqual(len(browser_checkpoint), 1)
         self.assertEqual(len(added), 1)
-        # The 88 rows of the earlier pin still lead the registry in their order, followed by the
-        # two families it named; every later family is appended after them.
-        self.assertEqual(
-            [row["family_id"] for row in families[88:90]],
-            ["run_started_index_checkpoint", "browser_workspace_created_index_checkpoint"],
-        )
-        # 2026-09-26 packet integration materializes onboarding_state from current Project,
-        # Settings and Onboarding owners via pm-onboarding-contracts.py --materialize.
-        # The onboarding pin preceded SP-322; its added schedule family brings the census to 295.
-        prior = families[:88]
-        self.assertEqual(len(prior), 88)
+        # Re-pinned 2026-11-04: the live registry is no longer append-ordered
+        # by the historical 88-row snapshot. Check its exact current status
+        # census and the named checkpoint owners instead of obsolete offsets.
+        self.assertEqual(sum(row["status"] == "materialized" for row in families), 320)
+        self.assertEqual(sum(row["status"] == "deferred_not_build_blocking" for row in families), 23)
+        self.assertEqual(sum(row["status"] == "compatibility_alias" for row in families), 1)
         def canonical_digest(value):
             return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
-        self.assertEqual(canonical_digest(prior), "f28f8926b74cd025e74f645a91a1fd59abc02dbbf1c6a6621b76231f60eeaff7")
         self.assertEqual(canonical_digest(added[0]), "24060bdb4077754dc609915d59ffd6357f3ae042e4ff34e75f91683937055842")
         spec = importlib.util.spec_from_file_location("browser_created_storage_pin", ROOT / "scripts/pm_browser_workspace_created.py")
         browser = importlib.util.module_from_spec(spec)
@@ -400,13 +443,27 @@ class OnboardingStorageTests(unittest.TestCase):
             onboarding_storage_value_schema(changed, PROJECT_SCHEMA, settings)
 
     def test_explicit_history_choices_are_bound_not_replaced_by_consumer_defaults(self):
-        for field, replacement in (("local_history", False), ("history_backend", "git")):
+        for replacement in ("git", "jujutsu"):
             changed = copy.deepcopy(CASES["valid.session.postcommit_provider"])
-            self.assertNotEqual(changed["setup_draft"][field], replacement)
-            changed["setup_draft"][field] = replacement
+            changed["setup_draft"]["history_backend"] = replacement
             self.assertTrue(valid("onboarding_session", changed))
-            self.assertIn("onboarding_persisted_draft_approved_bytes_mismatch",
-                          onboarding_semantic_failures("onboarding_session", changed))
+            self.assertTrue(GATE.Draft202012Validator(self.bundle).is_valid(changed))
+            if replacement != CASES["valid.session.postcommit_provider"]["setup_draft"]["history_backend"]:
+                self.assertIn("onboarding_persisted_draft_approved_bytes_mismatch",
+                              onboarding_semantic_failures("onboarding_session", changed))
+
+    def test_project_setup_cannot_disable_safe_history_in_owner_or_storage(self):
+        for mode in ("new", "existing_local", "existing_online", "restore"):
+            changed = copy.deepcopy(CASES["valid.session.postcommit_provider"])
+            changed["setup_draft"].update(project_mode=mode,
+                                          project_source_ref="source:existing",
+                                          backup_source_ref="backup:restore")
+            with self.subTest(project_mode=mode):
+                self.assertTrue(valid("onboarding_session", changed))
+                self.assertTrue(GATE.Draft202012Validator(self.bundle).is_valid(changed))
+                changed["setup_draft"]["local_history"] = False
+                self.assertFalse(valid("onboarding_session", changed))
+                self.assertFalse(GATE.Draft202012Validator(self.bundle).is_valid(changed))
 
     def test_touch_onboarding_residuals_do_not_restore_predecessor_contracts(self):
         touch = json.loads((ROOT / "Plans/touch_closure.json").read_text())
@@ -421,7 +478,7 @@ class OnboardingStorageTests(unittest.TestCase):
 
     def test_gui_stage_graphs_reference_owner_instead_of_visual_alias_roster(self):
         gui = json.loads((ROOT / "Plans/final_gui_interaction_contracts.schema.json").read_text())
-        props = gui["$defs"]["onboarding_motion"]["properties"]
+        props = gui["$defs"]["onboarding_motion_v2"]["properties"]
         for consumer, owner in (("stages", "main_stage_order"),
                                 ("connect_existing_stages", "connect_existing_stage_order"),
                                 ("deferred_project_stages", "deferred_project_stage_order")):

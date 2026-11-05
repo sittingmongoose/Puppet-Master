@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L2462-L2572
+Source lines: L2468-L2576
 
-Source SHA256: `dd347352cddb25f2be08d51b81df50cec81d13a55f6543ff71176a198f390d58`
+Source SHA256: `ec31e72135a20b97f0cf6eb893d2b7ddfedd51dcbc640599df316eb2a454ab3e`
 
 ---
 
@@ -77,9 +77,8 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are
   created.
 validation_surfaces:
-  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
-  - python3 scripts/pm-plans-verify.py lint-contractrefs
-  - python3 scripts/pm-plan-index.py validate
+  - scripts/pm-plans-verify.py
+  - scripts/pm-plan-index.py
 risk_class: pm7_parallel_owner_or_shared_assistant_clone_drift
 reasoning_tier: high
 context_scope: pm7_commands_wiring_dry_assistant
@@ -95,13 +94,12 @@ source_lineage:
   - Concepts/pm7-tools/build_pm7.py (retired PM7 builder; source-lineage-only)
   - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local successor audit status; verdict remains report-owned)
+  - "DL-260 source lineage only (no product API or implementation obligation): chatPanel and chatResizer were concept DOM identities; the shared Assistant component, resize ownership and state continuity remain product requirements."
 preserved_exact_tokens:
   - widget_layout:v1:usage
   - widget_layout:v1:dashboard
   - home_workspace_layout.v1
   - cmd.workspace_layout.size_surface
-  - chatPanel
-  - chatResizer
   - widget_layout:v1:dashboard:<board_id>
   - home_workspace_layout.v2
   - widget_layout:v1:<project_id>:<board_id>

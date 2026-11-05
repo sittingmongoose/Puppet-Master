@@ -35,7 +35,7 @@ canonical_text: >-
   GitLab uses forge_provider=gitlab with explicit gitlab_com, gitlab_self_managed or gitlab_dedicated variant,
   normalized host, account, namespace/group, provider repository, tier/license, server version where applicable,
   adapter and signed support catalog. GitLab Environment Toolkit is not a forge adapter or capability proof.
-  P1 New Project offers gitlab_com and gitlab_self_managed through FGI-023 and PJCT-010 with exact personal/group/subgroup namespace, privacy and auth. gitlab_dedicated retains its owner variant identity and signed support requirements but is not offered in this setup until an explicit owner admission. P2 guided fork-to-original remains typed unsupported here; a team-project branch/Merge Request remains available under its ordinary capability.
+  P1 New Project offers gitlab_com and gitlab_self_managed through FGI-023 and PJCT-010 with exact personal/group/subgroup namespace, privacy and auth. FGI-023's normative profile-to-variant mapping binds gitlab_saas to gitlab_com and gitlab_self_managed to gitlab_self_managed through create options and the resulting repository binding; the profile and variant vocabularies are not renamed. gitlab_dedicated has no New Project create profile, retains its owner variant identity and signed support requirements, and is not offered in this setup until an explicit owner admission. P2 guided fork-to-original remains typed unsupported here; a team-project branch/Merge Request remains available under its ordinary capability.
 gui_related: true
 gui_classification_reason: Provider variant, host, account and support state appear in setup and health UI.
 depends_on: [FGI-001, PDS-003]
@@ -44,7 +44,10 @@ acceptance_criteria:
   - All three provider variants remain distinguishable.
   - Self-managed/Dedicated capability requires current signed host/version/tier support evidence.
   - Environment Toolkit cannot satisfy GitLab forge readiness.
-validation_surfaces: [Plans/gitlab_integration_fixtures.json, provider/variant negative scans, signed catalog fixtures]
+validation_surfaces:
+- Plans/gitlab_integration_fixtures.json
+- future provider/variant negative scans
+- future signed catalog fixtures
 risk_class: gitlab_variant_or_tool_identity_conflation
 reasoning_tier: high
 context_scope: gitlab_provider_identity

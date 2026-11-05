@@ -579,9 +579,10 @@ acceptance_criteria:
 - A changed key or unknown key-write effect blocks readiness and safely returns to the exact setup without fallback.
 - Public PM ingress keeps SSH/PTY excluded, and protected human actions remain unavailable to agents and YOLO.
 validation_surfaces:
-- Plans/server_system_contracts.schema.json and Plans/server_system_contract_fixtures.json; F-d adoption required
-- Plans/projects_refresh_command_bindings.json and central wiring/Touch contracts; F-b adoption required
-- Future native protected-input, SSH currentness, remote-write/readback and restart evidence; not_run
+- Plans/server_system_contracts.schema.json
+- Plans/server_system_contract_fixtures.json
+- Plans/projects_refresh_command_bindings.json
+- future native protected-input, SSH currentness, remote-write/readback and restart evidence; not_run
 risk_class: ssh_host_impersonation_or_protected_key_install_authority_escape
 reasoning_tier: high
 context_scope: projects_refresh_20261103_ras_017
@@ -590,7 +591,7 @@ implementation_surfaces:
 - Plans/server_system_contracts.schema.json
 - future sole Server SSH owner and shared protected-auth broker; no implementation claimed
 node_compile_hint:
-  mode: accepted_product_contract_pending_companion_and_native_evidence
+  mode: accepted_product_contract_pending_native_evidence
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:

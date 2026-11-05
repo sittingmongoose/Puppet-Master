@@ -68,7 +68,18 @@
     /* NieR Mode paints basic-* under html[data-o55-nier] with its own stepped eases (nier.css): part of the key */
     var th = (b.getAttribute('data-theme') || '') + (document.documentElement.hasAttribute('data-o55-nier') ? '+nier' : '');
     if (tokCache.theme !== th) { tokCache.theme = th; tokCache.v = Object.create(null); }
-    if (!(name in tokCache.v)) { try { tokCache.v[name] = getComputedStyle(b).getPropertyValue(name).trim(); } catch (e) { return ''; } }
+    if (!(name in tokCache.v)) {
+      try {
+        /* Read this look's motion vocabulary together. An exit can ask for an ease or duration never used by
+           the entrance, after moving the ghost into the body; a lazy read then forces a second page layout. */
+        var cs = getComputedStyle(b);
+        for (var i = 0; i < cs.length; i++) {
+          var key = cs[i];
+          if (/^--pmx-(?:t-|wait-|ease-)/.test(key)) tokCache.v[key] = cs.getPropertyValue(key).trim();
+        }
+        if (!(name in tokCache.v)) tokCache.v[name] = cs.getPropertyValue(name).trim();
+      } catch (e) { return ''; }
+    }
     return tokCache.v[name];
   }
   function msOf(v) { v = String(v || '').trim(); var n = parseFloat(v); if (!isFinite(n)) return 0; return /ms$/.test(v) ? n : /s$/.test(v) ? n * 1000 : n; }

@@ -1358,9 +1358,9 @@ acceptance_criteria:
 - Failed bundle creates no partial To-Dos or units; regular Plan has no bundle.
 - Compiler accepts the Assistant-profile distinction while refusing product compilation and global-index admission.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows

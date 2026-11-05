@@ -9010,124 +9010,32 @@
       "x-selected-logical-schema-id": "pm.chat.move_manifest.v1"
     },
     "GoalCommandRequestApplicationV1": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "schema_id",
-        "schema_version",
-        "command_id",
-        "context",
-        "goal_id",
-        "expected_revision",
-        "expected_currentness_hash",
-        "objective_text",
-        "source_message_id",
-        "approval_id",
-        "original_operation_ref"
-      ],
-      "properties": {
-        "schema_id": {
-          "const": "pm.goal.command_request.application.v1"
-        },
-        "schema_version": {
-          "const": "1.0.0"
-        },
-        "command_id": {
-          "enum": [
-            "cmd.chat.goal.start",
-            "cmd.chat.goal.propose_update",
-            "cmd.chat.goal.update",
-            "cmd.chat.goal.pause",
-            "cmd.chat.goal.resume",
-            "cmd.chat.goal.cancel"
-          ]
-        },
-        "context": {
-          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
-        },
-        "goal_id": {
-          "anyOf": [
+      "description": "Current command union at the existing input root: retained v1 non-update commands or explicit v2 objective mutation. Exact historical v1 update bytes remain readable only through GoalCommandRequestApplicationLegacyV1, without current mutation authority.",
+      "oneOf": [
+        {
+          "allOf": [
             {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 256
+              "$ref": "#/$defs/GoalCommandRequestApplicationLegacyV1"
             },
             {
-              "type": "null"
+              "properties": {
+                "command_id": {
+                  "enum": [
+                    "cmd.chat.goal.start",
+                    "cmd.chat.goal.propose_update",
+                    "cmd.chat.goal.pause",
+                    "cmd.chat.goal.resume",
+                    "cmd.chat.goal.cancel"
+                  ]
+                }
+              }
             }
           ]
         },
-        "expected_revision": {
-          "anyOf": [
-            {
-              "type": "integer",
-              "minimum": 0
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "expected_currentness_hash": {
-          "anyOf": [
-            {
-              "type": "string",
-              "pattern": "^[0-9a-f]{64}$"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "objective_text": {
-          "anyOf": [
-            {
-              "type": "string",
-              "maxLength": 4000,
-              "pattern": "^[^\\ud800-\\udfff]*$"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "source_message_id": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 256
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "approval_id": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 256
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "original_operation_ref": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 256
-            },
-            {
-              "type": "null"
-            }
-          ]
+        {
+          "$ref": "#/$defs/GoalCommandRequestApplicationV2"
         }
-      }
+      ]
     },
     "GoalExecutionBindingApplicationV1": {
       "type": "object",
@@ -16854,6 +16762,269 @@
           ]
         }
       }
+    },
+    "GoalCommandRequestApplicationLegacyV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "context",
+        "goal_id",
+        "expected_revision",
+        "expected_currentness_hash",
+        "objective_text",
+        "source_message_id",
+        "approval_id",
+        "original_operation_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal.command_request.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "command_id": {
+          "enum": [
+            "cmd.chat.goal.start",
+            "cmd.chat.goal.propose_update",
+            "cmd.chat.goal.update",
+            "cmd.chat.goal.pause",
+            "cmd.chat.goal.resume",
+            "cmd.chat.goal.cancel"
+          ]
+        },
+        "context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        },
+        "goal_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expected_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expected_currentness_hash": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "objective_text": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 4000,
+              "pattern": "^[^\\ud800-\\udfff]*$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_message_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "approval_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_operation_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "GoalCommandRequestApplicationV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "context",
+        "goal_id",
+        "expected_revision",
+        "expected_currentness_hash",
+        "objective_text",
+        "source_message_id",
+        "approval_id",
+        "original_operation_ref",
+        "change_source"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal.command_request.application.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "command_id": {
+          "const": "cmd.chat.goal.update"
+        },
+        "context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "expected_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_currentness_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "objective_text": {
+          "type": "string",
+          "maxLength": 4000,
+          "pattern": "^[^\\ud800-\\udfff]*$"
+        },
+        "source_message_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "approval_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_operation_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "change_source": {
+          "enum": [
+            "user_direct",
+            "agent_proposed_user_approved"
+          ]
+        }
+      },
+      "description": "GRS-086 objective mutation edition. Direct Save is user_direct with no source message or fabricated approval. An agent replacement consumes its originating approved proposal. The owner verifies exact currentness, approved bytes, actor and source joins before mutation.",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "change_source": {
+                "const": "user_direct"
+              }
+            },
+            "required": [
+              "change_source"
+            ]
+          },
+          "then": {
+            "properties": {
+              "approval_id": {
+                "type": "null"
+              },
+              "source_message_id": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "change_source": {
+                "const": "agent_proposed_user_approved"
+              }
+            },
+            "required": [
+              "change_source"
+            ]
+          },
+          "then": {
+            "properties": {
+              "approval_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "source_message_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        }
+      ]
     }
   }
 }
