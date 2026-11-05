@@ -1,4 +1,7 @@
-import {installActivityPaintProbe} from '../helpers/activity-paint.mjs';
+import {installActivityInputProbe} from '../helpers/activity-paint.mjs';
+import {beginActivityFrameClock} from '../helpers/activity-frame-clock.mjs';
+import {mkdirSync,writeFileSync} from 'node:fs';
+import {join} from 'node:path';
 
 // Stream F SW regressions. Uses actual controls and the public fixture APIs.
 export const tests = {
@@ -8,7 +11,7 @@ export const tests = {
    const f=await t.app.open();
    await t.emulate({reducedMotion:'no-preference'});
    const b=f.locator('#pmRoot [data-action="open-activity"]').first();
-   await f.evaluate(installActivityPaintProbe);
+   await f.evaluate(installActivityInputProbe);
    await f.evaluate(()=>{
     window.__activityClickRenders=0;window.__activityClickActive=false;
     PM56_EXT.slot('afterRender',(_ctx,info)=>{if(window.__activityClickActive&&info.phase==='app')window.__activityClickRenders++;});
@@ -17,9 +20,19 @@ export const tests = {
      if(e.isTrusted&&e.target.closest('[data-action="open-activity"]'))window.__activityClickActive=true;
     },{capture:true,once:true});
    });
-   await b.click();
-   await f.waitForFunction(()=>window.__activityPaintResult!==null,{},{timeout:5000}).catch(()=>{});
-   const paint=await f.evaluate(()=>window.__activityPaintResult||{error:'No first-paint entry',input:window.__activityPaintInput,entries:window.__activityPaintEntries});
+   const stage=await f.locator('#pmRoot .chat-stage').boundingBox();
+   const clock=await beginActivityFrameClock(t.window);
+   let input,paint;
+   try{
+    await b.click();
+    await t.page.waitForTimeout(1200);
+    input=await f.evaluate(()=>window.__activityPaintInput);
+   }finally{await clock.stop();}
+   const dir=join(t.run.dir,'activity-first-paint-'+i);mkdirSync(dir,{recursive:true});
+   for(let j=0;j<clock.frames.length;j++)writeFileSync(join(dir,String(j).padStart(3,'0')+'.png'),clock.frames[j].png);
+   writeFileSync(join(dir,'frames.json'),JSON.stringify({input,stage,frames:clock.frames.map(({png,...frame})=>frame)},null,2));
+   try{paint=clock.analyze(input,stage);}catch(error){paint={error:error.message};}
+   writeFileSync(join(dir,'paint.json'),JSON.stringify(paint,null,2));
    t.log('input to first cover paint '+i+': '+JSON.stringify(paint));
    await t.check('first click painted within 500 ms '+i,
     !paint.error&&paint.input.trusted&&paint.elapsed>=0&&paint.elapsed<=500);

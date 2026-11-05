@@ -1,8 +1,9 @@
 import {pathToFileURL} from 'node:url';
-import {installActivityPaintProbe} from '../helpers/activity-paint.mjs';
+import {installActivityInputProbe} from '../helpers/activity-paint.mjs';
+import {beginActivityFrameClock} from '../helpers/activity-frame-clock.mjs';
 export default async function(t){
  await t.emulate({reducedMotion:'no-preference'});
- await t.page.context().addInitScript(installActivityPaintProbe);
+ await t.page.context().addInitScript(installActivityInputProbe);
  await t.page.context().addInitScript(()=>{
   window.__shortClicks=[];
   for(const type of ['pointerdown','click'])window.addEventListener(type,e=>{
@@ -24,12 +25,14 @@ export default async function(t){
   const b=f.locator('#pmRoot [data-action="open-activity"]').first();await b.waitFor({state:'visible'});
   const info=await b.evaluate(e=>({html:e.outerHTML,theme:document.documentElement.dataset.theme,nier:PM_NIER.on(),reduced:matchMedia('(prefers-reduced-motion: reduce)').matches,rootClass:document.querySelector('#pmRoot').className,htmlMotion:document.documentElement.getAttribute('data-motion')}));t.log('click target '+i+' '+JSON.stringify(info));await t.check('full motion at first click '+i,!info.reduced);
   const box=await b.boundingBox();t.log('click native bounds '+i+' '+JSON.stringify(box));await t.page.mouse.move(box.x+box.width/2,box.y+box.height/2);
-  t.log('input-clock anchor '+i+' '+JSON.stringify(await f.evaluate(()=>({wall:performance.timeOrigin+performance.now()}))));await t.mark('first click '+i);await t.page.mouse.click(box.x+box.width/2,box.y+box.height/2);
+  t.log('input-clock anchor '+i+' '+JSON.stringify(await f.evaluate(()=>({wall:performance.timeOrigin+performance.now()}))));const stage=await f.locator('#pmRoot .chat-stage').boundingBox();const clock=await beginActivityFrameClock(t.window);await t.mark('first click '+i);await t.page.mouse.click(box.x+box.width/2,box.y+box.height/2);
   // Event timestamps below locate the input independently of awaited click completion.
   await t.page.waitForTimeout(1200);await t.mark('cover settled '+i);
-  await f.waitForFunction(()=>window.__activityPaintResult!==null,{},{timeout:10000});
-  const got=await f.evaluate(()=>({paint:window.__activityPaintResult,events:window.__shortClicks,open:PM56_APP.state.activity.open,cover:!!document.querySelector('#pmRoot .activity-panel.cover'),rect:document.querySelector('#pmRoot .activity-panel.cover')?.getBoundingClientRect().toJSON()}));
-  t.log('paint region '+i+' '+JSON.stringify(got));
+  await clock.stop();
+  const input=await f.evaluate(()=>window.__activityPaintInput);
+  let paint;try{paint=clock.analyze(input,stage);}catch(e){paint={error:e.message};}
+  const got=await f.evaluate(()=>({events:window.__shortClicks,open:PM56_APP.state.activity.open,cover:!!document.querySelector('#pmRoot .activity-panel.cover'),rect:document.querySelector('#pmRoot .activity-panel.cover')?.getBoundingClientRect().toJSON()}));
+  got.paint=paint;t.log('paint region '+i+' '+JSON.stringify(got));
   await t.check('one click opens cover '+i,got.open&&got.cover,JSON.stringify(got));
   await t.check('input-clock first cover paint <=500ms '+i,
    got.paint&&!got.paint.error&&got.paint.elapsed>=0&&got.paint.elapsed<=500,JSON.stringify(got.paint));

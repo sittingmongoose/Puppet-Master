@@ -24,7 +24,7 @@ Parallel runs are safe: each gets its own browser and run folder. Give each its 
 | Check file | What it asserts |
 |---|---|
 | `chat-sweep`, `chat-sweep-surfaces`, `chat-sweep-project`, `chat-gaze` | Stream F chat sweep: first Activity click, duplicate agent identity, shared sound switch, dock width, Room controls, Retro face, Reduced Motion loops and entry speed. |
-| `activity-paint-calibration` | Paired Element Timing/native-frame calibration, with trusted input and per-click browser/CPU/memory data; use only when the first-paint clock disagrees with retained frames. |
+| `activity-paint-calibration` | Opt-in Element Timing diagnostic (`elementTimingCalibration=1` and annotated controlPage), retaining browser/CPU/memory data; the opacity-entry calibration showed missing entries, so this is not the SW01 assertion. |
 | `chat-detail-film` | SW-01 input-clock first-click films and SW-36 already-open selected Detail resize, normal and opaque child surfaces. |
 | `chat-detail-matrix` | Activity Detail keeps 360 px of messages or covers, all ten looks, both motion preferences and chat widths. |
 | `activity-speed-film` | SW-27: three owner-API Activity entries per speed, with stable viewport setup, for short control/fixed 60 fps GPU films. |

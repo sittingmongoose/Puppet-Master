@@ -6,6 +6,7 @@ import {execFileSync} from 'node:child_process';
 import {installActivityPaintProbe} from '../helpers/activity-paint.mjs';
 const cpu=()=>readFileSync('/proc/stat','utf8').split('\n')[0].trim().split(/\s+/).slice(1).map(Number);
 export default async function(t){
+ if(!t.args.elementTimingCalibration||!t.args.controlPage){t.log("Element Timing diagnostic is opt-in: --set elementTimingCalibration=1 --set controlPage=<annotated build>");return;}
  await t.emulate({reducedMotion:'no-preference'});
  await t.page.context().addInitScript(installActivityPaintProbe);
  const url=p=>/^https?:/.test(p)?p:pathToFileURL(p).href;
