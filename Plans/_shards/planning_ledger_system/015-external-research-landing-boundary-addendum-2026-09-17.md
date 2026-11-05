@@ -4,7 +4,7 @@ Source: `Plans/Planning_Ledger_System.md`
 
 Source lines: L1436-L1539
 
-Source SHA256: `ed1530a5d4cf1a58c263d22dae58032da87e4523fc1ebcb3b8495259addeb4c1`
+Source SHA256: `7a945d6260efdd5494763bab031b5e7c9df8c2c31f8bc1f9c3f852e90746cdef`
 
 ---
 
@@ -78,9 +78,9 @@ acceptance_criteria:
 - Regular Plan creates no ledger; conversion preserves sealed source and exact destination lineage.
 - No runtime operation writes product canon or governance.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows

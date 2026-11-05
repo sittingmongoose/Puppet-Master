@@ -1,21 +1,21 @@
 # Shard Index: Plans/Plan_Document_System.md
 
-Generated: 2026-11-05T03:19:31Z
+Generated: 2026-11-05T08:13:35Z
 
-Source SHA256: `3411eba871adcc07c98e121e6a91d52235d86f81afd0fbde40dcae0f7f188c8b`
+Source SHA256: `8a187f223848c09f9d7ab145c5d2333b966abe1692c1070ebc44f94d6225c48d`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L3 `49f02223bf9b249c9ceea88b798778ef3123e927017f8ee618cf1b234066b2b2`
-- [002 - 0. Scope](002-0.-scope.md) L5-L11 `16328f47e9152d23ff8f38f78a4a1c0397a9c48008c6cdf2829a1c902692fc3c`
-- [003 - 1. Profiles And Standard Document Shape](003-1.-profiles-and-standard-document-shape.md) L13-L66 `429560841835a055602aec8192e5b78482401f223240dcacfc39dc93bd9698c9`
-- [004 - 2. PlanUnits](004-2.-planunits.md) L68-L699 `5fa62a65dc4de6984a16dc3b160e9e544ddc2c348907b8fa26567afcfb5629f0`
-- [005 - 3. Compilation Coverage](005-3.-compilation-coverage.md) L701-L718 `6f8f110afe4a4792717a08e31fb356821cc41fb9b29262e8f03e57cede4491fc`
-- [006 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](006-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L720-L793 `01cd6cac0eaad225e1ede1ef4285ad1b8c36e52bdb237e86c417804e0d182fa0`
-- [007 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](007-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L796-L957 `4d6a0fc593d8684badfc626a176c24dd174e38830a91a612202b772951f1b60f`
-- [008 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](008-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L959-L1011 `43b2acf49e41ecaf917b4daabfed6fea0b0e93abdfda868eb64963eb7edf5301`
-- [009 - Implementation Readiness Gate Addendum - 2026-07-05](009-implementation-readiness-gate-addendum-2026-07-05.md) L1013-L1186 `670ce344576f4577c26679db7595ba9c8c6a559f5c1439e4730aa37bf2139eb8`
-- [010 - FABLE Remaining Action Plan Repair Notes (2026-07-08)](010-fable-remaining-action-plan-repair-notes-2026-07-08.md) L1187-L1195 `6e9f6ed81210ee11b8d10c8140a13b01876f82fd6b8941e4dfd40f430e68757c`
-- [011 - 4. Scoped Assistant Deep Plan PlanUnit Profile](011-4.-scoped-assistant-deep-plan-planunit-profile.md) L1197-L1392 `21b58424630be6d9c0d6a5130a2e4f727d420f3f272c605a2953d087fbd6237a`
+- [001 - Preamble](001-preamble.md) L1-L3 `3ab4a7d7e2aa1963e2c08c52e704fbba049c9b776cc4f5faad98c2caca4834db`
+- [002 - 0. Scope](002-0.-scope.md) L5-L11 `556de0fa68a9c7728ff12dd919138a7464355bb19173662e4007ec2f923fe9db`
+- [003 - 1. Profiles And Standard Document Shape](003-1.-profiles-and-standard-document-shape.md) L13-L66 `0606cd72697bd162cb664da9f9d13e94184162d48b07449e7eb6c92567506071`
+- [004 - 2. PlanUnits](004-2.-planunits.md) L68-L699 `dd009233f227913ee53fb3a0395957bc7bf3245e22f811947c995286772d2584`
+- [005 - 3. Compilation Coverage](005-3.-compilation-coverage.md) L701-L718 `c7ce5f19a0edab4c598caa3dc56d66ba1e56c265718a3c44c537984425dafe7d`
+- [006 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](006-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L720-L793 `f19127854e86ceb153d2a38f64c7fb420aff566f00a4d1cfc45d76dfe16695e2`
+- [007 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](007-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L796-L957 `9412da8f1a5943a24c9a4e223fd27d4171b1d709c871b8f2e36204b6edf28779`
+- [008 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](008-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L959-L1011 `4749919280c6e5f75c21fb0e7245031f928c790de267fbca5f1fd218180de0d8`
+- [009 - Implementation Readiness Gate Addendum - 2026-07-05](009-implementation-readiness-gate-addendum-2026-07-05.md) L1013-L1186 `c417e666fb666fbaea3033e433d6d11e06c03d3b706890b743cde75b8fbef918`
+- [010 - FABLE Remaining Action Plan Repair Notes (2026-07-08)](010-fable-remaining-action-plan-repair-notes-2026-07-08.md) L1187-L1195 `c440b89f92a0442d02b8b93d457a91c81336e5c8000dde50d9f35e88a3eba755`
+- [011 - 4. Scoped Assistant Deep Plan PlanUnit Profile](011-4.-scoped-assistant-deep-plan-planunit-profile.md) L1197-L1392 `77904910df7fbc2f3faf472496128c7dbbe74695f09a3f1a8380600ccea26d66`
