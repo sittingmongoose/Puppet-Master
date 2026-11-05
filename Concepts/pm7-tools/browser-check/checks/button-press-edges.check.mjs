@@ -67,7 +67,7 @@ export default async function(t) {
        const sc=e.closest('.o55-scroll'),foot=e.closest('.o55-layer')?.querySelector('.o55-foot'),hit=document.elementFromPoint(x,y);
        if(!sc||!foot||name!=='bottom-1'||!(hit===foot||foot.contains(hit)))return false;
        const r=e.getBoundingClientRect(),sr=sc.getBoundingClientRect(),fr=foot.getBoundingClientRect();
-       const boundary=sr.top+sc.clientTop+sc.clientHeight,clip=r.bottom-boundary,family=O55.S.root.dataset.family;
+       const boundary=sr.top+sc.clientTop+sc.clientHeight,clip=r.bottom-boundary,family=(window.PM_NIER&&PM_NIER.on())?'nier':O55.S.root.dataset.family;
        const expected=e.matches('.o55-toggle')?({friendly:.4375,nier:.359375})[family]:({basic:.25,friendly:.1875,retro:.40625})[family];
        return expected!==undefined&&Math.abs(clip-expected)<.001&&Math.abs(fr.top-boundary)<.01
         &&y>=boundary-1&&y<boundary&&e.contains(document.elementFromPoint(x,r.bottom-2))
