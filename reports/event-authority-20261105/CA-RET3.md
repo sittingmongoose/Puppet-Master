@@ -4,7 +4,7 @@
 
 Jared's verbatim answer is **"The rest I will defer to your recommendations."** The presented deck's fast-reply rule maps approval to option A on every item, so all twelve items (DL-453–DL-464) are answered A. This change applies items 1.a–7.e to the Storage owner text and policy objects. The Decision Log entries are supplied separately on `plans/ea-cards3-answers-20261105` (not yet pushed at application time); that branch is not merged here.
 
-Each new application policy has one shared Storage-instance count, `cardinality_scope=instance`, not a per-type, per-user, per-Server or per-Project count. Each allows at most 2,000,000 retained records; only expired records free of legal/investigation holds, active references, recovery obligations and protected backups can be removed. Never remove early for space. If the full bucket has no eligible expiry, refuse the new history record while retaining feature availability. No cross-bucket borrowing, double count, access grant or GitHub sign-in widening. The new 2555-day policies use `anchor_kind=creation` because every third-sitting bounded clock is a first-durable-save clock ("first successful save that survives a restart" of the recorded change or result); `terminal_transition` ("the transition that finishes the operation") would contradict item 3.a's explicit "never waits for the operation's later finish" and items 5.a/7.a/7.d/7.e's first-save wording.
+Each new application policy has one bucket for its selected item in the owning Server's Storage instance, shared by that Server's Clients. `cardinality_scope=instance` means that one Server's bucket, not an allowance spanning several Servers, and the count is not kept per type, per user or per Project. Each allows at most 2,000,000 retained records; only expired records free of legal/investigation holds, active references, recovery obligations and protected backups can be removed. Never remove early for space. If the full bucket has no eligible expiry, refuse the new history record while retaining feature availability. No cross-bucket borrowing, double count, access grant or GitHub sign-in widening. The new 2555-day policies use `anchor_kind=creation` because every third-sitting bounded clock is a first-durable-save clock ("first successful save that survives a restart" of the recorded change or result). The Project editions of items 3.a and 5.a reuse `RP-OPERATIONAL-2555D@1.0.0`, whose `anchor_kind` stays `terminal_transition`; the Project first-save anchor adapter (`Plans/storage-plan.md:17543`) binds that anchor to the same first-save clock for exactly those records, so a later finish can never start or move it.
 
 ## Per-item changes
 
@@ -12,20 +12,20 @@ Each new application policy has one shared Storage-instance count, `cardinality_
 |---|---|---|---|
 | **1.a / DL-453** | `Plans/storage-plan.md:17506` — 47 further histories kept permanently: 27 Both-scope, 14 Project-only, 6 application-only; the 33 Both/application types keep the permanent rule outside Projects. No age/count expiry, no new allowance. Deletion and storage-pressure rules as decided. | Reuses `RP-AUTHORITY-INDEFINITE@1.0.0`; no new object | None; full-contract completion/admission remains separate. |
 | **2.a / DL-454** | `Plans/storage-plan.md:17519` — 33 routine histories kept 90 days from first durable save; 26 Project-eligible types share `RP-TELEMETRY-90D`; 29 application-eligible types share one new 2,000,000 bucket. No reset on retry, reprocessing or restore. | `Plans/storage_value_registry.json:686`, `RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0` | None for the clock/count; admission remains separate. |
-| **3.a / DL-455** | `Plans/storage-plan.md:17527` — 24 operational/security/recovery histories kept seven years from the original saved change each entry records; a recorded start begins its own clock at first save. 19 Project-eligible types share `RP-OPERATIONAL-2555D`; 16 application-eligible types share one new 2,000,000 bucket. | `Plans/storage_value_registry.json:702`, `RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0` | None for the clock/count; the shared Project object keeps its values, the card clock governs these entries. |
+| **3.a / DL-455** | `Plans/storage-plan.md:17527` — 24 operational/security/recovery histories kept seven years from the original saved change each entry records; a recorded start begins its own clock at first save. 19 Project-eligible types share `RP-OPERATIONAL-2555D` under the Project first-save anchor adapter (`Plans/storage-plan.md:17543`); 16 application-eligible types share one new 2,000,000 bucket. | `Plans/storage_value_registry.json:702`, `RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0` | None for the clock/count; the shared Project object keeps its values and the adapter binds its anchor for these records. |
 | **4.a / DL-456** | `Plans/storage-plan.md:17539` — Four session-prompt histories kept as long as the target chat, counted in its 250,000 shared limit with linked continuation; chat deletion hides at once, purges unheld active copies in 24 h and backup bytes in 30 d. | Reuses `RP-CHAT-THREAD-LIFETIME@1.0.0`; no new object | None. |
-| **5.a / DL-457** | `Plans/storage-plan.md:17541` — `planning.question_budget_exhausted` kept 2,555 days from the first durable save of the refusal/next-step result across Plan, Deep Plan and question banks. Project records share `RP-OPERATIONAL-2555D`; one new 2,000,000 application bucket, no fresh allowance per chat/workflow/participant/source. | `Plans/storage_value_registry.json:718`, `RP-QUESTION-BUDGET-APPLICATION-2555D@1.0.0` | None. |
-| **6.a / DL-458** | `Plans/storage-plan.md:17543` — Cross-chat `browser.context_share_revoked` kept until the last affected recipient chat is deleted; counted once in each affected chat's 250,000 allowance; single-recipient case keeps the G10 Chat rule unchanged. | Reuses `RP-CHAT-THREAD-LIFETIME@1.0.0`; no new object | None; binds the DS15 pending cross-chat question. |
-| **6.b / DL-459** | `Plans/storage-plan.md:17545` — Two Browser reader checkpoints under the existing disposable-checkpoint rule: current copy while needed, at most three copies per reader per Project/Server history, replaced copies kept seven days (604,800 s), mixed-chat deletion boundary. Zero new event families. | Reuses `RP-PROJECTION-3GEN@1.0.0`; no new object | None; binds both DS15 pending checkpoint questions. |
-| **7.a / DL-460** | `Plans/storage-plan.md:17551` — `filesafe.command_denied` outside Projects: own 2,000,000 allowance, already-chosen 2,555 days from the saved original result's first durable save; scoped deletion/protection rule at `:17549`. | `Plans/storage_value_registry.json:734`, `RP-FILESAFE-BLOCKED-COMMAND-APPLICATION-2555D@1.0.0` | None; Project edition keeps its decided rule. |
-| **7.b / DL-461** | `Plans/storage-plan.md:17552` — `filesafe.destructive_override_denied` outside Projects kept permanently, no age/count expiry, Server-wide boundary, scoped deletion rule. | Reuses `RP-AUTHORITY-INDEFINITE@1.0.0`; no new object | None. |
-| **7.c / DL-462** | `Plans/storage-plan.md:17553` — `filesafe.destructive_override_requested`: same as 7.b. | Reuses `RP-AUTHORITY-INDEFINITE@1.0.0`; no new object | None. |
-| **7.d / DL-463** | `Plans/storage-plan.md:17554` — `filesafe.guard_init_failed` outside Projects: own 2,000,000 allowance, 2,555-day first-durable-save clock, scoped deletion rule. | `Plans/storage_value_registry.json:750`, `RP-FILESAFE-GUARD-FAILURE-APPLICATION-2555D@1.0.0` | None. |
-| **7.e / DL-464** | `Plans/storage-plan.md:17555` — `filesafe.path_denied` outside Projects: own 2,000,000 allowance, 2,555-day first-durable-save clock, scoped deletion rule. | `Plans/storage_value_registry.json:766`, `RP-FILESAFE-DENIED-PATH-APPLICATION-2555D@1.0.0` | None. |
+| **5.a / DL-457** | `Plans/storage-plan.md:17541` — `planning.question_budget_exhausted` kept 2,555 days from the first durable save of the refusal/next-step result across Plan, Deep Plan and question banks. Project records share `RP-OPERATIONAL-2555D` under the Project first-save anchor adapter (`Plans/storage-plan.md:17543`); one new 2,000,000 application bucket, no fresh allowance per chat/workflow/participant/source. | `Plans/storage_value_registry.json:718`, `RP-QUESTION-BUDGET-APPLICATION-2555D@1.0.0` | None. |
+| **6.a / DL-458** | `Plans/storage-plan.md:17557` — Cross-chat `browser.context_share_revoked` kept until the last affected recipient chat is deleted; counted once in each affected chat's 250,000 allowance; single-recipient case keeps the G10 Chat rule unchanged. | Reuses `RP-CHAT-THREAD-LIFETIME@1.0.0`; no new object | None; binds the DS15 pending cross-chat question. |
+| **6.b / DL-459** | `Plans/storage-plan.md:17559` — Two Browser reader checkpoints under the existing disposable-checkpoint rule: current copy while needed, at most three copies per reader per Project/Server history, replaced copies kept seven days (604,800 s), mixed-chat deletion boundary. Zero new event families. | Reuses `RP-PROJECTION-3GEN@1.0.0`; no new object | None; binds both DS15 pending checkpoint questions. |
+| **7.a / DL-460** | `Plans/storage-plan.md:17565` — `filesafe.command_denied` outside Projects: own 2,000,000 allowance, already-chosen 2,555 days from the saved original result's first durable save; scoped deletion/protection rule at `:17563`. | `Plans/storage_value_registry.json:734`, `RP-FILESAFE-BLOCKED-COMMAND-APPLICATION-2555D@1.0.0` | None; Project edition keeps its decided rule. |
+| **7.b / DL-461** | `Plans/storage-plan.md:17566` — `filesafe.destructive_override_denied` outside Projects kept permanently, no age/count expiry, Server-wide boundary, scoped deletion rule. | Reuses `RP-AUTHORITY-INDEFINITE@1.0.0`; no new object | None. |
+| **7.c / DL-462** | `Plans/storage-plan.md:17567` — `filesafe.destructive_override_requested`: same as 7.b. | Reuses `RP-AUTHORITY-INDEFINITE@1.0.0`; no new object | None. |
+| **7.d / DL-463** | `Plans/storage-plan.md:17568` — `filesafe.guard_init_failed` outside Projects: own 2,000,000 allowance, 2,555-day first-durable-save clock, scoped deletion rule. | `Plans/storage_value_registry.json:750`, `RP-FILESAFE-GUARD-FAILURE-APPLICATION-2555D@1.0.0` | None. |
+| **7.e / DL-464** | `Plans/storage-plan.md:17569` — `filesafe.path_denied` outside Projects: own 2,000,000 allowance, 2,555-day first-durable-save clock, scoped deletion rule. | `Plans/storage_value_registry.json:766`, `RP-FILESAFE-DENIED-PATH-APPLICATION-2555D@1.0.0` | None. |
 
 No stopped questions: every item's option A states its lifetime, clock, counting, deletion and protection completely.
 
-The common third-sitting terms are at `Plans/storage-plan.md:17504`. The FileSafe application boundary is at `Plans/storage-plan.md:17547`. SP-237's `depends_on` includes DL-453–DL-464 beside the earlier decisions; its acceptance criteria and source lineage carry the new assignment rules (`Plans/storage-plan.md:17955`). The census pin moves 35 → 41 policies (`Plans/storage-plan.md:533`).
+The common third-sitting terms are at `Plans/storage-plan.md:17504`. The Project first-save anchor adapter is at `Plans/storage-plan.md:17543-17555`. The FileSafe application boundary is at `Plans/storage-plan.md:17561`. SP-237's `depends_on` includes DL-453–DL-464 beside the earlier decisions; its acceptance criteria and source lineage carry the new assignment rules (`Plans/storage-plan.md:17969`). The census pin moves 35 → 41 policies (`Plans/storage-plan.md:533`).
 
 ## Families and groups per item
 
@@ -34,9 +34,9 @@ The common third-sitting terms are at `Plans/storage-plan.md:17504`. The FileSaf
 - **3.a (24):** Repository-hosting services 5, Source Control 6, Artifacts 1, Testing and capture 2, Backup 1, Remote Access 3, Restore 1, Server 2, External Research 2, Notebook 1 (`Plans/storage-plan.md:17528-17537`).
 - **4.a (4):** Requests sent to chats: `session_prompt.admitted`, `session_prompt.cancelled`, `session_prompt.expired`, `session_prompt.rejected` (`Plans/storage-plan.md:17539`).
 - **5.a (1):** `planning.question_budget_exhausted` (`Plans/storage-plan.md:17541`).
-- **6.a (1):** `browser.context_share_revoked`, cross-chat case only (`Plans/storage-plan.md:17543`).
-- **6.b (2 checkpoint types):** `projector.checkpoint.ds15.browser_context_shared:{scope_key}`, `projector.checkpoint.ds15.browser_context_share_revoked:{scope_key}` (`Plans/storage-plan.md:17545`).
-- **7.a–7.e (1 each):** `filesafe.command_denied`, `filesafe.destructive_override_denied`, `filesafe.destructive_override_requested`, `filesafe.guard_init_failed`, `filesafe.path_denied` (`Plans/storage-plan.md:17551-17555`).
+- **6.a (1):** `browser.context_share_revoked`, cross-chat case only (`Plans/storage-plan.md:17557`).
+- **6.b (2 checkpoint types):** `projector.checkpoint.ds15.browser_context_shared:{scope_key}`, `projector.checkpoint.ds15.browser_context_share_revoked:{scope_key}` (`Plans/storage-plan.md:17559`).
+- **7.a–7.e (1 each):** `filesafe.command_denied`, `filesafe.destructive_override_denied`, `filesafe.destructive_override_requested`, `filesafe.guard_init_failed`, `filesafe.path_denied` (`Plans/storage-plan.md:17565-17569`).
 
 Total: 115 event families plus 2 checkpoint types = 117 targets over 12 items. All 117 exact Appendix A names were extracted mechanically from the presented deck and verified present in the new section (`scope-audit.json`).
 
@@ -50,7 +50,7 @@ Total: 115 event families plus 2 checkpoint types = 117 targets over 12 items. A
 
 ## Checks and exits
 
-Commands ran in a full worktree. Base outputs were captured on the pristine tree before application; tip outputs after. These are static planning/contract checks, not native runtime proof. The full-tree landing check and aggregate governance reseal are not performed by this implementation worker.
+This table is the original implementation run, recorded at `228902e4ad`; the fix-round rerun is under Review cycle 1. Commands ran in a full worktree. Base outputs were captured on the pristine tree before application; tip outputs after. These are static planning/contract checks, not native runtime proof. The full-tree landing check and aggregate governance reseal are not performed by this implementation worker.
 
 | Check | Base exit | Tip exit | Result |
 |---|---:|---:|---|
@@ -97,11 +97,111 @@ Spec Lock exits 1 with the same 25 `stale_hash` rows; only the three edited file
 
 ## Open items and integration
 
-1. **Answer stack:** integrate the answers carrying DL-453–DL-464, then regenerate and validate the complete index. Keep the required dependency edges.
+1. **Answer stack:** integrate the answers carrying DL-453–DL-464, then regenerate and validate the complete index. Keep the required dependency edges. The pair passes (Review cycle 1). `origin/main` has since moved to `6861d332de`, so the landing integrates it too; that three-way merge also passes in scratch.
 2. **Wave-3 phase 2:** lanes bind their rows to these policies on their own branches; nothing here edits them.
 3. **Governance currentness:** request the assigned reseal for edited Storage sources and the readiness script after integration. Do not update Spec Lock, evidence, frozen validators or currentness edition in this branch. Full admission/native verification remains outside this implementation step.
 
+## Review cycle 1: findings and responses
+
+**Review:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CARDS3-sol/REVIEW-cycle1.md` (Sol 6.1 max), reviewed head `228902e4ad`. **Brief:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/CA-RET3-FIX1.md`. This round applies answers Jared already gave and needed no new product choice.
+
+| Finding | Severity | Response | Where |
+|---|---|---|---|
+| **C3-01:** the Project families of 3.a and 5.a reused a `terminal_transition` policy with no exact binding to their first-save clocks | blocking | **Fixed** by a Storage-owned scoped anchor adapter | `Plans/storage-plan.md:17543-17555`; pointers at `:17527` and `:17541`; SP-237 acceptance at `:17986-17987` |
+| **C3-02:** SP-237's DL-453–DL-464 edges do not resolve on this branch alone | blocking alone | **Kept.** The edges stay and this branch lands together with the answers branch; the pair passes below | `Plans/storage-plan.md:17981` |
+| **C3-03:** this report denied the approved Server counting boundary | should fix | **Fixed.** Line 7 now gives one bucket per selected item in the owning Server's Storage instance, shared by that Server's Clients. No policy field or membership changed | line 7 of this report |
+
+### C3-01: the binding and why
+
+**Chosen: a scoped anchor adapter.** The review allowed an adapter or a compatible new policy bound to the shared Project counter. The adapter is smaller and clearer.
+
+| | Scoped anchor adapter (chosen) | Compatible new policy (not chosen) |
+|---|---|---|
+| **Registry** | No change: 41 objects, same bytes | A 42nd object |
+| **Companion pins** | None | Census re-pin in `scripts/pm-implementation-readiness.py`, `tests/test_pm_onboarding_phases.py` and `Plans/storage-plan.md:533` |
+| **Shared Project count** | One by construction: same policy, same bucket | A second object with `max_cardinality=2000000` and `cardinality_scope=project` reads as a second allowance. `Plans/storage_value_registry.schema.json` has no field that binds one policy's count to another's, so prose would have to override the object |
+| **Fit with existing text** | Anchor meaning is already explicit per family (`Plans/storage-plan.md:899`), and G28 states this same policy's anchor the same way (`Plans/storage-plan.md:17465`) | One allowance split across two objects |
+
+**How each saved fact supplies the anchor** (`Plans/storage-plan.md:17545-17550`):
+
+| Population | Saved fact | Clock |
+|---|---|---|
+| 4 start entries | The recorded start | Always the start entry's own first save. A Project `forge.pipeline.started` saved at T0 expires at T0 + 220,752,000 seconds, even if the pipeline never finishes |
+| 6 finish and outcome entries | That finish or outcome | Its own clock; never moves the start entry's clock |
+| 1 retry entry | The recorded retry | Its own clock; earlier entries keep theirs |
+| 2 state-change entries | One saved state change | Its own clock; a later change never moves it |
+| 6 change, failure and refusal entries | One saved change, failure or refusal | Its own clock |
+| `planning.question_budget_exhausted` | The actual refusal and next-step result | Planning and a future execution run supply no anchor |
+
+**Where the time comes from** (`Plans/storage-plan.md:17551-17553`):
+
+- **Only save of the fact:** the EventRecord's canonical `persisted_at_utc`, proved by the matching first synced AppendReceipt. `Plans/storage-plan.md:17369` makes that time persistence evidence only with that receipt, and `Plans/storage-plan.md:21851` already anchors `RP-SEGLOG-7D` the same way.
+- **Independently saved original, any entry except a start:** that original's own proved first-save time. Card 5.a says so directly for an independently existing refusal result; card 3.a's "original saved change each entry records" gives the same rule.
+- **Not proved:** not eligible for expiry, the existing fail-safe at `Plans/storage-plan.md:17403` and `Plans/storage-plan.md:27417`. Nothing stands in for the time.
+
+**What stays:**
+
+- **Policy objects:** `Plans/storage_value_registry.json` is byte-identical to `228902e4ad`. All 35 earlier objects keep their bytes and all 41 keep their values, including `RP-OPERATIONAL-2555D@1.0.0` with `anchor_kind=terminal_transition`.
+- **Earlier assignments:** every G-row and Card 1.b–1.g row is unchanged. The 34 Card 1 names and the application-wide bucket records keep their own anchors.
+- **Count:** each Project keeps one 2,000,000-entry count under the policy. No per-item allowance or count key is added.
+- **Companions:** no script or test changes. The policy pin stays 41.
+
+**Authority:** deck `E-CARDS-3.as-presented-a7d00c73.md:20` (seven-year term), `:22` (bounded counts), `:134` (3.a A) and `:194` (5.a A). Survey `surveys/W3RT/QUESTIONS.md:131` proposed the same reading before the deck: "the original recorded transition that settles each saved fact, not a future pipeline/session completion." That line is the survey's, not Jared's.
+
+**Noted, not changed:** DL-422, DL-425 and DL-426 give the Project editions of `filesafe.command_denied`, `filesafe.guard_init_failed` and `filesafe.path_denied` a seven-year clock from the saved original result. At this head no Storage assignment selects `RP-OPERATIONAL-2555D@1.0.0` for them, so the adapter does not name them. If a later lane selects this policy for them, the same anchor question returns and needs its own owner line.
+
+### Fix-round checks
+
+Commands ran in a sparse worktree without `Concepts/` and with only the two `Plans/.plan_migration/` runs the checkers read. Tip here means `0672969a81`, the owner and derived commits; the report commit on top changes only this file. These are static planning and contract checks, not native runtime proof.
+
+| Check | Main base `2989975e8f` | Reviewed head `228902e4ad` | Tip `0672969a81` | Result |
+|---|---:|---:|---:|---|
+| `python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json` | 0 | 0 | 0 | pass |
+| `python3 scripts/pm-plan-index.py generate` | 0 | 1 | 1 | 1 blocker on a branch alone: SP-237's 12 DL-453–DL-464 edges (C3-02) |
+| `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` | 0 | 0 | 0 | pass |
+| `python3 scripts/pm-plan-index.py validate` | 1 | 1 | 1 | Live `origin/main`: 24 drift rows at all three; 3 more rows on a branch alone (C3-02). See below |
+| same, private `origin/main` = `2989975e8f` | 0 | 1 | 1 | 0, 3, 3 rows: the required C3-02 report and its two build-order consequences; zero retention rows |
+| `python3 scripts/pm-plans-verify.py validate-new-contracts` | 0 | 0 | 0 | pass |
+| `python3 scripts/pm-plans-verify.py validate-projects-refresh-contracts` | 0 | 0 | 0 | pass |
+| `python3 scripts/pm-plans-verify.py validate-browser-event-admission` | 0 | 0 | 0 | pass |
+| `python3 scripts/pm-plans-verify.py validate-testing-session-event-admission` | 0 | 0 | 0 | pass |
+| `python3 scripts/pm-plans-verify.py validate-github-project-integration` | 0 | 0 | 0 | pass |
+| `python3 scripts/pm-plans-verify.py validate-working-notebook-contracts` | 0 | 0 | 0 | pass |
+| `python3 scripts/pm-plans-verify.py validate-case-l-non-event-materialization` | 0 | 0 | 0 | pass |
+| `python3 scripts/pm-plans-verify.py validate-implementation-readiness` | 1 | 1 | 1 | 59, 61, 61 rows; the tip adds none |
+| `python3 scripts/pm-plans-verify.py verify-spec-lock` | 1 | 1 | 1 | 25 rows at all three; only edited files' stale-hash actuals refresh |
+| `python3 scripts/pm-plans-verify.py lint-contractrefs` | 1 | 1 | 1 | 1 identical row |
+| `python3 scripts/pm-implementation-readiness.py validate` | 1 | 1 | 1 | 59, 61, 61 rows; the tip adds none |
+| `python3 scripts/pm-implementation-readiness.py self-test` | 0 | 0 | 0 | pass |
+| `python3 scripts/pm-implementation-readiness.py validate-case-l` | 0 | 0 | 0 | pass |
+| `python3 -m unittest tests/test_event_authority_holding_bucket.py` | 1 | 1 | 1 | 34 run; same 2 failing names |
+| `python3 -m unittest tests/test_pm_emit_only_event_boundaries.py` | 1 | 1 | 1 | 13 run; same 1 failing name |
+| `python3 -m unittest tests/test_pm_pnc019_currentness.py` | 1 | 1 | 1 | 9 run; same 1 failing name |
+| `python3 -m unittest tests/test_pm_coordination_events.py` | 1 | 1 | 1 | 50 run; same 14 failing names |
+| `python3 -m unittest tests/test_pm_onboarding_phases.py` | 0 | 0 | 0 | 50 run; pass 50/50; policy pin stays 41 |
+
+**Baseline drift, not a retention failure.** `origin/main` moved from `2989975e8f` to `6861d332de` after the review, adding DL-337, DL-338 and DL-339. `pm-plan-index.py validate` compares a branch with `origin/main`, so any branch cut before those landings reports them as `plan_unit_removed_without_ledger_decision`. That path also reports 21 `plan_unit_removal_ledger_invalid` rows for older ledgers. Those 24 rows appear at all three commits. The private-baseline row repeats validation in a shared scratch clone whose own `origin/main` is `2989975e8f`, the true base of both branches. No shared ref moved.
+
+**Against the retained CA-RET3 runs:** apart from that live row at the main base, every exit equals its retained value at both earlier commits. The failing unittest names are identical at all three commits. Readiness rows at `228902e4ad` equal the retained tip rows, and the fix adds none: readiness rows at the tip equal those at `228902e4ad` exactly. Spec Lock differs in one value, the stale-hash actual of the edited `Plans/storage-plan.md`.
+
+### Pair and forward merges
+
+**Pair:** `0672969a81` plus the answers branch `ab613b2c3d`, merged in a shared scratch clone with private `origin/main` = `2989975e8f`. The merge conflicted in 4 derived paths and no owner path; derived paths were regenerated, never hand-merged. `Plans/Decision_Log.md` equals the answers branch; `Plans/storage-plan.md` and `Plans/storage_value_registry.json` equal this branch.
+
+| Command | Exit | Top-level status |
+|---|---:|---|
+| `python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json` | 0 | pass |
+| `python3 scripts/pm-plan-index.py generate` | 0 | pass |
+| `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` | 0 | pass |
+| `python3 scripts/pm-plan-index.py validate` | 0 | pass |
+
+Result: 7,500 PlanUnits and 30,195 acceptance units, zero failures, zero unresolved edges. Runtime readiness correctly stays `blocked_runtime_certification_incomplete`.
+
+**Forward (scratch only):** current `origin/main` `6861d332de`, then this branch, then the answers branch. No owner path conflicted. All four commands above exit 0, and validation against the live ref reports `status=pass` with zero failures. This is an early signal for the lead, not a landing.
+
 ## Evidence custody
+
+**Fix round:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-RET3/fix1` holds this report, the fix scripts, `scope-audit.json`, the fix-round check outputs and their `SHA256SUMS`. The direct hashes below describe the original bundle; its `CA-RET3.md` is the pre-fix report.
 
 External bundle: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-RET3`. The report is copied there as `CA-RET3.md`. `SHA256SUMS` covers the copied report, sources manifest, audit, scope evidence, retained checker outputs and reproducible check helpers. Direct hashes follow.
 
