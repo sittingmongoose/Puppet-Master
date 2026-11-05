@@ -3093,6 +3093,29 @@ LEGACY_LIST_FIELDS = frozenset({"source_atom_ids", "plan_unit_ids", "owner_docs"
 # of them as a source gets no demotions at all (Q7 Sol r5).
 LEGACY_RESERVED_SOURCE_NAMES = frozenset({"repair_closure_matrix.jsonl", "audit_report.json", "effective_status.json",
                                           "audit_scope_manifest.jsonl", "repair_impact_matrix.jsonl"})
+
+
+def reserved_source_names(audit_dir: Path, requested: Any) -> list[str]:
+    """The companion files that requested source-artifact arguments name, by file identity rather
+    than spelling: each argument is joined to the audit directory and normalized, so `./x`, `a/../x`,
+    repeated separators and an absolute path to the same file all count, and an existing file that
+    is the same file as a companion (os.path.samefile) counts too (Q7 Sol r6)."""
+    found: set[str] = set()
+    companions = {name: os.path.normpath(str(audit_dir / name)) for name in LEGACY_RESERVED_SOURCE_NAMES}
+    for arg in requested or ():
+        if not isinstance(arg, str):
+            continue
+        candidate = os.path.normpath(str(audit_dir / arg))
+        for name, path in companions.items():
+            if candidate == path:
+                found.add(name)
+            else:
+                try:
+                    if os.path.exists(candidate) and os.path.exists(path) and os.path.samefile(candidate, path):
+                        found.add(name)
+                except OSError:
+                    found.add(name)  # cannot tell: fail closed
+    return sorted(found)
 _LEGACY_INVENTORY_CACHE: dict[str, Any] = {}
 
 
@@ -3182,7 +3205,7 @@ def classify_legacy_format_errors(
     (`extra_coverage_all_inferred`)."""
     meta = list(getattr(errors, "meta", None) or [])
     if len(meta) != len(errors) or context.get("symlinked_inputs") or context.get("reserved_source_inputs") \
-            or (set(context.get("source_artifacts") or ()) & LEGACY_RESERVED_SOURCE_NAMES):
+            or reserved_source_names(audit_dir, context.get("source_artifacts")):
         return list(errors), {}
     frozen = set(context.get("frozen_files") or ())
     historical_lines = context.get("historical_matrix_lines")
@@ -3326,7 +3349,7 @@ def validate_audit_dir(
         ),
         "matrix_identity_agrees": set(),
         "source_artifacts": list(requested_artifacts),
-        "reserved_source_inputs": sorted(set(requested_artifacts) & LEGACY_RESERVED_SOURCE_NAMES),
+        "reserved_source_inputs": reserved_source_names(audit_dir, requested_artifacts),
         # Any input the run reads that is a symbolic link disqualifies the directory: what a
         # diagnostic names is then not the file that was read.
         "symlinked_inputs": sorted(
@@ -5169,6 +5192,15 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             check("legacy_rule_reserved_source_keeps_everything", all(
                 classify_legacy_format_errors(legacy_dir, diag, dict(ctx, source_artifacts=[*ctx["source_artifacts"], name])) == (list(diag), {})
                 for name in sorted(LEGACY_RESERVED_SOURCE_NAMES)))
+            spellings = ["./audit_report.json", ".//audit_report.json", "sub/../audit_report.json",
+                         str(legacy_dir / "audit_report.json"), "./repair_closure_matrix.jsonl", "./audit_scope_manifest.jsonl"]
+            check("legacy_rule_reserved_source_by_file_identity", all(
+                reserved_source_names(legacy_dir, [spelling]) for spelling in spellings)
+                and reserved_source_names(legacy_dir, ["semantic_risks.jsonl", "./semantic_risks.jsonl"]) == []
+                and reserved_source_names(legacy_dir, ["./audit_report.json", "audit_report.json"]) == ["audit_report.json"])
+            check("legacy_rule_reserved_alias_keeps_everything", all(
+                classify_legacy_format_errors(legacy_dir, diag, dict(ctx, source_artifacts=[*ctx["source_artifacts"], spelling])) == (list(diag), {})
+                for spelling in spellings))
             check("legacy_rule_reserved_source_flag_keeps_everything",
                   classify_legacy_format_errors(legacy_dir, diag, dict(ctx, reserved_source_inputs=[M])) == (list(diag), {}))
             # The matrix requested as a source keeps an appended row's key and source-field errors.
