@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "DG6A-FIX7-20261105",
+  "assessment_id": "DG6A-FIX8-20261105",
   "assessment_kind": "self_grade_preparation",
   "source_base": "be4766513ff71776346fc73b84f2542990f955af",
   "rubric": {
@@ -57,11 +57,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -84,11 +84,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "producer": {
           "status": "PASS",
@@ -111,11 +111,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -145,11 +145,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -172,16 +172,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "replay_idempotency": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full frozen semantics and original identity/receipt recovery prevent changed-key reuse, renewed timestamps or repeated effects. Current append/retry refuses projector_replay_only.",
+          "finding": "SP-660 retains exact original identity, payload and result custody. Restored schema ranges admit earlier valid revisions; independent admission evidence selects the existing exact MessagePack retry recipe. Edition/source forgeries refuse; current writer guards remain.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -203,14 +203,21 @@
               "line_start": 29595,
               "line_end": 29595,
               "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "retained_retry_digest",
+              "line_start": 157,
+              "line_end": 157,
+              "quote": "def retained_retry_digest("
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
-            "status": "PASS"
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change": "upgraded",
+          "change_reason": "Round 8 restores exact earlier-recipe retained reads and retries for B1."
         },
         "retention": {
           "status": "PARTIAL",
@@ -226,11 +233,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -254,8 +261,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 200,
-              "line_end": 200,
+              "line_start": 232,
+              "line_end": 232,
               "quote": "def append_result_errors"
             },
             {
@@ -267,11 +274,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "transitions": {
           "status": "PASS",
@@ -287,11 +294,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -321,16 +328,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact version dispatch and writer-cutoff/original-obligation/checkpoint-reader withdrawal fences are explicit; unknown or stale originals remain unavailable.",
+          "finding": "SP-660 retains exact original identity, payload and result custody. Restored schema ranges admit earlier valid revisions; independent admission evidence selects the existing exact MessagePack retry recipe. Edition/source forgeries refuse; current writer guards remain.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -345,19 +352,26 @@
               "line_start": 29546,
               "line_end": 29546,
               "quote": "withdrawn under whole-value CAS.\\"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "historical_guards",
+              "line_start": 480,
+              "line_end": 480,
+              "quote": "schema_key = (original['payload'].get('schema_id')"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
-            "status": "PASS"
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change": "upgraded",
+          "change_reason": "Round 8 restores exact earlier-recipe retained reads and retries for B1."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "SP-660/CV-680/F3-700/ATS-330 bind positive/negative contract oracles; numeric, format, type, custody, state and guard-removal suites pass. Admission ABSENT, retention PARTIAL; native NOT_RUN.",
+          "finding": "SP-660 binds authored oracles and the family checker passes. Nine history_shape counterfactual rows remain unproved across the lane (cycle-8 B2); adopt the shared guard-isolation tool in the sweep. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -376,8 +390,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 521,
-              "line_end": 521,
+              "line_start": 555,
+              "line_end": 555,
               "quote": "def historical_reader_cases"
             },
             {
@@ -390,8 +404,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 200,
-              "line_end": 200,
+              "line_start": 232,
+              "line_end": 232,
               "quote": "def append_result_errors"
             },
             {
@@ -424,17 +438,19 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PARTIAL"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 closes numeric payload/hash input-domain B1, deterministic timestamp-format B2 and malformed-container P1; full field and guard sweeps retain earlier fixes."
+          "change": "carried",
+          "change_reason": "Cycle 8 evidence rechecked; B2 remains a shared guard-tool sweep item, with no claim of completed isolation."
         }
       },
       "remaining_gaps": [
         "Exact event membership/admission absent.",
         "Retention remains PENDING_RETENTION_DECISION for event, operation and checkpoint.",
-        "Native execution, actual OS/storage recovery and source/receipt authentication NOT_RUN."
+        "Native execution, actual OS/storage recovery and source/receipt authentication NOT_RUN.",
+        "SWEEP B2: nine history_shape proof rows require scripts/pm_guard_isolation.py; C12 remains PARTIAL.",
+        "SWEEP: adopt CV-1100/SP-1100/SP-1101 for complete shared number-domain and authenticated recipe dispatch beyond B1 cap removal."
       ],
       "static_checks_seen": [
         "scripts/pm-alert-event-contracts-check.py",
@@ -442,7 +458,7 @@
         "scripts/pm-dg6a-domain-check.py",
         "scripts/pm-dg6a-guard-check.py"
       ],
-      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged. Round 7 fixes cycle-7 B1/B2/P1; final per-family domain/guard/CLI evidence is in drafts/DG6A/fix7; all twelve Astra items apply."
+      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged. Round 7 fixes cycle-7 B1/B2/P1; final per-family domain/guard/CLI evidence is in drafts/DG6A/fix7; all twelve Astra items apply. Round 8 fixes cycle-8 B1 with prior 2^53-1/2^53/2^53+1 retained-original and exact-retry cases. Cycle-8 B2 is deferred by the explicit shared-tool instruction; C12 stays PARTIAL. Nine held records unchanged."
     },
     {
       "event_type": "alert.dismissed",
@@ -480,11 +496,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -507,11 +523,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "producer": {
           "status": "PASS",
@@ -534,11 +550,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -568,11 +584,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -595,16 +611,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "replay_idempotency": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full frozen semantics and original identity/receipt recovery prevent changed-key reuse, renewed timestamps or repeated effects. Current append/retry refuses projector_replay_only.",
+          "finding": "SP-661 retains exact original identity, payload and result custody. Restored schema ranges admit earlier valid revisions; independent admission evidence selects the existing exact MessagePack retry recipe. Edition/source forgeries refuse; current writer guards remain.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -626,14 +642,21 @@
               "line_start": 29595,
               "line_end": 29595,
               "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "retained_retry_digest",
+              "line_start": 157,
+              "line_end": 157,
+              "quote": "def retained_retry_digest("
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
-            "status": "PASS"
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change": "upgraded",
+          "change_reason": "Round 8 restores exact earlier-recipe retained reads and retries for B1."
         },
         "retention": {
           "status": "PARTIAL",
@@ -649,11 +672,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -677,8 +700,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 200,
-              "line_end": 200,
+              "line_start": 232,
+              "line_end": 232,
               "quote": "def append_result_errors"
             },
             {
@@ -690,11 +713,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "transitions": {
           "status": "PASS",
@@ -710,11 +733,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -744,16 +767,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact version dispatch and writer-cutoff/original-obligation/checkpoint-reader withdrawal fences are explicit; unknown or stale originals remain unavailable.",
+          "finding": "SP-661 retains exact original identity, payload and result custody. Restored schema ranges admit earlier valid revisions; independent admission evidence selects the existing exact MessagePack retry recipe. Edition/source forgeries refuse; current writer guards remain.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -768,19 +791,26 @@
               "line_start": 29546,
               "line_end": 29546,
               "quote": "withdrawn under whole-value CAS.\\"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "historical_guards",
+              "line_start": 480,
+              "line_end": 480,
+              "quote": "schema_key = (original['payload'].get('schema_id')"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
-            "status": "PASS"
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change": "upgraded",
+          "change_reason": "Round 8 restores exact earlier-recipe retained reads and retries for B1."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "SP-661/CV-681/F3-701/ATS-331 bind positive/negative contract oracles; numeric, format, type, custody, state and guard-removal suites pass. Admission ABSENT, retention PARTIAL; native NOT_RUN.",
+          "finding": "SP-661 binds authored oracles and the family checker passes. Nine history_shape counterfactual rows remain unproved across the lane (cycle-8 B2); adopt the shared guard-isolation tool in the sweep. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -799,8 +829,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 521,
-              "line_end": 521,
+              "line_start": 555,
+              "line_end": 555,
               "quote": "def historical_reader_cases"
             },
             {
@@ -813,8 +843,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 200,
-              "line_end": 200,
+              "line_start": 232,
+              "line_end": 232,
               "quote": "def append_result_errors"
             },
             {
@@ -847,17 +877,19 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PARTIAL"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 closes numeric payload/hash input-domain B1, deterministic timestamp-format B2 and malformed-container P1; full field and guard sweeps retain earlier fixes."
+          "change": "carried",
+          "change_reason": "Cycle 8 evidence rechecked; B2 remains a shared guard-tool sweep item, with no claim of completed isolation."
         }
       },
       "remaining_gaps": [
         "Exact event membership/admission absent.",
         "Retention remains PENDING_RETENTION_DECISION for event, operation and checkpoint.",
-        "Native execution, actual OS/storage recovery and source/receipt authentication NOT_RUN."
+        "Native execution, actual OS/storage recovery and source/receipt authentication NOT_RUN.",
+        "SWEEP B2: nine history_shape proof rows require scripts/pm_guard_isolation.py; C12 remains PARTIAL.",
+        "SWEEP: adopt CV-1100/SP-1100/SP-1101 for complete shared number-domain and authenticated recipe dispatch beyond B1 cap removal."
       ],
       "static_checks_seen": [
         "scripts/pm-alert-event-contracts-check.py",
@@ -865,7 +897,7 @@
         "scripts/pm-dg6a-domain-check.py",
         "scripts/pm-dg6a-guard-check.py"
       ],
-      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged. Round 7 fixes cycle-7 B1/B2/P1; final per-family domain/guard/CLI evidence is in drafts/DG6A/fix7; all twelve Astra items apply."
+      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged. Round 7 fixes cycle-7 B1/B2/P1; final per-family domain/guard/CLI evidence is in drafts/DG6A/fix7; all twelve Astra items apply. Round 8 fixes cycle-8 B1 with prior 2^53-1/2^53/2^53+1 retained-original and exact-retry cases. Cycle-8 B2 is deferred by the explicit shared-tool instruction; C12 stays PARTIAL. Nine held records unchanged."
     },
     {
       "event_type": "alert.rule_muted",
@@ -903,11 +935,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -930,11 +962,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "producer": {
           "status": "PASS",
@@ -957,11 +989,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -991,11 +1023,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1018,16 +1050,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "replay_idempotency": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full frozen semantics and original identity/receipt recovery prevent changed-key reuse, renewed timestamps or repeated effects. Current append/retry refuses projector_replay_only.",
+          "finding": "SP-662 retains exact original identity, payload and result custody. Restored schema ranges admit earlier valid revisions; independent admission evidence selects the existing exact MessagePack retry recipe. Edition/source forgeries refuse; current writer guards remain.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1049,14 +1081,21 @@
               "line_start": 29595,
               "line_end": 29595,
               "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "retained_retry_digest",
+              "line_start": 157,
+              "line_end": 157,
+              "quote": "def retained_retry_digest("
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
-            "status": "PASS"
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change": "upgraded",
+          "change_reason": "Round 8 restores exact earlier-recipe retained reads and retries for B1."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1072,11 +1111,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1100,8 +1139,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 200,
-              "line_end": 200,
+              "line_start": 232,
+              "line_end": 232,
               "quote": "def append_result_errors"
             },
             {
@@ -1113,11 +1152,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "transitions": {
           "status": "PASS",
@@ -1133,11 +1172,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1167,16 +1206,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact version dispatch and writer-cutoff/original-obligation/checkpoint-reader withdrawal fences are explicit; unknown or stale originals remain unavailable.",
+          "finding": "SP-662 retains exact original identity, payload and result custody. Restored schema ranges admit earlier valid revisions; independent admission evidence selects the existing exact MessagePack retry recipe. Edition/source forgeries refuse; current writer guards remain.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1191,19 +1230,26 @@
               "line_start": 29546,
               "line_end": 29546,
               "quote": "withdrawn under whole-value CAS.\\"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "historical_guards",
+              "line_start": 480,
+              "line_end": 480,
+              "quote": "schema_key = (original['payload'].get('schema_id')"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
-            "status": "PASS"
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change": "upgraded",
+          "change_reason": "Round 8 restores exact earlier-recipe retained reads and retries for B1."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "SP-662/CV-682/F3-702/ATS-332 bind positive/negative contract oracles; numeric, format, type, custody, state and guard-removal suites pass. Admission ABSENT, retention PARTIAL; native NOT_RUN.",
+          "finding": "SP-662 binds authored oracles and the family checker passes. Nine history_shape counterfactual rows remain unproved across the lane (cycle-8 B2); adopt the shared guard-isolation tool in the sweep. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -1222,8 +1268,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 521,
-              "line_end": 521,
+              "line_start": 555,
+              "line_end": 555,
               "quote": "def historical_reader_cases"
             },
             {
@@ -1236,8 +1282,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 200,
-              "line_end": 200,
+              "line_start": 232,
+              "line_end": 232,
               "quote": "def append_result_errors"
             },
             {
@@ -1270,17 +1316,19 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PARTIAL"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 closes numeric payload/hash input-domain B1, deterministic timestamp-format B2 and malformed-container P1; full field and guard sweeps retain earlier fixes."
+          "change": "carried",
+          "change_reason": "Cycle 8 evidence rechecked; B2 remains a shared guard-tool sweep item, with no claim of completed isolation."
         }
       },
       "remaining_gaps": [
         "Exact event membership/admission absent.",
         "Retention remains PENDING_RETENTION_DECISION for event, operation and checkpoint.",
-        "Native execution, actual OS/storage recovery and source/receipt authentication NOT_RUN."
+        "Native execution, actual OS/storage recovery and source/receipt authentication NOT_RUN.",
+        "SWEEP B2: nine history_shape proof rows require scripts/pm_guard_isolation.py; C12 remains PARTIAL.",
+        "SWEEP: adopt CV-1100/SP-1100/SP-1101 for complete shared number-domain and authenticated recipe dispatch beyond B1 cap removal."
       ],
       "static_checks_seen": [
         "scripts/pm-alert-event-contracts-check.py",
@@ -1288,7 +1336,7 @@
         "scripts/pm-dg6a-domain-check.py",
         "scripts/pm-dg6a-guard-check.py"
       ],
-      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged. Round 7 fixes cycle-7 B1/B2/P1; final per-family domain/guard/CLI evidence is in drafts/DG6A/fix7; all twelve Astra items apply."
+      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged. Round 7 fixes cycle-7 B1/B2/P1; final per-family domain/guard/CLI evidence is in drafts/DG6A/fix7; all twelve Astra items apply. Round 8 fixes cycle-8 B1 with prior 2^53-1/2^53/2^53+1 retained-original and exact-retry cases. Cycle-8 B2 is deferred by the explicit shared-tool instruction; C12 stays PARTIAL. Nine held records unchanged."
     },
     {
       "event_type": "alert.snoozed",
@@ -1326,11 +1374,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1353,11 +1401,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "producer": {
           "status": "PASS",
@@ -1380,11 +1428,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1414,11 +1462,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1441,16 +1489,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "replay_idempotency": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full frozen semantics and original identity/receipt recovery prevent changed-key reuse, renewed timestamps or repeated effects. Current append/retry refuses projector_replay_only.",
+          "finding": "SP-663 retains exact original identity, payload and result custody. Restored schema ranges admit earlier valid revisions; independent admission evidence selects the existing exact MessagePack retry recipe. Edition/source forgeries refuse; current writer guards remain.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1472,14 +1520,21 @@
               "line_start": 29595,
               "line_end": 29595,
               "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "retained_retry_digest",
+              "line_start": 157,
+              "line_end": 157,
+              "quote": "def retained_retry_digest("
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
-            "status": "PASS"
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change": "upgraded",
+          "change_reason": "Round 8 restores exact earlier-recipe retained reads and retries for B1."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1495,11 +1550,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1523,8 +1578,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 200,
-              "line_end": 200,
+              "line_start": 232,
+              "line_end": 232,
               "quote": "def append_result_errors"
             },
             {
@@ -1536,11 +1591,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "transitions": {
           "status": "PASS",
@@ -1556,11 +1611,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1590,16 +1645,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact version dispatch and writer-cutoff/original-obligation/checkpoint-reader withdrawal fences are explicit; unknown or stale originals remain unavailable.",
+          "finding": "SP-663 retains exact original identity, payload and result custody. Restored schema ranges admit earlier valid revisions; independent admission evidence selects the existing exact MessagePack retry recipe. Edition/source forgeries refuse; current writer guards remain.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1614,19 +1669,26 @@
               "line_start": 29546,
               "line_end": 29546,
               "quote": "withdrawn under whole-value CAS.\\"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "historical_guards",
+              "line_start": 480,
+              "line_end": 480,
+              "quote": "schema_key = (original['payload'].get('schema_id')"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
-            "status": "PASS"
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change": "upgraded",
+          "change_reason": "Round 8 restores exact earlier-recipe retained reads and retries for B1."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "SP-663/CV-683/F3-703/ATS-333 bind positive/negative contract oracles; numeric, format, type, custody, state and guard-removal suites pass. Admission ABSENT, retention PARTIAL; native NOT_RUN.",
+          "finding": "SP-663 binds authored oracles and the family checker passes. Nine history_shape counterfactual rows remain unproved across the lane (cycle-8 B2); adopt the shared guard-isolation tool in the sweep. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -1645,8 +1707,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 521,
-              "line_end": 521,
+              "line_start": 555,
+              "line_end": 555,
               "quote": "def historical_reader_cases"
             },
             {
@@ -1659,8 +1721,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 200,
-              "line_end": 200,
+              "line_start": 232,
+              "line_end": 232,
               "quote": "def append_result_errors"
             },
             {
@@ -1693,17 +1755,19 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PARTIAL"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 closes numeric payload/hash input-domain B1, deterministic timestamp-format B2 and malformed-container P1; full field and guard sweeps retain earlier fixes."
+          "change": "carried",
+          "change_reason": "Cycle 8 evidence rechecked; B2 remains a shared guard-tool sweep item, with no claim of completed isolation."
         }
       },
       "remaining_gaps": [
         "Exact event membership/admission absent.",
         "Retention remains PENDING_RETENTION_DECISION for event, operation and checkpoint.",
-        "Native execution, actual OS/storage recovery and source/receipt authentication NOT_RUN."
+        "Native execution, actual OS/storage recovery and source/receipt authentication NOT_RUN.",
+        "SWEEP B2: nine history_shape proof rows require scripts/pm_guard_isolation.py; C12 remains PARTIAL.",
+        "SWEEP: adopt CV-1100/SP-1100/SP-1101 for complete shared number-domain and authenticated recipe dispatch beyond B1 cap removal."
       ],
       "static_checks_seen": [
         "scripts/pm-alert-event-contracts-check.py",
@@ -1711,7 +1775,7 @@
         "scripts/pm-dg6a-domain-check.py",
         "scripts/pm-dg6a-guard-check.py"
       ],
-      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged. Round 7 fixes cycle-7 B1/B2/P1; final per-family domain/guard/CLI evidence is in drafts/DG6A/fix7; all twelve Astra items apply."
+      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged. Round 7 fixes cycle-7 B1/B2/P1; final per-family domain/guard/CLI evidence is in drafts/DG6A/fix7; all twelve Astra items apply. Round 8 fixes cycle-8 B1 with prior 2^53-1/2^53/2^53+1 retained-original and exact-retry cases. Cycle-8 B2 is deferred by the explicit shared-tool instruction; C12 stays PARTIAL. Nine held records unchanged."
     },
     {
       "event_type": "bundle.annotation_state_changed",
@@ -3581,11 +3645,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3608,11 +3672,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "producer": {
           "status": "PASS",
@@ -3635,11 +3699,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3669,11 +3733,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3696,11 +3760,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3737,11 +3801,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3757,11 +3821,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3785,8 +3849,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 200,
-              "line_end": 200,
+              "line_start": 232,
+              "line_end": 232,
               "quote": "def append_result_errors"
             },
             {
@@ -3798,11 +3862,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "transitions": {
           "status": "PASS",
@@ -3818,11 +3882,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3852,11 +3916,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3879,16 +3943,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "OP-002/OP-004/UCC-147/SP-666/CV-686/ATS-334 bind positive/negative contract oracles; numeric, format, type, custody, state and guard-removal suites pass. Admission ABSENT, retention PARTIAL; native NOT_RUN.",
+          "finding": "OP-002 binds authored oracles and the family checker passes. Nine history_shape counterfactual rows remain unproved across the lane (cycle-8 B2); adopt the shared guard-isolation tool in the sweep. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -3907,8 +3971,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 521,
-              "line_end": 521,
+              "line_start": 555,
+              "line_end": 555,
               "quote": "def historical_reader_cases"
             },
             {
@@ -3921,8 +3985,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 200,
-              "line_end": 200,
+              "line_start": 232,
+              "line_end": 232,
               "quote": "def append_result_errors"
             },
             {
@@ -3955,17 +4019,18 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PARTIAL"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 closes numeric payload/hash input-domain B1, deterministic timestamp-format B2 and malformed-container P1; full field and guard sweeps retain earlier fixes."
+          "change": "carried",
+          "change_reason": "Cycle 8 evidence rechecked; B2 remains a shared guard-tool sweep item, with no claim of completed isolation."
         }
       },
       "remaining_gaps": [
         "Membership remains ABSENT until independent admission.",
         "Event/operation/checkpoint retention PENDING_RETENTION_DECISION; the existing concern_record RP-AUTHORITY-INDEFINITE policy/profile is preserved.",
-        "Native execution NOT_RUN; no sibling action or extra direct creator is authorized."
+        "Native execution NOT_RUN; no sibling action or extra direct creator is authorized.",
+        "SWEEP B2: nine history_shape proof rows require scripts/pm_guard_isolation.py; C12 remains PARTIAL."
       ],
       "static_checks_seen": [
         "scripts/pm-concern-created-contracts-check.py",
@@ -3973,7 +4038,7 @@
         "scripts/pm-dg6a-domain-check.py",
         "scripts/pm-dg6a-guard-check.py"
       ],
-      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged. Round 7 fixes cycle-7 B1/B2/P1; final per-family domain/guard/CLI evidence is in drafts/DG6A/fix7; all twelve Astra items apply.",
+      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged. Round 7 fixes cycle-7 B1/B2/P1; final per-family domain/guard/CLI evidence is in drafts/DG6A/fix7; all twelve Astra items apply. Round 8 fixes cycle-8 B1 with prior 2^53-1/2^53/2^53+1 retained-original and exact-retry cases. Cycle-8 B2 is deferred by the explicit shared-tool instruction; C12 stays PARTIAL. Nine held records unchanged.",
       "separate_proposal": {
         "question": "Beyond the already authorized runtime/package-overseer/seam-overseer/corroboration/graph-patch creators and worker nomination-only rule, may User or External Resource input directly commit a concern, or must an authorized owner accept its nomination, and with what confirmation?",
         "review_recommendation_unapplied": "Keep the already specified canonical creators. Worker, User and External Resource input is nomination until accepted by an authorized owner. Record creator separately from accountable owner. Do not re-ask whether the listed runtime creators may create.",
@@ -6291,11 +6356,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -6318,11 +6383,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "producer": {
           "status": "PASS",
@@ -6345,11 +6410,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -6379,11 +6444,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -6406,16 +6471,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "replay_idempotency": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full frozen semantics and original identity/receipt recovery prevent changed-key reuse, renewed timestamps or repeated effects. Current append/retry refuses projector_replay_only.",
+          "finding": "SP-664 retains exact original identity, payload and result custody. Restored schema ranges admit earlier valid revisions; independent admission evidence selects the existing exact MessagePack retry recipe. Edition/source forgeries refuse; current writer guards remain.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -6437,14 +6502,21 @@
               "line_start": 29595,
               "line_end": 29595,
               "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "retained_retry_digest",
+              "line_start": 157,
+              "line_end": 157,
+              "quote": "def retained_retry_digest("
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
-            "status": "PASS"
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change": "upgraded",
+          "change_reason": "Round 8 restores exact earlier-recipe retained reads and retries for B1."
         },
         "retention": {
           "status": "PARTIAL",
@@ -6460,11 +6532,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -6488,8 +6560,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 200,
-              "line_end": 200,
+              "line_start": 232,
+              "line_end": 232,
               "quote": "def append_result_errors"
             },
             {
@@ -6501,11 +6573,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "transitions": {
           "status": "PASS",
@@ -6521,11 +6593,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -6555,16 +6627,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact version dispatch and writer-cutoff/original-obligation/checkpoint-reader withdrawal fences are explicit; unknown or stale originals remain unavailable.",
+          "finding": "SP-664 retains exact original identity, payload and result custody. Restored schema ranges admit earlier valid revisions; independent admission evidence selects the existing exact MessagePack retry recipe. Edition/source forgeries refuse; current writer guards remain.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -6579,19 +6651,26 @@
               "line_start": 30157,
               "line_end": 30157,
               "quote": "withdrawn token, cursor beyond frontier or missing"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "historical_guards",
+              "line_start": 480,
+              "line_end": 480,
+              "quote": "schema_key = (original['payload'].get('schema_id')"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
-            "status": "PASS"
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change": "upgraded",
+          "change_reason": "Round 8 restores exact earlier-recipe retained reads and retries for B1."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "SP-664/CV-684/F3-704/ATS-334 bind positive/negative contract oracles; numeric, format, type, custody, state and guard-removal suites pass. Admission ABSENT, retention PARTIAL; native NOT_RUN.",
+          "finding": "SP-664 binds authored oracles and the family checker passes. Nine history_shape counterfactual rows remain unproved across the lane (cycle-8 B2); adopt the shared guard-isolation tool in the sweep. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -6610,8 +6689,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 521,
-              "line_end": 521,
+              "line_start": 555,
+              "line_end": 555,
               "quote": "def historical_reader_cases"
             },
             {
@@ -6624,8 +6703,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 200,
-              "line_end": 200,
+              "line_start": 232,
+              "line_end": 232,
               "quote": "def append_result_errors"
             },
             {
@@ -6658,17 +6737,19 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PARTIAL"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 closes numeric payload/hash input-domain B1, deterministic timestamp-format B2 and malformed-container P1; full field and guard sweeps retain earlier fixes."
+          "change": "carried",
+          "change_reason": "Cycle 8 evidence rechecked; B2 remains a shared guard-tool sweep item, with no claim of completed isolation."
         }
       },
       "remaining_gaps": [
         "Exact event membership/admission absent.",
         "Retention remains PENDING_RETENTION_DECISION for event, operation and checkpoint.",
-        "Native execution, actual OS/storage recovery and source/receipt authentication NOT_RUN."
+        "Native execution, actual OS/storage recovery and source/receipt authentication NOT_RUN.",
+        "SWEEP B2: nine history_shape proof rows require scripts/pm_guard_isolation.py; C12 remains PARTIAL.",
+        "SWEEP: adopt CV-1100/SP-1100/SP-1101 for complete shared number-domain and authenticated recipe dispatch beyond B1 cap removal."
       ],
       "static_checks_seen": [
         "scripts/pm-panel-event-contracts-check.py",
@@ -6676,7 +6757,7 @@
         "scripts/pm-dg6a-domain-check.py",
         "scripts/pm-dg6a-guard-check.py"
       ],
-      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged. Round 7 fixes cycle-7 B1/B2/P1; final per-family domain/guard/CLI evidence is in drafts/DG6A/fix7; all twelve Astra items apply."
+      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged. Round 7 fixes cycle-7 B1/B2/P1; final per-family domain/guard/CLI evidence is in drafts/DG6A/fix7; all twelve Astra items apply. Round 8 fixes cycle-8 B1 with prior 2^53-1/2^53/2^53+1 retained-original and exact-retry cases. Cycle-8 B2 is deferred by the explicit shared-tool instruction; C12 stays PARTIAL. Nine held records unchanged."
     },
     {
       "event_type": "panel.undocked",
@@ -6714,11 +6795,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -6741,11 +6822,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "producer": {
           "status": "PASS",
@@ -6768,11 +6849,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -6802,11 +6883,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -6829,16 +6910,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "replay_idempotency": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full frozen semantics and original identity/receipt recovery prevent changed-key reuse, renewed timestamps or repeated effects. Current append/retry refuses projector_replay_only.",
+          "finding": "SP-665 retains exact original identity, payload and result custody. Restored schema ranges admit earlier valid revisions; independent admission evidence selects the existing exact MessagePack retry recipe. Edition/source forgeries refuse; current writer guards remain.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -6860,14 +6941,21 @@
               "line_start": 29595,
               "line_end": 29595,
               "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "retained_retry_digest",
+              "line_start": 157,
+              "line_end": 157,
+              "quote": "def retained_retry_digest("
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
-            "status": "PASS"
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change": "upgraded",
+          "change_reason": "Round 8 restores exact earlier-recipe retained reads and retries for B1."
         },
         "retention": {
           "status": "PARTIAL",
@@ -6883,11 +6971,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -6911,8 +6999,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 200,
-              "line_end": 200,
+              "line_start": 232,
+              "line_end": 232,
               "quote": "def append_result_errors"
             },
             {
@@ -6924,11 +7012,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "transitions": {
           "status": "PASS",
@@ -6944,11 +7032,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -6978,16 +7066,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact version dispatch and writer-cutoff/original-obligation/checkpoint-reader withdrawal fences are explicit; unknown or stale originals remain unavailable.",
+          "finding": "SP-665 retains exact original identity, payload and result custody. Restored schema ranges admit earlier valid revisions; independent admission evidence selects the existing exact MessagePack retry recipe. Edition/source forgeries refuse; current writer guards remain.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -7002,19 +7090,26 @@
               "line_start": 30157,
               "line_end": 30157,
               "quote": "withdrawn token, cursor beyond frontier or missing"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "historical_guards",
+              "line_start": 480,
+              "line_end": 480,
+              "quote": "schema_key = (original['payload'].get('schema_id')"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
-            "status": "PASS"
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
+          "change": "upgraded",
+          "change_reason": "Round 8 restores exact earlier-recipe retained reads and retries for B1."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "SP-665/CV-685/F3-705/ATS-334 bind positive/negative contract oracles; numeric, format, type, custody, state and guard-removal suites pass. Admission ABSENT, retention PARTIAL; native NOT_RUN.",
+          "finding": "SP-665 binds authored oracles and the family checker passes. Nine history_shape counterfactual rows remain unproved across the lane (cycle-8 B2); adopt the shared guard-isolation tool in the sweep. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -7033,8 +7128,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 521,
-              "line_end": 521,
+              "line_start": 555,
+              "line_end": 555,
               "quote": "def historical_reader_cases"
             },
             {
@@ -7047,8 +7142,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 200,
-              "line_end": 200,
+              "line_start": 232,
+              "line_end": 232,
               "quote": "def append_result_errors"
             },
             {
@@ -7081,17 +7176,19 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
             "status": "PARTIAL"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 closes numeric payload/hash input-domain B1, deterministic timestamp-format B2 and malformed-container P1; full field and guard sweeps retain earlier fixes."
+          "change": "carried",
+          "change_reason": "Cycle 8 evidence rechecked; B2 remains a shared guard-tool sweep item, with no claim of completed isolation."
         }
       },
       "remaining_gaps": [
         "Exact event membership/admission absent.",
         "Retention remains PENDING_RETENTION_DECISION for event, operation and checkpoint.",
-        "Native execution, actual OS/storage recovery and source/receipt authentication NOT_RUN."
+        "Native execution, actual OS/storage recovery and source/receipt authentication NOT_RUN.",
+        "SWEEP B2: nine history_shape proof rows require scripts/pm_guard_isolation.py; C12 remains PARTIAL.",
+        "SWEEP: adopt CV-1100/SP-1100/SP-1101 for complete shared number-domain and authenticated recipe dispatch beyond B1 cap removal."
       ],
       "static_checks_seen": [
         "scripts/pm-panel-event-contracts-check.py",
@@ -7099,9 +7196,9 @@
         "scripts/pm-dg6a-domain-check.py",
         "scripts/pm-dg6a-guard-check.py"
       ],
-      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged. Round 7 fixes cycle-7 B1/B2/P1; final per-family domain/guard/CLI evidence is in drafts/DG6A/fix7; all twelve Astra items apply."
+      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged. Round 7 fixes cycle-7 B1/B2/P1; final per-family domain/guard/CLI evidence is in drafts/DG6A/fix7; all twelve Astra items apply. Round 8 fixes cycle-8 B1 with prior 2^53-1/2^53/2^53+1 retained-original and exact-retry cases. Cycle-8 B2 is deferred by the explicit shared-tool instruction; C12 stays PARTIAL. Nine held records unchanged."
     }
   ],
-  "reviewed_head": "adda7279f8067637b109125f9524b0952f88f96b",
-  "revision_binding": "Assessed code and full source/domain guard proof f34fec9eb0c00754638a05e65b456e576b9d818a; full CLI regression at da37d7ac9d947f8a26b6b66f053dffb4eaa6f150, followed by a navigation-only proof refinement and seven complete family/domain/guard reruns. Final report descendant is self-inclusive; admission ABSENT, native NOT_RUN."
+  "reviewed_head": "ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+  "revision_binding": "Technical source hashes and serial results in drafts/DG6A/fix8; final report/grade commit is self-inclusive. No admission or native execution."
 }

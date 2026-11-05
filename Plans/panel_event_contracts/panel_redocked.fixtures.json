@@ -15991,5 +15991,25 @@
         "unsettled operation carries append-result reference"
       ]
     }
+  ],
+  "retained_revision_cases": [
+    {
+      "name": "retained_prior_9007199254740991",
+      "prior_revision": 9007199254740991,
+      "request_digest": "9bfa9c0de697dd4cd13dfca7468a565d257b2f875d208ca258eb767b55d2242a",
+      "payload_bytes_sha256": "9c03291eb0809fff92ad95ec1c3a0d61a6fadb2544ff61115950278966dd2fcb"
+    },
+    {
+      "name": "retained_prior_9007199254740992",
+      "prior_revision": 9007199254740992,
+      "request_digest": "3ca80f7ab7ca8456c5b9ef37745bde1c9bffca29bcc8352776001da89ee864ee",
+      "payload_bytes_sha256": "ca94316fea95aea793ff7c1bd2e9bdf963b4d3124ed1fc5854180fbd13ec2182"
+    },
+    {
+      "name": "retained_prior_9007199254740993",
+      "prior_revision": 9007199254740993,
+      "request_digest": "5b2220b284863aefa177857b7ef9f99ebe9c0354aa5fc6a914e6c98386e46e41",
+      "payload_bytes_sha256": "cd08ed1b53e4ffb27a15cd908565ba3973acfa8966e4b2db5bc892767531a8ae"
+    }
   ]
 }

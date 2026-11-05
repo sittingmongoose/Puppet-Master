@@ -125,13 +125,11 @@
     },
     "prior_host_revision": {
       "type": "integer",
-      "minimum": 0,
-      "maximum": 9007199254740991
+      "minimum": 0
     },
     "new_host_revision": {
       "type": "integer",
-      "minimum": 1,
-      "maximum": 9007199254740991
+      "minimum": 1
     },
     "settled_at_utc": {
       "type": "string",

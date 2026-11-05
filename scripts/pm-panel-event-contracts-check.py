@@ -120,7 +120,8 @@ def protocol_errors(context, original_operation):
         errors.append('prior session cannot act')
     if context['window'] != original_payload['window_id']:
         errors.append('wrong window')
-    if not shared.retry_digest_matches(context['retry_command'], context['retry_payload'], original_operation['request_digest']):
+    if not shared.retry_digest_matches(context['retry_command'], context['retry_payload'], original_operation['request_digest'],
+                                       original_operation, context.get('append_original')):
         errors.append('retry changed')
     if context['publication_state'] != 'current' or shared.cursor_errors(context['cursor'], context['frontier']):
         errors.append('unavailable publication/cursor')
@@ -168,6 +169,8 @@ def main():
         count += 3
         op_schema = load(f"Plans/panel_event_contracts/{family['operation']}.schema.json")
         cp_schema = load(f"Plans/panel_event_contracts/{family['checkpoint']}.schema.json")
+        count += shared.retained_revision_cases('panel', sys.modules[__name__], family, fixture,
+            lambda request, expected: historical_panel_page(request, expected, family, schema, historical, cp_schema))
         for value_schema in (op_schema, cp_schema):
             shared.check_schema(value_schema)
             count += shared.pattern_leaf_cases(value_schema)

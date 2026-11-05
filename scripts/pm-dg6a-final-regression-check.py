@@ -15,7 +15,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-REVIEWED = 'adda7279f8067637b109125f9524b0952f88f96b'
+REVIEWED = 'ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f'
 GRADE = 'reports/event-authority-20261104/DG6A.self-grade.json'
 
 
@@ -41,7 +41,8 @@ def audit_grade():
             assert row == old[row['event_type']], ('stopped family changed', row['event_type'])
         else:
             for criterion, cell in row['cells'].items():
-                expected = {'membership_version': 'ABSENT', 'retention': 'PARTIAL'}.get(criterion, 'PASS')
+                expected = {'membership_version': 'ABSENT', 'retention': 'PARTIAL',
+                            'positive_negative_oracles': 'PARTIAL'}.get(criterion, 'PASS')
                 assert cell['status'] == expected, (row['event_type'], criterion, cell['status'])
         refs = row['disposition_evidence'] + [ref for cell in row['cells'].values() for ref in cell['evidence']]
         for ref in refs:
@@ -309,6 +310,9 @@ def run_suite(output, selected=None):
                     fixture_case('A4', 'coherent unauthorized creator ' + creator, bad_creator)
             cli(event, 'A5', 'overstated retention grade', Path(__file__).name, GRADE,
                 lambda v: next(r for r in v['families'] if r['event_type'] == event)['cells']['retention'].update(status='PASS'),
+                args=('--audit-grade-only',))
+            cli(event, 'B2-sweep', 'unproved history-shape guard cannot claim oracle PASS', Path(__file__).name, GRADE,
+                lambda v: next(r for r in v['families'] if r['event_type'] == event)['cells']['positive_negative_oracles'].update(status='PASS'),
                 args=('--audit-grade-only',))
 
     for fid in ('shared_alert_state', 'shared_alert_rule_state'):

@@ -154,10 +154,41 @@ def isolated_cases(kind, owner, family, fixture):
     return helper.vectors(kind, owner, family, fixture)
 
 
-def retry_digest_matches(command, payload, original_digest):
+def retained_retry_digest(command, payload, operation, original_event):
+    """Use the existing exact MessagePack recipe of an independently admitted original.
+
+    Only the six prepared alert/panel editions are handled here. SP-1101's shared
+    dispatch is sweep work. Caller fields never select the edition or the recipe.
+    Append resolution/source custody is also checked by append_result_errors.
+    """
+    if type(original_event) is not dict or original_event.get('valid_when_written') is not True:
+        raise ValueError('missing original admission evidence')
+    stored = original_event.get('payload')
+    schema = None
+    for manifest in ('Plans/alert_event_contracts/manifest.json', 'Plans/panel_event_contracts/manifest.json'):
+        for family in load(manifest)['families']:
+            if family['event_type'] == original_event.get('event_type'):
+                schema = load(family['payload_schema'])
+    if schema is None or type(stored) is not dict or list(Draft202012Validator(schema).iter_errors(stored)):
+        raise ValueError('unknown or invalid original payload edition')
+    if not exact_value(operation['payload'], stored):
+        raise ValueError('foreign original payload')
+    # This is the earlier recipe already owned by the lane, with no new cap,
+    # serializer, coercion, or current-write semantic-number validation.
+    frozen = dict(original_command=operation['original_command'], candidate_payload=stored)
+    if hashlib.sha256(packed(frozen)).hexdigest() != operation['request_digest']:
+        raise ValueError('invalid original request digest')
+    if not exact_value(command, operation['original_command']) or not exact_value(payload, stored):
+        raise ValueError('changed retained retry body')
+    return hashlib.sha256(packed(dict(original_command=command, candidate_payload=payload))).hexdigest()
+
+
+def retry_digest_matches(command, payload, original_digest, operation=None, original_event=None):
     try:
+        if operation is not None and operation['state'] in ('committed', 'settled'):
+            return retained_retry_digest(command, payload, operation, original_event) == original_digest
         return request_digest(command, payload) == original_digest
-    except (TypeError, ValueError):
+    except (KeyError, TypeError, ValueError):
         return False
 
 
@@ -190,7 +221,8 @@ def protocol_errors(context, original):
             found.append(field)
     if context['receipt_event_id'] != original['event_id']:
         found.append('wrong original receipt')
-    if not retry_digest_matches(context['retry_command'], context['retry_payload'], original['request_digest']):
+    if not retry_digest_matches(context['retry_command'], context['retry_payload'], original['request_digest'],
+                                original, context.get('append_original')):
         found.append('idempotency_conflict')
     family = original['schema_id'].removeprefix('pm.storage_value.').removesuffix('_operation.v1').replace('_', '.', 1)
     found += append_result_errors(original, context.get('append_resolution'), context.get('append_original'), family)
@@ -443,7 +475,9 @@ def historical_guards(request, expected, payload_schemas, cp_schema, cp_checker)
     expected_publication = {k: v for k, v in expected['checkpoint'].items() if k != 'state'}
     identity_fields = set(original) - {'payload', 'receipt', 'source_selection', 'state', 'valid_when_written'}
     payload = event['payload']
-    schema_key = (payload.get('schema_id'), payload.get('schema_version'))
+    # Select the retained edition from original admission evidence, never from
+    # the candidate payload; exact original equality below still checks both.
+    schema_key = (original['payload'].get('schema_id'), original['payload'].get('schema_version'))
     schema = payload_schemas.get(schema_key) if all(type(v) is str for v in schema_key) else None
     payload_valid = schema is not None and not list(
         Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(payload))
@@ -647,6 +681,87 @@ def historical_alert_page(request, expected, family, payload_schema, cp_schema):
     schemas = {(payload_schema['properties']['schema_id']['const'], '1.0.0'): payload_schema}
     return historical_page(request, expected, schemas, cp_schema, checkpoint_errors, family['event_type'])
 
+
+def retained_revision_cases(kind, owner, family, fixture, reader, observations=None):
+    """Old-valid originals and retries; each refusal changes exactly one leaf.
+
+    Digests and payload byte hashes are pinned from the independent cycle-8
+    earlier-codec witnesses, rather than recomputed as expected values here.
+    """
+    count = 0
+    for case in fixture['retained_revision_cases']:
+        operation = copy.deepcopy(fixture['append_operations']['settled'])
+        prior = case['prior_revision']
+        if kind == 'alert':
+            operation['payload']['prior_revision'] = operation['original_command']['prior_revision'] = prior
+            operation['prior_owner_state']['revision'] = prior
+            operation['payload']['result_revision'] = operation['candidate_owner_state']['revision'] = prior + 1
+        else:
+            operation['payload']['prior_host_revision'] = operation['original_command']['prior_host_revision'] = prior
+            operation['prior_host_snapshot']['host_revision'] = prior
+            operation['payload']['new_host_revision'] = operation['candidate_host_snapshot']['host_revision'] = prior + 1
+        operation['request_digest'] = case['request_digest']
+        assert hashlib.sha256(packed(operation['payload'])).hexdigest() == case['payload_bytes_sha256']
+        assert hashlib.sha256(packed(dict(original_command=operation['original_command'],
+                                         candidate_payload=operation['payload']))).hexdigest() == case['request_digest']
+        history = copy.deepcopy(fixture['history'])
+        history['event']['payload'] = copy.deepcopy(operation['payload'])
+        history['expected']['event']['payload'] = copy.deepcopy(operation['payload'])
+        expected = history['expected']
+        request = history_request(dict(history=history), expected['checkpoint'])
+        proof = copy.deepcopy(next(c['value'] for c in fixture['isolated_cases'] if c['name'] == 'valid_protocol'))
+        proof.update(retry_command=copy.deepcopy(operation['original_command']), retry_payload=copy.deepcopy(operation['payload']),
+                     append_original=copy.deepcopy(expected['event']), append_resolution=copy.deepcopy(expected['event']))
+        before = copy.deepcopy((operation, expected, request, proof))
+        assert reader(request, expected)['event_refs'] == [expected['event']['event_ref']]
+        assert not owner.protocol_errors(proof, operation), case['name']
+        results = [dict(name='retained_original', valid=True), dict(name='exact_retry', valid=True)]
+        for name, path, bad, guard in (
+                ('mismatched_edition', ['event', 'payload', 'schema_version'], '9.0.0', 'historical_payload'),
+                ('mismatched_source', ['event', 'source_selection', 'current_bytes_sha256'], 'b' * 64, 'original_source')):
+            altered = copy.deepcopy(request)
+            history_patch(altered, dict(path=path, value=bad))
+            assert changed_leaves(request, altered) == 1
+            try:
+                reader(altered, expected)
+            except HistoryUnavailable as error:
+                assert error.guards == [guard], (name, error.guards)
+            else:
+                raise AssertionError(('retained forgery accepted', name))
+            results.append(dict(name='history_' + name, valid=False, changed_leaves=1, guard=guard))
+        retry_guard = 'idempotency_conflict' if kind == 'alert' else 'retry changed'
+        for name, path, bad, guards in (
+                ('mismatched_edition', ['retry_payload', 'schema_version'], '9.0.0', [retry_guard]),
+                ('mismatched_source', ['append_resolution', 'source_selection', 'current_bytes_sha256'], 'b' * 64,
+                 ['resolved original append evidence mismatch']),
+                ('missing_admission', ['append_original', 'valid_when_written'], False,
+                 [retry_guard, 'resolved original append evidence mismatch']),
+                ('forged_original_digest', ['request_digest'], 'b' * 64, [retry_guard])):
+            altered, original = copy.deepcopy(proof), copy.deepcopy(operation)
+            target = original if path == ['request_digest'] else altered
+            history_patch(target, dict(path=path, value=bad))
+            assert changed_leaves((operation if target is original else proof), target) == 1
+            assert owner.protocol_errors(altered, original) == guards, name
+            results.append(dict(name='retry_' + name, valid=False, changed_leaves=1, guards=guards))
+        # One unsupported original edition, with EVERY observational copy and
+        # its old-codec digest reconciled. No stale body/digest masks selection.
+        altered, original = copy.deepcopy(proof), copy.deepcopy(operation)
+        for body in (original['payload'], altered['retry_payload'], altered['append_original']['payload'],
+                     altered['append_resolution']['payload']):
+            body['schema_version'] = '9.0.0'
+        original['request_digest'] = hashlib.sha256(packed(dict(original_command=original['original_command'],
+                                                               candidate_payload=original['payload']))).hexdigest()
+        assert not append_result_errors(original, altered['append_resolution'], altered['append_original'], family['event_type'])
+        assert owner.protocol_errors(altered, original) == [retry_guard]
+        results.append(dict(name='unsupported_original_edition', valid=False, semantic_defects=1,
+                            reconciled_copies=4, digest_recomputed=True, guards=[retry_guard]))
+        assert (operation, expected, request, proof) == before, 'retained case mutated original evidence'
+        if observations is not None:
+            observations.append(dict(family=family['event_type'], prior_revision=prior,
+                                     result_revision=prior + 1, results=results, status='pass'))
+        count += len(results)
+    return count
+
 def trailing_lf_cases(value, schema):
     """Each currently present patterned leaf gets an independent trailing-LF regression."""
     count = 0
@@ -797,6 +912,8 @@ def main():
                 count += operation_size_cases(original_context, value_schema, fixtures['operation_size_cases'])
             if key == 'checkpoint':
                 baseline = copy.deepcopy(fixtures['checkpoint_cases'][0]['value'])
+                count += retained_revision_cases('alert', sys.modules[__name__], family, fixtures,
+                    lambda request, expected: historical_alert_page(request, expected, family, schema, value_schema))
                 count += historical_reader_cases(fixtures, baseline, lambda request, expected:
                     historical_alert_page(request, expected, family, schema, value_schema))
                 for case in fixtures['history']['cases']:
