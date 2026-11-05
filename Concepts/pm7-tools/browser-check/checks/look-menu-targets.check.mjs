@@ -20,9 +20,9 @@ export default async function(t) {
       if(hit&&hit!==e&&!e.contains(hit)){wrong++;if(examples.length<12)examples.push({option:e.textContent.trim(),x,y,cover:hit.className});}
      }
     });
-    const help=[...root.querySelectorAll('button.o55-tipq')].map(e=>{const b=e.getBoundingClientRect(),s=getComputedStyle(e),p=getComputedStyle(e,'::before'),r={x:b.x+parseFloat(s.borderLeftWidth)+parseFloat(p.left),y:b.y+parseFloat(s.borderTopWidth)+parseFloat(p.top),w:parseFloat(p.width),h:parseFloat(p.height)};let owned=true;
-     for(const [x,y] of [[r.x+1,r.y+1],[r.x+r.w-1,r.y+1],[r.x+1,r.y+r.h-1],[r.x+r.w-1,r.y+r.h-1],[r.x+1,r.y+r.h/2],[r.x+r.w-1,r.y+r.h/2],[r.x+r.w/2,r.y+1],[r.x+r.w/2,r.y+r.h-1]])owned=owned&&document.elementFromPoint(x,y)?.closest('button')===e;
-     return {...r,owned};});return {count:options.length,pixels,wrong,examples,help};
+    const help=[...root.querySelectorAll('button.o55-tipq')].map(e=>{const b=e.getBoundingClientRect(),s=getComputedStyle(e),p=getComputedStyle(e,'::before'),r={x:b.x+parseFloat(s.borderLeftWidth)+parseFloat(p.left),y:b.y+parseFloat(s.borderTopWidth)+parseFloat(p.top),w:parseFloat(p.width),h:parseFloat(p.height)};const missing=[];
+     for(const [x,y] of [[r.x+1,r.y+1],[r.x+r.w-1,r.y+1],[r.x+1,r.y+r.h-1],[r.x+r.w-1,r.y+r.h-1],[r.x+1,r.y+r.h/2],[r.x+r.w-1,r.y+r.h/2],[r.x+r.w/2,r.y+1],[r.x+r.w/2,r.y+r.h-1]]){const hit=document.elementFromPoint(x,y)?.closest('button');if(hit!==e)missing.push({x,y,cover:hit?.className||null});}
+     return {...r,owned:!missing.length,missing};});return {count:options.length,pixels,wrong,examples,help};
    });
    const tag=`${look} ${motion}`;
    await t.check(`FO-75 every look-option pixel avoids other controls ${tag}`,scan.count>=7&&scan.wrong===0,JSON.stringify(scan));
