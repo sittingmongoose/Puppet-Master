@@ -52,6 +52,7 @@ export default async function(t){
  const f=await t.app.open();
  // Reduce Motion by default (the kit's rule); --set motion=on measures with motion on too
  if(t.args.motion==='on'){await t.emulate({reducedMotion:'no-preference'});await f.evaluate(()=>O55.studio.looks.setReduced(false));}
+ await t.check(`motion ${t.args.motion==='on'?'on':'reduced'} as asked`,await f.evaluate(on=>matchMedia('(prefers-reduced-motion: reduce)').matches!==on,t.args.motion==='on'));
  const looks=list(t.args.looks,LOOKS),routes=list(t.args.routes,['fresh','copied']),reasons=list(t.args.reasons,REASONS);
  const sizes=SIZES.filter(([w,h])=>!t.args.widths||String(t.args.widths).split(',').includes(String(w)));
  let lowest={contrast:Infinity};
