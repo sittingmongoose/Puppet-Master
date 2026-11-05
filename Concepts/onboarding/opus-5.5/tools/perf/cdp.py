@@ -90,6 +90,13 @@ class Browser:
         if attach:
             self.version = {'webSocketDebuggerUrl': attach}
             self._start(attach)
+            # The same keys /json/version gives a launched browser (perf.py records 'Browser' as chrome)
+            try:
+                v = self.send('Browser.getVersion', timeout=10)
+                self.version.update({'Browser': v.get('product'), 'Protocol-Version': v.get('protocolVersion'),
+                                     'User-Agent': v.get('userAgent'), 'V8-Version': v.get('jsVersion')})
+            except Exception:
+                pass
             return
         self.profile = os.path.join(HERE if IS_WIN else os.environ.get('PM_PROFILE_DIR', os.path.expanduser('~/pm-scratch')), f'profile-{port}')
         shutil.rmtree(self.profile, ignore_errors=True)
