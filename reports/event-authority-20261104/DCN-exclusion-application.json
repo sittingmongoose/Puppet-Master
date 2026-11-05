@@ -11,7 +11,7 @@
       "after_disposition": "RECLASSIFY_TO_EXCLUDED",
       "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_browser.session.navigated.json",
       "before_sha256": "5b8b4d8fdb5e89107fc0686dbc574ed0f633bf74279061f2ea63af0d8b6a6ad8",
-      "after_sha256": "db8c6dc3cff1c8c1ac7fcb88629030357dfcd225b41537eb798f679d5418e1f8",
+      "after_sha256": "4b2b87dedce0df4dde01b2a3280aa0f7291d87b3615a6767f7b58dccf5d287f1",
       "owner_evidence": [
         {
           "path": "Plans/storage-plan.md",
@@ -21,11 +21,12 @@
         },
         {
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
-          "line_start": 13380,
-          "line_end": 13380,
+          "line_start": 13381,
+          "line_end": 13381,
           "quote": "each manual session is the manual face of exactly one Browser workspace"
         }
-      ]
+      ],
+      "after_sha256_lf_superseded": "db8c6dc3cff1c8c1ac7fcb88629030357dfcd225b41537eb798f679d5418e1f8"
     },
     {
       "event_type": "browser.session.resized",
@@ -34,7 +35,7 @@
       "after_disposition": "RECLASSIFY_TO_EXCLUDED",
       "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_browser.session.resized.json",
       "before_sha256": "53c3310552ab811d7e06a28d0c9e97f492e3414a9295d4375d96b67fb453c260",
-      "after_sha256": "9b5260be75fed5c702315913e5151848620575bbbfa94bdf8086fa490bf9e39f",
+      "after_sha256": "f4c4517e3411144d460aad64da021bf090bd507eeb12d7b51bc3f61c586de24b",
       "owner_evidence": [
         {
           "path": "Plans/storage-plan.md",
@@ -44,11 +45,12 @@
         },
         {
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
-          "line_start": 13380,
-          "line_end": 13380,
+          "line_start": 13381,
+          "line_end": 13381,
           "quote": "each manual session is the manual face of exactly one Browser workspace"
         }
-      ]
+      ],
+      "after_sha256_lf_superseded": "9b5260be75fed5c702315913e5151848620575bbbfa94bdf8086fa490bf9e39f"
     },
     {
       "event_type": "memory.gist.verification_requested",
@@ -57,12 +59,12 @@
       "after_disposition": "RECLASSIFY_TO_EXCLUDED",
       "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_memory.gist.verification_requested.json",
       "before_sha256": "60308cc545c4a9482046f118224b02afcc770740dca118a7d9e566be177cdffa",
-      "after_sha256": "c347d50dfd199fd6a995ba8ed07b4d1feed82fd2bfb080e5a9a496a3ca5efc35",
+      "after_sha256": "3315a3bebac9b0a7e0c66291c60c15a7062b0ecce1ed32774559d9a5e5362898",
       "owner_evidence": [
         {
           "path": "Plans/assistant-memory-subsystem.md",
-          "line_start": 3179,
-          "line_end": 3179,
+          "line_start": 3180,
+          "line_end": 3180,
           "quote": "DL-407 retires memory.gist.verification_requested"
         },
         {
@@ -71,7 +73,8 @@
           "line_end": 1127,
           "quote": "verify/edit/pin/unpin/discard use `memory.gist_state_changed` once per successful real mutation"
         }
-      ]
+      ],
+      "after_sha256_lf_superseded": "c347d50dfd199fd6a995ba8ed07b4d1feed82fd2bfb080e5a9a496a3ca5efc35"
     },
     {
       "event_type": "memory.gist.verified",
@@ -80,12 +83,12 @@
       "after_disposition": "RECLASSIFY_TO_EXCLUDED",
       "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_memory.gist.verified.json",
       "before_sha256": "61f4d57a269e129cc662c5d0ef28d9bdb333e52fad2dd43a3ac7c0c86a453a69",
-      "after_sha256": "3c64e9bed82522759ed30a55825cf973ca9dc12a8a2dcb0b21145dec2c5a1241",
+      "after_sha256": "25956c1c4a7256bc33bb140a83233bfc70c72d80eb29e2d331feced9e58c5fb1",
       "owner_evidence": [
         {
           "path": "Plans/assistant-memory-subsystem.md",
-          "line_start": 3179,
-          "line_end": 3179,
+          "line_start": 3180,
+          "line_end": 3180,
           "quote": "DL-407 retires memory.gist.verification_requested"
         },
         {
@@ -94,7 +97,8 @@
           "line_end": 1127,
           "quote": "verify/edit/pin/unpin/discard use `memory.gist_state_changed` once per successful real mutation"
         }
-      ]
+      ],
+      "after_sha256_lf_superseded": "3c64e9bed82522759ed30a55825cf973ca9dc12a8a2dcb0b21145dec2c5a1241"
     },
     {
       "event_type": "memory.gist.verification_failed",
@@ -103,12 +107,12 @@
       "after_disposition": "RECLASSIFY_TO_EXCLUDED",
       "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_memory.gist.verification_failed.json",
       "before_sha256": "3f7c14222116d1429c89460a9ada30099be80241c9c3bdb6dd30321622c93721",
-      "after_sha256": "7bdd80316382c03647d4f136bc8c313941ce665e964b45dab7318e422b8c9e44",
+      "after_sha256": "118329a46b2778ca4e24675cfc4fda88c09c4f2d1c5264a2adeec2fc39d5bf8d",
       "owner_evidence": [
         {
           "path": "Plans/assistant-memory-subsystem.md",
-          "line_start": 3179,
-          "line_end": 3179,
+          "line_start": 3180,
+          "line_end": 3180,
           "quote": "DL-407 retires memory.gist.verification_requested"
         },
         {
@@ -117,7 +121,8 @@
           "line_end": 1127,
           "quote": "verify/edit/pin/unpin/discard use `memory.gist_state_changed` once per successful real mutation"
         }
-      ]
+      ],
+      "after_sha256_lf_superseded": "7bdd80316382c03647d4f136bc8c313941ce665e964b45dab7318e422b8c9e44"
     },
     {
       "event_type": "memory.gist.updated",
@@ -126,12 +131,12 @@
       "after_disposition": "RECLASSIFY_TO_EXCLUDED",
       "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_memory.gist.updated.json",
       "before_sha256": "bfb147c46c3d0e0b679c9e167a219fedc47204ea5c1aabadd4db9e39dd434126",
-      "after_sha256": "a432425c4b3fe27c67b40b07e6d03eba0e382106a426b209df9356dd77315f64",
+      "after_sha256": "da8e46d5dad0fd6e7c40fb3decbf23ed5c2ad4398159634eed298053fc630f17",
       "owner_evidence": [
         {
           "path": "Plans/assistant-memory-subsystem.md",
-          "line_start": 3179,
-          "line_end": 3179,
+          "line_start": 3180,
+          "line_end": 3180,
           "quote": "DL-407 retires memory.gist.verification_requested"
         },
         {
@@ -140,7 +145,8 @@
           "line_end": 1127,
           "quote": "verify/edit/pin/unpin/discard use `memory.gist_state_changed` once per successful real mutation"
         }
-      ]
+      ],
+      "after_sha256_lf_superseded": "a432425c4b3fe27c67b40b07e6d03eba0e382106a426b209df9356dd77315f64"
     },
     {
       "event_type": "memory.gist.pinned",
@@ -149,12 +155,12 @@
       "after_disposition": "RECLASSIFY_TO_EXCLUDED",
       "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_memory.gist.pinned.json",
       "before_sha256": "167ca8dc3611c5e6eae0460e45b9cd5859de71c245d31f33066e20300c4a8549",
-      "after_sha256": "ad5729fe424b4a2143bc45e78093711704208c0299822664964663dd3f165924",
+      "after_sha256": "c9219e0ce4ddb81b422088d7913be259f52707f54579b1bef740f098149350f3",
       "owner_evidence": [
         {
           "path": "Plans/assistant-memory-subsystem.md",
-          "line_start": 3179,
-          "line_end": 3179,
+          "line_start": 3180,
+          "line_end": 3180,
           "quote": "DL-407 retires memory.gist.verification_requested"
         },
         {
@@ -163,7 +169,8 @@
           "line_end": 1127,
           "quote": "verify/edit/pin/unpin/discard use `memory.gist_state_changed` once per successful real mutation"
         }
-      ]
+      ],
+      "after_sha256_lf_superseded": "ad5729fe424b4a2143bc45e78093711704208c0299822664964663dd3f165924"
     },
     {
       "event_type": "memory.gist.unpinned",
@@ -172,12 +179,12 @@
       "after_disposition": "RECLASSIFY_TO_EXCLUDED",
       "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_memory.gist.unpinned.json",
       "before_sha256": "e025be9d56093eb8ad706b19531e4d2ccd1f4a87d6794c61a7b491ed834d74f5",
-      "after_sha256": "b54fc1de532782866d14d250930678281a3a8e2911662d24e108cdaaf3fdbe06",
+      "after_sha256": "fc76166dff00d3f5f5cc6b7f02303a1fbffe31f0487e0d6b0493242ceab6e061",
       "owner_evidence": [
         {
           "path": "Plans/assistant-memory-subsystem.md",
-          "line_start": 3179,
-          "line_end": 3179,
+          "line_start": 3180,
+          "line_end": 3180,
           "quote": "DL-407 retires memory.gist.verification_requested"
         },
         {
@@ -186,7 +193,8 @@
           "line_end": 1127,
           "quote": "verify/edit/pin/unpin/discard use `memory.gist_state_changed` once per successful real mutation"
         }
-      ]
+      ],
+      "after_sha256_lf_superseded": "b54fc1de532782866d14d250930678281a3a8e2911662d24e108cdaaf3fdbe06"
     },
     {
       "event_type": "memory.gist.discarded",
@@ -195,12 +203,12 @@
       "after_disposition": "RECLASSIFY_TO_EXCLUDED",
       "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_memory.gist.discarded.json",
       "before_sha256": "c69126fc08860fabbd239f3e14f351caf5dfb0cd4230b5ff053e7aef7f868f58",
-      "after_sha256": "659044408d57212252f30e3284bba1bf9b5283c6f5a218b1b42f2e8d785f3799",
+      "after_sha256": "464c3d08097feb3787b506c00bff62fbd1b1b432f43653414da1ee2d72523388",
       "owner_evidence": [
         {
           "path": "Plans/assistant-memory-subsystem.md",
-          "line_start": 3179,
-          "line_end": 3179,
+          "line_start": 3180,
+          "line_end": 3180,
           "quote": "DL-407 retires memory.gist.verification_requested"
         },
         {
@@ -209,7 +217,8 @@
           "line_end": 1127,
           "quote": "verify/edit/pin/unpin/discard use `memory.gist_state_changed` once per successful real mutation"
         }
-      ]
+      ],
+      "after_sha256_lf_superseded": "659044408d57212252f30e3284bba1bf9b5283c6f5a218b1b42f2e8d785f3799"
     },
     {
       "event_type": "dashboard.widget_added",
@@ -218,15 +227,16 @@
       "after_disposition": "RECLASSIFY_TO_EXCLUDED",
       "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_dashboard.widget_added.json",
       "before_sha256": "95afd692f3a6ad43ca3b6370445d5d6ed7beccf1984ba265feaff6c8b25532da",
-      "after_sha256": "1c9002b2387d7ec6ad463aabcfe839018450b20b5a5a70cf9dc59f6a5a984f25",
+      "after_sha256": "b7033d797e39803c9a5b03743f716828fab1f1b4c3a7f939d0e3baf8422f787c",
       "owner_evidence": [
         {
           "path": "Plans/UI_Command_Catalog.md",
-          "line_start": 16973,
-          "line_end": 16973,
+          "line_start": 16975,
+          "line_end": 16975,
           "quote": "No event named dashboard.widget_added is emitted."
         }
-      ]
+      ],
+      "after_sha256_lf_superseded": "1c9002b2387d7ec6ad463aabcfe839018450b20b5a5a70cf9dc59f6a5a984f25"
     },
     {
       "event_type": "coordination.debug_mirror_exported",
@@ -235,7 +245,7 @@
       "after_disposition": "RECLASSIFY_TO_EXCLUDED",
       "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.debug_mirror_exported.json",
       "before_sha256": "52bebae4d7080a5755ec08b93b46d7645650e80bbc037c8d85f1624b7a09cf86",
-      "after_sha256": "6c272a08437e9623b7a639f758f231e11a52f55896288f1deb39ba7b98fe514d",
+      "after_sha256": "ff13fa80e73702b5ff6fd3f0a9e7f49b54249ed8059173464cfdd572a61a21ad",
       "owner_evidence": [
         {
           "path": "Plans/storage-plan.md",
@@ -243,13 +253,18 @@
           "line_end": 553,
           "quote": "the live mirror files it described are retired, so no new mirror export attempt is recorded"
         }
-      ]
+      ],
+      "after_sha256_lf_superseded": "6c272a08437e9623b7a639f758f231e11a52f55896288f1deb39ba7b98fe514d"
     }
   ],
   "census": {
     "path": "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl",
-    "before_sha256": "83a1698ac3dfe2795fec2f10aed3eaabfae6f4074966ed5e6806f756ddf15af0",
-    "after_sha256": "b3af78deab3288928d798db1bb051321ab849765427d41403f25a65cfe8cac4d",
-    "changed_rows": 11
-  }
+    "before_sha256": "0ee088985c807e3e5de718853c521780b64d5f0d3ff694a867e2aa73f0326a4b",
+    "after_sha256": "3b3ee99f53b7c14ea7d7d6020d798b6f6ebfbf1d73985825a0cd37904ca92333",
+    "changed_rows": 11,
+    "drafting_before_sha256": "83a1698ac3dfe2795fec2f10aed3eaabfae6f4074966ed5e6806f756ddf15af0",
+    "drafting_after_sha256": "b3af78deab3288928d798db1bb051321ab849765427d41403f25a65cfe8cac4d",
+    "changed_rows_note": "before and after are the file on the rebase base and on this branch. The drafting values are on the original base, whose file main has since changed in 33 other rows. Every row keeps the line ending it has on main."
+  },
+  "rebased_onto_commit": "2989975e8f"
 }
