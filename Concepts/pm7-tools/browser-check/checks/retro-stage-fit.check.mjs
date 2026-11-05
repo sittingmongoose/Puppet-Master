@@ -196,8 +196,9 @@ async function fit(t, mode) {
 		for (const [w, h] of [[740, 768], [1280, 500]]) {
 			await t.viewport(w, h);
 			const asleep = await f.evaluate(() => { const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage')); return !!(st && st.sleepZ); });
+			// (a precondition, not a skip: Welcome before anyone arrives has Pip asleep, or this case would pass vacuously)
+			await t.check(`${mode} ${look} Welcome ${w}x${h}: Pip is asleep before anyone arrives`, asleep, 'awake on Welcome');
 			if (asleep) await judge(t, f, `${mode} ${look} Welcome asleep ${w}x${h}`, { sign: false });
-			else t.log(`${mode} ${look} ${w}x${h}: Pip was awake on Welcome, the asleep case not measured`);
 		}
 		// Name, resized down through every layout and back up
 		await t.viewport(1920, 1080);
@@ -224,16 +225,20 @@ async function fit(t, mode) {
 // every screen, opened fresh at the sizes where Retro's crop moves the props (860 portrait, narrow 740, short 1280x500):
 // Pip whole, every resting prop inside the crop and above the foot, none over Pip's head (FO-50's c-ready server over the
 // fitted compact Pip; the blocks, QR and house the printer covered at 740). --set screens=name,c-ready walks some.
-const SCREENS = ['welcome', 'look', 'where', 'c-route', 'c-review', 'c-ready', 's-kind', 's-ready', 'begin', 'name', 'like', 'nas-find', 'online-service', 'online-details', 'safe', 'away', 'review', 'creating', 'protect', 'ai', 'ready'];
-const CROPPED = [[860, 768], [740, 768], [1280, 500]];
+// every setup screen the page defines (O55.screens.defs, read from the page: 45 today), at all seven window sizes
+// (sol-review-retro-1: 21 screens at three sizes left cells unmeasured). --set sizes=740x768,1280x500 and --set looks=
+// split it across browsers
+const sizesArg = (t) => (t.args.sizes ? String(t.args.sizes).split(',').map((x) => x.split('x').map(Number)) : null);
 async function everyScreen(t, mode) {
-	const reduce = t.args.motion === 'reduce', list = t.args.screens ? String(t.args.screens).split(',') : SCREENS;
-	for (const look of LOOKS) {
-		for (const [w, h] of CROPPED) {
+	const reduce = t.args.motion === 'reduce', looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
+	for (const look of looks) {
+		for (const [w, h] of sizesArg(t) || EVERY_SIZE) {
 			await t.viewport(w, h);
 			const f = await frameFor(t, mode);
 			await t.emulate({ reducedMotion: reduce ? 'reduce' : 'no-preference' });
 			await stageLook(t, f, look);
+			const list = t.args.screens ? String(t.args.screens).split(',') : await f.evaluate(() => Object.keys(window.O55.screens.defs));
+			if (w === (sizesArg(t) || EVERY_SIZE)[0][0] && h === (sizesArg(t) || EVERY_SIZE)[0][1]) t.log(`${mode} ${look}: ${list.length} screens: ${list.join(' ')}`);
 			for (const scr of list) {
 				await f.evaluate((x) => window.O55.ui.open({ fresh: true, screen: x }), scr);
 				// a screen opened straight may route on (protect without a backup place set): judged where it lands
@@ -241,9 +246,13 @@ async function everyScreen(t, mode) {
 				if (!ok) { await t.check(`${mode} ${look} ${scr} ${w}x${h}: the screen opens on a stage`, false, 'no stage within 15 s'); continue; }
 				await f.waitForTimeout(300);
 				const now = await f.evaluate(() => window.O55.S.sess.screen);
-				if (now !== 'welcome' && !(await arrive(t, f))) t.log(`${mode} ${look} ${scr} ${w}x${h}: Pip did not wake on the pointer's arrival`);
+				// (preconditions, not skips: Welcome has Pip asleep until someone arrives; any other screen, once the pointer has
+				// arrived, has it awake)
+				const tag = `${mode} ${look} ${scr}${now !== scr ? ` (opened as ${now})` : ''} ${w}x${h}`;
+				if (now === 'welcome') await t.check(`${tag}: Pip is asleep before anyone arrives`, await f.evaluate(() => !!O55.pipStage.of(O55.S.root.querySelector('.o55-stage')).sleepZ), 'awake on Welcome');
+				else await t.check(`${tag}: Pip wakes on the pointer's arrival`, await arrive(t, f), 'still asleep after 4 s');
 				await propsAtRest(f);
-				await judge(t, f, `${mode} ${look} ${scr}${now !== scr ? ` (opened as ${now})` : ''} ${w}x${h}`, { sign: false, props: true });
+				await judge(t, f, tag, { sign: false, props: true });
 			}
 		}
 	}
@@ -255,7 +264,7 @@ async function everyScreen(t, mode) {
 // over its head as it sways; where the stage's words cut its span it is drawn smaller, once (.82 in Retro Light at 740,
 // 1 elsewhere), never under 80% (the lead's ruling). --set looks=retro-light,nier-dark for some.
 const ALL_LOOKS = ['basic-light', 'basic-dark', 'friendly-light', 'friendly-dark', 'glass-light', 'glass-dark', 'retro-light', 'retro-dark', 'nier-light', 'nier-dark'];
-const EVERY_SIZE = [[1920, 1080], [1390, 900], [1024, 768], [860, 768], [740, 768], [1280, 500]];
+const EVERY_SIZE = [[1920, 1080], [1390, 900], [1280, 800], [1024, 768], [860, 768], [740, 768], [1280, 500]];
 async function clearOfWords(t, mode) {
 	const reduce = t.args.motion === 'reduce', looks = t.args.looks ? String(t.args.looks).split(',') : ALL_LOOKS;
 	for (const look of looks) {
@@ -269,7 +278,9 @@ async function clearOfWords(t, mode) {
 				const ok = await f.waitForFunction(() => !!O55.pipStage.of(O55.S.root.querySelector('.o55-stage')), null, { timeout: 15000 }).then(() => true, () => false);
 				if (!ok) { await t.check(`${mode} ${look} ${scr} ${w}x${h}: the screen opens on a stage`, false, 'no stage within 15 s'); continue; }
 				await f.waitForTimeout(300);
-				if (scr !== 'welcome' && !(await arrive(t, f))) await t.check(`${mode} ${look} ${scr} ${w}x${h}: Pip wakes on the pointer's arrival`, false, 'still asleep after 4 s');
+				// (preconditions, not skips: asleep on Welcome before anyone arrives, awake on Name once the pointer has)
+				if (scr === 'welcome') await t.check(`${mode} ${look} ${scr} ${w}x${h}: Pip is asleep before anyone arrives`, await f.evaluate(() => !!O55.pipStage.of(O55.S.root.querySelector('.o55-stage')).sleepZ), 'awake on Welcome');
+				else await t.check(`${mode} ${look} ${scr} ${w}x${h}: Pip wakes on the pointer's arrival`, await arrive(t, f), 'still asleep after 4 s');
 				await propsAtRest(f);
 				await judge(t, f, `${mode} ${look} ${scr} ${w}x${h}`, { sign: false, props: true });
 			}
