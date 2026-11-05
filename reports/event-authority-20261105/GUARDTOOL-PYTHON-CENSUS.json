@@ -10,6 +10,15 @@
     "refusal_value",
     "accumulator_write"
   ],
+  "preceding_exit_contexts": [
+    "early-success-return",
+    "early-raise",
+    "elif-chain",
+    "early-continue",
+    "early-break",
+    "except-return",
+    "two-preceding-exits"
+  ],
   "python": "3.14.4 (main, Aug 20 2026, 10:41:58) [GCC 15.2.0]",
   "refusal_kinds": {
     "accumulator_write": [
@@ -139,8 +148,8 @@
           "rule": "closed"
         },
         "refusal_value": {
-          "constraint": "Fixed scalar payload; shared controller/own-test composition; constants never replace controlling predicates.",
-          "cut": "skip-one-fixed-refusal-or-cut-one-control-leaf",
+          "constraint": "Fixed scalar payload has zero atoms; compose lexical tests and preceding exits or refuse registration.",
+          "cut": "cut-one-input-atom-of-complete-path",
           "disposition": "supported",
           "rule": "refusal"
         }
@@ -511,8 +520,8 @@
       "node": "Call",
       "positions": {
         "accumulator_write": {
-          "constraint": "Standalone append of exactly one scalar literal error only; other mutations refuse.",
-          "cut": "skip-one-error-append-or-cut-one-control-leaf",
+          "constraint": "Fixed scalar append has zero atoms; only a verified complete-path input atom can be cut.",
+          "cut": "cut-one-input-atom-of-complete-path",
           "disposition": "supported",
           "rule": "append"
         },
@@ -535,8 +544,8 @@
           "rule": "closed"
         },
         "refusal_value": {
-          "constraint": "Fixed scalar payload; shared controller/own-test composition; constants never replace controlling predicates.",
-          "cut": "skip-one-fixed-refusal-or-cut-one-control-leaf",
+          "constraint": "Fixed scalar payload has zero atoms; compose lexical tests and preceding exits or refuse registration.",
+          "cut": "cut-one-input-atom-of-complete-path",
           "disposition": "supported",
           "rule": "refusal"
         }
@@ -643,8 +652,8 @@
           "rule": "closed"
         },
         "refusal_value": {
-          "constraint": "Fixed scalar payload; shared controller/own-test composition; constants never replace controlling predicates.",
-          "cut": "skip-one-fixed-refusal-or-cut-one-control-leaf",
+          "constraint": "Fixed scalar payload has zero atoms; compose lexical tests and preceding exits or refuse registration.",
+          "cut": "cut-one-input-atom-of-complete-path",
           "disposition": "supported",
           "rule": "refusal"
         }
@@ -871,8 +880,8 @@
       "node": "Expr",
       "positions": {
         "accumulator_write": {
-          "constraint": "Standalone append of exactly one scalar literal error only; other mutations refuse.",
-          "cut": "skip-one-error-append-or-cut-one-control-leaf",
+          "constraint": "Fixed scalar append has zero atoms; only a verified complete-path input atom can be cut.",
+          "cut": "cut-one-input-atom-of-complete-path",
           "disposition": "supported",
           "rule": "append"
         },
@@ -2335,8 +2344,8 @@
           "rule": "closed"
         },
         "refusal_value": {
-          "constraint": "Fixed scalar payload; shared controller/own-test composition; constants never replace controlling predicates.",
-          "cut": "skip-one-fixed-refusal-or-cut-one-control-leaf",
+          "constraint": "Fixed scalar payload has zero atoms; compose lexical tests and preceding exits or refuse registration.",
+          "cut": "cut-one-input-atom-of-complete-path",
           "disposition": "supported",
           "rule": "refusal"
         }

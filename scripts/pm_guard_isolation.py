@@ -244,8 +244,8 @@ PYTHON_AST_RULES = {
     "boolean": ("supported", "replace-one-Boolean-leaf", "Split and/or/not recursively, retaining polarity, peers and short-circuit order."),
     "operand": ("supported", "preserve-operand-cut-enclosing-comparison-only", "Scalar literal/access or allow-listed scalar view; never a display, comprehension, chain or opaque expression."),
     "return": ("supported", "replace-one-Boolean-leaf", "Direct Boolean expression or literal falsy return under one supported if; returned locals refuse."),
-    "refusal": ("supported", "skip-one-fixed-refusal-or-cut-one-control-leaf", "Fixed scalar payload; shared controller/own-test composition; constants never replace controlling predicates."),
-    "append": ("supported", "skip-one-error-append-or-cut-one-control-leaf", "Standalone append of exactly one scalar literal error only; other mutations refuse."),
+    "refusal": ("supported", "cut-one-input-atom-of-complete-path", "Fixed scalar payload has zero atoms; compose lexical tests and preceding exits or refuse registration."),
+    "append": ("supported", "cut-one-input-atom-of-complete-path", "Fixed scalar append has zero atoms; only a verified complete-path input atom can be cut."),
     "initialize": ("supported", "preserve-empty-list-initialization", "Only fresh empty-list initialization to local names; contributes no refusal predicate."),
 }
 PYTHON_AST_POLICY = {name: {p: "closed" for p in PYTHON_AST_POSITIONS}
@@ -275,6 +275,10 @@ PYTHON_REFUSAL_KINDS = {
     "refusal_helper": ("Call", "refusal_value"),
     "predicate_helper": ("Call", "refusal_value"),
 }
+PYTHON_PRECEDING_EXIT_CONTEXTS = (
+    "early-success-return", "early-raise", "elif-chain", "early-continue",
+    "early-break", "except-return", "two-preceding-exits",
+)
 
 
 def python_construct_census():
@@ -310,7 +314,8 @@ def python_construct_census():
             "implementation": sys.implementation.name, "positions": list(PYTHON_AST_POSITIONS),
             "node_classes": len(live), "cells": len(live) * len(PYTHON_AST_POSITIONS),
             "totals": totals, "errors": errors, "rows": rows,
-            "refusal_kinds": {k: list(v) for k, v in PYTHON_REFUSAL_KINDS.items()}}
+            "refusal_kinds": {k: list(v) for k, v in PYTHON_REFUSAL_KINDS.items()},
+            "preceding_exit_contexts": list(PYTHON_PRECEDING_EXIT_CONTEXTS)}
 
 
 def python_node_supported(node, position):
@@ -1053,13 +1058,76 @@ class AstGuards:
         predicate = isinstance(node, ast.Call) and ast.unparse(node.func) in self.call_predicates
         return refusal, predicate
 
+    def _preceding_exits(self, node, fn, parents):
+        """Account for fallthrough in EVERY enclosing statement block.
+
+        Simple terminal if branches and assertions have exact fallthrough
+        conditions. Refusing exits are retained unchanged: changing one would
+        substitute a different refusal for the target, not weaken the target.
+        Only a lone successful return has a verified suffix-enabling cut.
+        Complex/opaque exits poison the suffix before it can be registered.
+        """
+        controls, reason = [], ""
+
+        def contains_exit(statement):
+            for part in ast.walk(statement):
+                refusal, predicate = self._calls(part)
+                if isinstance(part, (ast.Return, ast.Raise, ast.Assert, ast.Continue, ast.Break,
+                                     ast.Yield, ast.YieldFrom, ast.Await)) or predicate:
+                    return True
+                if isinstance(part, ast.Call):
+                    fixed_append = (refusal and isinstance(part.func, ast.Attribute) and part.func.attr == "append"
+                        and not part.keywords and len(part.args) == 1 and isinstance(part.args[0], ast.Constant))
+                    if not fixed_append and (refusal or python_atom_reason(part)):
+                        return True
+            return False
+
+        def terminal(statement):
+            if isinstance(statement, ast.Return):
+                return "success" if isinstance(statement.value, ast.Constant) and statement.value.value is True else "refusal"
+            if isinstance(statement, ast.Raise):
+                return "refusal"
+            refusal, _ = self._calls(statement)
+            if refusal and isinstance(statement, ast.Expr) and isinstance(statement.value.func, ast.Name):
+                return "refusal"
+            return ""
+
+        child, owner = node, parents.get(node)
+        while owner is not None:
+            for _, block in ast.iter_fields(owner):
+                if not isinstance(block, list) or child not in block or not isinstance(child, ast.stmt):
+                    continue
+                for previous in block[:block.index(child)]:
+                    if not isinstance(previous, ast.stmt) or not contains_exit(previous):
+                        continue
+                    if (isinstance(previous, ast.If) and not previous.orelse and len(previous.body) == 1
+                            and terminal(previous.body[0])):
+                        role = "preceding_exit" if terminal(previous.body[0]) == "success" else "retained_exit"
+                        controls.append((previous.test, previous, "test", False, role))
+                    elif isinstance(previous, ast.Assert):
+                        controls.append((previous.test, previous, "test", True, "retained_exit"))
+                    elif isinstance(previous, ast.Expr) and self._calls(previous.value)[1]:
+                        call = previous.value
+                        index = self.call_predicates[ast.unparse(call.func)]
+                        if (0 <= index < len(call.args) and not call.keywords and
+                                all(isinstance(arg, ast.Constant) for i, arg in enumerate(call.args) if i != index)):
+                            # Keep the helper's acceptance condition unchanged.
+                            controls.append((call.args[index], call, "args", True, "retained_exit"))
+                        else:
+                            reason = "preceding predicate helper has no exact fallthrough condition"
+                    else:
+                        reason = "preceding exit in " + type(previous).__name__ + " has no verified exact fallthrough/cut; atomic adapter required"
+            if owner is fn:
+                break
+            child, owner = owner, parents.get(owner)
+        return controls, reason
+
     def _compose_refusal(self, node, fn, parents):
         """One rejection formula for EVERY refusal kind, before registration.
 
-        Rejection is all enclosing branch tests (with their branch polarity)
-        AND failure of the site's own acceptance test. Constants contribute no
-        input atom under a controller. Unsupported composition poisons the
-        entire site, never just the unfamiliar component.
+        Rejection is the complete path condition AND failure of the site's own
+        acceptance test. Constants ALWAYS contribute zero input atoms. Unknown
+        fallthrough poisons the entire site, regardless of suite-level FAIL.
         """
         refusal_call, checkcall = self._calls(node)
         controls, reason = [], ""
@@ -1077,6 +1145,11 @@ class AstGuards:
                         reason = reason or "shared controlling body needs a refusal-local atomic adapter"
             child, owner = owner, parents.get(owner)
         controls.reverse()
+        preceding, path_reason = self._preceding_exits(node, fn, parents)
+        controls = preceding + controls
+        reason = reason or path_reason
+        if sum(role != "retained_exit" for *_, role in controls) > 1:
+            reason = reason or "multiple path controllers need a verified composition-preserving adapter"
         if not python_node_supported(fn, "controlling_context"):
             reason = "unsupported function context"
         if isinstance(fn, ast.AsyncFunctionDef):
@@ -1100,7 +1173,7 @@ class AstGuards:
                 reason = "return value fails closed in refusal-value position; atomic adapter required"
             if isinstance(node.value, (ast.Name, ast.Attribute, ast.Subscript)):
                 reason = "returned name/access may carry accumulated or compound predicates; dataflow adapter required"
-            if controls and node.value is not None and not isinstance(node.value, ast.Constant):
+            if any(role != "retained_exit" for *_, role in controls) and node.value is not None and not isinstance(node.value, ast.Constant):
                 reason = "conditional return value may carry additional predicates; atomic adapter required"
         elif isinstance(node, ast.Assert):
             kind, action, own, own_field = "assert", "assert", node.test, "test"
@@ -1133,21 +1206,31 @@ class AstGuards:
 
         own_component = (own, node, own_field, False, "own")
         components = [*controls, own_component]
+        parameters = {arg.arg for arg in (*fn.args.posonlyargs, *fn.args.args, *fn.args.kwonlyargs)}
+        def reads_input(atom):
+            return any(isinstance(read, ast.Name) and isinstance(read.ctx, ast.Load) and read.id in parameters
+                       for read in ast.walk(atom))
         composition = [{"role": role, "expression": ast.unparse(expr),
                         "line": getattr(root, "lineno", node.lineno),
-                        "rejects_when": polarity}
+                        "rejects_when": polarity,
+                        "input_atoms": sum(reads_input(atom) for _, atom in self._leaves(expr))}
                        for expr, root, _, polarity, role in components]
         # We have not verified cuts across a nonconstant own test AND a
         # controller. Expose both sets, but fail closed as one obligation set.
-        if controls and not isinstance(own, ast.Constant):
+        if any(role != "retained_exit" for *_, role in controls) and not isinstance(own, ast.Constant):
             reason = reason or "controller plus nonconstant own test needs a composition-preserving atomic adapter"
         if controls and isinstance(own, ast.Constant) and bool(own.value):
             reason = reason or "constant accepting value under control is not a refusal predicate"
         atoms = []
         for expr, root, field_name, polarity, role in components:
-            if isinstance(expr, ast.Constant) and controls:
+            if role == "retained_exit":
+                # Its original site owns these atoms. No cut of this refusal
+                # may redirect execution into a preceding rejecting exit.
+                reason = reason or next((python_atom_reason(atom) for _, atom in self._leaves(expr) if python_atom_reason(atom)), "")
                 continue
             for clause, atom in self._leaves(expr):
+                if not reads_input(atom):
+                    continue              # constants/fixed calls have ZERO input atoms
                 atom_reason = python_atom_reason(atom)
                 reason = reason or atom_reason
                 atoms.append((clause, atom, {"line": root.lineno, "column": root.col_offset, "node": type(root).__name__,
@@ -1161,12 +1244,6 @@ class AstGuards:
             atoms.append(((), own, {}))
         if not atoms:
             atoms = [((), own, {})]
-        if not controls and own_field is None:
-            # An unconditional fixed refusal has no input predicate. Retain its
-            # site obligation; only an unreachable/redundant declaration can
-            # explain how an accepting complete-path control exists.
-            atoms = [((), node, {"line": node.lineno, "column": node.col_offset, "node": type(node).__name__,
-                                  "field": None, "path": [], "accepting": True})]
         return kind, action, atoms, reason, composition
 
     def candidates(self):
@@ -1179,6 +1256,12 @@ class AstGuards:
                 refusal_call, checkcall = self._calls(node)
                 if isinstance(node, (ast.Raise, ast.Return, ast.Assert)) or (refusal_call and isinstance(node, ast.Expr)) or checkcall:
                     kind, action, atoms, reason, composition = self._compose_refusal(node, fn, parents)
+                    terminal_success = (isinstance(node, ast.Return) and isinstance(node.value, ast.Constant)
+                        and node.value.value is True and parents.get(node) is fn and node is fn.body[-1])
+                    if terminal_success:
+                        # Explicitly reviewable acceptance disposition; never a
+                        # registered cut, even when its path reads input atoms.
+                        action, atoms, reason = "predicate", [((), node.value, {})], ""
                     for clause, expression, target in atoms:
                         identity = digest([name, ast.dump(node, include_attributes=False), clause,
                                            ast.dump(expression, include_attributes=False)])[:16]
@@ -1187,8 +1270,8 @@ class AstGuards:
                             "clause": clause or None,
                             "expression": ast.unparse(expression), "fingerprint": identity,
                             "id": f"code:{self.name}:{name}:{identity}",
-                            "reason": reason, "predicate_count": None if reason else 1,
-                            "cut": "" if reason else "replace-one-Boolean-leaf" if target.get("field") else "skip-one-refusal-statement",
+                            "reason": reason, "predicate_count": 0 if terminal_success else None if reason else 1,
+                            "cut": "replace-one-Boolean-leaf" if not reason and target.get("field") else "",
                             "refusal_kind": kind, "composition": composition, "cut_target": target if not reason else {}})
                 for child in ast.iter_child_nodes(node):
                     walk(child)

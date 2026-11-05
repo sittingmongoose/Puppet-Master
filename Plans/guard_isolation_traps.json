@@ -1850,6 +1850,1243 @@
       "kind": "round5_coverage_gate",
       "mode": "context",
       "expected": "self-test fails before traps when new census support lacks generated composition coverage"
+    },
+    {
+      "id": "C6-B1-cell-01-single",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    raise ValueError(\"bad\")\n    return True\n",
+      "line": 4,
+      "refusal_kind": "raise",
+      "modes": [
+        "single"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "or",
+        "context": [
+          "body"
+        ],
+        "form": "raise",
+        "kind": "raise",
+        "source_sha256": "cf1ceaee9a4a2fafa88a61a0f5dee0a976755e904751530dc0a8a44ca5829dd0"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    raise ValueError(\"bad\")\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    raise ValueError(\"bad\")\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-02-aggregate",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    raise ValueError(\"bad\")\n    return True\n",
+      "line": 4,
+      "refusal_kind": "raise",
+      "modes": [
+        "aggregate"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "or",
+        "context": [
+          "body"
+        ],
+        "form": "raise",
+        "kind": "raise",
+        "source_sha256": "cf1ceaee9a4a2fafa88a61a0f5dee0a976755e904751530dc0a8a44ca5829dd0"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    raise ValueError(\"bad\")\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    raise ValueError(\"bad\")\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-03-single",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    raise ValueError(\"bad\")\n    return True\n",
+      "line": 4,
+      "refusal_kind": "raise",
+      "modes": [
+        "single"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "not-and",
+        "context": [
+          "body"
+        ],
+        "form": "raise",
+        "kind": "raise",
+        "source_sha256": "0d975dc557ee6c8fba06f4cf7099f8c8cef5ad840c8acf2e481279120d2a024f"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    raise ValueError(\"bad\")\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    raise ValueError(\"bad\")\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-04-aggregate",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    raise ValueError(\"bad\")\n    return True\n",
+      "line": 4,
+      "refusal_kind": "raise",
+      "modes": [
+        "aggregate"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "not-and",
+        "context": [
+          "body"
+        ],
+        "form": "raise",
+        "kind": "raise",
+        "source_sha256": "0d975dc557ee6c8fba06f4cf7099f8c8cef5ad840c8acf2e481279120d2a024f"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    raise ValueError(\"bad\")\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    raise ValueError(\"bad\")\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-05-single",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    return False\n    return True\n",
+      "line": 4,
+      "refusal_kind": "return",
+      "modes": [
+        "single"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "or",
+        "context": [
+          "body"
+        ],
+        "form": "return-False",
+        "kind": "return",
+        "source_sha256": "168ae0cc90da04ee8b75930c8c55d59fdb2c1b6cd48743852b9123917628268c"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    return False\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    return False\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-06-aggregate",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    return False\n    return True\n",
+      "line": 4,
+      "refusal_kind": "return",
+      "modes": [
+        "aggregate"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "or",
+        "context": [
+          "body"
+        ],
+        "form": "return-False",
+        "kind": "return",
+        "source_sha256": "168ae0cc90da04ee8b75930c8c55d59fdb2c1b6cd48743852b9123917628268c"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    return False\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    return False\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-07-single",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    return False\n    return True\n",
+      "line": 4,
+      "refusal_kind": "return",
+      "modes": [
+        "single"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "not-and",
+        "context": [
+          "body"
+        ],
+        "form": "return-False",
+        "kind": "return",
+        "source_sha256": "7be6f5733c646e63778d7be4306ed5d92114e481c7de06bce4d2984e5fa4d349"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    return False\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    return False\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-08-aggregate",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    return False\n    return True\n",
+      "line": 4,
+      "refusal_kind": "return",
+      "modes": [
+        "aggregate"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "not-and",
+        "context": [
+          "body"
+        ],
+        "form": "return-False",
+        "kind": "return",
+        "source_sha256": "7be6f5733c646e63778d7be4306ed5d92114e481c7de06bce4d2984e5fa4d349"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    return False\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    return False\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-09-single",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    return None\n    return True\n",
+      "line": 4,
+      "refusal_kind": "return",
+      "modes": [
+        "single"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "or",
+        "context": [
+          "body"
+        ],
+        "form": "return-None",
+        "kind": "return",
+        "source_sha256": "152cdcf116e7ade8e328b4916ebe4ebb6e5adad9ec91c293ae09198f790d923d"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    return None\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    return None\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-10-aggregate",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    return None\n    return True\n",
+      "line": 4,
+      "refusal_kind": "return",
+      "modes": [
+        "aggregate"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "or",
+        "context": [
+          "body"
+        ],
+        "form": "return-None",
+        "kind": "return",
+        "source_sha256": "152cdcf116e7ade8e328b4916ebe4ebb6e5adad9ec91c293ae09198f790d923d"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    return None\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    return None\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-11-single",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    return None\n    return True\n",
+      "line": 4,
+      "refusal_kind": "return",
+      "modes": [
+        "single"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "not-and",
+        "context": [
+          "body"
+        ],
+        "form": "return-None",
+        "kind": "return",
+        "source_sha256": "15a1399cd8814a13f940ca32661760b3c29a5f5122b275b96268062edb6ae501"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    return None\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    return None\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-12-aggregate",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    return None\n    return True\n",
+      "line": 4,
+      "refusal_kind": "return",
+      "modes": [
+        "aggregate"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "not-and",
+        "context": [
+          "body"
+        ],
+        "form": "return-None",
+        "kind": "return",
+        "source_sha256": "15a1399cd8814a13f940ca32661760b3c29a5f5122b275b96268062edb6ae501"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    return None\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    return None\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-13-single",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    return\n    return True\n",
+      "line": 4,
+      "refusal_kind": "return",
+      "modes": [
+        "single"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "or",
+        "context": [
+          "body"
+        ],
+        "form": "return-bare",
+        "kind": "return",
+        "source_sha256": "abf7c958fb7e47f475a057b7808168978360fc5a9808b09bd6d721a152104059"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    return\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    return\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-14-aggregate",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    return\n    return True\n",
+      "line": 4,
+      "refusal_kind": "return",
+      "modes": [
+        "aggregate"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "or",
+        "context": [
+          "body"
+        ],
+        "form": "return-bare",
+        "kind": "return",
+        "source_sha256": "abf7c958fb7e47f475a057b7808168978360fc5a9808b09bd6d721a152104059"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    return\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    return\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-15-single",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    return\n    return True\n",
+      "line": 4,
+      "refusal_kind": "return",
+      "modes": [
+        "single"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "not-and",
+        "context": [
+          "body"
+        ],
+        "form": "return-bare",
+        "kind": "return",
+        "source_sha256": "0e35e1bd20ca6cedd3e305389b174b70e6b9a31612c7e40750d005341ad84118"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    return\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    return\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-16-aggregate",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    return\n    return True\n",
+      "line": 4,
+      "refusal_kind": "return",
+      "modes": [
+        "aggregate"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "not-and",
+        "context": [
+          "body"
+        ],
+        "form": "return-bare",
+        "kind": "return",
+        "source_sha256": "0e35e1bd20ca6cedd3e305389b174b70e6b9a31612c7e40750d005341ad84118"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    return\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    return\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-17-single",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    return 0\n    return True\n",
+      "line": 4,
+      "refusal_kind": "return",
+      "modes": [
+        "single"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "or",
+        "context": [
+          "body"
+        ],
+        "form": "return-zero",
+        "kind": "return",
+        "source_sha256": "d7637642b38cc5ef603a859ba41f513b2b75a253b36215eae477b4bf33d8f0bf"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    return 0\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    return 0\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-18-aggregate",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    return 0\n    return True\n",
+      "line": 4,
+      "refusal_kind": "return",
+      "modes": [
+        "aggregate"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "or",
+        "context": [
+          "body"
+        ],
+        "form": "return-zero",
+        "kind": "return",
+        "source_sha256": "d7637642b38cc5ef603a859ba41f513b2b75a253b36215eae477b4bf33d8f0bf"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    return 0\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    return 0\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-19-single",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    return 0\n    return True\n",
+      "line": 4,
+      "refusal_kind": "return",
+      "modes": [
+        "single"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "not-and",
+        "context": [
+          "body"
+        ],
+        "form": "return-zero",
+        "kind": "return",
+        "source_sha256": "ff4b99ec08ff364026bb3d9f2b1d9310ea6959a7130fb0a4c13be9a83ce1c357"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    return 0\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    return 0\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-20-aggregate",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    return 0\n    return True\n",
+      "line": 4,
+      "refusal_kind": "return",
+      "modes": [
+        "aggregate"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "not-and",
+        "context": [
+          "body"
+        ],
+        "form": "return-zero",
+        "kind": "return",
+        "source_sha256": "ff4b99ec08ff364026bb3d9f2b1d9310ea6959a7130fb0a4c13be9a83ce1c357"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    return 0\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    return 0\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-21-single",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    return 0.0\n    return True\n",
+      "line": 4,
+      "refusal_kind": "return",
+      "modes": [
+        "single"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "or",
+        "context": [
+          "body"
+        ],
+        "form": "return-float-zero",
+        "kind": "return",
+        "source_sha256": "7e2fe0f2726a1d5413c87298d220ff511b85e91737bc3d251e54c52a9b9a3ced"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    return 0.0\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    return 0.0\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-22-aggregate",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    return 0.0\n    return True\n",
+      "line": 4,
+      "refusal_kind": "return",
+      "modes": [
+        "aggregate"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "or",
+        "context": [
+          "body"
+        ],
+        "form": "return-float-zero",
+        "kind": "return",
+        "source_sha256": "7e2fe0f2726a1d5413c87298d220ff511b85e91737bc3d251e54c52a9b9a3ced"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    return 0.0\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    return 0.0\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-23-single",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    return 0.0\n    return True\n",
+      "line": 4,
+      "refusal_kind": "return",
+      "modes": [
+        "single"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "not-and",
+        "context": [
+          "body"
+        ],
+        "form": "return-float-zero",
+        "kind": "return",
+        "source_sha256": "9aca124bd09e11eb62cda9442492b957ffd36b2f1621da562c76d45f5a440e6e"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    return 0.0\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    return 0.0\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-24-aggregate",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    return 0.0\n    return True\n",
+      "line": 4,
+      "refusal_kind": "return",
+      "modes": [
+        "aggregate"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "not-and",
+        "context": [
+          "body"
+        ],
+        "form": "return-float-zero",
+        "kind": "return",
+        "source_sha256": "9aca124bd09e11eb62cda9442492b957ffd36b2f1621da562c76d45f5a440e6e"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    return 0.0\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    return 0.0\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-25-single",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    return \"\"\n    return True\n",
+      "line": 4,
+      "refusal_kind": "return",
+      "modes": [
+        "single"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "or",
+        "context": [
+          "body"
+        ],
+        "form": "return-empty-string",
+        "kind": "return",
+        "source_sha256": "3d628307f8ed157758cf7f7605aa1ed5e943db5670e1c6e07b80cc48cd360253"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    return \"\"\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    return \"\"\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-26-aggregate",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    return \"\"\n    return True\n",
+      "line": 4,
+      "refusal_kind": "return",
+      "modes": [
+        "aggregate"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "or",
+        "context": [
+          "body"
+        ],
+        "form": "return-empty-string",
+        "kind": "return",
+        "source_sha256": "3d628307f8ed157758cf7f7605aa1ed5e943db5670e1c6e07b80cc48cd360253"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    return \"\"\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    return \"\"\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-27-single",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    return \"\"\n    return True\n",
+      "line": 4,
+      "refusal_kind": "return",
+      "modes": [
+        "single"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "not-and",
+        "context": [
+          "body"
+        ],
+        "form": "return-empty-string",
+        "kind": "return",
+        "source_sha256": "d76aeee399d2b553b390276eea8be4ddee4d08b14d68dd8389430efadbae9c66"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    return \"\"\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    return \"\"\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-28-aggregate",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    return \"\"\n    return True\n",
+      "line": 4,
+      "refusal_kind": "return",
+      "modes": [
+        "aggregate"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "not-and",
+        "context": [
+          "body"
+        ],
+        "form": "return-empty-string",
+        "kind": "return",
+        "source_sha256": "d76aeee399d2b553b390276eea8be4ddee4d08b14d68dd8389430efadbae9c66"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    return \"\"\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    return \"\"\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-29-single",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    assert False, \"bad\"\n    return True\n",
+      "line": 4,
+      "refusal_kind": "assert",
+      "modes": [
+        "single"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "or",
+        "context": [
+          "body"
+        ],
+        "form": "assert-False",
+        "kind": "assert",
+        "source_sha256": "3a421164ad0873c994b9411e39c135fe478619abb700a384e70b5aefe789b06c"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    assert False, \"bad\"\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    assert False, \"bad\"\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-30-aggregate",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    assert False, \"bad\"\n    return True\n",
+      "line": 4,
+      "refusal_kind": "assert",
+      "modes": [
+        "aggregate"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "or",
+        "context": [
+          "body"
+        ],
+        "form": "assert-False",
+        "kind": "assert",
+        "source_sha256": "3a421164ad0873c994b9411e39c135fe478619abb700a384e70b5aefe789b06c"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    assert False, \"bad\"\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    assert False, \"bad\"\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-31-single",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    assert False, \"bad\"\n    return True\n",
+      "line": 4,
+      "refusal_kind": "assert",
+      "modes": [
+        "single"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "not-and",
+        "context": [
+          "body"
+        ],
+        "form": "assert-False",
+        "kind": "assert",
+        "source_sha256": "998d70611638d00be5eeb25f6f2ef72e89b6b11e3aa0d2a4e0be9edc5cf72415"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    assert False, \"bad\"\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    assert False, \"bad\"\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-32-aggregate",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    assert False, \"bad\"\n    return True\n",
+      "line": 4,
+      "refusal_kind": "assert",
+      "modes": [
+        "aggregate"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "not-and",
+        "context": [
+          "body"
+        ],
+        "form": "assert-False",
+        "kind": "assert",
+        "source_sha256": "998d70611638d00be5eeb25f6f2ef72e89b6b11e3aa0d2a4e0be9edc5cf72415"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    assert False, \"bad\"\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    assert False, \"bad\"\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-33-single",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    assert 0, \"bad\"\n    return True\n",
+      "line": 4,
+      "refusal_kind": "assert",
+      "modes": [
+        "single"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "or",
+        "context": [
+          "body"
+        ],
+        "form": "assert-zero",
+        "kind": "assert",
+        "source_sha256": "e0036257d0f7aea9d551e211b0eda968e74b3ab878b0e55f589cbaf7ab554897"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    assert 0, \"bad\"\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    assert 0, \"bad\"\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-34-aggregate",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    assert 0, \"bad\"\n    return True\n",
+      "line": 4,
+      "refusal_kind": "assert",
+      "modes": [
+        "aggregate"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "or",
+        "context": [
+          "body"
+        ],
+        "form": "assert-zero",
+        "kind": "assert",
+        "source_sha256": "e0036257d0f7aea9d551e211b0eda968e74b3ab878b0e55f589cbaf7ab554897"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    assert 0, \"bad\"\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    assert 0, \"bad\"\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-35-single",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    assert 0, \"bad\"\n    return True\n",
+      "line": 4,
+      "refusal_kind": "assert",
+      "modes": [
+        "single"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "not-and",
+        "context": [
+          "body"
+        ],
+        "form": "assert-zero",
+        "kind": "assert",
+        "source_sha256": "b3d939ef13e935f2a50e1a526513a979026487ce5f3a1a04f752f51cd1bd1a95"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    assert 0, \"bad\"\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    assert 0, \"bad\"\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-36-aggregate",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    assert 0, \"bad\"\n    return True\n",
+      "line": 4,
+      "refusal_kind": "assert",
+      "modes": [
+        "aggregate"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "not-and",
+        "context": [
+          "body"
+        ],
+        "form": "assert-zero",
+        "kind": "assert",
+        "source_sha256": "b3d939ef13e935f2a50e1a526513a979026487ce5f3a1a04f752f51cd1bd1a95"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    assert 0, \"bad\"\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    assert 0, \"bad\"\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-37-single",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    errors.append(\"bad\")\n    return True\n",
+      "line": 4,
+      "refusal_kind": "accumulator_write",
+      "modes": [
+        "single"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "or",
+        "context": [
+          "body"
+        ],
+        "form": "append",
+        "kind": "accumulator_write",
+        "source_sha256": "1701c8e7b224310977b8cd0919d1a55662fbc0b4d4cf7198363485eaa7c623dc"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    errors.append(\"bad\")\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    errors.append(\"bad\")\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-38-aggregate",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    errors.append(\"bad\")\n    return True\n",
+      "line": 4,
+      "refusal_kind": "accumulator_write",
+      "modes": [
+        "aggregate"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "or",
+        "context": [
+          "body"
+        ],
+        "form": "append",
+        "kind": "accumulator_write",
+        "source_sha256": "1701c8e7b224310977b8cd0919d1a55662fbc0b4d4cf7198363485eaa7c623dc"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    errors.append(\"bad\")\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    errors.append(\"bad\")\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-39-single",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    errors.append(\"bad\")\n    return True\n",
+      "line": 4,
+      "refusal_kind": "accumulator_write",
+      "modes": [
+        "single"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "not-and",
+        "context": [
+          "body"
+        ],
+        "form": "append",
+        "kind": "accumulator_write",
+        "source_sha256": "72386d3a56c7e62f6c1b08d2107d8569125d85d1e576f58f1393dea04dc4320b"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    errors.append(\"bad\")\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    errors.append(\"bad\")\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-40-aggregate",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    errors.append(\"bad\")\n    return True\n",
+      "line": 4,
+      "refusal_kind": "accumulator_write",
+      "modes": [
+        "aggregate"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "not-and",
+        "context": [
+          "body"
+        ],
+        "form": "append",
+        "kind": "accumulator_write",
+        "source_sha256": "72386d3a56c7e62f6c1b08d2107d8569125d85d1e576f58f1393dea04dc4320b"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    errors.append(\"bad\")\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    errors.append(\"bad\")\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-41-single",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    refuse(\"bad\")\n    return True\n",
+      "line": 4,
+      "refusal_kind": "refusal_helper",
+      "modes": [
+        "single"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "or",
+        "context": [
+          "body"
+        ],
+        "form": "refuse",
+        "kind": "refusal_helper",
+        "source_sha256": "ab445a39e5ae6088a05ee23bd432b6f6aecc050ad3f95ee15cf94ffff98c2c8e"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    refuse(\"bad\")\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    refuse(\"bad\")\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-42-aggregate",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    refuse(\"bad\")\n    return True\n",
+      "line": 4,
+      "refusal_kind": "refusal_helper",
+      "modes": [
+        "aggregate"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "or",
+        "context": [
+          "body"
+        ],
+        "form": "refuse",
+        "kind": "refusal_helper",
+        "source_sha256": "ab445a39e5ae6088a05ee23bd432b6f6aecc050ad3f95ee15cf94ffff98c2c8e"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    refuse(\"bad\")\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    refuse(\"bad\")\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-43-single",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    refuse(\"bad\")\n    return True\n",
+      "line": 4,
+      "refusal_kind": "refusal_helper",
+      "modes": [
+        "single"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "not-and",
+        "context": [
+          "body"
+        ],
+        "form": "refuse",
+        "kind": "refusal_helper",
+        "source_sha256": "bba576ffebd50e491e3f8941de8edcfba16c99d2fdf41ec7730d8264be2abda2"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    refuse(\"bad\")\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    refuse(\"bad\")\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-44-aggregate",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    refuse(\"bad\")\n    return True\n",
+      "line": 4,
+      "refusal_kind": "refusal_helper",
+      "modes": [
+        "aggregate"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "not-and",
+        "context": [
+          "body"
+        ],
+        "form": "refuse",
+        "kind": "refusal_helper",
+        "source_sha256": "bba576ffebd50e491e3f8941de8edcfba16c99d2fdf41ec7730d8264be2abda2"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    refuse(\"bad\")\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    refuse(\"bad\")\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-45-single",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    require(False, \"bad\")\n    return True\n",
+      "line": 4,
+      "refusal_kind": "predicate_helper",
+      "modes": [
+        "single"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "or",
+        "context": [
+          "body"
+        ],
+        "form": "require-False",
+        "kind": "predicate_helper",
+        "source_sha256": "0fdf0a6cb492f52744b2884ed60bcd2c60baa8ad839ed0137f09252589d4a186"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    require(False, \"bad\")\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    require(False, \"bad\")\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-46-aggregate",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    require(False, \"bad\")\n    return True\n",
+      "line": 4,
+      "refusal_kind": "predicate_helper",
+      "modes": [
+        "aggregate"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "or",
+        "context": [
+          "body"
+        ],
+        "form": "require-False",
+        "kind": "predicate_helper",
+        "source_sha256": "0fdf0a6cb492f52744b2884ed60bcd2c60baa8ad839ed0137f09252589d4a186"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    require(False, \"bad\")\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    require(False, \"bad\")\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-47-single",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    require(False, \"bad\")\n    return True\n",
+      "line": 4,
+      "refusal_kind": "predicate_helper",
+      "modes": [
+        "single"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "not-and",
+        "context": [
+          "body"
+        ],
+        "form": "require-False",
+        "kind": "predicate_helper",
+        "source_sha256": "7f44cb25fe1dd3edb28fdf54d6138fe8403befa05516c6be76689dff429e02ea"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    require(False, \"bad\")\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    require(False, \"bad\")\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-cell-48-aggregate",
+      "kind": "round6_early_success",
+      "source": "def check(v, errors):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    require(False, \"bad\")\n    return True\n",
+      "line": 4,
+      "refusal_kind": "predicate_helper",
+      "modes": [
+        "aggregate"
+      ],
+      "origin": {
+        "compound_at": "0",
+        "condition": "not-and",
+        "context": [
+          "body"
+        ],
+        "form": "require-False",
+        "kind": "predicate_helper",
+        "source_sha256": "7f44cb25fe1dd3edb28fdf54d6138fe8403befa05516c6be76689dff429e02ea"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v, errors):\n    if v[\"y\"] >= 0:\n        return True\n    require(False, \"bad\")\n    return True\n",
+        "y_only_cut": "def check(v, errors):\n    if v[\"x\"] >= 0:\n        return True\n    require(False, \"bad\")\n    return True\n"
+      },
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect"
+    },
+    {
+      "id": "C6-B1-minimal",
+      "kind": "round6_early_success",
+      "source": "def check(v):\n    if v[\"x\"] >= 0 and v[\"y\"] >= 0:\n        return True\n    assert False, \"bad\"\n    return True\n",
+      "line": 4,
+      "refusal_kind": "assert",
+      "modes": [
+        "single",
+        "aggregate"
+      ],
+      "minimal": true,
+      "independent_sources": {
+        "x_only_cut": "def check(v):\n    if v[\"y\"] >= 0:\n        return True\n    assert False, \"bad\"\n    return True\n",
+        "y_only_cut": "def check(v):\n    if v[\"x\"] >= 0:\n        return True\n    assert False, \"bad\"\n    return True\n"
+      },
+      "expected": "one-argument callback catches only AssertionError; constant assertion is never a broad credited cut"
+    },
+    {
+      "id": "C6-zero-input-atoms",
+      "kind": "round6_zero_atoms",
+      "expected": "all fixed refusals and constant-only tests refuse registration"
+    },
+    {
+      "id": "C6-unknown-paths",
+      "kind": "round6_unknown_paths",
+      "expected": "unknown preceding exits make every later refusal unclassified"
+    },
+    {
+      "id": "C6-exit-coverage",
+      "kind": "round6_exit_coverage",
+      "expected": "missing generated preceding-exit context fails self-test before traps"
+    },
+    {
+      "id": "C6-constant-cut-gate",
+      "kind": "round6_constant_cut_gate",
+      "expected": "generated matrix rejects a credited constant cut even if the overall suite FAILs"
     }
   ]
 }

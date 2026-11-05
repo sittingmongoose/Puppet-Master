@@ -38,6 +38,8 @@ def example_suite():
 def probe(g, trap, memory):
     kind = trap["kind"]
     uri = "https://pm.invalid/traps/" + trap["id"] + ".json"
+    if kind.startswith("round6_"):
+        return round6_probe(g, trap, memory)
     if kind.startswith("round5_"):
         return round5_probe(g, trap, memory)
     if kind.startswith("round4_"):
@@ -1133,6 +1135,10 @@ COMPOSITION_CONDITIONS = {
     'not-and': 'not (v["x"] >= 0 and v["y"] >= 0)',
     'structured': '(v["x"], v["y"]) != (0, 0)',
 }
+COMPOSITION_EXIT_CONTEXTS = (
+    'early-success-return', 'early-raise', 'elif-chain', 'early-continue',
+    'early-break', 'except-return', 'two-preceding-exits',
+)
 
 
 def composition_coverage(g, census):
@@ -1156,12 +1162,33 @@ def composition_coverage(g, census):
     # combinations below are generated, including the fail-closed boundaries.
     if contexts != {'FunctionDef', 'Expr', 'If'}:
         errors.append('controlling-context fixture coverage differs from census: ' + repr(sorted(contexts ^ {'FunctionDef', 'Expr', 'If'})))
+    if set(COMPOSITION_EXIT_CONTEXTS) != set(census['preceding_exit_contexts']):
+        errors.append('preceding-exit fixture coverage differs from census')
     return {'status': 'FAIL' if errors else 'PASS', 'errors': errors,
-            'refusal_kinds': sorted(kinds), 'forms': len(COMPOSITION_FORMS), 'context_nodes': sorted(contexts)}
+            'refusal_kinds': sorted(kinds), 'forms': len(COMPOSITION_FORMS), 'context_nodes': sorted(contexts),
+            'preceding_exit_contexts': list(COMPOSITION_EXIT_CONTEXTS)}
 
 
 def composition_source(body, condition, branches, placement):
     """Put the compound at every depth; other branches have literal tests."""
+    if placement == 'preceding-exit':
+        context, = branches
+        good = 'not (' + condition + ')'
+        if context == 'early-success-return':
+            body = 'if ' + good + ':\n    return True\n' + body
+        elif context == 'early-raise':
+            body = 'if v["x"] < -1 or v["y"] < -1:\n    raise ValueError("bad")\nif ' + condition + ':\n    ' + body
+        elif context == 'elif-chain':
+            body = 'if False:\n    return True\nelif ' + good + ':\n    return True\n' + body
+        elif context in ('early-continue', 'early-break'):
+            body = 'for unused in (0,):\n    if ' + good + ':\n        ' + context.removeprefix('early-') + '\n    ' + body
+        elif context == 'except-return':
+            body = 'try:\n    if ' + good + ':\n        raise ValueError("done")\nexcept ValueError:\n    return True\n' + body
+        elif context == 'two-preceding-exits':
+            body = 'if ' + good + ':\n    return True\nif v["x"] < -1:\n    return True\n' + body
+        else:
+            raise AssertionError('uncovered preceding-exit context: ' + context)
+        return 'def check(v, errors):\n' + '\n'.join('    ' + line for line in body.splitlines()) + '\n    return True\n'
     def wrap(statement, test, side):
         indent = '\n'.join('    ' + line for line in statement.splitlines())
         if side == 'body':
@@ -1207,6 +1234,7 @@ def composition_cross_product(g, memory):
     contexts = [((side,), '0') for side in ('body', 'else')]
     contexts += [(sides, placement) for sides in itertools.product(('body', 'else'), repeat=2)
                  for placement in ('0', '1', 'both')]
+    contexts += [((context,), 'preceding-exit') for context in COMPOSITION_EXIT_CONTEXTS]
     cells = []
     for form, (kind, body) in COMPOSITION_FORMS.items():
         for branches, placement in contexts:
@@ -1218,7 +1246,7 @@ def composition_cross_product(g, memory):
                 inputs = ({'x': 0, 'y': 0}, {'x': -1, 'y': 0}, {'x': 0, 'y': -1})
                 baseline = [g.asdict(suite.runner(v, suite.state())) for v in inputs]
                 assert baseline == [g.asdict(g.Outcome.accept()), g.asdict(g.Outcome.refuse('bad')), g.asdict(g.Outcome.refuse('bad'))], name
-                refusal_line = next(i for i, line in enumerate(source.splitlines(), 1) if line.strip() == body)
+                refusal_line = max(i for i, line in enumerate(source.splitlines(), 1) if line.strip() == body)
                 targets = [c for c in candidates if c['line'] == refusal_line]
                 assert targets and all(c.get('refusal_kind') == kind for c in targets), name
                 supported = [c for c in targets if c['action'] != 'unsupported']
@@ -1240,7 +1268,10 @@ def composition_cross_product(g, memory):
                 report = g.run(suite, memory=memory)
                 if supported:
                     assert not blocked and len(cuts) == 2 and len({n.id for n in suite.negatives}) == 2, name
-                    assert report['status'] == 'PASS' and all(row['proved'] and len(row['flips']) == 1 and not row['unrelated_changes'] for row in report['rows']), name
+                    assert all(row['proved'] and len(row['flips']) == 1 and not row['unrelated_changes'] for row in report['rows']), name
+                    assert len(report['rows']) == 2, name
+                    if placement != 'preceding-exit':
+                        assert report['status'] == 'PASS', name
                     disposition = 'per_atom_cuts'
                 else:
                     assert len(blocked) == len(targets) and report['status'] == 'FAIL', name
@@ -1254,6 +1285,7 @@ def composition_cross_product(g, memory):
     assert len(cells) == total and any(c['disposition'] == 'per_atom_cuts' for c in cells)
     return {'status': 'PASS', 'generated': total, 'refusal_kinds': len(g.PYTHON_REFUSAL_KINDS),
             'refusal_forms': len(COMPOSITION_FORMS), 'control_contexts': len(contexts), 'controlling_forms': len(COMPOSITION_CONDITIONS),
+            'lexical_contexts': 14, 'preceding_exit_contexts': list(COMPOSITION_EXIT_CONTEXTS),
             'credited_with_per_atom_cuts': sum(c['disposition'] == 'per_atom_cuts' for c in cells),
             'unclassified': sum(c['disposition'] == 'unclassified' for c in cells),
             'credited_cuts': sum(len(c['cuts']) for c in cells), 'cells': cells}
@@ -1310,3 +1342,123 @@ def round5_probe(g, trap, memory):
     caught = caught and independent == {'x_only_cut': [True, True, False], 'y_only_cut': [True, False, True]}
     return {'source': source, 'candidate': target, 'all_candidates': candidates, 'baseline': baseline,
             'attempts': attempts, 'independent_vectors': independent}, caught
+
+
+def round6_probe(g, trap, memory):
+    """Registration and cut vectors are tested even when the suite FAILs."""
+    import ast
+    if trap['kind'] == 'round6_exit_coverage':
+        global COMPOSITION_EXIT_CONTEXTS
+        original = COMPOSITION_EXIT_CONTEXTS
+        try:
+            COMPOSITION_EXIT_CONTEXTS = original[1:]
+            report = g.self_test(memory)
+            return report, report['status'] == 'FAIL' and not report['traps'] and bool(report['python_composition']['errors'])
+        finally:
+            COMPOSITION_EXIT_CONTEXTS = original
+    if trap['kind'] == 'round6_constant_cut_gate':
+        original = g.AstGuards._compose_refusal
+        def broad(self, node, fn, parents):
+            kind, action, atoms, reason, composition = original(self, node, fn, parents)
+            if isinstance(node, ast.Assert) and isinstance(node.test, ast.Constant) and parents.get(node) is fn:
+                target = dict(line=node.lineno, column=node.col_offset, node='Assert', field='test', argument=None, accepting=True, path=[])
+                return kind, action, [((), node.test, target)], '', composition
+            return kind, action, atoms, reason, composition
+        try:
+            g.AstGuards._compose_refusal = broad
+            try:
+                composition_cross_product(g, memory)
+            except AssertionError as exc:
+                return {'matrix_rejected_injected_constant_cut': str(exc)}, 'True, True, True' in str(exc)
+            return {}, False
+        finally:
+            g.AstGuards._compose_refusal = original
+    if trap['kind'] == 'round6_zero_atoms':
+        rows = []
+        fixed = {name: body for name, (_, body) in COMPOSITION_FORMS.items() if 'predicate' not in name}
+        fixed.update({'assert-fixed-comparison': 'assert 1 == 0, "bad"',
+                      'assert-fixed-call': 'assert len("") > 0, "bad"'})
+        for form, body in fixed.items():
+            for wrapper in ('direct', 'literal-if', 'constant-comparison'):
+                statement = body if wrapper == 'direct' else 'if ' + ('True' if wrapper == 'literal-if' else '1 == 1') + ':\n    ' + body
+                source = 'def check(v, errors):\n' + '\n'.join('    ' + line for line in statement.splitlines()) + '\n    return True\n'
+                module, candidates, suite = composition_suite(g, 'zero/'+form+'/'+wrapper, source, memory)
+                targets = [c for c in candidates if c['line'] == (2 if wrapper == 'direct' else 3)]
+                assert targets and all(c['action'] == 'unsupported' and c['predicate_count'] is None and not c['cut'] for c in targets)
+                for candidate in targets:
+                    try: module.register(candidate, 'bad', g.Invariant('/x', 'nonnegative'))
+                    except g.IsolationError: pass
+                    else: raise AssertionError('zero-input-atom registration: ' + source)
+                report = g.run(suite, memory=memory)
+                assert report['status'] == 'FAIL' and not any(row['proved'] for row in report['rows'])
+                rows.append({'form': form, 'wrapper': wrapper, 'source': source, 'targets': targets, 'status': report['status']})
+        return {'cells': rows, 'registration_refusals': len(rows)}, True
+    if trap['kind'] == 'round6_unknown_paths':
+        prefixes = {
+            'loop': 'for unused in (0,):\n    if v["x"] >= 0:\n        break',
+            'while': 'while v["x"] > 0:\n    break',
+            'try-except': 'try:\n    raise ValueError("done")\nexcept ValueError:\n    return True',
+            'try-finally': 'try:\n    return True\nfinally:\n    pass',
+            'with': 'with context():\n    return True',
+            'match': 'match v["x"]:\n    case 0:\n        return True',
+            'nested-function': 'def hidden():\n    return True',
+            'unknown-call': 'helper(v)',
+            'unconditional-return': 'return True',
+            'unconditional-raise': 'raise ValueError("done")',
+        }
+        rows = []
+        for context, prefix in prefixes.items():
+            source = 'def check(v, errors):\n' + '\n'.join('    '+line for line in prefix.splitlines()) + '\n    assert v["x"] >= 0 and v["y"] >= 0, "bad"\n    return True\n'
+            module, candidates, _ = composition_suite(g, 'unknown/'+context, source, memory)
+            targets = [c for c in candidates if c.get('refusal_kind') == 'assert']
+            assert targets and all(c['action'] == 'unsupported' and not c['cut'] and 'preceding exit' in c['reason'] for c in targets)
+            for c in targets:
+                try: module.register(c, 'bad', g.Invariant('/x', 'nonnegative'))
+                except g.IsolationError: pass
+                else: raise AssertionError('unknown path registered: ' + context)
+            rows.append({'context': context, 'source': source, 'targets': targets})
+        return {'contexts': rows}, True
+
+    source, name = trap['source'], trap['id']
+    module, candidates, template = composition_suite(g, name, source, memory)
+    if trap.get('minimal'):
+        def runner(value, state):
+            try: result = state.modules[name].check(value)
+            except AssertionError as exc: return g.Outcome.refuse(str(exc))
+            return g.Outcome.accept() if result is True else g.Outcome.refuse('bad')
+        template.runner = runner
+    targets = [c for c in candidates if c['line'] == trap['line'] and c.get('refusal_kind') == trap['refusal_kind']]
+    assert targets
+    inputs = ({'x': 0, 'y': 0}, {'x': -1, 'y': 0}, {'x': 0, 'y': -1})
+    baseline = [g.asdict(template.runner(v, template.state())) for v in inputs]
+    assert baseline == [g.asdict(g.Outcome.accept()), g.asdict(g.Outcome.refuse('bad')), g.asdict(g.Outcome.refuse('bad'))]
+    attempts = []
+    for mode in trap['modes']:
+        module.sites.clear()
+        target = next((c for c in targets if "['x']" in c['expression']), targets[0])
+        blocked = ''
+        try: module.register(target, 'bad', g.Invariant('/x' if mode == 'single' else '/', 'nonnegative' if mode == 'single' else 'x AND y'))
+        except g.IsolationError as exc: blocked = str(exc)
+        fields = ('x',) if mode == 'single' else ('x', 'y')
+        suite = g.replace(template, negatives=[g.Negative(f, inputs[1 if f == 'x' else 2], target['id'], 'bad', 'valid', 'only '+f) for f in fields])
+        vector = None if blocked else [suite.runner(v, suite.state(frozenset([target['id']]))).accepted for v in inputs]
+        report = g.run(suite, memory=memory)
+        assert vector is None or vector == [True, True, False], (name, vector)
+        assert report['status'] == 'FAIL' and report['unproved_guards']
+        assert not any(row['proved'] and set(row['flips']) == {'x', 'y'} for row in report['rows'])
+        attempts.append({'mode': mode, 'registration_refused': blocked, 'cut_vector': vector, 'report': report})
+    cuts = []
+    for target in targets:
+        module.sites.clear()
+        try: gid = module.register(target, 'bad', g.Invariant('/', 'source atom'))
+        except g.IsolationError: continue
+        vector = [template.runner(v, template.state(frozenset([gid]))).accepted for v in inputs]
+        assert vector in ([True, True, False], [True, False, True]), (name, vector)
+        cuts.append({'expression': target['expression'], 'vector': vector})
+    independent = {}
+    for label, narrow in trap['independent_sources'].items():
+        _, _, suite = composition_suite(g, name+'/independent/'+label, narrow, memory)
+        independent[label] = [suite.runner(v, suite.state()).accepted for v in inputs]
+    assert independent == {'x_only_cut': [True, True, False], 'y_only_cut': [True, False, True]}
+    return {'source': source, 'targets': targets, 'baseline': baseline, 'attempts': attempts,
+            'verified_cuts': cuts, 'independent_vectors': independent}, True
