@@ -4,9 +4,13 @@ import {pathToFileURL} from 'node:url';
 import {captureResize, classifyResize} from '../helpers/resize-raster.mjs';
 
 // SW-36: Basic Dark, chat column 760, selected agent Detail docked at 1390x900, the frame shrinks to 1177x900 (the
-// boundary where it must cover). Painted frames, not a rAF sampler: the child's first new-sized frame must already be
-// the settled cover (no docked panel beside under 360 px of messages in any frame), and in T3's opaque iframe the
-// parent must not show the old child image clipped to the new width for longer than on the control build.
+// boundary where it must cover). Painted frames, not a rAF sampler. In T3's opaque iframe the child runs its resize
+// event before its first new-sized frame, so that frame must already be the settled cover (no docked panel beside under
+// 360 px of messages, no panel fading back in), and the parent must not show the old child image clipped to the new
+// width for longer than on the control build. On a normal page Chrome lays a same-process frame out at its new size in
+// the parent's frame and fires its resize event one rendering update later, so the first new-sized frame is the column
+// at its old width beside the shrunk centre (the dock still beside 479 px), on every build; there the cover must arrive
+// no later than on the control and stay once shown. The 360 px floor in every frame is also chat-sweep's rAF case.
 // --set control=<page> measures a control build in the same browser, order-balanced (C H H C ...), --set reps=N pairs.
 // --set sandbox=1 opaque only, =0 normal only; both by default.
 const FROM = 1390, TO = 1177, HEIGHT = 900;
@@ -65,15 +69,18 @@ async function surface(t, opaque) {
 		const tag = (opaque ? 'opaque ' : 'normal ') + (runs.head.length - 1);
 		await t.check(tag + ' settles to the cover at 1177', r.settledState.w === TO && r.settledState.cover, JSON.stringify(r.settledState));
 		await t.check(tag + ' frames classified', !r.error && r.firstNewMs != null && r.settled, r.error || JSON.stringify({firstNewMs: r.firstNewMs, settled: r.settled}));
-		await t.check(tag + ' first new-sized frame is the settled cover, no docked or other intermediate frame', !r.error && r.firstNewKind === 'final' && r.intermediate.length === 0, JSON.stringify({firstNewKind: r.firstNewKind, intermediate: r.intermediate}));
+		if (opaque) await t.check(tag + ' first new-sized frame is the settled cover, no docked or other intermediate frame', !r.error && r.firstNewKind === 'final' && r.intermediate.length === 0, JSON.stringify({firstNewKind: r.firstNewKind, intermediate: r.intermediate}));
+		await t.check(tag + ' the cover stays once shown', !r.error && r.unsettled.length === 0, JSON.stringify({unsettled: r.unsettled}));
 	}
-	const key = opaque ? 'retainedMs' : 'firstNewMs';
+	const key = opaque ? 'retainedMs' : 'settledMs';
 	const stat = which => runs[which].map(r => r[key]).filter(v => v != null);
 	const summary = {surface: opaque ? 'opaque' : 'normal', measure: key, head: stat('head'), control: stat('control'), headMedian: median(stat('head')), controlMedian: median(stat('control')),
-		controlIntermediate: runs.control.map(r => r.intermediate?.length ?? null), headFirstNew: runs.head.map(r => r.firstNewMs), controlFirstNew: runs.control.map(r => r.firstNewMs)};
+		controlIntermediate: runs.control.map(r => r.intermediate?.length ?? null), headFirstNew: runs.head.map(r => r.firstNewMs), controlFirstNew: runs.control.map(r => r.firstNewMs),
+		headSettled: runs.head.map(r => r.settledMs), controlSettled: runs.control.map(r => r.settledMs)};
 	t.log('resize raster ' + JSON.stringify(summary));
 	writeFileSync(join(dir, 'summary.json'), JSON.stringify(summary, null, 1));
 	if (opaque) await t.check('opaque parent shows the old image clipped (measured) on the head', stat('head').length === runs.head.length, JSON.stringify(summary));
+	if (control && opaque) await t.check('opaque settledMs head median <= control median', median(summary.headSettled) != null && median(summary.headSettled) <= median(summary.controlSettled), JSON.stringify(summary));
 	if (control) await t.check(`${summary.surface} ${key} head median <= control median`, summary.headMedian != null && summary.controlMedian != null && summary.headMedian <= summary.controlMedian, JSON.stringify(summary));
 	if (t.args.maxMs) await t.check(`${summary.surface} ${key} head median <= ${t.args.maxMs} ms`, summary.headMedian != null && summary.headMedian <= Number(t.args.maxMs), JSON.stringify(summary));
 }

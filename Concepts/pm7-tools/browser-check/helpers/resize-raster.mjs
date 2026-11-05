@@ -62,6 +62,10 @@ export function classifyResize(cap, box, toWidth, column, {finalTol = 0.02} = {}
 	const firstNew = samples.find(s => s.kind === 'final' || s.kind === 'intermediate');
 	const after = firstNew ? samples.filter(s => s.wall >= firstNew.wall) : [];
 	const lastNew = after.at(-1);
+	// the first frame from which every frame is the settled image
+	let settledAt = null;
+	for (let i = samples.length - 1; i >= 0 && samples[i].kind === 'final'; i--) settledAt = samples[i];
+	const firstFinal = after.find(s => s.kind === 'final');
 	return {
 		contrast, oldTol, frames: samples.length,
 		firstClipMs: firstClip ? firstClip.ms : null,
@@ -71,6 +75,9 @@ export function classifyResize(cap, box, toWidth, column, {finalTol = 0.02} = {}
 		retainedFrames: samples.filter(s => s.kind === 'old-clipped').length,
 		firstNewKind: firstNew ? firstNew.kind : null,
 		intermediate: after.filter(s => s.kind === 'intermediate').map(s => Math.round(s.ms)),
+		settledMs: settledAt ? settledAt.ms : null,
+		// frames that left the settled image again after it was first shown (a panel fading back in, a second layout)
+		unsettled: firstFinal ? after.filter(s => s.wall > firstFinal.wall && s.kind !== 'final').map(s => Math.round(s.ms)) : [],
 		settled: !!lastNew && lastNew.kind === 'final',
 		samples: samples.map(s => ({ms: Math.round(s.ms * 10) / 10, kind: s.kind, old: Math.round(s.old * 1000) / 1000, final: Math.round(s.final * 1000) / 1000, clipped: s.clipped}))
 	};
