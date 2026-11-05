@@ -176,13 +176,14 @@ async function surface(t, sandbox) {
 						await new Promise((r) => requestAnimationFrame(r));
 						for (const e of rig) {
 							const cs = getComputedStyle(e), props = cs.transitionProperty.split(',').map((x) => x.trim()), durs = cs.transitionDuration.split(',').map(parseFloat);
-							const tr = props.some((p, k) => (p === 'all' || p === 'transform') && (durs[k % durs.length] || 0) > 0), an = e.getAnimations().length;
+							/* a transition anywhere on the rig; an animation on its own groups (the face's designed hop is not one) */
+							const tr = props.some((p, k) => (p === 'all' || p === 'transform') && (durs[k % durs.length] || 0) > 0), an = [st.gPip, st.gHead, st.gCtl, ...st.pstrs].includes(e) ? e.getAnimations().length : e.getAnimations().filter((a) => a instanceof CSSTransition).length;
 							if ((tr || an) && out.length < 6) out.push(`${e.tagName.toLowerCase()}.${e.getAttribute('class') || ''}: ${tr ? 'transition ' + cs.transition : ''}${an ? ' ' + an + ' animation(s)' : ''}`);
 						}
 					}
 					return out;
 				}, STAGE);
-				await t.check(`${name}: no transition or animation on Pip's rig`, !css.length, css.join(' | '));
+				await t.check(`${name}: no transition on Pip's rig, no animation on its groups`, !css.length, css.join(' | '));
 				if (cdp) {
 					const trees = [], on = (e) => { trees.push(e.layers || []); };
 					cdp.on('LayerTree.layerTreeDidChange', on);
@@ -249,7 +250,10 @@ async function surface(t, sandbox) {
 	t.log(`witness: ${w.recs.length} frames, ${vis.length} visible, cost p95 ${(p95 / 1000).toFixed(2)} ms, ${w.cals.filter((c) => c.ok).length} calibrations, log ${file}`);
 	for (const r of evaluateWitness(w)) await t.check(r.name, r.ok, r.detail);
 	for (const p of ['welcome', 'tiles', 'begin', 'smb'].filter((x) => phases.includes(x))) for (const r of evaluateWitness(w, { phase: p }).slice(1, 3)) await t.check(r.name, r.ok, r.detail);
-	await t.check(`the witness costs under 2 ms a frame (p95 ${(p95 / 1000).toFixed(2)} ms)`, p95 < 2000, 'a heavy witness could change what the page paints');
+	/* about 0.6 ms a frame on the RTX 3090 host, 1.7 ms on the P1000 VM (a document.getAnimations() a frame is most of
+	   it: Web Animations started by script fire no events, so nothing cheaper sees them all). The film's coverage shows
+	   whether the page still drew every frame */
+	await t.check(`the witness costs under 4 ms a frame (p95 ${(p95 / 1000).toFixed(2)} ms)`, p95 < 4000, 'a heavy witness could change what the page paints');
 	const shown = [...new Set(vis.map((r) => S(r[w.F.look])))];
 	await t.check(`every requested look was shown (${looks.join(', ')})`, looks.every((l) => shown.includes(l)), `shown: ${shown.join(', ')}`);
 }

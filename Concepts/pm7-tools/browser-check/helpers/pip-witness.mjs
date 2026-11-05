@@ -96,6 +96,9 @@ export function installWitness(cfg) {
 		return { op, blur, dim };
 	};
 	const SHAPES = 'path,rect,circle,ellipse,polygon,polyline,line,use,image,text';
+	/* the head's painted leaves, listed again only when its children change (a face, a mood, a rebuild) */
+	let leafHead = null, leafDirty = true, leafList = [];
+	const leafMO = new MutationObserver(() => { leafDirty = true; });
 	/* the product's overlays that can stand over the head: the bubble, the tip, Retro Light's printer, and the parts of
 	   Retro's terminal and NieR's HUD that paint a ground (their containers span the stage and paint nothing) */
 	let ovKey = null, ovList = [], ovAge = 0;
@@ -149,7 +152,11 @@ export function installWitness(cfg) {
 			offBy = Math.max(offBy, hb[0] - pad - e.x, e.x - hb[0] - hb[2] - pad, hb[1] - pad - e.y, e.y - hb[1] - hb[3] - pad, 0);
 		}
 		rec[F.placed] = placed ? 1 : 0; rec[F.offBy] = Math.round(offBy);
-		rec[F.rigAnim] = anims.filter((a) => { const n = a.effect && a.effect.target; return n && S.gPip.contains(n) && (a.playState === 'running' || a.pending); }).length;
+		/* FO-30's cause class: any transition on the rig (it is drawn every frame; a transition there comes from a stray
+		   rule, as the printer's did), or an animation of geometry or paint on the rig's own groups (Pip, head,
+		   controller, strings, glows). The face's own designed motion (NieR's and the thinking dots' hop) is not */
+		const groups = new Set([S.gPip, S.gHead, S.gCtl, ...S.pstrs, ...(S.pglow || [])]);
+		rec[F.rigAnim] = anims.filter((a) => { const n = a.effect && a.effect.target; if (!n || !S.gPip.contains(n) || !(a.playState === 'running' || a.pending)) return false; return (typeof CSSTransition !== 'undefined' && a instanceof CSSTransition) || (groups.has(n) && !!kindOf(a)); }).length;
 		/* paint: the shared chain above Pip's group, then each part's own */
 		P.geom += pt() - tp; tp = pt();
 		let chainOp = 1, chainBlur = 0, chainDim = 1, chainShown = true, clip = [0, 0, innerWidth, innerHeight];
@@ -178,8 +185,8 @@ export function installWitness(cfg) {
 		P.chain += pt() - tp; tp = pt();
 		let leaf = 0;
 		const memo = new Map(), csOf = (n) => { let c = memo.get(n); if (!c) { c = getComputedStyle(n); memo.set(n, c); } return c; };
-		for (const e of S.gHead.querySelectorAll(SHAPES)) {
-			if (e.closest('defs, clipPath, mask, pattern, marker, symbol')) continue;
+		if (leafHead !== S.gHead || leafDirty) { leafHead = S.gHead; leafDirty = false; leafMO.disconnect(); leafMO.observe(S.gHead, { childList: true, subtree: true }); leafList = [...S.gHead.querySelectorAll(SHAPES)].filter((e) => !e.closest('defs, clipPath, mask, pattern, marker, symbol')); }
+		for (const e of leafList) {
 			const cs = csOf(e); if (cs.visibility !== 'visible') continue;
 			let op = 1, gone = false;
 			for (let n = e; n && n !== S.gHead.parentNode; n = n.parentNode) { const c = csOf(n); if (c.display === 'none') { gone = true; break; } op *= +c.opacity; }

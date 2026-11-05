@@ -37,7 +37,7 @@ if (!film || !opt('witness')) { console.error('usage: node pip_body_scan.mjs <fi
 if (!fs.existsSync(film)) die(2, 'film missing');
 let W;
 try { W = readLog(fs.readFileSync(opt('witness'), 'utf8')); } catch (e) { die(2, `witness log unreadable: ${e.message}`); }
-const { header, recs, strings, F } = W;
+const { header, recs, strings, F } = W, calLabel = new Map(W.cals.map((c) => [c.id, c.label]));
 const S = (i) => (i >= 0 ? strings[i] : '');
 const QB = Number(opt('qbits', 4)), QS = 8 - QB, NBIN = 1 << (3 * QB);
 const minCoverage = Number(opt('min-coverage', 0.9));
@@ -123,16 +123,20 @@ function judge() {
 	const unknown = frames.filter((e) => e.raw != null && e.seq == null).length;
 	/* references, per look */
 	const frac = (h) => { const m = new Map(); for (let i = 0; i < h.bins.length; i++) m.set(h.bins[i], h.counts[i] / h.px); return m; };
+	/* a colour is Pip's in a look when it is at least 4 times as common in the painted box as in the hidden box of every
+	   context (calibration) of that look: hanging on Welcome, asleep on the floor, on each screen */
 	const learn = (P, A) => {
-		const pb = new Map(), ab = new Map();
-		for (const h of P) for (const [b, v] of frac(h)) pb.set(b, (pb.get(b) || 0) + v / P.length);
-		for (const h of A) for (const [b, v] of frac(h)) ab.set(b, (ab.get(b) || 0) + v / A.length);
+		const pb = new Map(), ab = new Map(), groups = new Map();
+		for (const i of P) for (const [b, v] of frac(i.h)) pb.set(b, (pb.get(b) || 0) + v / P.length);
+		for (const i of A) { if (!groups.has(i.id)) groups.set(i.id, []); groups.get(i.id).push(i.h); }
+		for (const g of groups.values()) { const m = new Map(); for (const h of g) for (const [b, v] of frac(h)) m.set(b, (m.get(b) || 0) + v / g.length); for (const [b, v] of m) ab.set(b, Math.max(ab.get(b) || 0, v)); }
 		const D = new Set(); for (const [b, v] of pb) if (v >= 0.002 && v >= 4 * (ab.get(b) || 0) + 0.002) D.add(b);
 		return D;
 	};
 	const score = (D, h) => { let s = 0; for (let i = 0; i < h.bins.length; i++) if (D.has(h.bins[i])) s += h.counts[i]; return s / h.px; };
 	const q = (arr, p) => { const s = [...arr].sort((x, y) => x - y); return s.length ? s[Math.min(s.length - 1, Math.max(0, Math.floor(p * (s.length - 1))))] : NaN; };
-	const fit = (P, A, D) => { const sp = P.map((h) => score(D, h)), sa = A.map((h) => score(D, h)); const pm = q(sp, 0.5), am = Math.max(...sa); return { pm, am, p01: q(sp, 0.01), thr: am + 0.4 * (pm - am) }; };
+	const fit = (P, A, D) => { const sp = P.map((i) => score(D, i.h)), sa = A.map((i) => score(D, i.h)); const pm = q(sp, 0.5), am = Math.max(...sa); return { pm, am, p01: q(sp, 0.01), thr: am + 0.4 * (pm - am) }; };
+	const test = (trP, trA, teP, teA) => { const D = learn(trP, trA), m = fit(trP, trA, D); return { painted: teP.length, paintedUnder: teP.filter((i) => score(D, i.h) < m.thr).length, hidden: teA.length, hiddenOver: teA.filter((i) => score(D, i.h) >= m.thr).length }; };
 	/* calibration frames per look, one per page frame */
 	const cal = new Map();
 	const seen = new Set();
@@ -147,22 +151,22 @@ function judge() {
 	for (const [k, items] of cal) {
 		const ref = refs[k] = { calibrations: [...new Set(items.map((i) => i.id))].length, painted: items.filter((i) => !i.hidden).length, hidden: items.filter((i) => i.hidden).length, regions: {} };
 		for (const part of ['head', 'ctl']) {
-			const ok = items.filter((i) => i.e[part] && i.e[part].bins);
+			const ok = items.filter((i) => i.e[part] && i.e[part].bins).map((i) => ({ ...i, h: i.e[part] }));
 			const P = ok.filter((i) => !i.hidden), A = ok.filter((i) => i.hidden);
 			const R = ref.regions[part] = { painted: P.length, hidden: A.length };
 			if (P.length < 20 || A.length < 10) { R.error = `too few calibration frames on film (${P.length} painted, ${A.length} hidden)`; continue; }
-			/* held out: learn on all calibrations but one, test on that one; one calibration: alternate frames */
-			const ids = [...new Set(ok.map((i) => i.id))], folds = ids.length > 1 ? ids.map((id) => (i) => i.id === id) : [(i) => i.r[F.seq] % 2 === 0, (i) => i.r[F.seq] % 2 === 1];
-			let pMiss = 0, pN = 0, aHit = 0, aN = 0;
-			for (const test of folds) {
-				const trP = P.filter((i) => !test(i)), trA = A.filter((i) => !test(i)), teP = P.filter(test), teA = A.filter(test);
-				if (trP.length < 10 || trA.length < 5 || !teP.length && !teA.length) continue;
-				const D = learn(trP.map((i) => i.e[part]), trA.map((i) => i.e[part])), m = fit(trP.map((i) => i.e[part]), trA.map((i) => i.e[part]), D);
-				for (const i of teP) { pN++; if (score(D, i.e[part]) < m.thr) pMiss++; }
-				for (const i of teA) { aN++; if (score(D, i.e[part]) >= m.thr) aHit++; }
-			}
-			const D = learn(P.map((i) => i.e[part]), A.map((i) => i.e[part])), m = fit(P.map((i) => i.e[part]), A.map((i) => i.e[part]), D);
-			Object.assign(R, { colours: D.size, paintedMedian: +m.pm.toFixed(4), hiddenMax: +m.am.toFixed(4), threshold: +m.thr.toFixed(4), paintedP01: +m.p01.toFixed(4), heldOut: { painted: pN, paintedUnder: pMiss, hidden: aN, hiddenOver: aHit } });
+			/* held out, the gate: every calibration's odd page frames judged by a reference learned from the even ones of
+			   every calibration, and the other way round (each context seen, its frames not) */
+			const odd = (i) => i.r[F.seq] % 2 === 1, ho = { painted: 0, paintedUnder: 0, hidden: 0, hiddenOver: 0 };
+			for (const side of [true, false]) { const t = test(P.filter((i) => odd(i) !== side), A.filter((i) => odd(i) !== side), P.filter((i) => odd(i) === side), A.filter((i) => odd(i) === side)); for (const n in ho) ho[n] += t[n]; }
+			/* held out by context, reported: each calibration judged by a reference learned from the others only. A context
+			   no other one covers (Pip asleep on the floor) is judged by its own calibration in the final reference */
+			const ids = [...new Set(ok.map((i) => i.id))];
+			const contexts = ids.length > 1 ? ids.map((id) => ({ calibration: calLabel.get(id) || `#${id}`, ...test(P.filter((i) => i.id !== id), A.filter((i) => i.id !== id), P.filter((i) => i.id === id), A.filter((i) => i.id === id)) })) : [];
+			const D = learn(P, A), m = fit(P, A, D);
+			Object.assign(R, { colours: D.size, paintedMedian: +m.pm.toFixed(4), hiddenMax: +m.am.toFixed(4), threshold: +m.thr.toFixed(4), paintedP01: +m.p01.toFixed(4), heldOut: ho,
+				contextsCoveredOnlyByTheirOwnCalibration: contexts.filter((c) => c.hiddenOver || c.paintedUnder > 0.01 * c.painted).map((c) => `${c.calibration} (${c.hiddenOver}/${c.hidden} hidden over, ${c.paintedUnder}/${c.painted} painted under)`), contexts: contexts.length });
+			const pN = ho.painted, aN = ho.hidden, pMiss = ho.paintedUnder, aHit = ho.hiddenOver;
 			R.D = D; R.thr = m.thr; R.pm = m.pm; R.am = m.am;
 			R.calVis = q(P.map((i) => (i.r[F.clipFrac] / 1000) * (1 - i.r[F.occl] / 1000)), 0.5);
 			R.calArea = q(P.map((i) => i.r[part === 'head' ? F.hw : F.cw] * i.r[part === 'head' ? F.hh : F.ch]), 0.5);
@@ -262,12 +266,12 @@ function judge() {
 /* the witness log (helpers/pip-witness.mjs readWitness, repeated here so this tool stands alone) */
 function readLog(text) {
 	let header = null, end = null;
-	const recs = [], strings = [];
+	const recs = [], strings = [], cals = [];
 	for (const line of text.split('\n')) {
 		if (!line.trim()) continue;
 		const o = JSON.parse(line);
 		if (o.kind === 'header') header = o;
-		else if (o.kind === 'recs') { for (const r of o.recs) recs.push(r); if (o.strings) { if (o.stringsFrom !== strings.length) throw new Error(`strings out of order at ${o.stringsFrom}`); strings.push(...o.strings); } }
+		else if (o.kind === 'recs') { for (const r of o.recs) recs.push(r); if (o.cals) cals.push(...o.cals); if (o.strings) { if (o.stringsFrom !== strings.length) throw new Error(`strings out of order at ${o.stringsFrom}`); strings.push(...o.strings); } }
 		else if (o.kind === 'end') end = o;
 	}
 	if (!header) throw new Error('no header');
@@ -277,5 +281,5 @@ function readLog(text) {
 	const F = Object.fromEntries(header.fields.map((k, i) => [k, i]));
 	for (let i = 1; i < recs.length; i++) if (recs[i][F.seq] !== recs[i - 1][F.seq] + 1) throw new Error(`records skip from ${recs[i - 1][F.seq]} to ${recs[i][F.seq]}`);
 	if (!recs.length) throw new Error('no records');
-	return { header, recs, strings: strings.length ? strings : end.strings || [], F };
+	return { header, recs, strings: strings.length ? strings : end.strings || [], cals, F };
 }
