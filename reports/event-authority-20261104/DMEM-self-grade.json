@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-W2-DMEM-FIX8-SELF-GRADE-20261105",
+  "assessment_id": "EA-W2-DMEM-FIX9-SELF-GRADE-20261105",
   "assessment_kind": "worker_self_grade",
   "rubric": {
     "criteria": [
@@ -21,7 +21,7 @@
   },
   "assessed_tree": {
     "branch": "plans/ea-w2-memory-maintenance-20261104",
-    "commit": "ba3880b49cc9c0d6e2d89adfd40b3ca3a7550fd8",
+    "commit": "13030242c51899636c4d7416f27a16b14e3a8b7a",
     "base": "be4766513ff71776346fc73b84f2542990f955af"
   },
   "registry": {
@@ -29,9 +29,9 @@
     "sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653"
   },
   "status_counts": {
+    "ABSENT": 12,
     "PASS": 120,
-    "PARTIAL": 12,
-    "ABSENT": 12
+    "PARTIAL": 12
   },
   "native_execution": "NOT_RUN",
   "rows": [
@@ -78,11 +78,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "owner_doc": {
           "status": "PASS",
@@ -105,11 +105,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "producer": {
           "status": "PASS",
@@ -132,11 +132,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -152,11 +152,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "scope_identity": {
           "status": "PASS",
@@ -179,11 +179,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -227,11 +227,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "retention": {
           "status": "PARTIAL",
@@ -247,11 +247,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -295,11 +295,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "transitions": {
           "status": "PASS",
@@ -329,11 +329,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -356,16 +356,16 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; current safe-integer writes stay strict. Unknown recipe/edition, custody loss, access denial and withdrawal refuse.",
+          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; new Storage metadata uses owner uint64 independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -390,16 +390,16 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-7 review at e6703d144e",
-            "status": "PARTIAL"
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
+          "change": "carried",
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Complete per-family suites pass old-writer retained controls, current numeric/type rules, explicit format edges and complete guard/complement/restoration proof. Physical/native NOT_RUN.",
+          "finding": "All six owner uint64 boundaries pass current writes and metadata-only retries; invalid range/types refuse. Full lane guard/complement/restoration and per-site Storage proofs pass. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -489,28 +489,28 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
               "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
-              "line_start": 471,
-              "line_end": 471
+              "line_start": 478,
+              "line_end": 478
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 673,
-              "line_end": 673
+              "line_start": 683,
+              "line_end": 683
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 1280,
-              "line_end": 1280
+              "line_start": 1296,
+              "line_end": 1296
             },
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 665,
-              "line_end": 665,
+              "line_start": 755,
+              "line_end": 755,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
             },
             {
@@ -538,8 +538,8 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 849,
-              "line_end": 849
+              "line_start": 859,
+              "line_end": 859
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
@@ -575,14 +575,28 @@
               "line_start": 29505,
               "line_end": 29505,
               "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-630",
+              "quote": "Storage sequence_id independently adopts SP-236 exact uint64, 0 through 18446744073709551615 inclusive, with exact integer type",
+              "line_start": 29505,
+              "line_end": 29505
+            },
+            {
+              "path": "scripts/pm_memory_storage_metadata.py",
+              "unit": "run",
+              "quote": "def run(m, contexts):",
+              "line_start": 48,
+              "line_end": 48
             }
           ],
           "prior": {
-            "source": "Sol cycle-7 review at e6703d144e",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
+          "change_reason": "B1 full uint64 current-write/retry controls and complete surgical guard/site/complement/restoration proof pass."
         }
       },
       "remaining_gaps": [
@@ -595,11 +609,12 @@
         "scripts/pm_memory_maintenance_events.py",
         "scripts/pm_memory_guard_isolation.py",
         "Plans/memory_canonical_history_fixtures.json",
-        "round8: frozen write recipes, enforced formats, full guard table and restored defects"
+        "round8: frozen write recipes, enforced formats, full guard table and restored defects",
+        "round9: full uint64 current writers/retries, typed negatives, site-wise Storage proof and complete lane guard table"
       ],
       "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains.",
       "assessed_tree": {
-        "commit": "ba3880b49cc9c0d6e2d89adfd40b3ca3a7550fd8",
+        "commit": "13030242c51899636c4d7416f27a16b14e3a8b7a",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       }
     },
@@ -646,11 +661,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "owner_doc": {
           "status": "PASS",
@@ -673,11 +688,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "producer": {
           "status": "PASS",
@@ -700,11 +715,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -720,11 +735,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "scope_identity": {
           "status": "PASS",
@@ -747,11 +762,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -795,11 +810,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "retention": {
           "status": "PARTIAL",
@@ -815,11 +830,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -863,11 +878,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "transitions": {
           "status": "PASS",
@@ -904,11 +919,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -931,16 +946,16 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; current safe-integer writes stay strict. Unknown recipe/edition, custody loss, access denial and withdrawal refuse.",
+          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; new Storage metadata uses owner uint64 independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -965,16 +980,16 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-7 review at e6703d144e",
-            "status": "PARTIAL"
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
+          "change": "carried",
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Complete per-family suites pass old-writer retained controls, current numeric/type rules, explicit format edges and complete guard/complement/restoration proof. Physical/native NOT_RUN.",
+          "finding": "All six owner uint64 boundaries pass current writes and metadata-only retries; invalid range/types refuse. Full lane guard/complement/restoration and per-site Storage proofs pass. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1064,28 +1079,28 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
               "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
-              "line_start": 471,
-              "line_end": 471
+              "line_start": 478,
+              "line_end": 478
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 673,
-              "line_end": 673
+              "line_start": 683,
+              "line_end": 683
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 1280,
-              "line_end": 1280
+              "line_start": 1296,
+              "line_end": 1296
             },
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 665,
-              "line_end": 665,
+              "line_start": 755,
+              "line_end": 755,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
             },
             {
@@ -1113,8 +1128,8 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 849,
-              "line_end": 849
+              "line_start": 859,
+              "line_end": 859
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
@@ -1150,14 +1165,28 @@
               "line_start": 29562,
               "line_end": 29562,
               "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-631",
+              "quote": "Storage sequence_id independently adopts SP-236 exact uint64, 0 through 18446744073709551615 inclusive, with exact integer type",
+              "line_start": 29562,
+              "line_end": 29562
+            },
+            {
+              "path": "scripts/pm_memory_storage_metadata.py",
+              "unit": "run",
+              "quote": "def run(m, contexts):",
+              "line_start": 48,
+              "line_end": 48
             }
           ],
           "prior": {
-            "source": "Sol cycle-7 review at e6703d144e",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
+          "change_reason": "B1 full uint64 current-write/retry controls and complete surgical guard/site/complement/restoration proof pass."
         }
       },
       "remaining_gaps": [
@@ -1170,11 +1199,12 @@
         "scripts/pm_memory_maintenance_events.py",
         "scripts/pm_memory_guard_isolation.py",
         "Plans/memory_canonical_history_fixtures.json",
-        "round8: frozen write recipes, enforced formats, full guard table and restored defects"
+        "round8: frozen write recipes, enforced formats, full guard table and restored defects",
+        "round9: full uint64 current writers/retries, typed negatives, site-wise Storage proof and complete lane guard table"
       ],
       "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains.",
       "assessed_tree": {
-        "commit": "ba3880b49cc9c0d6e2d89adfd40b3ca3a7550fd8",
+        "commit": "13030242c51899636c4d7416f27a16b14e3a8b7a",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       }
     },
@@ -1221,11 +1251,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1248,11 +1278,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "producer": {
           "status": "PASS",
@@ -1282,11 +1312,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1302,11 +1332,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1329,11 +1359,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1384,11 +1414,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1404,11 +1434,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1452,11 +1482,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "transitions": {
           "status": "PASS",
@@ -1493,11 +1523,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1520,16 +1550,16 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; current safe-integer writes stay strict. Unknown recipe/edition, custody loss, access denial and withdrawal refuse.",
+          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; new Storage metadata uses owner uint64 independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1554,16 +1584,16 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-7 review at e6703d144e",
-            "status": "PARTIAL"
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
+          "change": "carried",
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Complete per-family suites pass old-writer retained controls, current numeric/type rules, explicit format edges and complete guard/complement/restoration proof. Physical/native NOT_RUN.",
+          "finding": "All six owner uint64 boundaries pass current writes and metadata-only retries; invalid range/types refuse. Full lane guard/complement/restoration and per-site Storage proofs pass. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1653,28 +1683,28 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
               "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
-              "line_start": 471,
-              "line_end": 471
+              "line_start": 478,
+              "line_end": 478
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 673,
-              "line_end": 673
+              "line_start": 683,
+              "line_end": 683
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 1280,
-              "line_end": 1280
+              "line_start": 1296,
+              "line_end": 1296
             },
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 665,
-              "line_end": 665,
+              "line_start": 755,
+              "line_end": 755,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
             },
             {
@@ -1702,8 +1732,8 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 849,
-              "line_end": 849
+              "line_start": 859,
+              "line_end": 859
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
@@ -1739,14 +1769,28 @@
               "line_start": 29627,
               "line_end": 29627,
               "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-632",
+              "quote": "Storage sequence_id independently adopts SP-236 exact uint64, 0 through 18446744073709551615 inclusive, with exact integer type",
+              "line_start": 29627,
+              "line_end": 29627
+            },
+            {
+              "path": "scripts/pm_memory_storage_metadata.py",
+              "unit": "run",
+              "quote": "def run(m, contexts):",
+              "line_start": 48,
+              "line_end": 48
             }
           ],
           "prior": {
-            "source": "Sol cycle-7 review at e6703d144e",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
+          "change_reason": "B1 full uint64 current-write/retry controls and complete surgical guard/site/complement/restoration proof pass."
         }
       },
       "remaining_gaps": [
@@ -1759,11 +1803,12 @@
         "scripts/pm_memory_maintenance_events.py",
         "scripts/pm_memory_guard_isolation.py",
         "Plans/memory_canonical_history_fixtures.json",
-        "round8: frozen write recipes, enforced formats, full guard table and restored defects"
+        "round8: frozen write recipes, enforced formats, full guard table and restored defects",
+        "round9: full uint64 current writers/retries, typed negatives, site-wise Storage proof and complete lane guard table"
       ],
       "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains.",
       "assessed_tree": {
-        "commit": "ba3880b49cc9c0d6e2d89adfd40b3ca3a7550fd8",
+        "commit": "13030242c51899636c4d7416f27a16b14e3a8b7a",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       }
     },
@@ -1810,11 +1855,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1837,11 +1882,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "producer": {
           "status": "PASS",
@@ -1871,11 +1916,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1891,11 +1936,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1918,11 +1963,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1973,11 +2018,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1993,11 +2038,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2041,11 +2086,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "transitions": {
           "status": "PASS",
@@ -2089,11 +2134,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2116,16 +2161,16 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; current safe-integer writes stay strict. Unknown recipe/edition, custody loss, access denial and withdrawal refuse.",
+          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; new Storage metadata uses owner uint64 independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -2150,16 +2195,16 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-7 review at e6703d144e",
-            "status": "PARTIAL"
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
+          "change": "carried",
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Complete per-family suites pass old-writer retained controls, current numeric/type rules, explicit format edges and complete guard/complement/restoration proof. Physical/native NOT_RUN.",
+          "finding": "All six owner uint64 boundaries pass current writes and metadata-only retries; invalid range/types refuse. Full lane guard/complement/restoration and per-site Storage proofs pass. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -2249,28 +2294,28 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
               "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
-              "line_start": 471,
-              "line_end": 471
+              "line_start": 478,
+              "line_end": 478
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 673,
-              "line_end": 673
+              "line_start": 683,
+              "line_end": 683
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 1280,
-              "line_end": 1280
+              "line_start": 1296,
+              "line_end": 1296
             },
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 665,
-              "line_end": 665,
+              "line_start": 755,
+              "line_end": 755,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
             },
             {
@@ -2298,8 +2343,8 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 849,
-              "line_end": 849
+              "line_start": 859,
+              "line_end": 859
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
@@ -2335,14 +2380,28 @@
               "line_start": 29692,
               "line_end": 29692,
               "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-633",
+              "quote": "Storage sequence_id independently adopts SP-236 exact uint64, 0 through 18446744073709551615 inclusive, with exact integer type",
+              "line_start": 29692,
+              "line_end": 29692
+            },
+            {
+              "path": "scripts/pm_memory_storage_metadata.py",
+              "unit": "run",
+              "quote": "def run(m, contexts):",
+              "line_start": 48,
+              "line_end": 48
             }
           ],
           "prior": {
-            "source": "Sol cycle-7 review at e6703d144e",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
+          "change_reason": "B1 full uint64 current-write/retry controls and complete surgical guard/site/complement/restoration proof pass."
         }
       },
       "remaining_gaps": [
@@ -2355,11 +2414,12 @@
         "scripts/pm_memory_maintenance_events.py",
         "scripts/pm_memory_guard_isolation.py",
         "Plans/memory_canonical_history_fixtures.json",
-        "round8: frozen write recipes, enforced formats, full guard table and restored defects"
+        "round8: frozen write recipes, enforced formats, full guard table and restored defects",
+        "round9: full uint64 current writers/retries, typed negatives, site-wise Storage proof and complete lane guard table"
       ],
       "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains.",
       "assessed_tree": {
-        "commit": "ba3880b49cc9c0d6e2d89adfd40b3ca3a7550fd8",
+        "commit": "13030242c51899636c4d7416f27a16b14e3a8b7a",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       }
     },
@@ -2406,11 +2466,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2433,11 +2493,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "producer": {
           "status": "PASS",
@@ -2467,11 +2527,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2487,11 +2547,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2514,11 +2574,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2569,11 +2629,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2589,11 +2649,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2637,11 +2697,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "transitions": {
           "status": "PASS",
@@ -2678,11 +2738,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2705,16 +2765,16 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; current safe-integer writes stay strict. Unknown recipe/edition, custody loss, access denial and withdrawal refuse.",
+          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; new Storage metadata uses owner uint64 independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -2739,16 +2799,16 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-7 review at e6703d144e",
-            "status": "PARTIAL"
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
+          "change": "carried",
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Complete per-family suites pass old-writer retained controls, current numeric/type rules, explicit format edges and complete guard/complement/restoration proof. Physical/native NOT_RUN.",
+          "finding": "All six owner uint64 boundaries pass current writes and metadata-only retries; invalid range/types refuse. Full lane guard/complement/restoration and per-site Storage proofs pass. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -2838,28 +2898,28 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
               "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
-              "line_start": 471,
-              "line_end": 471
+              "line_start": 478,
+              "line_end": 478
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 673,
-              "line_end": 673
+              "line_start": 683,
+              "line_end": 683
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 1280,
-              "line_end": 1280
+              "line_start": 1296,
+              "line_end": 1296
             },
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 665,
-              "line_end": 665,
+              "line_start": 755,
+              "line_end": 755,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
             },
             {
@@ -2887,8 +2947,8 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 849,
-              "line_end": 849
+              "line_start": 859,
+              "line_end": 859
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
@@ -2924,14 +2984,28 @@
               "line_start": 29757,
               "line_end": 29757,
               "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-634",
+              "quote": "Storage sequence_id independently adopts SP-236 exact uint64, 0 through 18446744073709551615 inclusive, with exact integer type",
+              "line_start": 29757,
+              "line_end": 29757
+            },
+            {
+              "path": "scripts/pm_memory_storage_metadata.py",
+              "unit": "run",
+              "quote": "def run(m, contexts):",
+              "line_start": 48,
+              "line_end": 48
             }
           ],
           "prior": {
-            "source": "Sol cycle-7 review at e6703d144e",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
+          "change_reason": "B1 full uint64 current-write/retry controls and complete surgical guard/site/complement/restoration proof pass."
         }
       },
       "remaining_gaps": [
@@ -2944,11 +3018,12 @@
         "scripts/pm_memory_maintenance_events.py",
         "scripts/pm_memory_guard_isolation.py",
         "Plans/memory_canonical_history_fixtures.json",
-        "round8: frozen write recipes, enforced formats, full guard table and restored defects"
+        "round8: frozen write recipes, enforced formats, full guard table and restored defects",
+        "round9: full uint64 current writers/retries, typed negatives, site-wise Storage proof and complete lane guard table"
       ],
       "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains.",
       "assessed_tree": {
-        "commit": "ba3880b49cc9c0d6e2d89adfd40b3ca3a7550fd8",
+        "commit": "13030242c51899636c4d7416f27a16b14e3a8b7a",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       }
     },
@@ -2995,11 +3070,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3022,11 +3097,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "producer": {
           "status": "PASS",
@@ -3056,11 +3131,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3076,11 +3151,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3103,11 +3178,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3158,11 +3233,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3178,11 +3253,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3226,11 +3301,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "transitions": {
           "status": "PASS",
@@ -3274,11 +3349,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3301,16 +3376,16 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; current safe-integer writes stay strict. Unknown recipe/edition, custody loss, access denial and withdrawal refuse.",
+          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; new Storage metadata uses owner uint64 independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -3335,16 +3410,16 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-7 review at e6703d144e",
-            "status": "PARTIAL"
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
+          "change": "carried",
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Complete per-family suites pass old-writer retained controls, current numeric/type rules, explicit format edges and complete guard/complement/restoration proof. Physical/native NOT_RUN.",
+          "finding": "All six owner uint64 boundaries pass current writes and metadata-only retries; invalid range/types refuse. Full lane guard/complement/restoration and per-site Storage proofs pass. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -3434,28 +3509,28 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
               "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
-              "line_start": 471,
-              "line_end": 471
+              "line_start": 478,
+              "line_end": 478
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 673,
-              "line_end": 673
+              "line_start": 683,
+              "line_end": 683
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 1280,
-              "line_end": 1280
+              "line_start": 1296,
+              "line_end": 1296
             },
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 665,
-              "line_end": 665,
+              "line_start": 755,
+              "line_end": 755,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
             },
             {
@@ -3483,8 +3558,8 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 849,
-              "line_end": 849
+              "line_start": 859,
+              "line_end": 859
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
@@ -3520,14 +3595,28 @@
               "line_start": 29822,
               "line_end": 29822,
               "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-635",
+              "quote": "Storage sequence_id independently adopts SP-236 exact uint64, 0 through 18446744073709551615 inclusive, with exact integer type",
+              "line_start": 29822,
+              "line_end": 29822
+            },
+            {
+              "path": "scripts/pm_memory_storage_metadata.py",
+              "unit": "run",
+              "quote": "def run(m, contexts):",
+              "line_start": 48,
+              "line_end": 48
             }
           ],
           "prior": {
-            "source": "Sol cycle-7 review at e6703d144e",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
+          "change_reason": "B1 full uint64 current-write/retry controls and complete surgical guard/site/complement/restoration proof pass."
         }
       },
       "remaining_gaps": [
@@ -3540,11 +3629,12 @@
         "scripts/pm_memory_maintenance_events.py",
         "scripts/pm_memory_guard_isolation.py",
         "Plans/memory_canonical_history_fixtures.json",
-        "round8: frozen write recipes, enforced formats, full guard table and restored defects"
+        "round8: frozen write recipes, enforced formats, full guard table and restored defects",
+        "round9: full uint64 current writers/retries, typed negatives, site-wise Storage proof and complete lane guard table"
       ],
       "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains.",
       "assessed_tree": {
-        "commit": "ba3880b49cc9c0d6e2d89adfd40b3ca3a7550fd8",
+        "commit": "13030242c51899636c4d7416f27a16b14e3a8b7a",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       }
     },
@@ -3591,11 +3681,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3618,11 +3708,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "producer": {
           "status": "PASS",
@@ -3645,11 +3735,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3665,11 +3755,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3692,11 +3782,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3740,11 +3830,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3760,11 +3850,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3808,11 +3898,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "transitions": {
           "status": "PASS",
@@ -3842,11 +3932,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3869,16 +3959,16 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; current safe-integer writes stay strict. Unknown recipe/edition, custody loss, access denial and withdrawal refuse.",
+          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; new Storage metadata uses owner uint64 independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -3903,16 +3993,16 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-7 review at e6703d144e",
-            "status": "PARTIAL"
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
+          "change": "carried",
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Complete per-family suites pass old-writer retained controls, current numeric/type rules, explicit format edges and complete guard/complement/restoration proof. Physical/native NOT_RUN.",
+          "finding": "All six owner uint64 boundaries pass current writes and metadata-only retries; invalid range/types refuse. Full lane guard/complement/restoration and per-site Storage proofs pass. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -4002,28 +4092,28 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
               "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
-              "line_start": 471,
-              "line_end": 471
+              "line_start": 478,
+              "line_end": 478
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 673,
-              "line_end": 673
+              "line_start": 683,
+              "line_end": 683
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 1280,
-              "line_end": 1280
+              "line_start": 1296,
+              "line_end": 1296
             },
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 665,
-              "line_end": 665,
+              "line_start": 755,
+              "line_end": 755,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
             },
             {
@@ -4051,8 +4141,8 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 849,
-              "line_end": 849
+              "line_start": 859,
+              "line_end": 859
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
@@ -4088,14 +4178,28 @@
               "line_start": 29879,
               "line_end": 29879,
               "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-636",
+              "quote": "Storage sequence_id independently adopts SP-236 exact uint64, 0 through 18446744073709551615 inclusive, with exact integer type",
+              "line_start": 29879,
+              "line_end": 29879
+            },
+            {
+              "path": "scripts/pm_memory_storage_metadata.py",
+              "unit": "run",
+              "quote": "def run(m, contexts):",
+              "line_start": 48,
+              "line_end": 48
             }
           ],
           "prior": {
-            "source": "Sol cycle-7 review at e6703d144e",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
+          "change_reason": "B1 full uint64 current-write/retry controls and complete surgical guard/site/complement/restoration proof pass."
         }
       },
       "remaining_gaps": [
@@ -4108,11 +4212,12 @@
         "scripts/pm_memory_maintenance_events.py",
         "scripts/pm_memory_guard_isolation.py",
         "Plans/memory_canonical_history_fixtures.json",
-        "round8: frozen write recipes, enforced formats, full guard table and restored defects"
+        "round8: frozen write recipes, enforced formats, full guard table and restored defects",
+        "round9: full uint64 current writers/retries, typed negatives, site-wise Storage proof and complete lane guard table"
       ],
       "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains.",
       "assessed_tree": {
-        "commit": "ba3880b49cc9c0d6e2d89adfd40b3ca3a7550fd8",
+        "commit": "13030242c51899636c4d7416f27a16b14e3a8b7a",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       }
     },
@@ -4159,11 +4264,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "owner_doc": {
           "status": "PASS",
@@ -4186,11 +4291,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "producer": {
           "status": "PASS",
@@ -4213,11 +4318,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -4233,11 +4338,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "scope_identity": {
           "status": "PASS",
@@ -4260,11 +4365,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -4308,11 +4413,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "retention": {
           "status": "PARTIAL",
@@ -4328,11 +4433,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -4376,11 +4481,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "transitions": {
           "status": "PASS",
@@ -4417,11 +4522,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -4444,16 +4549,16 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; current safe-integer writes stay strict. Unknown recipe/edition, custody loss, access denial and withdrawal refuse.",
+          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; new Storage metadata uses owner uint64 independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -4478,16 +4583,16 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-7 review at e6703d144e",
-            "status": "PARTIAL"
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
+          "change": "carried",
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Complete per-family suites pass old-writer retained controls, current numeric/type rules, explicit format edges and complete guard/complement/restoration proof. Physical/native NOT_RUN.",
+          "finding": "All six owner uint64 boundaries pass current writes and metadata-only retries; invalid range/types refuse. Full lane guard/complement/restoration and per-site Storage proofs pass. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -4577,28 +4682,28 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
               "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
-              "line_start": 471,
-              "line_end": 471
+              "line_start": 478,
+              "line_end": 478
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 673,
-              "line_end": 673
+              "line_start": 683,
+              "line_end": 683
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 1280,
-              "line_end": 1280
+              "line_start": 1296,
+              "line_end": 1296
             },
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 665,
-              "line_end": 665,
+              "line_start": 755,
+              "line_end": 755,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
             },
             {
@@ -4626,8 +4731,8 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 849,
-              "line_end": 849
+              "line_start": 859,
+              "line_end": 859
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
@@ -4663,14 +4768,28 @@
               "line_start": 29936,
               "line_end": 29936,
               "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-637",
+              "quote": "Storage sequence_id independently adopts SP-236 exact uint64, 0 through 18446744073709551615 inclusive, with exact integer type",
+              "line_start": 29936,
+              "line_end": 29936
+            },
+            {
+              "path": "scripts/pm_memory_storage_metadata.py",
+              "unit": "run",
+              "quote": "def run(m, contexts):",
+              "line_start": 48,
+              "line_end": 48
             }
           ],
           "prior": {
-            "source": "Sol cycle-7 review at e6703d144e",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
+          "change_reason": "B1 full uint64 current-write/retry controls and complete surgical guard/site/complement/restoration proof pass."
         }
       },
       "remaining_gaps": [
@@ -4683,11 +4802,12 @@
         "scripts/pm_memory_maintenance_events.py",
         "scripts/pm_memory_guard_isolation.py",
         "Plans/memory_canonical_history_fixtures.json",
-        "round8: frozen write recipes, enforced formats, full guard table and restored defects"
+        "round8: frozen write recipes, enforced formats, full guard table and restored defects",
+        "round9: full uint64 current writers/retries, typed negatives, site-wise Storage proof and complete lane guard table"
       ],
       "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains.",
       "assessed_tree": {
-        "commit": "ba3880b49cc9c0d6e2d89adfd40b3ca3a7550fd8",
+        "commit": "13030242c51899636c4d7416f27a16b14e3a8b7a",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       }
     },
@@ -4711,7 +4831,7 @@
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "assessed_tree": {
-        "commit": "ba3880b49cc9c0d6e2d89adfd40b3ca3a7550fd8",
+        "commit": "13030242c51899636c4d7416f27a16b14e3a8b7a",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       },
       "current_owner_units": [
@@ -4738,11 +4858,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "owner_doc": {
           "status": "PASS",
@@ -4758,11 +4878,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "producer": {
           "status": "PASS",
@@ -4778,11 +4898,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -4798,11 +4918,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "scope_identity": {
           "status": "PASS",
@@ -4818,11 +4938,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -4838,11 +4958,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "retention": {
           "status": "PARTIAL",
@@ -4858,11 +4978,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -4878,11 +4998,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "transitions": {
           "status": "PASS",
@@ -4898,11 +5018,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -4918,16 +5038,16 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; current safe-integer writes stay strict. Unknown recipe/edition, custody loss, access denial and withdrawal refuse.",
+          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; new Storage metadata uses owner uint64 independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -4945,16 +5065,16 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-7 review at e6703d144e",
-            "status": "PARTIAL"
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
+          "change": "carried",
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Complete per-family suites pass old-writer retained controls, current numeric/type rules, explicit format edges and complete guard/complement/restoration proof. Physical/native NOT_RUN.",
+          "finding": "All six owner uint64 boundaries pass current writes and metadata-only retries; invalid range/types refuse. Full lane guard/complement/restoration and per-site Storage proofs pass. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -4966,8 +5086,8 @@
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 665,
-              "line_end": 665,
+              "line_start": 755,
+              "line_end": 755,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
             },
             {
@@ -4995,8 +5115,8 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 849,
-              "line_end": 849
+              "line_start": 859,
+              "line_end": 859
             },
             {
               "path": "Plans/memory_archive_event_fixtures.json",
@@ -5067,14 +5187,28 @@
               "line_start": 30082,
               "line_end": 30082,
               "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-638",
+              "quote": "Storage sequence_id independently adopts SP-236 exact uint64, 0 through 18446744073709551615 inclusive, with exact integer type",
+              "line_start": 30082,
+              "line_end": 30082
+            },
+            {
+              "path": "scripts/pm_memory_storage_metadata.py",
+              "unit": "run",
+              "quote": "def run(m, contexts):",
+              "line_start": 48,
+              "line_end": 48
             }
           ],
           "prior": {
-            "source": "Sol cycle-7 review at e6703d144e",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
+          "change_reason": "B1 full uint64 current-write/retry controls and complete surgical guard/site/complement/restoration proof pass."
         }
       },
       "remaining_gaps": [
@@ -5088,7 +5222,8 @@
         "scripts/pm_memory_maintenance_events.py",
         "scripts/pm_memory_guard_isolation.py",
         "Plans/memory_canonical_history_fixtures.json",
-        "round8: frozen write recipes, enforced formats, full guard table and restored defects"
+        "round8: frozen write recipes, enforced formats, full guard table and restored defects",
+        "round9: full uint64 current writers/retries, typed negatives, site-wise Storage proof and complete lane guard table"
       ],
       "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains."
     },
@@ -5112,7 +5247,7 @@
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "assessed_tree": {
-        "commit": "ba3880b49cc9c0d6e2d89adfd40b3ca3a7550fd8",
+        "commit": "13030242c51899636c4d7416f27a16b14e3a8b7a",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       },
       "current_owner_units": [
@@ -5139,11 +5274,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "owner_doc": {
           "status": "PASS",
@@ -5159,11 +5294,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "producer": {
           "status": "PASS",
@@ -5179,11 +5314,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -5199,11 +5334,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "scope_identity": {
           "status": "PASS",
@@ -5219,11 +5354,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -5239,11 +5374,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "retention": {
           "status": "PARTIAL",
@@ -5259,11 +5394,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -5279,11 +5414,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "transitions": {
           "status": "PASS",
@@ -5299,11 +5434,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -5319,16 +5454,16 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; current safe-integer writes stay strict. Unknown recipe/edition, custody loss, access denial and withdrawal refuse.",
+          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; new Storage metadata uses owner uint64 independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -5346,16 +5481,16 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-7 review at e6703d144e",
-            "status": "PARTIAL"
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
+          "change": "carried",
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Complete per-family suites pass old-writer retained controls, current numeric/type rules, explicit format edges and complete guard/complement/restoration proof. Physical/native NOT_RUN.",
+          "finding": "All six owner uint64 boundaries pass current writes and metadata-only retries; invalid range/types refuse. Full lane guard/complement/restoration and per-site Storage proofs pass. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -5367,8 +5502,8 @@
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 665,
-              "line_end": 665,
+              "line_start": 755,
+              "line_end": 755,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
             },
             {
@@ -5396,8 +5531,8 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 849,
-              "line_end": 849
+              "line_start": 859,
+              "line_end": 859
             },
             {
               "path": "Plans/memory_archive_event_fixtures.json",
@@ -5468,14 +5603,28 @@
               "line_start": 30235,
               "line_end": 30235,
               "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-639",
+              "quote": "Storage sequence_id independently adopts SP-236 exact uint64, 0 through 18446744073709551615 inclusive, with exact integer type",
+              "line_start": 30235,
+              "line_end": 30235
+            },
+            {
+              "path": "scripts/pm_memory_storage_metadata.py",
+              "unit": "run",
+              "quote": "def run(m, contexts):",
+              "line_start": 48,
+              "line_end": 48
             }
           ],
           "prior": {
-            "source": "Sol cycle-7 review at e6703d144e",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
+          "change_reason": "B1 full uint64 current-write/retry controls and complete surgical guard/site/complement/restoration proof pass."
         }
       },
       "remaining_gaps": [
@@ -5489,7 +5638,8 @@
         "scripts/pm_memory_maintenance_events.py",
         "scripts/pm_memory_guard_isolation.py",
         "Plans/memory_canonical_history_fixtures.json",
-        "round8: frozen write recipes, enforced formats, full guard table and restored defects"
+        "round8: frozen write recipes, enforced formats, full guard table and restored defects",
+        "round9: full uint64 current writers/retries, typed negatives, site-wise Storage proof and complete lane guard table"
       ],
       "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains."
     },
@@ -5513,7 +5663,7 @@
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "assessed_tree": {
-        "commit": "ba3880b49cc9c0d6e2d89adfd40b3ca3a7550fd8",
+        "commit": "13030242c51899636c4d7416f27a16b14e3a8b7a",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       },
       "current_owner_units": [
@@ -5540,11 +5690,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "owner_doc": {
           "status": "PASS",
@@ -5560,11 +5710,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "producer": {
           "status": "PASS",
@@ -5580,11 +5730,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -5600,11 +5750,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "scope_identity": {
           "status": "PASS",
@@ -5620,11 +5770,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -5640,11 +5790,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "retention": {
           "status": "PARTIAL",
@@ -5660,11 +5810,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -5680,11 +5830,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "transitions": {
           "status": "PASS",
@@ -5700,11 +5850,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -5720,16 +5870,16 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; current safe-integer writes stay strict. Unknown recipe/edition, custody loss, access denial and withdrawal refuse.",
+          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; new Storage metadata uses owner uint64 independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -5747,16 +5897,16 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-7 review at e6703d144e",
-            "status": "PARTIAL"
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
+          "change": "carried",
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Complete per-family suites pass old-writer retained controls, current numeric/type rules, explicit format edges and complete guard/complement/restoration proof. Physical/native NOT_RUN.",
+          "finding": "All six owner uint64 boundaries pass current writes and metadata-only retries; invalid range/types refuse. Full lane guard/complement/restoration and per-site Storage proofs pass. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -5768,8 +5918,8 @@
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 665,
-              "line_end": 665,
+              "line_start": 755,
+              "line_end": 755,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
             },
             {
@@ -5797,8 +5947,8 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 849,
-              "line_end": 849
+              "line_start": 859,
+              "line_end": 859
             },
             {
               "path": "Plans/memory_archive_event_fixtures.json",
@@ -5869,14 +6019,28 @@
               "line_start": 24946,
               "line_end": 24946,
               "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-658",
+              "quote": "Storage sequence_id independently adopts SP-236 exact uint64, 0 through 18446744073709551615 inclusive, with exact integer type",
+              "line_start": 24946,
+              "line_end": 24946
+            },
+            {
+              "path": "scripts/pm_memory_storage_metadata.py",
+              "unit": "run",
+              "quote": "def run(m, contexts):",
+              "line_start": 48,
+              "line_end": 48
             }
           ],
           "prior": {
-            "source": "Sol cycle-7 review at e6703d144e",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
+          "change_reason": "B1 full uint64 current-write/retry controls and complete surgical guard/site/complement/restoration proof pass."
         }
       },
       "remaining_gaps": [
@@ -5890,7 +6054,8 @@
         "scripts/pm_memory_maintenance_events.py",
         "scripts/pm_memory_guard_isolation.py",
         "Plans/memory_canonical_history_fixtures.json",
-        "round8: frozen write recipes, enforced formats, full guard table and restored defects"
+        "round8: frozen write recipes, enforced formats, full guard table and restored defects",
+        "round9: full uint64 current writers/retries, typed negatives, site-wise Storage proof and complete lane guard table"
       ],
       "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains."
     },
@@ -5914,7 +6079,7 @@
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "assessed_tree": {
-        "commit": "ba3880b49cc9c0d6e2d89adfd40b3ca3a7550fd8",
+        "commit": "13030242c51899636c4d7416f27a16b14e3a8b7a",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       },
       "current_owner_units": [
@@ -5941,11 +6106,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "owner_doc": {
           "status": "PASS",
@@ -5961,11 +6126,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "producer": {
           "status": "PASS",
@@ -5981,11 +6146,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -6001,11 +6166,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "scope_identity": {
           "status": "PASS",
@@ -6021,11 +6186,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -6041,11 +6206,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "retention": {
           "status": "PARTIAL",
@@ -6061,11 +6226,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -6081,11 +6246,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "transitions": {
           "status": "PASS",
@@ -6101,11 +6266,11 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -6121,16 +6286,16 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; current safe-integer writes stay strict. Unknown recipe/edition, custody loss, access denial and withdrawal refuse.",
+          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; new Storage metadata uses owner uint64 independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -6148,16 +6313,16 @@
             }
           ],
           "prior": {
-            "source": "Sol cycle-7 review at e6703d144e",
-            "status": "PARTIAL"
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
+          "change": "carried",
+          "change_reason": "Agrees with cycle-8 review; S1/S2/S3 remain sweep items."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Complete per-family suites pass old-writer retained controls, current numeric/type rules, explicit format edges and complete guard/complement/restoration proof. Physical/native NOT_RUN.",
+          "finding": "All six owner uint64 boundaries pass current writes and metadata-only retries; invalid range/types refuse. Full lane guard/complement/restoration and per-site Storage proofs pass. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -6169,8 +6334,8 @@
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 665,
-              "line_end": 665,
+              "line_start": 755,
+              "line_end": 755,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
             },
             {
@@ -6198,8 +6363,8 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 849,
-              "line_end": 849
+              "line_start": 859,
+              "line_end": 859
             },
             {
               "path": "Plans/memory_archive_event_fixtures.json",
@@ -6270,14 +6435,28 @@
               "line_start": 25096,
               "line_end": 25096,
               "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-659",
+              "quote": "Storage sequence_id independently adopts SP-236 exact uint64, 0 through 18446744073709551615 inclusive, with exact integer type",
+              "line_start": 25096,
+              "line_end": 25096
+            },
+            {
+              "path": "scripts/pm_memory_storage_metadata.py",
+              "unit": "run",
+              "quote": "def run(m, contexts):",
+              "line_start": 48,
+              "line_end": 48
             }
           ],
           "prior": {
-            "source": "Sol cycle-7 review at e6703d144e",
+            "source": "Sol cycle-8 review at 0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
+          "change_reason": "B1 full uint64 current-write/retry controls and complete surgical guard/site/complement/restoration proof pass."
         }
       },
       "remaining_gaps": [
@@ -6291,27 +6470,28 @@
         "scripts/pm_memory_maintenance_events.py",
         "scripts/pm_memory_guard_isolation.py",
         "Plans/memory_canonical_history_fixtures.json",
-        "round8: frozen write recipes, enforced formats, full guard table and restored defects"
+        "round8: frozen write recipes, enforced formats, full guard table and restored defects",
+        "round9: full uint64 current writers/retries, typed negatives, site-wise Storage proof and complete lane guard table"
       ],
       "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains."
     }
   ],
-  "review_round": 7,
-  "reviewed_head": "77323e87d65908dbce2ea655ee344b6185a13ff1",
-  "review_scope": "Sol cycle 6 B1 and item-11 S1/S2; all eleven standing checks and Astra classes, all twelve exact families.",
+  "review_round": 9,
+  "reviewed_head": "0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
+  "review_scope": "Cycle-8 B1 only; S1/S2/S3 remain sweep items; all twelve exact families and complete check-11 proof.",
   "review_baseline_prepared_status_counts": {
     "PASS": 108,
     "PARTIAL": 24,
     "ABSENT": 12
   },
   "prepared_status_counts": {
+    "ABSENT": 12,
     "PASS": 120,
-    "PARTIAL": 12,
-    "ABSENT": 12
+    "PARTIAL": 12
   },
   "card1b_assessment": {
     "assessed_tree": {
-      "commit": "9646eb4e66bc7097068f1cb1588b8daac0cd2f9e",
+      "commit": "13030242c51899636c4d7416f27a16b14e3a8b7a",
       "branch": "plans/ea-w2-memory-maintenance-20261104"
     },
     "scope": [
@@ -6325,7 +6505,7 @@
       "DL-403"
     ],
     "event_retention": "DL-401/G04 on origin/plans/ea-retention-cards1-20261104@2663667e14346235daaa561d193e959422640b6e",
-    "source_pin_rule": "Fix 7 regrades all twelve rows at the common source pin; decision and retention source pins remain historical integration dependencies.",
+    "source_pin_rule": "Round 9 regrades all twelve rows at the common source pin; decision/retention pins remain integration dependencies.",
     "status_counts": {
       "ABSENT": 4,
       "PASS": 40,
@@ -6334,6 +6514,23 @@
   },
   "check11_evidence": {
     "path": "reports/event-authority-20261104/DMEM-check11-guards.json",
-    "full_proof_sha256": "0980fbb06a945e7d74c3fbc9f111e94b25f4a4005f03595cb0bd0e41e043768f"
-  }
+    "full_proof_sha256": "d243a1a551e83be8647fc5e069e52f00a70a3b7e02a95d84d69581286484d846"
+  },
+  "sweep_items": [
+    {
+      "id": "S1",
+      "location": "scripts/pm_memory_maintenance_events.py json_numbers/canonical_numbers; current schemas/registry mirrors; SP-630..639/CV-658..659/ATS-315",
+      "status": "OPEN_SHARED_SWEEP"
+    },
+    {
+      "id": "S2",
+      "location": "scripts/pm_memory_maintenance_events.py digest/canonical_numbers/retained/retained_digest/within_value_cap; twelve full-value paragraphs",
+      "status": "OPEN_SHARED_SWEEP"
+    },
+    {
+      "id": "S3",
+      "location": "scripts/pm_memory_maintenance_events.py HISTORY_RECIPES/historical_envelope_matches/retained_digest/read_canonical_history; frozen definitions; twelve numeric paragraphs",
+      "status": "OPEN_SHARED_SWEEP"
+    }
+  ]
 }

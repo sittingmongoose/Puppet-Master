@@ -1,3 +1,228 @@
+# DMEM fix round 9 — Storage exact uint64 metadata
+
+Branch: `plans/ea-w2-memory-maintenance-20261104`. Assessed source commit: `13030242c51899636c4d7416f27a16b14e3a8b7a`. Reviewed head: `0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee`. Review: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DMEM-sol/REVIEW-cycle8.md` (own-cycle8.json and source-audit.json are under its cycle8-evidence/ directory).
+
+Twelve exact families are prepared without admission, pending independent review. Membership remains ABSENT; retention PARTIAL; native execution NOT_RUN. DL-402/DL-403, cutoff unavailability, all retained-history recipes and format enforcement remain unchanged. No cutoff is selected.
+
+## Review round 9: findings and responses
+
+- **B1 — fixed (`13030242c51899636c4d7416f27a16b14e3a8b7a`). Where:** `scripts/pm_memory_maintenance_events.py:467,533,571`; `scripts/pm_memory_archive_events.py:194`; `Plans/memory_maintenance_event_record.schema.json`; the current-number paragraph in each SP-630–639/CV-658–659 and ATS-315 (`Plans/Automated_Testing_System.md:7259`). **Cause:** the current producer safe-integer preflight and envelope maximum incorrectly narrowed Storage sequence_id before semantic projection; full-record digest admission repeated that cap. **Fix:** apply the unchanged producer preflight only after excluding Storage-owned fields. Current sequence_id separately adopts SP-236 exact uint64 with exact integer type, inherited nonnegative schema bound and maximum 18446744073709551615. Full-record custody reuses the existing integer-json-v1 encoding, already byte-identical on all formerly supported current records; no new serializer or lane-invented cap. Both current writers and metadata-only retries accept the full owner domain. Current producer_sequence_id remains producer-owned under Contracts EventRecord section 1.2; its route is unchanged and S1 remains open. **Verify:** all twelve complete --family checkers; `72` fresh positives, `72` metadata-only retry positives, `72` retries against newly stored boundary originals, and `216` isolated current-write/retry negatives. Guard rows below prove every Storage predicate and every complement. No finding is disputed.
+- **Review note 2 — integration item. Where:** index retention validation against current origin/main. Actual `pm-plan-index.py validate` exits 1, top-level `fail`, 22 failures; the unchanged starting index reproduces those failures. Preserve current-main Decision Log additions and rerun at integration. No unrelated ledger or baseline is repaired here.
+- **Review note 3 — accounted for. Where:** four index JSON generated_at_utc fields. Normal generation is committed; literal byte identity is not claimed for clock fields. Only the three edited owner documents have changed owner shards.
+
+## Number-domain sweep items (recorded only)
+
+These are S1–S3 from cycle 8 / NUMRULE, reserved for shared CV-1100/SP-1100/SP-1101 adoption. None is fixed or counted as a new grade reduction in this round.
+
+1. **S1 — current grammar/range dispatch. Location:** `scripts/pm_memory_maintenance_events.py:62,74`, current schemas/registry mirrors, SP-630–639/CV-658–659 and ATS-315. Adopt CV-1100 exact current integer-token/type grammar and field-owned ranges. The existing producer route still accepts/normalizes some decimal/exponent and signed-zero forms. Keep the exact Decimal boundary and frozen historical alternatives. B1's Storage cap is removed separately.
+2. **S2 — physical versus semantic/local recipes. Location:** `scripts/pm_memory_maintenance_events.py:100,74,571,585,52`, `_CODEC.binding_bytes(canonical_numbers(...))` call sites and all twelve full-value commitment paragraphs. Adopt existing SP-1100/CV-1100/CV-339 owner profiles independently for producer semantics, local identity/results and physical/full-value custody. Existing normalized JSON helpers can collapse integer zero and signed/integral floats; no physical-float normalization or signed-zero rewrite is introduced here. The minimum necessary B1 dispatch reuses the existing encoder unchanged.
+3. **S3 — authentic original recipe selection. Location:** `scripts/pm_memory_maintenance_events.py:808,812,585,859`, frozen schema definitions and all twelve numeric paragraphs. Adopt SP-1101 immutable authenticated original issuance/registry selection and unknown/ambiguous/downgrade negatives. The known-old synthetic recipe controls keep passing; the supplied frozen witness/map is not the full shared authenticated issuance tuple. Original bytes/results and access/withdrawal fences remain intact.
+
+## uint64 cases and exact results
+
+`sequence_id` is the only Storage-owned uint64 in this EventRecord. SP-236 segment_generation is a frame-prefix field, absent from this record; producer_sequence_id is explicitly part of Contracts EventRecord section 1.2's producer projection. The fixture field list is asserted against the current model. Typed negatives load through standard JSON so 1.0 remains a float; existing current ingestion grammar is S1.
+
+Every family passes fresh-write and metadata-only retry positives at **0, 9007199254740991, 9007199254740992, 9007199254740993, 1152921504606846976, 18446744073709551615**. Fresh outputs retain exact integer type/value; only the append count advances once. Metadata-only retries preserve the original record, digest, append count and full state. A second retry against each newly stored boundary original also returns its exact original metadata.
+
+Every family refuses **18446744073709551616, -1, false, true, typed 1.0 and string "1"**, plus null, array and object controls, on fresh and retry routes. Each negative derives from its own passing canonical control with only sequence_id changed; input state is unchanged and no output escapes. Results: `{"fresh_negatives": 108, "fresh_positives": 72, "high_original_retry_positives": 72, "metadata_only_retry_negatives": 108, "metadata_only_retry_positives": 72}`.
+
+## Complete check-11 guard-removal table
+
+**130 rows; 23,666 negatives; 1,509,274 guard/case evaluations; 13,062 preserved custody-matrix cases.** Every row removes only its named predicate/declared duplicate set, runs the entire family corpus, flips its own negatives, preserves the exact refusal of every complement, restores the guard and rechecks rejection. Runs are serial, one family and one guard at a time. Full case IDs/complements and the 216 new case-by-case repeated-site proofs are in `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix9/check11.json`; compact ID hashes/examples are in `reports/event-authority-20261104/DMEM-check11-guards.json`.
+
+Storage bool/string/float/null/array/object type exclusions and lower/upper bounds are cut separately. For each new negative, keep each enforcement site alone, remove each alone, then remove its exact repeated sites together. A duplicate removal covers only the same field and predicate, never an unrelated clause. Only the runtime rejects integral float 1.0; repeated schema type/lower-bound checks can also reject newly stored starts. The full proof records which sites actually enforce each case. General envelope-schema removal retains the independent Storage type/min/max predicates. Frozen-reader predicates are modified only when testing their repeated check on a freshly stored current start, never on a retained-history read.
+
+Former large-integer Storage refusals become positive current writes. Their producer preflight witnesses remain at the actual producer-number endpoint; the producer route itself is unchanged. Existing schema-only Storage type witnesses now belong to their precise Storage type rows. Every other earlier case/guard remains, including historical integrality, custody, format, size, replay, access, cutoff and preservation controls. Unsupported producer-number/format/schema probes retain their actual predicate endpoints; no synthetic bytes or evaluation-time repair is introduced.
+
+### maintenance checker
+
+| Guard / predicate | Flip | Stay rejected | Restored |
+|---|---:|---:|---|
+| `action` | 8 | 15,452 | yes |
+| `admission` | 192 | 15,268 | yes |
+| `artifacts` | 4 | 15,456 | yes |
+| `boundary_acceptance` | 48 | 15,412 | yes |
+| `boundary_payload` | 8 | 15,452 | yes |
+| `boundary_receipts` | 144 | 15,316 | yes |
+| `boundary_request` | 8 | 15,452 | yes |
+| `boundary_scope` | 24 | 15,436 | yes |
+| `boundary_snapshot` | 192 | 15,268 | yes |
+| `boundary_terminal` | 4 | 15,456 | yes |
+| `checkpoint_event` | 8 | 15,452 | yes |
+| `checkpoint_key` | 8 | 15,452 | yes |
+| `checkpoint_storage` | 8 | 15,452 | yes |
+| `commitment_numbers` | 368 | 15,092 | yes |
+| `custody_binding` | 4,806 | 10,654 | yes |
+| `custody_digest` | 1,134 | 14,326 | yes |
+| `custody_flush` | 1,038 | 14,422 | yes |
+| `custody_presence` | 934 | 14,526 | yes |
+| `custody_shape` | 958 | 14,502 | yes |
+| `effect_count` | 4 | 15,456 | yes |
+| `effect_once` | 16 | 15,444 | yes |
+| `envelope_schema` | 216 | 15,244 | yes |
+| `formats_enforced` | 2,488 | 12,972 | yes |
+| `history_event` | 40 | 15,420 | yes |
+| `inline_cap` | 8 | 15,452 | yes |
+| `json_number_grammar` | 56 | 15,404 | yes |
+| `operation_cas` | 8 | 15,452 | yes |
+| `operation_receipt` | 8 | 15,452 | yes |
+| `operation_result_digest` | 8 | 15,452 | yes |
+| `operation_result_ref` | 8 | 15,452 | yes |
+| `operation_schema` | 72 | 15,388 | yes |
+| `original_input` | 8 | 15,452 | yes |
+| `outcome` | 8 | 15,452 | yes |
+| `partition` | 8 | 15,452 | yes |
+| `payload_schema` | 40 | 15,420 | yes |
+| `permission_or_withdrawal` | 2,218 | 13,242 | yes |
+| `phase` | 8 | 15,452 | yes |
+| `prior_selector` | 4 | 15,456 | yes |
+| `producer_join` | 40 | 15,420 | yes |
+| `references_resolve` | 8 | 15,452 | yes |
+| `replay_policy` | 8 | 15,452 | yes |
+| `request` | 8 | 15,452 | yes |
+| `selected_target` | 4 | 15,456 | yes |
+| `selector_cas` | 4 | 15,456 | yes |
+| `selector_schema` | 4 | 15,456 | yes |
+| `selector_scope` | 4 | 15,456 | yes |
+| `source` | 8 | 15,452 | yes |
+| `storage_uint64_NoneType` | 16 | 15,444 | yes |
+| `storage_uint64_bool` | 48 | 15,412 | yes |
+| `storage_uint64_dict` | 32 | 15,428 | yes |
+| `storage_uint64_float` | 16 | 15,444 | yes |
+| `storage_uint64_list` | 32 | 15,428 | yes |
+| `storage_uint64_maximum` | 16 | 15,444 | yes |
+| `storage_uint64_minimum` | 16 | 15,444 | yes |
+| `storage_uint64_str` | 48 | 15,412 | yes |
+| `target_identity` | 4 | 15,456 | yes |
+| `target_manifest` | 4 | 15,456 | yes |
+| `target_order` | 4 | 15,456 | yes |
+| `target_schema` | 4 | 15,456 | yes |
+| `target_source` | 4 | 15,456 | yes |
+| `terminal_custody` | 8 | 15,452 | yes |
+### archive checker
+
+| Guard / predicate | Flip | Stay rejected | Restored |
+|---|---:|---:|---|
+| `action` | 4 | 8,202 | yes |
+| `admission` | 100 | 8,106 | yes |
+| `boundary_acceptance` | 24 | 8,182 | yes |
+| `boundary_payload` | 4 | 8,202 | yes |
+| `boundary_receipts` | 72 | 8,134 | yes |
+| `boundary_request` | 4 | 8,202 | yes |
+| `boundary_scope` | 12 | 8,194 | yes |
+| `boundary_snapshot` | 96 | 8,110 | yes |
+| `boundary_terminal` | 2 | 8,204 | yes |
+| `checkpoint_event` | 4 | 8,202 | yes |
+| `checkpoint_key` | 8 | 8,198 | yes |
+| `checkpoint_storage` | 8 | 8,198 | yes |
+| `commitment_numbers` | 184 | 8,022 | yes |
+| `custody_digest` | 864 | 7,342 | yes |
+| `custody_flush` | 442 | 7,764 | yes |
+| `custody_presence` | 390 | 7,816 | yes |
+| `custody_shape` | 398 | 7,808 | yes |
+| `cutoff_commitment` | 4 | 8,202 | yes |
+| `cutoff_record` | 4 | 8,202 | yes |
+| `cutoff_reference` | 4 | 8,202 | yes |
+| `cutoff_scope` | 8 | 8,198 | yes |
+| `cutoff_unique` | 4 | 8,202 | yes |
+| `cutoffs_unavailable` | 328 | 7,878 | yes |
+| `effect_once` | 12 | 8,194 | yes |
+| `envelope_schema` | 112 | 8,094 | yes |
+| `evidence_preserved` | 4 | 8,202 | yes |
+| `formats_enforced` | 1,244 | 6,962 | yes |
+| `history_event` | 20 | 8,186 | yes |
+| `inline_cap` | 4 | 8,202 | yes |
+| `json_number_grammar` | 28 | 8,178 | yes |
+| `memory_flags` | 352 | 7,854 | yes |
+| `no_extra_memories` | 4 | 8,202 | yes |
+| `no_prune_summary` | 2 | 8,204 | yes |
+| `operation_cas` | 8 | 8,198 | yes |
+| `operation_receipt` | 4 | 8,202 | yes |
+| `operation_result_digest` | 4 | 8,202 | yes |
+| `operation_result_ref` | 4 | 8,202 | yes |
+| `operation_schema` | 40 | 8,166 | yes |
+| `original_input` | 4 | 8,202 | yes |
+| `originals_preserved` | 4 | 8,202 | yes |
+| `outcome` | 4 | 8,202 | yes |
+| `partition` | 8 | 8,198 | yes |
+| `payload_schema` | 98 | 8,108 | yes |
+| `permission_or_withdrawal` | 1,044 | 7,162 | yes |
+| `phase` | 4 | 8,202 | yes |
+| `pins_preserved` | 4 | 8,202 | yes |
+| `references_resolve` | 8 | 8,198 | yes |
+| `replay_policy` | 8 | 8,198 | yes |
+| `request` | 8 | 8,198 | yes |
+| `selected_archived` | 4 | 8,202 | yes |
+| `selected_fields_preserved` | 12 | 8,194 | yes |
+| `selection_exists` | 4 | 8,202 | yes |
+| `selection_kind` | 2 | 8,204 | yes |
+| `selection_pinned` | 4 | 8,202 | yes |
+| `selection_unique` | 4 | 8,202 | yes |
+| `semantic_binding` | 2,034 | 6,172 | yes |
+| `source` | 8 | 8,198 | yes |
+| `storage_uint64_NoneType` | 8 | 8,198 | yes |
+| `storage_uint64_bool` | 24 | 8,182 | yes |
+| `storage_uint64_dict` | 16 | 8,190 | yes |
+| `storage_uint64_float` | 8 | 8,198 | yes |
+| `storage_uint64_list` | 16 | 8,190 | yes |
+| `storage_uint64_maximum` | 8 | 8,198 | yes |
+| `storage_uint64_minimum` | 8 | 8,198 | yes |
+| `storage_uint64_str` | 24 | 8,182 | yes |
+| `summary_provenance` | 2 | 8,204 | yes |
+| `terminal_custody` | 8 | 8,198 | yes |
+| `unselected_preserved` | 4 | 8,202 | yes |
+| `versions_preserved` | 4 | 8,202 | yes |
+
+## Twelve-family grades before and after
+
+Before is the independent cycle-8 review. P/Q/A = PASS/PARTIAL/ABSENT. Only positive_negative_oracles upgrades PARTIAL → PASS, solely after B1's full-range controls and guard proof. S1–S3 are sweep-only. Other cells agree with the review.
+
+| Exact family | Before P/Q/A | After P/Q/A |
+|---|---:|---:|
+| `memory.dedup_sweep.completed` | 9/2/1 | 10/1/1 |
+| `memory.dedup_sweep.started` | 9/2/1 | 10/1/1 |
+| `memory.index.lexical.rebuild.completed` | 9/2/1 | 10/1/1 |
+| `memory.index.lexical.rebuild.started` | 9/2/1 | 10/1/1 |
+| `memory.index.semantic.rebuild.completed` | 9/2/1 | 10/1/1 |
+| `memory.index.semantic.rebuild.started` | 9/2/1 | 10/1/1 |
+| `memory.monthly_summary.completed` | 9/2/1 | 10/1/1 |
+| `memory.monthly_summary.started` | 9/2/1 | 10/1/1 |
+| `memory.prune_archive.completed` | 9/2/1 | 10/1/1 |
+| `memory.prune_archive.started` | 9/2/1 | 10/1/1 |
+| `memory.verification_sweep.completed` | 9/2/1 | 10/1/1 |
+| `memory.verification_sweep.started` | 9/2/1 | 10/1/1 |
+
+Totals: **108 PASS / 24 PARTIAL / 12 ABSENT → 120 PASS / 12 PARTIAL / 12 ABSENT**. Each family remains prepared without admission; retention and native limitations stay explicit. Exact citations are re-pinned at the assessed source commit.
+
+## Checks, preservation and boundaries
+
+- **Complete checkers:** all 12 --family runs exit 0. All old suites remain enabled, including 340 retained-old and 340 live-independent controls, 96 old binary64 controls, 216 old-receipt forgery negatives, 3732 format negatives and 2736 format positives.
+- **Standing checks 1–11:** existing replay-only, exact Application-key refusal, encoded Project partition, whole-value 16 KiB/SP-337, identifier LF, semantic-only retry, checkpoint joins, failure-exit, eager-ref, retained-history and full isolation suites run in every applicable family. All 24 restored-B1 complete checker processes exit 1 at the intended owner-valid-large-sequence assertion (whole-event preflight and schema maximum, separately, in every family). No extra native claim.
+- **Astra classes:** independent coherent-identity forgery, Storage-only retry, four-mode live-independent history/access, integer-for-hex, dormant ref, whole-value cap, both-outcome missing-start custody, and wrong authority/archive types pass for every family. Whole-corpus check 11 covers masked negatives. Honest preparation grades retain admission/retention/native limits. Number classes 10/10a retain existing history controls and list S1–S3 above; explicit format edges remain enabled for class 12.
+- **Preservation:** 56 assertions preserve all old fixtures/contracts/registry rows, generic envelope, current/frozen operation/target schemas, exact Card 1b owner text, history/format/producer-number functions, Decision Log and cutoff proposal. Only thirteen current-number paragraphs change across the three owner docs. No new PlanUnit IDs.
+- **Derived files:** shard generate/check and index generate pass. Actual index validation retains its existing current-main integration failures, as reproduced against the untouched starting index. All 15 currentness inputs are SHA-matched before generation and retained under fix9/frozen-currentness for reproduction. Generated clocks are qualified.
+- **Resources:** initial disk 96 GB free and RAM 9 GiB available. Initial attempts paused at the unchanged 6 GiB guard; successful checks enforce it per family/guard. Sparse local worktree; no parallel checker, subagent, pm-mail, browser, server, admission, registry append, Decision Log entry, governance reseal, landing lock or main push.
+- **IDs used:** no new PlanUnit IDs. Edited existing SP-630–639, CV-658–659, ATS-315. Existing AMS-100–107, CV-650–657 and ATS-316 remain references. New fixture identifier: pm.memory.storage_uint64_fixtures.v1. No new recipe/serializer identifier.
+- **Remaining:** independent review; S1–S3 shared adoption; current-main/index reconciliation; per-family admission; operation/result retention and cited unlanded decision/retention integration; Jared's cutoff choice; native receipt/transaction/flush/crash/backup/GUI/race proof. Dedup survivor/disposition remains open.
+
+## Round-nine evidence
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix9/check11.json` — SHA-256 `d243a1a551e83be8647fc5e069e52f00a70a3b7e02a95d84d69581286484d846`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix9/family-summary.json` — SHA-256 `960d442de806c2800a7dac545f6adc0022f788f364ba5c39493710833d9d258d`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix9/restored-b1.json` — SHA-256 `3f055337795eaa0e55911417bee8a754056949181b5348a44510f413e49a894e`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix9/independent-probes.json` — SHA-256 `8faf23d47c629d4460d848866be85bbb48069f50aebc3c4ff514188763a2f6a6`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix9/scope-preservation.json` — SHA-256 `a60058464aa27a10bfea95e0c7857537a953e1901ff53ce1c276a1b427fbf3e8`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix9/currentness-copy.json` — SHA-256 `044c5dff7d5239bd1daadf0be7fdf65f457da8866de3c1fee06067533212242c`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix9/shard-check.json` — SHA-256 `a471f4cd29bb5aeac3bf0eb27f14f6ee4baeec39bd3cb3a866aea09768adca69`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix9/index-validate.json` — SHA-256 `1e38cfac5f90eba5e370254d1ce638cd745ab0c14d3ea4edeb3c47fc5a0e7a60`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix9/index-baseline-equivalence.json` — SHA-256 `13cfbdb7ed8c987a977e81ba5d6353055ee0d4b4f2cd400de079d09826b36542`.
+
+Report/self-grade copies are in drafts/DMEM/. Complete proof IDs/complements remain in fix9/check11.json; redundant run outputs and temporary copies are removed. The sparse worktree is removed with the literal path after both commits are pushed.
+
+---
+
+Earlier source-pinned reports follow as lineage; their cutoff proposal is unchanged.
+
 # DMEM fix round 8 — retained write recipes and enforced formats
 
 Branch: `plans/ea-w2-memory-maintenance-20261104`. Assessed source commit: `ba3880b49cc9c0d6e2d89adfd40b3ca3a7550fd8`. Reviewed head: `e6703d144e85ddd7e566729848666656dfe6f14e`. Review: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DMEM-sol/REVIEW-cycle7.md`.
