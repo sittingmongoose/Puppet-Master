@@ -1,77 +1,84 @@
 {
   "schema_id": "pm.event_authority.numrule_checks.v1",
   "branch": "plans/ea-numrule-20261105",
-  "reviewed_head": "883af36ba4a68230e14497df86a5e4edcd38f697",
-  "implementation_commit": "088e8d63f7798c1efa7eaeb7c002f21f220fbb56",
+  "reviewed_head": "3d1459f9e60abc8519a08bdfb1d4ca0919cd152b",
+  "implementation_commits": {
+    "B1": "20d66f034a94c78f26d991fe1323e1f5c04ab6f3",
+    "B2": "67d459eda1c7d9d71a6de098c37af0ca501a224f",
+    "B3": "0eb68afab44bc6a5198d4b0909b76a0433beafda"
+  },
   "base": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
-  "status": "pass",
-  "scope": "Final finite outcomes and bounded review regressions only; complete guard isolation SWEEP_PENDING and native authority NOT_RUN.",
+  "status": "partial",
+  "scope": "All finite B1-B3 outcomes, narrow mutations, existing unit tests and shard check pass. Index has 22 unchanged integration failures; full guard isolation SWEEP_PENDING and native authority NOT_RUN.",
   "commands": [
     {
       "name": "self-test",
       "command": [
-        "python3",
+        "/home/sittingmongoose/pm-worktrees/numrule-fix3-env/bin/python",
         "scripts/pm_event_numbers.py",
         "--self-test"
       ],
       "exit_code": 0,
-      "expected_exit_code": 0,
-      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/self-test.stdout",
-      "sha256": "bd9eb05749b7d02f498399618e5a5125ba74eacf423b09b132af5ce17b1faffe",
-      "stderr_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/self-test.stderr",
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "run_record": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/self-test.run.json",
-      "run_record_sha256": "f8e8060662e2a40f4c218831db08ce942306feab7f84cfbc5fcfcc5916a481a2"
+      "started_utc": "2026-11-05T07:55:42.310463+00:00",
+      "finished_utc": "2026-11-05T07:55:45.624987+00:00",
+      "available_gb": 13,
+      "stdout": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix3/self-test.stdout",
+        "sha256": "e5ffdba0080058a36a9535f50821b860b27dbeb1cd725d856f4f08ed5b3813e8"
+      },
+      "stderr": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix3/self-test.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "run_record": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix3/self-test.run.json",
+      "run_record_sha256": "b083978ceb26cc16d268546011fd8509adb8cf4c14467c782a72535c862b6528"
     },
     {
       "name": "corpus",
       "command": [
-        "/usr/bin/python3",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/direct_corpus.py"
+        "/home/sittingmongoose/pm-worktrees/numrule-fix3-env/bin/python",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix3/direct_corpus.py"
       ],
       "exit_code": 0,
-      "expected_exit_code": 0,
-      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/corpus.stdout",
-      "sha256": "3e3efb8cda6c9cd0517e3c166108580d7f8463ef2a81f517343f4576ea215fe1",
-      "stderr_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/corpus.stderr",
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "run_record": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/corpus.run.json",
-      "run_record_sha256": "1c1c6ac72b99463edb21c6a7b4061a37d7e6491b71a958bd61b98adb3e731c41"
+      "started_utc": "2026-11-05T07:56:05.341964+00:00",
+      "finished_utc": "2026-11-05T07:56:07.691795+00:00",
+      "available_gb": 13,
+      "stdout": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix3/corpus.stdout",
+        "sha256": "e5ffdba0080058a36a9535f50821b860b27dbeb1cd725d856f4f08ed5b3813e8"
+      },
+      "stderr": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix3/corpus.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "run_record": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix3/corpus.run.json",
+      "run_record_sha256": "bac3060a244b10f720b8fe4dca82238bf25e27c4cee340be911cdf547c2584be"
     },
     {
       "name": "regressions",
       "command": [
-        "/usr/bin/python3",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/regressions.py"
+        "/home/sittingmongoose/pm-worktrees/numrule-fix3-env/bin/python",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix3/regressions.py"
       ],
       "exit_code": 0,
-      "expected_exit_code": 0,
-      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/regressions.stdout",
-      "sha256": "143430ccb571f21e03b389e18e5384a72bfe269505af001dfbc31ea0aa422965",
-      "stderr_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/regressions.stderr",
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "run_record": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/regressions.run.json",
-      "run_record_sha256": "43685d54716417bcac0b60294ef9e46f7f334115404e73e160dcc8a93fc39bad"
-    },
-    {
-      "name": "failure-oracle",
-      "command": [
-        "/usr/bin/python3",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/failure_oracle.py"
-      ],
-      "exit_code": 0,
-      "expected_exit_code": 0,
-      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/failure-oracle.stdout",
-      "sha256": "56833deb55f54792cada6a2c785acf22b2ff9c6485bede943d58524cbc0cc004",
-      "stderr_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/failure-oracle.stderr",
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "run_record": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/failure-oracle.run.json",
-      "run_record_sha256": "d82d33c45428553f8497f606cf639284a57d61d6397acbba4797564ae11bf30e"
+      "started_utc": "2026-11-05T07:56:33.503021+00:00",
+      "finished_utc": "2026-11-05T07:56:49.837727+00:00",
+      "available_gb": 15,
+      "stdout": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix3/regressions.stdout",
+        "sha256": "1dc2308281061c0134687416204a4e9281a6f3471e11211906f3f754851daebc"
+      },
+      "stderr": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix3/regressions.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "run_record": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix3/regressions.run.json",
+      "run_record_sha256": "75bee30fc1be6f7c0f09544f7e77aa431aadf0106fd062feb1e1247b5b774073"
     },
     {
       "name": "binding-tests",
       "command": [
-        "/usr/bin/python3",
+        "/home/sittingmongoose/pm-worktrees/numrule-fix3-env/bin/python",
         "-m",
         "unittest",
         "discover",
@@ -81,18 +88,24 @@
         "test_pm_event_index_binding.py"
       ],
       "exit_code": 0,
-      "expected_exit_code": 0,
-      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/binding-tests.stdout",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/binding-tests.stderr",
-      "stderr_sha256": "b6ece6e72a2d0a68f5468e35879b07260c3d5970d25432303dea7377ffe564a9",
-      "run_record": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/binding-tests.run.json",
-      "run_record_sha256": "8b1ddd16aa7d5efeb99546e44dcd5eacf3fba37de5948e1a59f3c4ec57cf1ebf"
+      "started_utc": "2026-11-05T07:56:58.244902+00:00",
+      "finished_utc": "2026-11-05T07:56:58.924641+00:00",
+      "available_gb": 15,
+      "stdout": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix3/binding-tests.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix3/binding-tests.stderr",
+        "sha256": "75312dbfcdc7087a0ad5a3a356fdb00cf72462a59e8b2f8416c01f22db1b6ff2"
+      },
+      "run_record": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix3/binding-tests.run.json",
+      "run_record_sha256": "fc697c7818bb831e2ac60e939cfb47386467d5b2f8aa3f5a526a41bbb189b355"
     },
     {
       "name": "runtime-storage-tests",
       "command": [
-        "/usr/bin/python3",
+        "/home/sittingmongoose/pm-worktrees/numrule-fix3-env/bin/python",
         "-m",
         "unittest",
         "discover",
@@ -102,123 +115,115 @@
         "test_shared_runtime_storage_contracts.py"
       ],
       "exit_code": 0,
-      "expected_exit_code": 0,
-      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/runtime-storage-tests.stdout",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/runtime-storage-tests.stderr",
-      "stderr_sha256": "6f82f728ba41c223c9b18aac7dd3b9342c1a6217628b43d46bd0d26ebd19ee9e",
-      "run_record": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/runtime-storage-tests.run.json",
-      "run_record_sha256": "d9a669d82f9f0e74e9453dd7f5df6e83c16157d6cbdb374d5e806c2241dc73b3"
+      "started_utc": "2026-11-05T07:57:12.169052+00:00",
+      "finished_utc": "2026-11-05T07:57:29.314147+00:00",
+      "available_gb": 14,
+      "stdout": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix3/runtime-storage-tests.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix3/runtime-storage-tests.stderr",
+        "sha256": "37ed5b927d5544ed63540f8c853b5b051629a696b1e715a3ebc30542d3aaf203"
+      },
+      "run_record": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix3/runtime-storage-tests.run.json",
+      "run_record_sha256": "6d3d7e99de1677af4728642d9b8f0fc069a0be1cf5ae35fc89bc4170c8a7ef07"
     },
     {
-      "name": "shards-generate",
+      "name": "failure-oracle",
       "command": [
-        "python3",
-        "scripts/pm-shard-plans.py",
-        "--generate",
-        "--config",
-        "Plans/sharding_config.json"
+        "/home/sittingmongoose/pm-worktrees/numrule-fix3-env/bin/python",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix3/failure_oracle.py"
       ],
       "exit_code": 0,
-      "expected_exit_code": 0,
-      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/shards-generate.stdout",
-      "sha256": "0097f44a100929b5fcc967352e31e0a28f4a8974cb0027f58fdf4df24ed776d3",
-      "stderr_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/shards-generate.stderr",
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "run_record": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/shards-generate.run.json",
-      "run_record_sha256": "ef07544cccf2101db55bef0101bf61b4ac4f7e8633717753c86c781a90bf2539"
-    },
-    {
-      "name": "index-generate",
-      "command": [
-        "/usr/bin/python3",
-        "scripts/pm-plan-index.py",
-        "generate"
-      ],
-      "exit_code": 0,
-      "expected_exit_code": 0,
-      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/index-generate.stdout",
-      "sha256": "6e9fbffa92daf0fcbcbd7382f10a9afed67b55bd9a5547ee82a99efac84d142b",
-      "stderr_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/index-generate.stderr",
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "run_record": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/index-generate.run.json",
-      "run_record_sha256": "cb36596f539e54157200df0642d47dcc9c40bb0bd054495a5bb8a21fbddd628c"
+      "started_utc": "2026-11-05T07:57:33.234260+00:00",
+      "finished_utc": "2026-11-05T07:57:36.311282+00:00",
+      "available_gb": 14,
+      "stdout": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix3/failure-oracle.stdout",
+        "sha256": "f6ee8ffa9322883a8370fd2ab4fbfc9ab06f4a1d81becb71a6a0b5743873ffaa"
+      },
+      "stderr": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix3/failure-oracle.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "run_record": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix3/failure-oracle.run.json",
+      "run_record_sha256": "b1e125680027090f7c7d26085552d7437f07ac64bd293a68aa6991b3e7bf996a"
     },
     {
       "name": "shards-check",
       "command": [
-        "python3",
+        "/home/sittingmongoose/pm-worktrees/numrule-fix3-env/bin/python",
         "scripts/pm-shard-plans.py",
         "--check",
         "--config",
         "Plans/sharding_config.json"
       ],
       "exit_code": 0,
-      "expected_exit_code": 0,
-      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/shards-check.stdout",
-      "sha256": "d697ac77c260ee1fbe5007467d179c832c4c197ffc685d08b78f338e04ff7fdc",
-      "stderr_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/shards-check.stderr",
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "run_record": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/shards-check.run.json",
-      "run_record_sha256": "18e90b67903ed2e5dd2e2de314592fc2b5e82eac4d13d76c376a2a6de0250a45"
+      "started_utc": "2026-11-05T07:57:44.496171+00:00",
+      "finished_utc": "2026-11-05T07:58:07.179828+00:00",
+      "available_gb": 13,
+      "stdout": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix3/shards-check.stdout",
+        "sha256": "d697ac77c260ee1fbe5007467d179c832c4c197ffc685d08b78f338e04ff7fdc"
+      },
+      "stderr": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix3/shards-check.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "run_record": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix3/shards-check.run.json",
+      "run_record_sha256": "f6f0d10a9036041996fef4fdc46db8617c87aaedfd1defc16514c5e76572fcb0"
     },
     {
       "name": "index-validate",
       "command": [
-        "/usr/bin/python3",
+        "/home/sittingmongoose/pm-worktrees/numrule-fix3-env/bin/python",
         "scripts/pm-plan-index.py",
         "validate"
       ],
-      "exit_code": 0,
-      "expected_exit_code": 0,
-      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/index-validate.stdout",
-      "sha256": "3640fae688c5aac2964012af962eeafc23b2ac220543f691ada20f646df17b6a",
-      "stderr_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/index-validate.stderr",
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "run_record": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/index-validate.run.json",
-      "run_record_sha256": "a0eea8b3342d4d5f239d8f2add732bbfd07cac93e5f107e1fa8fd5f7946e7d9b"
+      "exit_code": 1,
+      "started_utc": "2026-11-05T07:58:24.854692+00:00",
+      "finished_utc": "2026-11-05T07:59:09.260113+00:00",
+      "available_gb": 12,
+      "stdout": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix3/index-validate.stdout",
+        "sha256": "5262d72dfe55edba90c43c1cc0676e2599147d2f4c4c829a40a06d0da8492cd6"
+      },
+      "stderr": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix3/index-validate.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "run_record": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix3/index-validate.run.json",
+      "run_record_sha256": "625cc1fb301c61131479d7f17166a3cf6746530a532d705626dfd958ee32f4ea"
     },
     {
       "name": "scope-audit",
       "command": [
-        "python3",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/scope_audit.py"
+        "/home/sittingmongoose/pm-worktrees/numrule-fix3-env/bin/python",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix3/scope_audit.py"
       ],
       "exit_code": 0,
-      "expected_exit_code": 0,
-      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/scope-audit.stdout",
-      "sha256": "6c8664351143af6d7f14605fe269e5349de0aa1af1e112ac0e0c67af435a0687",
-      "stderr_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/scope-audit.stderr",
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "run_record": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/scope-audit.run.json",
-      "run_record_sha256": "461a244d9f4979191b27b686c1d7d2251c14fb56559c40682a55d2ee5e9f45a5"
+      "started_utc": "2026-11-05T08:02:56.272180+00:00",
+      "finished_utc": "2026-11-05T08:02:56.558701+00:00",
+      "available_gb": 15,
+      "stdout": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix3/scope-audit.stdout",
+        "sha256": "72997da97f40d322588542fe03d1097f90f646a7a75365fe8f09e2f0b29eacfe"
+      },
+      "stderr": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix3/scope-audit.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "run_record": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix3/scope-audit.run.json",
+      "run_record_sha256": "275ac7773e6c69a87e6923cdf233709a2c7cc5c73dc4f107a3f69f720a7b778b"
     }
   ],
-  "corpus": {
-    "corpus_cases": 451,
-    "case_passes": 451,
-    "positives": 239,
-    "negatives": 212,
-    "labelled_cases": 451,
-    "labelled_negatives": 212
+  "initial_index_attempt": {
+    "exit_code": -15,
+    "record": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix3/index-validate-initial.run.json",
+    "resolution": "Terminated after starting before shard completion; repeated sequentially after the shard check finished."
   },
-  "owner_integration_checks": 69,
-  "prior_attempts": [
-    {
-      "name": "runtime-storage-tests-initial",
-      "exit_code": 1,
-      "run_record": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/runtime-storage-tests-initial.run.json",
-      "sha256": "c40dfb2dad020bb162d6b3c55d85cc5e89a582eeda0070dbc9631e75bc54f3b1",
-      "resolution": "Preserved the pinned envelope schema bytes; CV-253 is composed in datetime_validator without registry edits. Final runtime-storage-tests exit 0."
-    },
-    {
-      "name": "scope-audit-initial",
-      "exit_code": 1,
-      "run_record": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix2/scope-audit-initial.run.json",
-      "sha256": "1a8c60a46594bc2dfc2a792500393820ae749efc998961c4ab4050cc1347f416",
-      "resolution": "Removed timestamp-only churn from the reverted schema edit by restoring its reviewed generated group and regenerating. Final scope audit exit 0."
-    }
-  ],
   "native_authority": "NOT_RUN",
-  "guard_isolation": "SWEEP_PENDING"
+  "guard_isolation": "SWEEP_PENDING",
+  "index_baseline_proof": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix3/index-baseline-proof.json"
 }

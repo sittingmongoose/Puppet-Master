@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-NUMRULE-SHARED-FIX2-20261105",
+  "assessment_id": "EA-NUMRULE-SHARED-FIX3-20261105",
   "assessment_kind": "author_shared_prerequisite_scope_assessment",
   "assessed_tree": {
     "branch": "plans/ea-numrule-20261105",
@@ -37,7 +37,10 @@
       "native_original_authentication": "NOT_RUN",
       "integration_status": "PARTIAL",
       "finite_selector_and_forged_output_oracles": "PASS",
-      "guard_isolation": "SWEEP_PENDING"
+      "guard_isolation": "SWEEP_PENDING",
+      "reviewed_fixture_predicate_isolation": "PASS",
+      "exact_boolean_verifier_oracles": "PASS",
+      "complete_predicate_coverage": "PARTIAL"
     },
     {
       "plan_unit_id": "CV-1101",
@@ -45,23 +48,25 @@
       "enforced_format_oracles": "PASS",
       "retained_profile_fixtures": "PASS",
       "lane_and_native_profile_integration": "NOT_RUN",
-      "integration_status": "PARTIAL"
+      "integration_status": "PARTIAL",
+      "reference_composition_oracles": "PASS",
+      "retained_envelope_composition_fixtures": "PASS"
     }
   ],
   "corpus": {
-    "cases": 451,
-    "positives": 239,
-    "negatives": 212,
-    "labelled_negatives": 212,
-    "passed": 451,
+    "cases": 1176,
+    "positives": 760,
+    "negatives": 416,
+    "labelled_negatives": 416,
+    "passed": 1176,
     "owner_integration_checks": 69,
     "finite_case_oracles": "PASS",
     "guard_isolation": "SWEEP_PENDING",
     "result": "PARTIAL",
     "withdrawn_group_proof_claim": "The original 25 diagnostic-group removals are not per-predicate isolation proof.",
-    "labelled_cases": 451,
-    "targeted_review_predicate_removals": 7,
-    "reviewed_fixture_replay": 370
+    "labelled_cases": 1176,
+    "targeted_review_predicate_removals": 6,
+    "round2_reviewed_fixture_replay": 370
   },
   "failed_premise_checks": [],
   "owner_questions": [],
@@ -75,20 +80,21 @@
     "Shared guard-isolation adoption for every labelled negative; specifically binary64/decimal, kind/sign, catalog/verification, replay-only/replay-policy and syntax/digest",
     "Native original-owner custody/recipe installation and resource authentication",
     "Complete actual schema/successor route qualification and family-specific adoption across 19 lanes",
-    "Integration/governance work belongs to the lead, outside this drafting task"
+    "Integration/governance work belongs to the lead, outside this drafting task",
+    "Index validation before integration: PLS-025 from newer main plus 21 unchanged legacy ledger-shape errors; no affected file was edited in this fix round."
   ],
-  "reviewed_head": "883af36ba4a68230e14497df86a5e4edcd38f697",
-  "review_round": 2,
+  "reviewed_head": "3d1459f9e60abc8519a08bdfb1d4ca0919cd152b",
+  "review_round": 3,
   "family_grades_before_after": "N/A: no event-family rows before or after. Native execution remains NOT_RUN.",
   "grade_changes": {
     "CV-1100.bounded_adapter_oracles": "author PASS -> review PARTIAL -> finite cases PASS, overall PARTIAL pending isolation",
     "SP-1100.frozen_byte_vector_oracles": "PASS -> PASS",
-    "SP-1101.bounded_selector_oracles": "author PASS -> review PARTIAL -> finite cases PASS, overall PARTIAL pending isolation",
+    "SP-1101.bounded_selector_oracles": "Astra PARTIAL -> B2/B3 finite isolation/result oracles PASS; aggregate selector remains PARTIAL pending shared guard inventory/native adoption",
     "corpus": "author PASS -> review PARTIAL -> finite cases PASS, guard proof SWEEP_PENDING",
     "CV-1101.owner_specification": "cycle-2 review PARTIAL -> finite reference owner binding PASS; native/lane integration NOT_RUN",
-    "CV-1101.enforced_format_oracles": "cycle-2 review PARTIAL -> source/family and CV-253 Storage profile finite oracles PASS"
+    "CV-1101.enforced_format_oracles": "Astra PARTIAL -> bounded direct/reference/nested/retained composition oracles PASS; complete lane/native integration NOT_RUN"
   },
-  "implementation_commit": "088e8d63f7798c1efa7eaeb7c002f21f220fbb56",
+  "implementation_commit": "0eb68afab44bc6a5198d4b0909b76a0433beafda",
   "round1_validation": {
     "index_status": "pass",
     "plan_units": 7426,
@@ -115,5 +121,30 @@
     "preserved_pinned_envelope_schema": true,
     "index_status": "pass",
     "shards_status": "pass"
+  },
+  "implementation_commits": {
+    "B1": "20d66f034a94c78f26d991fe1323e1f5c04ab6f3",
+    "B2": "67d459eda1c7d9d71a6de098c37af0ca501a224f",
+    "B3": "0eb68afab44bc6a5198d4b0909b76a0433beafda"
+  },
+  "ids_minted_round3": [],
+  "round3_validation": {
+    "self_test_status": "pass",
+    "corpus_status": "pass",
+    "targeted_predicate_removals": 6,
+    "bounded_regression_assertions": 28,
+    "existing_unit_tests": 30,
+    "shards_status": "pass",
+    "index_status": "fail",
+    "index_failure_count": 22,
+    "index_failure_disposition": "21 unchanged legacy ledger-shape errors; PLS-025 main-ahead integration requirement; all named paths and index/validator unchanged from reviewed head.",
+    "owner_text_changed": false,
+    "derived_regeneration": "NOT_NEEDED",
+    "failure_exit": 1,
+    "exception_outcome": "exception",
+    "pinned_schema_resources_changed": false,
+    "early_index_run": "Terminated after unintended overlap with shard check; final index check ran after shards completed.",
+    "scope_audit_status": "pass",
+    "reviewed_case_records_preserved": 451
   }
 }
