@@ -505,10 +505,15 @@ const NO_PICK_DONE = (screen) => {
 /* Back from Review to Welcome, and on every step on the way another value picked (or typed) first: Back must take the
    pick back, so the answers after it are those the step was reached with (lead: every picker, not only Review's Edit
    links: the restore source and place, the NAS device, method and folder, the service, the computer kind, the files
-   place, the backup place and access from away) */
-async function pickBackWalk(A, bad, label) {
-  const seq = [], picked = []; let s = await look(A);
+   place, the backup place and access from away). With judged ({ stale }), each screen is also judged exactly as walkBack
+   judges it, before its pick (generic, judge, toReviewOk): row 20's Back walk is this walk, so rows 20 and 21 share one
+   missing-pick guard (SW-41) */
+const BACK_SIG = () => { const l = document.querySelector('.o55-pane > .o55-layer:not(.o55-out)');
+  return JSON.stringify([!!document.querySelector('.o55-sheet[data-open="true"]'), l ? l.innerText : '', l ? l.querySelectorAll('[data-o55-do], input, textarea').length : 0]); };
+async function pickBackWalk(A, bad, label, judged = null) {
+  const seq = [], picked = [], run = []; let s = await look(A);
   for (let i = 0; i < 40; i++) {
+    if (judged) { generic(s, run, label + ' Back#' + i, bad); run.push(s.screen); judge(s, judged.stale || [], label + ' Back#' + i, bad); }
     seq.push(s.screen); if (!s.back) break;
     const before = await A.frame().evaluate(ANSWERS); let did = null;
     if (!NO_PICK.includes(s.screen) && !await A.frame().evaluate(NO_PICK_DONE, s.screen)) {
@@ -521,8 +526,12 @@ async function pickBackWalk(A, bad, label) {
       if (!did) bad.push(`${label} ${s.screen}: nothing to pick or type on this Back-walk screen, so nothing was checked`);
       const now = (await A.snap()).screen; if (now !== s.screen) { bad.push(`${label} ${s.screen}: ${did} went on to ${now} without Continue`); break; }
     }
-    await pressBack(A); let n = await look(A); if (n.screen === s.screen) { await pressBack(A); n = await look(A); } /* (the first Back closes an open sheet) */
+    /* (the first Back closes an open sheet. Judged, as in walkBack, a Back that changes nothing on the screen went nowhere:
+       a second press only follows a first that visibly undid something, a sheet or what the pick revealed) */
+    const pre = judged ? await A.frame().evaluate(BACK_SIG) : null;
+    await pressBack(A); let n = await look(A); if (n.screen === s.screen && (!judged || pre !== await A.frame().evaluate(BACK_SIG))) { await pressBack(A); n = await look(A); }
     if (n.screen === s.screen) { bad.push(`${label} Back#${i}: Back on ${s.screen} went nowhere`); break; }
+    if (judged) toReviewOk(s, n, i, run, label, bad);
     if (did) { picked.push(s.screen + ' ' + did); const after = await A.frame().evaluate(ANSWERS), ch = Object.keys(before).filter((k) => JSON.stringify(before[k]) !== JSON.stringify(after[k]));
       if (ch.length) bad.push(`${label} ${s.screen}: ${did}, then Back, changed ${ch.map((k) => k === 'draft' ? 'draft(' + Object.keys(Object.assign({}, before.draft, after.draft)).filter((x) => JSON.stringify(before.draft[x]) !== JSON.stringify(after.draft[x])).slice(0, 6).join(', ') + ')' : k + ' ' + JSON.stringify(before[k]) + ' > ' + JSON.stringify(after[k])).join('; ')}`); }
     s = n;
@@ -550,8 +559,12 @@ const ABANDON_NOT = { 'Home NAS files over SSH': NAS_STEPS, 'Home NAS files moun
   'a completed new Server': [...SERVER_STEPS, 'away', 'away-setup'], 'a connected existing Server': ['c-route', 'c-review', 'c-pair', 'c-ready'],
   'restore from a Recovery Kit': ['r-source', 'r-unlock', 'r-pick', 'r-preview'], 'restore from a cloud drive': ['r-source', 'r-unlock', 'r-pick', 'r-preview'],
   'online import': ['ex-repos'], 'online new copy': ['online-service', 'online-signin', 'online-details'], 'away with Tailscale': [...SERVER_STEPS, 'away', 'away-setup'] };
-/* --set rich=<part of a name>,… runs only those rich configurations in rows 20 and 21 */
+/* --set rich=<part of a name>,… runs only those rich configurations in rows 20 and 21 and in the focused SW-41 test */
 const richOf = (t) => (t.args.rich ? RICH.filter(([k]) => String(t.args.rich).split(',').some((x) => k.includes(x))) : RICH);
+/* (a filter that names no rich configuration fails, rather than running none of them and passing) */
+const richOrFail = async (t, label) => { const r = richOf(t);
+  if (t.args.rich && !r.length) await t.check(`${label}: --set rich`, false, `--set rich=${t.args.rich} matches no rich configuration; each comma-separated part must be part of one of: ${RICH.map(([k]) => k).join('; ')}`);
+  return r; };
 const KEEP = () => { const S = O55.S, d = S.sess.drafts.main, n = S.sess.nas || {}, r = S.sess.restore || {}, c = document.querySelector('.o55-pane > .o55-layer:not(.o55-out) [data-o55-do="commit"]');
   return { mode: d.project_mode, name: d.project_name, src: d.project_source_ref, transport: d.project_transport, loc: d.local_location, online: d.online_mode, forge: d.forge, repo: d.repository_ref,
     backup: d.backup_source_ref, btransport: d.backup_transport, storage: d.storage_mode, preflight: d.preflight_result_refs, auth: d.source_access_authorization_refs,
@@ -576,13 +589,16 @@ const keepAttempt = async (A) => { await A.click('reviewAgain', undefined, 'revi
 export const tests = {
   /* Focused SW-41 regression. Run with --grep 'SW-41' and --set selftest=nopick to require failure on
      every eligible screen, or nopick:begin to require failure after other screens really were picked. */
+  /* (online new copy by default; --set rich filters as in rows 20 and 21, richOf, and a filter matching nothing fails) */
   async 'SW-41 · every Back-walk picker must offer a change'(t) {
-    await flow(t, 'SW-41 online new copy Back walk', async (A, bad) => {
-      await RICH.find(([kind]) => kind === (t.args.rich || 'online new copy'))[1](A); await A.screen('review');
-      const w = await pickBackWalk(A, bad, 'SW-41');
-      if (w.seq[w.seq.length - 1] !== 'welcome') bad.push(`SW-41: Back stopped on ${w.seq[w.seq.length - 1]}`);
-      t.log(`SW-41 Back screens: ${w.seq.join(' > ')}; picks: ${w.picked.join(' | ')}`);
-    });
+    const kinds = t.args.rich ? await richOrFail(t, 'SW-41') : RICH.filter(([k]) => k === 'online new copy');
+    for (const [kind, est] of kinds)
+      await flow(t, `SW-41 ${kind} Back walk`, async (A, bad) => {
+        await est(A); await A.screen('review');
+        const w = await pickBackWalk(A, bad, `SW-41 ${kind}`);
+        if (w.seq[w.seq.length - 1] !== 'welcome') bad.push(`SW-41 ${kind}: Back stopped on ${w.seq[w.seq.length - 1]}`);
+        t.log(`SW-41 ${kind} Back screens: ${w.seq.join(' > ')}; picks: ${w.picked.join(' | ')}`);
+      });
   },
   async 'row A · Safe › GitHub › sign in › details › Safe › Change kept twice › Change › Not now, then Back to the start (Continue tried at each stop) and on'(t) {
     await row(t, 'A', { establish: async (A) => { await toDetails(A); await A.click('next', undefined, 'safe'); }, keep: keepCopy,
@@ -979,7 +995,8 @@ export const tests = {
      rich configurations, and for each every Edit link its Review shows, Edit > Continue with nothing changed > Review: the
      draft deep-equals the draft before (but its revision counter), Review shows the same rows, the Back path is the same */
   async 'row 20 · generated: every Review Edit link of each rich configuration (Home NAS files over SSH and mounted, a Home NAS source over SSH and mounted, a completed new Server, a connected existing Server, restore from a Recovery Kit and a cloud drive, online import and new copy, backup on Home NAS and a cloud drive, away with Tailscale), Edit and Continue unchanged: draft, Review rows and Back path all unchanged'(t) {
-    for (const [kind, est] of richOf(t))
+    const rich = await richOrFail(t, '20');
+    for (const [kind, est] of rich)
       await flow(t, `20 ${kind}`, async (A, bad) => { await est(A); await A.screen('review');
         const links = [...new Set((await A.snap()).buttons.filter((b) => b.action === 'edit').map((b) => b.arg))];
         if (!links.length) bad.push(`20 ${kind}: Review shows no Edit link`);
@@ -1006,13 +1023,16 @@ export const tests = {
            any family the page stores: RAW_RE, STORED_REFS) */
         const raw = await rawStale(A), rows = rawIn((await A.frame().evaluate(SNAP20)).rows.map((r) => ['Review row ' + r.split('=')[0], r.slice(r.indexOf('=') + 1)]), raw.filter((e) => e.x).map((e) => e.x));
         if (rows.length) bad.push(`20 ${kind}: Review shows a raw locator: ${rows.join(' | ')}`);
-        const seq = await walkBack(A, raw, bad, `20 ${kind}`), missed = (BACK_HAS[kind] || []).filter((x) => !seq.includes(x));
+        /* (SW-41: the Back run judges every screen as walkBack does, and on each one not in NO_PICK picks or types another
+           value first, which Back must take back: the same guard as row 21, so --set selftest=nopick or nopick:<screen> fails) */
+        const w = await pickBackWalk(A, bad, `20 ${kind}`, { stale: raw }), seq = w.seq, missed = (BACK_HAS[kind] || []).filter((x) => !seq.includes(x));
+        t.log(`20 ${kind} Back screens: ${seq.join(' > ')}; picks: ${w.picked.join(' | ')}`);
         if (missed.length) bad.push(`20 ${kind}: the Back run from Review leaves out still-current steps ${missed.join(', ')} (${seq.join(' > ')})`);
         const foreign = (BACK_NOT[kind] || []).filter((x) => seq.includes(x)); if (foreign.length) bad.push(`20 ${kind}: the Back run shows another way in's steps ${foreign.join(', ')} (${seq.join(' > ')})`);
         if (seq[seq.length - 1] !== 'welcome') bad.push(`20 ${kind}: the Back run from Review stopped on ${seq[seq.length - 1]} (${seq.join(' > ')})`); });
     /* abandoning an answer clears what it gave the plan (Astra AST-D6: files moved to This computer kept the NAS place and
        its key): each configuration's own answer given up, then every reference in the plan still describes an answer */
-    for (const [kind, est] of richOf(t)) { if (!ABANDON[kind]) continue; const [to, move] = ABANDON[kind];
+    for (const [kind, est] of rich) { if (!ABANDON[kind]) continue; const [to, move] = ABANDON[kind];
       await flow(t, `20 ${kind} given up: ${to}`, async (A, bad) => { await est(A); await A.screen('review'); await move(A); await A.screen('review');
         const inv = await A.frame().evaluate(INVAR); if (inv.length) bad.push(`20 ${kind} > ${to}: the plan still holds ${inv.join('; ')}`);
         const seq = await walkBack(A, [], bad, `20 ${kind} > ${to}`);
@@ -1106,7 +1126,7 @@ export const tests = {
      configuration and every Edit link its Review shows, another value picked (or typed), then Back without Continue: the
      draft, Review's rows, the screen's own selection (opened again) and the Back path are all as they were */
   async 'row 21 · generated twin of row 20: every Review Edit link of each rich configuration, another value picked or typed, then Back without Continue: draft, Review rows, the screen\'s own selection and the Back path all unchanged (lead ruling 1103040758)'(t) {
-    for (const [kind, est] of richOf(t))
+    for (const [kind, est] of await richOrFail(t, '21'))
       await flow(t, `21 ${kind}`, async (A, bad) => { await est(A); await A.screen('review');
         const links = [...new Set((await A.snap()).buttons.filter((b) => b.action === 'edit').map((b) => b.arg))];
         /* (SW-41: each Edit target with its first alternative, then its last where it has a second; a screen with nothing to
