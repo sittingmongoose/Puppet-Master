@@ -45640,7 +45640,13 @@
           "source_family": "subagent.context_shrunk",
           "foreign_event": true,
           "foreign_authority": true,
-          "expected": "identity_conflict_without_effect"
+          "expected": "identity_conflict_without_effect",
+          "test_class": "integration_regression",
+          "check_11_credit": false,
+          "distinct_target_predicates": [
+            "event_type",
+            "payload_schema_id"
+          ]
         },
         {
           "case_id": "genuine_other_context_event_only",
@@ -58435,7 +58441,13 @@
           "source_family": "subagent.context_rehydrated",
           "foreign_event": true,
           "foreign_authority": true,
-          "expected": "identity_conflict_without_effect"
+          "expected": "identity_conflict_without_effect",
+          "test_class": "integration_regression",
+          "check_11_credit": false,
+          "distinct_target_predicates": [
+            "event_type",
+            "payload_schema_id"
+          ]
         },
         {
           "case_id": "genuine_other_context_event_only",

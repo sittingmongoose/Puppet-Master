@@ -1064,6 +1064,9 @@ def main(guard_first=None):
             assert (original, authority) == before, (case['case_id'], 'authentic original unchanged')
             retry_boundary_count += 4
         for case in row.get('foreign_family_retry_cases', []):
+            if case['foreign_event'] and case['foreign_authority']:
+                assert case['test_class'] == 'integration_regression' and case['check_11_credit'] is False, case['case_id']
+                retry_boundary_count += 1
             foreign = families[case['source_family']]
             assert foreign is not row, case['case_id']
             event = foreign['positive_event_record'] if case['foreign_event'] else row['positive_event_record']
