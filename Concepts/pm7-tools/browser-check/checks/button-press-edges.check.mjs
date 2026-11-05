@@ -15,7 +15,7 @@ export default async function(t) {
  });
  const motions=t.args.motion?String(t.args.motion).split(','):['no-preference','reduce','attribute'];
  const looks=t.args.look?String(t.args.look).split(','):LOOKS;
- const screens=t.args.screen?String(t.args.screen).split(','):['look','where','nas-find','begin','name','safe','away','review','ai-none','ready','look-menu','backup-sheet','ex-folder','nas-smb','nas-key','online-details'];
+ const screens=t.args.screen?String(t.args.screen).split(','):['look','where','nas-find','begin','name','safe','away','review','ai-none','ready','look-menu','backup-sheet','ex-folder','nas-smb','tree-sheet','away-proxy'];
  for(const motion of motions) {
   await t.emulate({reducedMotion:motion==='attribute'?'no-preference':motion});
   for(const look of looks) {
@@ -23,7 +23,7 @@ export default async function(t) {
    await f.evaluate(m=>document.documentElement.setAttribute('data-motion',m==='attribute'?'reduced':'full'),motion);
    await f.evaluate(()=>{window.__pressSeen=new Set();});
    for(const screen of screens) {
-    await t.page.mouse.move(2,2);await f.evaluate(s=>{O55.S.lookOpen=false;O55.S.sess.ui.sheet=null;O55.ui.go(s==='look-menu'?'look':s==='backup-sheet'?'safe':s,{noHistory:true});if(s==='look-menu')O55.ui.act('lookMenu');if(s==='backup-sheet'){O55.S.sess.ui.sheet='backup';O55.ui.refresh();}},screen);await f.waitForTimeout(1800);
+    await t.page.mouse.move(2,2);await f.evaluate(s=>{O55.S.lookOpen=false;O55.S.sess.ui.sheet=null;if(s==='away-proxy'){O55.S.draft().remote_mode='reverse_proxy';O55.S.draft().proxy_hostname='https://pm.example.net';}O55.ui.go(s==='look-menu'?'look':s==='backup-sheet'?'safe':s==='tree-sheet'?'ex-folder':s==='away-proxy'?'away':s,{noHistory:true});if(s==='look-menu')O55.ui.act('lookMenu');if(s==='backup-sheet'||s==='tree-sheet'){O55.S.sess.ui.sheet=s==='backup-sheet'?'backup':'tree';O55.ui.refresh();}},screen);await f.waitForTimeout(1800);
     await f.evaluate(()=>{document.querySelectorAll('[data-press-test]').forEach(e=>e.removeAttribute('data-press-test'));document.querySelectorAll('#pm-o55-onboarding button:not(.o55-card, .o55-tile):not([aria-disabled="true"]):not(:disabled)').forEach(e=>{if(e.checkVisibility()&&e.getBoundingClientRect().width){const cls=[...e.classList].filter(c=>!['o55-on','pmh-on','o55-lookbtn','o55-talk','o55-close'].includes(c)).sort().join('.')||e.parentElement.className;const key=cls+(e.matches('.o55-btn')?':'+(e.closest('.o55-foot')?'footer':e.closest('.o55-sheet')?'sheet':'inline'):'');if(!window.__pressSeen.has(key)){window.__pressSeen.add(key);e.setAttribute('data-press-test','');}}});});
     const sel=L+'button[data-press-test]'+(t.args.button?String(t.args.button):''),count=await f.locator(sel).count(),tag=`${look} ${motion} ${screen}`;
     await f.evaluate(()=>{window.__press.clicks=[];window.__press.downs=[];});
@@ -32,7 +32,8 @@ export default async function(t) {
      const c=f.locator(sel).nth(i);await c.scrollIntoViewIfNeeded();await t.page.mouse.move(2,2);
      const rest=await f.evaluate(async({sel,i})=>{
       const e=document.querySelectorAll(sel)[i];e.__pressId=i;getComputedStyle(e).transform;
-      await Promise.all(e.getAnimations().filter(a=>a.transitionProperty&&a.playState==='running').map(a=>a.finished.catch(()=>{})));
+      const ancestors=[];for(let n=e;n&&n!==document.body;n=n.parentElement)ancestors.push(n);
+      await Promise.all(ancestors.flatMap(n=>n.getAnimations()).filter(a=>a.playState==='running'&&Number.isFinite(a.effect.getComputedTiming().endTime)).map(a=>a.finished.catch(()=>{})));
       const r=e.getBoundingClientRect(),s=getComputedStyle(e);
       const rad=Math.min(r.width/2,r.height/2,Math.max(...['TopLeft','TopRight','BottomLeft','BottomRight'].map(k=>parseFloat(s['border'+k+'Radius'])||0)));
       return {x:r.x,y:r.y,w:r.width,h:r.height,rad};
@@ -47,7 +48,8 @@ export default async function(t) {
       if(!exposed){covered.push(trial);continue;}
       await t.page.mouse.move(2,2);
       await f.evaluate(async({sel,i,trial})=>{const e=document.querySelectorAll(sel)[i];getComputedStyle(e).transform;
-       await Promise.all(e.getAnimations().filter(a=>a.transitionProperty&&a.playState==='running').map(a=>a.finished.catch(()=>{})));window.__press.trial=trial;},{sel,i,trial});
+       const ancestors=[];for(let n=e;n&&n!==document.body;n=n.parentElement)ancestors.push(n);
+      await Promise.all(ancestors.flatMap(n=>n.getAnimations()).filter(a=>a.playState==='running'&&Number.isFinite(a.effect.getComputedTiming().endTime)).map(a=>a.finished.catch(()=>{})));window.__press.trial=trial;},{sel,i,trial});
       await t.page.mouse.move(off.x+x,off.y+y);if(t.args.marks)await t.mark(`down ${trial}`);await t.page.mouse.down();
       // the box is sampled in the page for the whole hold, every frame, so a spring between reads is seen too
       const drift=await f.evaluate(({sel,i,hold,rest})=>new Promise(res=>{const e=document.querySelectorAll(sel)[i],t0=performance.now();let worst=0,frames=0;
