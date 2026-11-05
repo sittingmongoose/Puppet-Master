@@ -7,19 +7,19 @@
       "grade": "PASS"
     },
     {
-      "basis": "Declared entries enforced; dynamic/recursive and mixed-dialect assertions remain visible, unclassified and unproved. Mixed caller/target contexts preserve original validation and cannot receive isolation credit.",
+      "basis": "Four dialects, all keyword specimens under positive/negative/nested-not contexts. 768 cells: 139 with atomic cuts, 530 fail closed, 99 zero-predicate. Unknown vocabulary remains unclassified even in unused declarations.",
       "criterion": "schema_inventory",
       "grade": "PARTIAL"
     },
     {
-      "basis": "F1 exposes negated Python atoms independently. F4 refuses compound negative schema contexts before unsafe cuts; supported positive/single-negative cuts pass bounded regressions.",
+      "basis": "Only explicit one-predicate allow-list entries get cuts. Chains, ternaries, dataflow, negative applicability, regex/format grammar and unevaluated/oneOf contexts remain unproved.",
       "criterion": "predicate_cuts",
       "grade": "PARTIAL"
     },
     {
-      "basis": "Bounded Python grammar plus explicit unsupported inventory: standalone, assigned and annotated appends, class/nested/module declared calls, negated atoms and all review counterexamples caught. Consumed-result/class mutation itself is unsupported and unproved.",
+      "basis": "Complete conservative call/write census plus bounded atomic cuts. Python audit: 12 supported constructions and 16 unclassified; class/native/opaque/dataflow work still requires seams.",
       "criterion": "code_sites",
-      "grade": "PASS"
+      "grade": "PARTIAL"
     },
     {
       "basis": "Controls, own flips, unchanged unrelated refusals, explicit masking codes, crashes and restoration exercised.",
@@ -32,22 +32,22 @@
       "grade": "PASS"
     },
     {
-      "basis": "Stable JSON inventory/removal tables, complement universe and Markdown output exercised.",
+      "basis": "Stable JSON matrix and explicit predicate_count/cut metadata; all exercised adapter trust decisions are enumerated.",
       "criterion": "output",
       "grade": "PASS"
     },
     {
-      "basis": "Serial execution, actual low-memory pause/resume and expected RSS refusal verified.",
+      "basis": "Finite API thresholds, fresh configured callback-boundary samples and RSS recheck on resume verified with injected readers; sampled guard only.",
       "criterion": "resources",
       "grade": "PASS"
     },
     {
-      "basis": "86/86 expected observations caught: all 79 prior traps plus all cycle-2 probes and one extra trap for each remaining finding. The reviewed engine catches 82/86 and exposes exactly the four new F2/F5 regressions.",
+      "basis": "124/124 observations: old 86 plus 38 round-3 entries; reviewed base catches only 87/124, including the independent regex control.",
       "criterion": "corpus",
       "grade": "PASS"
     },
     {
-      "basis": "All 19 drafting lanes have callback, labels, replaced machinery and remaining-work instructions.",
+      "basis": "All 19 lane migration instructions retained; capability narrowed to actual allow-list, with every demonstrated trust-boundary decision named.",
       "criterion": "adoption_guide",
       "grade": "PASS"
     },
@@ -58,19 +58,19 @@
     }
   ],
   "evidence": {
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix2/verification-manifest.json",
-    "sha256": "e43848f2a67643c02e4935c9e02f7e447ec8ce64e2e4d99dbd1ecf3dac344441"
+    "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix3/verification-manifest.json",
+    "sha256": "2c8149b96f36b983ada12c4d1761004cff818c1cd6792776c2322c4e36fe7f1f"
   },
   "families": [],
   "family_rubric": "not applicable: this lane prepares a repository tool, not event families",
   "ids_used": [],
   "limitations": [
-    "Adapter declarations of input-field identity, selectors and opaque predicate boundaries require review.",
-    "Only the reviewer's bounded three-family DG6B retained-history exercise ran: 21 selected runtime guards proved, overall FAIL for uncovered obligations. No complete lane matrix or family grade upgrade.",
-    "Compound negative schemas, class/closure/native internals, consumed-result refusal calls, mixed-dialect and recursive/dynamic schema contexts require sound atomic adapter seams and remain unproved.",
-    "Format capability is interpreter-specific and missing checkers fail closed; no new product grammar or number-domain policy is created.",
-    "Plan-index validate reports 22 failures in unchanged paths against the current origin/main comparison. Shards pass; no governance or derived refresh performed.",
-    "RSS is sampled at callback boundaries, not an allocation sandbox."
+    "Only allow-listed single-predicate cuts receive automatic credit. Unsupported grammar remains unclassified/unproved.",
+    "No general chain normalizer or regex/format clause splitter. Pattern-bearing lanes cannot claim complete adoption from this tool alone.",
+    "Callback invocation, root-to-input occurrences, dynamic subjects, helper/source closure, refusal translation and alias/duplicate declarations require independent reviewer judgment.",
+    "Real exercise is bounded retained history: 21 selected guards, all three suites FAIL. No family grade or admission.",
+    "22 unchanged plan-index findings remain; shards pass. No owner/derived/governance changes.",
+    "Memory is sampled at fresh callback boundaries and resume, not hard allocation/child-process containment."
   ],
   "review_round_1": {
     "after": {
@@ -110,6 +110,89 @@
       "total": 86
     }
   },
-  "self_assessment": "PARTIAL overall for unsupported schema/code contexts and incomplete lane adoption. All 86 required trap observations and 21 selected real DG6B runtime predicates verified; full exercises remain FAIL for uncovered obligations.",
-  "subject": "shared check-11 guard-isolation tool"
+  "self_assessment": "PARTIAL overall. All 124 bounded observations and 21 selected real guards verified; unsupported grammar and incomplete lane adoption keep the three full real suites FAIL.",
+  "subject": "shared check-11 guard-isolation tool",
+  "review_round_3": {
+    "base_sha": "16bd9ccb0c52e557ef58b2b78b937308f1f28a03",
+    "implementation_commit": "9769ca85108aed8faf82fe9530fda5cd9cd43147",
+    "findings": {
+      "A-B1": "fixed; conservative refusal where no sound atomic cut exists",
+      "A-B2": "fixed; conservative refusal where no sound atomic cut exists",
+      "A-B3": "fixed; conservative refusal where no sound atomic cut exists",
+      "A-B4": "fixed; conservative refusal where no sound atomic cut exists",
+      "A-B5": "fixed; conservative refusal where no sound atomic cut exists",
+      "resource_finite": "fixed; conservative refusal where no sound atomic cut exists",
+      "resource_fresh": "fixed; conservative refusal where no sound atomic cut exists",
+      "resource_resume": "fixed; conservative refusal where no sound atomic cut exists"
+    },
+    "before": {
+      "code_sites": "PASS claimed, contradicted by Astra A-B2/A-B3",
+      "schema_inventory": "PARTIAL with false PASS cases",
+      "predicate_cuts": "PARTIAL with aggregate cuts"
+    },
+    "after": {
+      "code_sites": "PARTIAL",
+      "schema_inventory": "PARTIAL",
+      "predicate_cuts": "PARTIAL"
+    },
+    "traps": {
+      "old": 86,
+      "new": 38,
+      "caught": 124,
+      "total": 124
+    },
+    "schema_audit": {
+      "cut_cells": 139,
+      "fail_closed_cells": 530,
+      "zero_predicate_cells": 99
+    },
+    "python_audit": {
+      "supported": 12,
+      "fail_closed": 16
+    },
+    "real": [
+      {
+        "family": "plugin.loaded",
+        "status": "FAIL",
+        "inventory": 12007,
+        "rows": 403,
+        "evaluations": 3642,
+        "selected_proved": 7,
+        "unproved": 1155,
+        "unproved_schema": 425,
+        "unclassified_code": 730,
+        "unclassified_schema": 29,
+        "old_unproved": 649
+      },
+      {
+        "family": "plugin.hook.invoked",
+        "status": "FAIL",
+        "inventory": 12013,
+        "rows": 410,
+        "evaluations": 3705,
+        "selected_proved": 7,
+        "unproved": 1161,
+        "unproved_schema": 431,
+        "unclassified_code": 730,
+        "unclassified_schema": 28,
+        "old_unproved": 655
+      },
+      {
+        "family": "auth.github.authenticated",
+        "status": "FAIL",
+        "inventory": 12031,
+        "rows": 427,
+        "evaluations": 3858,
+        "selected_proved": 7,
+        "unproved": 1177,
+        "unproved_schema": 447,
+        "unclassified_code": 730,
+        "unclassified_schema": 27,
+        "old_unproved": 671
+      }
+    ],
+    "family_grade_changes": "not applicable; no admissions or family grade changes",
+    "core_commit": "f62a23b9207b5be9e472c2070482007ce5f459e5",
+    "closure_commit": "309359ebe9"
+  }
 }

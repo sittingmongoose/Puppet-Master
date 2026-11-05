@@ -134,3 +134,158 @@ The result audit passes: **21/21 selected guards**, **1,306 rows**, **11,799 eva
 **Repository checks:** shard verification exits 0/PASS (99 documents, 3,095 shards). Plan-index validation exits 1, parsed top-level `status=fail`, with the same 22 findings: 21 removal-ledger records and `PLS-025` compared with `origin/main`. Every named path and both checker sources are unchanged from the fix base. `scope-invariance.json` verifies this and the unchanged canonical/protected/derived paths. Currentness input was copied into the ignored location and all 15 files hash-match the shared source. No owner Markdown was edited, so no shard/index regeneration was performed. No admission, registry or Decision Log changes; no main push, pm-mail or subagents.
 
 **Round-2 evidence:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix2/verification-manifest.json`, SHA-256 `e43848f2a67643c02e4935c9e02f7e447ec8ce64e2e4d99dbd1ecf3dac344441`. Complete traps, review probes, serial commands/exits, real matrix reports, result audit and scope/source fingerprints are retained there. The report, self-grade and compact trap results are copied into the same `fix2/` folder. Local worktree and extracted product inputs are removed after the final branch push.
+
+## Review round 3: findings and responses
+
+**Core implementation:** `f62a23b9207b5be9e472c2070482007ce5f459e5`; closure follow-up `309359ebe9`; total-predicate negative-context follow-up `9769ca85108aed8faf82fe9530fda5cd9cd43147`. Base: `16bd9ccb0c52e557ef58b2b78b937308f1f28a03`. The current contract supersedes the earlier general support and code-sites PASS claims. Overall capability remains **PARTIAL**; active unsupported grammar prevents complete lane proof. No family grade or admission is granted.
+
+The rule is explicit: proof credit requires an allow-listed cut of one predicate. Automatic guards expose `predicate_count=1` and their `cut`; unsupported obligations are unclassified with no cut. Unclassified schema obligations cannot be waived by assigning a selector label. The adoption guide contains the complete allow-list, predicate counts, scope, and remaining adapter work.
+
+| Finding | Where / cause / fix | Verify |
+|---|---|---|
+| **A-B1 — fixed** (`f62a23b920`) | `scripts/pm_guard_isolation.py:451, :498, :811`. Legacy contains was incorrectly tied to modern minContains support. Inventory the implicit >=1 predicate in draft-06/07; its cut removes legacy contains, preserving other assertions. Ignored minContains=0/maxContains spellings never waive that obligation. | `python3 -B scripts/pm_guard_isolation.py --self-test`; A-B1-draft-06-* and A-B1-draft-07-* (six traps). |
+| **A-B2 — fixed** (`f62a23b920`) | `scripts/pm_guard_isolation.py:927, :1005`. The refusal inventory recognized append but omitted equivalent effects. All calls and writes are audited; extend, +=, slice/insert/item mutation, helpers, and other unsupported effects become explicit seams. A proved x guard cannot clear an unregistered y refusal. | `python3 -B scripts/pm_guard_isolation.py --self-test`; A-B2-* and the Python construct audit; all four exact Astra forms retained. |
+| **A-B3 — fixed by conservative refusal** (`f62a23b920`) | `scripts/pm_guard_isolation.py:219, :957, :1042`. Chained comparisons and opaque return expressions received aggregate cuts. Chains, ternaries, returned locals (including under not), conditional compound returns, dataflow and opaque calls now refuse registration. No chain is rewritten, so shared operands/evaluation order are preserved. Transparent and/or/not leaves still cut separately. | `python3 -B scripts/pm_guard_isolation.py --self-test`; A-B3-chain-single/aggregate; four exact return-form cases, aggregate reports and held-out peers; Python audit. |
+| **A-B4 — fixed by conservative refusal** (`f62a23b920`) | `scripts/pm_guard_isolation.py:573, :614`. Negated routing/applicability created acceptance requirements without explicit child assertions. Negative property/conditional routing, nested not and compound contexts now carry unclassified obligations, including empty-inventory shapes. Only same-input total type/const/enum/Boolean predicates retain negative cuts. Negated typed assertions also require their applicability domain; those contexts fail closed (`9769ca8510`). | `python3 -B scripts/pm_guard_isolation.py --self-test`; A-B4-conditional/properties/no-guard/nested; held-out refusals checked by the original dialect validator. |
+| **A-B5 — fixed by conservative refusal** (`f62a23b920`) | `scripts/pm_guard_isolation.py:218, :618; reports/event-authority-20261105/GUARDTOOL-ADOPTION.md:21`. A pattern keyword was treated as one predicate. All patterns now remain unclassified/unproved; no whole-pattern cut is offered. The DM syntax and CR/LF examples preserve independent narrow regex witnesses. Adoption alone does not close DM C8C-B1. | `python3 -B scripts/pm_guard_isolation.py --self-test`; A-B5-pattern-single/aggregate and A-B5-independent-clauses. |
+| **Resource finite thresholds — fixed** (`f62a23b920`) | `scripts/pm_guard_isolation.py:1213`. NaN bypassed comparisons in the public API. Every threshold rejects non-finite/non-numeric values before deriving defaults. | `python3 -B scripts/pm_guard_isolation.py --self-test`; A-resource-finite: NaN and +/-infinity for all five thresholds (15 refusals). |
+| **Resource fresh samples — fixed** (`f62a23b920`) | `scripts/pm_guard_isolation.py:1242`. The one-second throttle could skip a low-memory callback boundary. Every configured check samples available memory afresh. Factories/allocations are still outside hard containment. | `python3 -B scripts/pm_guard_isolation.py --self-test`; A-resource-fresh: successful t=0 sample, low t=.5 sample, injected pause/resume. |
+| **Resource resume RSS — fixed** (`f62a23b920`) | `scripts/pm_guard_isolation.py:1258`. A rising high-water RSS during a low-memory pause escaped the check. RSS is rechecked after each pause sample and on resume. | `python3 -B scripts/pm_guard_isolation.py --self-test`; A-resource-resume: injected peak rises from 10 to 200 MiB under a 100 MiB cap; resume refuses. |
+
+**Whole-tool audit, beyond the five reductions:** oneOf branch cuts remain unclassified because weakening a branch may create overlaps. Unevaluated coverage makes the complete entry unclassified because cuts can change annotation coverage. Pattern routing, formats, unknown vocabularies, unsupported dialects, dynamic/recursive and mixed contexts fail closed. Default invariant identity now includes activation antecedents and matcher occurrences: different contains matchers and different schema-dependency triggers cannot automatically form duplicates. The additional distinct-context trap refuses all three attempted false groups. Unknown keywords in unused definitions or unconsumed declared resources also remain unclassified (`309359ebe9`, scripts/pm_guard_isolation.py:680). The added number/string/object/array negation traps preserve the implicit applicability obligations. Ordinary DFM root-minimum duplicates still PASS.
+
+**Adapter trust:** every run lists its complete callback, refusal translation, consumer/root bindings, module/helper closure, dynamic subject contexts, code predicate bindings, schema aliases, duplicate equivalence declarations and manual dispositions in `trust_decisions`, with inventory/source evidence. Review the callback that only constructs a validator, envelope/payload reuse of one root, x/y loop subjects, translated assertions/internal crashes, and false DC enum aliases. Matrix observations cannot certify those declarations. The guide names each decision explicitly. Some deliberately unsound adapters still PASS; that is the disclosed reviewer boundary, not isolation credit for unknown engine grammar.
+
+### Schema vocabulary audit
+
+The executable audit covers **64 keyword/Boolean/unknown specimens × 4 dialects × 3 contexts = 768 cells**. It covers every keyword exposed by the installed four dialect validators and their standard metadata/declaration vocabulary, plus implicit contains and unknown extensions. **C** means this specimen inventories only per-predicate cuts (each counted separately); **F** means at least one unclassified obligation and no complete proof credit; **0** means only evidenced routing/no-op/ignored/declaration rows. Each dialect column is **positive / negative / nested-not**. C describes the inventory of that keyword specimen including its child predicates, never a whole-container cut. The guide specifies scope and individual cut strategies; raw audit rows include counts, strategies and classifications.
+
+| Keyword | Draft-06 + / - / nested | Draft-07 + / - / nested | 2019-09 + / - / nested | 2020-12 + / - / nested |
+|---|---|---|---|---|
+| `minimum` | C / F / F | C / F / F | C / F / F | C / F / F |
+| `maximum` | C / F / F | C / F / F | C / F / F | C / F / F |
+| `exclusiveMinimum` | C / F / F | C / F / F | C / F / F | C / F / F |
+| `exclusiveMaximum` | C / F / F | C / F / F | C / F / F | C / F / F |
+| `multipleOf` | C / F / F | C / F / F | C / F / F | C / F / F |
+| `minLength` | C / F / F | C / F / F | C / F / F | C / F / F |
+| `maxLength` | C / F / F | C / F / F | C / F / F | C / F / F |
+| `minItems` | C / F / F | C / F / F | C / F / F | C / F / F |
+| `maxItems` | C / F / F | C / F / F | C / F / F | C / F / F |
+| `minProperties` | C / F / F | C / F / F | C / F / F | C / F / F |
+| `maxProperties` | C / F / F | C / F / F | C / F / F | C / F / F |
+| `type` | C / C / F | C / C / F | C / C / F | C / C / F |
+| `const` | C / C / F | C / C / F | C / C / F | C / C / F |
+| `enum` | C / C / F | C / C / F | C / C / F | C / C / F |
+| `pattern` | F / F / F | F / F / F | F / F / F | F / F / F |
+| `format` | F / F / F | F / F / F | F / F / F | F / F / F |
+| `uniqueItems` | C / F / F | C / F / F | C / F / F | C / F / F |
+| `required` | C / F / F | C / F / F | C / F / F | C / F / F |
+| `dependentRequired` | 0 / F / F | 0 / F / F | C / F / F | C / F / F |
+| `dependencies` | C / F / F | C / F / F | 0 / F / F | 0 / F / F |
+| `dependentSchemas` | 0 / F / F | 0 / F / F | C / F / F | C / F / F |
+| `properties` | C / F / F | C / F / F | C / F / F | C / F / F |
+| `patternProperties` | F / F / F | F / F / F | F / F / F | F / F / F |
+| `additionalProperties` | C / F / F | C / F / F | C / F / F | C / F / F |
+| `unevaluatedProperties` | 0 / F / F | 0 / F / F | F / F / F | F / F / F |
+| `items` | C / F / F | C / F / F | C / F / F | C / F / F |
+| `prefixItems` | 0 / F / F | 0 / F / F | 0 / F / F | C / F / F |
+| `additionalItems` | C / F / F | C / F / F | C / F / F | 0 / F / F |
+| `unevaluatedItems` | 0 / F / F | 0 / F / F | F / F / F | F / F / F |
+| `propertyNames` | C / F / F | C / F / F | C / F / F | C / F / F |
+| `contains` | C / F / F | C / F / F | C / F / F | C / F / F |
+| `minContains` | C / F / F | C / F / F | C / F / F | C / F / F |
+| `maxContains` | C / F / F | C / F / F | C / F / F | C / F / F |
+| `allOf` | C / F / F | C / F / F | C / F / F | C / F / F |
+| `anyOf` | C / F / F | C / F / F | C / F / F | C / F / F |
+| `oneOf` | F / F / F | F / F / F | F / F / F | F / F / F |
+| `not` | F / F / F | F / F / F | F / F / F | F / F / F |
+| `if` | 0 / F / F | C / F / F | C / F / F | C / F / F |
+| `then` | 0 / F / F | C / F / F | C / F / F | C / F / F |
+| `else` | 0 / F / F | C / F / F | C / F / F | C / F / F |
+| `$ref` | C / F / F | C / F / F | C / F / F | C / F / F |
+| `$dynamicRef` | 0 / F / F | 0 / F / F | 0 / F / F | F / F / F |
+| `$recursiveRef` | 0 / F / F | 0 / F / F | F / F / F | 0 / F / F |
+| `$defs` | 0 / F / F | 0 / F / F | 0 / F / F | 0 / F / F |
+| `definitions` | 0 / F / F | 0 / F / F | 0 / F / F | 0 / F / F |
+| `$boolean` | C / 0 / F | C / 0 / F | C / 0 / F | C / 0 / F |
+| `$vocabulary` | F / F / F | F / F / F | F / F / F | F / F / F |
+| `contentSchema` | 0 / F / F | 0 / F / F | 0 / F / F | 0 / F / F |
+| `<unknown>` | F / F / F | F / F / F | F / F / F | F / F / F |
+| `$id` | 0 / F / F | 0 / F / F | 0 / F / F | 0 / F / F |
+| `$anchor` | 0 / F / F | 0 / F / F | 0 / F / F | 0 / F / F |
+| `$dynamicAnchor` | 0 / F / F | 0 / F / F | 0 / F / F | 0 / F / F |
+| `$recursiveAnchor` | 0 / F / F | 0 / F / F | 0 / F / F | 0 / F / F |
+| `$comment` | 0 / F / F | 0 / F / F | 0 / F / F | 0 / F / F |
+| `title` | 0 / F / F | 0 / F / F | 0 / F / F | 0 / F / F |
+| `description` | 0 / F / F | 0 / F / F | 0 / F / F | 0 / F / F |
+| `default` | 0 / F / F | 0 / F / F | 0 / F / F | 0 / F / F |
+| `examples` | 0 / F / F | 0 / F / F | 0 / F / F | 0 / F / F |
+| `deprecated` | 0 / F / F | 0 / F / F | 0 / F / F | 0 / F / F |
+| `readOnly` | 0 / F / F | 0 / F / F | 0 / F / F | 0 / F / F |
+| `writeOnly` | 0 / F / F | 0 / F / F | 0 / F / F | 0 / F / F |
+| `contentEncoding` | 0 / F / F | 0 / F / F | 0 / F / F | 0 / F / F |
+| `contentMediaType` | 0 / F / F | 0 / F / F | 0 / F / F | 0 / F / F |
+| `$schema` | 0 / F / F | 0 / F / F | 0 / F / F | 0 / F / F |
+
+**Schema audit totals:** 139 cells with per-predicate cuts; 530 fail closed; 99 contain no effective rejecting predicate. These are bounded audit cells, not 139 distinct keyword types. Every automatically cut assertion has exactly one predicate; a cell may contain several separately inventoried assertions. Typed assertions under negation are unclassified because their applicability domain is an additional acceptance requirement. Legacy implicit contains counts are separately tested for both dialects, including ignored explicit count spellings. Homogeneous draft-07 ignored ref siblings and eager dormant refs retain their controls.
+
+### Python refusal and condition audit
+
+Each supported specimen runs its complete two-predicate flip/peer/restoration matrix. Every unsupported specimen retains an unclassified candidate. Mutating list/refusal examples also run independent held-out y cases in the main corpus.
+
+| Construct | Inventory / cut | Result |
+|---|---|---|
+| `raise` | 2 individual Boolean/refusal predicates; each peer retained | PASS |
+| `return-False` | 2 individual Boolean/refusal predicates; each peer retained | PASS |
+| `return-None` | 2 individual Boolean/refusal predicates; each peer retained | PASS |
+| `return-bare` | 2 individual Boolean/refusal predicates; each peer retained | PASS |
+| `return-zero` | 2 individual Boolean/refusal predicates; each peer retained | PASS |
+| `return-float-zero` | 2 individual Boolean/refusal predicates; each peer retained | PASS |
+| `return-empty-string` | 2 individual Boolean/refusal predicates; each peer retained | PASS |
+| `return-list` | Unknown predicate count; unsupported seam, no registration | FAIL |
+| `return-dict` | Unknown predicate count; unsupported seam, no registration | FAIL |
+| `return-set` | Unknown predicate count; unsupported seam, no registration | FAIL |
+| `return-and` | 2 individual Boolean/refusal predicates; each peer retained | PASS |
+| `return-or-not` | 2 individual Boolean/refusal predicates; each peer retained | PASS |
+| `return-chain` | Unknown predicate count; unsupported seam, no registration | FAIL |
+| `return-conditional` | Unknown predicate count; unsupported seam, no registration | FAIL |
+| `return-name` | Unknown predicate count; unsupported seam, no registration | FAIL |
+| `return-negated-name` | Unknown predicate count; unsupported seam, no registration | FAIL |
+| `conditional-compound-return` | Unknown predicate count; unsupported seam, no registration | FAIL |
+| `implicit-falsy-return` | Unknown predicate count; unsupported seam, no registration | FAIL |
+| `require-chain` | Unknown predicate count; unsupported seam, no registration | FAIL |
+| `opaque-helper` | Unknown predicate count; unsupported seam, no registration | FAIL |
+| `extend` | Unknown predicate count; unsupported seam, no registration | FAIL |
+| `iadd` | Unknown predicate count; unsupported seam, no registration | FAIL |
+| `slice-assignment` | Unknown predicate count; unsupported seam, no registration | FAIL |
+| `insert` | Unknown predicate count; unsupported seam, no registration | FAIL |
+| `item-assignment` | Unknown predicate count; unsupported seam, no registration | FAIL |
+| `append-clauses` | 2 individual Boolean/refusal predicates; each peer retained | PASS |
+| `require-clauses` | 2 individual Boolean/refusal predicates; each peer retained | PASS |
+| `assert-clauses` | 2 individual Boolean/refusal predicates; each peer retained | PASS |
+
+**Python audit totals:** 12 supported per-predicate constructions; 16 fail closed. Earlier corpus cases also cover class/nested/module/consumed-result guards, mixed/nested Boolean negations, exact append clauses and helper composition. Async functions, match/try/with/await/yield contexts, mutation/dataflow and opaque calls require explicit seams. Fresh empty-list initialization and the listed read-only value grammar create no new rejection predicates; function fallthrough is an explicit falsy-return obligation. A returned local is never assumed to be a single predicate.
+
+### Verification and real adapter result
+
+`python3 -B scripts/pm_guard_isolation.py --self-test` exits **0; 124/124 caught**: all 86 old traps and 38 new entries. The reviewed base catches **87/124**, comprising the old 86 and only the independent regex-witness control among the new entries. All 37 other new entries expose missing capability or a former false clearance on the reviewed base. The older trap sources and target predicates were preserved; exact inventory-size assertions now permit additional conservative obligations while still requiring their named offending sites. The fixture adapter explicitly declares successful returns and the error-list carrier with source evidence.
+
+The untouched Astra producers run serially (all driver exits 0). DCH C8-B1, DC C4-B3, uncaught exceptions, dormant unresolved refs, closed dynamic/mixed and compound-not controls remain FAIL; the DFM schema-group control remains PASS. The original chained-expression, return-form and pattern drivers stop their affected probe when registration/cutting is refused, instead of yielding a misleading PASS; the committed regressions run every individual variant and the aggregate attempts independently. All resource counterexamples are closed by direct injected tests. The independent result audit passes **136 assertions**. Toy adapter and syntax checks pass; the 1 MiB RSS cap refuses as expected. Full commands/exits are in `final-checks.json`.
+
+`pm-shard-plans.py --check --config Plans/sharding_config.json` exits **0/PASS**, 99 documents and 3,095 shards. `pm-plan-index.py validate` exits **1**, parsed top-level **fail**, with the same **22** findings (21 malformed removal-ledger records plus PLS-025 against newer origin/main). Every named finding path, owner Markdown, checker, protected and derived path is unchanged from this task's pinned base. All 15 ignored currentness inputs hash-match the shared source. No regeneration or governance check/reseal was performed.
+
+The unchanged real reviewer adapter and checker/fixtures remain pinned at `ff6d98d8740eff0df68a44f5d4eca0894c4fdf41`. Its callback executes the retained reader `history_contract` → `record_contract` → historical Storage verification with the original format and physical integer choices.
+
+| Family | Overall / exit | Inventory | Rows | Evaluations | Selected proved | Unproved schema/extension | Unclassified code | Unproved total (prior) |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| `plugin.loaded` | FAIL / 1 | 12,007 | 403 | 3,642 | 7/7 | 425 | 730 | 1,155 (649) |
+| `plugin.hook.invoked` | FAIL / 1 | 12,013 | 410 | 3,705 | 7/7 | 431 | 730 | 1,161 (655) |
+| `auth.github.authenticated` | FAIL / 1 | 12,031 | 427 | 3,858 | 7/7 | 447 | 730 | 1,177 (671) |
+
+**21/21 selected runtime guards still proved**, across **1,240 rows / 11,205 evaluations**. Each selected row has one own flip, all six peers unchanged, restoration and accepted controls. No masking or unexpected checker results. No schema row receives proof credit.
+
+The complete results stay **FAIL**. Each module exposes 730 undispositioned code candidates instead of 230. Six formerly unreachable unknown metadata keyword occurrences per catalog now remain unclassified too. Former schema cuts for unsupported grammar also become explicit unclassified obligations. Total unproved rises from **1,975 to 3,493**. The supported-row count drops from 1,306 to 1,240; those unsupported rows receive no cut credit. This is the intended rule change, not new product failure or complete adoption. Distinct consumer/input bindings and all remaining obligations still need lane/reviewer work.
+
+**Scope:** no owner Markdown, registry, admission, Decision Log, Spec Lock, auto-decisions, generated shards/index/evidence or .gitignore edits. No ids minted, pm-mail, subagents or main push. Only tool scripts, trap data and compact reports changed. No general prover, automatic chain normalization, regex clause splitter, resource sandbox, full lane adoption or family grade is claimed.
+
+**Round-3 evidence:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix3/verification-manifest.json`, SHA-256 `2c8149b96f36b983ada12c4d1761004cff818c1cd6792776c2322c4e36fe7f1f`. The full trap reports, untouched Astra producer copies and rerun outputs, currentness receipt, pinned source fingerprints, serial command records, complete DG6B matrices and independent result audit are retained there. Report/guide/self-grade are copied to the requested drafts/GUARDTOOL folder. The temporary input tree and fix worktree are removed after the final push.
