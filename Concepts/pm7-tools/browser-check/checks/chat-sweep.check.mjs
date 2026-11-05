@@ -21,10 +21,12 @@ export const tests = {
     },{capture:true,once:true});
    });
    const stage=await f.locator('#pmRoot .chat-stage').boundingBox();
+   const box=await b.boundingBox();
+   await t.page.mouse.move(box.x+box.width/2,box.y+box.height/2);
    const clock=await beginActivityFrameClock(t.window);
    let input,paint;
    try{
-    await b.click();
+    await t.page.mouse.click(box.x+box.width/2,box.y+box.height/2);
     await t.page.waitForTimeout(1200);
     input=await f.evaluate(()=>window.__activityPaintInput);
    }finally{await clock.stop();}
@@ -33,7 +35,8 @@ export const tests = {
    writeFileSync(join(dir,'frames.json'),JSON.stringify({input,stage,frames:clock.frames.map(({png,...frame})=>frame)},null,2));
    try{paint=clock.analyze(input,stage);}catch(error){paint={error:error.message};}
    writeFileSync(join(dir,'paint.json'),JSON.stringify(paint,null,2));
-   t.log('input to first cover paint '+i+': '+JSON.stringify(paint));
+   const {samples,...summary}=paint;
+   t.log('input to first cover paint '+i+': '+JSON.stringify({...summary,frames:samples?.length}));
    await t.check('first click painted within 500 ms '+i,
     !paint.error&&paint.input.trusted&&paint.elapsed>=0&&paint.elapsed<=500);
    await t.equal('cover click avoids full transcript render '+i,await f.evaluate(()=>window.__activityClickRenders),0);
