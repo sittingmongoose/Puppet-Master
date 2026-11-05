@@ -31,7 +31,14 @@ export default async function(t){
  await cdp.send('Runtime.enable');await cdp.send('Page.enable');
  if(String(t.args.sandbox)==='1')await t.openInSandbox(target.href);
  await cdp.send('Page.addScriptToEvaluateOnNewDocument',{source:'('+probe.toString()+')()'});
- if(String(t.args.sandbox)==='1')await cdp.send('Page.reload');else await cdp.send('Page.navigate',{url:target.href});
+ if(String(t.args.sandbox)==='1'){
+  // HTTP sandbox wrappers are temporary routed documents: reloading the
+  // wrapper loses its route. Navigate only its existing sandboxed app frame.
+  const {frameTree}=await cdp.send('Page.getFrameTree');
+  const app=frameTree.childFrames?.find(x=>new URL(x.frame.url).pathname===target.pathname);
+  if(!app)throw new Error('native sound probe needs the approved sandbox app frame');
+  await cdp.send('Page.navigate',{url:target.href,frameId:app.frame.id});
+ }else await cdp.send('Page.navigate',{url:target.href});
  let R=null;const deadline=Date.now()+60000;
  while(Date.now()<deadline&&!R){
   for(const contextId of contexts){
