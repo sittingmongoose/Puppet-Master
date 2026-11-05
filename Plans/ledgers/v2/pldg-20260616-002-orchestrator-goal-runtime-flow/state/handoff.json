@@ -6,12 +6,13 @@
     "Plan index generation and validation passed.",
     "Migration validation passes after governance-seal migration proof refresh.",
     "The later explicit governance seal refreshed generated governance artifacts where allowed; WorkNodes, NodeSeeds, executable queues, final node manifests, final build tasks, production build tasks, final node queues, and implementation files were not created.",
-    "2026-11-05: DL-336 and corr-0010 restore the five GRS-027 lost rules in active owner units and retire three old strategy spellings under coordinator resolution A1; independent review and degraded finish remain separate product questions."
+    "2026-11-05: DL-336 and corr-0010 restore the five GRS-027 lost rules in active owner units and retire three old strategy spellings under coordinator resolution A1; independent review and degraded finish remain separate product questions.",
+    "2026-11-05: DL-337, DL-338 and corr-0011 record Jared's answers: independent review stays a free choice, on by default (atom-0055 risk-tier rule retired), and an exhausted repair budget stops blocked with an optional DL-081 exception request (atom-0049 token degraded retired)."
   ],
   "current_phase": "compiled_orchestrator_goal_runtime_flow_governance_sealed",
   "cursor": {
     "last_decision_id": "dec-0029",
-    "last_event_id": "evt-0017",
+    "last_event_id": "evt-0018",
     "next_queue_id": null
   },
   "deferred_questions": [],
@@ -42,7 +43,7 @@
     "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/validation/final_readiness_review_20260616.json"
   ],
   "schema_id": "pm.bootstrap_ledger_handoff.v1",
-  "updated_at_utc": "2026-11-05T13:21:08Z",
+  "updated_at_utc": "2026-11-05T17:10:37Z",
   "validation_state": {
     "forbidden_artifacts": "not_created",
     "governance_status": "sealed",
@@ -54,6 +55,6 @@
     "pm_plan_migration_validate": "pass_after_archive17_hash_refresh",
     "strict_canonical_plan_target": "Plans/Goal_Runtime_System.md",
     "pm_plan_index_generate": "pass_5354_planunits_19198_acceptance_units",
-    "pm_bootstrap_ledger_validate_summary": "104_atoms_17_events_1_compile_queue_item_3305_planunits_checked"
+    "pm_bootstrap_ledger_validate_summary": "104_atoms_18_events_1_compile_queue_item_3306_planunits_checked"
   }
 }

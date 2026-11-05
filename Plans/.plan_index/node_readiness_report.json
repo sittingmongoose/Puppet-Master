@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18858,
+    "depends_on_edge_count": 18868,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22068,
-    "node_count": 7489,
+    "edge_count": 22078,
+    "node_count": 7493,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3210,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-05T17:55:32Z",
+  "generated_at_utc": "2026-11-05T22:45:56Z",
   "gui_related_units": {
-    "count": 3814,
+    "count": 3815,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -12426,12 +12426,23 @@
       },
       {
         "owner_doc": "Plans/Decision_Log.md",
-        "plan_unit_id": "DL-340",
+        "plan_unit_id": "DL-338",
         "source_location": {
-          "heading": "DL-340 - Onboarding Retains Auto Appearance",
+          "heading": "DL-338 - An Exhausted Repair Budget Stops The Run Or Asks For An Approved Exception",
           "heading_level": 3,
-          "heading_line": 28648,
-          "line": 28652,
+          "heading_line": 28698,
+          "line": 28702,
+          "path": "Plans/Decision_Log.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Decision_Log.md",
+        "plan_unit_id": "DL-349",
+        "source_location": {
+          "heading": "DL-349 - Onboarding Retains Auto Appearance",
+          "heading_level": 3,
+          "heading_line": 28839,
+          "line": 28843,
           "path": "Plans/Decision_Log.md"
         }
       },
@@ -13497,8 +13508,8 @@
         "source_location": {
           "heading": "EP-110 - P0-STREAM-HISTORY-COALESCER",
           "heading_level": 3,
-          "heading_line": 6894,
-          "line": 6896,
+          "heading_line": 6897,
+          "line": 6899,
           "path": "Plans/Executor_Protocol.md"
         }
       },
@@ -13508,8 +13519,8 @@
         "source_location": {
           "heading": "EP-111 - P0-WEBSOCKET-TRANSPORT-POLICY",
           "heading_level": 3,
-          "heading_line": 6966,
-          "line": 6968,
+          "heading_line": 6969,
+          "line": 6971,
           "path": "Plans/Executor_Protocol.md"
         }
       },
@@ -13519,8 +13530,8 @@
         "source_location": {
           "heading": "EP-112 - P1-WEBSOCKET-BACKPRESSURE-DIAGNOSTICS",
           "heading_level": 3,
-          "heading_line": 7039,
-          "line": 7041,
+          "heading_line": 7042,
+          "line": 7044,
           "path": "Plans/Executor_Protocol.md"
         }
       },
@@ -13530,8 +13541,8 @@
         "source_location": {
           "heading": "EP-129 - Collaboration Helper Message In Progress",
           "heading_level": 3,
-          "heading_line": 8869,
-          "line": 8871,
+          "heading_line": 8872,
+          "line": 8874,
           "path": "Plans/Executor_Protocol.md"
         }
       },
@@ -28677,8 +28688,8 @@
         "source_location": {
           "heading": "OSI-434 - Sustainable Waves, Operational Awareness, And Truthful Work",
           "heading_level": 3,
-          "heading_line": 31826,
-          "line": 31828,
+          "heading_line": 31827,
+          "line": 31829,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -28688,8 +28699,8 @@
         "source_location": {
           "heading": "Working Notebook Scopes Addendum (2026-09-05)",
           "heading_level": 2,
-          "heading_line": 31899,
-          "line": 31935,
+          "heading_line": 31900,
+          "line": 31936,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -28699,8 +28710,8 @@
         "source_location": {
           "heading": "OSI-439 - Application Thread Requests And Receiver Authority",
           "heading_level": 3,
-          "heading_line": 31965,
-          "line": 31967,
+          "heading_line": 31966,
+          "line": 31968,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -28710,8 +28721,8 @@
         "source_location": {
           "heading": "OSI-440 - Application Crew Coordination And Root Identity",
           "heading_level": 3,
-          "heading_line": 32034,
-          "line": 32036,
+          "heading_line": 32035,
+          "line": 32037,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -28721,8 +28732,8 @@
         "source_location": {
           "heading": "OSI-441 - Project Build Grant Consumption And Child Ceiling",
           "heading_level": 3,
-          "heading_line": 32105,
-          "line": 32107,
+          "heading_line": 32106,
+          "line": 32108,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -41978,12 +41989,12 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 7489,
+  "plan_unit_count": 7493,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2808,
+      "high": 2811,
       "low": 9,
-      "medium": 32,
+      "medium": 33,
       "standard": 4640
     },
     "risk_class_counts": {
@@ -43321,7 +43332,7 @@
       "false_certainty": 2,
       "false_certification_or_lost_original_decision_authority": 3,
       "false_compaction_phase_or_repeated_original_effect": 1,
-      "false_completion": 7,
+      "false_completion": 8,
       "false_completion_claim": 1,
       "false_dap_lifecycle_proof": 1,
       "false_durability": 2,
@@ -43534,7 +43545,7 @@
       "governance_boundary": 2,
       "governance_false_buildability": 1,
       "governance_gap_loss": 1,
-      "governance_integrity": 3,
+      "governance_integrity": 5,
       "governance_label_copy_drift": 1,
       "governance_role_conflation": 1,
       "governance_runtime_record_schema_gap": 1,
@@ -44992,6 +45003,7 @@
       "review_gate_bypass": 1,
       "review_gate_drift": 1,
       "review_pass_persona_key_drift": 1,
+      "review_policy_drift": 1,
       "review_preset_gap": 1,
       "review_results_merged_across_targets": 1,
       "review_roster_count_inconsistency": 1,
@@ -46129,7 +46141,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 7270,
+      "accepted": 7274,
       "retired": 196,
       "superseded": 23
     },
@@ -46162,7 +46174,7 @@
       "contract": 5,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 234,
+      "decision": 238,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,
@@ -46308,7 +46320,7 @@
       {
         "actual": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8",
         "error": "pnc019_source_hash_stale",
-        "expected": "9c0410e167ba897b0a47edc1b957d464d777bde6a57087844b2bb7387b2eec9a",
+        "expected": "18ef187b558dadb4f429dd076afc8327f6d4522c80f1c9ff103a560d89754636",
         "source_path": "Plans/Executor_Protocol.md"
       },
       {

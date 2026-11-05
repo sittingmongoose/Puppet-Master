@@ -4420,6 +4420,7 @@
     "WS-010",
     "PDS-022",
     "0PI-057",
+    "DL-339",
     "PDS-015",
     "PLS-025",
     "PSMERA-008",
@@ -4822,6 +4823,7 @@
     "WM-014",
     "WM-018",
     "WS-012",
+    "DL-340",
     "PSMERA-014",
     "DR-077",
     "SSYS-016",
@@ -6242,6 +6244,7 @@
     "SP-344",
     "SP-347",
     "CV-335",
+    "DL-338",
     "SP-289",
     "EP-116",
     "OP-036",
@@ -6828,7 +6831,7 @@
     "SP-254",
     "SRV-013",
     "SP-273",
-    "DL-340",
+    "DL-349",
     "F3-590",
     "UIW-013",
     "BRS-011",
@@ -7321,6 +7324,7 @@
     "ATS-043",
     "DL-153",
     "F3-599",
+    "DL-337",
     "F3-525",
     "UCC-203",
     "F3-083",
@@ -29627,17 +29631,67 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "DL-337",
+      "to": "F3-524"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-337",
+      "to": "GRS-049"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-337",
+      "to": "MS-128"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-337",
+      "to": "OSI-428"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-338",
+      "to": "DL-081"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-338",
+      "to": "EP-103"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-338",
+      "to": "GRS-065"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-339",
+      "to": "PDS-014"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "DL-340",
+      "to": "DL-334"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-340",
+      "to": "PLS-026"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-349",
       "to": "DL-301"
     },
     {
       "edge_type": "depends_on",
-      "from": "DL-340",
+      "from": "DL-349",
       "to": "F3-520"
     },
     {
       "edge_type": "depends_on",
-      "from": "DL-340",
+      "from": "DL-349",
       "to": "SSYS-010"
     },
     {
@@ -117836,7 +117890,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-05T17:55:31Z",
+  "generated_at_utc": "2026-11-05T22:45:56Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -153131,17 +153185,85 @@
       "unit_type": "decision"
     },
     {
-      "context_scope": "onboarding_appearance",
-      "gui_related": true,
+      "context_scope": "closure_owner_answers_20261105",
+      "gui_related": false,
       "owner_doc": "Plans/Decision_Log.md",
-      "plan_unit_id": "DL-340",
+      "plan_unit_id": "DL-337",
       "reasoning_tier": "high",
-      "risk_class": "appearance_state_drift",
+      "risk_class": "review_policy_drift",
       "source_location": {
-        "heading": "DL-340 - Onboarding Retains Auto Appearance",
+        "heading": "DL-337 - Independent Review Stays A Free Choice, On By Default",
         "heading_level": 3,
         "heading_line": 28648,
         "line": 28652,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "closure_owner_answers_20261105",
+      "gui_related": true,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-338",
+      "reasoning_tier": "high",
+      "risk_class": "false_completion",
+      "source_location": {
+        "heading": "DL-338 - An Exhausted Repair Budget Stops The Run Or Asks For An Approved Exception",
+        "heading_level": 3,
+        "heading_line": 28698,
+        "line": 28702,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "closure_owner_answers_20261105",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-339",
+      "reasoning_tier": "medium",
+      "risk_class": "governance_integrity",
+      "source_location": {
+        "heading": "DL-339 - Migration Run 001 Is History Only",
+        "heading_level": 3,
+        "heading_line": 28750,
+        "line": 28754,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "semantic_audit_closure",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-340",
+      "reasoning_tier": "high",
+      "risk_class": "governance_integrity",
+      "source_location": {
+        "heading": "DL-340 - The June Legacy Rule Reads Four Older Words As Passed",
+        "heading_level": 3,
+        "heading_line": 28791,
+        "line": 28795,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "onboarding_appearance",
+      "gui_related": true,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-349",
+      "reasoning_tier": "high",
+      "risk_class": "appearance_state_drift",
+      "source_location": {
+        "heading": "DL-349 - Onboarding Retains Auto Appearance",
+        "heading_level": 3,
+        "heading_line": 28839,
+        "line": 28843,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -158784,8 +158906,8 @@
       "source_location": {
         "heading": "EP-104 - Three-Stage Executor Intake And Required Graph Acceptance",
         "heading_level": 3,
-        "heading_line": 6468,
-        "line": 6470,
+        "heading_line": 6471,
+        "line": 6473,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158801,8 +158923,8 @@
       "source_location": {
         "heading": "EP-105 - Runtime WorkNodeRecord Identity, Receipts, And Activation Consumers",
         "heading_level": 3,
-        "heading_line": 6584,
-        "line": 6586,
+        "heading_line": 6587,
+        "line": 6589,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158818,8 +158940,8 @@
       "source_location": {
         "heading": "EP-106 - Executor Discovery Orientation And Verification Handoff",
         "heading_level": 3,
-        "heading_line": 6538,
-        "line": 6540,
+        "heading_line": 6541,
+        "line": 6543,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158835,8 +158957,8 @@
       "source_location": {
         "heading": "EP-107 - Free Models Dispatch Fallback Attempt Bounds And In-Flight Isolation",
         "heading_level": 3,
-        "heading_line": 6681,
-        "line": 6683,
+        "heading_line": 6684,
+        "line": 6686,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158852,8 +158974,8 @@
       "source_location": {
         "heading": "EP-108 - Free Models PM-Owned Runtime Adapter Activation Boundary",
         "heading_level": 3,
-        "heading_line": 6738,
-        "line": 6740,
+        "heading_line": 6741,
+        "line": 6743,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158869,8 +158991,8 @@
       "source_location": {
         "heading": "EP-109 - HostCapabilityCommand Executor Intake Boundary",
         "heading_level": 3,
-        "heading_line": 6799,
-        "line": 6801,
+        "heading_line": 6802,
+        "line": 6804,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158886,8 +159008,8 @@
       "source_location": {
         "heading": "EP-110 - P0-STREAM-HISTORY-COALESCER",
         "heading_level": 3,
-        "heading_line": 6894,
-        "line": 6896,
+        "heading_line": 6897,
+        "line": 6899,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158903,8 +159025,8 @@
       "source_location": {
         "heading": "EP-111 - P0-WEBSOCKET-TRANSPORT-POLICY",
         "heading_level": 3,
-        "heading_line": 6966,
-        "line": 6968,
+        "heading_line": 6969,
+        "line": 6971,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158920,8 +159042,8 @@
       "source_location": {
         "heading": "EP-112 - P1-WEBSOCKET-BACKPRESSURE-DIAGNOSTICS",
         "heading_level": 3,
-        "heading_line": 7039,
-        "line": 7041,
+        "heading_line": 7042,
+        "line": 7044,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158937,8 +159059,8 @@
       "source_location": {
         "heading": "EP-113 - P1-STREAM-HISTORY-COALESCER-REPLAY",
         "heading_level": 3,
-        "heading_line": 7108,
-        "line": 7110,
+        "heading_line": 7111,
+        "line": 7113,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158954,8 +159076,8 @@
       "source_location": {
         "heading": "EP-114 - FABLE Wake Coalescing And Transport Receipt Closure",
         "heading_level": 3,
-        "heading_line": 7193,
-        "line": 7195,
+        "heading_line": 7196,
+        "line": 7198,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158971,8 +159093,8 @@
       "source_location": {
         "heading": "Transition In-Flight Safety Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 7318,
-        "line": 7322,
+        "heading_line": 7321,
+        "line": 7325,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158988,8 +159110,8 @@
       "source_location": {
         "heading": "EP-116 - Run-start identity and recovery consumer",
         "heading_level": 3,
-        "heading_line": 7386,
-        "line": 7388,
+        "heading_line": 7389,
+        "line": 7391,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -159005,8 +159127,8 @@
       "source_location": {
         "heading": "Complete later native dependencies remain separately admitted",
         "heading_level": 4,
-        "heading_line": 7528,
-        "line": 7551,
+        "heading_line": 7531,
+        "line": 7554,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -159022,8 +159144,8 @@
       "source_location": {
         "heading": "Event and native qualification boundary",
         "heading_level": 4,
-        "heading_line": 7674,
-        "line": 7680,
+        "heading_line": 7677,
+        "line": 7683,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -159039,8 +159161,8 @@
       "source_location": {
         "heading": "Event registry, terminal caller and remaining proof boundary",
         "heading_level": 4,
-        "heading_line": 8354,
-        "line": 8364,
+        "heading_line": 8357,
+        "line": 8367,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -159056,8 +159178,8 @@
       "source_location": {
         "heading": "EP-120 - Original started Event to native publication custody join",
         "heading_level": 3,
-        "heading_line": 8430,
-        "line": 8444,
+        "heading_line": 8433,
+        "line": 8447,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -159073,8 +159195,8 @@
       "source_location": {
         "heading": "EP-121 - Whole original positive D06 event and causal custody consumption",
         "heading_level": 3,
-        "heading_line": 8487,
-        "line": 8505,
+        "heading_line": 8490,
+        "line": 8508,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -159090,8 +159212,8 @@
       "source_location": {
         "heading": "EP-122 — Original successful native lifecycle source and prebirth admission (2026-09-20)",
         "heading_level": 2,
-        "heading_line": 8552,
-        "line": 8554,
+        "heading_line": 8555,
+        "line": 8557,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -159107,8 +159229,8 @@
       "source_location": {
         "heading": "EP-123 — Original certified producer source hooks and fresh installation boundary (2026-09-21)",
         "heading_level": 2,
-        "heading_line": 8651,
-        "line": 8653,
+        "heading_line": 8654,
+        "line": 8656,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -159124,8 +159246,8 @@
       "source_location": {
         "heading": "EP-124 — Fresh all_writers.v7 before-birth installation and exact producer prepare.v2; whole native participants, original source acquisition, Q1–Q4 and joint certification lifecycle (2026-09-21)",
         "heading_level": 2,
-        "heading_line": 8711,
-        "line": 8713,
+        "heading_line": 8714,
+        "line": 8716,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -159141,8 +159263,8 @@
       "source_location": {
         "heading": "EP-128 - Assistant Turn Presentation Stream",
         "heading_level": 3,
-        "heading_line": 8789,
-        "line": 8791,
+        "heading_line": 8792,
+        "line": 8794,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -159158,8 +159280,8 @@
       "source_location": {
         "heading": "EP-129 - Collaboration Helper Message In Progress",
         "heading_level": 3,
-        "heading_line": 8869,
-        "line": 8871,
+        "heading_line": 8872,
+        "line": 8874,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -159175,8 +159297,8 @@
       "source_location": {
         "heading": "EP-130 - One Finished Message Per Helper Message In Progress",
         "heading_level": 3,
-        "heading_line": 8938,
-        "line": 8940,
+        "heading_line": 8941,
+        "line": 8943,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -159192,8 +159314,8 @@
       "source_location": {
         "heading": "EP-131 - A Helper Message In Progress That Does Not Finish",
         "heading_level": 3,
-        "heading_line": 9001,
-        "line": 9003,
+        "heading_line": 9004,
+        "line": 9006,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -159209,8 +159331,8 @@
       "source_location": {
         "heading": "EP-132 - Application Dispatch And Historical Project Source Boundaries",
         "heading_level": 3,
-        "heading_line": 9073,
-        "line": 9075,
+        "heading_line": 9076,
+        "line": 9078,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -204140,8 +204262,8 @@
       "source_location": {
         "heading": "OSI-429 - Ambient Orchestrator Discovery For Agent Context",
         "heading_level": 3,
-        "heading_line": 31507,
-        "line": 31509,
+        "heading_line": 31508,
+        "line": 31510,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -204157,8 +204279,8 @@
       "source_location": {
         "heading": "OSI-430 - Orchestrator DRY Consumer Retarget",
         "heading_level": 3,
-        "heading_line": 31559,
-        "line": 31561,
+        "heading_line": 31560,
+        "line": 31562,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -204191,8 +204313,8 @@
       "source_location": {
         "heading": "OSI-432 - Coordination Canon Record Projection And Mirror Contract",
         "heading_level": 3,
-        "heading_line": 31620,
-        "line": 31622,
+        "heading_line": 31621,
+        "line": 31623,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -204208,8 +204330,8 @@
       "source_location": {
         "heading": "OSI-433 - Durable Thread And Agent Lineage Consumer",
         "heading_level": 3,
-        "heading_line": 31780,
-        "line": 31782,
+        "heading_line": 31781,
+        "line": 31783,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -204225,8 +204347,8 @@
       "source_location": {
         "heading": "OSI-434 - Sustainable Waves, Operational Awareness, And Truthful Work",
         "heading_level": 3,
-        "heading_line": 31826,
-        "line": 31828,
+        "heading_line": 31827,
+        "line": 31829,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -204242,8 +204364,8 @@
       "source_location": {
         "heading": "OSI-435 - Agent Requested Thread Operations",
         "heading_level": 3,
-        "heading_line": 31860,
-        "line": 31862,
+        "heading_line": 31861,
+        "line": 31863,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -204259,8 +204381,8 @@
       "source_location": {
         "heading": "Working Notebook Scopes Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 31899,
-        "line": 31903,
+        "heading_line": 31900,
+        "line": 31904,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -204276,8 +204398,8 @@
       "source_location": {
         "heading": "Working Notebook Scopes Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 31899,
-        "line": 31935,
+        "heading_line": 31900,
+        "line": 31936,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -204310,8 +204432,8 @@
       "source_location": {
         "heading": "OSI-439 - Application Thread Requests And Receiver Authority",
         "heading_level": 3,
-        "heading_line": 31965,
-        "line": 31967,
+        "heading_line": 31966,
+        "line": 31968,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -204327,8 +204449,8 @@
       "source_location": {
         "heading": "OSI-440 - Application Crew Coordination And Root Identity",
         "heading_level": 3,
-        "heading_line": 32034,
-        "line": 32036,
+        "heading_line": 32035,
+        "line": 32037,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -204344,8 +204466,8 @@
       "source_location": {
         "heading": "OSI-441 - Project Build Grant Consumption And Child Ceiling",
         "heading_level": 3,
-        "heading_line": 32105,
-        "line": 32107,
+        "heading_line": 32106,
+        "line": 32108,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -245158,10 +245280,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18858,
+    "depends_on_edge_count": 18868,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22068,
-    "node_count": 7489,
+    "edge_count": 22078,
+    "node_count": 7493,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3210,
     "unresolved_reference_count": 0

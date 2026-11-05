@@ -5759,10 +5759,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 100,
-        "True": 227
+        "False": 103,
+        "True": 228
       },
-      "heading_count": 555,
+      "heading_count": 559,
       "implementation_surfaces": [
         ".claude/CLAUDE.md",
         ".gitignore",
@@ -5889,9 +5889,9 @@
         "scripts/pm_pnc019_currentness.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 28700,
+      "line_count": 28891,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 327,
+      "plan_unit_count": 331,
       "plan_unit_ids": [
         "DL-400",
         "DL-401",
@@ -6219,7 +6219,11 @@
         "DL-332",
         "DL-334",
         "DL-336",
-        "DL-340"
+        "DL-337",
+        "DL-338",
+        "DL-339",
+        "DL-340",
+        "DL-349"
       ],
       "reasoning_tiers": [
         "high",
@@ -6300,6 +6304,7 @@
         "event_authority_registration_checkpoint_drift",
         "event_authority_seal_check_drift",
         "extraction_mapping_overauthority",
+        "false_completion",
         "finalgui_drift",
         "first_paint_drift",
         "forge_wiring_provider_vocabulary_drift",
@@ -6354,6 +6359,7 @@
         "repeated_node_reference_breaks_selection_anchoring",
         "retired_provider_route_revived",
         "retired_token_revived_or_ledger_unrecorded",
+        "review_policy_drift",
         "review_preset_gap",
         "run_limit_precedence",
         "runtime_artifact_retention_assignment_drift",
@@ -6403,15 +6409,15 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "7216a9afaabcf2473fc9bbcc304ebea04e23cc1ea7f5b8b5362d6e2949288230",
+      "sha256": "d76f4681607dcb094e826cc884fa55ded6496c249182926053e0aa48e0516fb9",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 327
+        "accepted": 331
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "decision": 211,
+        "decision": 215,
         "decision_record": 24,
         "requirement": 91
       },
@@ -7002,7 +7008,7 @@
         "future Executor intake",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 9140,
+      "line_count": 9143,
       "path": "Plans/Executor_Protocol.md",
       "plan_unit_count": 129,
       "plan_unit_ids": [
@@ -7174,7 +7180,7 @@
         "unverified_execution_completion",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "9c0410e167ba897b0a47edc1b957d464d777bde6a57087844b2bb7387b2eec9a",
+      "sha256": "18ef187b558dadb4f429dd076afc8327f6d4522c80f1c9ff103a560d89754636",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 129
@@ -8850,7 +8856,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "50698dfdf325cfff915e08fd82379903edfb55be334f46bc1faf20e5e9d6bad8",
+      "sha256": "edb74a9d0cdf5e325d137c62cdae642542eb51d14fb982d712f88d4430331293",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 653,
@@ -12697,7 +12703,7 @@
         "future Orchestrator prompt routes",
         "future subagent handoff and child-run receipt records"
       ],
-      "line_count": 32164,
+      "line_count": 32165,
       "path": "Plans/orchestrator-subagent-integration.md",
       "plan_unit_count": 441,
       "plan_unit_ids": [
@@ -13588,7 +13594,7 @@
         "wake_reason_cascade_semantics",
         "worktree_native_conflict_control_observability"
       ],
-      "sha256": "975d158680edb20c2d1c08e1338ce73e63356d69d02d268a31b73be19b0c7e3d",
+      "sha256": "efa0d584b565514addf6b0c0c42d53bf36adf36ce886cfdafbae81600129d900",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 440,
@@ -14634,7 +14640,7 @@
         "scripts/pm-prd-planning-runtime-validate.py",
         "tests/test_pm_audit_closure.py"
       ],
-      "line_count": 1712,
+      "line_count": 1719,
       "path": "Plans/Planning_Ledger_System.md",
       "plan_unit_count": 26,
       "plan_unit_ids": [
@@ -14694,7 +14700,7 @@
         "source_loss",
         "vague_compile_output"
       ],
-      "sha256": "4d62ad27167c821894fcdafa612f3f72e42a4fe78091fd8beeec1a774d455eb8",
+      "sha256": "75f07e9f0c48a78ea75291ebbb2e1beb47e2f04c263f9e2eb85fd0250790a840",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 26
@@ -21641,7 +21647,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-05T17:55:31Z",
+  "generated_at_utc": "2026-11-05T22:45:56Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -21649,13 +21655,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3675,
-      "True": 3814
+      "False": 3678,
+      "True": 3815
     },
-    "plan_unit_count": 7489,
+    "plan_unit_count": 7493,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 7270,
+      "accepted": 7274,
       "retired": 196,
       "superseded": 23
     },
@@ -21688,7 +21694,7 @@
       "contract": 5,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 234,
+      "decision": 238,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,
