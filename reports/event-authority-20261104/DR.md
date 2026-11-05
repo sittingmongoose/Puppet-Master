@@ -1,193 +1,192 @@
-# DR — fix round 6: source consistency, numeric forms and exact types
+# DR — fix round 7: exact restore-source JSON types
 
-Branch `plans/ea-w2-runtime-artifacts-20261104`; reviewed head `b96dc768a5cc93f7e0edb82b41a7f51ca02dec7c`. Product/checker repair `9041c1ce90`; implementation including measurement-driver repairs `7c04fd7f86044d5746e6406e2219491197255943`. The final report delivery head is pinned in external `drafts/DR/HEAD.txt`.
+Branch `plans/ea-w2-runtime-artifacts-20261104`; reviewed head `379727030a1e0e6929a11e5f9595e1fe2f35db1a`; implementation `2d92a6977184325037bf8b52e8292dccf04d335a`. Final delivery head is recorded in external `drafts/DR/HEAD.txt`.
 
-**Result:** independent cycle-5 16/19 prepared → **19/19 self-graded prepared without admission**. All 228 cells: **206 PASS / 3 PARTIAL / 19 ABSENT → 209 PASS / 0 PARTIAL / 19 ABSENT**. Only the three identified oracle cells upgrade; the other sixteen families retain every PASS. Membership stays ABSENT and native execution stays NOT_RUN. No admission is requested or inferred.
+**Result:** cycle-6 review 18/19 prepared → **19/19 prepared without admission**. Grades **208 PASS / 1 PARTIAL / 19 ABSENT → 209 PASS / 0 PARTIAL / 19 ABSENT**. Membership remains ABSENT; native execution remains NOT_RUN.
 
-## Review round 6: findings and responses
+## Review round 7: findings and responses
 
-- **C5-B1 — fixed (`9041c1ce90`, `16d04eab2c`).** Where: `scripts/pm-runtime-artifact-event-drafts.py:172` (`copied_pairs` / `source_agreement` / `decode` / `AppendModel.append`); RAP-103/CV-523, RAP-106/CV-526, RAP-117/CV-537 and ATS-260. Why: schema scalars and envelope joins never bound copies inside these bodies. Fix: browser-session and action/page source joins; all root/primary/refs/settlement copies in Usage and trace; normalized reasoning/total aliases; recomputed inclusive/exclusive known token buckets, declared derived provider totals, complete known bucket-cost sums, source-class and observed/redacted flags, and retry parent consistency. Known provider digests are recomputed from separately selected synthetic redacted source bytes. All five review mutations and every additional copied-field pair have one-field negatives on schema, inline/packed decode and fresh append. Each pack is built from its actual changed body with new length and digest, with no stale original custody. B01 has 240 own invocation pairs; B02/B03 each have four direct source-type/digest pairs. The 36 distinct-source-role controls preserve action provenance, redirected/current-versus-historical pages, delta/parent/child/context roles and trace signals/retry parents; each paired contradiction refuses and flips under B01 removal.
-- **N1 / Astra item 10 — fixed (`9041c1ce90`, `16d04eab2c`).** Where: `scripts/pm-runtime-artifact-event-drafts.py:156` (`validator` / `canonical_numbers` / `storage_form`), ATS-260. Why: integral floats/exponents reached the unchanged CV-339 MessagePack codec and split complete-value commitments; packing could also collapse a float before the producer checked it. Fix: require integer form for integral current inputs recursively before either storage route, validation, hashing or dedupe. Test `1.0`, `1e0`, signed float zero and leading-zero attempts, with event, receipt, custody, result, checkpoint and open-map coverage. Plain JSON `-0` collapses to integer zero and produces identical bytes; noncanonical packed spellings refuse. Keep the CV-339 codec, domain and frozen vector unchanged. All 38 genuinely issued old numeric inline/packed originals reproduce byte-for-byte against the previous model and still resolve under their original event/receipt/custody/result contract; current writes refuse them.
-- **Astra item 11 — fixed (`9041c1ce90`, `16d04eab2c`).** Where: `scripts/pm-runtime-artifact-event-drafts.py:457` (`full_value_matches`), `:576` (`checkpoint_matches`) and current schema/source/pack/admission/observation boundaries. Why: truthiness and Python bool/int equality could read a wrong type as a valid value. Fix: actual boolean predicates, exact integer snapshot checks, encoded comparisons for untyped copies and the existing closed schema types. All nineteen receive string boolean/number, null, array, nested-object and boolean-as-number negatives. The raw full-schema sweep passes 12,831 assertions. Primitive-type mutation S07 targets its concrete witness leaves while preserving union/format discriminator types so its valid controls remain valid.
+- **C6-B1 — fixed (`2d92a6977184325037bf8b52e8292dccf04d335a`).** Where: `scripts/pm-runtime-artifact-event-drafts.py:1028`, `observation_admissible`, O03 and `scripts/pm_runtime_artifact_round7_cases.py`; existing RAP-113/SP-533/CV-533/ATS-260. Why: Python dictionary equality aliases boolean false with `0`/`0.0`, and true with `1`/`1.0`. Fix: validate the complete source snapshot using the adopted logical schema **before** comparing exact encoded values. No coercion. Nine required/optional restore booleans, protected/unprotected references, first/successor and inline/packed routes supply **832 new one-defect pairs**. Wrong forms include `0`, `1`, `0.0`, `1.0`, string booleans/numbers, null, arrays and nested objects. Source shape negatives are included. The candidate, identity, predecessor and pack bytes stay intact. All valid controls accept. O03 has **833 own flips**, no masked cases or unrelated flips. Injecting `restores_files: false → 0` into positive source adapters now makes the actual full restore checker exit 1/status fail; no production guard or expected answer is modified in that trial.
+- **N1 — integration item retained.** The required unmodified `pm-plan-index.py validate` exits 1 with top-level `fail`. All 22 failures match N1: DL-302 plus 21 pre-existing removal-ledger format errors. The branch still predates current-main units; the three-dot branch scope changes no Decision Log or owner prose this round. Preserve current-main units (including DL-302), regenerate at integration and rerun the original validator. No baseline substitution or unrelated ledger repair is claimed as a pass.
 
-**Disputed:** none. **Stopped for Jared:** none. No new feature, retention/deletion decision or owner conflict is selected.
-
-The measurement repairs across `16d04eab2c` and `7c04fd7f86044d5746e6406e2219491197255943` name D12's forwarded B01 calls and update two old standing-mutation selectors to the strengthened exact-boolean predicates. The complete guard and standing suites were rerun after the measurement and exact-byte repairs. Retained receipt copies and native checkpoint source/segment copies have additional one-field representation negatives; every non-targeted observation is rebound. The raw audit exposed stale publication-locator copies in the initial source-counter witnesses; the corrected inputs rebind those copies and their row-set/frontier commitments. SP-278 independently refuses floating counters in publication locators, so those impossible derived cases are recorded as codec refusals rather than claimed causal flips; encodable boolean counterparts prove the source type guard. D12 bypasses the logical-validator call, including its nested source-agreement overlay: its inline/packed decode and packed-append B01 cases are the same validation at the caller, now explicitly named. Inline append retains a second logical-schema check in full-value validation and is not included in that forwarding set. No production rule or expected answer is weakened.
+**Disputed:** none. **Stopped for Jared:** none.
 
 ## Family grades before and after
 
-P=PASS, Q=PARTIAL, A=ABSENT. Every family passes all eleven standing checks in the Project-only edition; application input refusal is not an application-writer certification.
+P=PASS, Q=PARTIAL, A=ABSENT. Twelve rubric cells; expected absence is registry non-admission.
 
-| Exact family | Twelve cells, before → after |
+| Exact family | Before → after |
 |---|---|
 | `runtime_artifact.api_web_call` | 11P / 0Q / 1A → 11P / 0Q / 1A |
 | `runtime_artifact.artifact_version` | 11P / 0Q / 1A → 11P / 0Q / 1A |
 | `runtime_artifact.before_after_snapshot` | 11P / 0Q / 1A → 11P / 0Q / 1A |
-| `runtime_artifact.browser_recording` | 10P / 1Q / 1A → 11P / 0Q / 1A |
+| `runtime_artifact.browser_recording` | 11P / 0Q / 1A → 11P / 0Q / 1A |
 | `runtime_artifact.code_diff` | 11P / 0Q / 1A → 11P / 0Q / 1A |
 | `runtime_artifact.context_snapshot` | 11P / 0Q / 1A → 11P / 0Q / 1A |
-| `runtime_artifact.cost_usage` | 10P / 1Q / 1A → 11P / 0Q / 1A |
+| `runtime_artifact.cost_usage` | 11P / 0Q / 1A → 11P / 0Q / 1A |
 | `runtime_artifact.document` | 11P / 0Q / 1A → 11P / 0Q / 1A |
 | `runtime_artifact.evidence` | 11P / 0Q / 1A → 11P / 0Q / 1A |
 | `runtime_artifact.failed_attempts` | 11P / 0Q / 1A → 11P / 0Q / 1A |
 | `runtime_artifact.hitl_approval` | 11P / 0Q / 1A → 11P / 0Q / 1A |
 | `runtime_artifact.implementation_plan` | 11P / 0Q / 1A → 11P / 0Q / 1A |
 | `runtime_artifact.reasoning_summary` | 11P / 0Q / 1A → 11P / 0Q / 1A |
-| `runtime_artifact.restore_point` | 11P / 0Q / 1A → 11P / 0Q / 1A |
+| `runtime_artifact.restore_point` | 10P / 1Q / 1A → 11P / 0Q / 1A |
 | `runtime_artifact.screenshot` | 11P / 0Q / 1A → 11P / 0Q / 1A |
 | `runtime_artifact.subagent_lineage` | 11P / 0Q / 1A → 11P / 0Q / 1A |
 | `runtime_artifact.suggested_next_steps` | 11P / 0Q / 1A → 11P / 0Q / 1A |
-| `runtime_artifact.tool_llm_trace` | 10P / 1Q / 1A → 11P / 0Q / 1A |
+| `runtime_artifact.tool_llm_trace` | 11P / 0Q / 1A → 11P / 0Q / 1A |
 | `runtime_artifact.validation_test` | 11P / 0Q / 1A → 11P / 0Q / 1A |
 
-## Complete guard-removal table
+## Whole guard table
 
-**93/93 rows; 5,668 valid/negative pairs; 5,869 owned acceptance flips; zero unrelated flips; all 93 full mutated checkers exit 1/status fail.** Baseline full checker: **17,964 assertions, exit 0/status pass**. Independent production modules repeat all baseline pairs and all owned flips without schema, codec, JSON or hash memoization. The table names forwarded identical enforcement; each other isolated negative remains rejected. Mutations exist only in memory and are discarded after their trial. The repository driver memoizes exact typed byte/hash operations and exact schema evaluation, never guard decisions or expected answers; the raw run checks those results independently.
+**93/93 guards; 6,886 distinct valid/negative pairs; 7,087 owned acceptance flips; zero masked cases; zero unrelated flips.** Every complete mutant checker returns exit 1/status fail. All nineteen family checkers run sequentially under each guard or named duplicate set; available memory is checked before each family and guard. The raw production modules independently reproduce all baseline pairs and owned flips without schema, codec or hash memoization. No guard, expectation or negative from the reviewed inventory is removed.
 
-| Guard / rule | Own negatives that become accepted (family-expanded count) | Other negatives still rejected | Full checker |
+O03 names the duplicated type defenses: adopted source-snapshot schema and exact encoded snapshot join. They are removed together for the causal witness. Existing forwarded/repeated-rule sets stay explicit (F01→A07, F13→H06, F11→C06 custody-event, D12→B01 decode/packed-append, repeated canonical JSON and checkpoint joins). All other isolated negatives remain refused.
+
+| Guard / named rule | Negatives that flip (names in DR.guard-removal.json) | Other negatives stay refused | Full checker |
 |---|---|---:|---|
-| `D01` — decode: event_validator.iter_errors | `envelope_extension` (19) | 5649 | 1 / fail |
-| `D02` — decode: row['payload_schema_id'] | `family`, `payload_schema` (38) | 5630 | 1 / fail |
-| `D03` — decode: event['scope_kind'] | `redaction`, `replay` (38) | 5630 | 1 / fail |
-| `D04` — decode: len(rfc8785.dumps(payload)) | `inline_size` (19) | 5649 | 1 / fail |
-| `D05` — decode/stored: exact pack media and reference grammar | `media` (19) | 5649 | 1 / fail |
-| `D06` — decode: event['payload'] != {} | `placeholder` (19) | 5649 | 1 / fail |
-| `D07` — decode: not source or | `pack_authorized_type_0`, `pack_authorized_type_1`, `pack_authorized_type_2`, `pack_authorized_type_3`, `pack_authorized_type_4`, `pack_authorized_type_5`, `pack_authorized_type_6`, `pack_authorized_type_7`, `pack_durable_type_0`, `pack_durable_type_1`, `pack_durable_type_2`, `pack_durable_type_3`, `pack_durable_type_4`, `pack_durable_type_5`, `pack_durable_type_6`, `pack_durable_type_7`, `pack_not_durable`, `pack_unauthorized` (342) | 5326 | 1 / fail |
-| `D08` — decode: len(body) != int(size) | `byte_size` (19) | 5649 | 1 / fail |
-| `D09` — decode: blake3(body).hexdigest() != digest | `same_size_digest` (19) | 5649 | 1 / fail |
-| `D10` — canonical JSON: unique members and canonical serialization (same encoding rule) | `duplicate_member`, `whitespace` (38) | 5630 | 1 / fail |
-| `D11` — decode: len(body) <= INLINE_LIMIT | `unnecessary_pack` (19) | 5649 | 1 / fail |
-| `D12` — decode: validator(schema; forwards B01:*_inline_decode, B01:*_packed_decode, B01:*_packed_append | `console_ref_inline_decode`, `console_ref_packed_append`, `console_ref_packed_decode`, `cost_derived_inline_decode`, `cost_derived_packed_append`, `cost_derived_packed_decode`, `input_derived_inline_decode`, `input_derived_packed_append`, `input_derived_packed_decode`, `is_cli_reported_inline_decode`, `is_cli_reported_packed_append`, `is_cli_reported_packed_decode`, `is_estimated_inline_decode`, `is_estimated_packed_append`, `is_estimated_packed_decode`, `is_local_context_estimate_inline_decode`, `is_local_context_estimate_packed_append`, `is_local_context_estimate_packed_decode`, `is_provider_reported_inline_decode`, `is_provider_reported_packed_append`, `is_provider_reported_packed_decode`, `logical_extension`, `network_ref_inline_decode`, `network_ref_packed_append`, `network_ref_packed_decode`, `output_derived_inline_decode`, `output_derived_packed_append`, `output_derived_packed_decode`, `page_ref_inline_decode`, `page_ref_packed_append`, `page_ref_packed_decode`, `pdf_artifact_ref_inline_decode`, `pdf_artifact_ref_packed_append`, `pdf_artifact_ref_packed_decode`, `provider_total_derived_inline_decode`, `provider_total_derived_packed_append`, `provider_total_derived_packed_decode`, `reasoning_alias_inline_decode`, `reasoning_alias_packed_append`, `reasoning_alias_packed_decode`, `redacted_inline_decode`, `redacted_packed_append`, `redacted_packed_decode`, `redaction_profile_inline_decode`, `redaction_profile_packed_append`, `redaction_profile_packed_decode`, `refs_attempt_id_inline_decode`, `refs_attempt_id_packed_append`, `refs_attempt_id_packed_decode`, `refs_node_id_inline_decode`, `refs_node_id_packed_append`, `refs_node_id_packed_decode`, `refs_provider_attempt_ref_inline_decode`, `refs_provider_attempt_ref_packed_append`, `refs_provider_attempt_ref_packed_decode`, `refs_raw_payload_ref_inline_decode`, `refs_raw_payload_ref_packed_append`, `refs_raw_payload_ref_packed_decode`, `refs_run_id_inline_decode`, `refs_run_id_packed_append`, `refs_run_id_packed_decode`, `refs_thread_id_inline_decode`, `refs_thread_id_packed_append`, `refs_thread_id_packed_decode`, `refs_usage_event_ref_inline_decode`, `refs_usage_event_ref_packed_append`, `refs_usage_event_ref_packed_decode`, `refs_usage_record_id_inline_decode`, `refs_usage_record_id_packed_append`, `refs_usage_record_id_packed_decode`, `retry_missing_parent_inline_decode`, `retry_missing_parent_packed_append`, `retry_missing_parent_packed_decode`, `retry_parent_inline_decode`, `retry_parent_packed_append`, `retry_parent_packed_decode`, `root_provider_attempt_ref_inline_decode`, `root_provider_attempt_ref_packed_append`, `root_provider_attempt_ref_packed_decode`, `root_receipt_refs_inline_decode`, `root_receipt_refs_packed_append`, `root_receipt_refs_packed_decode`, `root_usage_event_ref_inline_decode`, `root_usage_event_ref_packed_append`, `root_usage_event_ref_packed_decode`, `root_usage_record_id_inline_decode`, `root_usage_record_id_packed_append`, `root_usage_record_id_packed_decode`, `screenshot_artifact_ref_inline_decode`, `screenshot_artifact_ref_packed_append`, `screenshot_artifact_ref_packed_decode`, `session_0_inline_decode`, `session_0_packed_append`, `session_0_packed_decode`, `session_1_inline_decode`, `session_1_packed_append`, `session_1_packed_decode`, `session_2_inline_decode`, `session_2_packed_append`, `session_2_packed_decode`, `session_3_inline_decode`, `session_3_packed_append`, `session_3_packed_decode`, `session_4_inline_decode`, `session_4_packed_append`, `session_4_packed_decode`, `session_5_inline_decode`, `session_5_packed_append`, `session_5_packed_decode`, `settlement_usage_event_ref_inline_decode`, `settlement_usage_event_ref_packed_append`, `settlement_usage_event_ref_packed_decode`, `settlement_usage_record_id_inline_decode`, `settlement_usage_record_id_packed_append`, `settlement_usage_record_id_packed_decode`, `total_alias_inline_decode`, `total_alias_packed_append`, `total_alias_packed_decode`, `usage_artifact_observed_inline_decode`, `usage_artifact_observed_packed_append`, `usage_artifact_observed_packed_decode`, `usage_observed_inline_decode`, `usage_observed_packed_append`, `usage_observed_packed_decode` (163) | 5505 | 1 / fail |
-| `D13` — decode: payload['project_id'] != event['project_id'] | `project_join` (19) | 5649 | 1 / fail |
-| `D14` — decode: payload.get(field) | `attempt_id`, `node_id`, `run_id`, `thread_id` (76) | 5592 | 1 / fail |
-| `D15` — decode: payload['created_at_utc'] | `authored_time` (19) | 5649 | 1 / fail |
-| `D16` — decode: payload['actor_ref'] | `actor` (19) | 5649 | 1 / fail |
-| `D17` — decode: event['idempotency_key'] | `identity` (19) | 5649 | 1 / fail |
-| `D18` — decode: point['project_id'] | `point_project` (1) | 5667 | 1 / fail |
-| `H01` — inspect: source['withdrawn'] | `flag_type_authorized_0`, `flag_type_authorized_1`, `flag_type_authorized_2`, `flag_type_authorized_3`, `flag_type_authorized_4`, `flag_type_authorized_5`, `flag_type_authorized_6`, `flag_type_authorized_7`, `flag_type_withdrawn_0`, `flag_type_withdrawn_1`, `flag_type_withdrawn_2`, `flag_type_withdrawn_3`, `flag_type_withdrawn_4`, `flag_type_withdrawn_5`, `flag_type_withdrawn_6`, `flag_type_withdrawn_7`, `unauthorized`, `withdrawn` (342) | 5326 | 1 / fail |
-| `H02` — inspect: source['source_valid'] | `flag_type_receipt_valid_0`, `flag_type_receipt_valid_1`, `flag_type_receipt_valid_2`, `flag_type_receipt_valid_3`, `flag_type_receipt_valid_4`, `flag_type_receipt_valid_5`, `flag_type_receipt_valid_6`, `flag_type_receipt_valid_7`, `flag_type_source_valid_0`, `flag_type_source_valid_1`, `flag_type_source_valid_2`, `flag_type_source_valid_3`, `flag_type_source_valid_4`, `flag_type_source_valid_5`, `flag_type_source_valid_6`, `flag_type_source_valid_7`, `forged_receipt`, `forged_source` (342) | 5326 | 1 / fail |
-| `H03` — inspect: source['project_id'] | `family`, `project` (38) | 5630 | 1 / fail |
-| `H04` — inspect: source['original_payload'] | `changed_original` (19) | 5649 | 1 / fail |
-| `H06` — resolve_history: not full_value_matches | `authenticated_custody` (19) | 5649 | 1 / fail |
-| `H05` — explicit supported historical decoder selection | `decoder_selection` (2) | 5666 | 1 / fail |
-| `F01` — full_value_matches: stored_event_valid; forwards A07 | `invalid_issued_custody`, `schema` (38) | 5630 | 1 / fail |
-| `F02` — full_value_matches: value_bytes(candidate) == value_bytes(stored) | `original_value_bytes` (19) | 5649 | 1 / fail |
-| `F03` — full_value_matches: custody['scope_partition'] == scope_partition(candidate['project_id']) | `partition` (19) | 5649 | 1 / fail |
-| `F04` — full_value_matches: custody['event_type'] == candidate['event_type'] | `custody_family` (19) | 5649 | 1 / fail |
-| `F05` — full_value_matches: custody['idempotency_key'] == candidate['idempotency_key'] | `custody_key` (19) | 5649 | 1 / fail |
-| `F06` — full_value_matches: value_bytes(receipt['sequence_id']) == value_bytes(candidate['sequence_id']) | `receipt_sequence`, `retained_exact_receipt_type` (38) | 5630 | 1 / fail |
-| `F07` — full_value_matches: result['original_segment_ref'] == custody['original_segment_ref'] | `segment_reference` (19) | 5649 | 1 / fail |
-| `F08` — full_value_matches: commitment(candidate) == custody['original_event_value_commitment'] == result['original_event_value_commitment'] | `full_commitment`, `result_commitment` (38) | 5630 | 1 / fail |
-| `F09` — full_value_matches: semantic_digest(candidate) == custody['producer_semantic_digest'] | `semantic_commitment` (19) | 5649 | 1 / fail |
-| `F10` — full_value_matches: value_bytes(receipt) == value_bytes(custody['first_append_receipt']) | `receipt_copy`, `retained_exact_receipt_type` (38) | 5630 | 1 / fail |
-| `F11` — full_value_matches: receipt['event_id'] == candidate['event_id'] == custody['event_id']; forwards C06:shipped_wrong_custody_event | `custody_event`, `receipt_event`, `shipped_wrong_custody_event` (57) | 5611 | 1 / fail |
-| `F12` — full_value_matches: value_bytes(result) == value_bytes(original['result']) | `original_result`, `retained_exact_receipt_type` (38) | 5630 | 1 / fail |
-| `F13` — full_value_matches: value_bytes(custody) == value_bytes(original['custody']); forwards H06 | `authenticated_custody`, `original_custody`, `retained_exact_receipt_type` (57) | 5611 | 1 / fail |
-| `V01` — stored_event_valid: event_validator.iter_errors | `event_extension` (19) | 5649 | 1 / fail |
-| `V02` — stored_event_valid: event['scope_kind'] | `replay` (19) | 5649 | 1 / fail |
-| `V03` — stored_event_valid: bool(PACK_REF.fullmatch(event['payload_ref'])) | `pack_ref` (19) | 5649 | 1 / fail |
-| `V04` — stored_event_valid: event['payload'] == {} | `pack_placeholder` (19) | 5649 | 1 / fail |
-| `V05` — stored_event_valid: len(rfc8785.dumps(event['payload'])) <= INLINE_LIMIT | `inline_size` (19) | 5649 | 1 / fail |
-| `V06` — stored_event_valid: validator(load(row['payload_schema_ref']), validation=validation).is_valid(event['payload']) | `logical_schema` (19) | 5649 | 1 / fail |
-| `V07` — stored_event_valid: return False | `unknown_dispatch` (19) | 5649 | 1 / fail |
-| `A01` — append: admission is not True | `flag_type_admission_0`, `flag_type_admission_1`, `flag_type_admission_2`, `flag_type_admission_3`, `flag_type_admission_4`, `flag_type_admission_5`, `flag_type_admission_6`, `flag_type_admission_7`, `not_admitted` (171) | 5497 | 1 / fail |
-| `A02` — append: source_valid is not True | `dedupe_unavailable`, `flag_type_dedupe_available_0`, `flag_type_dedupe_available_1`, `flag_type_dedupe_available_2`, `flag_type_dedupe_available_3`, `flag_type_dedupe_available_4`, `flag_type_dedupe_available_5`, `flag_type_dedupe_available_6`, `flag_type_dedupe_available_7`, `flag_type_source_valid_0`, `flag_type_source_valid_1`, `flag_type_source_valid_2`, `flag_type_source_valid_3`, `flag_type_source_valid_4`, `flag_type_source_valid_5`, `flag_type_source_valid_6`, `flag_type_source_valid_7`, `source_invalid` (342) | 5326 | 1 / fail |
-| `A03` — append: replay policy before dedupe (both refusal branches) | `append_once_retry`, `dedupe_by_event_id_retry`, `projector_replay_only_retry` (57) | 5611 | 1 / fail |
-| `A04` — append: event['event_id'] in self.global_ids | `global_event_conflict` (19) | 5649 | 1 / fail |
-| `A05` — append: original['custody']['producer_semantic_digest'] == digest | `scoped_semantic_conflict` (19) | 5649 | 1 / fail |
-| `A06` — append: EVENT_VALIDATOR | `retry_envelope_extension` (19) | 5649 | 1 / fail |
-| `A07` — append: not full_value_matches | `invalid_issued_custody` (19) | 5649 | 1 / fail |
-| `P01` — policies_match: row.get('index_retention_policy_ref') == index_policy | `index` (19) | 5649 | 1 / fail |
-| `P02` — policies_match: row.get('checkpoint_retention_policy_ref') == checkpoint_policy | `checkpoint` (19) | 5649 | 1 / fail |
-| `P03` — policies_match: 'derived_retention_policy_ref' not in row | `conflated` (19) | 5649 | 1 / fail |
-| `C01` — checkpoint: schema/key route and resolved checkpoint target | `available_wrong_schema_target`, `route`, `shipped_wrong_key_route` (57) | 5611 | 1 / fail |
-| `C02` — checkpoint_matches: validator(schema, 'checkpoint') | `schema` (19) | 5649 | 1 / fail |
-| `C03` — checkpoint store/key identities, including repeated token store/key joins | `shipped_wrong_checkpoint_store`, `shipped_wrong_custody_store`, `shipped_wrong_source_store`, `shipped_wrong_store_key`, `shipped_wrong_token_store`, `storage` (114) | 5554 | 1 / fail |
-| `C04` — checkpoint live selection/verification/snapshot, including the repeated token snapshot join | `primary_selection_recovery_epoch_boolean`, `primary_selection_selected_segment_generation_boolean`, `primary_selection_selected_segment_generation_float`, `shipped_unverified_source`, `shipped_wrong_anchor_store`, `shipped_wrong_frontier_store`, `shipped_wrong_live_snapshot`, `shipped_wrong_token_source_store`, `snapshot`, `verified` (190) | 5478 | 1 / fail |
-| `C05` — checkpoint_matches: generation != expected_generation | `shipped_wrong_frontier`, `shipped_wrong_pointer`, `token_commitment` (57) | 5611 | 1 / fail |
-| `C06` — checkpoint_matches: not full_value_matches | `shipped_wrong_custody_event`, `shipped_wrong_event`, `source_event` (57) | 5611 | 1 / fail |
-| `C07` — checkpoint_matches: source['scope_partition'] | `partition`, `shipped_wrong_locator`, `shipped_wrong_partition` (57) | 5611 | 1 / fail |
-| `C08` — checkpoint_matches: selection['current_bytes_sha256'] | `current_bytes`, `current_generation_type_0`, `current_generation_type_1`, `current_generation_type_2`, `current_generation_type_3`, `current_generation_type_4`, `current_generation_type_5`, `current_generation_type_6`, `current_generation_type_7`, `manifest_bytes`, `manifest_generation_type_0`, `manifest_generation_type_1`, `manifest_generation_type_2`, `manifest_generation_type_3`, `manifest_generation_type_4`, `manifest_generation_type_5`, `manifest_generation_type_6`, `manifest_generation_type_7`, `manifest_inventory_type`, `manifest_segment_type_0`, `manifest_segment_type_1`, `manifest_segment_type_2`, `manifest_segment_type_3`, `manifest_segment_type_4`, `manifest_segment_type_5`, `manifest_segment_type_6`, `manifest_segment_type_7`, `recovery_epoch_type_0`, `recovery_epoch_type_1`, `recovery_epoch_type_2`, `recovery_epoch_type_3`, `recovery_epoch_type_4`, `recovery_epoch_type_5`, `recovery_epoch_type_6`, `recovery_epoch_type_7`, `shipped_wrong_source_selection` (684) | 4984 | 1 / fail |
-| `C09` — checkpoint_matches: value_bytes(anchor['source_selection']) != value_bytes(selection) | `coverage` (19) | 5649 | 1 / fail |
-| `C10` — checkpoint_matches: coverage['last_frame'] | `last_frame`, `source_frame_end_type`, `source_segment_retained_event_count_boolean`, `source_segment_scan_start_offset_boolean`, `source_segment_segment_generation_boolean` (95) | 5573 | 1 / fail |
-| `C11` — checkpoint_matches: segment['scan_start_offset'] | `segment` (19) | 5649 | 1 / fail |
-| `C12` — checkpoint_matches: value_bytes(bundle['datasets']) == value_bytes({token['index_dataset_name']: dataset}) | `dataset`, `shipped_missing_dataset` (38) | 5630 | 1 / fail |
-| `C13` — checkpoint_matches: frontier['index_row_count'] == 1 | `row_count` (19) | 5649 | 1 / fail |
-| `C14` — checkpoint_matches: frontier['index_row_set_sha256'] == binding_digest(dict( domain='pm.event_index.row_set.v1', entries=[dict(key=row_key, value=expected_row)])) | `row_set_digest` (19) | 5649 | 1 / fail |
-| `O01` — observation_admissible: source['proof_valid'] | `predecessor_complete`, `predecessor_complete_type_0`, `predecessor_complete_type_1`, `predecessor_complete_type_2`, `predecessor_complete_type_3`, `predecessor_complete_type_4`, `predecessor_complete_type_5`, `predecessor_complete_type_6`, `predecessor_complete_type_7`, `proof_valid`, `proof_valid_type_0`, `proof_valid_type_1`, `proof_valid_type_2`, `proof_valid_type_3`, `proof_valid_type_4`, `proof_valid_type_5`, `proof_valid_type_6`, `proof_valid_type_7`, `snapshot_current`, `snapshot_current_type_0`, `snapshot_current_type_1`, `snapshot_current_type_2`, `snapshot_current_type_3`, `snapshot_current_type_4`, `snapshot_current_type_5`, `snapshot_current_type_6`, `snapshot_current_type_7` (27) | 5641 | 1 / fail |
-| `O02` — observation_admissible: candidate['correlation_id'] != grouping_identity | `grouping` (1) | 5667 | 1 / fail |
-| `O03` — observation_admissible: payload['type_payload'] != source | `source_snapshot` (1) | 5667 | 1 / fail |
-| `O04` — observation_admissible: candidate['producer_sequence_id'] == 0 and candidate['parent_event_id'] is None | `first_parent_event_id`, `first_producer_sequence_id` (2) | 5666 | 1 / fail |
-| `O05` — observation_admissible: payload['artifact_id'] != | `artifact_id`, `project_id`, `record_ref`, `record_sha256`, `restore_point_id`, `source_branch_id`, `source_message_id`, `source_thread_id` (8) | 5660 | 1 / fail |
-| `O06` — observation_admissible: payload['type_payload'] == old['type_payload'] | `unchanged` (1) | 5667 | 1 / fail |
-| `O07` — observation_admissible: old_status != 'available' | `terminal_reopen` (1) | 5667 | 1 / fail |
-| `O08` — observation_admissible: candidate['producer_sequence_id'] == previous['producer_sequence_id'] + 1 | `0`, `2` (2) | 5666 | 1 / fail |
-| `O09` — observation_admissible: candidate['parent_event_id'] == previous['event_id'] | `predecessor` (1) | 5667 | 1 / fail |
-| `O10` — observation_admissible: candidate['correlation_id'] == previous['correlation_id'] | `prior_group` (1) | 5667 | 1 / fail |
-| `S01` — whole-document schema references, including optional/unvisited definitions | `unresolved_optional` (19) | 5649 | 1 / fail |
-| `S02` — exact_pattern: re.search(pattern, instance) and re.fullmatch(pattern, instance) is None | `identifier_LF` (1) | 5667 | 1 / fail |
-| `S04` — exact_pattern_properties: re.search(pattern, key) and re.fullmatch(pattern, key) is None | `identifier_key_LF` (1) | 5667 | 1 / fail |
-| `S03` — current-writer provider hash overlay | `provider_hash` (2) | 5666 | 1 / fail |
-| `S05` — rejected: return False | `success_is_not_failure` (1) | 5667 | 1 / fail |
-| `I01` — identity: type(revision) | `boolean_observation_revision`, `fractional_observation_revision`, `missing_observation_revision`, `negative_observation_revision` (4) | 5664 | 1 / fail |
-| `I02` — value_bytes: not math.isfinite | `infinite_value`, `nan_value`, `negative_infinite_value` (3) | 5665 | 1 / fail |
-| `I03` — value_bytes: type(value) not in | `unsupported_binary` (1) | 5667 | 1 / fail |
-| `S06` — validator: validation not in | `unsupported_validation_profile` (1) | 5667 | 1 / fail |
-| `H07` — inspect: return ('metadata_only' if source['body_deleted'] else 'metadata_and_authorized_refs') if type(source['body_deleted']) is bool else 'unavailable' | `deleted_body_refs`, `flag_type_body_deleted_0`, `flag_type_body_deleted_1`, `flag_type_body_deleted_2`, `flag_type_body_deleted_3`, `flag_type_body_deleted_4`, `flag_type_body_deleted_5`, `flag_type_body_deleted_6`, `flag_type_body_deleted_7` (171) | 5497 | 1 / fail |
-| `N01` — numeric_walk: not math.isfinite(value) | `exponent_checkpoint`, `exponent_custody`, `exponent_event`, `exponent_open_map`, `exponent_receipt`, `exponent_result`, `exponent_storage_form_inline`, `exponent_storage_form_packed`, `float_checkpoint`, `float_custody`, `float_event`, `float_open_map`, `float_receipt`, `float_result`, `float_storage_form_inline`, `float_storage_form_packed`, `negative_zero_checkpoint`, `negative_zero_custody`, `negative_zero_event`, `negative_zero_open_map`, `negative_zero_receipt`, `negative_zero_result`, `negative_zero_storage_form_inline`, `negative_zero_storage_form_packed`, `positive_zero_checkpoint`, `positive_zero_custody`, `positive_zero_event`, `positive_zero_open_map`, `positive_zero_receipt`, `positive_zero_result`, `positive_zero_storage_form_inline`, `positive_zero_storage_form_packed` (608) | 5060 | 1 / fail |
-| `B01` — source_agreement: copy != source | `console_ref_inline_append`, `console_ref_inline_decode`, `console_ref_packed_append`, `console_ref_packed_decode`, `console_ref_schema`, `cost_derived_inline_append`, `cost_derived_inline_decode`, `cost_derived_packed_append`, `cost_derived_packed_decode`, `cost_derived_schema`, `input_derived_inline_append`, `input_derived_inline_decode`, `input_derived_packed_append`, `input_derived_packed_decode`, `input_derived_schema`, `is_cli_reported_inline_append`, `is_cli_reported_inline_decode`, `is_cli_reported_packed_append`, `is_cli_reported_packed_decode`, `is_cli_reported_schema`, `is_estimated_inline_append`, `is_estimated_inline_decode`, `is_estimated_packed_append`, `is_estimated_packed_decode`, `is_estimated_schema`, `is_local_context_estimate_inline_append`, `is_local_context_estimate_inline_decode`, `is_local_context_estimate_packed_append`, `is_local_context_estimate_packed_decode`, `is_local_context_estimate_schema`, `is_provider_reported_inline_append`, `is_provider_reported_inline_decode`, `is_provider_reported_packed_append`, `is_provider_reported_packed_decode`, `is_provider_reported_schema`, `network_ref_inline_append`, `network_ref_inline_decode`, `network_ref_packed_append`, `network_ref_packed_decode`, `network_ref_schema`, `output_derived_inline_append`, `output_derived_inline_decode`, `output_derived_packed_append`, `output_derived_packed_decode`, `output_derived_schema`, `page_ref_inline_append`, `page_ref_inline_decode`, `page_ref_packed_append`, `page_ref_packed_decode`, `page_ref_schema`, `pdf_artifact_ref_inline_append`, `pdf_artifact_ref_inline_decode`, `pdf_artifact_ref_packed_append`, `pdf_artifact_ref_packed_decode`, `pdf_artifact_ref_schema`, `provider_total_derived_inline_append`, `provider_total_derived_inline_decode`, `provider_total_derived_packed_append`, `provider_total_derived_packed_decode`, `provider_total_derived_schema`, `reasoning_alias_inline_append`, `reasoning_alias_inline_decode`, `reasoning_alias_packed_append`, `reasoning_alias_packed_decode`, `reasoning_alias_schema`, `redacted_inline_append`, `redacted_inline_decode`, `redacted_packed_append`, `redacted_packed_decode`, `redacted_schema`, `redaction_profile_inline_append`, `redaction_profile_inline_decode`, `redaction_profile_packed_append`, `redaction_profile_packed_decode`, `redaction_profile_schema`, `refs_attempt_id_inline_append`, `refs_attempt_id_inline_decode`, `refs_attempt_id_packed_append`, `refs_attempt_id_packed_decode`, `refs_attempt_id_schema`, `refs_node_id_inline_append`, `refs_node_id_inline_decode`, `refs_node_id_packed_append`, `refs_node_id_packed_decode`, `refs_node_id_schema`, `refs_provider_attempt_ref_inline_append`, `refs_provider_attempt_ref_inline_decode`, `refs_provider_attempt_ref_packed_append`, `refs_provider_attempt_ref_packed_decode`, `refs_provider_attempt_ref_schema`, `refs_raw_payload_ref_inline_append`, `refs_raw_payload_ref_inline_decode`, `refs_raw_payload_ref_packed_append`, `refs_raw_payload_ref_packed_decode`, `refs_raw_payload_ref_schema`, `refs_run_id_inline_append`, `refs_run_id_inline_decode`, `refs_run_id_packed_append`, `refs_run_id_packed_decode`, `refs_run_id_schema`, `refs_thread_id_inline_append`, `refs_thread_id_inline_decode`, `refs_thread_id_packed_append`, `refs_thread_id_packed_decode`, `refs_thread_id_schema`, `refs_usage_event_ref_inline_append`, `refs_usage_event_ref_inline_decode`, `refs_usage_event_ref_packed_append`, `refs_usage_event_ref_packed_decode`, `refs_usage_event_ref_schema`, `refs_usage_record_id_inline_append`, `refs_usage_record_id_inline_decode`, `refs_usage_record_id_packed_append`, `refs_usage_record_id_packed_decode`, `refs_usage_record_id_schema`, `retry_missing_parent_inline_append`, `retry_missing_parent_inline_decode`, `retry_missing_parent_packed_append`, `retry_missing_parent_packed_decode`, `retry_missing_parent_schema`, `retry_parent_inline_append`, `retry_parent_inline_decode`, `retry_parent_packed_append`, `retry_parent_packed_decode`, `retry_parent_schema`, `root_provider_attempt_ref_inline_append`, `root_provider_attempt_ref_inline_decode`, `root_provider_attempt_ref_packed_append`, `root_provider_attempt_ref_packed_decode`, `root_provider_attempt_ref_schema`, `root_receipt_refs_inline_append`, `root_receipt_refs_inline_decode`, `root_receipt_refs_packed_append`, `root_receipt_refs_packed_decode`, `root_receipt_refs_schema`, `root_usage_event_ref_inline_append`, `root_usage_event_ref_inline_decode`, `root_usage_event_ref_packed_append`, `root_usage_event_ref_packed_decode`, `root_usage_event_ref_schema`, `root_usage_record_id_inline_append`, `root_usage_record_id_inline_decode`, `root_usage_record_id_packed_append`, `root_usage_record_id_packed_decode`, `root_usage_record_id_schema`, `screenshot_artifact_ref_inline_append`, `screenshot_artifact_ref_inline_decode`, `screenshot_artifact_ref_packed_append`, `screenshot_artifact_ref_packed_decode`, `screenshot_artifact_ref_schema`, `session_0_inline_append`, `session_0_inline_decode`, `session_0_packed_append`, `session_0_packed_decode`, `session_0_schema`, `session_1_inline_append`, `session_1_inline_decode`, `session_1_packed_append`, `session_1_packed_decode`, `session_1_schema`, `session_2_inline_append`, `session_2_inline_decode`, `session_2_packed_append`, `session_2_packed_decode`, `session_2_schema`, `session_3_inline_append`, `session_3_inline_decode`, `session_3_packed_append`, `session_3_packed_decode`, `session_3_schema`, `session_4_inline_append`, `session_4_inline_decode`, `session_4_packed_append`, `session_4_packed_decode`, `session_4_schema`, `session_5_inline_append`, `session_5_inline_decode`, `session_5_packed_append`, `session_5_packed_decode`, `session_5_schema`, `settlement_usage_event_ref_inline_append`, `settlement_usage_event_ref_inline_decode`, `settlement_usage_event_ref_packed_append`, `settlement_usage_event_ref_packed_decode`, `settlement_usage_event_ref_schema`, `settlement_usage_record_id_inline_append`, `settlement_usage_record_id_inline_decode`, `settlement_usage_record_id_packed_append`, `settlement_usage_record_id_packed_decode`, `settlement_usage_record_id_schema`, `total_alias_inline_append`, `total_alias_inline_decode`, `total_alias_packed_append`, `total_alias_packed_decode`, `total_alias_schema`, `usage_artifact_observed_inline_append`, `usage_artifact_observed_inline_decode`, `usage_artifact_observed_packed_append`, `usage_artifact_observed_packed_decode`, `usage_artifact_observed_schema`, `usage_observed_inline_append`, `usage_observed_inline_decode`, `usage_observed_packed_append`, `usage_observed_packed_decode`, `usage_observed_schema` (240) | 5428 | 1 / fail |
-| `B02` — decode: raw is False | `source_bytes_type_inline`, `source_bytes_type_packed` (4) | 5664 | 1 / fail |
-| `B03` — decode: evidence['provider_payload_hash'] != expected | `source_digest_inline`, `source_digest_packed` (4) | 5664 | 1 / fail |
-| `S07` — primitive JSON type at artifact_id, sequence_id and boolean scalar witness leaves; union/format tags retained | `boolean_type_0`, `boolean_type_1`, `boolean_type_2`, `boolean_type_3`, `boolean_type_4`, `boolean_type_5`, `boolean_type_6`, `boolean_type_7`, `event_number_type_0`, `event_number_type_1`, `event_number_type_2`, `event_number_type_3`, `event_number_type_4`, `event_number_type_5`, `payload_string_type_0`, `payload_string_type_1`, `payload_string_type_2`, `payload_string_type_3`, `payload_string_type_4`, `payload_string_type_5`, `payload_string_type_6` (399) | 5269 | 1 / fail |
+| `D01` — decode: event_validator.iter_errors | `envelope_extension` (19) | 6867 | 1 / fail |
+| `D02` — decode: row['payload_schema_id'] | `family`, `payload_schema` (38) | 6848 | 1 / fail |
+| `D03` — decode: event['scope_kind'] | `redaction`, `replay` (38) | 6848 | 1 / fail |
+| `D04` — decode: len(rfc8785.dumps(payload)) | `inline_size` (19) | 6867 | 1 / fail |
+| `D05` — decode/stored: exact pack media and reference grammar | `media` (19) | 6867 | 1 / fail |
+| `D06` — decode: event['payload'] != {} | `placeholder` (19) | 6867 | 1 / fail |
+| `D07` — decode: not source or | 22 named cases; full list in `DR.guard-removal.json` (418) | 6468 | 1 / fail |
+| `D08` — decode: len(body) != int(size) | `byte_size` (19) | 6867 | 1 / fail |
+| `D09` — decode: blake3(body).hexdigest() != digest | `same_size_digest` (19) | 6867 | 1 / fail |
+| `D10` — canonical JSON: unique members and canonical serialization (same encoding rule) | `duplicate_member`, `whitespace` (38) | 6848 | 1 / fail |
+| `D11` — decode: len(body) <= INLINE_LIMIT | `unnecessary_pack` (19) | 6867 | 1 / fail |
+| `D12` — decode: validator(schema | 124 named cases; full list in `DR.guard-removal.json` (163) | 6723 | 1 / fail |
+| `D13` — decode: payload['project_id'] != event['project_id'] | `project_join` (19) | 6867 | 1 / fail |
+| `D14` — decode: payload.get(field) | `attempt_id`, `node_id`, `run_id`, `thread_id` (76) | 6810 | 1 / fail |
+| `D15` — decode: payload['created_at_utc'] | `authored_time` (19) | 6867 | 1 / fail |
+| `D16` — decode: payload['actor_ref'] | `actor` (19) | 6867 | 1 / fail |
+| `D17` — decode: event['idempotency_key'] | `identity` (19) | 6867 | 1 / fail |
+| `D18` — decode: point['project_id'] | `point_project` (1) | 6885 | 1 / fail |
+| `H01` — inspect: source['withdrawn'] | 22 named cases; full list in `DR.guard-removal.json` (418) | 6468 | 1 / fail |
+| `H02` — inspect: source['source_valid'] | 22 named cases; full list in `DR.guard-removal.json` (418) | 6468 | 1 / fail |
+| `H03` — inspect: source['project_id'] | `family`, `project` (38) | 6848 | 1 / fail |
+| `H04` — inspect: source['original_payload'] | `changed_original` (19) | 6867 | 1 / fail |
+| `H06` — resolve_history: not full_value_matches | `authenticated_custody` (19) | 6867 | 1 / fail |
+| `H05` — explicit supported historical decoder selection | `decoder_selection` (2) | 6884 | 1 / fail |
+| `F01` — full_value_matches: stored_event_valid | `invalid_issued_custody`, `schema` (38) | 6848 | 1 / fail |
+| `F02` — full_value_matches: value_bytes(candidate) == value_bytes(stored) | `original_value_bytes` (19) | 6867 | 1 / fail |
+| `F03` — full_value_matches: custody['scope_partition'] == scope_partition(candidate['project_id']) | `partition` (19) | 6867 | 1 / fail |
+| `F04` — full_value_matches: custody['event_type'] == candidate['event_type'] | `custody_family` (19) | 6867 | 1 / fail |
+| `F05` — full_value_matches: custody['idempotency_key'] == candidate['idempotency_key'] | `custody_key` (19) | 6867 | 1 / fail |
+| `F06` — full_value_matches: value_bytes(receipt['sequence_id']) == value_bytes(candidate['sequence_id']) | `receipt_sequence`, `retained_exact_receipt_type` (38) | 6848 | 1 / fail |
+| `F07` — full_value_matches: result['original_segment_ref'] == custody['original_segment_ref'] | `segment_reference` (19) | 6867 | 1 / fail |
+| `F08` — full_value_matches: commitment(candidate) == custody['original_event_value_commitment'] == result['original_event_value_commitment'] | `full_commitment`, `result_commitment` (38) | 6848 | 1 / fail |
+| `F09` — full_value_matches: semantic_digest(candidate) == custody['producer_semantic_digest'] | `semantic_commitment` (19) | 6867 | 1 / fail |
+| `F10` — full_value_matches: value_bytes(receipt) == value_bytes(custody['first_append_receipt']) | `receipt_copy`, `retained_exact_receipt_type` (38) | 6848 | 1 / fail |
+| `F11` — full_value_matches: receipt['event_id'] == candidate['event_id'] == custody['event_id'] | `custody_event`, `receipt_event`, `shipped_wrong_custody_event` (57) | 6829 | 1 / fail |
+| `F12` — full_value_matches: value_bytes(result) == value_bytes(original['result']) | `original_result`, `retained_exact_receipt_type` (38) | 6848 | 1 / fail |
+| `F13` — full_value_matches: value_bytes(custody) == value_bytes(original['custody']) | `authenticated_custody`, `original_custody`, `retained_exact_receipt_type` (57) | 6829 | 1 / fail |
+| `V01` — stored_event_valid: event_validator.iter_errors | `event_extension` (19) | 6867 | 1 / fail |
+| `V02` — stored_event_valid: event['scope_kind'] | `replay` (19) | 6867 | 1 / fail |
+| `V03` — stored_event_valid: bool(PACK_REF.fullmatch(event['payload_ref'])) | `pack_ref` (19) | 6867 | 1 / fail |
+| `V04` — stored_event_valid: event['payload'] == {} | `pack_placeholder` (19) | 6867 | 1 / fail |
+| `V05` — stored_event_valid: len(rfc8785.dumps(event['payload'])) <= INLINE_LIMIT | `inline_size` (19) | 6867 | 1 / fail |
+| `V06` — stored_event_valid: validator(load(row['payload_schema_ref']), validation=validation).is_valid(event['payload']) | `logical_schema` (19) | 6867 | 1 / fail |
+| `V07` — stored_event_valid: return False | `unknown_dispatch` (19) | 6867 | 1 / fail |
+| `A01` — append: admission is not True | `flag_type_admission_0`, `flag_type_admission_1`, `flag_type_admission_2`, `flag_type_admission_3`, `flag_type_admission_4`, `flag_type_admission_5`, `flag_type_admission_6`, `flag_type_admission_7`, `flag_type_admission_8`, `flag_type_admission_9`, `not_admitted` (209) | 6677 | 1 / fail |
+| `A02` — append: source_valid is not True | 22 named cases; full list in `DR.guard-removal.json` (418) | 6468 | 1 / fail |
+| `A03` — append: replay policy before dedupe (both refusal branches) | `append_once_retry`, `dedupe_by_event_id_retry`, `projector_replay_only_retry` (57) | 6829 | 1 / fail |
+| `A04` — append: event['event_id'] in self.global_ids | `global_event_conflict` (19) | 6867 | 1 / fail |
+| `A05` — append: original['custody']['producer_semantic_digest'] == digest | `scoped_semantic_conflict` (19) | 6867 | 1 / fail |
+| `A06` — append: EVENT_VALIDATOR | `retry_envelope_extension` (19) | 6867 | 1 / fail |
+| `A07` — append: not full_value_matches | `invalid_issued_custody` (19) | 6867 | 1 / fail |
+| `P01` — policies_match: row.get('index_retention_policy_ref') == index_policy | `index` (19) | 6867 | 1 / fail |
+| `P02` — policies_match: row.get('checkpoint_retention_policy_ref') == checkpoint_policy | `checkpoint` (19) | 6867 | 1 / fail |
+| `P03` — policies_match: 'derived_retention_policy_ref' not in row | `conflated` (19) | 6867 | 1 / fail |
+| `C01` — checkpoint: schema/key route and resolved checkpoint target | `available_wrong_schema_target`, `route`, `shipped_wrong_key_route` (57) | 6829 | 1 / fail |
+| `C02` — checkpoint_matches: validator(schema, 'checkpoint') | `schema` (19) | 6867 | 1 / fail |
+| `C03` — checkpoint store/key identities, including repeated token store/key joins | `shipped_wrong_checkpoint_store`, `shipped_wrong_custody_store`, `shipped_wrong_source_store`, `shipped_wrong_store_key`, `shipped_wrong_token_store`, `storage` (114) | 6772 | 1 / fail |
+| `C04` — checkpoint live selection/verification/snapshot, including the repeated token snapshot join | 10 named cases; full list in `DR.guard-removal.json` (190) | 6696 | 1 / fail |
+| `C05` — checkpoint_matches: generation != expected_generation | `shipped_wrong_frontier`, `shipped_wrong_pointer`, `token_commitment` (57) | 6829 | 1 / fail |
+| `C06` — checkpoint_matches: not full_value_matches | `shipped_wrong_custody_event`, `shipped_wrong_event`, `source_event` (57) | 6829 | 1 / fail |
+| `C07` — checkpoint_matches: source['scope_partition'] | `partition`, `shipped_wrong_locator`, `shipped_wrong_partition` (57) | 6829 | 1 / fail |
+| `C08` — checkpoint_matches: selection['current_bytes_sha256'] | 36 named cases; full list in `DR.guard-removal.json` (684) | 6202 | 1 / fail |
+| `C09` — checkpoint_matches: value_bytes(anchor['source_selection']) != value_bytes(selection) | `coverage` (19) | 6867 | 1 / fail |
+| `C10` — checkpoint_matches: coverage['last_frame'] | `last_frame`, `source_frame_end_type`, `source_segment_retained_event_count_boolean`, `source_segment_scan_start_offset_boolean`, `source_segment_segment_generation_boolean` (95) | 6791 | 1 / fail |
+| `C11` — checkpoint_matches: segment['scan_start_offset'] | `segment` (19) | 6867 | 1 / fail |
+| `C12` — checkpoint_matches: value_bytes(bundle['datasets']) == value_bytes({token['index_dataset_name']: dataset}) | `dataset`, `shipped_missing_dataset` (38) | 6848 | 1 / fail |
+| `C13` — checkpoint_matches: frontier['index_row_count'] == 1 | `row_count` (19) | 6867 | 1 / fail |
+| `C14` — checkpoint_matches: frontier['index_row_set_sha256'] == binding_digest(dict( domain='pm.event_index.row_set.v1', entries=[dict(key=row_key, value=expected_row)])) | `row_set_digest` (19) | 6867 | 1 / fail |
+| `O01` — observation_admissible: source['proof_valid'] | 33 named cases; full list in `DR.guard-removal.json` (33) | 6853 | 1 / fail |
+| `O02` — observation_admissible: candidate['correlation_id'] != grouping_identity | `grouping` (1) | 6885 | 1 / fail |
+| `O03` — source snapshot: adopted logical schema before exact encoded join (named duplicate type defenses) | 833 named cases; full list in `DR.guard-removal.json` (833) | 6053 | 1 / fail |
+| `O04` — observation_admissible: candidate['producer_sequence_id'] == 0 and candidate['parent_event_id'] is None | `first_parent_event_id`, `first_producer_sequence_id` (2) | 6884 | 1 / fail |
+| `O05` — observation_admissible: payload['artifact_id'] != | `artifact_id`, `project_id`, `record_ref`, `record_sha256`, `restore_point_id`, `source_branch_id`, `source_message_id`, `source_thread_id` (8) | 6878 | 1 / fail |
+| `O06` — observation_admissible: payload['type_payload'] == old['type_payload'] | `unchanged` (1) | 6885 | 1 / fail |
+| `O07` — observation_admissible: old_status != 'available' | `terminal_reopen` (1) | 6885 | 1 / fail |
+| `O08` — observation_admissible: candidate['producer_sequence_id'] == previous['producer_sequence_id'] + 1 | `0`, `2` (2) | 6884 | 1 / fail |
+| `O09` — observation_admissible: candidate['parent_event_id'] == previous['event_id'] | `predecessor` (1) | 6885 | 1 / fail |
+| `O10` — observation_admissible: candidate['correlation_id'] == previous['correlation_id'] | `prior_group` (1) | 6885 | 1 / fail |
+| `S01` — whole-document schema references, including optional/unvisited definitions | `unresolved_optional` (19) | 6867 | 1 / fail |
+| `S02` — exact_pattern: re.search(pattern, instance) and re.fullmatch(pattern, instance) is None | `identifier_LF` (1) | 6885 | 1 / fail |
+| `S04` — exact_pattern_properties: re.search(pattern, key) and re.fullmatch(pattern, key) is None | `identifier_key_LF` (1) | 6885 | 1 / fail |
+| `S03` — current-writer provider hash overlay | `provider_hash` (2) | 6884 | 1 / fail |
+| `S05` — rejected: return False | `success_is_not_failure` (1) | 6885 | 1 / fail |
+| `I01` — identity: type(revision) | `boolean_observation_revision`, `fractional_observation_revision`, `missing_observation_revision`, `negative_observation_revision` (4) | 6882 | 1 / fail |
+| `I02` — value_bytes: not math.isfinite | `infinite_value`, `nan_value`, `negative_infinite_value` (3) | 6883 | 1 / fail |
+| `I03` — value_bytes: type(value) not in | `unsupported_binary` (1) | 6885 | 1 / fail |
+| `S06` — validator: validation not in | `unsupported_validation_profile` (1) | 6885 | 1 / fail |
+| `H07` — inspect: return ('metadata_only' if source['body_deleted'] else 'metadata_and_authorized_refs') if type(source['body_deleted']) is bool else 'unavailable' | 11 named cases; full list in `DR.guard-removal.json` (209) | 6677 | 1 / fail |
+| `N01` — numeric_walk: not math.isfinite(value) | 32 named cases; full list in `DR.guard-removal.json` (608) | 6278 | 1 / fail |
+| `B01` — source_agreement: copy != source | 205 named cases; full list in `DR.guard-removal.json` (240) | 6646 | 1 / fail |
+| `B02` — decode: raw is False | `source_bytes_type_inline`, `source_bytes_type_packed` (4) | 6882 | 1 / fail |
+| `B03` — decode: evidence['provider_payload_hash'] != expected | `source_digest_inline`, `source_digest_packed` (4) | 6882 | 1 / fail |
+| `S07` — primitive JSON type at artifact_id, sequence_id and boolean scalar witness leaves; union/format tags retained | 21 named cases; full list in `DR.guard-removal.json` (399) | 6487 | 1 / fail |
 
-The complete per-family lists and mutant SHA-256 values are in `complete-guard-removal.json`; `DR.guard-removal.json` is the compact repository summary. Existing forwarded same-rule sets remain F01→A07, F13→H06 and F11→C06's custody-event case. D12→B01 is listed above. Repeated canonical JSON and checkpoint route/store/source-selection enforcement retain their named sets. Missing bytes/files remain structural-unavailability controls, with separate available-corrupt/available-wrong-target witnesses.
+## Eleven standing checks and Astra classes
 
-## Eleven Astra classes: own probes and limits
+The complete baseline has **20,400 distinct assertions, exit 0/status pass**, across nineteen sequential family runs; identical shared assertions are counted once and executed in each family run. All **45/45** standing mutation trials are caught. Every family retains standing checks 1–11; application scope is refused in this Project-only edition and is not application-writer certification. Historical support means authenticated issued originals, not invented unsupported legacy mappings.
 
-| Class | Evidence at this implementation |
+| Astra class | Round-7 probe and result |
 |---|---|
-| 1 forged/contradictory input | C5-B1's 240 copied/derived pairs and B02/B03 source type/digest negatives; framed identities and full-value commitments recomputed; 36 distinct-role controls. |
-| 2 Storage metadata from payload | Every family's three Storage-field mutations fail against its frozen original while the producer semantic digest stays unchanged; original receipt/custody joins execute. Real Storage issuance is NOT_RUN. |
-| 3 historical readers | Four genuine old provider-hash originals plus 38 genuine numeric originals retain original bytes and resolve after live changes; current writes, withdrawal and forged original/source/receipt/custody refuse. |
-| 4 one field read two ways | Exact identifier grammar/fullmatch, typed source/flag/number checks and encoded copies; no string/number/bool coercion. |
-| 5 unvisited unresolved refs | Existing complete-schema preflight and independent nested-unused/optional/external-ref probes refuse. |
-| 6 limits on part of a value | Exact 16,383/16,384/16,385-byte inline/pack controls and byte-integrity negatives; no new stored operation/outbox value. |
-| 7 custody on every path | Every inline/packed fresh write and retained resolver exercises full original custody; source receipt/authentication adapters remain synthetic assumptions, not native certification. |
-| 8 masked negatives | Complete table and uncached own-rule run above, including fresh packs, rebound checkpoint observations, digest and ordinal witnesses and named forwarded checks. |
-| 9 inflated grades | Only the three oracle cells upgrade; 228 cells and 677 exact excerpts checked. Membership ABSENT and native NOT_RUN remain explicit. |
-| 10 numeric spellings | Shared current boundary refuses integral floats/exponents/signed float zero before hashing or packing; all nineteen, every commitment-bearing domain and genuine retained history are covered. |
-| 11 confused types | 12,831 raw assertions across EventRecord, payload, receipt, custody/result and checkpoint/token schemas; helper flag and untyped snapshot/copy witnesses are causal. |
+| 1 forged/contradictory input | Framed identity, full-value source joins and all B01/B02/B03 body/digest pairs rerun. C6-B1 source contradictions now refuse. |
+| 2 Storage metadata | Full family suites preserve producer-semantic retries and reject forged Storage-owned copies against original receipt/custody. Real issuance remains NOT_RUN. |
+| 3 retained history | 798 checks over 38 numeric and four provider originals reissue with the actual old models, preserve exact bytes after live changes and reject withdrawal/forgery. Historical decoder and commitment recipes are byte-identical to reviewed source. |
+| 4 field read two ways | Source schema runs before encoded equality; current helper boolean predicates and numeric/copy boundaries receive integer/float/string/null/container probes. |
+| 5 dangling references | Complete schema preflight and optional/unused/external/fragment standing mutations rerun; no bypass. |
+| 6 sizes of every part | Existing exact 16 KiB inline/packed boundary, digest and canonical-storage checks rerun for every family. No stored operation/outbox value is added. |
+| 7 custody paths | Inline/packed fresh append, retry, retained resolution, receipt and checkpoint joins rerun; source authentication remains a synthetic adapter. |
+| 8 masked negatives | Complete 93-row table and uncached proof; one guard or explicitly named duplicate set at a time, with every unrelated negative still refused. |
+| 9 grade precision | Only restore_point.positive_negative_oracles upgrades. All 680 exact evidence excerpts match current source. Native NOT_RUN and membership ABSENT remain explicit. |
+| 10 numeric forms | 3666 independent boundary assertions include float/exponent/signed-zero/invalid leading-zero forms and unchanged originals. Every declared numeric scalar also receives representation probes. |
+| 11 confused types | Raw sweep passes **220,163 assertions**, including **13,454 declared scalar positions** across nineteen families, optional fields and unused reachable definitions. All present event/payload/receipt/custody/result/checkpoint/token fields are tested at their complete schema boundary. Legal multi-type fixture fields keep their declared alternatives. Exact source-copy witnesses include every restore boolean. |
 
-## Verification, scope and retained authority
+Both item 10 and item 11 apply to this round. Nothing is deferred under the later-added-item clause.
 
-The reused prior driver retains its old provenance head label; its independently recorded checker_sha256 identifies the current implementation actually executed. The separate previous-review independent suite still passes 836 assertions with zero failed expectations (four fewer conditional join probes are skipped because the new cost source schema now rejects those contradictions earlier). All 45 standing mutations are caught. Shard generate/check, index generate and parsed top-level validation, runtime-artifact schema checks and whitespace checks pass. Fifteen ignored currentness files match the shared edition by SHA-256. Generated changes stay under the three edited owner shard directories and the six global index files. Readiness remains `blocked_runtime_certification_incomplete`; no seal follows.
+## Scope, authority and integration
 
-Current-main per-family source searches are in `source-searches.json` and three source-hashed search outputs: Runtime Artifacts, Usage, Browser/Section15, Contracts and Storage were searched independently for each family. Existing owner roles are reused first; these exact joins are explicitly newly authored technical contracts under DL-045. No Decision Log answer is newly applied; DL-075, DL-270, source/body/Usage policies, SP-278/SP-286/CV-339 and SP-337 remain as previously premise-checked. No premise failed. The sixteen passing families have no owner-unit changes; their shared numeric/type helpers and retained regressions were rerun.
+Compared with `379727030a1e0e6929a11e5f9595e1fe2f35db1a`, **no Plans path changed**. Every owner unit, payload schema, fixture, frozen original, registry and generated shard/index is byte-identical. Production definitions other than `observation_admissible` and `main` are byte-identical; `main` only gains explicit family selection. All 5,668 old named negative pairs remain, with 1,218 additions. The other eighteen families change only shared test coverage and sequential execution controls, and keep their eleven PASS cells.
 
-**IDs used: zero new.** Existing branch allocation remains RAP-100..118 / SP-520..538 / CV-520..538 / ATS-260 (58 IDs). This round edits only RAP-103/106/117, CV-523/526/537 and ATS-260. No registry/admission, Decision Log, .gitignore, Spec Lock, governance evidence, auto-decisions or frozen-validator edit; no subagent, mailbox message/registration, landing lock or main push. Native sync/crash/CAS, real source authentication, actual receipt issuance, backup/restore and UI execution remain NOT_RUN.
+No new technical binding or Decision Log premise is applied. Existing DL-045/DL-075/DL-270, source/body policies, SP-278/SP-286/CV-339 and SP-337 remain as previously reviewed. No feature, retention/deletion choice or owner conflict is decided. Canonical Markdown was not edited, so derived regeneration is unnecessary; the unchanged shards are checked. Fifteen ignored currentness files match the shared edition by SHA-256. Native authentication/receipt issuance, sync/crash/CAS, backup/restore and UI execution remain NOT_RUN. Readiness remains blocked_runtime_certification_incomplete; no seal follows.
 
-The sparse detached worktree is `/home/sittingmongoose/pm-worktrees/DR-fix6`; resource samples stayed above 6 GB available RAM and 50 GB disk. The task removes it and its temporary venv after the final report is pushed; external `cleanup.json` records completion. No browser or server was started.
+**IDs used: zero new.** Existing allocation stays RAP-100..118 / SP-520..538 / CV-520..538 / ATS-260 (58 IDs). No registry/admission, Decision Log, .gitignore, Spec Lock, governance evidence, auto-decisions or frozen-validator edit. No subagent, mailbox use, landing lock or main push.
 
-## Pinned evidence
+## Verification commands and evidence
 
-All paths are under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-6/`. Each raw result remains external; repository reports hold compact summaries.
+Exact argv, exit codes, duration and output hashes are in `DR.checks.json`; top-level index failure is retained as N1. Pinned dependencies come from `scripts/requirements-runtime-artifact-drafts.txt` plus PyYAML 6.0.3. All checks run one family at a time; available RAM stays at least 6 GB.
 
-| File | SHA-256 |
+| Evidence under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-7/` | SHA-256 |
 |---|---|
-| `complete-guard-removal.json` | `d6905b85dec7559a220afae651c64679fb4d315571d58a8fa056e239eeeaaa8e` |
-| `complete-raw-guard-proof.json` | `2e7a8608326217b8a09ef17adc1cf613917c8a128b8bc6ebbd5cf73f941b213a` |
-| `complete-standing-mutations.json` | `935cdceca2a9acdf14b6335713c4f83ab834c01423a3dcd94f6969a0bf1c749a` |
-| `full-checker.json` | `f6f1b8ff74679bd068c62a7e7896cbfaea641203e8944eb59aeb8375024572d7` |
-| `type-number-sweep.json` | `b153d84f251c0476a23dc14702c2bb9f0474d177e25e8dec598417dbcce03dd9` |
-| `numeric-history-provenance.json` | `e28e57b17c8d82fc26abf8646a5cc627f15e6ebd8d27bf4cb45a9da6d4d020be` |
-| `distinct-source-role-probes.json` | `4387642c3f89e230c7aca7f8d7c71f8457bf2e0586ee36009ecce53fd53e1dac` |
-| `cycle5-independent-probes.json` | `a690b4536919f22d41f6f0fde7666c3dd7aec7af7fc23cb481e4b940dbdebdff` |
-| `source-searches.json` | `52053ced5260bfded5595591402459f394253c1c6bbdec071a0a6fb0292d02be` |
-| `grade-source-audit.json` | `b87c9f5b5d73593ad8363e1f8a63e5ea6060ca53a079af9499cbb9b6b9f5ad33` |
-| `currentness-copy.json` | `6cd61d1aeeb512f8ddff1d80087cffeb107a7cec0c17f5ecf44140bb60a5f8eb` |
+| `full-checker.json` | `f7daf3d9fc7df2b95446ce7bfe4584db58aeab9ca443e694f59ec358981e0832` |
+| `complete-guard-removal.json` | `22b8a66085d1ff64025b634a42c29d4816d2c2924a31d3fb9dbb6cd20f1b79a2` |
+| `raw-guard-proof.json` | `bae1cbb84a12b521bfa2a4cda0d60d51dd7da269b266c292279011d682d415d7` |
+| `standing-mutations.json` | `cc1086e99654cd5eeb02f008c0de8ac14177a4a4183d79ee2a70f397c8fea289` |
+| `type-number-sweep.json` | `5fcd4ec11e1083cca00821c59bc12824d44f0b7634c8f58c22e351d1ea3adb19` |
+| `restore-full-checker.json` | `ab815091b5518da9aea3b5efbe39e502cd734b81a981616f759d5ba2440844ed` |
+| `independent-boundaries.json` | `ed3d1d3a46219cf136753e12f05f62d01251904f1f9dd36ca77a36e8f637a6a3` |
+| `historical-originals.json` | `d1cf8915f40e824cdb2722f874d4a784cb002a846f21951ab1a7a81670daa42b` |
+| `scope-audit.json` | `5be0827893befc129570f12693b1075f0e302e2adb09e4710a32746b8af27132` |
+| `grade-source-audit.json` | `9b8bd2bee98a4f51641f7f2d1219f881f1e93c1f7132678439ed80735b79a408` |
+| `currentness-copy.json` | `1b765b9ac2ab42d60576eba5c1f1edd03454965e434717497da8cbcf32c009bf` |
+| `runtime-schemas.json` | `3fd6ab6c00934eae504d164593562d2467fac84347c147e66ad97dcd88509c16` |
 | `shard-check.json` | `10cde07211161ba5007ce9acf94b977462852fb760eea82736b42c96996d0c85` |
-| `index-validate.json` | `49f00e48b560f6ac105a1992fa88f0fb48e7ac330da1828976970316fe079961` |
-| `runtime-schemas.json` | `3625990b5e6e8951366dff2c64f47ea9f9aad6ff39023bd5c65b6640586885db` |
-| `binding-codec-type-proof.json` | `0f0af4226460f12324bb219ce789a0363519eada6f2fa7cfa78b19711ae03259` |
+| `index-validate.json` | `6c9ceeee9813f9e1615f5fad83d3a5506fb8ed3c56d2b0c7a8fc88492224fb86` |
+| `validation-runs.json` | `437a1212b514495373c62d95f0545276637351cd4d1a29f982fb593572036853` |
 
-Exact verification argv and working directories are recorded in `DR.checks.json`. Recreate a venv from `scripts/requirements-runtime-artifact-drafts.txt` before reproduction; the task removes its temporary environment after delivery.
+The sparse detached fix worktree and temporary venv are removed after push; external `cleanup.json` records the completed cleanup. No browser or server was started.

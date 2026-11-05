@@ -1,11 +1,11 @@
 {
   "status": "pass",
-  "implementation_commit": "7c04fd7f86044d5746e6406e2219491197255943",
+  "implementation_commit": "2d92a6977184325037bf8b52e8292dccf04d335a",
   "guard_count": 93,
-  "isolated_negative_pairs": 5668,
-  "acceptance_flips": 5869,
+  "isolated_negative_pairs": 6886,
+  "acceptance_flips": 7087,
   "unrelated_flips": 0,
-  "baseline_assertions": 17964,
+  "baseline_assertions": 20400,
   "whole_checker_mutants": 93,
   "rows": [
     {
@@ -15,11 +15,12 @@
         "envelope_extension"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "e1774a7b642a6a604e18681abe72021569e14c0d56dbb0029302822885acd9da"
+      "mutant_sha256": "4b92e9770fb02761fe0810741936ed2e97f58337e083b6f5e0922192c1e140eb",
+      "full_checker_families": 19
     },
     {
       "guard": "D02",
@@ -29,11 +30,12 @@
         "payload_schema"
       ],
       "flip_count": 38,
-      "other_negatives_still_rejected": 5630,
+      "other_negatives_still_rejected": 6848,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "056b5840eef252a8f8d831dfc4e99272dacf575bbd39c83abab8182089c1063f"
+      "mutant_sha256": "ccd89d5e41c3cff339208e41e913baa29b20072a41f2d90f0e47883ca82fe798",
+      "full_checker_families": 19
     },
     {
       "guard": "D03",
@@ -43,11 +45,12 @@
         "replay"
       ],
       "flip_count": 38,
-      "other_negatives_still_rejected": 5630,
+      "other_negatives_still_rejected": 6848,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "9cb079118cb413c50ff04eab471a30610aac6b3c7ffca65772a9db6934ffef29"
+      "mutant_sha256": "dcf8fc09fe19e019a5c88673b4942623a1f8715063dc2a05ccec189a80c83577",
+      "full_checker_families": 19
     },
     {
       "guard": "D04",
@@ -56,11 +59,12 @@
         "inline_size"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "0d0533dad84e3850120befb709e5b9e251b1d0e1fdc9650a1e957f98038251ca"
+      "mutant_sha256": "b1a2f3748609290f73a143a0d15bdf4d58d7b100de88a7e2d7ba23991bf2ca93",
+      "full_checker_families": 19
     },
     {
       "guard": "D05",
@@ -69,11 +73,12 @@
         "media"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "16613b2298357cad0bd880effc71ba593f7c6c8d64e6e49df4acd5340a895630"
+      "mutant_sha256": "3a973c60898aab1dbcdfb6f1fdab8e9de6ee636696f5b34f772797575169e042",
+      "full_checker_families": 19
     },
     {
       "guard": "D06",
@@ -82,11 +87,12 @@
         "placeholder"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "c6a8eff6d853e7d9851ad51db667badac36ac2d5977ad75282d1707585e5e7d1"
+      "mutant_sha256": "8f511299d8600a6bc6c89204d6ba692a090735543e8a142cc811feaad816bd98",
+      "full_checker_families": 19
     },
     {
       "guard": "D07",
@@ -100,6 +106,8 @@
         "pack_authorized_type_5",
         "pack_authorized_type_6",
         "pack_authorized_type_7",
+        "pack_authorized_type_8",
+        "pack_authorized_type_9",
         "pack_durable_type_0",
         "pack_durable_type_1",
         "pack_durable_type_2",
@@ -108,15 +116,18 @@
         "pack_durable_type_5",
         "pack_durable_type_6",
         "pack_durable_type_7",
+        "pack_durable_type_8",
+        "pack_durable_type_9",
         "pack_not_durable",
         "pack_unauthorized"
       ],
-      "flip_count": 342,
-      "other_negatives_still_rejected": 5326,
+      "flip_count": 418,
+      "other_negatives_still_rejected": 6468,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "672625b4026b5818c131a8f0bb17dd465e7158cde71d29961cd12cf458fdb1d0"
+      "mutant_sha256": "233e366797ac6c53d7300f557d71fb565aaba7f68ca75f8713459c84c1392bc8",
+      "full_checker_families": 19
     },
     {
       "guard": "D08",
@@ -125,11 +136,12 @@
         "byte_size"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "1dca7e7dc79a4972e9939b1952d281f951e7e35f4c6233bfcdda34db1f1ab9d4"
+      "mutant_sha256": "6fd9d62c3b60ff5c240ba875a3a2099493844a62f3c89d82ef7f0e29db3a00da",
+      "full_checker_families": 19
     },
     {
       "guard": "D09",
@@ -138,11 +150,12 @@
         "same_size_digest"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "00431e1f6696b06059b5231edb50f7f001c4b76660ae5ce161ba51e39ebc0eea"
+      "mutant_sha256": "4ef5a6ddc58a99947d8a2d5cbc74684d0762a58ef20b6f85af8ac07491d31544",
+      "full_checker_families": 19
     },
     {
       "guard": "D10",
@@ -152,11 +165,12 @@
         "whitespace"
       ],
       "flip_count": 38,
-      "other_negatives_still_rejected": 5630,
+      "other_negatives_still_rejected": 6848,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "6f1656117056d688daae9105a05f1e860ed708ec8f5bed49d86ff5e05c95a977"
+      "mutant_sha256": "e742b17dbd86ee4755f05f3c32b2e159e92121c174caaabcda5627e9ebbeb14d",
+      "full_checker_families": 19
     },
     {
       "guard": "D11",
@@ -165,11 +179,12 @@
         "unnecessary_pack"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "8e1d1d41f10713d68a7fdf2603f77f23c177859d89acea99fdbb9f339b85ab81"
+      "mutant_sha256": "f9954b76519e5621d68d1fe6dc444158d286714f887741b20205adfd12b73836",
+      "full_checker_families": 19
     },
     {
       "guard": "D12",
@@ -301,7 +316,7 @@
         "usage_observed_packed_decode"
       ],
       "flip_count": 163,
-      "other_negatives_still_rejected": 5505,
+      "other_negatives_still_rejected": 6723,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [
@@ -309,7 +324,8 @@
         "B01:*_packed_decode",
         "B01:*_packed_append"
       ],
-      "mutant_sha256": "8c37bcc2aacccfbcc88759fc97092890c6a4fc63713fca0fced6187c3b53e41e"
+      "mutant_sha256": "b0cde20eb4d5fafeb42ff627f8a8d7096742fbd20b87f88a1b4a0ec0788c1736",
+      "full_checker_families": 19
     },
     {
       "guard": "D13",
@@ -318,11 +334,12 @@
         "project_join"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "6975b42c25c7b23154c77795c5cdd20f0956c1c78bc579b7e0c89d63ed7b3fb4"
+      "mutant_sha256": "469cfc6289515b6566e301cca98c73c46bd84e70c344e30584d1a7136cbfbc26",
+      "full_checker_families": 19
     },
     {
       "guard": "D14",
@@ -334,11 +351,12 @@
         "thread_id"
       ],
       "flip_count": 76,
-      "other_negatives_still_rejected": 5592,
+      "other_negatives_still_rejected": 6810,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "ac17e9b642b3edbe5c184f85976f6f78619133dc299c002175ef04c46f2c2d19"
+      "mutant_sha256": "2a9e1be51badc604f3c64f46b7b703e87b9c14f9bf2af70ce8b500ebd9cab099",
+      "full_checker_families": 19
     },
     {
       "guard": "D15",
@@ -347,11 +365,12 @@
         "authored_time"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "a050176f21a181ddc1f34161022f6a5e213cabef71fa07af6f412bdc6d965702"
+      "mutant_sha256": "2d18bfc19d8a40da8978f507390496551ac37f56b0cc9512e2ec36d20efe143c",
+      "full_checker_families": 19
     },
     {
       "guard": "D16",
@@ -360,11 +379,12 @@
         "actor"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "6b439a8b0ed5ea687fc50db0fd5be93c8199bf690b9cfcfa3bd9398589c114a6"
+      "mutant_sha256": "78e1d92ec08c726e0d1149aee8fa89c299e460149dbcdd8db5d6511ef7e8b267",
+      "full_checker_families": 19
     },
     {
       "guard": "D17",
@@ -373,11 +393,12 @@
         "identity"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "9ecf2afa3fc0ca24300723580463fad5ba4760b3668c07cb220832a1f611e725"
+      "mutant_sha256": "d741b618478e2667fba289b481cd5f29ba4c726e44d34b90188096ba8d9e9601",
+      "full_checker_families": 19
     },
     {
       "guard": "D18",
@@ -386,11 +407,12 @@
         "point_project"
       ],
       "flip_count": 1,
-      "other_negatives_still_rejected": 5667,
+      "other_negatives_still_rejected": 6885,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "01a1f6c3aa1ed6f61dedbbb773fad3597cd2bbbc39e3b4870a47b8752f969508"
+      "mutant_sha256": "9a7d2758cf30049e8205bceaffc75b7133892bd5e4f1457d63a213aa93409101",
+      "full_checker_families": 19
     },
     {
       "guard": "H01",
@@ -404,6 +426,8 @@
         "flag_type_authorized_5",
         "flag_type_authorized_6",
         "flag_type_authorized_7",
+        "flag_type_authorized_8",
+        "flag_type_authorized_9",
         "flag_type_withdrawn_0",
         "flag_type_withdrawn_1",
         "flag_type_withdrawn_2",
@@ -412,15 +436,18 @@
         "flag_type_withdrawn_5",
         "flag_type_withdrawn_6",
         "flag_type_withdrawn_7",
+        "flag_type_withdrawn_8",
+        "flag_type_withdrawn_9",
         "unauthorized",
         "withdrawn"
       ],
-      "flip_count": 342,
-      "other_negatives_still_rejected": 5326,
+      "flip_count": 418,
+      "other_negatives_still_rejected": 6468,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "5739895ef5f05650d9cd8a6dc669ab15ea5cde68483a4ff89bf952ab1cd5b4b0"
+      "mutant_sha256": "3b4076b6628bbaa34d7b711c144e67fe5efbf0bccf53c37e8e3b656dd492bba0",
+      "full_checker_families": 19
     },
     {
       "guard": "H02",
@@ -434,6 +461,8 @@
         "flag_type_receipt_valid_5",
         "flag_type_receipt_valid_6",
         "flag_type_receipt_valid_7",
+        "flag_type_receipt_valid_8",
+        "flag_type_receipt_valid_9",
         "flag_type_source_valid_0",
         "flag_type_source_valid_1",
         "flag_type_source_valid_2",
@@ -442,15 +471,18 @@
         "flag_type_source_valid_5",
         "flag_type_source_valid_6",
         "flag_type_source_valid_7",
+        "flag_type_source_valid_8",
+        "flag_type_source_valid_9",
         "forged_receipt",
         "forged_source"
       ],
-      "flip_count": 342,
-      "other_negatives_still_rejected": 5326,
+      "flip_count": 418,
+      "other_negatives_still_rejected": 6468,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "eabd1ac367436187bd995195a3bc3f41cca384d733d762449599e3354ed650bb"
+      "mutant_sha256": "1875f7d32643f0e1963a4102c2f04025665742f974e0f41756788b8518a3de31",
+      "full_checker_families": 19
     },
     {
       "guard": "H03",
@@ -460,11 +492,12 @@
         "project"
       ],
       "flip_count": 38,
-      "other_negatives_still_rejected": 5630,
+      "other_negatives_still_rejected": 6848,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "d0d825b884b6ef1eda4591be51200981ab5785ca9bf588f69ffedff117923769"
+      "mutant_sha256": "2ba0fc5b2ee1827982fb27ed0b6d96b2e684546420184b97a4b74d186583fd12",
+      "full_checker_families": 19
     },
     {
       "guard": "H04",
@@ -473,11 +506,12 @@
         "changed_original"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "0d37e2f3adcbf13aa68b033a4e5aa483f5b54c4c960e96ff2dc180a80092cd62"
+      "mutant_sha256": "e40fafdd5e30bb4979d0e2d60c472bde69a0d550fe590e12376937c5346ca64b",
+      "full_checker_families": 19
     },
     {
       "guard": "H06",
@@ -486,11 +520,12 @@
         "authenticated_custody"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "97d7ae26633219f2c7cff85683d7be02495684e1676c4c2841a6ff69a5163614"
+      "mutant_sha256": "bb4830900ab32b71c62f1b179f84dec29b2a11c4bbb9ec2be46f144b7360e8c8",
+      "full_checker_families": 19
     },
     {
       "guard": "H05",
@@ -499,11 +534,12 @@
         "decoder_selection"
       ],
       "flip_count": 2,
-      "other_negatives_still_rejected": 5666,
+      "other_negatives_still_rejected": 6884,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "aea5d234ada4f912b5ed4f68883a3622c5e8ede45c89f7f4d491c02ba814a27d"
+      "mutant_sha256": "fec621ea85fd2c09dddacf74dc6722e9f016db8ed0ba0228fd2ce40efbdd9b51",
+      "full_checker_families": 19
     },
     {
       "guard": "F01",
@@ -513,13 +549,14 @@
         "schema"
       ],
       "flip_count": 38,
-      "other_negatives_still_rejected": 5630,
+      "other_negatives_still_rejected": 6848,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [
         "A07"
       ],
-      "mutant_sha256": "04ac65b2e683bbf969a7514bbeb8df46ed45ecdc2407fbaf6d96fe05d32c8524"
+      "mutant_sha256": "caa510a4d8fd0d711bd667d08f309fc7c8adca8b4f19a675600659f2d1767054",
+      "full_checker_families": 19
     },
     {
       "guard": "F02",
@@ -528,11 +565,12 @@
         "original_value_bytes"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "f0e65222c3507638ee12db9f49cc0fea78be3256210967cefa26a175a2917583"
+      "mutant_sha256": "bb2751befd3ee82edf4a05cd044bef91175ab72fea3228747f9e6641b89117f7",
+      "full_checker_families": 19
     },
     {
       "guard": "F03",
@@ -541,11 +579,12 @@
         "partition"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "86186b4d84753ccf6c3db52fe22a2928f281422c2ab9ecf0671077cb9f6becb0"
+      "mutant_sha256": "a3de7e1cb8d6b74641b33f76f35425926fbab9b2c5a137e37fa66fded88d5fe2",
+      "full_checker_families": 19
     },
     {
       "guard": "F04",
@@ -554,11 +593,12 @@
         "custody_family"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "c647dafd61a0ef12cc0389b4675ad88344b60cbcd403627bc641c9e24e5aac70"
+      "mutant_sha256": "a919628f06a790d9df0f840242edb3431add17d19d7a1ffcc9810ab9f4b88cde",
+      "full_checker_families": 19
     },
     {
       "guard": "F05",
@@ -567,11 +607,12 @@
         "custody_key"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "f178e78282ee78ead209be86957be94179cb59a28a641e1d412b742c66926306"
+      "mutant_sha256": "06ad0a0118ae22efc30a30206e3bbc956c70cd45130ef27b7e799a18255c52bf",
+      "full_checker_families": 19
     },
     {
       "guard": "F06",
@@ -581,11 +622,12 @@
         "retained_exact_receipt_type"
       ],
       "flip_count": 38,
-      "other_negatives_still_rejected": 5630,
+      "other_negatives_still_rejected": 6848,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "dab4e4194669c0ae6a0f9b694e6a6f120f3640856a38a244110c8663d91b68dd"
+      "mutant_sha256": "cf74099de5790564b150123c846ede7a80fa3bac8d279c75222ff815fad8fec5",
+      "full_checker_families": 19
     },
     {
       "guard": "F07",
@@ -594,11 +636,12 @@
         "segment_reference"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "d2d22c127b33c06740b97c35f2117215939c9b291dffed1c523f7fbd3b64f695"
+      "mutant_sha256": "6c70b08428f3ebc82f7339cd7ff0d5e50704c4f24ea6281773f6c7f8be14e6ef",
+      "full_checker_families": 19
     },
     {
       "guard": "F08",
@@ -608,11 +651,12 @@
         "result_commitment"
       ],
       "flip_count": 38,
-      "other_negatives_still_rejected": 5630,
+      "other_negatives_still_rejected": 6848,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "d75ccb04b2d245cbb9f62aec961dcdf07851b3b9f97a17fdf170cbe52b317685"
+      "mutant_sha256": "f739ef32735ae53b90f7f9f4c84467ef88e9a0491ee4770716806813a7071b86",
+      "full_checker_families": 19
     },
     {
       "guard": "F09",
@@ -621,11 +665,12 @@
         "semantic_commitment"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "8d66c2e3e269e72e8cac314e2984a07d8f7226b62ca45901f1245db22a1388ae"
+      "mutant_sha256": "615b6c9afc1fbd9d0529f07ad875c39e016ea2b92ccd229a383fc17c6eb1dfb9",
+      "full_checker_families": 19
     },
     {
       "guard": "F10",
@@ -635,11 +680,12 @@
         "retained_exact_receipt_type"
       ],
       "flip_count": 38,
-      "other_negatives_still_rejected": 5630,
+      "other_negatives_still_rejected": 6848,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "8e62d10768584cda9dd846e41deed50fe26856b4dcf76bc54a40b75240f29bbe"
+      "mutant_sha256": "835d489fed55239655364f3a9515bc6ac1133c218ed2e17890374489cb05c39c",
+      "full_checker_families": 19
     },
     {
       "guard": "F11",
@@ -650,13 +696,14 @@
         "shipped_wrong_custody_event"
       ],
       "flip_count": 57,
-      "other_negatives_still_rejected": 5611,
+      "other_negatives_still_rejected": 6829,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [
         "C06:shipped_wrong_custody_event"
       ],
-      "mutant_sha256": "04c5e6e2dc21865d6c80f13d156047a57a6fee95a3486fb2d03508bf64a8fd3b"
+      "mutant_sha256": "455b2c427eff7585e303269302cc53b78e9017bfb0f47b6623108161bd581d2b",
+      "full_checker_families": 19
     },
     {
       "guard": "F12",
@@ -666,11 +713,12 @@
         "retained_exact_receipt_type"
       ],
       "flip_count": 38,
-      "other_negatives_still_rejected": 5630,
+      "other_negatives_still_rejected": 6848,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "bcb318edcfe9af853c55d2ded85491b657b89b643ed1a63ca0bb90d83f287e1e"
+      "mutant_sha256": "c1c49db45767d06f95888d00a5b39c2e503909dc66ea6c1b11ad05f207ae3bd7",
+      "full_checker_families": 19
     },
     {
       "guard": "F13",
@@ -681,13 +729,14 @@
         "retained_exact_receipt_type"
       ],
       "flip_count": 57,
-      "other_negatives_still_rejected": 5611,
+      "other_negatives_still_rejected": 6829,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [
         "H06"
       ],
-      "mutant_sha256": "b7462f929d21387920a5c5dd33de8bccbcab3d4d00d4bab946bf94d26dcadf17"
+      "mutant_sha256": "aeb37f9fc476adaa79f8cd9513b7a4fa5ef2362682794ce59062a583ec71739f",
+      "full_checker_families": 19
     },
     {
       "guard": "V01",
@@ -696,11 +745,12 @@
         "event_extension"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "621fc1b91fb762a25fd73de4e3bea88abff9d3b9ab03c3c2bcc0142cf45725e2"
+      "mutant_sha256": "96cca3b1a8e640e57e0b92acf056ad180966f422dff9cd986044d280b3b36d52",
+      "full_checker_families": 19
     },
     {
       "guard": "V02",
@@ -709,11 +759,12 @@
         "replay"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "af892e28343bb849cf95d87f664216c0b921d7fc044db6f2d0b9f520d0b6d89c"
+      "mutant_sha256": "924f44299de0fc5e27b79d3252ffd2127b459e6dd973c8adeece20406f1958f7",
+      "full_checker_families": 19
     },
     {
       "guard": "V03",
@@ -722,11 +773,12 @@
         "pack_ref"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "0d917905e20bec50706beb962aa632b2a934cbb7e66b0ee289b45ff82ecbebd0"
+      "mutant_sha256": "9e2090fa48a56a77cc622a1a1fb0c6340a12a73f3b55be8fa6f48e7af7ffe467",
+      "full_checker_families": 19
     },
     {
       "guard": "V04",
@@ -735,11 +787,12 @@
         "pack_placeholder"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "f50399fe70642e8cfd2b9f902b94daeaa323e3b0b1d4d7468f57ddd26aabd651"
+      "mutant_sha256": "9a6399cc35a7413854a7249116c10db70ef38b4b9ebb4a7ca01a6d5bb20b8dac",
+      "full_checker_families": 19
     },
     {
       "guard": "V05",
@@ -748,11 +801,12 @@
         "inline_size"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "de0da290c6850bef43b6ef33e40600601418416e4449a3ca2146b0ab54616952"
+      "mutant_sha256": "14645e5f2410eb6ef38be6d46a7bd1f96b3c5d5f21b2cdcc21b7a8219f274ef7",
+      "full_checker_families": 19
     },
     {
       "guard": "V06",
@@ -761,24 +815,26 @@
         "logical_schema"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "1e5cd2539bfe900445b1d623a0961d3602d4b8a8da96d9f5ab1ad1afda80d49d"
+      "mutant_sha256": "188703cd8aaab06b46bf717e0a3630233037bddf61ef5ca8c80b4afb777754a7",
+      "full_checker_families": 19
     },
     {
       "guard": "V07",
-      "rule": "stored_event_valid: \n    return False",
+      "rule": "stored_event_valid: return False",
       "negatives_that_flip": [
         "unknown_dispatch"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "f8e8dfa436832609bfd4eff9cd086f28e230ccae383680d7d47c91eaa7a6e11a"
+      "mutant_sha256": "46ff2133a1429121817a015e6fae6a0dcf4762f46aef5a72b4f90163532cbb0e",
+      "full_checker_families": 19
     },
     {
       "guard": "A01",
@@ -792,14 +848,17 @@
         "flag_type_admission_5",
         "flag_type_admission_6",
         "flag_type_admission_7",
+        "flag_type_admission_8",
+        "flag_type_admission_9",
         "not_admitted"
       ],
-      "flip_count": 171,
-      "other_negatives_still_rejected": 5497,
+      "flip_count": 209,
+      "other_negatives_still_rejected": 6677,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "3d00060da60ae26f832d7713c8adab3ec554e9b3ee0850f8dcd2374108a48cf6"
+      "mutant_sha256": "ddb3ca26bedcece8732bdced5740430c4801fa1d9009432e6eaca074f38335d2",
+      "full_checker_families": 19
     },
     {
       "guard": "A02",
@@ -814,6 +873,8 @@
         "flag_type_dedupe_available_5",
         "flag_type_dedupe_available_6",
         "flag_type_dedupe_available_7",
+        "flag_type_dedupe_available_8",
+        "flag_type_dedupe_available_9",
         "flag_type_source_valid_0",
         "flag_type_source_valid_1",
         "flag_type_source_valid_2",
@@ -822,14 +883,17 @@
         "flag_type_source_valid_5",
         "flag_type_source_valid_6",
         "flag_type_source_valid_7",
+        "flag_type_source_valid_8",
+        "flag_type_source_valid_9",
         "source_invalid"
       ],
-      "flip_count": 342,
-      "other_negatives_still_rejected": 5326,
+      "flip_count": 418,
+      "other_negatives_still_rejected": 6468,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "39000675a25e2107c6c48e6760b9ea28be9cf8f5d26e08196556ecf2c3df18de"
+      "mutant_sha256": "8e822c4b2cf69f46098c3f725e26cbfd961628dd3fab4f5cb117d15de8a3b784",
+      "full_checker_families": 19
     },
     {
       "guard": "A03",
@@ -840,11 +904,12 @@
         "projector_replay_only_retry"
       ],
       "flip_count": 57,
-      "other_negatives_still_rejected": 5611,
+      "other_negatives_still_rejected": 6829,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "49caea66a85bf3ee1bf8d2ac5b23cc8163802509b8d7e08d592abdab4131d272"
+      "mutant_sha256": "803ac4a495aeb44d35a368e95695fa1c826dbc563400a655c6d3e23285f59cc6",
+      "full_checker_families": 19
     },
     {
       "guard": "A04",
@@ -853,11 +918,12 @@
         "global_event_conflict"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "16ae736f6db9a47ca4ba8d48a26bee14efb297532b03cc309b16672fa774af73"
+      "mutant_sha256": "97dfeaa277a729191bfca8ab679d7884a68400495c71cfe8602d6bee6912b612",
+      "full_checker_families": 19
     },
     {
       "guard": "A05",
@@ -866,11 +932,12 @@
         "scoped_semantic_conflict"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "b2ed4aab9a24fceefd14aa82ffba92b8403f3027ead7d5a983914687df8d312a"
+      "mutant_sha256": "64412367de032aac6cd96220688d842268fedd62a6cbb7604c1153360345a5f9",
+      "full_checker_families": 19
     },
     {
       "guard": "A06",
@@ -879,11 +946,12 @@
         "retry_envelope_extension"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "880a00689f5df611056eaf4de571661702e7d61cb138a3d1717f32e5faa25805"
+      "mutant_sha256": "65b842fda837f227e9d92b063b306010df5b98d00240dbf885f3030e2f5982d4",
+      "full_checker_families": 19
     },
     {
       "guard": "A07",
@@ -892,11 +960,12 @@
         "invalid_issued_custody"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "f2fac283e1bb0433f9a49ecfb5c8541ec9c455fc27f1af517d41ad4505417eaa"
+      "mutant_sha256": "cdb66307a3dc7573fa8a90f2f89bfa3e85df3d4ed2bc8ed756b0bdd8ba655db8",
+      "full_checker_families": 19
     },
     {
       "guard": "P01",
@@ -905,11 +974,12 @@
         "index"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "86249bef3e4a4fa488a46e0731a273b5abdbd2d059214eaf620c159a1ab23194"
+      "mutant_sha256": "c6a375c73198a64926fca7b93cd91794f160624aa475599561aee7f093f3f25f",
+      "full_checker_families": 19
     },
     {
       "guard": "P02",
@@ -918,11 +988,12 @@
         "checkpoint"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "491c96833d97e39db58cbc4ee3de4315d3ae0e632af5d85ca458651e01c4fdf0"
+      "mutant_sha256": "0e0dfb8644ea37dbb1b32f35e914e7ac87648e916983455caf4324864598a5b0",
+      "full_checker_families": 19
     },
     {
       "guard": "P03",
@@ -931,11 +1002,12 @@
         "conflated"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "e292ca78705fa42caacfb238cf3605a449d245af46cb3b2887df5739cb8840a1"
+      "mutant_sha256": "7b5b48deed64de4cdf083d7e87904949d1118ec190317df6ce8380647e11c9ed",
+      "full_checker_families": 19
     },
     {
       "guard": "C01",
@@ -946,11 +1018,12 @@
         "shipped_wrong_key_route"
       ],
       "flip_count": 57,
-      "other_negatives_still_rejected": 5611,
+      "other_negatives_still_rejected": 6829,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "20e380a4dbb9875a9041b077b42c4fdd4a7e9ae9892471245d52b22215540e67"
+      "mutant_sha256": "7423cf21b3bc20c233626a8cdb22baf4074d903a833ddb68d1f48206c202b846",
+      "full_checker_families": 19
     },
     {
       "guard": "C02",
@@ -959,11 +1032,12 @@
         "schema"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "0a6061774a86d10ef2b309f3301bcf21bf7b8c11652cb06129040e56b5a85278"
+      "mutant_sha256": "ee1497f933108736e6161139ea415135fb873bd49ba89ec3b280778771a27d58",
+      "full_checker_families": 19
     },
     {
       "guard": "C03",
@@ -977,11 +1051,12 @@
         "storage"
       ],
       "flip_count": 114,
-      "other_negatives_still_rejected": 5554,
+      "other_negatives_still_rejected": 6772,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "44cc4f70cc4a11e475787febfb0d541a83f20db456ec893ed3d240338d110e52"
+      "mutant_sha256": "22e70a8507023d7b0298dc1a8de2709624d13c936c00a288e218812e53546ecb",
+      "full_checker_families": 19
     },
     {
       "guard": "C04",
@@ -999,11 +1074,12 @@
         "verified"
       ],
       "flip_count": 190,
-      "other_negatives_still_rejected": 5478,
+      "other_negatives_still_rejected": 6696,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "c03edf666f3c4230c6277c0c0d32a7a6fa6de06c6df2c19cfddf92ba8d4e36c1"
+      "mutant_sha256": "a6e2bf104cd45af7d91112dfac0bc42cf656a4f410dc5bf2a6388111ac0ac672",
+      "full_checker_families": 19
     },
     {
       "guard": "C05",
@@ -1014,11 +1090,12 @@
         "token_commitment"
       ],
       "flip_count": 57,
-      "other_negatives_still_rejected": 5611,
+      "other_negatives_still_rejected": 6829,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "d92a60b4090d0cbc7d322026092a8e4b6e9051eb21df6567622709f6d3b14307"
+      "mutant_sha256": "be08bc4ebd69f439201fc46ba60870cb018c95931cd7f7b44d68c7623f350fde",
+      "full_checker_families": 19
     },
     {
       "guard": "C06",
@@ -1029,11 +1106,12 @@
         "source_event"
       ],
       "flip_count": 57,
-      "other_negatives_still_rejected": 5611,
+      "other_negatives_still_rejected": 6829,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "e12457bd0673ac22901d553b6728c876f85fc4421651ef7849d7936de9affbb2"
+      "mutant_sha256": "1cf57f6e16af060708089c73a760331751bd8db82dd59a56068f19c88f648daa",
+      "full_checker_families": 19
     },
     {
       "guard": "C07",
@@ -1044,11 +1122,12 @@
         "shipped_wrong_partition"
       ],
       "flip_count": 57,
-      "other_negatives_still_rejected": 5611,
+      "other_negatives_still_rejected": 6829,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "0fd1563688c768ec94d844687c4a9006e796846e24cbef7a4abc261dd7216b16"
+      "mutant_sha256": "8b5d49f74094639fded021ed6dcdecb78b6cd6528240c1046e185d5c42560b68",
+      "full_checker_families": 19
     },
     {
       "guard": "C08",
@@ -1092,11 +1171,12 @@
         "shipped_wrong_source_selection"
       ],
       "flip_count": 684,
-      "other_negatives_still_rejected": 4984,
+      "other_negatives_still_rejected": 6202,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "cd859db011694b25136139e5f98f18f7218bbafa0af9d2fb85d68e37274f2d37"
+      "mutant_sha256": "e09192ac319d38570721df31b6ba5170332c33f1e9308d1e5f64b70546fc7f68",
+      "full_checker_families": 19
     },
     {
       "guard": "C09",
@@ -1105,11 +1185,12 @@
         "coverage"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "0423eea3c9f3b70b5940dbb4e8300c8cad701997e91b3654775a1f9134e89c86"
+      "mutant_sha256": "372d78b2cda04da056b7fca7744ad20961ef725ec9fc14fd24edae22289aedab",
+      "full_checker_families": 19
     },
     {
       "guard": "C10",
@@ -1122,11 +1203,12 @@
         "source_segment_segment_generation_boolean"
       ],
       "flip_count": 95,
-      "other_negatives_still_rejected": 5573,
+      "other_negatives_still_rejected": 6791,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "fae5339f75651a21e139af2abe729230705e9a8dc90a44bea3a58068f97a0b4b"
+      "mutant_sha256": "b187e82cd1a88f1db1ceb330263ba2b78457a8cfb336a4962cd7d208bbe59075",
+      "full_checker_families": 19
     },
     {
       "guard": "C11",
@@ -1135,11 +1217,12 @@
         "segment"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "6119a9e94c3bf195e65f12d72b8ad02199f7fccdf3bf3707961003e14734611a"
+      "mutant_sha256": "2d0e87945b315b7ab35e72284ec4a2a8085f9539b4398651316cd766b26b69f7",
+      "full_checker_families": 19
     },
     {
       "guard": "C12",
@@ -1149,11 +1232,12 @@
         "shipped_missing_dataset"
       ],
       "flip_count": 38,
-      "other_negatives_still_rejected": 5630,
+      "other_negatives_still_rejected": 6848,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "0b5919a245369c7e90d749b0db843ffaab6fa4d4d1861830661bd04929dfbdbc"
+      "mutant_sha256": "d26c053eb9a261fe2e5c7344f291e5da4ba02e8f4b779742dbc61fcab2b287c2",
+      "full_checker_families": 19
     },
     {
       "guard": "C13",
@@ -1162,24 +1246,26 @@
         "row_count"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "29a78e8f68943b1f4ef4dd5517f128820ea2561ed268619d6a6f49a0f97770ab"
+      "mutant_sha256": "3b74881e845211d218de18458bac73c62f32a0dbfe6ebec4eeeaeff126e84181",
+      "full_checker_families": 19
     },
     {
       "guard": "C14",
-      "rule": "checkpoint_matches: frontier['index_row_set_sha256'] == binding_digest(dict(\n                    domain='pm.event_index.row_set.v1', entries=[dict(key=row_key, value=expected_row)]))",
+      "rule": "checkpoint_matches: frontier['index_row_set_sha256'] == binding_digest(dict( domain='pm.event_index.row_set.v1', entries=[dict(key=row_key, value=expected_row)]))",
       "negatives_that_flip": [
         "row_set_digest"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "ebb735796db7cb397504fa6f1e6ae73d6c98e2ba0e488c050eb5b9ecc0922ada"
+      "mutant_sha256": "d07ee1e89f9542a05bb10d2a8d0ee79acbcee2b81b3e4bc81c0b06544b7e69b0",
+      "full_checker_families": 19
     },
     {
       "guard": "O01",
@@ -1194,6 +1280,8 @@
         "predecessor_complete_type_5",
         "predecessor_complete_type_6",
         "predecessor_complete_type_7",
+        "predecessor_complete_type_8",
+        "predecessor_complete_type_9",
         "proof_valid",
         "proof_valid_type_0",
         "proof_valid_type_1",
@@ -1203,6 +1291,8 @@
         "proof_valid_type_5",
         "proof_valid_type_6",
         "proof_valid_type_7",
+        "proof_valid_type_8",
+        "proof_valid_type_9",
         "snapshot_current",
         "snapshot_current_type_0",
         "snapshot_current_type_1",
@@ -1211,14 +1301,17 @@
         "snapshot_current_type_4",
         "snapshot_current_type_5",
         "snapshot_current_type_6",
-        "snapshot_current_type_7"
+        "snapshot_current_type_7",
+        "snapshot_current_type_8",
+        "snapshot_current_type_9"
       ],
-      "flip_count": 27,
-      "other_negatives_still_rejected": 5641,
+      "flip_count": 33,
+      "other_negatives_still_rejected": 6853,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "0e29e839f35da2e5114bedef7fc28e36ba1cc19039955a635fd5406a72b422fa"
+      "mutant_sha256": "5a0fb5ae0ebeb966699b3da5d82045a38e59135fef0d1eacbbb6a367b75cf7e8",
+      "full_checker_families": 19
     },
     {
       "guard": "O02",
@@ -1227,24 +1320,861 @@
         "grouping"
       ],
       "flip_count": 1,
-      "other_negatives_still_rejected": 5667,
+      "other_negatives_still_rejected": 6885,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "00759ed012715612a8468c10d727684fbd34fe40bd29af5267fcf8c4ecb926b6"
+      "mutant_sha256": "5d32e12f683ab6b89df0338695562ba654386308a626490a9cf691b7f0320c8b",
+      "full_checker_families": 19
     },
     {
       "guard": "O03",
-      "rule": "observation_admissible: payload['type_payload'] != source",
+      "rule": "source snapshot: adopted logical schema before exact encoded join (named duplicate type defenses)",
       "negatives_that_flip": [
-        "source_snapshot"
+        "first_inline_False_snapshot_shape_0",
+        "first_inline_False_snapshot_shape_1",
+        "first_inline_False_snapshot_shape_2",
+        "first_inline_False_snapshot_shape_3",
+        "first_inline_False_snapshot_shape_4",
+        "first_inline_True_snapshot_shape_0",
+        "first_inline_True_snapshot_shape_1",
+        "first_inline_True_snapshot_shape_2",
+        "first_inline_True_snapshot_shape_3",
+        "first_inline_True_snapshot_shape_4",
+        "first_inline_held_contains_raw_secrets_wrong_type_0",
+        "first_inline_held_contains_raw_secrets_wrong_type_1",
+        "first_inline_held_contains_raw_secrets_wrong_type_10",
+        "first_inline_held_contains_raw_secrets_wrong_type_2",
+        "first_inline_held_contains_raw_secrets_wrong_type_3",
+        "first_inline_held_contains_raw_secrets_wrong_type_4",
+        "first_inline_held_contains_raw_secrets_wrong_type_5",
+        "first_inline_held_contains_raw_secrets_wrong_type_6",
+        "first_inline_held_contains_raw_secrets_wrong_type_7",
+        "first_inline_held_contains_raw_secrets_wrong_type_8",
+        "first_inline_held_contains_raw_secrets_wrong_type_9",
+        "first_inline_held_holds/has_protected_refs_wrong_type_0",
+        "first_inline_held_holds/has_protected_refs_wrong_type_1",
+        "first_inline_held_holds/has_protected_refs_wrong_type_10",
+        "first_inline_held_holds/has_protected_refs_wrong_type_2",
+        "first_inline_held_holds/has_protected_refs_wrong_type_3",
+        "first_inline_held_holds/has_protected_refs_wrong_type_4",
+        "first_inline_held_holds/has_protected_refs_wrong_type_5",
+        "first_inline_held_holds/has_protected_refs_wrong_type_6",
+        "first_inline_held_holds/has_protected_refs_wrong_type_7",
+        "first_inline_held_holds/has_protected_refs_wrong_type_8",
+        "first_inline_held_holds/has_protected_refs_wrong_type_9",
+        "first_inline_held_safe_point_restores_files_wrong_type_0",
+        "first_inline_held_safe_point_restores_files_wrong_type_1",
+        "first_inline_held_safe_point_restores_files_wrong_type_10",
+        "first_inline_held_safe_point_restores_files_wrong_type_2",
+        "first_inline_held_safe_point_restores_files_wrong_type_3",
+        "first_inline_held_safe_point_restores_files_wrong_type_4",
+        "first_inline_held_safe_point_restores_files_wrong_type_5",
+        "first_inline_held_safe_point_restores_files_wrong_type_6",
+        "first_inline_held_safe_point_restores_files_wrong_type_7",
+        "first_inline_held_safe_point_restores_files_wrong_type_8",
+        "first_inline_held_safe_point_restores_files_wrong_type_9",
+        "first_inline_held_workspace_effects/mutates_git_index_wrong_type_0",
+        "first_inline_held_workspace_effects/mutates_git_index_wrong_type_1",
+        "first_inline_held_workspace_effects/mutates_git_index_wrong_type_10",
+        "first_inline_held_workspace_effects/mutates_git_index_wrong_type_2",
+        "first_inline_held_workspace_effects/mutates_git_index_wrong_type_3",
+        "first_inline_held_workspace_effects/mutates_git_index_wrong_type_4",
+        "first_inline_held_workspace_effects/mutates_git_index_wrong_type_5",
+        "first_inline_held_workspace_effects/mutates_git_index_wrong_type_6",
+        "first_inline_held_workspace_effects/mutates_git_index_wrong_type_7",
+        "first_inline_held_workspace_effects/mutates_git_index_wrong_type_8",
+        "first_inline_held_workspace_effects/mutates_git_index_wrong_type_9",
+        "first_inline_held_workspace_effects/mutates_runtime_safe_points_wrong_type_0",
+        "first_inline_held_workspace_effects/mutates_runtime_safe_points_wrong_type_1",
+        "first_inline_held_workspace_effects/mutates_runtime_safe_points_wrong_type_10",
+        "first_inline_held_workspace_effects/mutates_runtime_safe_points_wrong_type_2",
+        "first_inline_held_workspace_effects/mutates_runtime_safe_points_wrong_type_3",
+        "first_inline_held_workspace_effects/mutates_runtime_safe_points_wrong_type_4",
+        "first_inline_held_workspace_effects/mutates_runtime_safe_points_wrong_type_5",
+        "first_inline_held_workspace_effects/mutates_runtime_safe_points_wrong_type_6",
+        "first_inline_held_workspace_effects/mutates_runtime_safe_points_wrong_type_7",
+        "first_inline_held_workspace_effects/mutates_runtime_safe_points_wrong_type_8",
+        "first_inline_held_workspace_effects/mutates_runtime_safe_points_wrong_type_9",
+        "first_inline_held_workspace_effects/mutates_source_branch_wrong_type_0",
+        "first_inline_held_workspace_effects/mutates_source_branch_wrong_type_1",
+        "first_inline_held_workspace_effects/mutates_source_branch_wrong_type_10",
+        "first_inline_held_workspace_effects/mutates_source_branch_wrong_type_2",
+        "first_inline_held_workspace_effects/mutates_source_branch_wrong_type_3",
+        "first_inline_held_workspace_effects/mutates_source_branch_wrong_type_4",
+        "first_inline_held_workspace_effects/mutates_source_branch_wrong_type_5",
+        "first_inline_held_workspace_effects/mutates_source_branch_wrong_type_6",
+        "first_inline_held_workspace_effects/mutates_source_branch_wrong_type_7",
+        "first_inline_held_workspace_effects/mutates_source_branch_wrong_type_8",
+        "first_inline_held_workspace_effects/mutates_source_branch_wrong_type_9",
+        "first_inline_held_workspace_effects/mutates_source_thread_wrong_type_0",
+        "first_inline_held_workspace_effects/mutates_source_thread_wrong_type_1",
+        "first_inline_held_workspace_effects/mutates_source_thread_wrong_type_10",
+        "first_inline_held_workspace_effects/mutates_source_thread_wrong_type_2",
+        "first_inline_held_workspace_effects/mutates_source_thread_wrong_type_3",
+        "first_inline_held_workspace_effects/mutates_source_thread_wrong_type_4",
+        "first_inline_held_workspace_effects/mutates_source_thread_wrong_type_5",
+        "first_inline_held_workspace_effects/mutates_source_thread_wrong_type_6",
+        "first_inline_held_workspace_effects/mutates_source_thread_wrong_type_7",
+        "first_inline_held_workspace_effects/mutates_source_thread_wrong_type_8",
+        "first_inline_held_workspace_effects/mutates_source_thread_wrong_type_9",
+        "first_inline_held_workspace_effects/mutates_source_worktree_wrong_type_0",
+        "first_inline_held_workspace_effects/mutates_source_worktree_wrong_type_1",
+        "first_inline_held_workspace_effects/mutates_source_worktree_wrong_type_10",
+        "first_inline_held_workspace_effects/mutates_source_worktree_wrong_type_2",
+        "first_inline_held_workspace_effects/mutates_source_worktree_wrong_type_3",
+        "first_inline_held_workspace_effects/mutates_source_worktree_wrong_type_4",
+        "first_inline_held_workspace_effects/mutates_source_worktree_wrong_type_5",
+        "first_inline_held_workspace_effects/mutates_source_worktree_wrong_type_6",
+        "first_inline_held_workspace_effects/mutates_source_worktree_wrong_type_7",
+        "first_inline_held_workspace_effects/mutates_source_worktree_wrong_type_8",
+        "first_inline_held_workspace_effects/mutates_source_worktree_wrong_type_9",
+        "first_inline_held_workspace_effects/restores_files_wrong_type_0",
+        "first_inline_held_workspace_effects/restores_files_wrong_type_1",
+        "first_inline_held_workspace_effects/restores_files_wrong_type_10",
+        "first_inline_held_workspace_effects/restores_files_wrong_type_2",
+        "first_inline_held_workspace_effects/restores_files_wrong_type_3",
+        "first_inline_held_workspace_effects/restores_files_wrong_type_4",
+        "first_inline_held_workspace_effects/restores_files_wrong_type_5",
+        "first_inline_held_workspace_effects/restores_files_wrong_type_6",
+        "first_inline_held_workspace_effects/restores_files_wrong_type_7",
+        "first_inline_held_workspace_effects/restores_files_wrong_type_8",
+        "first_inline_held_workspace_effects/restores_files_wrong_type_9",
+        "first_inline_unheld_contains_raw_secrets_wrong_type_0",
+        "first_inline_unheld_contains_raw_secrets_wrong_type_1",
+        "first_inline_unheld_contains_raw_secrets_wrong_type_10",
+        "first_inline_unheld_contains_raw_secrets_wrong_type_2",
+        "first_inline_unheld_contains_raw_secrets_wrong_type_3",
+        "first_inline_unheld_contains_raw_secrets_wrong_type_4",
+        "first_inline_unheld_contains_raw_secrets_wrong_type_5",
+        "first_inline_unheld_contains_raw_secrets_wrong_type_6",
+        "first_inline_unheld_contains_raw_secrets_wrong_type_7",
+        "first_inline_unheld_contains_raw_secrets_wrong_type_8",
+        "first_inline_unheld_contains_raw_secrets_wrong_type_9",
+        "first_inline_unheld_holds/has_protected_refs_wrong_type_0",
+        "first_inline_unheld_holds/has_protected_refs_wrong_type_1",
+        "first_inline_unheld_holds/has_protected_refs_wrong_type_10",
+        "first_inline_unheld_holds/has_protected_refs_wrong_type_2",
+        "first_inline_unheld_holds/has_protected_refs_wrong_type_3",
+        "first_inline_unheld_holds/has_protected_refs_wrong_type_4",
+        "first_inline_unheld_holds/has_protected_refs_wrong_type_5",
+        "first_inline_unheld_holds/has_protected_refs_wrong_type_6",
+        "first_inline_unheld_holds/has_protected_refs_wrong_type_7",
+        "first_inline_unheld_holds/has_protected_refs_wrong_type_8",
+        "first_inline_unheld_holds/has_protected_refs_wrong_type_9",
+        "first_inline_unheld_safe_point_restores_files_wrong_type_0",
+        "first_inline_unheld_safe_point_restores_files_wrong_type_1",
+        "first_inline_unheld_safe_point_restores_files_wrong_type_10",
+        "first_inline_unheld_safe_point_restores_files_wrong_type_2",
+        "first_inline_unheld_safe_point_restores_files_wrong_type_3",
+        "first_inline_unheld_safe_point_restores_files_wrong_type_4",
+        "first_inline_unheld_safe_point_restores_files_wrong_type_5",
+        "first_inline_unheld_safe_point_restores_files_wrong_type_6",
+        "first_inline_unheld_safe_point_restores_files_wrong_type_7",
+        "first_inline_unheld_safe_point_restores_files_wrong_type_8",
+        "first_inline_unheld_safe_point_restores_files_wrong_type_9",
+        "first_inline_unheld_workspace_effects/mutates_git_index_wrong_type_0",
+        "first_inline_unheld_workspace_effects/mutates_git_index_wrong_type_1",
+        "first_inline_unheld_workspace_effects/mutates_git_index_wrong_type_10",
+        "first_inline_unheld_workspace_effects/mutates_git_index_wrong_type_2",
+        "first_inline_unheld_workspace_effects/mutates_git_index_wrong_type_3",
+        "first_inline_unheld_workspace_effects/mutates_git_index_wrong_type_4",
+        "first_inline_unheld_workspace_effects/mutates_git_index_wrong_type_5",
+        "first_inline_unheld_workspace_effects/mutates_git_index_wrong_type_6",
+        "first_inline_unheld_workspace_effects/mutates_git_index_wrong_type_7",
+        "first_inline_unheld_workspace_effects/mutates_git_index_wrong_type_8",
+        "first_inline_unheld_workspace_effects/mutates_git_index_wrong_type_9",
+        "first_inline_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_0",
+        "first_inline_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_1",
+        "first_inline_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_10",
+        "first_inline_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_2",
+        "first_inline_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_3",
+        "first_inline_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_4",
+        "first_inline_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_5",
+        "first_inline_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_6",
+        "first_inline_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_7",
+        "first_inline_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_8",
+        "first_inline_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_9",
+        "first_inline_unheld_workspace_effects/mutates_source_branch_wrong_type_0",
+        "first_inline_unheld_workspace_effects/mutates_source_branch_wrong_type_1",
+        "first_inline_unheld_workspace_effects/mutates_source_branch_wrong_type_10",
+        "first_inline_unheld_workspace_effects/mutates_source_branch_wrong_type_2",
+        "first_inline_unheld_workspace_effects/mutates_source_branch_wrong_type_3",
+        "first_inline_unheld_workspace_effects/mutates_source_branch_wrong_type_4",
+        "first_inline_unheld_workspace_effects/mutates_source_branch_wrong_type_5",
+        "first_inline_unheld_workspace_effects/mutates_source_branch_wrong_type_6",
+        "first_inline_unheld_workspace_effects/mutates_source_branch_wrong_type_7",
+        "first_inline_unheld_workspace_effects/mutates_source_branch_wrong_type_8",
+        "first_inline_unheld_workspace_effects/mutates_source_branch_wrong_type_9",
+        "first_inline_unheld_workspace_effects/mutates_source_thread_wrong_type_0",
+        "first_inline_unheld_workspace_effects/mutates_source_thread_wrong_type_1",
+        "first_inline_unheld_workspace_effects/mutates_source_thread_wrong_type_10",
+        "first_inline_unheld_workspace_effects/mutates_source_thread_wrong_type_2",
+        "first_inline_unheld_workspace_effects/mutates_source_thread_wrong_type_3",
+        "first_inline_unheld_workspace_effects/mutates_source_thread_wrong_type_4",
+        "first_inline_unheld_workspace_effects/mutates_source_thread_wrong_type_5",
+        "first_inline_unheld_workspace_effects/mutates_source_thread_wrong_type_6",
+        "first_inline_unheld_workspace_effects/mutates_source_thread_wrong_type_7",
+        "first_inline_unheld_workspace_effects/mutates_source_thread_wrong_type_8",
+        "first_inline_unheld_workspace_effects/mutates_source_thread_wrong_type_9",
+        "first_inline_unheld_workspace_effects/mutates_source_worktree_wrong_type_0",
+        "first_inline_unheld_workspace_effects/mutates_source_worktree_wrong_type_1",
+        "first_inline_unheld_workspace_effects/mutates_source_worktree_wrong_type_10",
+        "first_inline_unheld_workspace_effects/mutates_source_worktree_wrong_type_2",
+        "first_inline_unheld_workspace_effects/mutates_source_worktree_wrong_type_3",
+        "first_inline_unheld_workspace_effects/mutates_source_worktree_wrong_type_4",
+        "first_inline_unheld_workspace_effects/mutates_source_worktree_wrong_type_5",
+        "first_inline_unheld_workspace_effects/mutates_source_worktree_wrong_type_6",
+        "first_inline_unheld_workspace_effects/mutates_source_worktree_wrong_type_7",
+        "first_inline_unheld_workspace_effects/mutates_source_worktree_wrong_type_8",
+        "first_inline_unheld_workspace_effects/mutates_source_worktree_wrong_type_9",
+        "first_inline_unheld_workspace_effects/restores_files_wrong_type_0",
+        "first_inline_unheld_workspace_effects/restores_files_wrong_type_1",
+        "first_inline_unheld_workspace_effects/restores_files_wrong_type_10",
+        "first_inline_unheld_workspace_effects/restores_files_wrong_type_2",
+        "first_inline_unheld_workspace_effects/restores_files_wrong_type_3",
+        "first_inline_unheld_workspace_effects/restores_files_wrong_type_4",
+        "first_inline_unheld_workspace_effects/restores_files_wrong_type_5",
+        "first_inline_unheld_workspace_effects/restores_files_wrong_type_6",
+        "first_inline_unheld_workspace_effects/restores_files_wrong_type_7",
+        "first_inline_unheld_workspace_effects/restores_files_wrong_type_8",
+        "first_inline_unheld_workspace_effects/restores_files_wrong_type_9",
+        "first_packed_False_snapshot_shape_0",
+        "first_packed_False_snapshot_shape_1",
+        "first_packed_False_snapshot_shape_2",
+        "first_packed_False_snapshot_shape_3",
+        "first_packed_False_snapshot_shape_4",
+        "first_packed_True_snapshot_shape_0",
+        "first_packed_True_snapshot_shape_1",
+        "first_packed_True_snapshot_shape_2",
+        "first_packed_True_snapshot_shape_3",
+        "first_packed_True_snapshot_shape_4",
+        "first_packed_held_contains_raw_secrets_wrong_type_0",
+        "first_packed_held_contains_raw_secrets_wrong_type_1",
+        "first_packed_held_contains_raw_secrets_wrong_type_10",
+        "first_packed_held_contains_raw_secrets_wrong_type_2",
+        "first_packed_held_contains_raw_secrets_wrong_type_3",
+        "first_packed_held_contains_raw_secrets_wrong_type_4",
+        "first_packed_held_contains_raw_secrets_wrong_type_5",
+        "first_packed_held_contains_raw_secrets_wrong_type_6",
+        "first_packed_held_contains_raw_secrets_wrong_type_7",
+        "first_packed_held_contains_raw_secrets_wrong_type_8",
+        "first_packed_held_contains_raw_secrets_wrong_type_9",
+        "first_packed_held_holds/has_protected_refs_wrong_type_0",
+        "first_packed_held_holds/has_protected_refs_wrong_type_1",
+        "first_packed_held_holds/has_protected_refs_wrong_type_10",
+        "first_packed_held_holds/has_protected_refs_wrong_type_2",
+        "first_packed_held_holds/has_protected_refs_wrong_type_3",
+        "first_packed_held_holds/has_protected_refs_wrong_type_4",
+        "first_packed_held_holds/has_protected_refs_wrong_type_5",
+        "first_packed_held_holds/has_protected_refs_wrong_type_6",
+        "first_packed_held_holds/has_protected_refs_wrong_type_7",
+        "first_packed_held_holds/has_protected_refs_wrong_type_8",
+        "first_packed_held_holds/has_protected_refs_wrong_type_9",
+        "first_packed_held_safe_point_restores_files_wrong_type_0",
+        "first_packed_held_safe_point_restores_files_wrong_type_1",
+        "first_packed_held_safe_point_restores_files_wrong_type_10",
+        "first_packed_held_safe_point_restores_files_wrong_type_2",
+        "first_packed_held_safe_point_restores_files_wrong_type_3",
+        "first_packed_held_safe_point_restores_files_wrong_type_4",
+        "first_packed_held_safe_point_restores_files_wrong_type_5",
+        "first_packed_held_safe_point_restores_files_wrong_type_6",
+        "first_packed_held_safe_point_restores_files_wrong_type_7",
+        "first_packed_held_safe_point_restores_files_wrong_type_8",
+        "first_packed_held_safe_point_restores_files_wrong_type_9",
+        "first_packed_held_workspace_effects/mutates_git_index_wrong_type_0",
+        "first_packed_held_workspace_effects/mutates_git_index_wrong_type_1",
+        "first_packed_held_workspace_effects/mutates_git_index_wrong_type_10",
+        "first_packed_held_workspace_effects/mutates_git_index_wrong_type_2",
+        "first_packed_held_workspace_effects/mutates_git_index_wrong_type_3",
+        "first_packed_held_workspace_effects/mutates_git_index_wrong_type_4",
+        "first_packed_held_workspace_effects/mutates_git_index_wrong_type_5",
+        "first_packed_held_workspace_effects/mutates_git_index_wrong_type_6",
+        "first_packed_held_workspace_effects/mutates_git_index_wrong_type_7",
+        "first_packed_held_workspace_effects/mutates_git_index_wrong_type_8",
+        "first_packed_held_workspace_effects/mutates_git_index_wrong_type_9",
+        "first_packed_held_workspace_effects/mutates_runtime_safe_points_wrong_type_0",
+        "first_packed_held_workspace_effects/mutates_runtime_safe_points_wrong_type_1",
+        "first_packed_held_workspace_effects/mutates_runtime_safe_points_wrong_type_10",
+        "first_packed_held_workspace_effects/mutates_runtime_safe_points_wrong_type_2",
+        "first_packed_held_workspace_effects/mutates_runtime_safe_points_wrong_type_3",
+        "first_packed_held_workspace_effects/mutates_runtime_safe_points_wrong_type_4",
+        "first_packed_held_workspace_effects/mutates_runtime_safe_points_wrong_type_5",
+        "first_packed_held_workspace_effects/mutates_runtime_safe_points_wrong_type_6",
+        "first_packed_held_workspace_effects/mutates_runtime_safe_points_wrong_type_7",
+        "first_packed_held_workspace_effects/mutates_runtime_safe_points_wrong_type_8",
+        "first_packed_held_workspace_effects/mutates_runtime_safe_points_wrong_type_9",
+        "first_packed_held_workspace_effects/mutates_source_branch_wrong_type_0",
+        "first_packed_held_workspace_effects/mutates_source_branch_wrong_type_1",
+        "first_packed_held_workspace_effects/mutates_source_branch_wrong_type_10",
+        "first_packed_held_workspace_effects/mutates_source_branch_wrong_type_2",
+        "first_packed_held_workspace_effects/mutates_source_branch_wrong_type_3",
+        "first_packed_held_workspace_effects/mutates_source_branch_wrong_type_4",
+        "first_packed_held_workspace_effects/mutates_source_branch_wrong_type_5",
+        "first_packed_held_workspace_effects/mutates_source_branch_wrong_type_6",
+        "first_packed_held_workspace_effects/mutates_source_branch_wrong_type_7",
+        "first_packed_held_workspace_effects/mutates_source_branch_wrong_type_8",
+        "first_packed_held_workspace_effects/mutates_source_branch_wrong_type_9",
+        "first_packed_held_workspace_effects/mutates_source_thread_wrong_type_0",
+        "first_packed_held_workspace_effects/mutates_source_thread_wrong_type_1",
+        "first_packed_held_workspace_effects/mutates_source_thread_wrong_type_10",
+        "first_packed_held_workspace_effects/mutates_source_thread_wrong_type_2",
+        "first_packed_held_workspace_effects/mutates_source_thread_wrong_type_3",
+        "first_packed_held_workspace_effects/mutates_source_thread_wrong_type_4",
+        "first_packed_held_workspace_effects/mutates_source_thread_wrong_type_5",
+        "first_packed_held_workspace_effects/mutates_source_thread_wrong_type_6",
+        "first_packed_held_workspace_effects/mutates_source_thread_wrong_type_7",
+        "first_packed_held_workspace_effects/mutates_source_thread_wrong_type_8",
+        "first_packed_held_workspace_effects/mutates_source_thread_wrong_type_9",
+        "first_packed_held_workspace_effects/mutates_source_worktree_wrong_type_0",
+        "first_packed_held_workspace_effects/mutates_source_worktree_wrong_type_1",
+        "first_packed_held_workspace_effects/mutates_source_worktree_wrong_type_10",
+        "first_packed_held_workspace_effects/mutates_source_worktree_wrong_type_2",
+        "first_packed_held_workspace_effects/mutates_source_worktree_wrong_type_3",
+        "first_packed_held_workspace_effects/mutates_source_worktree_wrong_type_4",
+        "first_packed_held_workspace_effects/mutates_source_worktree_wrong_type_5",
+        "first_packed_held_workspace_effects/mutates_source_worktree_wrong_type_6",
+        "first_packed_held_workspace_effects/mutates_source_worktree_wrong_type_7",
+        "first_packed_held_workspace_effects/mutates_source_worktree_wrong_type_8",
+        "first_packed_held_workspace_effects/mutates_source_worktree_wrong_type_9",
+        "first_packed_held_workspace_effects/restores_files_wrong_type_0",
+        "first_packed_held_workspace_effects/restores_files_wrong_type_1",
+        "first_packed_held_workspace_effects/restores_files_wrong_type_10",
+        "first_packed_held_workspace_effects/restores_files_wrong_type_2",
+        "first_packed_held_workspace_effects/restores_files_wrong_type_3",
+        "first_packed_held_workspace_effects/restores_files_wrong_type_4",
+        "first_packed_held_workspace_effects/restores_files_wrong_type_5",
+        "first_packed_held_workspace_effects/restores_files_wrong_type_6",
+        "first_packed_held_workspace_effects/restores_files_wrong_type_7",
+        "first_packed_held_workspace_effects/restores_files_wrong_type_8",
+        "first_packed_held_workspace_effects/restores_files_wrong_type_9",
+        "first_packed_unheld_contains_raw_secrets_wrong_type_0",
+        "first_packed_unheld_contains_raw_secrets_wrong_type_1",
+        "first_packed_unheld_contains_raw_secrets_wrong_type_10",
+        "first_packed_unheld_contains_raw_secrets_wrong_type_2",
+        "first_packed_unheld_contains_raw_secrets_wrong_type_3",
+        "first_packed_unheld_contains_raw_secrets_wrong_type_4",
+        "first_packed_unheld_contains_raw_secrets_wrong_type_5",
+        "first_packed_unheld_contains_raw_secrets_wrong_type_6",
+        "first_packed_unheld_contains_raw_secrets_wrong_type_7",
+        "first_packed_unheld_contains_raw_secrets_wrong_type_8",
+        "first_packed_unheld_contains_raw_secrets_wrong_type_9",
+        "first_packed_unheld_holds/has_protected_refs_wrong_type_0",
+        "first_packed_unheld_holds/has_protected_refs_wrong_type_1",
+        "first_packed_unheld_holds/has_protected_refs_wrong_type_10",
+        "first_packed_unheld_holds/has_protected_refs_wrong_type_2",
+        "first_packed_unheld_holds/has_protected_refs_wrong_type_3",
+        "first_packed_unheld_holds/has_protected_refs_wrong_type_4",
+        "first_packed_unheld_holds/has_protected_refs_wrong_type_5",
+        "first_packed_unheld_holds/has_protected_refs_wrong_type_6",
+        "first_packed_unheld_holds/has_protected_refs_wrong_type_7",
+        "first_packed_unheld_holds/has_protected_refs_wrong_type_8",
+        "first_packed_unheld_holds/has_protected_refs_wrong_type_9",
+        "first_packed_unheld_safe_point_restores_files_wrong_type_0",
+        "first_packed_unheld_safe_point_restores_files_wrong_type_1",
+        "first_packed_unheld_safe_point_restores_files_wrong_type_10",
+        "first_packed_unheld_safe_point_restores_files_wrong_type_2",
+        "first_packed_unheld_safe_point_restores_files_wrong_type_3",
+        "first_packed_unheld_safe_point_restores_files_wrong_type_4",
+        "first_packed_unheld_safe_point_restores_files_wrong_type_5",
+        "first_packed_unheld_safe_point_restores_files_wrong_type_6",
+        "first_packed_unheld_safe_point_restores_files_wrong_type_7",
+        "first_packed_unheld_safe_point_restores_files_wrong_type_8",
+        "first_packed_unheld_safe_point_restores_files_wrong_type_9",
+        "first_packed_unheld_workspace_effects/mutates_git_index_wrong_type_0",
+        "first_packed_unheld_workspace_effects/mutates_git_index_wrong_type_1",
+        "first_packed_unheld_workspace_effects/mutates_git_index_wrong_type_10",
+        "first_packed_unheld_workspace_effects/mutates_git_index_wrong_type_2",
+        "first_packed_unheld_workspace_effects/mutates_git_index_wrong_type_3",
+        "first_packed_unheld_workspace_effects/mutates_git_index_wrong_type_4",
+        "first_packed_unheld_workspace_effects/mutates_git_index_wrong_type_5",
+        "first_packed_unheld_workspace_effects/mutates_git_index_wrong_type_6",
+        "first_packed_unheld_workspace_effects/mutates_git_index_wrong_type_7",
+        "first_packed_unheld_workspace_effects/mutates_git_index_wrong_type_8",
+        "first_packed_unheld_workspace_effects/mutates_git_index_wrong_type_9",
+        "first_packed_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_0",
+        "first_packed_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_1",
+        "first_packed_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_10",
+        "first_packed_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_2",
+        "first_packed_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_3",
+        "first_packed_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_4",
+        "first_packed_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_5",
+        "first_packed_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_6",
+        "first_packed_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_7",
+        "first_packed_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_8",
+        "first_packed_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_9",
+        "first_packed_unheld_workspace_effects/mutates_source_branch_wrong_type_0",
+        "first_packed_unheld_workspace_effects/mutates_source_branch_wrong_type_1",
+        "first_packed_unheld_workspace_effects/mutates_source_branch_wrong_type_10",
+        "first_packed_unheld_workspace_effects/mutates_source_branch_wrong_type_2",
+        "first_packed_unheld_workspace_effects/mutates_source_branch_wrong_type_3",
+        "first_packed_unheld_workspace_effects/mutates_source_branch_wrong_type_4",
+        "first_packed_unheld_workspace_effects/mutates_source_branch_wrong_type_5",
+        "first_packed_unheld_workspace_effects/mutates_source_branch_wrong_type_6",
+        "first_packed_unheld_workspace_effects/mutates_source_branch_wrong_type_7",
+        "first_packed_unheld_workspace_effects/mutates_source_branch_wrong_type_8",
+        "first_packed_unheld_workspace_effects/mutates_source_branch_wrong_type_9",
+        "first_packed_unheld_workspace_effects/mutates_source_thread_wrong_type_0",
+        "first_packed_unheld_workspace_effects/mutates_source_thread_wrong_type_1",
+        "first_packed_unheld_workspace_effects/mutates_source_thread_wrong_type_10",
+        "first_packed_unheld_workspace_effects/mutates_source_thread_wrong_type_2",
+        "first_packed_unheld_workspace_effects/mutates_source_thread_wrong_type_3",
+        "first_packed_unheld_workspace_effects/mutates_source_thread_wrong_type_4",
+        "first_packed_unheld_workspace_effects/mutates_source_thread_wrong_type_5",
+        "first_packed_unheld_workspace_effects/mutates_source_thread_wrong_type_6",
+        "first_packed_unheld_workspace_effects/mutates_source_thread_wrong_type_7",
+        "first_packed_unheld_workspace_effects/mutates_source_thread_wrong_type_8",
+        "first_packed_unheld_workspace_effects/mutates_source_thread_wrong_type_9",
+        "first_packed_unheld_workspace_effects/mutates_source_worktree_wrong_type_0",
+        "first_packed_unheld_workspace_effects/mutates_source_worktree_wrong_type_1",
+        "first_packed_unheld_workspace_effects/mutates_source_worktree_wrong_type_10",
+        "first_packed_unheld_workspace_effects/mutates_source_worktree_wrong_type_2",
+        "first_packed_unheld_workspace_effects/mutates_source_worktree_wrong_type_3",
+        "first_packed_unheld_workspace_effects/mutates_source_worktree_wrong_type_4",
+        "first_packed_unheld_workspace_effects/mutates_source_worktree_wrong_type_5",
+        "first_packed_unheld_workspace_effects/mutates_source_worktree_wrong_type_6",
+        "first_packed_unheld_workspace_effects/mutates_source_worktree_wrong_type_7",
+        "first_packed_unheld_workspace_effects/mutates_source_worktree_wrong_type_8",
+        "first_packed_unheld_workspace_effects/mutates_source_worktree_wrong_type_9",
+        "first_packed_unheld_workspace_effects/restores_files_wrong_type_0",
+        "first_packed_unheld_workspace_effects/restores_files_wrong_type_1",
+        "first_packed_unheld_workspace_effects/restores_files_wrong_type_10",
+        "first_packed_unheld_workspace_effects/restores_files_wrong_type_2",
+        "first_packed_unheld_workspace_effects/restores_files_wrong_type_3",
+        "first_packed_unheld_workspace_effects/restores_files_wrong_type_4",
+        "first_packed_unheld_workspace_effects/restores_files_wrong_type_5",
+        "first_packed_unheld_workspace_effects/restores_files_wrong_type_6",
+        "first_packed_unheld_workspace_effects/restores_files_wrong_type_7",
+        "first_packed_unheld_workspace_effects/restores_files_wrong_type_8",
+        "first_packed_unheld_workspace_effects/restores_files_wrong_type_9",
+        "source_snapshot",
+        "successor_inline_False_snapshot_shape_0",
+        "successor_inline_False_snapshot_shape_1",
+        "successor_inline_False_snapshot_shape_2",
+        "successor_inline_False_snapshot_shape_3",
+        "successor_inline_False_snapshot_shape_4",
+        "successor_inline_True_snapshot_shape_0",
+        "successor_inline_True_snapshot_shape_1",
+        "successor_inline_True_snapshot_shape_2",
+        "successor_inline_True_snapshot_shape_3",
+        "successor_inline_True_snapshot_shape_4",
+        "successor_inline_held_contains_raw_secrets_wrong_type_0",
+        "successor_inline_held_contains_raw_secrets_wrong_type_1",
+        "successor_inline_held_contains_raw_secrets_wrong_type_10",
+        "successor_inline_held_contains_raw_secrets_wrong_type_2",
+        "successor_inline_held_contains_raw_secrets_wrong_type_3",
+        "successor_inline_held_contains_raw_secrets_wrong_type_4",
+        "successor_inline_held_contains_raw_secrets_wrong_type_5",
+        "successor_inline_held_contains_raw_secrets_wrong_type_6",
+        "successor_inline_held_contains_raw_secrets_wrong_type_7",
+        "successor_inline_held_contains_raw_secrets_wrong_type_8",
+        "successor_inline_held_contains_raw_secrets_wrong_type_9",
+        "successor_inline_held_holds/has_protected_refs_wrong_type_0",
+        "successor_inline_held_holds/has_protected_refs_wrong_type_1",
+        "successor_inline_held_holds/has_protected_refs_wrong_type_10",
+        "successor_inline_held_holds/has_protected_refs_wrong_type_2",
+        "successor_inline_held_holds/has_protected_refs_wrong_type_3",
+        "successor_inline_held_holds/has_protected_refs_wrong_type_4",
+        "successor_inline_held_holds/has_protected_refs_wrong_type_5",
+        "successor_inline_held_holds/has_protected_refs_wrong_type_6",
+        "successor_inline_held_holds/has_protected_refs_wrong_type_7",
+        "successor_inline_held_holds/has_protected_refs_wrong_type_8",
+        "successor_inline_held_holds/has_protected_refs_wrong_type_9",
+        "successor_inline_held_safe_point_restores_files_wrong_type_0",
+        "successor_inline_held_safe_point_restores_files_wrong_type_1",
+        "successor_inline_held_safe_point_restores_files_wrong_type_10",
+        "successor_inline_held_safe_point_restores_files_wrong_type_2",
+        "successor_inline_held_safe_point_restores_files_wrong_type_3",
+        "successor_inline_held_safe_point_restores_files_wrong_type_4",
+        "successor_inline_held_safe_point_restores_files_wrong_type_5",
+        "successor_inline_held_safe_point_restores_files_wrong_type_6",
+        "successor_inline_held_safe_point_restores_files_wrong_type_7",
+        "successor_inline_held_safe_point_restores_files_wrong_type_8",
+        "successor_inline_held_safe_point_restores_files_wrong_type_9",
+        "successor_inline_held_workspace_effects/mutates_git_index_wrong_type_0",
+        "successor_inline_held_workspace_effects/mutates_git_index_wrong_type_1",
+        "successor_inline_held_workspace_effects/mutates_git_index_wrong_type_10",
+        "successor_inline_held_workspace_effects/mutates_git_index_wrong_type_2",
+        "successor_inline_held_workspace_effects/mutates_git_index_wrong_type_3",
+        "successor_inline_held_workspace_effects/mutates_git_index_wrong_type_4",
+        "successor_inline_held_workspace_effects/mutates_git_index_wrong_type_5",
+        "successor_inline_held_workspace_effects/mutates_git_index_wrong_type_6",
+        "successor_inline_held_workspace_effects/mutates_git_index_wrong_type_7",
+        "successor_inline_held_workspace_effects/mutates_git_index_wrong_type_8",
+        "successor_inline_held_workspace_effects/mutates_git_index_wrong_type_9",
+        "successor_inline_held_workspace_effects/mutates_runtime_safe_points_wrong_type_0",
+        "successor_inline_held_workspace_effects/mutates_runtime_safe_points_wrong_type_1",
+        "successor_inline_held_workspace_effects/mutates_runtime_safe_points_wrong_type_10",
+        "successor_inline_held_workspace_effects/mutates_runtime_safe_points_wrong_type_2",
+        "successor_inline_held_workspace_effects/mutates_runtime_safe_points_wrong_type_3",
+        "successor_inline_held_workspace_effects/mutates_runtime_safe_points_wrong_type_4",
+        "successor_inline_held_workspace_effects/mutates_runtime_safe_points_wrong_type_5",
+        "successor_inline_held_workspace_effects/mutates_runtime_safe_points_wrong_type_6",
+        "successor_inline_held_workspace_effects/mutates_runtime_safe_points_wrong_type_7",
+        "successor_inline_held_workspace_effects/mutates_runtime_safe_points_wrong_type_8",
+        "successor_inline_held_workspace_effects/mutates_runtime_safe_points_wrong_type_9",
+        "successor_inline_held_workspace_effects/mutates_source_branch_wrong_type_0",
+        "successor_inline_held_workspace_effects/mutates_source_branch_wrong_type_1",
+        "successor_inline_held_workspace_effects/mutates_source_branch_wrong_type_10",
+        "successor_inline_held_workspace_effects/mutates_source_branch_wrong_type_2",
+        "successor_inline_held_workspace_effects/mutates_source_branch_wrong_type_3",
+        "successor_inline_held_workspace_effects/mutates_source_branch_wrong_type_4",
+        "successor_inline_held_workspace_effects/mutates_source_branch_wrong_type_5",
+        "successor_inline_held_workspace_effects/mutates_source_branch_wrong_type_6",
+        "successor_inline_held_workspace_effects/mutates_source_branch_wrong_type_7",
+        "successor_inline_held_workspace_effects/mutates_source_branch_wrong_type_8",
+        "successor_inline_held_workspace_effects/mutates_source_branch_wrong_type_9",
+        "successor_inline_held_workspace_effects/mutates_source_thread_wrong_type_0",
+        "successor_inline_held_workspace_effects/mutates_source_thread_wrong_type_1",
+        "successor_inline_held_workspace_effects/mutates_source_thread_wrong_type_10",
+        "successor_inline_held_workspace_effects/mutates_source_thread_wrong_type_2",
+        "successor_inline_held_workspace_effects/mutates_source_thread_wrong_type_3",
+        "successor_inline_held_workspace_effects/mutates_source_thread_wrong_type_4",
+        "successor_inline_held_workspace_effects/mutates_source_thread_wrong_type_5",
+        "successor_inline_held_workspace_effects/mutates_source_thread_wrong_type_6",
+        "successor_inline_held_workspace_effects/mutates_source_thread_wrong_type_7",
+        "successor_inline_held_workspace_effects/mutates_source_thread_wrong_type_8",
+        "successor_inline_held_workspace_effects/mutates_source_thread_wrong_type_9",
+        "successor_inline_held_workspace_effects/mutates_source_worktree_wrong_type_0",
+        "successor_inline_held_workspace_effects/mutates_source_worktree_wrong_type_1",
+        "successor_inline_held_workspace_effects/mutates_source_worktree_wrong_type_10",
+        "successor_inline_held_workspace_effects/mutates_source_worktree_wrong_type_2",
+        "successor_inline_held_workspace_effects/mutates_source_worktree_wrong_type_3",
+        "successor_inline_held_workspace_effects/mutates_source_worktree_wrong_type_4",
+        "successor_inline_held_workspace_effects/mutates_source_worktree_wrong_type_5",
+        "successor_inline_held_workspace_effects/mutates_source_worktree_wrong_type_6",
+        "successor_inline_held_workspace_effects/mutates_source_worktree_wrong_type_7",
+        "successor_inline_held_workspace_effects/mutates_source_worktree_wrong_type_8",
+        "successor_inline_held_workspace_effects/mutates_source_worktree_wrong_type_9",
+        "successor_inline_held_workspace_effects/restores_files_wrong_type_0",
+        "successor_inline_held_workspace_effects/restores_files_wrong_type_1",
+        "successor_inline_held_workspace_effects/restores_files_wrong_type_10",
+        "successor_inline_held_workspace_effects/restores_files_wrong_type_2",
+        "successor_inline_held_workspace_effects/restores_files_wrong_type_3",
+        "successor_inline_held_workspace_effects/restores_files_wrong_type_4",
+        "successor_inline_held_workspace_effects/restores_files_wrong_type_5",
+        "successor_inline_held_workspace_effects/restores_files_wrong_type_6",
+        "successor_inline_held_workspace_effects/restores_files_wrong_type_7",
+        "successor_inline_held_workspace_effects/restores_files_wrong_type_8",
+        "successor_inline_held_workspace_effects/restores_files_wrong_type_9",
+        "successor_inline_unheld_contains_raw_secrets_wrong_type_0",
+        "successor_inline_unheld_contains_raw_secrets_wrong_type_1",
+        "successor_inline_unheld_contains_raw_secrets_wrong_type_10",
+        "successor_inline_unheld_contains_raw_secrets_wrong_type_2",
+        "successor_inline_unheld_contains_raw_secrets_wrong_type_3",
+        "successor_inline_unheld_contains_raw_secrets_wrong_type_4",
+        "successor_inline_unheld_contains_raw_secrets_wrong_type_5",
+        "successor_inline_unheld_contains_raw_secrets_wrong_type_6",
+        "successor_inline_unheld_contains_raw_secrets_wrong_type_7",
+        "successor_inline_unheld_contains_raw_secrets_wrong_type_8",
+        "successor_inline_unheld_contains_raw_secrets_wrong_type_9",
+        "successor_inline_unheld_holds/has_protected_refs_wrong_type_0",
+        "successor_inline_unheld_holds/has_protected_refs_wrong_type_1",
+        "successor_inline_unheld_holds/has_protected_refs_wrong_type_10",
+        "successor_inline_unheld_holds/has_protected_refs_wrong_type_2",
+        "successor_inline_unheld_holds/has_protected_refs_wrong_type_3",
+        "successor_inline_unheld_holds/has_protected_refs_wrong_type_4",
+        "successor_inline_unheld_holds/has_protected_refs_wrong_type_5",
+        "successor_inline_unheld_holds/has_protected_refs_wrong_type_6",
+        "successor_inline_unheld_holds/has_protected_refs_wrong_type_7",
+        "successor_inline_unheld_holds/has_protected_refs_wrong_type_8",
+        "successor_inline_unheld_holds/has_protected_refs_wrong_type_9",
+        "successor_inline_unheld_safe_point_restores_files_wrong_type_0",
+        "successor_inline_unheld_safe_point_restores_files_wrong_type_1",
+        "successor_inline_unheld_safe_point_restores_files_wrong_type_10",
+        "successor_inline_unheld_safe_point_restores_files_wrong_type_2",
+        "successor_inline_unheld_safe_point_restores_files_wrong_type_3",
+        "successor_inline_unheld_safe_point_restores_files_wrong_type_4",
+        "successor_inline_unheld_safe_point_restores_files_wrong_type_5",
+        "successor_inline_unheld_safe_point_restores_files_wrong_type_6",
+        "successor_inline_unheld_safe_point_restores_files_wrong_type_7",
+        "successor_inline_unheld_safe_point_restores_files_wrong_type_8",
+        "successor_inline_unheld_safe_point_restores_files_wrong_type_9",
+        "successor_inline_unheld_workspace_effects/mutates_git_index_wrong_type_0",
+        "successor_inline_unheld_workspace_effects/mutates_git_index_wrong_type_1",
+        "successor_inline_unheld_workspace_effects/mutates_git_index_wrong_type_10",
+        "successor_inline_unheld_workspace_effects/mutates_git_index_wrong_type_2",
+        "successor_inline_unheld_workspace_effects/mutates_git_index_wrong_type_3",
+        "successor_inline_unheld_workspace_effects/mutates_git_index_wrong_type_4",
+        "successor_inline_unheld_workspace_effects/mutates_git_index_wrong_type_5",
+        "successor_inline_unheld_workspace_effects/mutates_git_index_wrong_type_6",
+        "successor_inline_unheld_workspace_effects/mutates_git_index_wrong_type_7",
+        "successor_inline_unheld_workspace_effects/mutates_git_index_wrong_type_8",
+        "successor_inline_unheld_workspace_effects/mutates_git_index_wrong_type_9",
+        "successor_inline_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_0",
+        "successor_inline_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_1",
+        "successor_inline_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_10",
+        "successor_inline_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_2",
+        "successor_inline_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_3",
+        "successor_inline_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_4",
+        "successor_inline_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_5",
+        "successor_inline_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_6",
+        "successor_inline_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_7",
+        "successor_inline_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_8",
+        "successor_inline_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_9",
+        "successor_inline_unheld_workspace_effects/mutates_source_branch_wrong_type_0",
+        "successor_inline_unheld_workspace_effects/mutates_source_branch_wrong_type_1",
+        "successor_inline_unheld_workspace_effects/mutates_source_branch_wrong_type_10",
+        "successor_inline_unheld_workspace_effects/mutates_source_branch_wrong_type_2",
+        "successor_inline_unheld_workspace_effects/mutates_source_branch_wrong_type_3",
+        "successor_inline_unheld_workspace_effects/mutates_source_branch_wrong_type_4",
+        "successor_inline_unheld_workspace_effects/mutates_source_branch_wrong_type_5",
+        "successor_inline_unheld_workspace_effects/mutates_source_branch_wrong_type_6",
+        "successor_inline_unheld_workspace_effects/mutates_source_branch_wrong_type_7",
+        "successor_inline_unheld_workspace_effects/mutates_source_branch_wrong_type_8",
+        "successor_inline_unheld_workspace_effects/mutates_source_branch_wrong_type_9",
+        "successor_inline_unheld_workspace_effects/mutates_source_thread_wrong_type_0",
+        "successor_inline_unheld_workspace_effects/mutates_source_thread_wrong_type_1",
+        "successor_inline_unheld_workspace_effects/mutates_source_thread_wrong_type_10",
+        "successor_inline_unheld_workspace_effects/mutates_source_thread_wrong_type_2",
+        "successor_inline_unheld_workspace_effects/mutates_source_thread_wrong_type_3",
+        "successor_inline_unheld_workspace_effects/mutates_source_thread_wrong_type_4",
+        "successor_inline_unheld_workspace_effects/mutates_source_thread_wrong_type_5",
+        "successor_inline_unheld_workspace_effects/mutates_source_thread_wrong_type_6",
+        "successor_inline_unheld_workspace_effects/mutates_source_thread_wrong_type_7",
+        "successor_inline_unheld_workspace_effects/mutates_source_thread_wrong_type_8",
+        "successor_inline_unheld_workspace_effects/mutates_source_thread_wrong_type_9",
+        "successor_inline_unheld_workspace_effects/mutates_source_worktree_wrong_type_0",
+        "successor_inline_unheld_workspace_effects/mutates_source_worktree_wrong_type_1",
+        "successor_inline_unheld_workspace_effects/mutates_source_worktree_wrong_type_10",
+        "successor_inline_unheld_workspace_effects/mutates_source_worktree_wrong_type_2",
+        "successor_inline_unheld_workspace_effects/mutates_source_worktree_wrong_type_3",
+        "successor_inline_unheld_workspace_effects/mutates_source_worktree_wrong_type_4",
+        "successor_inline_unheld_workspace_effects/mutates_source_worktree_wrong_type_5",
+        "successor_inline_unheld_workspace_effects/mutates_source_worktree_wrong_type_6",
+        "successor_inline_unheld_workspace_effects/mutates_source_worktree_wrong_type_7",
+        "successor_inline_unheld_workspace_effects/mutates_source_worktree_wrong_type_8",
+        "successor_inline_unheld_workspace_effects/mutates_source_worktree_wrong_type_9",
+        "successor_inline_unheld_workspace_effects/restores_files_wrong_type_0",
+        "successor_inline_unheld_workspace_effects/restores_files_wrong_type_1",
+        "successor_inline_unheld_workspace_effects/restores_files_wrong_type_10",
+        "successor_inline_unheld_workspace_effects/restores_files_wrong_type_2",
+        "successor_inline_unheld_workspace_effects/restores_files_wrong_type_3",
+        "successor_inline_unheld_workspace_effects/restores_files_wrong_type_4",
+        "successor_inline_unheld_workspace_effects/restores_files_wrong_type_5",
+        "successor_inline_unheld_workspace_effects/restores_files_wrong_type_6",
+        "successor_inline_unheld_workspace_effects/restores_files_wrong_type_7",
+        "successor_inline_unheld_workspace_effects/restores_files_wrong_type_8",
+        "successor_inline_unheld_workspace_effects/restores_files_wrong_type_9",
+        "successor_packed_False_snapshot_shape_0",
+        "successor_packed_False_snapshot_shape_1",
+        "successor_packed_False_snapshot_shape_2",
+        "successor_packed_False_snapshot_shape_3",
+        "successor_packed_False_snapshot_shape_4",
+        "successor_packed_True_snapshot_shape_0",
+        "successor_packed_True_snapshot_shape_1",
+        "successor_packed_True_snapshot_shape_2",
+        "successor_packed_True_snapshot_shape_3",
+        "successor_packed_True_snapshot_shape_4",
+        "successor_packed_held_contains_raw_secrets_wrong_type_0",
+        "successor_packed_held_contains_raw_secrets_wrong_type_1",
+        "successor_packed_held_contains_raw_secrets_wrong_type_10",
+        "successor_packed_held_contains_raw_secrets_wrong_type_2",
+        "successor_packed_held_contains_raw_secrets_wrong_type_3",
+        "successor_packed_held_contains_raw_secrets_wrong_type_4",
+        "successor_packed_held_contains_raw_secrets_wrong_type_5",
+        "successor_packed_held_contains_raw_secrets_wrong_type_6",
+        "successor_packed_held_contains_raw_secrets_wrong_type_7",
+        "successor_packed_held_contains_raw_secrets_wrong_type_8",
+        "successor_packed_held_contains_raw_secrets_wrong_type_9",
+        "successor_packed_held_holds/has_protected_refs_wrong_type_0",
+        "successor_packed_held_holds/has_protected_refs_wrong_type_1",
+        "successor_packed_held_holds/has_protected_refs_wrong_type_10",
+        "successor_packed_held_holds/has_protected_refs_wrong_type_2",
+        "successor_packed_held_holds/has_protected_refs_wrong_type_3",
+        "successor_packed_held_holds/has_protected_refs_wrong_type_4",
+        "successor_packed_held_holds/has_protected_refs_wrong_type_5",
+        "successor_packed_held_holds/has_protected_refs_wrong_type_6",
+        "successor_packed_held_holds/has_protected_refs_wrong_type_7",
+        "successor_packed_held_holds/has_protected_refs_wrong_type_8",
+        "successor_packed_held_holds/has_protected_refs_wrong_type_9",
+        "successor_packed_held_safe_point_restores_files_wrong_type_0",
+        "successor_packed_held_safe_point_restores_files_wrong_type_1",
+        "successor_packed_held_safe_point_restores_files_wrong_type_10",
+        "successor_packed_held_safe_point_restores_files_wrong_type_2",
+        "successor_packed_held_safe_point_restores_files_wrong_type_3",
+        "successor_packed_held_safe_point_restores_files_wrong_type_4",
+        "successor_packed_held_safe_point_restores_files_wrong_type_5",
+        "successor_packed_held_safe_point_restores_files_wrong_type_6",
+        "successor_packed_held_safe_point_restores_files_wrong_type_7",
+        "successor_packed_held_safe_point_restores_files_wrong_type_8",
+        "successor_packed_held_safe_point_restores_files_wrong_type_9",
+        "successor_packed_held_workspace_effects/mutates_git_index_wrong_type_0",
+        "successor_packed_held_workspace_effects/mutates_git_index_wrong_type_1",
+        "successor_packed_held_workspace_effects/mutates_git_index_wrong_type_10",
+        "successor_packed_held_workspace_effects/mutates_git_index_wrong_type_2",
+        "successor_packed_held_workspace_effects/mutates_git_index_wrong_type_3",
+        "successor_packed_held_workspace_effects/mutates_git_index_wrong_type_4",
+        "successor_packed_held_workspace_effects/mutates_git_index_wrong_type_5",
+        "successor_packed_held_workspace_effects/mutates_git_index_wrong_type_6",
+        "successor_packed_held_workspace_effects/mutates_git_index_wrong_type_7",
+        "successor_packed_held_workspace_effects/mutates_git_index_wrong_type_8",
+        "successor_packed_held_workspace_effects/mutates_git_index_wrong_type_9",
+        "successor_packed_held_workspace_effects/mutates_runtime_safe_points_wrong_type_0",
+        "successor_packed_held_workspace_effects/mutates_runtime_safe_points_wrong_type_1",
+        "successor_packed_held_workspace_effects/mutates_runtime_safe_points_wrong_type_10",
+        "successor_packed_held_workspace_effects/mutates_runtime_safe_points_wrong_type_2",
+        "successor_packed_held_workspace_effects/mutates_runtime_safe_points_wrong_type_3",
+        "successor_packed_held_workspace_effects/mutates_runtime_safe_points_wrong_type_4",
+        "successor_packed_held_workspace_effects/mutates_runtime_safe_points_wrong_type_5",
+        "successor_packed_held_workspace_effects/mutates_runtime_safe_points_wrong_type_6",
+        "successor_packed_held_workspace_effects/mutates_runtime_safe_points_wrong_type_7",
+        "successor_packed_held_workspace_effects/mutates_runtime_safe_points_wrong_type_8",
+        "successor_packed_held_workspace_effects/mutates_runtime_safe_points_wrong_type_9",
+        "successor_packed_held_workspace_effects/mutates_source_branch_wrong_type_0",
+        "successor_packed_held_workspace_effects/mutates_source_branch_wrong_type_1",
+        "successor_packed_held_workspace_effects/mutates_source_branch_wrong_type_10",
+        "successor_packed_held_workspace_effects/mutates_source_branch_wrong_type_2",
+        "successor_packed_held_workspace_effects/mutates_source_branch_wrong_type_3",
+        "successor_packed_held_workspace_effects/mutates_source_branch_wrong_type_4",
+        "successor_packed_held_workspace_effects/mutates_source_branch_wrong_type_5",
+        "successor_packed_held_workspace_effects/mutates_source_branch_wrong_type_6",
+        "successor_packed_held_workspace_effects/mutates_source_branch_wrong_type_7",
+        "successor_packed_held_workspace_effects/mutates_source_branch_wrong_type_8",
+        "successor_packed_held_workspace_effects/mutates_source_branch_wrong_type_9",
+        "successor_packed_held_workspace_effects/mutates_source_thread_wrong_type_0",
+        "successor_packed_held_workspace_effects/mutates_source_thread_wrong_type_1",
+        "successor_packed_held_workspace_effects/mutates_source_thread_wrong_type_10",
+        "successor_packed_held_workspace_effects/mutates_source_thread_wrong_type_2",
+        "successor_packed_held_workspace_effects/mutates_source_thread_wrong_type_3",
+        "successor_packed_held_workspace_effects/mutates_source_thread_wrong_type_4",
+        "successor_packed_held_workspace_effects/mutates_source_thread_wrong_type_5",
+        "successor_packed_held_workspace_effects/mutates_source_thread_wrong_type_6",
+        "successor_packed_held_workspace_effects/mutates_source_thread_wrong_type_7",
+        "successor_packed_held_workspace_effects/mutates_source_thread_wrong_type_8",
+        "successor_packed_held_workspace_effects/mutates_source_thread_wrong_type_9",
+        "successor_packed_held_workspace_effects/mutates_source_worktree_wrong_type_0",
+        "successor_packed_held_workspace_effects/mutates_source_worktree_wrong_type_1",
+        "successor_packed_held_workspace_effects/mutates_source_worktree_wrong_type_10",
+        "successor_packed_held_workspace_effects/mutates_source_worktree_wrong_type_2",
+        "successor_packed_held_workspace_effects/mutates_source_worktree_wrong_type_3",
+        "successor_packed_held_workspace_effects/mutates_source_worktree_wrong_type_4",
+        "successor_packed_held_workspace_effects/mutates_source_worktree_wrong_type_5",
+        "successor_packed_held_workspace_effects/mutates_source_worktree_wrong_type_6",
+        "successor_packed_held_workspace_effects/mutates_source_worktree_wrong_type_7",
+        "successor_packed_held_workspace_effects/mutates_source_worktree_wrong_type_8",
+        "successor_packed_held_workspace_effects/mutates_source_worktree_wrong_type_9",
+        "successor_packed_held_workspace_effects/restores_files_wrong_type_0",
+        "successor_packed_held_workspace_effects/restores_files_wrong_type_1",
+        "successor_packed_held_workspace_effects/restores_files_wrong_type_10",
+        "successor_packed_held_workspace_effects/restores_files_wrong_type_2",
+        "successor_packed_held_workspace_effects/restores_files_wrong_type_3",
+        "successor_packed_held_workspace_effects/restores_files_wrong_type_4",
+        "successor_packed_held_workspace_effects/restores_files_wrong_type_5",
+        "successor_packed_held_workspace_effects/restores_files_wrong_type_6",
+        "successor_packed_held_workspace_effects/restores_files_wrong_type_7",
+        "successor_packed_held_workspace_effects/restores_files_wrong_type_8",
+        "successor_packed_held_workspace_effects/restores_files_wrong_type_9",
+        "successor_packed_unheld_contains_raw_secrets_wrong_type_0",
+        "successor_packed_unheld_contains_raw_secrets_wrong_type_1",
+        "successor_packed_unheld_contains_raw_secrets_wrong_type_10",
+        "successor_packed_unheld_contains_raw_secrets_wrong_type_2",
+        "successor_packed_unheld_contains_raw_secrets_wrong_type_3",
+        "successor_packed_unheld_contains_raw_secrets_wrong_type_4",
+        "successor_packed_unheld_contains_raw_secrets_wrong_type_5",
+        "successor_packed_unheld_contains_raw_secrets_wrong_type_6",
+        "successor_packed_unheld_contains_raw_secrets_wrong_type_7",
+        "successor_packed_unheld_contains_raw_secrets_wrong_type_8",
+        "successor_packed_unheld_contains_raw_secrets_wrong_type_9",
+        "successor_packed_unheld_holds/has_protected_refs_wrong_type_0",
+        "successor_packed_unheld_holds/has_protected_refs_wrong_type_1",
+        "successor_packed_unheld_holds/has_protected_refs_wrong_type_10",
+        "successor_packed_unheld_holds/has_protected_refs_wrong_type_2",
+        "successor_packed_unheld_holds/has_protected_refs_wrong_type_3",
+        "successor_packed_unheld_holds/has_protected_refs_wrong_type_4",
+        "successor_packed_unheld_holds/has_protected_refs_wrong_type_5",
+        "successor_packed_unheld_holds/has_protected_refs_wrong_type_6",
+        "successor_packed_unheld_holds/has_protected_refs_wrong_type_7",
+        "successor_packed_unheld_holds/has_protected_refs_wrong_type_8",
+        "successor_packed_unheld_holds/has_protected_refs_wrong_type_9",
+        "successor_packed_unheld_safe_point_restores_files_wrong_type_0",
+        "successor_packed_unheld_safe_point_restores_files_wrong_type_1",
+        "successor_packed_unheld_safe_point_restores_files_wrong_type_10",
+        "successor_packed_unheld_safe_point_restores_files_wrong_type_2",
+        "successor_packed_unheld_safe_point_restores_files_wrong_type_3",
+        "successor_packed_unheld_safe_point_restores_files_wrong_type_4",
+        "successor_packed_unheld_safe_point_restores_files_wrong_type_5",
+        "successor_packed_unheld_safe_point_restores_files_wrong_type_6",
+        "successor_packed_unheld_safe_point_restores_files_wrong_type_7",
+        "successor_packed_unheld_safe_point_restores_files_wrong_type_8",
+        "successor_packed_unheld_safe_point_restores_files_wrong_type_9",
+        "successor_packed_unheld_workspace_effects/mutates_git_index_wrong_type_0",
+        "successor_packed_unheld_workspace_effects/mutates_git_index_wrong_type_1",
+        "successor_packed_unheld_workspace_effects/mutates_git_index_wrong_type_10",
+        "successor_packed_unheld_workspace_effects/mutates_git_index_wrong_type_2",
+        "successor_packed_unheld_workspace_effects/mutates_git_index_wrong_type_3",
+        "successor_packed_unheld_workspace_effects/mutates_git_index_wrong_type_4",
+        "successor_packed_unheld_workspace_effects/mutates_git_index_wrong_type_5",
+        "successor_packed_unheld_workspace_effects/mutates_git_index_wrong_type_6",
+        "successor_packed_unheld_workspace_effects/mutates_git_index_wrong_type_7",
+        "successor_packed_unheld_workspace_effects/mutates_git_index_wrong_type_8",
+        "successor_packed_unheld_workspace_effects/mutates_git_index_wrong_type_9",
+        "successor_packed_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_0",
+        "successor_packed_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_1",
+        "successor_packed_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_10",
+        "successor_packed_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_2",
+        "successor_packed_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_3",
+        "successor_packed_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_4",
+        "successor_packed_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_5",
+        "successor_packed_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_6",
+        "successor_packed_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_7",
+        "successor_packed_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_8",
+        "successor_packed_unheld_workspace_effects/mutates_runtime_safe_points_wrong_type_9",
+        "successor_packed_unheld_workspace_effects/mutates_source_branch_wrong_type_0",
+        "successor_packed_unheld_workspace_effects/mutates_source_branch_wrong_type_1",
+        "successor_packed_unheld_workspace_effects/mutates_source_branch_wrong_type_10",
+        "successor_packed_unheld_workspace_effects/mutates_source_branch_wrong_type_2",
+        "successor_packed_unheld_workspace_effects/mutates_source_branch_wrong_type_3",
+        "successor_packed_unheld_workspace_effects/mutates_source_branch_wrong_type_4",
+        "successor_packed_unheld_workspace_effects/mutates_source_branch_wrong_type_5",
+        "successor_packed_unheld_workspace_effects/mutates_source_branch_wrong_type_6",
+        "successor_packed_unheld_workspace_effects/mutates_source_branch_wrong_type_7",
+        "successor_packed_unheld_workspace_effects/mutates_source_branch_wrong_type_8",
+        "successor_packed_unheld_workspace_effects/mutates_source_branch_wrong_type_9",
+        "successor_packed_unheld_workspace_effects/mutates_source_thread_wrong_type_0",
+        "successor_packed_unheld_workspace_effects/mutates_source_thread_wrong_type_1",
+        "successor_packed_unheld_workspace_effects/mutates_source_thread_wrong_type_10",
+        "successor_packed_unheld_workspace_effects/mutates_source_thread_wrong_type_2",
+        "successor_packed_unheld_workspace_effects/mutates_source_thread_wrong_type_3",
+        "successor_packed_unheld_workspace_effects/mutates_source_thread_wrong_type_4",
+        "successor_packed_unheld_workspace_effects/mutates_source_thread_wrong_type_5",
+        "successor_packed_unheld_workspace_effects/mutates_source_thread_wrong_type_6",
+        "successor_packed_unheld_workspace_effects/mutates_source_thread_wrong_type_7",
+        "successor_packed_unheld_workspace_effects/mutates_source_thread_wrong_type_8",
+        "successor_packed_unheld_workspace_effects/mutates_source_thread_wrong_type_9",
+        "successor_packed_unheld_workspace_effects/mutates_source_worktree_wrong_type_0",
+        "successor_packed_unheld_workspace_effects/mutates_source_worktree_wrong_type_1",
+        "successor_packed_unheld_workspace_effects/mutates_source_worktree_wrong_type_10",
+        "successor_packed_unheld_workspace_effects/mutates_source_worktree_wrong_type_2",
+        "successor_packed_unheld_workspace_effects/mutates_source_worktree_wrong_type_3",
+        "successor_packed_unheld_workspace_effects/mutates_source_worktree_wrong_type_4",
+        "successor_packed_unheld_workspace_effects/mutates_source_worktree_wrong_type_5",
+        "successor_packed_unheld_workspace_effects/mutates_source_worktree_wrong_type_6",
+        "successor_packed_unheld_workspace_effects/mutates_source_worktree_wrong_type_7",
+        "successor_packed_unheld_workspace_effects/mutates_source_worktree_wrong_type_8",
+        "successor_packed_unheld_workspace_effects/mutates_source_worktree_wrong_type_9",
+        "successor_packed_unheld_workspace_effects/restores_files_wrong_type_0",
+        "successor_packed_unheld_workspace_effects/restores_files_wrong_type_1",
+        "successor_packed_unheld_workspace_effects/restores_files_wrong_type_10",
+        "successor_packed_unheld_workspace_effects/restores_files_wrong_type_2",
+        "successor_packed_unheld_workspace_effects/restores_files_wrong_type_3",
+        "successor_packed_unheld_workspace_effects/restores_files_wrong_type_4",
+        "successor_packed_unheld_workspace_effects/restores_files_wrong_type_5",
+        "successor_packed_unheld_workspace_effects/restores_files_wrong_type_6",
+        "successor_packed_unheld_workspace_effects/restores_files_wrong_type_7",
+        "successor_packed_unheld_workspace_effects/restores_files_wrong_type_8",
+        "successor_packed_unheld_workspace_effects/restores_files_wrong_type_9"
       ],
-      "flip_count": 1,
-      "other_negatives_still_rejected": 5667,
+      "flip_count": 833,
+      "other_negatives_still_rejected": 6053,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
-      "linked_same_rule_guards": [],
-      "mutant_sha256": "44863a33ed3b305a6e6363a754c85da5a2c0e6221e1dfaabbece9694c3f60811"
+      "linked_same_rule_guards": [
+        "O03:adopted_source_snapshot_schema",
+        "O03:exact_encoded_snapshot_join"
+      ],
+      "mutant_sha256": "40c1e2f12e30e0a85e14bffd8c3b6a0f956c40919b5eda80887ef9fb81b77cc8",
+      "full_checker_families": 19
     },
     {
       "guard": "O04",
@@ -1254,11 +2184,12 @@
         "first_producer_sequence_id"
       ],
       "flip_count": 2,
-      "other_negatives_still_rejected": 5666,
+      "other_negatives_still_rejected": 6884,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "ef6461e46be54b3ceffb1c509dd683ab3a6e47edd5847cfb620e34f5e4e4ecdf"
+      "mutant_sha256": "d4a52312dfbd0d383900d653a3a668e2a4b8d4b42371cbf86c765e08dc5c6b60",
+      "full_checker_families": 19
     },
     {
       "guard": "O05",
@@ -1274,11 +2205,12 @@
         "source_thread_id"
       ],
       "flip_count": 8,
-      "other_negatives_still_rejected": 5660,
+      "other_negatives_still_rejected": 6878,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "b8fbf1c2c4c23742f973900b224a17af4520bca650c2e825851e2c91126b5266"
+      "mutant_sha256": "5c83838adf65bbb68d46adc1066f9a40cc5df097c8aa262c0ae6253925992d61",
+      "full_checker_families": 19
     },
     {
       "guard": "O06",
@@ -1287,11 +2219,12 @@
         "unchanged"
       ],
       "flip_count": 1,
-      "other_negatives_still_rejected": 5667,
+      "other_negatives_still_rejected": 6885,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "239f9ef836273ea1f5296e903f940302fa4a7ee4305b56694e47e1f63bbd3452"
+      "mutant_sha256": "cf67abf0ef5436172a6f69ae270de14a1d96fd1cd49cc2cec521bbf536a3f529",
+      "full_checker_families": 19
     },
     {
       "guard": "O07",
@@ -1300,11 +2233,12 @@
         "terminal_reopen"
       ],
       "flip_count": 1,
-      "other_negatives_still_rejected": 5667,
+      "other_negatives_still_rejected": 6885,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "f7b95a7450610123e16b49eb1c853e5687803c29483a5ee05b8a5955d24f5b26"
+      "mutant_sha256": "7aa549de2fd4b71c238524b0404a71bbb490e10fb48b2f89059c2af25bcd2e9b",
+      "full_checker_families": 19
     },
     {
       "guard": "O08",
@@ -1314,11 +2248,12 @@
         "2"
       ],
       "flip_count": 2,
-      "other_negatives_still_rejected": 5666,
+      "other_negatives_still_rejected": 6884,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "c06f219e5ffe5f92e75cb97be5066300a9cc9e28ccabf98ca3f4c4e5387a4572"
+      "mutant_sha256": "f548cdfe35135e77c504d48682f4564444a183714f4605e802b312549e65c4c6",
+      "full_checker_families": 19
     },
     {
       "guard": "O09",
@@ -1327,11 +2262,12 @@
         "predecessor"
       ],
       "flip_count": 1,
-      "other_negatives_still_rejected": 5667,
+      "other_negatives_still_rejected": 6885,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "d7de111aa435852b971960b40c685a99e1a051edd7f03553fac512da6c214cf9"
+      "mutant_sha256": "13f2a0316652350e802535dc148b1e6390d34810d0eadcf91c0edd0336c6b382",
+      "full_checker_families": 19
     },
     {
       "guard": "O10",
@@ -1340,11 +2276,12 @@
         "prior_group"
       ],
       "flip_count": 1,
-      "other_negatives_still_rejected": 5667,
+      "other_negatives_still_rejected": 6885,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "9ce9d6ff2c5f78fabdff32f1149aca4a5040eba441f334bd95dff40840362b41"
+      "mutant_sha256": "f93f481a3387b5d0a31a277b4685d4eafaa1f636485d31a95afaf8b4dfb68904",
+      "full_checker_families": 19
     },
     {
       "guard": "S01",
@@ -1353,11 +2290,12 @@
         "unresolved_optional"
       ],
       "flip_count": 19,
-      "other_negatives_still_rejected": 5649,
+      "other_negatives_still_rejected": 6867,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "61e8ed1d3232992fa54560054da5d1edf61538fdd7169d6c7d6ebbb562c4e978"
+      "mutant_sha256": "1b1ef66cd10dc682d38c4797e23f11b8de2ec05d5d37316530dc69ef9de1413b",
+      "full_checker_families": 19
     },
     {
       "guard": "S02",
@@ -1366,11 +2304,12 @@
         "identifier_LF"
       ],
       "flip_count": 1,
-      "other_negatives_still_rejected": 5667,
+      "other_negatives_still_rejected": 6885,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "7b738b4ed98ca06deb7b57b454c59cd2f5942dcab60cca2fdbbf475384974584"
+      "mutant_sha256": "390eceb9b3840d2f62648deddf818ab154f3e4f22dcff84ecccba92d9acb6e79",
+      "full_checker_families": 19
     },
     {
       "guard": "S04",
@@ -1379,11 +2318,12 @@
         "identifier_key_LF"
       ],
       "flip_count": 1,
-      "other_negatives_still_rejected": 5667,
+      "other_negatives_still_rejected": 6885,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "b8421bd2fda61c3bb22a4c1aa24d206a260ec66b9d07d12e7c71044f5a28bc52"
+      "mutant_sha256": "fa3e2f8210a803ec3b1bef835bdcf4dee47deb9cc6da5cfbd656f89aa8d921d9",
+      "full_checker_families": 19
     },
     {
       "guard": "S03",
@@ -1392,24 +2332,26 @@
         "provider_hash"
       ],
       "flip_count": 2,
-      "other_negatives_still_rejected": 5666,
+      "other_negatives_still_rejected": 6884,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "f0b240af40d9870b11c21475c8b622f5655f951ec4233e491c99e8934bb641d7"
+      "mutant_sha256": "3dace018221979a592f9d04b105c761b3ed254d7188bf555629660dfca496d99",
+      "full_checker_families": 19
     },
     {
       "guard": "S05",
-      "rule": "rejected:     return False",
+      "rule": "rejected: return False",
       "negatives_that_flip": [
         "success_is_not_failure"
       ],
       "flip_count": 1,
-      "other_negatives_still_rejected": 5667,
+      "other_negatives_still_rejected": 6885,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "2a87d7fe9f7d771b86d921a392fca9174de80b526018f82d88a47a81c045192b"
+      "mutant_sha256": "a2e8425798b8239b333ea31c2f09865c86f84dba0f3459aa9de85f084e47b132",
+      "full_checker_families": 19
     },
     {
       "guard": "I01",
@@ -1421,11 +2363,12 @@
         "negative_observation_revision"
       ],
       "flip_count": 4,
-      "other_negatives_still_rejected": 5664,
+      "other_negatives_still_rejected": 6882,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "59f3f97b3e6f378ab64ffac21a94860b39110237dc7e1a2f33136452b9f11992"
+      "mutant_sha256": "26e6848b0c290d361008c62aa4a0712ada05d3df203e95bd47fe1eef1dbcbb43",
+      "full_checker_families": 19
     },
     {
       "guard": "I02",
@@ -1436,11 +2379,12 @@
         "negative_infinite_value"
       ],
       "flip_count": 3,
-      "other_negatives_still_rejected": 5665,
+      "other_negatives_still_rejected": 6883,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "88c59c3ce1fc47946b5a79645225c79f702c5685cf5a1e9dc72fff204e843ebb"
+      "mutant_sha256": "ae9dd530b46479be23a5e7ea021a7225d18aa3acc0b4e1cee5aebb9b4fb608f7",
+      "full_checker_families": 19
     },
     {
       "guard": "I03",
@@ -1449,11 +2393,12 @@
         "unsupported_binary"
       ],
       "flip_count": 1,
-      "other_negatives_still_rejected": 5667,
+      "other_negatives_still_rejected": 6885,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "e91520f97da6442388c89d0d56c1f5d1e8638a5e0c2aa13f459919ace068f5d7"
+      "mutant_sha256": "e55cd584c118bf980db996ba466c1199723873ecc0fafcff93a706a63e2c1b0e",
+      "full_checker_families": 19
     },
     {
       "guard": "S06",
@@ -1462,11 +2407,12 @@
         "unsupported_validation_profile"
       ],
       "flip_count": 1,
-      "other_negatives_still_rejected": 5667,
+      "other_negatives_still_rejected": 6885,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "c6f4819856c6c860928ba7556d28e4f9e66c8e1049dedf45513e064a75682b15"
+      "mutant_sha256": "fe611758896f6fea82e3c0d80c500bf00b6da3b6bef663b2640f27f4f07e1531",
+      "full_checker_families": 19
     },
     {
       "guard": "H07",
@@ -1480,14 +2426,17 @@
         "flag_type_body_deleted_4",
         "flag_type_body_deleted_5",
         "flag_type_body_deleted_6",
-        "flag_type_body_deleted_7"
+        "flag_type_body_deleted_7",
+        "flag_type_body_deleted_8",
+        "flag_type_body_deleted_9"
       ],
-      "flip_count": 171,
-      "other_negatives_still_rejected": 5497,
+      "flip_count": 209,
+      "other_negatives_still_rejected": 6677,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "cd3b6c2000a62a2b34282e1ed8dd6a4386683e7ed948cf4d20dc457077082a46"
+      "mutant_sha256": "efb6eff2117d3b9698c8eeb30dcdf25ecb0824a81d5c85900d01bdf02168708f",
+      "full_checker_families": 19
     },
     {
       "guard": "N01",
@@ -1527,11 +2476,12 @@
         "positive_zero_storage_form_packed"
       ],
       "flip_count": 608,
-      "other_negatives_still_rejected": 5060,
+      "other_negatives_still_rejected": 6278,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "5f618c8cfc39412255b91fbf62ddee5c8387d564a4afe59c19ee44d1b3517d4e"
+      "mutant_sha256": "42a5908c0930558aa08395c5c62058e4c885aa9e8e197aaf795e9cc8f0649631",
+      "full_checker_families": 19
     },
     {
       "guard": "B01",
@@ -1744,11 +2694,12 @@
         "usage_observed_schema"
       ],
       "flip_count": 240,
-      "other_negatives_still_rejected": 5428,
+      "other_negatives_still_rejected": 6646,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "1f89e5ea935d4b21d4623911fa2d44a8377f2846725c848d5b7d4d6c9a7dda36"
+      "mutant_sha256": "d538a099aae4d8df6812932dccbf36dfac9a9e9a0aa0bb7592280057631b0605",
+      "full_checker_families": 19
     },
     {
       "guard": "B02",
@@ -1758,11 +2709,12 @@
         "source_bytes_type_packed"
       ],
       "flip_count": 4,
-      "other_negatives_still_rejected": 5664,
+      "other_negatives_still_rejected": 6882,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "2f1d42ce1cad3329ba4b0282ad8ab62aacea7327f8100dbb877e3cc0b0cf2d0c"
+      "mutant_sha256": "0f92091be639da19d69b6f6409ff5b3eb4792798ce2d2ba272edede23207d458",
+      "full_checker_families": 19
     },
     {
       "guard": "B03",
@@ -1772,11 +2724,12 @@
         "source_digest_packed"
       ],
       "flip_count": 4,
-      "other_negatives_still_rejected": 5664,
+      "other_negatives_still_rejected": 6882,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "7657699378b6dc6d9af79578fd0b3e3c0e4eb14128ea728c09b8ff52e6de1b71"
+      "mutant_sha256": "864f4af3719024f4989387120b888eb1158f43ae3fb98571e762b5e819df1cb4",
+      "full_checker_families": 19
     },
     {
       "guard": "S07",
@@ -1805,13 +2758,20 @@
         "payload_string_type_6"
       ],
       "flip_count": 399,
-      "other_negatives_still_rejected": 5269,
+      "other_negatives_still_rejected": 6487,
       "unrelated_flips": 0,
       "whole_checker_exit": 1,
       "linked_same_rule_guards": [],
-      "mutant_sha256": "9eb783690c70719f9a97d88008db30eba838f08620654f5e270ed01cee398b87"
+      "mutant_sha256": "758cbc143bae5f18b077473d157959e61463487479f06dc2d137acce12b106c7",
+      "full_checker_families": 19
     }
   ],
-  "native_execution": "NOT_RUN",
-  "admission": "NONE"
+  "raw_evidence": {
+    "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-7/complete-guard-removal.json",
+    "sha256": "22b8a66085d1ff64025b634a42c29d4816d2c2924a31d3fb9dbb6cd20f1b79a2"
+  },
+  "uncached_evidence": {
+    "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-7/raw-guard-proof.json",
+    "sha256": "bae1cbb84a12b521bfa2a4cda0d60d51dd7da269b266c292279011d682d415d7"
+  }
 }
