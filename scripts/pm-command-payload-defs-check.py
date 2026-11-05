@@ -273,19 +273,33 @@ def line_of(text: str, offset: int) -> int:
 def _root_key_by_tokens(block: str) -> tuple[bool, bool]:
     """(found, scanner_failed): whether a top-level mapping key spelled command_payload_definitions
     occurs before the YAML scanner stops, in any quoting, flow or explicit-key form."""
-    depth, key_next = 0, False
+    depth, key_next, pending_anchor = 0, False, None
+    anchors: dict[str, str] = {}
     try:
         for token in yaml.scan(block, Loader=yaml.SafeLoader):
             kind = type(token).__name__
             if kind in ("BlockMappingStartToken", "BlockSequenceStartToken", "FlowMappingStartToken", "FlowSequenceStartToken"):
                 depth += 1
+                pending_anchor = None
             elif kind in ("BlockEndToken", "FlowMappingEndToken", "FlowSequenceEndToken"):
                 depth -= 1
             elif kind == "KeyToken":
                 key_next = depth == 1
                 continue
-            elif kind == "ScalarToken" and key_next and token.value == DEFS_ROOT_KEY:
-                return True, False
+            elif kind == "AnchorToken":
+                pending_anchor = token.value  # a node property: the key may still follow
+                continue
+            elif kind == "TagToken":
+                continue  # a node property: the key may still follow
+            elif kind == "AliasToken":
+                if key_next and anchors.get(token.value) == DEFS_ROOT_KEY:
+                    return True, False
+            elif kind == "ScalarToken":
+                if pending_anchor is not None:
+                    anchors[pending_anchor] = token.value
+                    pending_anchor = None
+                if key_next and token.value == DEFS_ROOT_KEY:
+                    return True, False
             key_next = False
     except Exception:  # noqa: BLE001 - the scanner stopped; report what it saw
         return False, True
@@ -1384,8 +1398,10 @@ def check_blocks(ctx: Context) -> dict[str, list[tuple[str, str]]]:
     seen_owner_units: dict[str, str] = {}
     for doc in ctx.corpus.top_level_docs():
         text = ctx.corpus.text(doc)
-        if text is None or "command_payload_definitions:" not in text:
+        if text is None:
             continue
+        # No textual prefilter: a quoted, escaped or spaced root key is found only by reading the
+        # YAML of every fence (Sol r5).
         for block in find_blocks(text, doc):
             base = {"path": doc}
             if block.error is not None:
@@ -1863,6 +1879,9 @@ class Fixture:
                               self.between_unit_and_block.get(uid, ""), block]
         for doc, parts_ in docs.items():
             out[doc] = "\n".join(parts_) + self.doc_suffix.get(doc, "")
+        for doc, suffix in self.doc_suffix.items():
+            if doc not in out:
+                out[doc] = "# Probe document (fixture)\n" + suffix
         out[DECISION_LOG] = "# Decision Log (fixture)\n\n### DL-333 - fixture\n\n" + fence({"plan_unit_id": "DL-333", "unit_type": "decision"})
         enum = self.schema_enum or ["invalid_route", "unknown_command", "invalid_args", "permission_denied",
                                     "blocked_state_required", "stale_projection", "handler_unavailable", "internal_error"]
@@ -2328,6 +2347,50 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
         def _(fx: Fixture, kind=kind, value=value) -> None:
             _prim(fx, kind, value)
 
+    for label, kind, value, ok in [
+        ("timestamp +00:00 offset", "timestamp", "2026-11-04T12:34:56+00:00", True),
+        ("timestamp lower-case t and z", "timestamp", "2026-11-04t12:34:56.250z", True),
+        ("timestamp leap second at month end", "timestamp", "2016-12-31T23:59:60Z", True),
+        ("timestamp leap second mid-month", "timestamp", "2026-11-04T12:34:60Z", False),
+        ("timestamp leap second at 23:59 not month end", "timestamp", "2026-11-04T23:59:60Z", False),
+        ("timestamp -00:00 (unknown local offset)", "timestamp", "2026-11-04T12:34:56-00:00", False),
+        ("timestamp full-width digits", "timestamp", "\uff12\uff10\uff12\uff16-11-04T12:34:56Z", False),
+        ("timestamp hour 24", "timestamp", "2026-11-04T24:00:00Z", False),
+        ("timestamp invalid date", "timestamp", "2026-02-30T12:00:00Z", False),
+        ("url https with path", "url", "https://example.com/docs?x=1#top", True),
+        ("url http with port", "url", "http://example.com:8080/x", True),
+        ("url https IPv6 host", "url", "https://[2001:db8::1]/x", True),
+        ("url https IPv4 host", "url", "https://192.0.2.10/x", True),
+        ("url space in host", "url", "https://exa mple.com/docs", False),
+        ("url non-numeric port", "url", "https://example.com:bad/docs", False),
+        ("url port out of range", "url", "https://example.com:99999/docs", False),
+        ("url empty port", "url", "https://example.com:/docs", False),
+        ("url NUL in path", "url", "https://example.com/\x00", False),
+        ("url ftp scheme", "url", "ftp://example.com/docs", False),
+        ("url file scheme", "url", "file://example.com/docs", False),
+        ("url javascript scheme", "url", "javascript:alert(1)", False),
+        ("url upper-case host (not normalized)", "url", "https://Example.com/docs", False),
+        ("url bad percent escape", "url", "https://example.com/a%zz", False),
+        ("url invalid IPv4", "url", "https://999.1.1.1/x", False),
+        ("url label with leading hyphen", "url", "https://-bad.example.com/x", False),
+        ("path POSIX root", "path", "/", True),
+        ("path POSIX file", "path", "/tmp/manifest.yaml", True),
+        ("path Windows drive forward slashes", "path", "C:/work/manifest.yaml", True),
+        ("path Windows drive backslashes", "path", "C:\\work\\manifest.yaml", True),
+        ("path Windows drive root", "path", "C:\\", True),
+        ("path UNC share", "path", "\\\\server\\share\\dir\\file.txt", True),
+        ("path NUL in segment", "path", "/tmp/a\x00b", False),
+        ("path relative", "path", "relative/path", False),
+        ("path dot segment", "path", "/a/./b", False),
+        ("path empty interior segment", "path", "/a//b", False),
+        ("path trailing slash", "path", "/a/b/", False),
+        ("path Windows drive without separator", "path", "C:work", False),
+        ("path UNC without share", "path", "\\\\server", False),
+    ]:
+        @case(f"fail C06 (resolution 11{'; formerly a pass control' if ok else ''}): {label}", 1, {"C06"})
+        def _(fx: Fixture, kind=kind, value=value) -> None:
+            _prim(fx, kind, value)
+
     for kind in LITERAL_DEFAULT_FORBIDDEN_TYPES:
         @case(f"pass: {kind} field with default none", 0, set())
         def _(fx: Fixture, kind=kind) -> None:
@@ -2359,6 +2422,17 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
         @case(f"fail C14: definitions block with a {label} is detected", 1, {"C14"})
         def _(fx: Fixture, text=text) -> None:
             fx.doc_suffix["Plans/Containers_Registry_and_Unraid.md"] = "\n\n```yaml\n" + text + "\n```\n"
+
+    for label, text in [("double-quoted key", '"command_payload_definitions": false'),
+                        ("escaped key", '"command\\x5fpayload_definitions": false'),
+                        ("space before the colon", "command_payload_definitions : false"),
+                        ("explicit multi-line key", "? command_payload_definitions\n: false"),
+                        ("anchored key, malformed value", "&k command_payload_definitions: {unclosed"),
+                        ("tagged key, malformed value", "!!str command_payload_definitions: {unclosed"),
+                        ("alias key, malformed value", "a: &k command_payload_definitions\n*k : {unclosed")]:
+        @case(f"fail C14: a {label} in a document with no other definitions block is detected", 1, {"C14"})
+        def _(fx: Fixture, text=text) -> None:
+            fx.doc_suffix["Plans/Probe_Doc.md"] = "\n\n```yaml\n" + text + "\n```\n"
 
     for label, text in [("multi-line double-quoted scalar", 'description: "The text\ncommand_payload_definitions: false\nis illustrative."'),
                         ("multi-line single-quoted scalar", "description: 'The text\ncommand_payload_definitions: false\nis illustrative.'"),
