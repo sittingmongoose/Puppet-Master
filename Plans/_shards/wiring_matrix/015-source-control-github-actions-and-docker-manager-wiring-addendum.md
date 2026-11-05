@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L493-L611
+Source lines: L493-L612
 
-Source SHA256: `01acfe29e7225a322b8fee4dc271eb77a072ecdb01f5ed5265ebccf9d18ebe42`
+Source SHA256: `365e2a001b523c021bfcf2dc879803d977cf8598679b18f68b6215cd6cedefcf`
 
 ---
 
@@ -22,10 +22,11 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Git
 |---|---|---|---|
 | Chat header button `Create Worktree` | WorktreeManager `create_worktree` | User clicks header button or `cmd.chat.worktree.create` | thread_id, branch_name, base_ref → worktree_id, path |
 | Chat dropdown `Remove Worktree` | WorktreeManager `remove_worktree` | User confirms removal | worktree_id → success/error |
-| Chat dropdown `Bind Existing` | WorktreeManager `list_worktrees` | User opens bind dialog | → unbound worktree list |
 | Chat merge dialog | WorktreeManager `merge_worktree` | User confirms merge | worktree_id, target_branch, strategy → result |
 | Chat merge dialog | WorktreeManager `create_pr` | User clicks Create PR | worktree_id, branch, target → pr_url |
 | Auto-create (thread creation) | WorktreeManager `create_worktree` | `branching.assistant_auto_worktree` is true | thread_id, auto-generated branch name |
+
+Retired 2026-11-05 (DL-335): the former `Chat dropdown Bind Existing` → WorktreeManager `list_worktrees` row (open a bind dialog, return the unbound worktree list) is removed and is not wired. UCC-058 says Bind Existing must not be exposed as `cmd.chat.worktree.bind_existing`, and assistant-chat-design W.17 keeps Bind Existing out of the MVP; no surface offers it.
 
 **Chat ↔ Source Control wiring:**
 
