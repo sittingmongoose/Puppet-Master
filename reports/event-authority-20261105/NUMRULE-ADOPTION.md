@@ -1,18 +1,33 @@
 # NUMRULE adoption guide
 
-Shared owners: `CV-1100` (current tokens/types and qualified semantic recipes), `SP-1100` (physical/profile domains), `SP-1101` (authenticated original selection). Keep the exact existing profile owner beside each reference: `CV-317`, `CV-339`, `CV-366`, `SP-026`/`SP-236`, `SP-278`, `SP-286`, `SP-337`, or the named Goal/local-source unit.
+Shared owners: `CV-1100` (current tokens/types and qualified semantic recipes), `SP-1100` (physical/profile domains), `SP-1101` (authenticated original selection), `CV-1101` (enforced EventRecord date-time profiles). Keep the exact existing profile owner beside each reference: `CV-317`, `CV-339`, `CV-366`, `SP-026`/`SP-236`, `SP-278`, `SP-286`, `SP-337`, or the named Goal/local-source unit.
 
 ## Shared calls
 
 - Parse raw input with `loads_current_json`; call `current_integer(value, minimum=..., maximum=...)` at every schema integer slot, including nested slots. `loads_exact` retains `JsonNumber` tokens for schema-directed callers; it does not choose a history recipe. `storage_uint64` is only for owner-declared uint64 fields. No blanket integer walk over an entire joined event or checkpoint.
-- Replace shared producer surrogates with `producer_semantic_bytes` / `producer_semantic_digest`. They use the unchanged full producer projection. Use `qualified_jcs` for another actual JCS preimage only; declare `type_sensitive_paths` wherever the source owner distinguishes numeric types/sign. Validate the full original schema and future/successor domains separately. Unsupported encoding is an existing route refusal before effects, never a source-schema cap.
+- Replace shared producer surrogates with `producer_semantic_bytes` / `producer_semantic_digest`. They use the unchanged full producer projection. Use `qualified_jcs` for another actual JCS preimage only; declare `type_sensitive_paths` wherever the source owner distinguishes numeric types/sign, and `numeric_kinds={path: "float"}` for a Decimal carrier whose owner declares float kind. `loads_current_json` retains the parsed numeric kind in its exact Decimal carrier, with optional schema `numeric_kinds` selection. Raw `JsonNumber` preserves its integer/float token kind; a carrier alone never proves kind loss. `sign_sensitive_paths` can check zero sign independently. A bare Decimal has no implicit owner kind. Validate the full original schema and future/successor domains separately. Unsupported encoding is an existing route refusal before effects, never a source-schema cap.
 - Use `storage_value_bytes` / `decode_storage_value` with exact `EVENT_VALUE`, `APP_PHYSICAL`, or `INDEX_BINDING`. SP-278 dispatch reuses `pm_event_index_binding.binding_bytes`. `full_value_commitment` implements the unchanged CV-339 tuple. These are static reference codecs, not native I/O/authentication. App binary is legal only in schema-declared fields; EventRecord disallows binary.
 - Compose `RetainedDispatcher` with the genuine original owner's `authenticated_original` and the exact immutable `RecipeTuple` → `FrozenRecipe` map outside request data. `resolve` gets one original selection; the frozen verifier recomputes all original joins, hashes and identities with its original resources. No current-then-legacy probing. `OriginalCustody` is an internal return type, never a caller credential. Native custody integration remains required. Current disclosure and current request admission stay separate; `current_append_policy` must not run on a retained original.
-- Preserve every local recipe ID/preimage/prefix/tuple position/field type. Never replace Goal/DT exact source JSON, CV-366 typed trees, payload BLAKE3 or physical hashes with EventRecord JCS. Run the shared corpus through each complete lane checker and history/retry/first-receipt/checkpoint/inline/reference paths, then the lane's own guard-removal suite.
+- Validate timestamp fields with `pm_event_datetime.datetime_validator` (the explicitly registered checker is passed), or call `date_time` at a separately enforced boundary. The default `event_record` profile admits RFC3339 lowercase, offsets, legitimate leap seconds and arbitrary fractional precision; select `coordination_utc_z` only for its owner fields and `legacy_normalization_output` only for that output form. Frozen SP-1101 verifiers bind the original profile/resources; no request selects it. Preserve strings in hashes.
+- Preserve every local recipe ID/preimage/prefix/tuple position/field type. Never replace Goal/DT exact source JSON, CV-366 typed trees, payload BLAKE3 or physical hashes with EventRecord JCS. Run the shared corpus through each complete lane checker and history/retry/first-receipt/checkpoint/inline/reference paths, then adopt `scripts/pm_guard_isolation.py` for predicate isolation across every labelled negative.
+
+## Authority boundary
+
+| Boundary | Existing authority and action |
+|---|---|
+| Logical number range/type | Field owner schema stays exact; no lane safe cap or string substitution. |
+| Producer JCS route | CV-317/CV-1100: qualify the full producer projection before effects, including required successors; unavailable exact encoding uses its existing refusal. |
+| Storage sequence/receipt/checkpoint uint | SP-026/SP-236/SP-1100: exact 0..2^64-1, independent of producer JCS and logical source range. |
+| Physical floats and full values | SP-236/CV-339 retain 1.0 float bytes and signed zero; CV-366 app float64 and SP-278 uint-only profiles remain distinct. |
+| Retained number/date-time recipes | SP-1101 authenticates one frozen original resource/profile; current gates never narrow valid old originals. |
+| Timestamp grammar | EventRecord/CV-317/CV-1101 enforces RFC3339 date-time; stricter local fields and legacy normalization output keep their owners. |
+| Actual conflicting promises or new behavior | An actual conflict between owner promises, or a proposal for a new encoding, range, hash or feature, goes to Jared under DL-045; this rule does not decide it. |
+
+The cited DCN/DCH/DMEM/DT/DX corrections apply existing owners and need no new product decision. A package ceiling is no authority to lower a schema maximum. DCH restores SP-236 typed float bytes; DMEM/DT separate exact local source recipes and metadata from JCS; DX checks the emitted decimal as well as binary64 equality. Each lane keeps authentic retained recipes and adopts CV-1101.
 
 ## Per-lane replacements
 
-The targets below are section 5 of the pinned design, not edits to those branches. Re-read a changed branch before adoption; line numbers are deliberately omitted in favor of exact function names. Every drafting lane cites all three new shared units plus its existing owners below.
+The targets below are section 5 of the pinned design, not edits to those branches. Re-read a changed branch before adoption; line numbers are deliberately omitted in favor of exact function names. Every drafting lane cites the number/physical/history units and CV-1101 plus its existing owners below.
 
 ### DS
 
@@ -24,7 +39,7 @@ Pinned `plans/ea-b1-seal-blockers-20261104` at `25c568598fa3ff1028a95c326c885474
 
 **Existing owner units:** `Plans/Contracts_V0.md`: `CV-332`; `Plans/storage-plan.md`: `SP-319`, `SP-323`, `SP-353`, `SP-400`; `Plans/assistant-chat-design.md`: `ACD-459`.
 
-**Adoption:** Make current integer-token refusal cite CV-1100; dispatch physical event encoding through SP-1100 without changing retained float bytes. Replace bounded canonical_json uses only where they claim shared RFC8785 semantics; preserve separately owned local hashes. Bind the existing v1/v2/v3 selection to authenticated original issuance/edition under SP-1101. Keep the v3 payload-reference work as its own already-drafted envelope successor; this survey grants no adoption/admission.
+**Adoption:** Make current integer-token refusal cite CV-1100; dispatch physical event encoding through SP-1100 without changing retained float bytes. Replace bounded canonical_json uses only where they claim shared RFC8785 semantics; preserve separately owned local hashes. Bind the existing v1/v2/v3 selection to authenticated original issuance/edition under SP-1101. Keep the v3 payload-reference work as its own already-drafted envelope successor; this survey grants no adoption/admission. Enforce CV-1101 with `datetime_validator`/`date_time` at this lane’s envelope and timestamp-source boundaries, selecting any stricter field-owner profile explicitly; SP-1101’s frozen verifier selects the authentic original profile for history/retry and preserves exact timestamp strings.
 
 ### DC
 
@@ -34,7 +49,7 @@ Pinned `plans/ea-collab-prep-20261104` at `d6f7d7cd788313d613cc5341f2c295e82467c
 
 **Existing owner units:** `Plans/Contracts_V0.md`: `CV-460`, `CV-462`, `CV-463`, `CV-464`, `CV-465`, `CV-466`, `CV-467`, `CV-468`, `CV-469`, `CV-470`, `CV-472`, `CV-473`, `CV-474`, `CV-475`, `CV-477`, `CV-478`; `Plans/storage-plan.md`: `SP-460`, `SP-461`, `SP-462`, `SP-463`, `SP-464`, `SP-465`, `SP-466`, `SP-467`, `SP-468`, `SP-469`, `SP-470`, `SP-471`, `SP-472`, `SP-473`, `SP-474`, `SP-475`, `SP-476`, `SP-477`, `SP-478`.
 
-**Adoption:** Keep local subject tuples/domain strings exact; use shared exact integer-token parsing before subject decimalization. Use actual RFC8785 only for a preimage the EventRecord owner calls RFC8785, with original-number exactness qualification. Do not relabel payload-only producer_digest as generic producer_semantic_digest. Select older canonical/identity helpers by authenticated original edition, not current write_epoch context alone; record the historical source recipe in the owner adoption map.
+**Adoption:** Keep local subject tuples/domain strings exact; use shared exact integer-token parsing before subject decimalization. Use actual RFC8785 only for a preimage the EventRecord owner calls RFC8785, with original-number exactness qualification. Do not relabel payload-only producer_digest as generic producer_semantic_digest. Select older canonical/identity helpers by authenticated original edition, not current write_epoch context alone; record the historical source recipe in the owner adoption map. Enforce CV-1101 with `datetime_validator`/`date_time` at this lane’s envelope and timestamp-source boundaries, selecting any stricter field-owner profile explicitly; SP-1101’s frozen verifier selects the authentic original profile for history/retry and preserves exact timestamp strings.
 
 ### DG
 
@@ -48,7 +63,7 @@ Pinned `plans/ea-goal-depth-20261104` at `686382d06164df5f7296f4d6af1ab8f9d16f73
 
 **Existing owner units:** `Plans/Contracts_V0.md`: `CV-420`, `CV-421`, `CV-422`, `CV-423`, `CV-424`, `CV-425`, `CV-426`; `Plans/storage-plan.md`: `SP-420`, `SP-421`, `SP-422`, `SP-423`, `SP-424`, `SP-425`, `SP-426`, `SP-427`, `SP-428`, `SP-429`, `SP-430`, `SP-431`, `SP-432`, `SP-433`; `Plans/Goal_Runtime_System.md`: `GRS-200`, `GRS-201`, `GRS-202`, `GRS-203`, `GRS-204`, `GRS-205`, `GRS-206`, `GRS-207`.
 
-**Adoption:** Keep GRS-064 arbitrary-precision Goal-source bytes and each exact revision-as-string identity tuple. Split generic EventRecord JCS from Goal/local fixture JSON; add exact-token parsing and codec-route refusal without capping Goal revisions. History must resolve the original schema/recipe map, not recanonicalize old rows using the newest normalize helper.
+**Adoption:** Keep GRS-064 arbitrary-precision Goal-source bytes and each exact revision-as-string identity tuple. Split generic EventRecord JCS from Goal/local fixture JSON; add exact-token parsing and codec-route refusal without capping Goal revisions. History must resolve the original schema/recipe map, not recanonicalize old rows using the newest normalize helper. Enforce CV-1101 with `datetime_validator`/`date_time` at this lane’s envelope and timestamp-source boundaries, selecting any stricter field-owner profile explicitly; SP-1101’s frozen verifier selects the authentic original profile for history/retry and preserves exact timestamp strings.
 
 ### DCW
 
@@ -61,7 +76,7 @@ Pinned `plans/ea-w2-chain-wizard-20261104` at `cdc9d4a94878868c9a2c67439bdf28ea5
 
 **Existing owner units:** `Plans/Contracts_V0.md`: `CV-590`, `CV-591`, `CV-592`, `CV-593`, `CV-594`, `CV-595`; `Plans/storage-plan.md`: `SP-575`, `SP-576`, `SP-577`, `SP-578`, `SP-579`; `Plans/assistant-chat-design.md`: `ACD-571`, `ACD-572`, `ACD-573`, `ACD-574`; `Plans/Planning_Wizard.md`: `PWIZ-097`, `PWIZ-098`.
 
-**Adoption:** Remove lane-authored pm-uint changes from frozen shared compatibility readers; centralize current token/type checks. Keep unsigned fixture MessagePack only for schema-proven uint slots; full-event commitments use the general Storage codec. Replace semantic_digest sorted-json surrogate with qualified JCS. Add retained integral-float/original-version positives independently of current refusal and authenticate recipe selection.
+**Adoption:** Remove lane-authored pm-uint changes from frozen shared compatibility readers; centralize current token/type checks. Keep unsigned fixture MessagePack only for schema-proven uint slots; full-event commitments use the general Storage codec. Replace semantic_digest sorted-json surrogate with qualified JCS. Add retained integral-float/original-version positives independently of current refusal and authenticate recipe selection. Enforce CV-1101 with `datetime_validator`/`date_time` at this lane’s envelope and timestamp-source boundaries, selecting any stricter field-owner profile explicitly; SP-1101’s frozen verifier selects the authentic original profile for history/retry and preserves exact timestamp strings.
 
 ### DCH
 
@@ -73,7 +88,7 @@ Pinned `plans/ea-w2-chat-20261104` at `c21fa62e507de04c5970fb51aabb9c841182dfed`
 
 **Existing owner units:** `Plans/Contracts_V0.md`: `CV-630`, `CV-631`, `CV-632`, `CV-633`, `CV-634`, `CV-635`, `CV-636`, `CV-637`, `CV-638`, `CV-639`, `CV-640`, `CV-641`, `CV-642`, `CV-643`, `CV-644`, `CV-645`, `CV-646`; `Plans/storage-plan.md`: `SP-610`, `SP-611`, `SP-612`, `SP-613`, `SP-614`, `SP-615`, `SP-616`, `SP-617`, `SP-618`, `SP-619`, `SP-620`, `SP-621`, `SP-622`, `SP-623`, `SP-624`, `SP-625`, `SP-626`; `Plans/assistant-chat-design.md`: `ACD-610`, `ACD-611`, `ACD-612`, `ACD-613`, `ACD-614`, `ACD-615`, `ACD-616`, `ACD-617`, `ACD-618`, `ACD-619`, `ACD-620`, `ACD-621`, `ACD-622`, `ACD-623`, `ACD-624`, `ACD-625`, `ACD-626`; `Plans/Automated_Testing_System.md`: `ATS-305`.
 
-**Adoption:** Delete blanket safe ceilings on Storage sequence/epoch/receipt/checkpoint metadata; restore their actual uint64 domain. Remove family-conditioned maximum from generic event_record.schema.json. body_bytes must preserve float type and signed zero under SP-236. Current integer-token grammar is separate from both physical codec and historical decoder. Freeze then-valid schema/recipe resources for old records; current JCS qualification only covers producer-owned fields, never Storage-assigned metadata.
+**Adoption:** Delete blanket safe ceilings on Storage sequence/epoch/receipt/checkpoint metadata; restore their actual uint64 domain. Remove family-conditioned maximum from generic event_record.schema.json. body_bytes must preserve float type and signed zero under SP-236. Current integer-token grammar is separate from both physical codec and historical decoder. Freeze then-valid schema/recipe resources for old records; current JCS qualification only covers producer-owned fields, never Storage-assigned metadata. Enforce CV-1101 with `datetime_validator`/`date_time` at this lane’s envelope and timestamp-source boundaries, selecting any stricter field-owner profile explicitly; SP-1101’s frozen verifier selects the authentic original profile for history/retry and preserves exact timestamp strings.
 
 ### DCO
 
@@ -84,7 +99,7 @@ Pinned `plans/ea-w2-coordination-20261104` at `855df1ccc1c38d57ea2c2204d610eaf85
 
 **Existing owner units:** `Plans/storage-plan.md`: `SP-540`, `SP-541`, `SP-542`, `SP-543`, `SP-544`, `SP-545`; `Plans/orchestrator-subagent-integration.md`: `OSI-650`.
 
-**Adoption:** Validate exact integer tokens before decimalizing epoch/revision; do not change SP-320 string-array preimage or heartbeat threshold. Separate local payload hash from generic producer JCS. Cite shared physical/token/history owners and add original-recipe lookup to reused coordination retained readers. DO carries another modified copy of pm_coordination_events.py: integrate these edits once, then exercise both consumers.
+**Adoption:** Validate exact integer tokens before decimalizing epoch/revision; do not change SP-320 string-array preimage or heartbeat threshold. Separate local payload hash from generic producer JCS. Cite shared physical/token/history owners and add original-recipe lookup to reused coordination retained readers. DO carries another modified copy of pm_coordination_events.py: integrate these edits once, then exercise both consumers. Enforce CV-1101 with `datetime_validator`/`date_time` at this lane’s envelope and timestamp-source boundaries, selecting any stricter field-owner profile explicitly; SP-1101’s frozen verifier selects the authentic original profile for history/retry and preserves exact timestamp strings.
 
 ### DDBG
 
@@ -95,7 +110,7 @@ Pinned `plans/ea-w2-debug-20261104` at `dd186623ab2cc2809ea5992fd2fcaac362eb1d60
 
 **Existing owner units:** `Plans/Contracts_V0.md`: `CV-570`, `CV-571`, `CV-572`, `CV-573`, `CV-574`, `CV-575`, `CV-576`, `CV-577`, `CV-578`; `Plans/storage-plan.md`: `SP-570`; `Plans/Automated_Testing_System.md`: `ATS-285`.
 
-**Adoption:** Replace semantic_digest Python serialization with shared qualified RFC8785 over exactly its existing projection. Apply current integer-token checks before schema/identity/append and leave string-only identity tuple unchanged. Add retained original numeric-recipe resources, large metadata positives and downgrade refusals to fixtures/standing checks.
+**Adoption:** Replace semantic_digest Python serialization with shared qualified RFC8785 over exactly its existing projection. Apply current integer-token checks before schema/identity/append and leave string-only identity tuple unchanged. Add retained original numeric-recipe resources, large metadata positives and downgrade refusals to fixtures/standing checks. Enforce CV-1101 with `datetime_validator`/`date_time` at this lane’s envelope and timestamp-source boundaries, selecting any stricter field-owner profile explicitly; SP-1101’s frozen verifier selects the authentic original profile for history/retry and preserves exact timestamp strings.
 
 ### DX
 
@@ -106,7 +121,7 @@ Pinned `plans/ea-w2-executor-20261104` at `578ca65028307887448bb0c2280d095dc565b
 
 **Existing owner units:** `Plans/Contracts_V0.md`: `CV-368`; `Plans/Executor_Protocol.md`: `EP-132`; `Plans/storage-plan.md`: `SP-353`.
 
-**Adoption:** Replace int(float(n)) equality alone with original-value AND output-decimal exactness qualification where owner requires mathematical identity; 2^60 demonstrates that those are different checks. Do not route entire retained source/custody through current JCS input validation. Keep source-owner local and physical domains separate. Shared JCS helper serves only actual JCS preimages; original history resolves a frozen recipe and all full-value bytes use SP-236.
+**Adoption:** Replace int(float(n)) equality alone with original-value AND output-decimal exactness qualification where owner requires mathematical identity; 2^60 demonstrates that those are different checks. Do not route entire retained source/custody through current JCS input validation. Keep source-owner local and physical domains separate. Shared JCS helper serves only actual JCS preimages; original history resolves a frozen recipe and all full-value bytes use SP-236. Enforce CV-1101 with `datetime_validator`/`date_time` at this lane’s envelope and timestamp-source boundaries, selecting any stricter field-owner profile explicitly; SP-1101’s frozen verifier selects the authentic original profile for history/retry and preserves exact timestamp strings.
 
 ### DFM
 
@@ -116,7 +131,7 @@ Pinned `plans/ea-w2-filemanager-20261104` at `f70cb3ad5a883de839c27012c90a2b8ee1
 
 **Existing owner units:** `Plans/Contracts_V0.md`: `CV-560`; `Plans/storage-plan.md`: `SP-560`; `Plans/FileManager.md`: `F-150`, `F-151`, `F-152`, `F-153`, `F-154`, `F-155`, `F-156`, `F-157`, `F-158`, `F-159`, `F-160`, `F-161`.
 
-**Adoption:** Change all three producer-semantic digest sites together to shared qualified JCS. Keep exact typed full-value equality, original source hashes and physical MessagePack independent. Add authentic retained recipe selection before historical digest verification; keep schema-proven string-only identity recipe exact and add non-ASCII conformance controls rather than calling Python JSON general JCS.
+**Adoption:** Change all three producer-semantic digest sites together to shared qualified JCS. Keep exact typed full-value equality, original source hashes and physical MessagePack independent. Add authentic retained recipe selection before historical digest verification; keep schema-proven string-only identity recipe exact and add non-ASCII conformance controls rather than calling Python JSON general JCS. Enforce CV-1101 with `datetime_validator`/`date_time` at this lane’s envelope and timestamp-source boundaries, selecting any stricter field-owner profile explicitly; SP-1101’s frozen verifier selects the authentic original profile for history/retry and preserves exact timestamp strings.
 
 ### DF
 
@@ -128,7 +143,7 @@ Pinned `plans/ea-w2-filesafe-20261104` at `233112bf6aa6f47bb1c58bf36bb7e6731625c
 
 **Existing owner units:** `Plans/Contracts_V0.md`: `CV-550`, `CV-551`, `CV-552`, `CV-553`, `CV-554`, `CV-555`, `CV-556`, `CV-557`, `CV-558`; `Plans/storage-plan.md`: `SP-550`, `SP-551`, `SP-552`, `SP-553`, `SP-554`, `SP-555`, `SP-556`, `SP-557`, `SP-558`.
 
-**Adoption:** Use the shared numeric decoder/recipe dispatcher for any generic EventRecord JCS and full-value bytes; preserve declared integer-only local source domains and string versions. Pin original source codec/edition through authentic storage custody before decode_original. Keep existing fail-closed authority boundaries and add retained former-type/large-integer controls plus current grammar negatives.
+**Adoption:** Use the shared numeric decoder/recipe dispatcher for any generic EventRecord JCS and full-value bytes; preserve declared integer-only local source domains and string versions. Pin original source codec/edition through authentic storage custody before decode_original. Keep existing fail-closed authority boundaries and add retained former-type/large-integer controls plus current grammar negatives. Enforce CV-1101 with `datetime_validator`/`date_time` at this lane’s envelope and timestamp-source boundaries, selecting any stricter field-owner profile explicitly; SP-1101’s frozen verifier selects the authentic original profile for history/retry and preserves exact timestamp strings.
 
 ### DG6A
 
@@ -141,7 +156,7 @@ Pinned `plans/ea-w2-gui-concerns-20261104` at `ab06fd3d6873e6f42fd0873b8edebfe61
 
 **Existing owner units:** `Plans/Contracts_V0.md`: `CV-680`, `CV-681`, `CV-682`, `CV-683`, `CV-684`, `CV-685`, `CV-686`; `Plans/storage-plan.md`: `SP-660`, `SP-661`, `SP-662`, `SP-663`, `SP-664`, `SP-665`, `SP-666`; `Plans/FinalGUISpec.md`: `F3-700`, `F3-701`, `F3-702`, `F3-703`, `F3-704`, `F3-705`.
 
-**Adoption:** Keep exact timestamp comparison and current integer grammar, cite CV-1100 instead of repeating safe ceilings. Bound only an actually owner-bounded field; qualify producer JCS route rather than redefining logical integer domains. Retain original schema type/format/number validation on history, with new current guards excluded. Add authenticated recipe evidence plus former-valid integral-float/large-metadata history positives.
+**Adoption:** Keep exact timestamp comparison and current integer grammar, cite CV-1100 instead of repeating safe ceilings. Bound only an actually owner-bounded field; qualify producer JCS route rather than redefining logical integer domains. Retain original schema type/format/number validation on history, with new current guards excluded. Add authenticated recipe evidence plus former-valid integral-float/large-metadata history positives. Enforce CV-1101 with `datetime_validator`/`date_time` at this lane’s envelope and timestamp-source boundaries, selecting any stricter field-owner profile explicitly; SP-1101’s frozen verifier selects the authentic original profile for history/retry and preserves exact timestamp strings.
 
 ### DMEM
 
@@ -153,7 +168,7 @@ Pinned `plans/ea-w2-memory-maintenance-20261104` at `e6703d144e85ddd7e5667298486
 
 **Existing owner units:** `Plans/Contracts_V0.md`: `CV-650`, `CV-651`, `CV-652`, `CV-653`, `CV-654`, `CV-655`, `CV-656`, `CV-657`, `CV-658`, `CV-659`; `Plans/storage-plan.md`: `SP-630`, `SP-631`, `SP-632`, `SP-633`, `SP-634`, `SP-635`, `SP-636`, `SP-637`, `SP-638`, `SP-639`; `Plans/assistant-memory-subsystem.md`: `AMS-100`, `AMS-101`, `AMS-102`, `AMS-103`, `AMS-104`, `AMS-105`, `AMS-106`, `AMS-107`.
 
-**Adoption:** Retain exact Decimal token parsing, then enforce the shared current integer grammar rather than silently normalizing forbidden spellings. Remove blanket safe caps from Storage metadata and all frozen compatibility/historical schemas. Split local source/result hashes, generic EventRecord JCS and full-value MessagePack. retained_digest must select the authenticated original recipe before current admission validation; add retained >2^53 and former-integral-float positives with valid original hashes.
+**Adoption:** Retain exact Decimal token parsing, then enforce the shared current integer grammar rather than silently normalizing forbidden spellings. Remove blanket safe caps from Storage metadata and all frozen compatibility/historical schemas. Split local source/result hashes, generic EventRecord JCS and full-value MessagePack. retained_digest must select the authenticated original recipe before current admission validation; add retained >2^53 and former-integral-float positives with valid original hashes. Enforce CV-1101 with `datetime_validator`/`date_time` at this lane’s envelope and timestamp-source boundaries, selecting any stricter field-owner profile explicitly; SP-1101’s frozen verifier selects the authentic original profile for history/retry and preserves exact timestamp strings.
 
 ### DO
 
@@ -165,7 +180,7 @@ Pinned `plans/ea-w2-orchestrator-20261104` at `97064e1c914377d7d9c0c5ac5915724b7
 
 **Existing owner units:** `Plans/Contracts_V0.md`: `CV-740`, `CV-366`; `Plans/orchestrator-subagent-integration.md`: `OSI-680`, `OSI-681`, `OSI-682`, `OSI-683`, `OSI-684`, `OSI-685`, `OSI-686`, `OSI-687`, `OSI-688`, `OSI-689`, `OSI-690`, `OSI-691`, `OSI-692`, `OSI-693`, `OSI-694`, `OSI-695`, `OSI-696`, `OSI-697`, `OSI-698`, `OSI-699`, `OSI-700`, `OSI-701`, `OSI-702`, `OSI-703`, `OSI-704`; `Plans/storage-plan.md`: `SP-720`, `SP-721`, `SP-722`, `SP-723`; `Plans/Automated_Testing_System.md`: `ATS-360`.
 
-**Adoption:** Reuse explicit recipe-evidence structure as an input from genuine original Storage/owner authority, never caller-selectable verified/self-hash flags. Cover producer semantic and physical profiles as well as identity. retry_outcome still calls the current number gate; original receipt resolution needs the same authenticated original-recipe handling rather than an implicit current-only rehash. Replace library safe-int ceiling as a global rule with central owner exactness qualification. Keep existing old/new DO recipe bytes frozen, including app original-operation identity. Reconcile carried coordination helper with DCO once.
+**Adoption:** Reuse explicit recipe-evidence structure as an input from genuine original Storage/owner authority, never caller-selectable verified/self-hash flags. Cover producer semantic and physical profiles as well as identity. retry_outcome still calls the current number gate; original receipt resolution needs the same authenticated original-recipe handling rather than an implicit current-only rehash. Replace library safe-int ceiling as a global rule with central owner exactness qualification. Keep existing old/new DO recipe bytes frozen, including app original-operation identity. Reconcile carried coordination helper with DCO once. Enforce CV-1101 with `datetime_validator`/`date_time` at this lane’s envelope and timestamp-source boundaries, selecting any stricter field-owner profile explicitly; SP-1101’s frozen verifier selects the authentic original profile for history/retry and preserves exact timestamp strings.
 
 ### DG6B
 
@@ -176,7 +191,7 @@ Pinned `plans/ea-w2-plugins-personas-github-20261104` at `0c92d2e91ed2a34391d16b
 
 **Existing owner units:** `Plans/Contracts_V0.md`: `CV-691`; `Plans/storage-plan.md`: `SP-670`, `SP-671`, `SP-672`; `Plans/Personas.md`: `P-120`, `P-121`, `P-122`, `P-123`, `P-124`, `P-125`; `Plans/Plugins_System.md`: `PLUG-131`, `PLUG-132`, `PLUG-133`, `PLUG-134`, `PLUG-135`, `PLUG-136`, `PLUG-137`, `PLUG-138`; `Plans/GitHub_API_Auth_and_Flows.md`: `GAAAF-077`, `GAAAF-078`, `GAAAF-079`, `GAAAF-080`, `GAAAF-081`.
 
-**Adoption:** Use central exact integer-token checks and qualified JCS on only producer projection; leave owner string-only identity arrays exact. A full EventRecord byte comparison must use SP-236 general typed MessagePack (or prove the selected schema excludes every other type), not silently redefine its domain with SP-278 binding_bytes. Select an authenticated original recipe for history, including app original physical profile where selected.
+**Adoption:** Use central exact integer-token checks and qualified JCS on only producer projection; leave owner string-only identity arrays exact. A full EventRecord byte comparison must use SP-236 general typed MessagePack (or prove the selected schema excludes every other type), not silently redefine its domain with SP-278 binding_bytes. Select an authenticated original recipe for history, including app original physical profile where selected. Enforce CV-1101 with `datetime_validator`/`date_time` at this lane’s envelope and timestamp-source boundaries, selecting any stricter field-owner profile explicitly; SP-1101’s frozen verifier selects the authentic original profile for history/retry and preserves exact timestamp strings.
 
 ### DR
 
@@ -188,7 +203,7 @@ Pinned `plans/ea-w2-runtime-artifacts-20261104` at `679bc22ad3a5109a070a064235a2
 
 **Existing owner units:** `Plans/Contracts_V0.md`: `CV-520`, `CV-521`, `CV-522`, `CV-523`, `CV-524`, `CV-525`, `CV-526`, `CV-527`, `CV-528`, `CV-529`, `CV-530`, `CV-531`, `CV-532`, `CV-533`, `CV-534`, `CV-535`, `CV-536`, `CV-537`, `CV-538`; `Plans/storage-plan.md`: `SP-520`, `SP-521`, `SP-522`, `SP-523`, `SP-524`, `SP-525`, `SP-526`, `SP-527`, `SP-528`, `SP-529`, `SP-530`, `SP-531`, `SP-532`, `SP-533`, `SP-534`, `SP-535`, `SP-536`, `SP-537`, `SP-538`; `Plans/Runtime_Artifacts_Panel.md`: `RAP-100`, `RAP-101`, `RAP-102`, `RAP-103`, `RAP-104`, `RAP-105`, `RAP-106`, `RAP-107`, `RAP-108`, `RAP-109`, `RAP-110`, `RAP-111`, `RAP-112`, `RAP-113`, `RAP-114`, `RAP-115`, `RAP-116`, `RAP-117`, `RAP-118`.
 
-**Adoption:** Keep separate current/historical validators and correct typed physical codec. Route semantic_digest through shared JCS exactness qualifier without narrowing logical owner numbers. Authenticate selection of HISTORICAL_V1 and the original transport/hash recipes in SP-1101. Keep each declared payload media/byte profile; do not re-encode retained JSON pack bytes as MessagePack. Extend round6/7 fixtures with recipe downgrade and exact large-number controls.
+**Adoption:** Keep separate current/historical validators and correct typed physical codec. Route semantic_digest through shared JCS exactness qualifier without narrowing logical owner numbers. Authenticate selection of HISTORICAL_V1 and the original transport/hash recipes in SP-1101. Keep each declared payload media/byte profile; do not re-encode retained JSON pack bytes as MessagePack. Extend round6/7 fixtures with recipe downgrade and exact large-number controls. Enforce CV-1101 with `datetime_validator`/`date_time` at this lane’s envelope and timestamp-source boundaries, selecting any stricter field-owner profile explicitly; SP-1101’s frozen verifier selects the authentic original profile for history/retry and preserves exact timestamp strings.
 
 ### DS15
 
@@ -199,7 +214,7 @@ Pinned `plans/ea-w2-section15-newtools-20261104` at `03dccbe3e5018b485a18e50a75e
 
 **Existing owner units:** `Plans/Contracts_V0.md`: `CV-660`, `CV-661`, `CV-662`, `CV-663`, `CV-664`, `CV-665`, `CV-666`, `CV-667`, `CV-668`, `CV-669`, `CV-670`, `CV-671`, `CV-672`, `CV-673`, `CV-674`, `CV-675`, `CV-676`; `Plans/storage-plan.md`: `SP-640`, `SP-641`, `SP-642`, `SP-643`, `SP-644`, `SP-645`, `SP-646`, `SP-647`, `SP-648`, `SP-649`, `SP-650`, `SP-651`, `SP-652`, `SP-653`, `SP-654`, `SP-655`, `SP-656`; `Plans/Section15_MVP_Promoted_Features_Spec.md`: `SMPFS-310`, `SMPFS-311`, `SMPFS-312`, `SMPFS-313`, `SMPFS-314`, `SMPFS-315`, `SMPFS-316`, `SMPFS-317`; `Plans/newtools.md`: `N2-217`, `N2-218`, `N2-219`, `N2-220`, `N2-221`, `N2-222`, `N2-223`.
 
-**Adoption:** Use the common current integer grammar and actual field owner ranges; keep physical MessagePack range as route qualification, not a new logical schema ceiling. Separate producer JCS eligibility from full metadata uint64 eligibility. Remove current numeric wrappers from historical entrypoints; dispatch to frozen authenticated original schema/recipe. Add old integral-float and large-storage history positives, not just current rejection negatives.
+**Adoption:** Use the common current integer grammar and actual field owner ranges; keep physical MessagePack range as route qualification, not a new logical schema ceiling. Separate producer JCS eligibility from full metadata uint64 eligibility. Remove current numeric wrappers from historical entrypoints; dispatch to frozen authenticated original schema/recipe. Add old integral-float and large-storage history positives, not just current rejection negatives. Enforce CV-1101 with `datetime_validator`/`date_time` at this lane’s envelope and timestamp-source boundaries, selecting any stricter field-owner profile explicitly; SP-1101’s frozen verifier selects the authentic original profile for history/retry and preserves exact timestamp strings.
 
 ### DM
 
@@ -210,7 +225,7 @@ Pinned `plans/ea-w2-small-owners-20261104` at `93f27d505890f4e8ee623ff796855a5f2
 
 **Existing owner units:** `Plans/Contracts_V0.md`: `CV-620`, `CV-621`, `CV-622`, `CV-623`, `CV-624`, `CV-625`, `CV-626`, `CV-627`; `Plans/storage-plan.md`: `SP-600`, `SP-601`, `SP-602`, `SP-603`, `SP-604`, `SP-605`, `SP-606`, `SP-607`; `Plans/Automated_Testing_System.md`: `ATS-300`, `ATS-301`, `ATS-302`, `ATS-303`, `ATS-304`.
 
-**Adoption:** Keep full-u64 Storage metadata and explicit retained path. Replace current sorted Python producer JSON with actual owner JCS plus exactness check; freeze the earlier retained exact-decimal recipe as an explicit original edition, not an unlabelled universal fallback. Authenticate that selection before resolving retries. Keep central grammar and drop duplicate safe-cap prose from these family units; unsupported routes refuse without source-schema caps.
+**Adoption:** Keep full-u64 Storage metadata and explicit retained path. Replace current sorted Python producer JSON with actual owner JCS plus exactness check; freeze the earlier retained exact-decimal recipe as an explicit original edition, not an unlabelled universal fallback. Authenticate that selection before resolving retries. Keep central grammar and drop duplicate safe-cap prose from these family units; unsupported routes refuse without source-schema caps. Enforce CV-1101 with `datetime_validator`/`date_time` at this lane’s envelope and timestamp-source boundaries, selecting any stricter field-owner profile explicitly; SP-1101’s frozen verifier selects the authentic original profile for history/retry and preserves exact timestamp strings.
 
 ### DT
 
@@ -222,7 +237,7 @@ Pinned `plans/ea-w2-tools-gates-approvals-20261104` at `e4547dc697758794bac656f7
 
 **Existing owner units:** `Plans/Contracts_V0.md`: `CV-600`, `CV-601`, `CV-602`, `CV-603`, `CV-604`, `CV-605`, `CV-606`, `CV-607`, `CV-608`, `CV-609`, `CV-610`, `CV-611`, `CV-612`, `CV-613`, `CV-614`, `CV-615`, `CV-616`; `Plans/storage-plan.md`: `SP-580`, `SP-581`, `SP-582`, `SP-583`, `SP-584`, `SP-585`, `SP-586`, `SP-587`, `SP-588`, `SP-589`, `SP-590`, `SP-591`, `SP-592`, `SP-593`, `SP-594`, `SP-595`, `SP-596`.
 
-**Adoption:** Preserve pm.dt.source.json.v1 exactly as a local source recipe. Do not apply current_numbers_valid to Storage-assigned sequence metadata in source_valid. Use shared qualified JCS only on PRODUCER_FIELDS; qualify Decimal source routes explicitly instead of coercing to float. Replace historical=True/x-dt-retained-number-bounds as the selector with authenticated original edition dispatch. Share integer-token grammar while preserving the old accepted source representation/identity bytes in retained fixtures.
+**Adoption:** Preserve pm.dt.source.json.v1 exactly as a local source recipe. Do not apply current_numbers_valid to Storage-assigned sequence metadata in source_valid. Use shared qualified JCS only on PRODUCER_FIELDS; qualify Decimal source routes explicitly instead of coercing to float. Replace historical=True/x-dt-retained-number-bounds as the selector with authenticated original edition dispatch. Share integer-token grammar while preserving the old accepted source representation/identity bytes in retained fixtures. Enforce CV-1101 with `datetime_validator`/`date_time` at this lane’s envelope and timestamp-source boundaries, selecting any stricter field-owner profile explicitly; SP-1101’s frozen verifier selects the authentic original profile for history/retry and preserves exact timestamp strings.
 
 ### DCN
 
@@ -232,7 +247,7 @@ Pinned `plans/ea-w3-card2-names-20261104` at `ddd4e74e2707d4d225bf7c7bf1668d418c
 
 **Existing owner units:** `Plans/Contracts_V0.md`: `CV-780`, `CV-781`, `CV-782`, `CV-783`, `CV-784`, `CV-785`; `Plans/storage-plan.md`: `SP-760`, `SP-761`, `SP-762`, `SP-763`, `SP-764`, `SP-765`; `Plans/assistant-memory-subsystem.md`: `AMS-130`; `Plans/Section15_MVP_Promoted_Features_Spec.md`: `SMPFS-244`, `SMPFS-245`, `SMPFS-246`, `SMPFS-247`, `SMPFS-248`.
 
-**Adoption:** Add central current integer grammar before schema/equality; retain separate SP-278 uint64 encoding and qualified EventRecord producer JCS. Historical source/schema/hash selection must come from authentic original edition; keep current source live checks from substituting for at-write facts. Add old number/type positives and recipe forgery negatives across every history/retry rule subset.
+**Adoption:** Add central current integer grammar before schema/equality. Apply `storage_uint64` to Storage-assigned `sequence_id` in records, receipts and every join: exact `0..2^64-1`, current integer spelling only, no bool/string/float/exponent/negative-zero coercion; preserve original historical grammar via SP-1101. Keep it outside producer semantics. Replace `pm_card2_events.semantic_digest` with the full qualified producer projection and qualify the actual route before append/owner effects consistently across append/retry and required successors. `2^53` encodes exactly; `2^53+1`, `2^60` and u64 max take the existing route refusal before effects. Retain actual revision/producer source domains and the separate SP-278 uint64 codec. Historical source/schema/hash selection must come from authentic original edition; keep current source live checks from substituting for at-write facts. Add old number/type positives and recipe forgery negatives across every history/retry rule subset. Enforce CV-1101 with `datetime_validator`/`date_time` at this lane’s envelope and timestamp-source boundaries, selecting any stricter field-owner profile explicitly; SP-1101’s frozen verifier selects the authentic original profile for history/retry and preserves exact timestamp strings.
 
 ## Ancillary lanes
 
@@ -249,6 +264,6 @@ Pinned `plans/ea-w3-card2-names-20261104` at `ddd4e74e2707d4d225bf7c7bf1668d418c
 
 ## Validation and limits
 
-Run `python3 scripts/pm_event_numbers.py --self-test` with `rfc8785==0.1.4`, `msgpack==1.1.2`, `blake3==1.0.11` and the repository's existing jsonschema dependency available. The default corpus is `Plans/event_number_recipe_corpus.json`; `--corpus <path>` runs an adopter's compatible corpus. A failure returns exit 1. An exception is never counted as a successful refusal: negatives match their exact diagnostic. The AST guard-removal table weakens named authored refusal guards, keeps the original case unchanged and retains an unrelated refusing control. Coupled exact-value/custody guards are named together. Stdlib JSON and external MessagePack parser guards are checked with independent malformed/noncanonical vectors, not rewritten.
+Run `python3 scripts/pm_event_numbers.py --self-test` with `rfc8785==0.1.4`, `msgpack==1.1.2`, `blake3==1.0.11` and the repository's existing jsonschema dependency available. The default corpus is `Plans/event_number_recipe_corpus.json`; `--corpus <path>` runs an adopter's compatible corpus. A failure returns exit 1. An exception is never counted as a successful refusal: negatives match their exact diagnostic. Per-predicate guard proof is SWEEP_PENDING in the shared guard-isolation tool; the old 25 diagnostic-group removals are withdrawn. The sweep must isolate binary64/decimal, kind/sign, catalog/verification, replay-only/replay-policy and syntax/digest, retaining unrelated clauses and testing genuine duplicates at each site and together. Every negative names its target predicate; acceptance, Refusal and unexpected exception are three separate outcomes. Success-output assertions run after admission evaluation and cannot hide a forged returned value. Intrinsic JSON/MessagePack parser refusals remain labelled for the shared tool’s boundary handling.
 
 This helper run does not execute the other lane checkers, establish native original authentication, validate arbitrary schemas, establish a complete route's future domain, enforce pack durability/retention, or admit an event. Each lane owns those integration checks. No lane branch was edited by NUMRULE.

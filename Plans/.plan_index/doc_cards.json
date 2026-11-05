@@ -4479,10 +4479,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 286,
+        "False": 287,
         "True": 76
       },
-      "heading_count": 562,
+      "heading_count": 563,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -4586,13 +4586,15 @@
         "scripts/pm-implementation-readiness.py",
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm-plans-verify.py",
+        "scripts/pm_event_datetime.py",
         "scripts/pm_event_numbers.py"
       ],
-      "line_count": 24529,
+      "line_count": 24588,
       "path": "Plans/Contracts_V0.md",
-      "plan_unit_count": 362,
+      "plan_unit_count": 363,
       "plan_unit_ids": [
         "CV-1100",
+        "CV-1101",
         "CV-292",
         "CV-293",
         "CV-294",
@@ -5255,6 +5257,7 @@
         "setup_readiness_auth_surface_collapse",
         "shared_contract_gap",
         "shared_receipt_identity_codec_or_restore_authority_drift",
+        "skipped_format_or_historical_timestamp_profile_drift",
         "slint_scale_mechanism_drift",
         "stale_runtime_taxonomy_revival",
         "startup_recovered_wake_drift",
@@ -5315,10 +5318,10 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "ef2eb04565a8faa6a1caa20ce0cdbc645ed5b6c0469b75875941becb6b7efdec",
+      "sha256": "0149f4f53e286622657a31f915a372e058dca47000a7e3b6c03897c0ac5fb978",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 362
+        "accepted": 363
       },
       "title": "Contracts V0 (Canonical)",
       "unit_type_counts": {
@@ -5327,7 +5330,7 @@
         "consumer_requirement": 1,
         "future_scope_decision": 1,
         "integration_contract": 3,
-        "interface_contract": 7,
+        "interface_contract": 8,
         "owner_boundary": 1,
         "requirement": 230,
         "schema_contract": 28,
@@ -5486,6 +5489,7 @@
         "scripts/pm-plan-index.py",
         "scripts/pm-plans-verify.py",
         "scripts/pm-projects-refresh-contracts.py",
+        "scripts/pm_event_datetime.py",
         "secret-bearing receipt rejection fixtures",
         "security receipts are visible and redacted.",
         "seglog replay tests",
@@ -18697,7 +18701,7 @@
         "scripts/pm-implementation-readiness.py",
         "scripts/pm_event_numbers.py"
       ],
-      "line_count": 29601,
+      "line_count": 29602,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 343,
       "plan_unit_ids": [
@@ -19167,7 +19171,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "6438f16839a59808d93f01e615d6db9990aeadec05da0faef75b3a5bc88095b2",
+      "sha256": "e073459059545026287001a2d19a91fa061da1d0fa3325543d607112f32f9c47",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 339,
@@ -21549,7 +21553,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-05T03:54:18Z",
+  "generated_at_utc": "2026-11-05T05:10:25Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -21557,13 +21561,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3634,
+      "False": 3635,
       "True": 3791
     },
-    "plan_unit_count": 7425,
+    "plan_unit_count": 7426,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 7207,
+      "accepted": 7208,
       "retired": 195,
       "superseded": 23
     },
@@ -21613,7 +21617,7 @@
       "implementation_reference": 1,
       "integration_contract": 130,
       "interaction_contract": 6,
-      "interface_contract": 7,
+      "interface_contract": 8,
       "invariant": 33,
       "migration": 1,
       "migration_contract": 2,

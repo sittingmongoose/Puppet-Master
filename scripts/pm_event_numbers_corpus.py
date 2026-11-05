@@ -5,15 +5,30 @@ authenticate a native store, register a family, or run the other drafting lanes.
 """
 from __future__ import annotations
 
-import ast
-from dataclasses import replace
+from dataclasses import dataclass, replace
 from decimal import Decimal
 import hashlib
 import json
 from pathlib import Path
-import struct
-import sys
-import types
+
+
+@dataclass
+class RetainedObservation:
+    returned: object
+    observed: object
+    calls: list
+
+
+def success_errors(result):
+    """Test postconditions, deliberately outside admission evaluation."""
+    if not isinstance(result, RetainedObservation):
+        return []
+    errors = []
+    if len(result.calls) != 1:
+        errors.append("expected exactly one frozen verifier")
+    if result.returned != result.observed:
+        errors.append("retained bytes/result/receipt changed")
+    return errors
 
 
 def _value(value):
@@ -45,6 +60,7 @@ def _retained(m, case, corpus):
                                hashlib.sha256(b"frozen fixture resources").hexdigest())
     current_recipe = replace(base_recipe, owner_edition="current-edition",
                              identity_recipe="fixture.identity.current")
+    replaced_resources = replace(base_recipe, resource_manifest_sha256="f" * 64)
     original = m.OriginalCustody(binding, base_recipe, raw, b"original-result", b"original-receipt")
     scenario = case.get("scenario", "valid")
     if scenario == "current_original":
@@ -73,9 +89,11 @@ def _retained(m, case, corpus):
         sealed = replace(original, recipe=current_recipe)
         observed = original  # Supported old recipe, wrong original selection.
     elif scenario == "unknown_recipe":
-        observed = replace(original, recipe=replace(base_recipe, identity_recipe="unregistered"))
+        # Authentic original, genuinely unsupported catalog entry. No stale seal.
+        sealed = observed = replace(original, recipe=replace(base_recipe, identity_recipe="unregistered"))
     elif scenario == "rewritten_resources":
-        observed = replace(original, recipe=replace(base_recipe, resource_manifest_sha256="f" * 64))
+        # Supported tuple, but original resource selection has been tampered.
+        observed = replace(original, recipe=replaced_resources)
     elif scenario == "ambiguous":
         observed = (original, replace(original, recipe=current_recipe))
     elif scenario == "missing":
@@ -110,21 +128,25 @@ def _retained(m, case, corpus):
         calls.append(record.recipe)
         # Exact independent original pin joins bytes/identity/source/recipe/result.
         # These names describe fixture recipes, not newly registered product IDs.
-        return (record == sealed and
-                hashlib.sha256(record.record_bytes).hexdigest() == record.binding.source_commitment)
+        authentic = (record == sealed and
+                     hashlib.sha256(record.record_bytes).hexdigest() == record.binding.source_commitment)
+        if authentic and case.get("date_time_profile"):
+            from pm_event_datetime import date_time
+            # The frozen original resource map selects this; no request switch.
+            selected = case.get("sealed_date_time_profile", "event_record")
+            observed_profile = case["date_time_profile"]
+            if observed_profile != selected:
+                return False
+            date_time(json.loads(record.record_bytes)["occurred_at_utc"], profile=selected)
+        return authentic
 
     dispatcher = m.RetainedDispatcher(FixtureOwner(), {
         base_recipe: m.FrozenRecipe(verify), current_recipe: m.FrozenRecipe(verify),
+        replaced_resources: m.FrozenRecipe(verify),
     })
-    try:
-        out = dispatcher.resolve("sealed-ref", expected, disclose=lambda b: allow,
-                                 recipe_override=override)
-    finally:
-        if len(calls) > 1:
-            raise AssertionError("tried alternative recipes")
-    if out.record_bytes != observed.record_bytes or out.result_bytes != b"original-result" or out.receipt_bytes != b"original-receipt":
-        raise AssertionError("retained output changed")
-    return "original-returned-with-zero-effects"
+    out = dispatcher.resolve("sealed-ref", expected, disclose=lambda b: allow,
+                             recipe_override=override)
+    return RetainedObservation(out, observed, calls)
 
 
 def execute(m, case, corpus):
@@ -156,10 +178,33 @@ def execute(m, case, corpus):
         m.loads_current_json(case["raw"])
         return "accepted"
     if op == "jcs":
-        return m.qualified_jcs(m.loads_exact(case["raw"])).decode()
+        parser = m.loads_current_json if case.get("parser") == "current" else m.loads_exact
+        return m.qualified_jcs(parser(case["raw"]),
+                               type_sensitive_paths={()} if case.get("typed") else set(),
+                               sign_sensitive_paths={()} if case.get("sign") else set(),
+                               numeric_kinds={(): case["kind"]} if "kind" in case else {}).decode()
     if op == "jcs_value":
         return m.qualified_jcs(_value(case["value"]),
-                               type_sensitive_paths={()} if case.get("typed") else set()).decode()
+                               type_sensitive_paths={()} if case.get("typed") else set(),
+                               sign_sensitive_paths={()} if case.get("sign") else set(),
+                               numeric_kinds={(): case["kind"]} if "kind" in case else {}).decode()
+    if op == "datetime":
+        from pm_event_datetime import datetime_validator
+        from jsonschema import ValidationError
+        # Exercise the enforced validator, not only the standalone predicate.
+        schema = {"type": "string", "format": "date-time"}
+        try:
+            datetime_validator(schema, profile=case.get("profile", "event_record")).validate(case["value"])
+        except ValidationError as error:
+            if isinstance(error.cause, m.Refusal):
+                raise error.cause
+            if error.validator == "type":
+                raise m.Refusal("date_time_type") from error
+            raise
+        return case["value"]
+    if op == "datetime_direct":
+        from pm_event_datetime import date_time
+        return date_time(case["value"], profile=case.get("profile", "event_record"))
     if op == "physical":
         return m.storage_value_bytes(_value(case["value"]), profile=case.get("profile", m.EVENT_VALUE)).hex()
     if op == "decode":
@@ -186,32 +231,16 @@ def execute(m, case, corpus):
     raise AssertionError("Unknown corpus operation: " + op)
 
 
-def _mutation_module(m, reasons, name):
-    """Remove the named authored refusal guards; no corpus input is repaired."""
-    tree = ast.parse(Path(m.__file__).read_text())
-
-    class Remove(ast.NodeTransformer):
-        def visit_Expr(self, node):
-            call = node.value
-            if (isinstance(call, ast.Call) and isinstance(call.func, ast.Name) and
-                    call.func.id == "_refuse" and call.args and
-                    isinstance(call.args[0], ast.Constant) and call.args[0].value in reasons):
-                return ast.Pass()
-            return self.generic_visit(node)
-
-        def visit_If(self, node):
-            if len(node.body) == 1 and isinstance(node.body[0], ast.Expr):
-                call = node.body[0].value
-                if (isinstance(call, ast.Call) and isinstance(call.func, ast.Name) and
-                        call.func.id == "_refuse" and call.args and
-                        isinstance(call.args[0], ast.Constant) and call.args[0].value in reasons):
-                    return ast.Pass()
-            return self.generic_visit(node)
-    module = types.ModuleType(name)
-    module.__file__ = m.__file__
-    sys.modules[name] = module
-    exec(compile(ast.fix_missing_locations(Remove().visit(tree)), m.__file__, "exec"), module.__dict__)
-    return module
+def evaluate(m, case, corpus):
+    """Exactly three admission outcomes. Unexpected exceptions never pass."""
+    try:
+        result = execute(m, case, corpus)
+    except m.Refusal as error:
+        return {"outcome": "refusal", "error": error.reason}, None
+    except Exception as error:
+        return {"outcome": "exception", "exception": type(error).__name__, "message": str(error)}, None
+    output = "original-returned-with-zero-effects" if isinstance(result, RetainedObservation) else result
+    return {"outcome": "acceptance", "output": output}, result
 
 
 def run_corpus(path):
@@ -219,43 +248,17 @@ def run_corpus(path):
     corpus = json.loads(Path(path).read_text(), object_pairs_hook=m._unique_object)
     failures, outcomes = [], {}
     for c in corpus["cases"]:
-        try:
-            output = execute(m, c, corpus)
-            actual = {"output": output}
-        except m.Refusal as error:
-            actual = {"error": error.reason}
-        except Exception as error:
-            actual = {"unexpected": type(error).__name__ + ": " + str(error)}
-        expected = {"error": c["error"]} if "error" in c else {"output": c["output"]}
+        actual, result = evaluate(m, c, corpus)
+        expected = ({"outcome": "refusal", "error": c["error"]} if "error" in c
+                    else {"outcome": "acceptance", "output": c["output"]})
         outcomes[c["id"]] = actual
         if actual != expected:
             failures.append({"id": c["id"], "expected": expected, "actual": actual})
-    cases = {c["id"]: c for c in corpus["cases"]}
-    proofs = []
-    for index, proof in enumerate(corpus["guard_removal"]):
-        name = "_pm_number_mutant_" + str(index)
-        module = _mutation_module(m, set(proof["guards"]), name)
-        flipped = []
-        for case_id in proof["case_ids"]:
-            try:
-                execute(module, cases[case_id], corpus)
-                flipped.append(case_id)
-            except Exception:
-                pass
-        # An unrelated exact boolean guard must survive every non-boolean mutation.
-        control = "int-string" if "boolean_type" in proof["guards"] else "bool-number"
-        try:
-            execute(module, cases[control], corpus)
-            isolated = False
-        except module.Refusal:
-            isolated = True
-        except Exception:
-            isolated = False
-        ok = flipped == proof["case_ids"] and isolated
-        proofs.append({"guards": proof["guards"], "flipped": flipped, "unrelated_control_refused": isolated, "pass": ok})
-        if not ok:
-            failures.append({"guard_proof": proof, "flipped": flipped, "isolated": isolated})
-        del sys.modules[name]
+        elif "output" in c:
+            for error in success_errors(result):
+                failures.append({"id": c["id"], "postcondition": error})
+        if "error" in c and not c.get("target_predicate"):
+            failures.append({"id": c["id"], "missing_target_predicate": True})
     # Real unchanged owner vectors, not self-generated expected bytes.
     root = Path(__file__).resolve().parents[1]
     wire = json.loads((root / "Plans/seglog_frame_v2_wire_fixtures.json").read_text())
@@ -266,6 +269,23 @@ def run_corpus(path):
         "frozen_complete_event_bytes": m.storage_value_bytes(wire["base_event"]) == original_payload,
         "frozen_complete_event_decode": m.decode_storage_value(original_payload) == wire["base_event"],
     }
+    from pm_event_datetime import datetime_validator
+    schema = json.loads((root / "Plans/event_record.schema.json").read_text())
+    envelope_validator = datetime_validator(schema)
+    checks["eventrecord_datetime_valid"] = envelope_validator.is_valid(wire["base_event"])
+    for field in ("occurred_at_utc", "observed_at_utc", "persisted_at_utc"):
+        for index, invalid in enumerate(("2026-01-01T00:00:00", "2026-02-30T00:00:00Z",
+                                          "2026-01-01T00:00:00Z\n")):
+            checks["eventrecord_format_enforced_" + field + "_" + str(index)] = not envelope_validator.is_valid(
+                dict(wire["base_event"], **{field: invalid}))
+    # These full-route endpoints exercise more than one required exactness
+    # predicate. They are controls, not purported single-predicate negatives.
+    for value, reason in (((1 << 53) + 1, "jcs_binary64"), ((1 << 64) - 1, "jcs_binary64")):
+        try:
+            m.qualified_jcs(value)
+            checks["full_jcs_endpoint_refusal_" + str(value)] = False
+        except m.Refusal as error:
+            checks["full_jcs_endpoint_refusal_" + str(value)] = error.reason == reason
     full = json.loads((root / "Plans/event_append_receipt_full_value_fixtures.json").read_text())
     checks["frozen_full_value_commitment"] = m.full_value_commitment(full["base_original_event"]) == full["commitment_sha256"]
     event = wire["base_event"]
@@ -297,7 +317,13 @@ def run_corpus(path):
             failures.append({"integration_check": name})
     return {"status": "fail" if failures else "pass", "corpus_cases": len(corpus["cases"]),
             "case_passes": len(corpus["cases"]) - sum("id" in f for f in failures),
-            "guard_removal": proofs, "owner_integration_checks": checks,
+            "positives": sum("output" in c for c in corpus["cases"]),
+            "negatives": sum("error" in c for c in corpus["cases"]),
+            "labelled_negatives": sum("error" in c and bool(c.get("target_predicate")) for c in corpus["cases"]),
+            "outcomes": outcomes,
+            "guard_isolation": {"status": "SWEEP_PENDING", "tool": "scripts/pm_guard_isolation.py",
+                                "items": corpus["guard_isolation_sweep"]},
+            "owner_integration_checks": checks,
             "conflicts_covered": sorted({x for c in corpus["cases"] for x in c["conflicts"]}),
             "failures": failures, "native_authority": "NOT_RUN",
             "scope": "Shared adapter/corpus only; no complete lane checker or family admission."}

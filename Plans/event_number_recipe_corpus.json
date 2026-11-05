@@ -1,231 +1,18 @@
 {
   "schema_id": "pm.event_number_recipe_corpus.v1",
-  "qualification": "Finite shared adapter oracles; no family, native custody, durability or admission proof. Conflicts C01-C10 and probes N01-N11 apply by actual profile, not one universal reject list. Library parser/codec refusal checks have exact reason oracles; authored guards are weakened in the separate table.",
+  "qualification": "Finite shared admission outcomes and separate success postconditions. Each negative names its field/predicate; per-predicate isolation remains pending adoption of the shared guard tool. No family/native/admission proof.",
   "historical_originals": {
     "integral_float": "{\"producer_sequence_id\":1.0,\"sequence_id\":18446744073709551615,\"replay_policy\":\"projector_replay_only\"}",
     "exponent": "{\"producer_sequence_id\":1e0,\"sequence_id\":18446744073709551615}",
     "negative_zero": "{\"producer_sequence_id\":-0,\"sequence_id\":18446744073709551615}",
     "large_decimal": "{\"producer_sequence_id\":1152921504606846976,\"sequence_id\":18446744073709551615}",
-    "large_metadata": "{\"producer_sequence_id\":1,\"sequence_id\":18446744073709551615,\"recovery_epoch\":9223372036854775808}"
+    "large_metadata": "{\"producer_sequence_id\":1,\"sequence_id\":18446744073709551615,\"recovery_epoch\":9223372036854775808}",
+    "datetime_lowercase": "{\"occurred_at_utc\":\"2026-01-01t00:00:00z\"}",
+    "datetime_offset": "{\"occurred_at_utc\":\"2026-01-01T00:00:00+05:30\"}",
+    "datetime_long-fraction": "{\"occurred_at_utc\":\"2026-01-01T00:00:00.123456789123456789123456789Z\"}",
+    "datetime_leap-offset": "{\"occurred_at_utc\":\"2017-01-01T05:29:60+05:30\"}",
+    "datetime_invalid": "{\"occurred_at_utc\": \"2026-02-30T00:00:00Z\"}"
   },
-  "guard_removal": [
-    {
-      "guards": [
-        "integer_token"
-      ],
-      "case_ids": [
-        "bad-token-'-0'",
-        "current-nested-minuszero"
-      ]
-    },
-    {
-      "guards": [
-        "integer_type"
-      ],
-      "case_ids": [
-        "int-string",
-        "int-bool",
-        "int-float"
-      ]
-    },
-    {
-      "guards": [
-        "integer_range"
-      ],
-      "case_ids": [
-        "range--1",
-        "uint64-overflow-18446744073709551616"
-      ]
-    },
-    {
-      "guards": [
-        "boolean_type"
-      ],
-      "case_ids": [
-        "bool-number",
-        "bool-string"
-      ]
-    },
-    {
-      "guards": [
-        "duplicate_key"
-      ],
-      "case_ids": [
-        "duplicate-json"
-      ]
-    },
-    {
-      "guards": [
-        "jcs_binary64",
-        "jcs_decimal"
-      ],
-      "case_ids": [
-        "jcs-9007199254740993"
-      ]
-    },
-    {
-      "guards": [
-        "jcs_decimal"
-      ],
-      "case_ids": [
-        "jcs-1152921504606846976"
-      ]
-    },
-    {
-      "guards": [
-        "jcs_primitive"
-      ],
-      "case_ids": [
-        "jcs-typed--0.0",
-        "jcs-typed-1.0"
-      ]
-    },
-    {
-      "guards": [
-        "physical_integer_range"
-      ],
-      "case_ids": [
-        "physical-overflow--9223372036854775809"
-      ]
-    },
-    {
-      "guards": [
-        "physical_nonfinite"
-      ],
-      "case_ids": [
-        "physical-nan"
-      ]
-    },
-    {
-      "guards": [
-        "physical_type"
-      ],
-      "case_ids": [
-        "physical-decimal"
-      ]
-    },
-    {
-      "guards": [
-        "physical_noncanonical"
-      ],
-      "case_ids": [
-        "decode-uint-nonminimal",
-        "decode-float-nonminimal"
-      ]
-    },
-    {
-      "guards": [
-        "caller_recipe_override"
-      ],
-      "case_ids": [
-        "history-caller_override"
-      ]
-    },
-    {
-      "guards": [
-        "original_binding"
-      ],
-      "case_ids": [
-        "history-foreign-storage_instance_id",
-        "history-foreign-event_id"
-      ]
-    },
-    {
-      "guards": [
-        "recipe_unknown",
-        "original_verification"
-      ],
-      "case_ids": [
-        "history-unknown_recipe",
-        "history-rewritten_resources"
-      ]
-    },
-    {
-      "guards": [
-        "original_verification"
-      ],
-      "case_ids": [
-        "history-downgrade",
-        "history-forged_bytes_selfhash"
-      ]
-    },
-    {
-      "guards": [
-        "current_disclosure"
-      ],
-      "case_ids": [
-        "history-denied",
-        "history-truthy_disclosure"
-      ]
-    },
-    {
-      "guards": [
-        "replay_only_not_appendable",
-        "replay_policy"
-      ],
-      "case_ids": [
-        "append-replay-only"
-      ]
-    },
-    {
-      "guards": [
-        "payload_size"
-      ],
-      "case_ids": [
-        "payload-size"
-      ]
-    },
-    {
-      "guards": [
-        "payload_digest"
-      ],
-      "case_ids": [
-        "payload-same-size-different-bytes"
-      ]
-    },
-    {
-      "guards": [
-        "payload_media"
-      ],
-      "case_ids": [
-        "payload-media"
-      ]
-    },
-    {
-      "guards": [
-        "payload_inline_limit"
-      ],
-      "case_ids": [
-        "payload-inline-limit"
-      ]
-    },
-    {
-      "guards": [
-        "recipe_resource_hash"
-      ],
-      "case_ids": [
-        "recipe-hash-trailing-lf",
-        "recipe-hash-upper"
-      ]
-    },
-    {
-      "guards": [
-        "recipe_tuple"
-      ],
-      "case_ids": [
-        "recipe-type"
-      ]
-    },
-    {
-      "guards": [
-        "payload_id_type",
-        "payload_digest"
-      ],
-      "case_ids": [
-        "payload-id-trailing-lf"
-      ]
-    }
-  ],
   "cases": [
     {
       "id": "token-0",
@@ -366,7 +153,10 @@
       "conflicts": [
         "C07"
       ],
-      "error": "integer_token"
+      "error": "integer_token",
+      "target_predicate": "integer_token",
+      "enforcement": "authored",
+      "single_defect": "integer_token"
     },
     {
       "id": "bad-token-'1e0'",
@@ -375,7 +165,10 @@
       "conflicts": [
         "C07"
       ],
-      "error": "integer_token"
+      "error": "integer_token",
+      "target_predicate": "integer_token",
+      "enforcement": "authored",
+      "single_defect": "integer_token"
     },
     {
       "id": "bad-token-'-0'",
@@ -384,7 +177,10 @@
       "conflicts": [
         "C07"
       ],
-      "error": "integer_token"
+      "error": "integer_token",
+      "target_predicate": "integer_token",
+      "enforcement": "authored",
+      "single_defect": "integer_token"
     },
     {
       "id": "bad-token-'-0.0'",
@@ -393,7 +189,10 @@
       "conflicts": [
         "C07"
       ],
-      "error": "integer_token"
+      "error": "integer_token",
+      "target_predicate": "integer_token",
+      "enforcement": "authored",
+      "single_defect": "integer_token"
     },
     {
       "id": "bad-token-'+1'",
@@ -402,7 +201,10 @@
       "conflicts": [
         "C07"
       ],
-      "error": "integer_token"
+      "error": "integer_token",
+      "target_predicate": "integer_token",
+      "enforcement": "authored",
+      "single_defect": "integer_token"
     },
     {
       "id": "bad-token-'01'",
@@ -411,7 +213,10 @@
       "conflicts": [
         "C07"
       ],
-      "error": "integer_token"
+      "error": "integer_token",
+      "target_predicate": "integer_token",
+      "enforcement": "authored",
+      "single_defect": "integer_token"
     },
     {
       "id": "bad-token-'1\\n'",
@@ -420,7 +225,10 @@
       "conflicts": [
         "C07"
       ],
-      "error": "integer_token"
+      "error": "integer_token",
+      "target_predicate": "integer_token",
+      "enforcement": "authored",
+      "single_defect": "integer_token"
     },
     {
       "id": "bad-token-' 1'",
@@ -429,7 +237,10 @@
       "conflicts": [
         "C07"
       ],
-      "error": "integer_token"
+      "error": "integer_token",
+      "target_predicate": "integer_token",
+      "enforcement": "authored",
+      "single_defect": "integer_token"
     },
     {
       "id": "bad-token-'\u0661'",
@@ -438,7 +249,10 @@
       "conflicts": [
         "C07"
       ],
-      "error": "integer_token"
+      "error": "integer_token",
+      "target_predicate": "integer_token",
+      "enforcement": "authored",
+      "single_defect": "integer_token"
     },
     {
       "id": "bad-token-'1e-7'",
@@ -447,7 +261,10 @@
       "conflicts": [
         "C07"
       ],
-      "error": "integer_token"
+      "error": "integer_token",
+      "target_predicate": "integer_token",
+      "enforcement": "authored",
+      "single_defect": "integer_token"
     },
     {
       "id": "bad-token-'1e20'",
@@ -456,7 +273,10 @@
       "conflicts": [
         "C07"
       ],
-      "error": "integer_token"
+      "error": "integer_token",
+      "target_predicate": "integer_token",
+      "enforcement": "authored",
+      "single_defect": "integer_token"
     },
     {
       "id": "slot-1.0",
@@ -467,7 +287,10 @@
         "C07",
         "C08"
       ],
-      "error": "integer_type"
+      "error": "integer_type",
+      "target_predicate": "integer_type",
+      "enforcement": "authored",
+      "single_defect": "integer_type"
     },
     {
       "id": "slot-1e0",
@@ -478,7 +301,10 @@
         "C07",
         "C08"
       ],
-      "error": "integer_type"
+      "error": "integer_type",
+      "target_predicate": "integer_type",
+      "enforcement": "authored",
+      "single_defect": "integer_type"
     },
     {
       "id": "slot--0",
@@ -489,7 +315,10 @@
         "C07",
         "C08"
       ],
-      "error": "integer_token"
+      "error": "integer_token",
+      "target_predicate": "integer_token",
+      "enforcement": "authored",
+      "single_defect": "integer_token"
     },
     {
       "id": "slot--0.0",
@@ -500,7 +329,10 @@
         "C07",
         "C08"
       ],
-      "error": "integer_type"
+      "error": "integer_type",
+      "target_predicate": "integer_type",
+      "enforcement": "authored",
+      "single_defect": "integer_type"
     },
     {
       "id": "slot-+1",
@@ -511,7 +343,10 @@
         "C07",
         "C08"
       ],
-      "error": "json_syntax"
+      "error": "json_syntax",
+      "target_predicate": "json_syntax",
+      "enforcement": "intrinsic_parser",
+      "single_defect": "json_syntax"
     },
     {
       "id": "slot-01",
@@ -522,7 +357,10 @@
         "C07",
         "C08"
       ],
-      "error": "json_syntax"
+      "error": "json_syntax",
+      "target_predicate": "json_syntax",
+      "enforcement": "intrinsic_parser",
+      "single_defect": "json_syntax"
     },
     {
       "id": "slot-9007199254740993.0",
@@ -533,7 +371,10 @@
         "C07",
         "C08"
       ],
-      "error": "integer_type"
+      "error": "integer_type",
+      "target_predicate": "integer_type",
+      "enforcement": "authored",
+      "single_defect": "integer_type"
     },
     {
       "id": "slot-9.007199254740993e15",
@@ -544,7 +385,10 @@
         "C07",
         "C08"
       ],
-      "error": "integer_type"
+      "error": "integer_type",
+      "target_predicate": "integer_type",
+      "enforcement": "authored",
+      "single_defect": "integer_type"
     },
     {
       "id": "slot-ok-0",
@@ -593,7 +437,10 @@
       "conflicts": [
         "C07"
       ],
-      "error": "integer_type"
+      "error": "integer_type",
+      "target_predicate": "integer_type",
+      "enforcement": "authored",
+      "single_defect": "integer_type"
     },
     {
       "id": "int-string-zero",
@@ -602,7 +449,10 @@
       "conflicts": [
         "C07"
       ],
-      "error": "integer_type"
+      "error": "integer_type",
+      "target_predicate": "integer_type",
+      "enforcement": "authored",
+      "single_defect": "integer_type"
     },
     {
       "id": "int-string-false",
@@ -611,7 +461,10 @@
       "conflicts": [
         "C07"
       ],
-      "error": "integer_type"
+      "error": "integer_type",
+      "target_predicate": "integer_type",
+      "enforcement": "authored",
+      "single_defect": "integer_type"
     },
     {
       "id": "int-bool",
@@ -620,7 +473,10 @@
       "conflicts": [
         "C07"
       ],
-      "error": "integer_type"
+      "error": "integer_type",
+      "target_predicate": "integer_type",
+      "enforcement": "authored",
+      "single_defect": "integer_type"
     },
     {
       "id": "int-false",
@@ -629,7 +485,10 @@
       "conflicts": [
         "C07"
       ],
-      "error": "integer_type"
+      "error": "integer_type",
+      "target_predicate": "integer_type",
+      "enforcement": "authored",
+      "single_defect": "integer_type"
     },
     {
       "id": "int-null",
@@ -638,7 +497,10 @@
       "conflicts": [
         "C07"
       ],
-      "error": "integer_type"
+      "error": "integer_type",
+      "target_predicate": "integer_type",
+      "enforcement": "authored",
+      "single_defect": "integer_type"
     },
     {
       "id": "int-array",
@@ -647,7 +509,10 @@
       "conflicts": [
         "C07"
       ],
-      "error": "integer_type"
+      "error": "integer_type",
+      "target_predicate": "integer_type",
+      "enforcement": "authored",
+      "single_defect": "integer_type"
     },
     {
       "id": "int-object",
@@ -658,7 +523,10 @@
       "conflicts": [
         "C07"
       ],
-      "error": "integer_type"
+      "error": "integer_type",
+      "target_predicate": "integer_type",
+      "enforcement": "authored",
+      "single_defect": "integer_type"
     },
     {
       "id": "int-float",
@@ -669,7 +537,10 @@
       "conflicts": [
         "C07"
       ],
-      "error": "integer_type"
+      "error": "integer_type",
+      "target_predicate": "integer_type",
+      "enforcement": "authored",
+      "single_defect": "integer_type"
     },
     {
       "id": "int-decimal",
@@ -680,7 +551,10 @@
       "conflicts": [
         "C07"
       ],
-      "error": "integer_type"
+      "error": "integer_type",
+      "target_predicate": "integer_type",
+      "enforcement": "authored",
+      "single_defect": "integer_type"
     },
     {
       "id": "range--1",
@@ -693,7 +567,10 @@
       "conflicts": [
         "C03"
       ],
-      "error": "integer_range"
+      "error": "integer_range",
+      "target_predicate": "integer.minimum",
+      "enforcement": "authored",
+      "single_defect": "integer.minimum"
     },
     {
       "id": "range-11",
@@ -706,7 +583,10 @@
       "conflicts": [
         "C03"
       ],
-      "error": "integer_range"
+      "error": "integer_range",
+      "target_predicate": "integer.maximum",
+      "enforcement": "authored",
+      "single_defect": "integer.maximum"
     },
     {
       "id": "bool-number",
@@ -715,7 +595,10 @@
       "conflicts": [
         "C07"
       ],
-      "error": "boolean_type"
+      "error": "boolean_type",
+      "target_predicate": "boolean_type",
+      "enforcement": "authored",
+      "single_defect": "boolean_type"
     },
     {
       "id": "bool-zero",
@@ -724,7 +607,10 @@
       "conflicts": [
         "C07"
       ],
-      "error": "boolean_type"
+      "error": "boolean_type",
+      "target_predicate": "boolean_type",
+      "enforcement": "authored",
+      "single_defect": "boolean_type"
     },
     {
       "id": "bool-string",
@@ -733,7 +619,10 @@
       "conflicts": [
         "C07"
       ],
-      "error": "boolean_type"
+      "error": "boolean_type",
+      "target_predicate": "boolean_type",
+      "enforcement": "authored",
+      "single_defect": "boolean_type"
     },
     {
       "id": "bool-string-zero",
@@ -742,7 +631,10 @@
       "conflicts": [
         "C07"
       ],
-      "error": "boolean_type"
+      "error": "boolean_type",
+      "target_predicate": "boolean_type",
+      "enforcement": "authored",
+      "single_defect": "boolean_type"
     },
     {
       "id": "bool-null",
@@ -751,7 +643,10 @@
       "conflicts": [
         "C07"
       ],
-      "error": "boolean_type"
+      "error": "boolean_type",
+      "target_predicate": "boolean_type",
+      "enforcement": "authored",
+      "single_defect": "boolean_type"
     },
     {
       "id": "bool-array",
@@ -760,7 +655,10 @@
       "conflicts": [
         "C07"
       ],
-      "error": "boolean_type"
+      "error": "boolean_type",
+      "target_predicate": "boolean_type",
+      "enforcement": "authored",
+      "single_defect": "boolean_type"
     },
     {
       "id": "bool-object",
@@ -769,7 +667,10 @@
       "conflicts": [
         "C07"
       ],
-      "error": "boolean_type"
+      "error": "boolean_type",
+      "target_predicate": "boolean_type",
+      "enforcement": "authored",
+      "single_defect": "boolean_type"
     },
     {
       "id": "bool-ok-True",
@@ -877,7 +778,10 @@
       "conflicts": [
         "C08"
       ],
-      "error": "json_nonfinite"
+      "error": "json_nonfinite",
+      "target_predicate": "json_nonfinite",
+      "enforcement": "authored",
+      "single_defect": "json_nonfinite"
     },
     {
       "id": "parse-Infinity",
@@ -886,7 +790,10 @@
       "conflicts": [
         "C08"
       ],
-      "error": "json_nonfinite"
+      "error": "json_nonfinite",
+      "target_predicate": "json_nonfinite",
+      "enforcement": "authored",
+      "single_defect": "json_nonfinite"
     },
     {
       "id": "parse--Infinity",
@@ -895,7 +802,10 @@
       "conflicts": [
         "C08"
       ],
-      "error": "json_nonfinite"
+      "error": "json_nonfinite",
+      "target_predicate": "json_nonfinite",
+      "enforcement": "authored",
+      "single_defect": "json_nonfinite"
     },
     {
       "id": "json-syntax-01",
@@ -904,7 +814,10 @@
       "conflicts": [
         "C07"
       ],
-      "error": "json_syntax"
+      "error": "json_syntax",
+      "target_predicate": "json_syntax",
+      "enforcement": "intrinsic_parser",
+      "single_defect": "json_syntax"
     },
     {
       "id": "json-syntax-+1",
@@ -913,7 +826,10 @@
       "conflicts": [
         "C07"
       ],
-      "error": "json_syntax"
+      "error": "json_syntax",
+      "target_predicate": "json_syntax",
+      "enforcement": "intrinsic_parser",
+      "single_defect": "json_syntax"
     },
     {
       "id": "json-syntax-1 2",
@@ -922,7 +838,10 @@
       "conflicts": [
         "C07"
       ],
-      "error": "json_syntax"
+      "error": "json_syntax",
+      "target_predicate": "json_syntax",
+      "enforcement": "intrinsic_parser",
+      "single_defect": "json_syntax"
     },
     {
       "id": "json-syntax-{\"a\":1,}",
@@ -931,7 +850,10 @@
       "conflicts": [
         "C07"
       ],
-      "error": "json_syntax"
+      "error": "json_syntax",
+      "target_predicate": "json_syntax",
+      "enforcement": "intrinsic_parser",
+      "single_defect": "json_syntax"
     },
     {
       "id": "json-syntax-[1,]",
@@ -940,7 +862,10 @@
       "conflicts": [
         "C07"
       ],
-      "error": "json_syntax"
+      "error": "json_syntax",
+      "target_predicate": "json_syntax",
+      "enforcement": "intrinsic_parser",
+      "single_defect": "json_syntax"
     },
     {
       "id": "duplicate-json",
@@ -949,7 +874,10 @@
       "conflicts": [
         "C08"
       ],
-      "error": "duplicate_key"
+      "error": "duplicate_key",
+      "target_predicate": "duplicate_key",
+      "enforcement": "authored",
+      "single_defect": "duplicate_key"
     },
     {
       "id": "surrogate-json",
@@ -958,7 +886,10 @@
       "conflicts": [
         "C08"
       ],
-      "error": "unicode_scalar"
+      "error": "unicode_scalar",
+      "target_predicate": "unicode_scalar",
+      "enforcement": "authored",
+      "single_defect": "unicode_scalar"
     },
     {
       "id": "current-nested-minuszero",
@@ -968,7 +899,10 @@
         "C07",
         "C08"
       ],
-      "error": "integer_token"
+      "error": "integer_token",
+      "target_predicate": "integer_token",
+      "enforcement": "authored",
+      "single_defect": "integer_token"
     },
     {
       "id": "current-large-exact",
@@ -1108,9 +1042,9 @@
       "output": "9007199254740992"
     },
     {
-      "id": "jcs-9007199254740993",
+      "id": "jcs-binary64-only-10^23",
       "op": "jcs",
-      "raw": "9007199254740993",
+      "raw": "100000000000000000000000",
       "conflicts": [
         "C01",
         "C02",
@@ -1118,7 +1052,10 @@
         "C04",
         "C08"
       ],
-      "error": "jcs_binary64"
+      "error": "jcs_binary64",
+      "target_predicate": "jcs_binary64",
+      "enforcement": "authored",
+      "single_defect": "jcs_binary64"
     },
     {
       "id": "jcs-1152921504606846976",
@@ -1131,7 +1068,10 @@
         "C04",
         "C08"
       ],
-      "error": "jcs_decimal"
+      "error": "jcs_decimal",
+      "target_predicate": "jcs_decimal",
+      "enforcement": "authored",
+      "single_defect": "jcs_decimal"
     },
     {
       "id": "jcs-9223372036854775808",
@@ -1144,12 +1084,15 @@
         "C04",
         "C08"
       ],
-      "error": "jcs_decimal"
+      "error": "jcs_decimal",
+      "target_predicate": "jcs_decimal",
+      "enforcement": "authored",
+      "single_defect": "jcs_decimal"
     },
     {
-      "id": "jcs-18446744073709551615",
+      "id": "jcs-binary64-only-minus10^23",
       "op": "jcs",
-      "raw": "18446744073709551615",
+      "raw": "-100000000000000000000000",
       "conflicts": [
         "C01",
         "C02",
@@ -1157,7 +1100,10 @@
         "C04",
         "C08"
       ],
-      "error": "jcs_binary64"
+      "error": "jcs_binary64",
+      "target_predicate": "jcs_binary64",
+      "enforcement": "authored",
+      "single_defect": "jcs_binary64"
     },
     {
       "id": "jcs-18446744073709551616",
@@ -1170,7 +1116,10 @@
         "C04",
         "C08"
       ],
-      "error": "jcs_decimal"
+      "error": "jcs_decimal",
+      "target_predicate": "jcs_decimal",
+      "enforcement": "authored",
+      "single_defect": "jcs_decimal"
     },
     {
       "id": "jcs-9007199254740993.0",
@@ -1183,7 +1132,10 @@
         "C04",
         "C08"
       ],
-      "error": "jcs_decimal"
+      "error": "jcs_decimal",
+      "target_predicate": "jcs_decimal",
+      "enforcement": "authored",
+      "single_defect": "jcs_decimal"
     },
     {
       "id": "jcs-1e9999",
@@ -1196,7 +1148,10 @@
         "C04",
         "C08"
       ],
-      "error": "jcs_binary64"
+      "error": "jcs_binary64",
+      "target_predicate": "jcs_binary64",
+      "enforcement": "authored",
+      "single_defect": "jcs_binary64"
     },
     {
       "id": "jcs-1e-9999",
@@ -1209,7 +1164,10 @@
         "C04",
         "C08"
       ],
-      "error": "jcs_decimal"
+      "error": "jcs_decimal",
+      "target_predicate": "jcs_decimal",
+      "enforcement": "authored",
+      "single_defect": "jcs_decimal"
     },
     {
       "id": "jcs--9007199254740992",
@@ -1235,7 +1193,10 @@
         "C04",
         "C08"
       ],
-      "error": "jcs_decimal"
+      "error": "jcs_decimal",
+      "target_predicate": "jcs_decimal",
+      "enforcement": "authored",
+      "single_defect": "jcs_decimal"
     },
     {
       "id": "jcs-nonascii-order",
@@ -1255,7 +1216,10 @@
       "conflicts": [
         "C02"
       ],
-      "error": "jcs_nonfinite"
+      "error": "jcs_nonfinite",
+      "target_predicate": "jcs_nonfinite",
+      "enforcement": "authored",
+      "single_defect": "jcs_nonfinite"
     },
     {
       "id": "jcs-inf",
@@ -1266,7 +1230,10 @@
       "conflicts": [
         "C02"
       ],
-      "error": "jcs_nonfinite"
+      "error": "jcs_nonfinite",
+      "target_predicate": "jcs_nonfinite",
+      "enforcement": "authored",
+      "single_defect": "jcs_nonfinite"
     },
     {
       "id": "jcs-minusinf",
@@ -1277,7 +1244,10 @@
       "conflicts": [
         "C02"
       ],
-      "error": "jcs_nonfinite"
+      "error": "jcs_nonfinite",
+      "target_predicate": "jcs_nonfinite",
+      "enforcement": "authored",
+      "single_defect": "jcs_nonfinite"
     },
     {
       "id": "jcs-typed-1.0",
@@ -1290,7 +1260,10 @@
         "C01",
         "C05"
       ],
-      "error": "jcs_primitive"
+      "error": "jcs_kind",
+      "target_predicate": "jcs_kind",
+      "enforcement": "authored",
+      "single_defect": "jcs_kind"
     },
     {
       "id": "jcs-typed--0.0",
@@ -1298,12 +1271,15 @@
       "value": {
         "@float": "-0.0"
       },
-      "typed": true,
       "conflicts": [
         "C01",
         "C05"
       ],
-      "error": "jcs_primitive"
+      "error": "jcs_sign",
+      "sign": true,
+      "target_predicate": "jcs_sign",
+      "enforcement": "authored",
+      "single_defect": "jcs_sign"
     },
     {
       "id": "physical-int-0",
@@ -1626,7 +1602,10 @@
       "conflicts": [
         "C06"
       ],
-      "error": "physical_integer_range"
+      "error": "physical_integer_range",
+      "target_predicate": "physical_integer_range",
+      "enforcement": "authored",
+      "single_defect": "physical_integer_range"
     },
     {
       "id": "physical-overflow-18446744073709551616",
@@ -1637,7 +1616,10 @@
       "conflicts": [
         "C06"
       ],
-      "error": "physical_integer_range"
+      "error": "physical_integer_range",
+      "target_predicate": "physical_integer_range",
+      "enforcement": "authored",
+      "single_defect": "physical_integer_range"
     },
     {
       "id": "physical-float-1.0",
@@ -1809,7 +1791,10 @@
       "conflicts": [
         "C05"
       ],
-      "error": "physical_nonfinite"
+      "error": "physical_nonfinite",
+      "target_predicate": "physical_nonfinite",
+      "enforcement": "authored",
+      "single_defect": "physical_nonfinite"
     },
     {
       "id": "physical-inf",
@@ -1820,7 +1805,10 @@
       "conflicts": [
         "C05"
       ],
-      "error": "physical_nonfinite"
+      "error": "physical_nonfinite",
+      "target_predicate": "physical_nonfinite",
+      "enforcement": "authored",
+      "single_defect": "physical_nonfinite"
     },
     {
       "id": "physical--inf",
@@ -1831,7 +1819,10 @@
       "conflicts": [
         "C05"
       ],
-      "error": "physical_nonfinite"
+      "error": "physical_nonfinite",
+      "target_predicate": "physical_nonfinite",
+      "enforcement": "authored",
+      "single_defect": "physical_nonfinite"
     },
     {
       "id": "physical-decimal",
@@ -1842,7 +1833,10 @@
       "conflicts": [
         "C05"
       ],
-      "error": "physical_type"
+      "error": "physical_type",
+      "target_predicate": "physical_type",
+      "enforcement": "authored",
+      "single_defect": "physical_type"
     },
     {
       "id": "physical-binary",
@@ -1853,7 +1847,10 @@
       "conflicts": [
         "C05"
       ],
-      "error": "physical_type"
+      "error": "physical_type",
+      "target_predicate": "physical_type",
+      "enforcement": "authored",
+      "single_defect": "physical_type"
     },
     {
       "id": "app-binary",
@@ -1875,7 +1872,10 @@
       "conflicts": [
         "C05"
       ],
-      "error": "physical_profile"
+      "error": "physical_profile",
+      "target_predicate": "physical_profile",
+      "enforcement": "authored",
+      "single_defect": "physical_profile"
     },
     {
       "id": "metadata-sequence_id-9007199254740991",
@@ -2606,7 +2606,10 @@
       "conflicts": [
         "C06"
       ],
-      "error": "integer_range"
+      "error": "integer_range",
+      "target_predicate": "integer.minimum",
+      "enforcement": "authored",
+      "single_defect": "integer.minimum"
     },
     {
       "id": "uint64-overflow-18446744073709551616",
@@ -2617,7 +2620,10 @@
       "conflicts": [
         "C06"
       ],
-      "error": "integer_range"
+      "error": "integer_range",
+      "target_predicate": "integer.maximum",
+      "enforcement": "authored",
+      "single_defect": "integer.maximum"
     },
     {
       "id": "uint64-type-bool",
@@ -2626,7 +2632,10 @@
       "conflicts": [
         "C06"
       ],
-      "error": "integer_type"
+      "error": "integer_type",
+      "target_predicate": "integer_type",
+      "enforcement": "authored",
+      "single_defect": "integer_type"
     },
     {
       "id": "uint64-type-string",
@@ -2635,7 +2644,10 @@
       "conflicts": [
         "C06"
       ],
-      "error": "integer_type"
+      "error": "integer_type",
+      "target_predicate": "integer_type",
+      "enforcement": "authored",
+      "single_defect": "integer_type"
     },
     {
       "id": "uint64-type-float",
@@ -2646,7 +2658,10 @@
       "conflicts": [
         "C06"
       ],
-      "error": "integer_type"
+      "error": "integer_type",
+      "target_predicate": "integer_type",
+      "enforcement": "authored",
+      "single_defect": "integer_type"
     },
     {
       "id": "uint64-type-null",
@@ -2655,7 +2670,10 @@
       "conflicts": [
         "C06"
       ],
-      "error": "integer_type"
+      "error": "integer_type",
+      "target_predicate": "integer_type",
+      "enforcement": "authored",
+      "single_defect": "integer_type"
     },
     {
       "id": "binding-1",
@@ -2692,7 +2710,10 @@
         "C05",
         "C06"
       ],
-      "error": "binding_domain"
+      "error": "binding_domain",
+      "target_predicate": "binding.numeric_type",
+      "enforcement": "authored",
+      "single_defect": "binding.numeric_type"
     },
     {
       "id": "binding-bad-negative",
@@ -2703,7 +2724,10 @@
         "C05",
         "C06"
       ],
-      "error": "binding_domain"
+      "error": "binding_domain",
+      "target_predicate": "binding.integer.minimum",
+      "enforcement": "authored",
+      "single_defect": "binding.integer.minimum"
     },
     {
       "id": "binding-bad-overflow",
@@ -2716,7 +2740,10 @@
         "C05",
         "C06"
       ],
-      "error": "binding_domain"
+      "error": "binding_domain",
+      "target_predicate": "binding.integer.maximum",
+      "enforcement": "authored",
+      "single_defect": "binding.integer.maximum"
     },
     {
       "id": "decode-uint-nonminimal",
@@ -2725,7 +2752,10 @@
       "conflicts": [
         "C05"
       ],
-      "error": "physical_noncanonical"
+      "error": "physical_noncanonical",
+      "target_predicate": "msgpack.integer.minimal_width",
+      "enforcement": "authored",
+      "single_defect": "msgpack.integer.minimal_width"
     },
     {
       "id": "decode-positive-signed",
@@ -2734,7 +2764,10 @@
       "conflicts": [
         "C05"
       ],
-      "error": "physical_noncanonical"
+      "error": "physical_noncanonical",
+      "target_predicate": "msgpack.integer.unsigned_positive",
+      "enforcement": "authored",
+      "single_defect": "msgpack.integer.unsigned_positive"
     },
     {
       "id": "decode-float-nonminimal",
@@ -2743,7 +2776,10 @@
       "conflicts": [
         "C05"
       ],
-      "error": "physical_noncanonical"
+      "error": "physical_noncanonical",
+      "target_predicate": "msgpack.float.minimal_width",
+      "enforcement": "authored",
+      "single_defect": "msgpack.float.minimal_width"
     },
     {
       "id": "decode-binary",
@@ -2752,7 +2788,10 @@
       "conflicts": [
         "C05"
       ],
-      "error": "physical_type"
+      "error": "physical_type",
+      "target_predicate": "physical_type",
+      "enforcement": "authored",
+      "single_defect": "physical_type"
     },
     {
       "id": "decode-extension",
@@ -2761,7 +2800,10 @@
       "conflicts": [
         "C05"
       ],
-      "error": "physical_tag"
+      "error": "physical_tag",
+      "target_predicate": "physical_tag",
+      "enforcement": "intrinsic_parser",
+      "single_defect": "physical_tag"
     },
     {
       "id": "decode-timestamp",
@@ -2770,7 +2812,10 @@
       "conflicts": [
         "C05"
       ],
-      "error": "physical_type"
+      "error": "physical_type",
+      "target_predicate": "physical_type",
+      "enforcement": "authored",
+      "single_defect": "physical_type"
     },
     {
       "id": "decode-trailing",
@@ -2779,7 +2824,10 @@
       "conflicts": [
         "C05"
       ],
-      "error": "physical_decode"
+      "error": "physical_decode",
+      "target_predicate": "physical_decode",
+      "enforcement": "intrinsic_parser",
+      "single_defect": "physical_decode"
     },
     {
       "id": "decode-duplicate-map",
@@ -2788,7 +2836,10 @@
       "conflicts": [
         "C05"
       ],
-      "error": "duplicate_key"
+      "error": "duplicate_key",
+      "target_predicate": "duplicate_key",
+      "enforcement": "authored",
+      "single_defect": "duplicate_key"
     },
     {
       "id": "decode-unordered-map",
@@ -2797,7 +2848,10 @@
       "conflicts": [
         "C05"
       ],
-      "error": "physical_noncanonical"
+      "error": "physical_noncanonical",
+      "target_predicate": "msgpack.map.key_order",
+      "enforcement": "authored",
+      "single_defect": "msgpack.map.key_order"
     },
     {
       "id": "decode-nan",
@@ -2806,7 +2860,10 @@
       "conflicts": [
         "C05"
       ],
-      "error": "physical_nonfinite"
+      "error": "physical_nonfinite",
+      "target_predicate": "physical_nonfinite",
+      "enforcement": "authored",
+      "single_defect": "physical_nonfinite"
     },
     {
       "id": "decode-invalid-utf8",
@@ -2815,7 +2872,10 @@
       "conflicts": [
         "C05"
       ],
-      "error": "physical_decode"
+      "error": "physical_decode",
+      "target_predicate": "physical_decode",
+      "enforcement": "intrinsic_parser",
+      "single_defect": "physical_decode"
     },
     {
       "id": "decode-good-int",
@@ -2891,7 +2951,10 @@
       "conflicts": [
         "C09"
       ],
-      "error": "replay_only_not_appendable"
+      "error": "replay_only_not_appendable",
+      "target_predicate": "replay_only_not_appendable",
+      "enforcement": "authored",
+      "single_defect": "replay_only_not_appendable"
     },
     {
       "id": "history-integral_float",
@@ -2960,7 +3023,10 @@
         "C09",
         "C10"
       ],
-      "error": "caller_recipe_override"
+      "error": "caller_recipe_override",
+      "target_predicate": "caller_recipe_override",
+      "enforcement": "authored",
+      "single_defect": "caller_recipe_override"
     },
     {
       "id": "history-downgrade",
@@ -2970,7 +3036,10 @@
         "C09",
         "C10"
       ],
-      "error": "original_verification"
+      "error": "original_verification",
+      "target_predicate": "original.downgrade",
+      "enforcement": "authored",
+      "single_defect": "original.downgrade"
     },
     {
       "id": "history-unknown_recipe",
@@ -2980,7 +3049,10 @@
         "C09",
         "C10"
       ],
-      "error": "recipe_unknown"
+      "error": "recipe_unknown",
+      "target_predicate": "recipe_unknown",
+      "enforcement": "authored",
+      "single_defect": "recipe_unknown"
     },
     {
       "id": "history-rewritten_resources",
@@ -2990,7 +3062,10 @@
         "C09",
         "C10"
       ],
-      "error": "recipe_unknown"
+      "error": "original_verification",
+      "target_predicate": "original.rewritten_resources",
+      "enforcement": "authored",
+      "single_defect": "original.rewritten_resources"
     },
     {
       "id": "history-ambiguous",
@@ -3000,7 +3075,10 @@
         "C09",
         "C10"
       ],
-      "error": "original_authority"
+      "error": "original_authority",
+      "target_predicate": "original_authority",
+      "enforcement": "authored",
+      "single_defect": "original_authority"
     },
     {
       "id": "history-missing",
@@ -3010,7 +3088,10 @@
         "C09",
         "C10"
       ],
-      "error": "original_authority"
+      "error": "original_authority",
+      "target_predicate": "original_authority",
+      "enforcement": "authored",
+      "single_defect": "original_authority"
     },
     {
       "id": "history-self_authenticated_dict",
@@ -3020,7 +3101,10 @@
         "C09",
         "C10"
       ],
-      "error": "original_authority"
+      "error": "original_authority",
+      "target_predicate": "original_authority",
+      "enforcement": "authored",
+      "single_defect": "original_authority"
     },
     {
       "id": "history-verified_string",
@@ -3030,7 +3114,10 @@
         "C09",
         "C10"
       ],
-      "error": "original_authority"
+      "error": "original_authority",
+      "target_predicate": "original_authority",
+      "enforcement": "authored",
+      "single_defect": "original_authority"
     },
     {
       "id": "history-forged_bytes_selfhash",
@@ -3040,7 +3127,10 @@
         "C09",
         "C10"
       ],
-      "error": "original_verification"
+      "error": "original_verification",
+      "target_predicate": "original.forged_bytes_selfhash",
+      "enforcement": "authored",
+      "single_defect": "original.forged_bytes_selfhash"
     },
     {
       "id": "history-forged_result",
@@ -3050,7 +3140,10 @@
         "C09",
         "C10"
       ],
-      "error": "original_verification"
+      "error": "original_verification",
+      "target_predicate": "original.forged_result",
+      "enforcement": "authored",
+      "single_defect": "original.forged_result"
     },
     {
       "id": "history-forged_receipt",
@@ -3060,7 +3153,10 @@
         "C09",
         "C10"
       ],
-      "error": "original_verification"
+      "error": "original_verification",
+      "target_predicate": "original.forged_receipt",
+      "enforcement": "authored",
+      "single_defect": "original.forged_receipt"
     },
     {
       "id": "history-string_record_bytes",
@@ -3070,7 +3166,10 @@
         "C09",
         "C10"
       ],
-      "error": "original_bytes_type"
+      "error": "original_bytes_type",
+      "target_predicate": "original_bytes_type",
+      "enforcement": "authored",
+      "single_defect": "original_bytes_type"
     },
     {
       "id": "history-denied",
@@ -3080,7 +3179,10 @@
         "C09",
         "C10"
       ],
-      "error": "current_disclosure"
+      "error": "current_disclosure",
+      "target_predicate": "disclosure.exact_true",
+      "enforcement": "authored",
+      "single_defect": "disclosure.exact_true"
     },
     {
       "id": "history-deleted",
@@ -3090,7 +3192,10 @@
         "C09",
         "C10"
       ],
-      "error": "current_disclosure"
+      "error": "current_disclosure",
+      "target_predicate": "disclosure.exact_true",
+      "enforcement": "authored",
+      "single_defect": "disclosure.exact_true"
     },
     {
       "id": "history-withdrawn",
@@ -3100,7 +3205,10 @@
         "C09",
         "C10"
       ],
-      "error": "current_disclosure"
+      "error": "current_disclosure",
+      "target_predicate": "disclosure.exact_true",
+      "enforcement": "authored",
+      "single_defect": "disclosure.exact_true"
     },
     {
       "id": "history-hold_denied",
@@ -3110,7 +3218,10 @@
         "C09",
         "C10"
       ],
-      "error": "current_disclosure"
+      "error": "current_disclosure",
+      "target_predicate": "disclosure.exact_true",
+      "enforcement": "authored",
+      "single_defect": "disclosure.exact_true"
     },
     {
       "id": "history-truthy_disclosure",
@@ -3120,7 +3231,10 @@
         "C09",
         "C10"
       ],
-      "error": "current_disclosure"
+      "error": "current_disclosure",
+      "target_predicate": "disclosure.exact_true",
+      "enforcement": "authored",
+      "single_defect": "disclosure.exact_true"
     },
     {
       "id": "history-foreign-storage_instance_id",
@@ -3129,7 +3243,10 @@
       "conflicts": [
         "C10"
       ],
-      "error": "original_binding"
+      "error": "original_binding",
+      "target_predicate": "original.binding.storage_instance_id",
+      "enforcement": "authored",
+      "single_defect": "original.binding.storage_instance_id"
     },
     {
       "id": "history-foreign-scope_kind",
@@ -3138,7 +3255,10 @@
       "conflicts": [
         "C10"
       ],
-      "error": "original_binding"
+      "error": "original_binding",
+      "target_predicate": "original.binding.scope_kind",
+      "enforcement": "authored",
+      "single_defect": "original.binding.scope_kind"
     },
     {
       "id": "history-foreign-server_id",
@@ -3147,7 +3267,10 @@
       "conflicts": [
         "C10"
       ],
-      "error": "original_binding"
+      "error": "original_binding",
+      "target_predicate": "original.binding.server_id",
+      "enforcement": "authored",
+      "single_defect": "original.binding.server_id"
     },
     {
       "id": "history-foreign-project_id",
@@ -3156,7 +3279,10 @@
       "conflicts": [
         "C10"
       ],
-      "error": "original_binding"
+      "error": "original_binding",
+      "target_predicate": "original.binding.project_id",
+      "enforcement": "authored",
+      "single_defect": "original.binding.project_id"
     },
     {
       "id": "history-foreign-event_type",
@@ -3165,7 +3291,10 @@
       "conflicts": [
         "C10"
       ],
-      "error": "original_binding"
+      "error": "original_binding",
+      "target_predicate": "original.binding.event_type",
+      "enforcement": "authored",
+      "single_defect": "original.binding.event_type"
     },
     {
       "id": "history-foreign-event_id",
@@ -3174,7 +3303,10 @@
       "conflicts": [
         "C10"
       ],
-      "error": "original_binding"
+      "error": "original_binding",
+      "target_predicate": "original.binding.event_id",
+      "enforcement": "authored",
+      "single_defect": "original.binding.event_id"
     },
     {
       "id": "history-foreign-idempotency_key",
@@ -3183,7 +3315,10 @@
       "conflicts": [
         "C10"
       ],
-      "error": "original_binding"
+      "error": "original_binding",
+      "target_predicate": "original.binding.idempotency_key",
+      "enforcement": "authored",
+      "single_defect": "original.binding.idempotency_key"
     },
     {
       "id": "history-foreign-owner_operation_id",
@@ -3192,7 +3327,10 @@
       "conflicts": [
         "C10"
       ],
-      "error": "original_binding"
+      "error": "original_binding",
+      "target_predicate": "original.binding.owner_operation_id",
+      "enforcement": "authored",
+      "single_defect": "original.binding.owner_operation_id"
     },
     {
       "id": "history-foreign-source_commitment",
@@ -3201,7 +3339,10 @@
       "conflicts": [
         "C10"
       ],
-      "error": "original_binding"
+      "error": "original_binding",
+      "target_predicate": "original.binding.source_commitment",
+      "enforcement": "authored",
+      "single_defect": "original.binding.source_commitment"
     },
     {
       "id": "payload-inline-limit",
@@ -3212,7 +3353,10 @@
         "C06",
         "C09"
       ],
-      "error": "payload_inline_limit"
+      "error": "payload_inline_limit",
+      "target_predicate": "payload_inline_limit",
+      "enforcement": "authored",
+      "single_defect": "payload_inline_limit"
     },
     {
       "id": "payload-inline-boundary",
@@ -3249,7 +3393,10 @@
         "C06",
         "C09"
       ],
-      "error": "payload_size"
+      "error": "payload_size",
+      "target_predicate": "payload_size",
+      "enforcement": "authored",
+      "single_defect": "payload_size"
     },
     {
       "id": "payload-same-size-different-bytes",
@@ -3262,7 +3409,10 @@
         "C06",
         "C09"
       ],
-      "error": "payload_digest"
+      "error": "payload_digest",
+      "target_predicate": "payload_digest",
+      "enforcement": "authored",
+      "single_defect": "payload_digest"
     },
     {
       "id": "payload-media",
@@ -3276,7 +3426,10 @@
         "C06",
         "C09"
       ],
-      "error": "payload_media"
+      "error": "payload_media",
+      "target_predicate": "payload_media",
+      "enforcement": "authored",
+      "single_defect": "payload_media"
     },
     {
       "id": "payload-size-string",
@@ -3290,7 +3443,10 @@
         "C06",
         "C09"
       ],
-      "error": "integer_type"
+      "error": "integer_type",
+      "target_predicate": "integer_type",
+      "enforcement": "authored",
+      "single_defect": "integer_type"
     },
     {
       "id": "payload-size-bool",
@@ -3304,7 +3460,10 @@
         "C06",
         "C09"
       ],
-      "error": "integer_type"
+      "error": "integer_type",
+      "target_predicate": "integer_type",
+      "enforcement": "authored",
+      "single_defect": "integer_type"
     },
     {
       "id": "recipe-hash-valid",
@@ -3324,7 +3483,10 @@
       "conflicts": [
         "C07",
         "C10"
-      ]
+      ],
+      "target_predicate": "recipe_resource_hash",
+      "enforcement": "authored",
+      "single_defect": "recipe_resource_hash"
     },
     {
       "id": "recipe-hash-upper",
@@ -3334,7 +3496,10 @@
       "conflicts": [
         "C07",
         "C10"
-      ]
+      ],
+      "target_predicate": "recipe_resource_hash",
+      "enforcement": "authored",
+      "single_defect": "recipe_resource_hash"
     },
     {
       "id": "recipe-hash-short",
@@ -3344,7 +3509,10 @@
       "conflicts": [
         "C07",
         "C10"
-      ]
+      ],
+      "target_predicate": "recipe_resource_hash",
+      "enforcement": "authored",
+      "single_defect": "recipe_resource_hash"
     },
     {
       "id": "recipe-hash-int",
@@ -3354,7 +3522,10 @@
       "conflicts": [
         "C07",
         "C10"
-      ]
+      ],
+      "target_predicate": "recipe_tuple",
+      "enforcement": "authored",
+      "single_defect": "recipe_tuple"
     },
     {
       "id": "recipe-type",
@@ -3365,7 +3536,10 @@
       "conflicts": [
         "C07",
         "C10"
-      ]
+      ],
+      "target_predicate": "recipe_tuple",
+      "enforcement": "authored",
+      "single_defect": "recipe_tuple"
     },
     {
       "id": "payload-id-trailing-lf",
@@ -3378,7 +3552,1052 @@
       "conflicts": [
         "C07",
         "C10"
+      ],
+      "target_predicate": "payload_id_type",
+      "enforcement": "authored",
+      "single_defect": "payload_id_type"
+    },
+    {
+      "id": "jcs-typed-exact-1.5",
+      "op": "jcs",
+      "raw": "1.5",
+      "parser": "exact",
+      "typed": true,
+      "kind": "float",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "1.5"
+    },
+    {
+      "id": "jcs-typed-current-1.5",
+      "op": "jcs",
+      "raw": "1.5",
+      "parser": "current",
+      "typed": true,
+      "kind": "float",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "1.5"
+    },
+    {
+      "id": "jcs-typed-float-1.5",
+      "op": "jcs_value",
+      "value": {
+        "@float": "1.5"
+      },
+      "typed": true,
+      "kind": "float",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "1.5"
+    },
+    {
+      "id": "jcs-typed-decimal-1.5",
+      "op": "jcs_value",
+      "value": {
+        "@decimal": "1.5"
+      },
+      "typed": true,
+      "kind": "float",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "1.5"
+    },
+    {
+      "id": "jcs-typed-exact-1.25",
+      "op": "jcs",
+      "raw": "1.25",
+      "parser": "exact",
+      "typed": true,
+      "kind": "float",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "1.25"
+    },
+    {
+      "id": "jcs-typed-current-1.25",
+      "op": "jcs",
+      "raw": "1.25",
+      "parser": "current",
+      "typed": true,
+      "kind": "float",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "1.25"
+    },
+    {
+      "id": "jcs-typed-float-1.25",
+      "op": "jcs_value",
+      "value": {
+        "@float": "1.25"
+      },
+      "typed": true,
+      "kind": "float",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "1.25"
+    },
+    {
+      "id": "jcs-typed-decimal-1.25",
+      "op": "jcs_value",
+      "value": {
+        "@decimal": "1.25"
+      },
+      "typed": true,
+      "kind": "float",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "1.25"
+    },
+    {
+      "id": "jcs-decimal-kind-1.0",
+      "op": "jcs_value",
+      "value": {
+        "@decimal": "1.0"
+      },
+      "typed": true,
+      "kind": "decimal",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "jcs_kind",
+      "target_predicate": "jcs_kind",
+      "enforcement": "authored",
+      "single_defect": "jcs_kind"
+    },
+    {
+      "id": "jcs-decimal-kind-1.25",
+      "op": "jcs_value",
+      "value": {
+        "@decimal": "1.25"
+      },
+      "typed": true,
+      "kind": "decimal",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "jcs_kind",
+      "target_predicate": "jcs_kind",
+      "enforcement": "authored",
+      "single_defect": "jcs_kind"
+    },
+    {
+      "id": "jcs-decimal-undeclared",
+      "op": "jcs_value",
+      "value": {
+        "@decimal": "1.5"
+      },
+      "typed": true,
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "jcs_kind_undeclared",
+      "target_predicate": "jcs_kind_undeclared",
+      "enforcement": "authored",
+      "single_defect": "jcs_kind_undeclared"
+    },
+    {
+      "id": "jcs-invalid-kind",
+      "op": "jcs_value",
+      "value": {
+        "@decimal": "1.5"
+      },
+      "typed": true,
+      "kind": "unknown",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "jcs_numeric_kind",
+      "target_predicate": "jcs_numeric_kind",
+      "enforcement": "authored",
+      "single_defect": "jcs_numeric_kind"
+    },
+    {
+      "id": "jcs-kind-loss-exact",
+      "op": "jcs",
+      "raw": "1.0",
+      "parser": "exact",
+      "typed": true,
+      "kind": "float",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "jcs_kind",
+      "target_predicate": "jcs_kind",
+      "enforcement": "authored",
+      "single_defect": "jcs_kind"
+    },
+    {
+      "id": "jcs-sign-loss-exact",
+      "op": "jcs",
+      "raw": "-0.0",
+      "parser": "exact",
+      "sign": true,
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "jcs_sign",
+      "target_predicate": "jcs_sign",
+      "enforcement": "authored",
+      "single_defect": "jcs_sign"
+    },
+    {
+      "id": "jcs-kind-loss-current",
+      "op": "jcs",
+      "raw": "1.0",
+      "parser": "current",
+      "typed": true,
+      "kind": "float",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "jcs_kind",
+      "target_predicate": "jcs_kind",
+      "enforcement": "authored",
+      "single_defect": "jcs_kind"
+    },
+    {
+      "id": "jcs-sign-loss-current",
+      "op": "jcs",
+      "raw": "-0.0",
+      "parser": "current",
+      "sign": true,
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "jcs_sign",
+      "target_predicate": "jcs_sign",
+      "enforcement": "authored",
+      "single_defect": "jcs_sign"
+    },
+    {
+      "id": "jcs-integer-sign-loss",
+      "op": "jcs",
+      "raw": "-0",
+      "typed": true,
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "jcs_sign",
+      "target_predicate": "jcs_sign",
+      "enforcement": "authored",
+      "single_defect": "jcs_sign"
+    },
+    {
+      "id": "append-unknown-policy",
+      "op": "append_policy",
+      "value": "unknown_policy",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "replay_policy",
+      "target_predicate": "replay_policy",
+      "enforcement": "authored",
+      "single_defect": "replay_policy"
+    },
+    {
+      "id": "append-policy-type",
+      "op": "append_policy",
+      "value": true,
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "replay_policy",
+      "target_predicate": "replay_policy",
+      "enforcement": "authored",
+      "single_defect": "replay_policy"
+    },
+    {
+      "id": "datetime-valid-0",
+      "op": "datetime",
+      "value": "2026-01-01T00:00:00Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "2026-01-01T00:00:00Z"
+    },
+    {
+      "id": "datetime-valid-1",
+      "op": "datetime",
+      "value": "2026-01-01t00:00:00z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "2026-01-01t00:00:00z"
+    },
+    {
+      "id": "datetime-valid-2",
+      "op": "datetime",
+      "value": "2026-01-01T00:00:00+05:30",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "2026-01-01T00:00:00+05:30"
+    },
+    {
+      "id": "datetime-valid-3",
+      "op": "datetime",
+      "value": "2026-01-01T00:00:00-07:00",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "2026-01-01T00:00:00-07:00"
+    },
+    {
+      "id": "datetime-valid-4",
+      "op": "datetime",
+      "value": "2026-01-01T00:00:00-00:00",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "2026-01-01T00:00:00-00:00"
+    },
+    {
+      "id": "datetime-valid-5",
+      "op": "datetime",
+      "value": "2026-01-01T00:00:00.1Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "2026-01-01T00:00:00.1Z"
+    },
+    {
+      "id": "datetime-valid-6",
+      "op": "datetime",
+      "value": "2026-01-01T00:00:00.123456789123456789123456789Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "2026-01-01T00:00:00.123456789123456789123456789Z"
+    },
+    {
+      "id": "datetime-valid-7",
+      "op": "datetime",
+      "value": "2024-02-29T23:59:59Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "2024-02-29T23:59:59Z"
+    },
+    {
+      "id": "datetime-valid-8",
+      "op": "datetime",
+      "value": "2000-02-29T00:00:00Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "2000-02-29T00:00:00Z"
+    },
+    {
+      "id": "datetime-valid-9",
+      "op": "datetime",
+      "value": "0000-02-29T00:00:00Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "0000-02-29T00:00:00Z"
+    },
+    {
+      "id": "datetime-valid-10",
+      "op": "datetime",
+      "value": "9999-12-31T23:59:59+23:59",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "9999-12-31T23:59:59+23:59"
+    },
+    {
+      "id": "datetime-valid-11",
+      "op": "datetime",
+      "value": "2016-12-31T23:59:60Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "2016-12-31T23:59:60Z"
+    },
+    {
+      "id": "datetime-valid-12",
+      "op": "datetime",
+      "value": "2017-01-01T05:29:60+05:30",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "2017-01-01T05:29:60+05:30"
+    },
+    {
+      "id": "datetime-valid-13",
+      "op": "datetime",
+      "value": "2016-12-31T16:59:60-07:00",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "2016-12-31T16:59:60-07:00"
+    },
+    {
+      "id": "datetime-valid-14",
+      "op": "datetime",
+      "value": "2016-12-31t23:59:60.123456789123z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "2016-12-31t23:59:60.123456789123z"
+    },
+    {
+      "id": "datetime-missing-zone",
+      "op": "datetime",
+      "value": "2026-01-01T00:00:00",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "date_time_syntax",
+      "target_predicate": "date_time_syntax",
+      "enforcement": "authored",
+      "single_defect": "date_time_syntax"
+    },
+    {
+      "id": "datetime-space",
+      "op": "datetime",
+      "value": "2026-01-01 00:00:00Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "date_time_syntax",
+      "target_predicate": "date_time_syntax",
+      "enforcement": "authored",
+      "single_defect": "date_time_syntax"
+    },
+    {
+      "id": "datetime-lf",
+      "op": "datetime",
+      "value": "2026-01-01T00:00:00Z\n",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "date_time_syntax",
+      "target_predicate": "date_time_syntax",
+      "enforcement": "authored",
+      "single_defect": "date_time_syntax"
+    },
+    {
+      "id": "datetime-invalid-day",
+      "op": "datetime",
+      "value": "2026-02-30T00:00:00Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "date_time_day",
+      "target_predicate": "date_time_day",
+      "enforcement": "authored",
+      "single_defect": "date_time_day"
+    },
+    {
+      "id": "datetime-day-zero",
+      "op": "datetime",
+      "value": "2026-01-00T00:00:00Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "date_time_day",
+      "target_predicate": "date_time_day",
+      "enforcement": "authored",
+      "single_defect": "date_time_day"
+    },
+    {
+      "id": "datetime-month",
+      "op": "datetime",
+      "value": "2026-13-01T00:00:00Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "date_time_month",
+      "target_predicate": "date_time_month",
+      "enforcement": "authored",
+      "single_defect": "date_time_month"
+    },
+    {
+      "id": "datetime-nonleap",
+      "op": "datetime",
+      "value": "1900-02-29T00:00:00Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "date_time_day",
+      "target_predicate": "date_time_day",
+      "enforcement": "authored",
+      "single_defect": "date_time_day"
+    },
+    {
+      "id": "datetime-hour",
+      "op": "datetime",
+      "value": "2026-01-01T24:00:00Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "date_time_hour",
+      "target_predicate": "date_time_hour",
+      "enforcement": "authored",
+      "single_defect": "date_time_hour"
+    },
+    {
+      "id": "datetime-minute",
+      "op": "datetime",
+      "value": "2026-01-01T00:60:00Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "date_time_minute",
+      "target_predicate": "date_time_minute",
+      "enforcement": "authored",
+      "single_defect": "date_time_minute"
+    },
+    {
+      "id": "datetime-second",
+      "op": "datetime",
+      "value": "2026-01-01T00:00:61Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "date_time_second",
+      "target_predicate": "date_time_second",
+      "enforcement": "authored",
+      "single_defect": "date_time_second"
+    },
+    {
+      "id": "datetime-offset-hour",
+      "op": "datetime",
+      "value": "2026-01-01T00:00:00+24:00",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "date_time_offset_hour",
+      "target_predicate": "date_time_offset_hour",
+      "enforcement": "authored",
+      "single_defect": "date_time_offset_hour"
+    },
+    {
+      "id": "datetime-offset-minute",
+      "op": "datetime",
+      "value": "2026-01-01T00:00:00+00:60",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "date_time_offset_minute",
+      "target_predicate": "date_time_offset_minute",
+      "enforcement": "authored",
+      "single_defect": "date_time_offset_minute"
+    },
+    {
+      "id": "datetime-leap-date",
+      "op": "datetime",
+      "value": "2016-12-30T23:59:60Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "date_time_leap_second",
+      "target_predicate": "date_time_leap_second",
+      "enforcement": "authored",
+      "single_defect": "date_time_leap_second"
+    },
+    {
+      "id": "datetime-leap-minute",
+      "op": "datetime",
+      "value": "2016-12-31T23:58:60Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "date_time_leap_second",
+      "target_predicate": "date_time_leap_second",
+      "enforcement": "authored",
+      "single_defect": "date_time_leap_second"
+    },
+    {
+      "id": "datetime-leap-offset",
+      "op": "datetime",
+      "value": "2017-01-01T05:29:60+05:00",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "date_time_leap_second",
+      "target_predicate": "date_time_leap_second",
+      "enforcement": "authored",
+      "single_defect": "date_time_leap_second"
+    },
+    {
+      "id": "datetime-future-leap",
+      "op": "datetime",
+      "value": "2026-12-31T23:59:60Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "date_time_leap_second",
+      "target_predicate": "date_time_leap_second",
+      "enforcement": "authored",
+      "single_defect": "date_time_leap_second"
+    },
+    {
+      "id": "datetime-empty-fraction",
+      "op": "datetime",
+      "value": "2026-01-01T00:00:00.Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "date_time_syntax",
+      "target_predicate": "date_time_syntax",
+      "enforcement": "authored",
+      "single_defect": "date_time_syntax"
+    },
+    {
+      "id": "datetime-unicode-digit",
+      "op": "datetime",
+      "value": "2026-01-01T00:00:0\u0661Z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "date_time_syntax",
+      "target_predicate": "date_time_syntax",
+      "enforcement": "authored",
+      "single_defect": "date_time_syntax"
+    },
+    {
+      "id": "datetime-type",
+      "op": "datetime",
+      "value": 1,
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "date_time_type",
+      "target_predicate": "date_time_type",
+      "enforcement": "authored",
+      "single_defect": "date_time_type"
+    },
+    {
+      "id": "datetime-coordination_utc_z-valid",
+      "op": "datetime",
+      "value": "2026-01-01T00:00:00.123456789Z",
+      "profile": "coordination_utc_z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "2026-01-01T00:00:00.123456789Z"
+    },
+    {
+      "id": "datetime-coordination_utc_z-offset",
+      "op": "datetime",
+      "value": "2026-01-01T00:00:00.123456789+00:00",
+      "profile": "coordination_utc_z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "date_time_utc_z",
+      "target_predicate": "date_time_utc_z",
+      "enforcement": "authored",
+      "single_defect": "date_time_utc_z"
+    },
+    {
+      "id": "datetime-coordination_utc_z-lower-z",
+      "op": "datetime",
+      "value": "2026-01-01T00:00:00.123456789z",
+      "profile": "coordination_utc_z",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "date_time_utc_z",
+      "target_predicate": "date_time_utc_z",
+      "enforcement": "authored",
+      "single_defect": "date_time_utc_z"
+    },
+    {
+      "id": "datetime-legacy_normalization_output-valid",
+      "op": "datetime",
+      "value": "2026-01-01T00:00:00.123456789Z",
+      "profile": "legacy_normalization_output",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "2026-01-01T00:00:00.123456789Z"
+    },
+    {
+      "id": "datetime-legacy_normalization_output-offset",
+      "op": "datetime",
+      "value": "2026-01-01T00:00:00.123456789+00:00",
+      "profile": "legacy_normalization_output",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "date_time_utc_z",
+      "target_predicate": "date_time_utc_z",
+      "enforcement": "authored",
+      "single_defect": "date_time_utc_z"
+    },
+    {
+      "id": "datetime-legacy_normalization_output-lower-z",
+      "op": "datetime",
+      "value": "2026-01-01T00:00:00.123456789z",
+      "profile": "legacy_normalization_output",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "date_time_utc_z",
+      "target_predicate": "date_time_utc_z",
+      "enforcement": "authored",
+      "single_defect": "date_time_utc_z"
+    },
+    {
+      "id": "datetime-legacy-short",
+      "op": "datetime",
+      "value": "2026-01-01T00:00:00.123Z",
+      "profile": "legacy_normalization_output",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "date_time_legacy_fraction",
+      "target_predicate": "date_time_legacy_fraction",
+      "enforcement": "authored",
+      "single_defect": "date_time_legacy_fraction"
+    },
+    {
+      "id": "datetime-legacy-long",
+      "op": "datetime",
+      "value": "2026-01-01T00:00:00.123456789123Z",
+      "profile": "legacy_normalization_output",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "date_time_legacy_fraction",
+      "target_predicate": "date_time_legacy_fraction",
+      "enforcement": "authored",
+      "single_defect": "date_time_legacy_fraction"
+    },
+    {
+      "id": "datetime-legacy-absent",
+      "op": "datetime",
+      "value": "2026-01-01T00:00:00Z",
+      "profile": "legacy_normalization_output",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "date_time_legacy_fraction",
+      "target_predicate": "date_time_legacy_fraction",
+      "enforcement": "authored",
+      "single_defect": "date_time_legacy_fraction"
+    },
+    {
+      "id": "datetime-legacy-lower-t",
+      "op": "datetime",
+      "value": "2026-01-01t00:00:00.123456789Z",
+      "profile": "legacy_normalization_output",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "2026-01-01t00:00:00.123456789Z"
+    },
+    {
+      "id": "datetime-unknown-profile",
+      "op": "datetime",
+      "value": "2026-01-01T00:00:00Z",
+      "profile": "unknown",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "date_time_profile",
+      "target_predicate": "date_time_profile",
+      "enforcement": "authored",
+      "single_defect": "date_time_profile"
+    },
+    {
+      "id": "datetime-profile-type",
+      "op": "datetime",
+      "value": "2026-01-01T00:00:00Z",
+      "profile": true,
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "date_time_profile",
+      "target_predicate": "date_time_profile",
+      "enforcement": "authored",
+      "single_defect": "date_time_profile"
+    },
+    {
+      "id": "history-datetime-lowercase",
+      "op": "history",
+      "original": "datetime_lowercase",
+      "date_time_profile": "event_record",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "original-returned-with-zero-effects"
+    },
+    {
+      "id": "history-datetime-offset",
+      "op": "history",
+      "original": "datetime_offset",
+      "date_time_profile": "event_record",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "original-returned-with-zero-effects"
+    },
+    {
+      "id": "history-datetime-long-fraction",
+      "op": "history",
+      "original": "datetime_long-fraction",
+      "date_time_profile": "event_record",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "original-returned-with-zero-effects"
+    },
+    {
+      "id": "history-datetime-leap-offset",
+      "op": "history",
+      "original": "datetime_leap-offset",
+      "date_time_profile": "event_record",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "original-returned-with-zero-effects"
+    },
+    {
+      "id": "history-datetime-forged-coordination_utc_z",
+      "op": "history",
+      "original": "datetime_offset",
+      "date_time_profile": "coordination_utc_z",
+      "sealed_date_time_profile": "event_record",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "original_verification",
+      "target_predicate": "original.datetime_profile",
+      "enforcement": "authored",
+      "single_defect": "original.datetime_profile"
+    },
+    {
+      "id": "history-datetime-forged-legacy_normalization_output",
+      "op": "history",
+      "original": "datetime_offset",
+      "date_time_profile": "legacy_normalization_output",
+      "sealed_date_time_profile": "event_record",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "original_verification",
+      "target_predicate": "original.datetime_profile",
+      "enforcement": "authored",
+      "single_defect": "original.datetime_profile"
+    },
+    {
+      "id": "history-datetime-invalid-original",
+      "op": "history",
+      "original": "datetime_invalid",
+      "date_time_profile": "event_record",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "date_time_day",
+      "target_predicate": "date_time_day",
+      "enforcement": "authored",
+      "single_defect": "date_time_day"
+    },
+    {
+      "id": "datetime-direct-type-NoneType",
+      "op": "datetime_direct",
+      "value": null,
+      "error": "date_time_type",
+      "target_predicate": "date_time_type",
+      "single_defect": "date_time_type",
+      "enforcement": "authored",
+      "conflicts": [
+        "C07",
+        "C10"
+      ]
+    },
+    {
+      "id": "datetime-direct-type-int",
+      "op": "datetime_direct",
+      "value": 1,
+      "error": "date_time_type",
+      "target_predicate": "date_time_type",
+      "single_defect": "date_time_type",
+      "enforcement": "authored",
+      "conflicts": [
+        "C07",
+        "C10"
+      ]
+    },
+    {
+      "id": "datetime-direct-type-bool",
+      "op": "datetime_direct",
+      "value": true,
+      "error": "date_time_type",
+      "target_predicate": "date_time_type",
+      "single_defect": "date_time_type",
+      "enforcement": "authored",
+      "conflicts": [
+        "C07",
+        "C10"
+      ]
+    },
+    {
+      "id": "datetime-direct-type-list",
+      "op": "datetime_direct",
+      "value": [],
+      "error": "date_time_type",
+      "target_predicate": "date_time_type",
+      "single_defect": "date_time_type",
+      "enforcement": "authored",
+      "conflicts": [
+        "C07",
+        "C10"
+      ]
+    },
+    {
+      "id": "datetime-direct-type-dict",
+      "op": "datetime_direct",
+      "value": {},
+      "error": "date_time_type",
+      "target_predicate": "date_time_type",
+      "single_defect": "date_time_type",
+      "enforcement": "authored",
+      "conflicts": [
+        "C07",
+        "C10"
+      ]
+    },
+    {
+      "id": "jcs-parsed-kind-exact-1.5",
+      "op": "jcs",
+      "raw": "1.5",
+      "parser": "exact",
+      "typed": true,
+      "output": "1.5",
+      "conflicts": [
+        "C01",
+        "C08"
+      ]
+    },
+    {
+      "id": "jcs-parsed-kind-exact-1.25",
+      "op": "jcs",
+      "raw": "1.25",
+      "parser": "exact",
+      "typed": true,
+      "output": "1.25",
+      "conflicts": [
+        "C01",
+        "C08"
+      ]
+    },
+    {
+      "id": "jcs-parsed-kind-current-1.5",
+      "op": "jcs",
+      "raw": "1.5",
+      "parser": "current",
+      "typed": true,
+      "output": "1.5",
+      "conflicts": [
+        "C01",
+        "C08"
+      ]
+    },
+    {
+      "id": "jcs-parsed-kind-current-1.25",
+      "op": "jcs",
+      "raw": "1.25",
+      "parser": "current",
+      "typed": true,
+      "output": "1.25",
+      "conflicts": [
+        "C01",
+        "C08"
       ]
     }
+  ],
+  "guard_isolation_sweep": [
+    "binary64 versus emitted-decimal equality (10^23 and 2^60); retain full-route endpoint controls separately",
+    "numeric kind versus zero sign; retain type/sign clauses independently",
+    "catalog eligibility versus original/resource verification; authenticate unsupported original, never probe a verifier in actual dispatch",
+    "replay-only exclusion versus unknown-policy/type clauses; preserve unrelated policy guards",
+    "payload-id syntax versus digest equality; LF carries the correct decoded digest",
+    "all labelled negatives, intrinsic parser refusals and duplicate enforcement sites; exceptions are distinct outcomes"
   ]
 }

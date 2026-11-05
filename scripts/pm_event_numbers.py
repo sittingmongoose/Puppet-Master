@@ -84,6 +84,15 @@ class JsonNumber:
         return _integer_digits(self.token) if self.integer else Decimal(self.token)
 
 
+class ParsedDecimal(Decimal):
+    """Exact Decimal carrier retaining the JSON/schema numeric kind."""
+
+    def __new__(cls, token, numeric_kind="float"):
+        value = super().__new__(cls, token)
+        value.numeric_kind = numeric_kind
+        return value
+
+
 def current_integer(value, *, minimum=None, maximum=None) -> int:
     if type(value) is JsonNumber:
         if not value.integer:
@@ -169,44 +178,60 @@ def loads_exact(raw: str | bytes):
     return result
 
 
-def loads_current_json(raw):
+def loads_current_json(raw, *, numeric_kinds=None):
     """Current raw integers become exact ints; fractional tokens stay Decimal.
 
     This is not a schema validator. Call current_integer at every integer slot
     after parsing, including nullable slots only when non-null. It deliberately
     does not convert fractional/exponent tokens, even integral ones, to ints.
+    ParsedDecimal retains their lexical float kind, or the schema-declared kind
+    from numeric_kinds, without converting their exact value to binary64.
     """
-    def materialize(value):
+    def materialize(value, path=()):
         if type(value) is JsonNumber:
-            return current_integer(value) if value.integer else value.exact()
+            return (current_integer(value) if value.integer else
+                    ParsedDecimal(value.token, (numeric_kinds or {}).get(path, "float")))
         if type(value) is list:
-            return [materialize(v) for v in value]
+            return [materialize(v, path + (i,)) for i, v in enumerate(value)]
         if type(value) is dict:
-            return {k: materialize(v) for k, v in value.items()}
+            return {k: materialize(v, path + (k,)) for k, v in value.items()}
         return value
     return materialize(loads_exact(raw))
 
 
-def qualified_jcs(value, *, type_sensitive_paths=frozenset()) -> bytes:
+def qualified_jcs(value, *, type_sensitive_paths=frozenset(),
+                  sign_sensitive_paths=frozenset(), numeric_kinds=None) -> bytes:
     """Actual RFC8785, qualified against original integers/output decimals.
 
     Paths are tuples of map keys / array indices from the original schema.
     Where that source distinguishes number primitive types or zero sign,
     type_sensitive_paths additionally refuses a JCS serialization losing them.
+    numeric_kinds maps schema paths to integer, float or decimal, independently
+    of the parser carrier. Bare Decimal has no declared kind: supply one at a
+    type-sensitive path. JsonNumber retains the lexical integer/float kind.
+    sign_sensitive_paths checks zero sign without requiring primitive kind.
     This never certifies all future values of an owner schema or successor slot.
     """
     import rfc8785
 
     def number(v, path):
-        source_integer = type(v) is int
-        source_decimal = type(v) is Decimal
+        kind = (numeric_kinds or {}).get(path)
+        inferred_kind = ("integer" if type(v) is int else "float" if type(v) is float else
+                         v.numeric_kind if type(v) is ParsedDecimal else None)
+        source_negative_zero = False
         if type(v) is JsonNumber:
-            source_integer = v.integer
-            source_decimal = not v.integer
+            inferred_kind = "integer" if v.integer else "float"
+            source_negative_zero = v.token.startswith("-") and Decimal(v.token).is_zero()
             v = v.exact()
+        kind = kind if kind is not None else inferred_kind
+        if kind not in (None, "integer", "float", "decimal"):
+            _refuse("jcs_numeric_kind")
+        if path in type_sensitive_paths and kind is None:
+            _refuse("jcs_kind_undeclared")
+        source_integer = type(v) is int
         if type(v) is int:
             exact = Decimal(v)
-        elif type(v) is Decimal:
+        elif type(v) in (Decimal, ParsedDecimal):
             if not v.is_finite():
                 _refuse("jcs_nonfinite")
             exact = v
@@ -227,15 +252,20 @@ def qualified_jcs(value, *, type_sensitive_paths=frozenset()) -> bytes:
             _refuse("jcs_decimal")
         if path in type_sensitive_paths:
             output_integer = re.fullmatch(rb"-?(?:0|[1-9][0-9]*)", token) is not None
-            negative_zero = f == 0 and math.copysign(1.0, f) < 0
-            if source_decimal or source_integer != output_integer or negative_zero:
-                _refuse("jcs_primitive")
+            output_kind = "integer" if output_integer else "float"
+            if kind != output_kind:
+                _refuse("jcs_kind")
+        if path in type_sensitive_paths or path in sign_sensitive_paths:
+            negative_zero = source_negative_zero or (v == 0 and (
+                v.is_signed() if type(v) in (Decimal, ParsedDecimal) else math.copysign(1.0, f) < 0))
+            if negative_zero:
+                _refuse("jcs_sign")
         return f
 
     def adapt(v, path=()):
         if v is None or type(v) is bool:
             return v
-        if type(v) in (int, float, Decimal, JsonNumber):
+        if type(v) in (int, float, Decimal, ParsedDecimal, JsonNumber):
             return number(v, path)
         if type(v) is str:
             return _scalar_string(v)
@@ -381,7 +411,9 @@ def verify_payload_bytes(raw: bytes, *, byte_size, payload_id, media_type,
         _refuse("payload_size")
     if type(payload_id) is not str or re.fullmatch(r"[0-9a-f]{64}", payload_id) is None:
         _refuse("payload_id_type")
-    if payload_id != blake3.blake3(raw).hexdigest():
+    # Syntax is independently enforced above. Compare digest bytes so a
+    # syntax-only whitespace defect does not also become a digest defect.
+    if bytes.fromhex(payload_id) != blake3.blake3(raw).digest():
         _refuse("payload_digest")
     if type(media_type) is not str or media_type != expected_media_type:
         _refuse("payload_media")
