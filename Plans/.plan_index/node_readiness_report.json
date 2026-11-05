@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 19022,
+    "depends_on_edge_count": 19026,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22230,
-    "node_count": 7481,
+    "edge_count": 22234,
+    "node_count": 7485,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-05T07:44:14Z",
+  "generated_at_utc": "2026-11-05T10:08:38Z",
   "gui_related_units": {
     "count": 3792,
     "units": [
@@ -41736,10 +41736,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 7481,
+  "plan_unit_count": 7485,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2803,
+      "high": 2807,
       "low": 9,
       "medium": 29,
       "standard": 4640
@@ -44383,6 +44383,7 @@
       "projection_health_safety_drift": 1,
       "projection_message_board_responsibility_split": 1,
       "projection_path_import_scope": 1,
+      "projection_reference_or_original_source_substitution": 4,
       "projection_scope_or_stale_key_revival": 1,
       "projection_state_axis_drift": 1,
       "projection_store_divergence": 1,
@@ -45893,7 +45894,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 7264,
+      "accepted": 7268,
       "retired": 194,
       "superseded": 23
     },
@@ -45950,7 +45951,7 @@
       "migration_requirement": 3,
       "operational_policy": 1,
       "optional_requirement": 1,
-      "owner_boundary": 71,
+      "owner_boundary": 75,
       "owner_contract": 16,
       "owner_map": 6,
       "platform_requirement": 1,
@@ -46055,7 +46056,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "65bec3424aa40235b35f272539c9e423972f5f5deeebe33bae22a5bae3a2de2a",
+        "expected": "30ebde095c2b6132aa6beafc24659647ec8c4f56a0e6a30f2cf8bc2132598e94",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -46079,7 +46080,7 @@
       {
         "actual": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785",
         "error": "pnc019_source_hash_stale",
-        "expected": "3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218",
+        "expected": "1766c325cc373ff909981fdf193a52ace3bdf18ce02bf1b8e8eb0ea4a3a05b52",
         "source_path": "Plans/Goal_Runtime_System.md"
       },
       {
@@ -46091,7 +46092,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "7c14844fffac3bd898d90226fd3a94a58a193d22808ccf45a5f15d1beceb784d",
+        "expected": "0bc0707040f6fd36ac75b7eadfebcd84ff8ff38a5b2256f1e1a860d1f955a8a3",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {

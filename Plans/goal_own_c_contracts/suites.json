@@ -79,7 +79,14 @@
       "inherited_full_tuple_coverage": "PARTIAL",
       "native_execution": "NOT_RUN",
       "part2_whole_tuple_coverage": "PARTIAL_NOT_CLOSED",
-      "part2_component_witnesses": []
+      "part2_component_witnesses": [],
+      "projection_reference_successor": {
+        "selection": "Plans/goal_run_projection_reference_contracts/started.physical.json",
+        "protocol": "Plans/goal_run_projection_reference_contracts/started.md",
+        "oracles": "scripts/pm_goal_own_c3_w34_reference_oracles.py",
+        "qualification": "NEWLY_AUTHORED_UNINSTALLED_FULL_ORIGINAL_PATH_REQUIRED",
+        "whole_root_closure": "BLOCKED_ORIGINAL_NATIVE_V7_CONSUMER_EDITION"
+      }
     },
     {
       "event_type": "goal_run.cancelled",
@@ -103,7 +110,14 @@
       "inherited_full_tuple_coverage": "PARTIAL",
       "native_execution": "NOT_RUN",
       "part2_whole_tuple_coverage": "PARTIAL_NOT_CLOSED",
-      "part2_component_witnesses": []
+      "part2_component_witnesses": [],
+      "projection_reference_successor": {
+        "selection": "Plans/goal_run_projection_reference_contracts/cancelled.physical.json",
+        "protocol": "Plans/goal_run_projection_reference_contracts/cancelled.md",
+        "oracles": "scripts/pm_goal_own_c3_w34_reference_oracles.py",
+        "qualification": "NEWLY_AUTHORED_UNINSTALLED_FULL_ORIGINAL_PATH_REQUIRED",
+        "whole_root_closure": "BLOCKED_ORIGINAL_NATIVE_V7_CONSUMER_EDITION"
+      }
     },
     {
       "event_type": "goal_run.certified",

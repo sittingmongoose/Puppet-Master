@@ -1,0 +1,2399 @@
+{
+  "qualification": "Runtime label/negative inventory plus raw per-field schema errors only; generic refusal codes are NOT duplicate sets. Shared sweep tool required. No local removal engine.",
+  "runtime_guards": {
+    "checkpoint/key": [
+      "started/inline/checkpoint/key",
+      "started/event_reference/checkpoint/key",
+      "started/record_reference/checkpoint/key",
+      "cancelled/inline/checkpoint/key",
+      "cancelled/event_reference/checkpoint/key",
+      "cancelled/record_reference/checkpoint/key"
+    ],
+    "checkpoint/logical_key": [
+      "started/inline/checkpoint/logical_key",
+      "started/event_reference/checkpoint/logical_key",
+      "started/record_reference/checkpoint/logical_key",
+      "cancelled/inline/checkpoint/logical_key",
+      "cancelled/event_reference/checkpoint/logical_key",
+      "cancelled/record_reference/checkpoint/logical_key"
+    ],
+    "checkpoint/logical_scope": [
+      "started/inline/checkpoint/logical_scope",
+      "started/event_reference/checkpoint/logical_scope",
+      "started/record_reference/checkpoint/logical_scope",
+      "cancelled/inline/checkpoint/logical_scope",
+      "cancelled/event_reference/checkpoint/logical_scope",
+      "cancelled/record_reference/checkpoint/logical_scope"
+    ],
+    "checkpoint/logical_storage": [
+      "started/inline/checkpoint/logical_storage",
+      "started/event_reference/checkpoint/logical_storage",
+      "started/record_reference/checkpoint/logical_storage",
+      "cancelled/inline/checkpoint/logical_storage",
+      "cancelled/event_reference/checkpoint/logical_storage",
+      "cancelled/record_reference/checkpoint/logical_storage"
+    ],
+    "checkpoint/operation_size": [
+      "started/inline/checkpoint_operation_size_seam",
+      "started/event_reference/checkpoint_operation_size_seam",
+      "started/record_reference/checkpoint_operation_size_seam",
+      "cancelled/inline/checkpoint_operation_size_seam",
+      "cancelled/event_reference/checkpoint_operation_size_seam",
+      "cancelled/record_reference/checkpoint_operation_size_seam"
+    ],
+    "checkpoint/storage": [
+      "started/inline/checkpoint/storage",
+      "started/event_reference/checkpoint/storage",
+      "started/record_reference/checkpoint/storage",
+      "cancelled/inline/checkpoint/storage",
+      "cancelled/event_reference/checkpoint/storage",
+      "cancelled/record_reference/checkpoint/storage"
+    ],
+    "pack/access": [
+      "started/event_reference/pack_access",
+      "started/record_reference/pack_access",
+      "cancelled/event_reference/pack_access",
+      "cancelled/record_reference/pack_access"
+    ],
+    "pack/blake3": [
+      "started/event_reference/corrupt_bytes",
+      "started/record_reference/corrupt_bytes",
+      "cancelled/event_reference/corrupt_bytes",
+      "cancelled/record_reference/corrupt_bytes"
+    ],
+    "pack/codec": [
+      "started/event_reference/noncanonical_pack_boundary",
+      "started/record_reference/noncanonical_pack_boundary",
+      "cancelled/event_reference/noncanonical_pack_boundary",
+      "cancelled/record_reference/noncanonical_pack_boundary"
+    ],
+    "pack/durable": [
+      "started/event_reference/pack_durable",
+      "started/record_reference/pack_durable",
+      "cancelled/event_reference/pack_durable",
+      "cancelled/record_reference/pack_durable"
+    ],
+    "pack/media": [
+      "started/inline/pack_media_boundary",
+      "started/event_reference/pack_media_boundary",
+      "started/record_reference/pack_media_boundary",
+      "cancelled/inline/pack_media_boundary",
+      "cancelled/event_reference/pack_media_boundary",
+      "cancelled/record_reference/pack_media_boundary"
+    ],
+    "pack/present": [
+      "started/event_reference/missing_bytes",
+      "started/record_reference/missing_bytes",
+      "cancelled/event_reference/missing_bytes",
+      "cancelled/record_reference/missing_bytes"
+    ],
+    "pack/size": [
+      "started/event_reference/ref_byte_size",
+      "started/record_reference/ref_byte_size",
+      "cancelled/event_reference/ref_byte_size",
+      "cancelled/record_reference/ref_byte_size"
+    ],
+    "pack/store": [
+      "started/event_reference/pack_store",
+      "started/record_reference/pack_store",
+      "cancelled/event_reference/pack_store",
+      "cancelled/record_reference/pack_store"
+    ],
+    "publish/ack_lost": [
+      "started/inline/after_commit",
+      "started/event_reference/after_commit",
+      "started/record_reference/after_commit",
+      "cancelled/inline/after_commit",
+      "cancelled/event_reference/after_commit",
+      "cancelled/record_reference/after_commit"
+    ],
+    "publish/before_commit": [
+      "started/inline/before_commit",
+      "started/event_reference/before_commit",
+      "started/record_reference/before_commit",
+      "cancelled/inline/before_commit",
+      "cancelled/event_reference/before_commit",
+      "cancelled/record_reference/before_commit"
+    ],
+    "read/current": [
+      "started/inline/current_after_live_change",
+      "started/event_reference/current_after_live_change",
+      "started/record_reference/current_after_live_change",
+      "cancelled/inline/current_after_live_change",
+      "cancelled/event_reference/current_after_live_change",
+      "cancelled/record_reference/current_after_live_change"
+    ],
+    "read/dataset": [
+      "started/inline/dataset_name",
+      "started/event_reference/dataset_name",
+      "started/record_reference/dataset_name",
+      "cancelled/inline/dataset_name",
+      "cancelled/event_reference/dataset_name",
+      "cancelled/record_reference/dataset_name"
+    ],
+    "read/event_commitment": [
+      "started/inline/commitment",
+      "started/event_reference/commitment",
+      "started/record_reference/commitment",
+      "cancelled/inline/commitment",
+      "cancelled/event_reference/commitment",
+      "cancelled/record_reference/commitment"
+    ],
+    "read/event_identity/event_id": [
+      "started/inline/identity/event_id",
+      "started/event_reference/identity/event_id",
+      "started/record_reference/identity/event_id",
+      "cancelled/inline/identity/event_id",
+      "cancelled/event_reference/identity/event_id",
+      "cancelled/record_reference/identity/event_id"
+    ],
+    "read/event_identity/event_type": [
+      "cancelled/inline/identity/event_type",
+      "cancelled/event_reference/identity/event_type",
+      "cancelled/record_reference/identity/event_type"
+    ],
+    "read/event_identity/idempotency_key": [
+      "started/inline/identity/idempotency_key",
+      "started/event_reference/identity/idempotency_key",
+      "started/record_reference/identity/idempotency_key",
+      "cancelled/inline/identity/idempotency_key",
+      "cancelled/event_reference/identity/idempotency_key",
+      "cancelled/record_reference/identity/idempotency_key"
+    ],
+    "read/event_identity/scope": [
+      "started/inline/identity/scope",
+      "started/event_reference/identity/scope",
+      "started/record_reference/identity/scope",
+      "cancelled/inline/identity/scope",
+      "cancelled/event_reference/identity/scope",
+      "cancelled/record_reference/identity/scope"
+    ],
+    "read/event_identity/sequence_id": [
+      "started/inline/identity/sequence_id",
+      "started/event_reference/identity/sequence_id",
+      "started/record_reference/identity/sequence_id",
+      "cancelled/inline/identity/sequence_id",
+      "cancelled/event_reference/identity/sequence_id",
+      "cancelled/record_reference/identity/sequence_id"
+    ],
+    "read/event_identity/storage_instance_id": [
+      "started/inline/identity/storage_instance_id",
+      "started/event_reference/identity/storage_instance_id",
+      "started/record_reference/identity/storage_instance_id",
+      "cancelled/inline/identity/storage_instance_id",
+      "cancelled/event_reference/identity/storage_instance_id",
+      "cancelled/record_reference/identity/storage_instance_id"
+    ],
+    "read/key": [
+      "started/inline/physical_key",
+      "started/event_reference/physical_key",
+      "started/record_reference/physical_key",
+      "cancelled/inline/physical_key",
+      "cancelled/event_reference/physical_key",
+      "cancelled/record_reference/physical_key"
+    ],
+    "read/operation_size": [
+      "started/inline/operation_size_seam",
+      "started/event_reference/operation_size_seam",
+      "started/record_reference/operation_size_seam",
+      "cancelled/inline/operation_size_seam",
+      "cancelled/event_reference/operation_size_seam",
+      "cancelled/record_reference/operation_size_seam"
+    ],
+    "read/original_record": [
+      "started/inline/original_metadata",
+      "started/event_reference/original_metadata",
+      "started/record_reference/original_metadata",
+      "cancelled/inline/original_metadata",
+      "cancelled/event_reference/original_metadata",
+      "cancelled/record_reference/original_metadata"
+    ],
+    "read/permission": [
+      "started/inline/permission/wrong_type/0",
+      "started/inline/permission/wrong_type/1",
+      "started/inline/permission/wrong_type/2",
+      "started/inline/permission/wrong_type/3",
+      "started/inline/permission/wrong_type/4",
+      "started/inline/permission",
+      "started/event_reference/permission/wrong_type/0",
+      "started/event_reference/permission/wrong_type/1",
+      "started/event_reference/permission/wrong_type/2",
+      "started/event_reference/permission/wrong_type/3",
+      "started/event_reference/permission/wrong_type/4",
+      "started/event_reference/permission",
+      "started/record_reference/permission/wrong_type/0",
+      "started/record_reference/permission/wrong_type/1",
+      "started/record_reference/permission/wrong_type/2",
+      "started/record_reference/permission/wrong_type/3",
+      "started/record_reference/permission/wrong_type/4",
+      "started/record_reference/permission",
+      "cancelled/inline/permission/wrong_type/0",
+      "cancelled/inline/permission/wrong_type/1",
+      "cancelled/inline/permission/wrong_type/2",
+      "cancelled/inline/permission/wrong_type/3",
+      "cancelled/inline/permission/wrong_type/4",
+      "cancelled/inline/permission",
+      "cancelled/event_reference/permission/wrong_type/0",
+      "cancelled/event_reference/permission/wrong_type/1",
+      "cancelled/event_reference/permission/wrong_type/2",
+      "cancelled/event_reference/permission/wrong_type/3",
+      "cancelled/event_reference/permission/wrong_type/4",
+      "cancelled/event_reference/permission",
+      "cancelled/record_reference/permission/wrong_type/0",
+      "cancelled/record_reference/permission/wrong_type/1",
+      "cancelled/record_reference/permission/wrong_type/2",
+      "cancelled/record_reference/permission/wrong_type/3",
+      "cancelled/record_reference/permission/wrong_type/4",
+      "cancelled/record_reference/permission"
+    ],
+    "read/representation": [
+      "started/inline/nonselected_representation",
+      "cancelled/inline/nonselected_representation"
+    ],
+    "read/root_cas": [
+      "started/inline/root_epoch/wrong_type/0",
+      "started/inline/root_epoch/wrong_type/1",
+      "started/inline/root_epoch/wrong_type/2",
+      "started/inline/root_epoch/wrong_type/3",
+      "started/inline/root_epoch/wrong_type/4",
+      "started/inline/root_epoch",
+      "started/event_reference/root_epoch/wrong_type/0",
+      "started/event_reference/root_epoch/wrong_type/1",
+      "started/event_reference/root_epoch/wrong_type/2",
+      "started/event_reference/root_epoch/wrong_type/3",
+      "started/event_reference/root_epoch/wrong_type/4",
+      "started/event_reference/root_epoch",
+      "started/record_reference/root_epoch/wrong_type/0",
+      "started/record_reference/root_epoch/wrong_type/1",
+      "started/record_reference/root_epoch/wrong_type/2",
+      "started/record_reference/root_epoch/wrong_type/3",
+      "started/record_reference/root_epoch/wrong_type/4",
+      "started/record_reference/root_epoch",
+      "cancelled/inline/root_epoch/wrong_type/0",
+      "cancelled/inline/root_epoch/wrong_type/1",
+      "cancelled/inline/root_epoch/wrong_type/2",
+      "cancelled/inline/root_epoch/wrong_type/3",
+      "cancelled/inline/root_epoch/wrong_type/4",
+      "cancelled/inline/root_epoch",
+      "cancelled/event_reference/root_epoch/wrong_type/0",
+      "cancelled/event_reference/root_epoch/wrong_type/1",
+      "cancelled/event_reference/root_epoch/wrong_type/2",
+      "cancelled/event_reference/root_epoch/wrong_type/3",
+      "cancelled/event_reference/root_epoch/wrong_type/4",
+      "cancelled/event_reference/root_epoch",
+      "cancelled/record_reference/root_epoch/wrong_type/0",
+      "cancelled/record_reference/root_epoch/wrong_type/1",
+      "cancelled/record_reference/root_epoch/wrong_type/2",
+      "cancelled/record_reference/root_epoch/wrong_type/3",
+      "cancelled/record_reference/root_epoch/wrong_type/4",
+      "cancelled/record_reference/root_epoch"
+    ],
+    "read/source_lifetime": [
+      "started/inline/source_available/wrong_type/0",
+      "started/inline/source_available/wrong_type/1",
+      "started/inline/source_available/wrong_type/2",
+      "started/inline/source_available/wrong_type/3",
+      "started/inline/source_available/wrong_type/4",
+      "started/inline/source_available",
+      "started/event_reference/source_available/wrong_type/0",
+      "started/event_reference/source_available/wrong_type/1",
+      "started/event_reference/source_available/wrong_type/2",
+      "started/event_reference/source_available/wrong_type/3",
+      "started/event_reference/source_available/wrong_type/4",
+      "started/event_reference/source_available",
+      "started/record_reference/source_available/wrong_type/0",
+      "started/record_reference/source_available/wrong_type/1",
+      "started/record_reference/source_available/wrong_type/2",
+      "started/record_reference/source_available/wrong_type/3",
+      "started/record_reference/source_available/wrong_type/4",
+      "started/record_reference/source_available",
+      "cancelled/inline/source_available/wrong_type/0",
+      "cancelled/inline/source_available/wrong_type/1",
+      "cancelled/inline/source_available/wrong_type/2",
+      "cancelled/inline/source_available/wrong_type/3",
+      "cancelled/inline/source_available/wrong_type/4",
+      "cancelled/inline/source_available",
+      "cancelled/event_reference/source_available/wrong_type/0",
+      "cancelled/event_reference/source_available/wrong_type/1",
+      "cancelled/event_reference/source_available/wrong_type/2",
+      "cancelled/event_reference/source_available/wrong_type/3",
+      "cancelled/event_reference/source_available/wrong_type/4",
+      "cancelled/event_reference/source_available",
+      "cancelled/record_reference/source_available/wrong_type/0",
+      "cancelled/record_reference/source_available/wrong_type/1",
+      "cancelled/record_reference/source_available/wrong_type/2",
+      "cancelled/record_reference/source_available/wrong_type/3",
+      "cancelled/record_reference/source_available/wrong_type/4",
+      "cancelled/record_reference/source_available"
+    ],
+    "read/storage": [
+      "started/inline/storage_instance_id",
+      "started/event_reference/storage_instance_id",
+      "started/record_reference/storage_instance_id",
+      "cancelled/inline/storage_instance_id",
+      "cancelled/event_reference/storage_instance_id",
+      "cancelled/record_reference/storage_instance_id"
+    ],
+    "read/withdrawal": [
+      "started/inline/withdrawn/wrong_type/0",
+      "started/inline/withdrawn/wrong_type/1",
+      "started/inline/withdrawn/wrong_type/2",
+      "started/inline/withdrawn/wrong_type/3",
+      "started/inline/withdrawn/wrong_type/4",
+      "started/inline/withdrawn",
+      "started/event_reference/withdrawn/wrong_type/0",
+      "started/event_reference/withdrawn/wrong_type/1",
+      "started/event_reference/withdrawn/wrong_type/2",
+      "started/event_reference/withdrawn/wrong_type/3",
+      "started/event_reference/withdrawn/wrong_type/4",
+      "started/event_reference/withdrawn",
+      "started/record_reference/withdrawn/wrong_type/0",
+      "started/record_reference/withdrawn/wrong_type/1",
+      "started/record_reference/withdrawn/wrong_type/2",
+      "started/record_reference/withdrawn/wrong_type/3",
+      "started/record_reference/withdrawn/wrong_type/4",
+      "started/record_reference/withdrawn",
+      "cancelled/inline/withdrawn/wrong_type/0",
+      "cancelled/inline/withdrawn/wrong_type/1",
+      "cancelled/inline/withdrawn/wrong_type/2",
+      "cancelled/inline/withdrawn/wrong_type/3",
+      "cancelled/inline/withdrawn/wrong_type/4",
+      "cancelled/inline/withdrawn",
+      "cancelled/event_reference/withdrawn/wrong_type/0",
+      "cancelled/event_reference/withdrawn/wrong_type/1",
+      "cancelled/event_reference/withdrawn/wrong_type/2",
+      "cancelled/event_reference/withdrawn/wrong_type/3",
+      "cancelled/event_reference/withdrawn/wrong_type/4",
+      "cancelled/event_reference/withdrawn",
+      "cancelled/record_reference/withdrawn/wrong_type/0",
+      "cancelled/record_reference/withdrawn/wrong_type/1",
+      "cancelled/record_reference/withdrawn/wrong_type/2",
+      "cancelled/record_reference/withdrawn/wrong_type/3",
+      "cancelled/record_reference/withdrawn/wrong_type/4",
+      "cancelled/record_reference/withdrawn"
+    ],
+    "representation/schema": [
+      "started/inline/uuid/'invalid-uuid'",
+      "started/inline/uuid/'12345678-1234-1234-1234-123456789abc\\n'",
+      "started/inline/uuid/'12345678123412341234123456789abc'",
+      "started/inline/identity/event_type",
+      "started/event_reference/uuid/'invalid-uuid'",
+      "started/event_reference/uuid/'12345678-1234-1234-1234-123456789abc\\n'",
+      "started/event_reference/uuid/'12345678123412341234123456789abc'",
+      "started/event_reference/identity/event_type",
+      "started/event_reference/decoded_event_type/0",
+      "started/event_reference/decoded_event_type/1",
+      "started/event_reference/decoded_event_type/2",
+      "started/event_reference/decoded_event_type/3",
+      "started/event_reference/decoded_event_type/4",
+      "started/event_reference/ref_media_type",
+      "started/record_reference/uuid/'invalid-uuid'",
+      "started/record_reference/uuid/'12345678-1234-1234-1234-123456789abc\\n'",
+      "started/record_reference/uuid/'12345678123412341234123456789abc'",
+      "started/record_reference/identity/event_type",
+      "started/record_reference/decoded_event_type/0",
+      "started/record_reference/decoded_metadata_type/0",
+      "started/record_reference/decoded_event_type/1",
+      "started/record_reference/decoded_metadata_type/1",
+      "started/record_reference/decoded_event_type/2",
+      "started/record_reference/decoded_metadata_type/2",
+      "started/record_reference/decoded_event_type/3",
+      "started/record_reference/decoded_metadata_type/3",
+      "started/record_reference/decoded_event_type/4",
+      "started/record_reference/decoded_metadata_type/4",
+      "started/record_reference/ref_media_type",
+      "cancelled/inline/uuid/'invalid-uuid'",
+      "cancelled/inline/uuid/'12345678-1234-1234-1234-123456789abc\\n'",
+      "cancelled/inline/uuid/'12345678123412341234123456789abc'",
+      "cancelled/event_reference/uuid/'invalid-uuid'",
+      "cancelled/event_reference/uuid/'12345678-1234-1234-1234-123456789abc\\n'",
+      "cancelled/event_reference/uuid/'12345678123412341234123456789abc'",
+      "cancelled/event_reference/decoded_event_type/0",
+      "cancelled/event_reference/decoded_event_type/1",
+      "cancelled/event_reference/decoded_event_type/2",
+      "cancelled/event_reference/decoded_event_type/3",
+      "cancelled/event_reference/decoded_event_type/4",
+      "cancelled/event_reference/ref_media_type",
+      "cancelled/record_reference/uuid/'invalid-uuid'",
+      "cancelled/record_reference/uuid/'12345678-1234-1234-1234-123456789abc\\n'",
+      "cancelled/record_reference/uuid/'12345678123412341234123456789abc'",
+      "cancelled/record_reference/decoded_event_type/0",
+      "cancelled/record_reference/decoded_metadata_type/0",
+      "cancelled/record_reference/decoded_event_type/1",
+      "cancelled/record_reference/decoded_metadata_type/1",
+      "cancelled/record_reference/decoded_event_type/2",
+      "cancelled/record_reference/decoded_metadata_type/2",
+      "cancelled/record_reference/decoded_event_type/3",
+      "cancelled/record_reference/decoded_metadata_type/3",
+      "cancelled/record_reference/decoded_event_type/4",
+      "cancelled/record_reference/decoded_metadata_type/4",
+      "cancelled/record_reference/ref_media_type"
+    ]
+  },
+  "schema_assertion_negative_observations": [
+    {
+      "case_id": "started/inline/uuid/'invalid-uuid'",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/StorageProjection",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "format"
+          ],
+          "keyword": "format"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "pattern"
+          ],
+          "keyword": "pattern"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "minLength"
+          ],
+          "keyword": "minLength"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "started/inline/uuid/'12345678-1234-1234-1234-123456789abc\\n'",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/StorageProjection",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "format"
+          ],
+          "keyword": "format"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "pattern"
+          ],
+          "keyword": "pattern"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "maxLength"
+          ],
+          "keyword": "maxLength"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "started/inline/uuid/'12345678123412341234123456789abc'",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/StorageProjection",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "format"
+          ],
+          "keyword": "format"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "pattern"
+          ],
+          "keyword": "pattern"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "minLength"
+          ],
+          "keyword": "minLength"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "started/inline/identity/event_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/StorageProjection",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [
+            "event_identity",
+            "event_type"
+          ],
+          "schema_path": [
+            "properties",
+            "event_identity",
+            "properties",
+            "event_type",
+            "enum"
+          ],
+          "keyword": "enum"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "started/event_reference/uuid/'invalid-uuid'",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/StorageProjection",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "format"
+          ],
+          "keyword": "format"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "pattern"
+          ],
+          "keyword": "pattern"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "minLength"
+          ],
+          "keyword": "minLength"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "started/event_reference/uuid/'12345678-1234-1234-1234-123456789abc\\n'",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/StorageProjection",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "format"
+          ],
+          "keyword": "format"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "pattern"
+          ],
+          "keyword": "pattern"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "maxLength"
+          ],
+          "keyword": "maxLength"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "started/event_reference/uuid/'12345678123412341234123456789abc'",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/StorageProjection",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "format"
+          ],
+          "keyword": "format"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "pattern"
+          ],
+          "keyword": "pattern"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "minLength"
+          ],
+          "keyword": "minLength"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "started/event_reference/identity/event_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/StorageProjection",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [
+            "event_identity",
+            "event_type"
+          ],
+          "schema_path": [
+            "properties",
+            "event_identity",
+            "properties",
+            "event_type",
+            "enum"
+          ],
+          "keyword": "enum"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "started/event_reference/decoded_event_type/0",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/Event",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "allOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "started/event_reference/decoded_event_type/1",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/Event",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "allOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "started/event_reference/decoded_event_type/2",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/Event",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "allOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "started/event_reference/decoded_event_type/3",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/Event",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "allOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "started/event_reference/decoded_event_type/4",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/Event",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "allOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "started/event_reference/ref_media_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/StorageProjection",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [
+            "content"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf",
+            0,
+            "additionalProperties"
+          ],
+          "keyword": "additionalProperties"
+        },
+        {
+          "instance_path": [
+            "content"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf",
+            0,
+            "required"
+          ],
+          "keyword": "required"
+        },
+        {
+          "instance_path": [
+            "content",
+            "kind"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf",
+            0,
+            "properties",
+            "kind",
+            "const"
+          ],
+          "keyword": "const"
+        },
+        {
+          "instance_path": [
+            "content",
+            "event_ref",
+            "media_type"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf",
+            1,
+            "properties",
+            "event_ref",
+            "properties",
+            "media_type",
+            "const"
+          ],
+          "keyword": "const"
+        },
+        {
+          "instance_path": [
+            "content"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf",
+            2,
+            "additionalProperties"
+          ],
+          "keyword": "additionalProperties"
+        },
+        {
+          "instance_path": [
+            "content"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf",
+            2,
+            "required"
+          ],
+          "keyword": "required"
+        },
+        {
+          "instance_path": [
+            "content",
+            "kind"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf",
+            2,
+            "properties",
+            "kind",
+            "const"
+          ],
+          "keyword": "const"
+        },
+        {
+          "instance_path": [
+            "content",
+            "event_ref",
+            "media_type"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf",
+            2,
+            "properties",
+            "event_ref",
+            "properties",
+            "media_type",
+            "const"
+          ],
+          "keyword": "const"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "started/record_reference/uuid/'invalid-uuid'",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/StorageProjection",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "format"
+          ],
+          "keyword": "format"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "pattern"
+          ],
+          "keyword": "pattern"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "minLength"
+          ],
+          "keyword": "minLength"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "started/record_reference/uuid/'12345678-1234-1234-1234-123456789abc\\n'",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/StorageProjection",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "format"
+          ],
+          "keyword": "format"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "pattern"
+          ],
+          "keyword": "pattern"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "maxLength"
+          ],
+          "keyword": "maxLength"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "started/record_reference/uuid/'12345678123412341234123456789abc'",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/StorageProjection",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "format"
+          ],
+          "keyword": "format"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "pattern"
+          ],
+          "keyword": "pattern"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "minLength"
+          ],
+          "keyword": "minLength"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "started/record_reference/identity/event_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/StorageProjection",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [
+            "event_identity",
+            "event_type"
+          ],
+          "schema_path": [
+            "properties",
+            "event_identity",
+            "properties",
+            "event_type",
+            "enum"
+          ],
+          "keyword": "enum"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "started/record_reference/decoded_event_type/0",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/Event",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "allOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "started/record_reference/decoded_metadata_type/0",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/Metadata",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "started/record_reference/decoded_event_type/1",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/Event",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "allOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "started/record_reference/decoded_metadata_type/1",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/Metadata",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "started/record_reference/decoded_event_type/2",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/Event",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "allOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "started/record_reference/decoded_metadata_type/2",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/Metadata",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "started/record_reference/decoded_event_type/3",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/Event",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "allOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "started/record_reference/decoded_metadata_type/3",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/Metadata",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "started/record_reference/decoded_event_type/4",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/Event",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "allOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "started/record_reference/decoded_metadata_type/4",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/Metadata",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "started/record_reference/ref_media_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/StorageProjection",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [
+            "content"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf",
+            0,
+            "additionalProperties"
+          ],
+          "keyword": "additionalProperties"
+        },
+        {
+          "instance_path": [
+            "content"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf",
+            0,
+            "required"
+          ],
+          "keyword": "required"
+        },
+        {
+          "instance_path": [
+            "content",
+            "kind"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf",
+            0,
+            "properties",
+            "kind",
+            "const"
+          ],
+          "keyword": "const"
+        },
+        {
+          "instance_path": [
+            "content"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf",
+            1,
+            "additionalProperties"
+          ],
+          "keyword": "additionalProperties"
+        },
+        {
+          "instance_path": [
+            "content"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf",
+            1,
+            "required"
+          ],
+          "keyword": "required"
+        },
+        {
+          "instance_path": [
+            "content",
+            "kind"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf",
+            1,
+            "properties",
+            "kind",
+            "const"
+          ],
+          "keyword": "const"
+        },
+        {
+          "instance_path": [
+            "content",
+            "event_ref",
+            "media_type"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf",
+            1,
+            "properties",
+            "event_ref",
+            "properties",
+            "media_type",
+            "const"
+          ],
+          "keyword": "const"
+        },
+        {
+          "instance_path": [
+            "content",
+            "event_ref",
+            "media_type"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf",
+            2,
+            "properties",
+            "event_ref",
+            "properties",
+            "media_type",
+            "const"
+          ],
+          "keyword": "const"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "cancelled/inline/uuid/'invalid-uuid'",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/StorageProjection",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "format"
+          ],
+          "keyword": "format"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "pattern"
+          ],
+          "keyword": "pattern"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "minLength"
+          ],
+          "keyword": "minLength"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "cancelled/inline/uuid/'12345678-1234-1234-1234-123456789abc\\n'",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/StorageProjection",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "format"
+          ],
+          "keyword": "format"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "pattern"
+          ],
+          "keyword": "pattern"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "maxLength"
+          ],
+          "keyword": "maxLength"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "cancelled/inline/uuid/'12345678123412341234123456789abc'",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/StorageProjection",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "format"
+          ],
+          "keyword": "format"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "pattern"
+          ],
+          "keyword": "pattern"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "minLength"
+          ],
+          "keyword": "minLength"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "cancelled/event_reference/uuid/'invalid-uuid'",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/StorageProjection",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "format"
+          ],
+          "keyword": "format"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "pattern"
+          ],
+          "keyword": "pattern"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "minLength"
+          ],
+          "keyword": "minLength"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "cancelled/event_reference/uuid/'12345678-1234-1234-1234-123456789abc\\n'",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/StorageProjection",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "format"
+          ],
+          "keyword": "format"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "pattern"
+          ],
+          "keyword": "pattern"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "maxLength"
+          ],
+          "keyword": "maxLength"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "cancelled/event_reference/uuid/'12345678123412341234123456789abc'",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/StorageProjection",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "format"
+          ],
+          "keyword": "format"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "pattern"
+          ],
+          "keyword": "pattern"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "minLength"
+          ],
+          "keyword": "minLength"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "cancelled/event_reference/decoded_event_type/0",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/Event",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "oneOf",
+            0,
+            "allOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        },
+        {
+          "instance_path": [],
+          "schema_path": [
+            "oneOf",
+            1,
+            "allOf",
+            0,
+            "allOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "cancelled/event_reference/decoded_event_type/1",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/Event",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "oneOf",
+            0,
+            "allOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        },
+        {
+          "instance_path": [],
+          "schema_path": [
+            "oneOf",
+            1,
+            "allOf",
+            0,
+            "allOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "cancelled/event_reference/decoded_event_type/2",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/Event",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "oneOf",
+            0,
+            "allOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        },
+        {
+          "instance_path": [],
+          "schema_path": [
+            "oneOf",
+            1,
+            "allOf",
+            0,
+            "allOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "cancelled/event_reference/decoded_event_type/3",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/Event",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "oneOf",
+            0,
+            "allOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        },
+        {
+          "instance_path": [],
+          "schema_path": [
+            "oneOf",
+            1,
+            "allOf",
+            0,
+            "allOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "cancelled/event_reference/decoded_event_type/4",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/Event",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "oneOf",
+            0,
+            "allOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        },
+        {
+          "instance_path": [],
+          "schema_path": [
+            "oneOf",
+            1,
+            "allOf",
+            0,
+            "allOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "cancelled/event_reference/ref_media_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/StorageProjection",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [
+            "content"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf",
+            0,
+            "additionalProperties"
+          ],
+          "keyword": "additionalProperties"
+        },
+        {
+          "instance_path": [
+            "content"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf",
+            0,
+            "required"
+          ],
+          "keyword": "required"
+        },
+        {
+          "instance_path": [
+            "content",
+            "kind"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf",
+            0,
+            "properties",
+            "kind",
+            "const"
+          ],
+          "keyword": "const"
+        },
+        {
+          "instance_path": [
+            "content",
+            "event_ref",
+            "media_type"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf",
+            1,
+            "properties",
+            "event_ref",
+            "properties",
+            "media_type",
+            "const"
+          ],
+          "keyword": "const"
+        },
+        {
+          "instance_path": [
+            "content"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf",
+            2,
+            "additionalProperties"
+          ],
+          "keyword": "additionalProperties"
+        },
+        {
+          "instance_path": [
+            "content"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf",
+            2,
+            "required"
+          ],
+          "keyword": "required"
+        },
+        {
+          "instance_path": [
+            "content",
+            "kind"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf",
+            2,
+            "properties",
+            "kind",
+            "const"
+          ],
+          "keyword": "const"
+        },
+        {
+          "instance_path": [
+            "content",
+            "event_ref",
+            "media_type"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf",
+            2,
+            "properties",
+            "event_ref",
+            "properties",
+            "media_type",
+            "const"
+          ],
+          "keyword": "const"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "cancelled/record_reference/uuid/'invalid-uuid'",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/StorageProjection",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "format"
+          ],
+          "keyword": "format"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "pattern"
+          ],
+          "keyword": "pattern"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "minLength"
+          ],
+          "keyword": "minLength"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "cancelled/record_reference/uuid/'12345678-1234-1234-1234-123456789abc\\n'",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/StorageProjection",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "format"
+          ],
+          "keyword": "format"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "pattern"
+          ],
+          "keyword": "pattern"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "maxLength"
+          ],
+          "keyword": "maxLength"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "cancelled/record_reference/uuid/'12345678123412341234123456789abc'",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/StorageProjection",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "format"
+          ],
+          "keyword": "format"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "pattern"
+          ],
+          "keyword": "pattern"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "minLength"
+          ],
+          "keyword": "minLength"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "cancelled/record_reference/decoded_event_type/0",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/Event",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "oneOf",
+            0,
+            "allOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        },
+        {
+          "instance_path": [],
+          "schema_path": [
+            "oneOf",
+            1,
+            "allOf",
+            0,
+            "allOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "cancelled/record_reference/decoded_metadata_type/0",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/Metadata",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "oneOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        },
+        {
+          "instance_path": [],
+          "schema_path": [
+            "oneOf",
+            1,
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "cancelled/record_reference/decoded_event_type/1",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/Event",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "oneOf",
+            0,
+            "allOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        },
+        {
+          "instance_path": [],
+          "schema_path": [
+            "oneOf",
+            1,
+            "allOf",
+            0,
+            "allOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "cancelled/record_reference/decoded_metadata_type/1",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/Metadata",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "oneOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        },
+        {
+          "instance_path": [],
+          "schema_path": [
+            "oneOf",
+            1,
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "cancelled/record_reference/decoded_event_type/2",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/Event",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "oneOf",
+            0,
+            "allOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        },
+        {
+          "instance_path": [],
+          "schema_path": [
+            "oneOf",
+            1,
+            "allOf",
+            0,
+            "allOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "cancelled/record_reference/decoded_metadata_type/2",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/Metadata",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "oneOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        },
+        {
+          "instance_path": [],
+          "schema_path": [
+            "oneOf",
+            1,
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "cancelled/record_reference/decoded_event_type/3",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/Event",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "oneOf",
+            0,
+            "allOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        },
+        {
+          "instance_path": [],
+          "schema_path": [
+            "oneOf",
+            1,
+            "allOf",
+            0,
+            "allOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "cancelled/record_reference/decoded_metadata_type/3",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/Metadata",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "oneOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        },
+        {
+          "instance_path": [],
+          "schema_path": [
+            "oneOf",
+            1,
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "cancelled/record_reference/decoded_event_type/4",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/Event",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "oneOf",
+            0,
+            "allOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        },
+        {
+          "instance_path": [],
+          "schema_path": [
+            "oneOf",
+            1,
+            "allOf",
+            0,
+            "allOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "cancelled/record_reference/decoded_metadata_type/4",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/Metadata",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "oneOf",
+            0,
+            "type"
+          ],
+          "keyword": "type"
+        },
+        {
+          "instance_path": [],
+          "schema_path": [
+            "oneOf",
+            1,
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    },
+    {
+      "case_id": "cancelled/record_reference/ref_media_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/StorageProjection",
+      "raw_leaf_errors": [
+        {
+          "instance_path": [
+            "content"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf",
+            0,
+            "additionalProperties"
+          ],
+          "keyword": "additionalProperties"
+        },
+        {
+          "instance_path": [
+            "content"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf",
+            0,
+            "required"
+          ],
+          "keyword": "required"
+        },
+        {
+          "instance_path": [
+            "content",
+            "kind"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf",
+            0,
+            "properties",
+            "kind",
+            "const"
+          ],
+          "keyword": "const"
+        },
+        {
+          "instance_path": [
+            "content"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf",
+            1,
+            "additionalProperties"
+          ],
+          "keyword": "additionalProperties"
+        },
+        {
+          "instance_path": [
+            "content"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf",
+            1,
+            "required"
+          ],
+          "keyword": "required"
+        },
+        {
+          "instance_path": [
+            "content",
+            "kind"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf",
+            1,
+            "properties",
+            "kind",
+            "const"
+          ],
+          "keyword": "const"
+        },
+        {
+          "instance_path": [
+            "content",
+            "event_ref",
+            "media_type"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf",
+            1,
+            "properties",
+            "event_ref",
+            "properties",
+            "media_type",
+            "const"
+          ],
+          "keyword": "const"
+        },
+        {
+          "instance_path": [
+            "content",
+            "event_ref",
+            "media_type"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf",
+            2,
+            "properties",
+            "event_ref",
+            "properties",
+            "media_type",
+            "const"
+          ],
+          "keyword": "const"
+        }
+      ],
+      "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
+    }
+  ]
+}

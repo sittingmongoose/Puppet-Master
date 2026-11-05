@@ -1,0 +1,15 @@
+{
+  "status": "NEWLY_AUTHORED_ADDITIVE_RESOURCE_SELECTION",
+  "network_fallback": false,
+  "original_bank": "Plans/goal_run_cancelled_consumer_schema_resources.json",
+  "original_bank_sha256": "b616a2b1c219dceb152f1d67fee0b23a00afe8c98c0e821bff04a2592704869c",
+  "original_bank_unchanged": true,
+  "successor_resource": {
+    "path": "Plans/goal_run_projection_reference_contracts/cancelled.v1.schema.json",
+    "sha256": "89a11ab4b0174874b26d0f996051107ca058cb4cd45fe65d2cf7afac5e615ee0",
+    "retrieval_uri": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0"
+  },
+  "realm": "native_consumer",
+  "scope_rule": "The new resource resolves external references only inside this exact original realm. Original realms are never merged. Every original and new reference must eagerly resolve; this declaration does not excuse missing historical routes.",
+  "whole_resource_locations": "Plans/goal_run_projection_reference_contracts/original-locations.json"
+}

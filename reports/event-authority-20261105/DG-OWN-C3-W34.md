@@ -1,100 +1,109 @@
-# DG-OWN-C3-W34 — stopped at the original projection representation gate
+# DG-OWN-C3-W34 part 2 — reference successors authored; original consumer-edition blocker
 
-Branch `plans/ea-goal-own-c3-w34-20261105`, based exactly on `e1188eae0c5fa5cf0a8548d9dba76f6f0de8c437`. **Neither assigned suite is COMPLETE. Both stop on the exact technical blocker below.** This is a blocker handoff, not another partial source-witness delivery. Native execution is NOT_RUN.
+Continuation branch `plans/ea-goal-own-c3-w34-20261105`, exact starting head `83fbbd77bb5351995349861fdb713e18f2ec05dc`, on Nas1. **W3 and W4 are BLOCKED at the exact source-consumer dependency below. Neither is COMPLETE.** The requested projection-reference successors are authored; this is a technical-stop package, not a claim that more partial witnesses close O7. Native execution is NOT_RUN.
 
-## Location, cause, and required repair
+## Where, why, and required repair
 
-**Location.** `Plans/storage-plan.md:26505` (SP-311) explicitly requires a reference representation when the entire derived projection would exceed 16 KiB: “the row keeps the Event identity, whole-value commitment and BLAKE3 payload-store reference (SP-337)”. The same paragraph explicitly applies it to `CancelledProjection` in SP-312. SP-337 is at `Plans/storage-plan.md:28895`.
+**Where.** `Plans/goal_run_started_consumer_contracts/consumer.schema.json#/$defs/RetainedNativeStart` requires complete `original_d01_update` through `executor_workflow_original_start.v2.schema.json#/$defs/StorageWorkflowUpdate`. The cancelled consumer requires the same started original and the same original D01 graph through its own retained cancellation/current-source roots. The source schema at `Plans/executor_cancellation_contracts/schemas/workflow-original-start.v2.schema.json:1784` fixes the header to `pm.storage_value.executor_workflow_workflow_update.v4@4.0.0`; its original WorkflowBirth fixes `pm.executor.workflow_source.all_writers.v3` at line 692.
 
-The selected original roots cannot express that representation:
+The required native-v7 branch is independently authored and correctly separately dispatched: `Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-original-start.v6.schema.json:1844` issues `pm.storage_value.executor_workflow_workflow_update.v8@8.0.0`, with `all_writers.v7` birth at line 752. **These differences are intentional edition separation, not by themselves a defect.** The missing contract is the separately selected native-v7 passive consumer source/realm/method/custody mapping for each exact family. None was found in either family's own full consumer schema, method map or bank. The native-v7 protocol at line 144 expressly preserves the complete original started consumer and says no started consumer is adopted or modified. Its separate producer/current-source methods do not independently bind the old passive consumer graph. The certified family's v7 consumer cannot be silently adopted as either family's contract.
 
-| Family | Exact selected complete wrapper | Required full Event member |
-|---|---|---|
-| `goal_run.started` / W3 | `Plans/goal_run_started_consumer_contracts/consumer.schema.json:544`, `#/$defs/StorageProjection` | Closed `Projection` at line 113 requires `original_event` at line 120; its schema at line 142 selects the complete `TypedOriginalEvent`. |
-| `goal_run.cancelled` / W4 | `Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json:1392`, `#/$defs/CombinedStorageProjection` | Closed `CancelledProjection` at line 1103 requires `original_event` at line 1110; its schema at line 1146 selects the complete `TypedCancelledEvent`. |
+**Why the new projection/test contract cannot supply it.** The newly authored projection edition encodes/reconstructs the exact logical record and new derived checkpoint; it does not issue, rename or convert native original source custody. A TEST_ONLY source copy, changed original header, a copied v7 descriptor on an old birth, or a sibling's certified-consumer graph cannot create an authentic v3 birth/D01 original for a v7 run. The real repair is another **explicit, complete source-consumer edition** for each family, selecting its native-v7 complete original source graph and full retained/current/prefix/first-receipt methods in their own realms while retaining old editions. That is a source binding task, not another Event admission, product vote, retention policy or a payload-reference cast. This report does not claim the differing versions prevent the already specified separately dispatched producer methods from running.
 
-`Plans/storage_value_registry.json:115883` and `:116145` select those same whole wrappers. Neither the wrapper nor its record has a payload-reference alternative. The combined union's other branch is the original full started projection, not a reference branch. W4's positive Event itself remains inline-only; this finding concerns the **derived projection**, including a case whose Event is below the inline limit.
+The executable obstruction validates a **complete v7 StorageWorkflowUpdate schema specimen** under its actual selected whole root, then applies each family's actual old selected whole source root. Both old roots reject precisely the two version-header consts. Three additional exact-keyword checks per family show update schema id/version and birth writer_contract have disjoint required domains. They prove edition disjointness; per-family search and the explicit no-consumer-adoption text identify the missing route. None of these schema specimens asserts genuine native issuance or a semantic Start/D06 positive.
 
-**Cause.** DL-270's newer projection/payload owner requirement has no corresponding representation in these frozen original whole schemas. The eight diagnostic schema checks in `scripts/pm_goal_own_c3_w34_oracles.py` reproduce it without modifying a schema, bank, URI, hash, registry selection or existing checker:
+The old cancelled bank also retains its known 22 eagerly unresolved reference sites through two retrieval roots. They remain a whole-bank qualification blocker for that frozen selection, not a claim that an active D06 path is broken. The bare native-v7 bank's corresponding sites already have an explicit scoped import in `goal_certified_event_coordinator_contracts/original-reference-routing.json`; that existing native-v7 route is preserved and is **not** reported as a missing v7 contract. No bank, URI, old hash or historical byte was rewritten.
 
-| Schema specimen | Embedded Event MessagePack bytes | Complete wrapper MessagePack bytes | Result |
-|---|---:|---:|---|
-| Started `StorageProjection` | 12,749 | 16,385 | Complete original schema accepts; whole stored value exceeds the owner limit. |
-| Cancelled branch of `CombinedStorageProjection` | 10,199 | 16,385 | Complete original schema accepts; whole stored value exceeds the owner limit. |
+## Requested projection repair
 
-For each wrapper a small complete schema specimen also validates. Removing only `record.original_event` refuses. Substituting a scalar reference at its original Event-schema seam refuses with `type`. These are **schema specimens**, not authentic native-source positives: they do not assert Start/D06 issuance, provenance, coherent source digests, native admission, or a complete semantic path. MessagePack is used only to measure byte length; map ordering does not change that length. No numeric identity codec, cap, or physical-float normalization was introduced.
+Two separate newly authored contracts live in `Plans/goal_run_projection_reference_contracts/started.md` and `cancelled.md`. Each has its own complete schema, resource selection, physical selection and methods. GRS-1136 adopts started; GRS-1137 adopts cancelled; SP-1138 and ATS-1120 adopt both separately. They implement the lead's projection ruling and preserve SP-311/SP-312's original producer semantics.
 
-**Required repair.** Supply an explicitly versioned whole projection schema/resource/physical-selection successor for each exact family that implements the existing SP-311/SP-312 reference obligation. Preserve old roots and historical bytes. Define the exact reference/identity/whole-value-commitment join, original pack durability/read/access/source-lifetime predicates, wrapper and operation limits, and rebuild/cutover selection, then run the original-path suites against that explicitly selected edition. This is technical schema/selection work, not a new retention or product choice.
+- **Identity and value:** each stored row retains Storage/RunScope/Event identity plus original SP-286/CV-339 whole-value commitment. It verifies complete original Event bytes, BLAKE3/byte_size/media_type and independently acquired original custody. The payload reference is not an original-source authenticator.
+- **Whole stored parts:** deterministic inline, Event-reference, then metadata-reference forms preserve every original record field. Metadata omits only original_event, stored separately once. Complete row and complete operation must each fit 16 KiB. An oversized checkpoint uses its own full-value reference wrapper; every stored row/checkpoint/operation remains bounded. No source/schema field is trimmed and no new numeric codec/cap is authored.
+- **Packs and lifetime:** original bytes and index durability precede referencing-record acknowledgement. Resolution rechecks exact byte/digest/type/canonical decoding, actual store/access/permission/withdrawal and source availability before and after helpers and final disclosure. Existing SP-337 retention/hold/backup/deletion rules and each original source lifetime remain controlling; no projection-created original hold.
+- **Selection and cutover:** four additive Storage value rows select new projection/checkpoint keys, profiles and schemas. Every one of the 344 old Storage rows and all old profiles remain structurally identical; four additive same-group profiles enforce the same 16 KiB budget. All Event registry bytes remain identical. Derived state rebuilds into new isolated generations, with original full-prefix/source/CAS rules and atomic row/checkpoint/cutover; no in-place rewrite or old checkpoint copying. A missing source-consumer edition fails closed.
 
-**Why a new test contract cannot supply the missing original.** A prose adoption or TEST_ONLY issuer cannot make a reference validate against these exact closed original roots. Widening their required Event member would change frozen original schema bytes and their banks; selecting a different representation implicitly would substitute a schema edition. C3's brief prohibits rewriting/restamping original banks, URIs and hashes, and prohibits registry changes. Silently accepting an oversized wrapper, treating a failed projection as successful reference publication, or claiming the producer's inline-only refusal covers the newer mandatory projection-reference route would weaken the requirement. This worker stops at that incompatibility. It does not claim the missing successor was implemented.
+The new private/return schemas explicitly replace only derived projection/checkpoint members. Original native/Goal/FileSafe source roots remain in their original isolated realms. Semantic checkpoint algorithms are parameterized only by the new derived key/table/profile; no new checkpoint is cast to an old header.
 
-## Search, original realms, and premises
+## Search, authority and preservation
 
-Each family was searched separately across live Goal_Runtime_System, Executor_Protocol, Contracts_V0, Automated_Testing_System, storage-plan, Event/Storage registries, its own complete consumer schema/method/physical roots, and DG-OWN-C protocol/suite metadata. `source-search.json` records all fifteen paths, complete file hashes and exact term line hits independently for each family. The existing producer, passive-reader, projector and checkpoint bindings are reused as evidence; no missing owner identifier was inferred from a sibling. No selected reference alternative was found in either family's own original wrapper. The current `origin/main` copies of both whole consumer schemas are byte-identical to the pinned base; `main-comparison.json` records the exact revision and hashes. This is not a branch-local deletion.
+`source-search.json` records an independent fifteen-plus-file search for EACH exact family, complete hashes and line hits: current Goal_Runtime_System, Executor_Protocol, Contracts_V0, Automated_Testing_System, storage-plan, Event/Storage registries, original consumer/method/bank, DG-OWN-C protocol, native-v7 protocol/methods/fresh-profile methods and both exact native source editions. `main-comparison.json` records that all six original own consumer/schema-bank/method files are byte-identical on fetched origin/main. No binding is inferred from a sibling.
 
-DL-045's exact Goal row still names both registered families and permits technical depth work. GRS-079/EP-120/SP-311 still bind original Start; GRS-080/EP-121/SP-312 still bind positive D06 and its distinct causal graph. Those premises hold. DL-270's 16 KiB/store-once decision remains in SP-337 and the specific SP-311 projection amendment. The failed premise is narrower: an original schema-valid inline projection is **not** a complete current stored representation for the amended owner requirement. No new product ruling, retention/deletion interpretation, application Stop edition or DL-448 work is authored.
+DL-045's exact Goal row still includes both families and permits technical bindings for existing behavior after that search. GRS-079/EP-120/SP-311 still select genuine original Start; GRS-080/EP-121/SP-312 still select positive D06 and its distinct causal/effect graph. DL-270/SP-337 still require the projection reference path. These owner premises hold. The projection-representation premise now has a new explicit edition; the missing independently selected native-v7 passive consumer graph is not assumed away. No application `goal_run.stopped`, DL-448, Decision Log, admission, retention/deletion decision, seal or main push is authored.
 
-Eight whole-resource location mappings resolve the exact frozen prerequisite bytes, including the different old/v7 Source Control hashes. These are diagnostic file locations only, not new bank members or new source authority. The old W3 consumer's two isolated realms eagerly resolve all their references. The W4 native consumer retains 22 unresolved reference sites (eleven distinct relative references exposed through two literal retrieval roots); its Goal and FileSafe realms resolve. They point at the old completion input's `inputs/Plans/plans_to_code_handoff.schema.json` URI.
+Before minting, the scan covered **577 fetched origin refs plus local main, 287 distinct owner-document blobs**, with zero definitions for the allocated ids used. Used: **GRS-1136, GRS-1137, SP-1138, ATS-1120**. CV/SIR/EP allocations remain unused. The scan is retained as id-scan.json.
 
-The native-v7 composition has an **existing explicit** scoped import for that exact URI in `Plans/goal_certified_event_coordinator_contracts/original-reference-routing.json`. Its target is the whole retained original resource at SHA-256 `1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d`; nested resolution stays in the retained realm. The bare native-v7 bank's 22 sites are therefore not reported as a missing v7 contract. No corresponding edge was inferred for the older W4 bank. The older report already identifies those aliases as inactive, and this handoff does **not** claim that they break an active D06 method. They remain an eager-whole-bank qualification item, separate from the primary projection-root blocker.
+## Oracles and qualification
+
+**Complete original-path oracles added: 0 positive / 0 negative.** The new runner exits **2** on `BLOCKED_ORIGINAL_NATIVE_V7_CONSUMER_EDITION` after representation and exact-source diagnostics; it cannot claim full W3/W4 closure. The representation count is reported separately in `reference-oracles.json`: {'positive': 30, 'negative': 358}. Earlier failed intermediate fixture expectations are superseded by the final result, not counted as passing checks.
+
+The representation suite covers inline/Event-reference/metadata-reference decode, original full-value commitment and identity/key/dataset/store joins, selected representation, direct pack media and canonical-byte boundaries, missing/corrupt payloads, durability/access, typed source/permission/withdrawal/root facts, retained-versus-current distinction, full checkpoint spill, whole-operation bounds, and before/after publication plus immutable byte replay. **Its native metadata are schema specimens, not authentic Start/D06 source positives.** Publication uses an explicitly labelled TEST_ONLY assignment, never native redb or fsync evidence. New runtime guard labels and negative ids are exported in `guard_negative_map`, with raw per-field schema-path/keyword observations separately exported. Generic refusal codes are not asserted to be duplicate sets; no local isolation engine or check-11 clearance is claimed. Schema/physical seams are labelled component witnesses and are not presented as complete-path negatives.
+
+Every new stored-part size is measured with the exact existing hash-pinned canonical MessagePack implementation from DG-OWN-C's original source manifest. SP-286 full-value commitments use CV-339's exact existing ordered array, separately from pack BLAKE3. No identity serializer, physical-float normalization, 53-bit cap or changed historical recipe is introduced. The existing format/number/guard-proof shared sweeps remain separate obligations. Native NOT_RUN alone does not lower any grade.
 
 ## Closure and twelve-criterion re-grade
 
-| Family | Whole-root closure | Before | After | Exact stop |
-|---|---|---:|---:|---|
-| `goal_run.started` | **BLOCKED** | 11/12 | 10/12 | Selected `StorageProjection` cannot represent SP-311's required oversized-row reference route. |
-| `goal_run.cancelled` | **BLOCKED** | 11/12 | 10/12 | Selected combined wrapper's `CancelledProjection` cannot represent the same expressly adopted route. |
+| Family | Before part 2 | After part 2 | Whole-root result |
+|---|---:|---:|---|
+| goal_run.started / W3 | 10/12 | 10/12 | BLOCKED: separately selected native-v7 passive consumer source edition missing. |
+| goal_run.cancelled / W4 | 10/12 | 10/12 | BLOCKED: separately selected native-v7 passive consumer source edition missing; old whole-bank eager routing also remains unqualified. |
 
-Criterion order follows the twelve-criterion rubric. Both families have the same vector; the JSON beside this report contains current citations, exact quotes and complete file hashes for every cell.
+Both vectors, rubric order: `PASS PASS PASS PASS PASS PASS PASS PASS PASS PARTIAL PASS PARTIAL`. The two PARTIAL cells are consumers/checkpoints and positive/negative oracles. All 88 carried citations are checked against current text and rehashed; the self-grade adds four exact new limitation citations. No untested facet is upgraded. Old-profile complete producer/publication and source/prefix/CAS/crash/cutover tuples remain unclosed, rather than being implied by a new derived representation.
 
-| Criterion | Started | Cancelled |
-|---|---|---|
-| membership_version | PASS | PASS |
-| owner_doc | PASS | PASS |
-| producer | PASS | PASS |
-| closed_payload_schema | PASS | PASS |
-| scope_identity | PASS | PASS |
-| replay_idempotency | PASS | PASS |
-| retention | PASS | PASS |
-| redaction_custody | PASS | PASS |
-| transitions | PASS | PASS |
-| consumers_checkpoints | **PARTIAL** | **PARTIAL** |
-| compatibility_withdrawal | PASS | PASS |
-| positive_negative_oracles | **PARTIAL** | **PARTIAL** |
+## Changes and merge scope
 
-The consumer cell is downgraded for the demonstrated missing stored-row representation, not for native NOT_RUN. Event payload-schema and membership cells are unchanged: this is a derived Storage schema gap, not a new Event family or version. Full original Start/native/D01 production/publication, native-v7 dispatch, original D06/D05/effects/current-read, generic source/checkpoint/CAS/crash/staging/cutover/withdrawal suites remain unclosed. No untested facet is upgraded.
+New units: `Plans/Goal_Runtime_System.md:9197` GRS-1136; `:9245` GRS-1137; `Plans/storage-plan.md:30834` SP-1138; `Plans/Automated_Testing_System.md:7651` ATS-1120. Existing ATS-1118 and all other workers' units/scripts remain untouched. The new oracle is `scripts/pm_goal_own_c3_w34_reference_oracles.py`; part 1's diagnostic is preserved.
 
-## Changes, checks, and merge scope
+Every shared-file hunk relative to requested continuation head (new-side start,count):
 
-- **New script:** `scripts/pm_goal_own_c3_w34_oracles.py`, original-resource and projection representation preflight. It deliberately exits 2 with `BLOCKED_ORIGINAL_PROJECTION_REFERENCE_ROOT_MISSING`.
-- **New reports:** this file and `DG-OWN-C3-W34-self-grade.json`.
-- **Owner units added/amended:** none. **IDs used:** none. No allocation scan/mint was needed.
-- **Shared-file hunks:** none. ATS-1118, protocol.md, suites.json, all existing oracle files, original banks, schema resources and registries are unchanged.
-- **Complete-path oracles added:** 0 positives / 0 negatives. **Diagnostic checks:** 4 valid schema specimens / 4 required schema refusals. They are not counted as complete-path oracles.
-- **New product guards and guard-to-negative mapping:** none. No local guard-isolation engine or check-11 clearance is claimed.
+- **Plans/Goal_Runtime_System.md**: 9196,96.
+- **Plans/storage-plan.md**: 30833,58.
+- **Plans/Automated_Testing_System.md**: 7650,58.
+- **Plans/storage_value_registry.json**: 123079,646, 125927,28.
+- **Plans/goal_own_c_contracts/protocol.md**: 63,2, 71,2.
+- **Plans/goal_own_c_contracts/suites.json**: 82,8, 113,8.
 
-| Command | Exit | Fresh result |
-|---|---:|---|
-| `git fetch origin` | 1 then 0 | First fetch collided with another process updating remote refs; retry succeeded. Exact requested base verified. |
-| New W34 preflight with `--output` | 2 | Exact technical stop; four valid specimens and four refusals. |
-| `python scripts/pm_goal_own_c_oracles.py --output ...` | 0 | Inherited bounded adapter: 355 cases, 46 positive / 309 negative; full inherited coverage still PARTIAL. This adapter has no parallel removal audit. |
-| `python -m py_compile scripts/pm_goal_own_c3_w34_oracles.py` | 0 | Pass. |
-| Current citation check and canonical root comparison | 0 | Carried citations match; both consumer root files equal current origin/main. |
-| `git diff --check` | 0 | Pass. |
+Machine copy: `DG-OWN-C3-W34-part2-merge-ranges.json`. Generated shards/indexes are regenerated, never hand-merged. Registry shard churn outside the final appended rows is generated source-hash/header/line-boundary churn for the edited registry, not another source edit.
 
-Commands requiring msgpack/blake3 used an isolated temporary Python 3.14 venv with the system jsonschema/referencing packages, msgpack 1.2.4 and blake3 1.0.11. The initial system-Python import lacked msgpack; the isolated environment resolved that setup issue. No project dependency or machine configuration was changed.
+## Checks
 
-No Plans file changed, so shard/index generation was not run and no generated file is delivered. No fresh ordinary index-validation result is claimed; the pinned branch's previously reported main-ahead/legacy-ledger baseline is neither repaired nor reclassified. The four expensive DG removal suites and Part-2 native-source suite were not rerun after this preflight stop; their earlier results are not presented as fresh. No aggregate gate, governance seal, native execution, admission or landing was run. Resource-intensive runs did not overlap in this worker; sampled available memory stayed at least 8 GB and disk began above 500 GB free. No pm-mail, subagent, main push or other worker's edit occurred.
+| Command | Exit | Elapsed |
+|---|---:|---:|
+| `shard-generate` | 0 | 12.43 s |
+| `index-generate` | 0 | 110.63 s |
+| `shard-check` | 0 | 48.81 s |
+| `index-validate` | 1 | 98.07 s |
+| `own-c` | 0 | 3.01 s |
+| `source-oracles` | 0 | 12.23 s |
+| `dg-current` | 0 | 48.7 s |
+| `final-reference-oracles` | 2 | 14.25 s |
+| `storage-profile` | 1 | 1.07 s |
+| `final-shard-generate` | 0 | 4.13 s |
+| `final-index-generate` | 0 | 46.87 s |
+| `final-shard-check` | 0 | 10.02 s |
+| `final-index-validate` | 1 | 27.09 s |
+| `pycompile` | 0 | 1.0 s |
+| `diff-check` | 0 | 2.02 s |
 
-## Retained evidence
+The ordinary index baseline is recorded unmodified. Storage-profile validation exits 1 with the same 41 missing-profile errors at the requested base and this branch; all four new families have profiles, and no existing profile or policy is repaired. The attributed base run changes only its registry input, never its predicates. Known legacy-ledger removals and main-ahead DL-302/PLS-025 are not repaired. Final check outputs and the exact input edition accompany this report. Heavy checks run serially with PM_GOAL_AUDIT_WORKERS=1; C3-W12's serial supervisor yields while the history audit is active. Resource pauses are recorded. The source-check pass is serialized by pausing this worker's own history audit and its supervisor, then resuming both; C3-W12 is untouched. The fifteen-file live ignored currentness edition is copied coherently before index generation. No aggregate gates, governance reseal/baseline refresh, native execution, admission or landing is claimed.
 
-Directory: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W34/`. The final report, self-grade, check results and evidence manifest are copied there. Exact retained inputs/results:
+Retained evidence directory: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W34/part2/`. Exact hashes:
 
 | File | SHA-256 |
 |---|---|
-| `root-preflight.json` | `d79cc46fce12487f1149b56b0457e143553b2c4f01ea938cdc92e95da720b74e` |
-| `source-search.json` | `a5ea4044f294c1c5579114d2931110b235c0166ba2eeb8078025c107f4510d54` |
-| `main-comparison.json` | `6dcc94c904a9613d0740ad1cdbb6ab2083769ac5320b533b49f2247f6f3a06cd` |
-| `root-diagnostic.json` | `6f459780d6f334771fbfc0824d2484f87e4cae7317622f71cb820c2765e5967e` |
+| `reference-oracles.json` | `7a5eff4f9755dfcc9cdeac52aa3740a2b1f49a434b2664a5c5c95804576e557e` |
+| `source-search.json` | `a10485bbbae3d38d5c03bd9fddc5966b1a125398c3ada4134f24b46a5b74989c` |
+| `main-comparison.json` | `31114c3338c9db3092088ca53c54f37320e16460e4af65a1ae94a406eb263411` |
+| `preserved-roots.json` | `44d5006c4a0272e1457efa42ad3487d96f3a5e456cd14ef2e352d35230179ecc` |
+| `id-scan.json` | `ba54dca75101576c6b003d036259df04c07be7c8165c53aae375c4d2a094c60d` |
+| `currentness-copy.json` | `ab791e5e2ed31495e4044be4139a858a1470a3171a210fc609231ddf1030be98` |
+| `citation-check.json` | `1374945a3c550324b9370563b620e2b585c122d0b8ec94786566cc3b39a74111` |
+| `checks.json` | `ec0971dfc1727d77cc3945fca43e265b821072a3c1ba71ad193c15479b1f265e` |
+| `derived-scope.json` | `2cd5203ab5c7c9f067fb13d29a7d58d57ab85c8cdd3a2ac80dca498d83e75c3a` |
+| `schema-probes.json` | `ae04ae2827eefb8513f9c31fdadf626382e22af5295919e5e9582048a955ff3e` |
+| `registry-additive.json` | `bc257eb7880dc854d059f2980b13b16e6200003a45c8d5aa18011072de9796a1` |
+| `storage-profile-comparison.json` | `69729c81567784c98aab5d2a54b1ecaca8e90b733d3932723dfeb883106568d4` |
+| `input-briefs.json` | `02cf1ca56506bdaa9107cf1865ecb18281024395739de745e7bf663c4589e2da` |
+| `currentness-inputs.tar.gz` | `2a29334f0ae97365c4d2855971a3bb5f22ff3f82686c28751d4e18cb46179beb` |
 
-**Stopped question for Jared: none.** The exact technical dependency is the separately selected projection-reference successor described above. This handoff makes no COMPLETE or admission claim.
+**Stopped question: none.** This handoff names missing technical source-consumer binding, not a new product decision.
