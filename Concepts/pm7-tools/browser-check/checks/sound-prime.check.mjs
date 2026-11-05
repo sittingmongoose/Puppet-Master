@@ -48,7 +48,7 @@ export default async function(t){
  await t.check('native rehearsal setup completed',!!R,JSON.stringify(R));
  if(R){
   await t.check('setup stayed free of trusted input and activation',R.events===0&&!R.beforeActive&&!R.afterActive,JSON.stringify(R));
-  await t.check('offline prime synthesized before the first gesture',R.starts.length>0&&R.starts.every(x=>x.offline&&!x.active&&x.events===0),JSON.stringify(R));
+  await t.check('offline prime scheduled a source before the first gesture',R.starts.length>0&&R.starts.every(x=>x.offline&&!x.active&&x.events===0),JSON.stringify(R));
   await t.check('offline rehearsal emitted no live callout',!R.liveCallout,JSON.stringify(R));
  }
  await cdp.detach();

@@ -25,7 +25,7 @@ Parallel runs are safe: each gets its own browser and run folder. Give each its 
 |---|---|
 | `inbox-prewarm` | SW-26: early real bell holds defer the unrelated editor cache build until the inbox finishes closing; optional DevTools trace. Both surfaces. |
 | `idle-in-drag` | SW-17: real Usage divider hold with witnessed pending Usage/theme/census jobs; native delivery gate keeps setup from draining them, exact callback identities must resume after release. Missing owner setup fails. `--set repeats=5 --set setupDelay=0` stresses fast setup; `setupDelay=6000` stresses late setup. Both surfaces; `--set film=1` keeps the recording viewport, otherwise 1390×900. |
-| `sound-prime` | SW-26: before any gesture, the private sound rehearsal actually synthesizes on an offline context and leaves the live log untouched. Both surfaces. |
+| `sound-prime` | SW-26: before any gesture, the private sound rehearsal schedules a source on an offline context and leaves the live log untouched. Both surfaces. |
 | `work-projection` | SW-10: actual Studio scenario controls update scoped work surfaces and retain the transcript scroll host, on either surface. |
 | `performance-default-route` | Repeats the actual default perf route, including settled Basic/NieR→Glass menu picks, on either surface. `routeRepeats=2` by default; optional `tracePrefix=<path>`. |
 | `performance-round2` | One resident browser, control/fix trace accounting across Crew, Studio, actual look picks, real drag and cold bell. `--set base=... --set fixed=... --set evidence=<existing-dir>`; optional `tasks=crew,studio,look,drag,bell`, `profile=1`, `functional=1`. |
