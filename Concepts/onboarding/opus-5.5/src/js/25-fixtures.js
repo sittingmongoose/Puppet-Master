@@ -201,9 +201,13 @@
     };
   }
 
+  /* Transport timing belongs to the simulated world. Tests may declare a pending
+     approval window before making a fixture; live requests keep their own copy. */
+  const TIMINGS = { pairApprovalMs: 2800 };
   function base() {
     return {
       scenario: 'fresh',
+      timings: Object.assign({}, TIMINGS),
       client: { id: 'client:this', name: "Jared's MacBook Pro", os: 'macOS', user: 'jared' },
       here: {
         id: 'server:this', name: 'This computer', freeGB: 212, git: true, jj: true, internet: true, vpn: true, /* already on a VPN (the office one) */
@@ -408,7 +412,7 @@
     const h = NAS_HOST[platform]; return h ? Object.assign({}, env.unclaimed, { name: h, address: h, seed: env.unclaimed.seed + ':' + platform }) : env.unclaimed;
   }
   O55.fixtures = {
-    unclaimedFor,
+    unclaimedFor, timings: TIMINGS,
     PROVIDERS, FORGES, FREE_ROUTES, SCENARIOS, OFFICIAL, folders, DEMO,
     make(scenario) {
       const e = base();

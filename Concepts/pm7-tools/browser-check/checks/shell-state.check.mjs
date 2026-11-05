@@ -99,6 +99,9 @@ export const tests = {
   let f;
   for (const look of ['nier-light','friendly-dark']) {
    f=await t.app.open();
+   await t.equal(`${look} normal approval fixture remains 2.8s`,()=>f.evaluate(()=>O55.fixtures.timings.pairApprovalMs),2800);
+   // This case inspects a pending approval, rather than racing the normal auto-approval.
+   await f.evaluate(()=>O55.fixtures.timings.pairApprovalMs=60000);
    await t.app.look(look); await f.locator('#o55np-reboot').waitFor({state:'hidden'});
    if(t.args.helpSelftest==='transparent') await f.addStyleTag({content:'#pm7ob-explainer .pst-bt-on, #pm7ob-explainer .pst-bt-off, #pm7ob-explainer .o55-explainer-w {opacity:0!important}'});
    for (const id of ['ai','ai-none','c-review','c-pair','c-ready','s-kind','s-wait','s-confirm','s-ready','away-setup']) {
@@ -107,6 +110,7 @@ export const tests = {
     await row.scrollIntoViewIfNeeded(); await row.click();
     await t.until(`${look} ${id} opens`, () => window.O55.S.open && !!document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)'));
     await f.waitForFunction(()=>{const e=document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)');return e && !e.matches('.o55-hold,.o55-entering') && e.innerText.trim().length>0;},null,{timeout:15000});
+    if(id==='c-pair') await f.waitForFunction(()=>Object.values(O55.S.sess.ops||{}).some(op=>op.state==='running'&&(op.phases||[]).some(p=>p.key==='approve'&&p.status==='active')));
     // Capture launch facts together, then open Help immediately: a pairing fixture
     // can finish while separate diagnostic reads run and remove its Resend control.
     if(t.args.helpSelftest==='missing') await f.locator('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-do="tip"]').evaluateAll(es=>es.forEach(e=>e.remove()));
@@ -130,6 +134,7 @@ export const tests = {
     const bodyPaint=await paintedBody(words,t.page);
     t.log(JSON.stringify({look,id,bodyPaint}));
     await t.check(`${look} ${id} body text paints ink`,bodyPaint.paintedCount>=3,JSON.stringify(bodyPaint));
+    if(id==='c-pair') await t.check(`${look} declared 60s pending approval remains active`,await f.evaluate(()=>O55.S.env.timings.pairApprovalMs===60000&&!O55.S.sess.connect.paired&&Object.values(O55.S.sess.ops||{}).some(op=>op.state==='running'&&(op.phases||[]).some(p=>p.key==='approve'&&p.status==='active'))));
     if(['c-pair','s-wait'].includes(id)) await t.crop(`${look}-${id}-help`,'#pm7ob-explainer','Rendered help body stays visible on the pairing and discovery screens');
 
     await f.evaluate(() => O55.ui.close());

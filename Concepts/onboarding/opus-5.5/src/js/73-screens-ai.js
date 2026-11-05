@@ -217,8 +217,10 @@
     if (['signin', 'key', 'install'].includes(st) && !r.confirmInstall && (otherWay || r.adding)) extra = ex('add', `<div class="o55-sublinks">${otherWay}${r.adding ? C.link(T('ai.cancel'), 'cancelAdd', p.id, { tip: false }) : ''}</div>`);
     if (st === 'key') { action = { label: T('ai.key'), do: 'key', arg: p.id }; }
     if (st === 'server') { pill = ['needs', T('ai.notSetUp')]; meta = T('ai.pairs.opencode-runtime'); action = { label: T('ai.setUp'), do: 'server', arg: p.id }; }
-    if (fromCopy && st !== 'ready') meta = T('ai.unavailable', { project: cp.name, host: hostName(S) });
-    else if (fromCopy) meta = T('ai.from', { project: cp.name }) + ' · ' + meta;
+    if (fromCopy) {
+      /* Failure reasons and recovery take precedence over the copied-account sign-in hint. */
+      if (!pill || pill[0] !== 'fail') meta = st === 'ready' ? T('ai.from', { project: cp.name }) + ' · ' + meta : T('ai.unavailable', { project: cp.name, host: hostName(S) });
+    }
     else if (d && d.installed && !['ready', 'server', 'expired'].includes(st)) meta = (onServer(S) ? T('ai.foundOn', { host: host(S).name }) : T('ai.found')) + ' · ' + meta;
     /* inline states */
     if (r.confirmInstall) extra = ex('ask', installConsent(S, p, r));
