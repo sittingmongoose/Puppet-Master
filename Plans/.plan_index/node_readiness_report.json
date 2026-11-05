@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18750,
+    "depends_on_edge_count": 19071,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21958,
-    "node_count": 7422,
+    "edge_count": 22279,
+    "node_count": 7487,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-05T01:50:32Z",
+  "generated_at_utc": "2026-11-05T05:13:12Z",
   "gui_related_units": {
     "count": 3791,
     "units": [
@@ -41725,10 +41725,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 7422,
+  "plan_unit_count": 7487,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2743,
+      "high": 2808,
       "low": 9,
       "medium": 30,
       "standard": 4640
@@ -42946,6 +42946,7 @@
       "event_contract_drift": 1,
       "event_driven_gui_projection_alignment": 1,
       "event_envelope_compatibility_break": 1,
+      "event_identity_custody_and_false_evidence": 65,
       "event_observation_misrepresented_as_goal_action": 1,
       "event_payload_gap": 1,
       "event_payload_schema_owner_split_drift": 1,
@@ -45863,7 +45864,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 7204,
+      "accepted": 7269,
       "retired": 195,
       "superseded": 23
     },
@@ -45913,7 +45914,7 @@
       "implementation_reference": 1,
       "integration_contract": 130,
       "interaction_contract": 6,
-      "interface_contract": 6,
+      "interface_contract": 71,
       "invariant": 33,
       "migration": 1,
       "migration_contract": 2,
@@ -46060,7 +46061,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "76ba098f914899db177bae3445d45612d22b6b60c5e3f02f84a3a3bd2f7a0647",
+        "expected": "d5304bbf055dbd62892ac8c91319064237f1385906d0f18d4eead107e4d3d58b",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {
@@ -46098,6 +46099,22 @@
         "error": "pnc019_source_hash_stale",
         "expected": "aa8aaa943e27ffc9be79cc62049dbc4bc36ccd2b3955891b8ecfa9b1b5f6230d",
         "source_path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Automated_Testing_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Contracts_V0.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Test_Capture_and_Motion_Evidence.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/storage-plan.md"
       },
       {
         "bulk_registration_allowed": false,

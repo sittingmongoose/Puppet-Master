@@ -6129,6 +6129,7 @@
     "CRAU-060",
     "CRAU-103",
     "ATS-027",
+    "ATS-1222",
     "ACD-430",
     "GRS-032",
     "CV-339",
@@ -6796,6 +6797,27 @@
     "PDS-023",
     "PLS-024",
     "SIR-055",
+    "CV-1300",
+    "CV-1301",
+    "CV-1302",
+    "CV-1303",
+    "CV-1304",
+    "CV-1305",
+    "CV-1306",
+    "CV-1307",
+    "CV-1308",
+    "CV-1309",
+    "CV-1310",
+    "CV-1311",
+    "CV-1312",
+    "CV-1313",
+    "CV-1314",
+    "CV-1315",
+    "CV-1316",
+    "CV-1317",
+    "CV-1318",
+    "CV-1319",
+    "CV-1320",
     "CV-367",
     "SP-349",
     "SP-353",
@@ -6807,6 +6829,27 @@
     "UCC-148",
     "C-046",
     "ACD-508",
+    "SP-1300",
+    "SP-1301",
+    "SP-1302",
+    "SP-1303",
+    "SP-1304",
+    "SP-1305",
+    "SP-1306",
+    "SP-1307",
+    "SP-1308",
+    "SP-1309",
+    "SP-1310",
+    "SP-1311",
+    "SP-1312",
+    "SP-1313",
+    "SP-1314",
+    "SP-1315",
+    "SP-1316",
+    "SP-1317",
+    "SP-1318",
+    "SP-1319",
+    "SP-1320",
     "CV-368",
     "SP-351",
     "SMPFS-035",
@@ -6826,6 +6869,27 @@
     "GRS-086",
     "OSI-439",
     "SQR-019",
+    "TCME-1300",
+    "TCME-1301",
+    "TCME-1302",
+    "TCME-1303",
+    "TCME-1304",
+    "TCME-1305",
+    "TCME-1306",
+    "TCME-1307",
+    "TCME-1308",
+    "TCME-1309",
+    "TCME-1310",
+    "TCME-1311",
+    "TCME-1312",
+    "TCME-1313",
+    "TCME-1314",
+    "TCME-1315",
+    "TCME-1316",
+    "TCME-1317",
+    "TCME-1318",
+    "TCME-1319",
+    "ATS-1220",
     "SMPFS-001",
     "SMPFS-144",
     "SP-352",
@@ -6840,6 +6904,7 @@
     "EP-132",
     "OP-038",
     "SQR-020",
+    "ATS-1221",
     "RAP-012",
     "RTIM-019",
     "RTIM-024",
@@ -15530,6 +15595,61 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "ATS-1220",
+      "to": "ATS-026"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1220",
+      "to": "ATS-027"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1220",
+      "to": "CV-1320"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1220",
+      "to": "SP-1320"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1221",
+      "to": "ATS-1220"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1221",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1221",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1221",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1222",
+      "to": "ATS-025"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1222",
+      "to": "ATS-026"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1222",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "BBI-001",
       "to": "FGI-001"
     },
@@ -23600,6 +23720,206 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CV-1300",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1300",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1300",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1300",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1301",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1301",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1301",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1301",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1302",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1302",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1302",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1302",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1303",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1303",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1303",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1303",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1304",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1304",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1304",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1304",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1305",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1305",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1305",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1305",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1306",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1306",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1306",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1306",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1307",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1307",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1307",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1307",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1308",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1308",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1308",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1308",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1309",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1309",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1309",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1309",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CV-131",
       "to": "CV-017"
     },
@@ -23610,8 +23930,228 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CV-1310",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1310",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1310",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1310",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1311",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1311",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1311",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1311",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1312",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1312",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1312",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1312",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1313",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1313",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1313",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1313",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1314",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1314",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1314",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1314",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1315",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1315",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1315",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1315",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1316",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1316",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1316",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1316",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1317",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1317",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1317",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1317",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1318",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1318",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1318",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1318",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1319",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1319",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1319",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1319",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CV-132",
       "to": "CV-131"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1320",
+      "to": "ATS-026"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1320",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1320",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1320",
+      "to": "CV-366"
     },
     {
       "edge_type": "depends_on",
@@ -77655,6 +78195,306 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-1300",
+      "to": "CV-1300"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1300",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1300",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1300",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1300",
+      "to": "SP-340"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1300",
+      "to": "SP-343"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1301",
+      "to": "CV-1301"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1301",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1301",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1301",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1301",
+      "to": "SP-340"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1301",
+      "to": "SP-343"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1302",
+      "to": "CV-1302"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1302",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1302",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1302",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1302",
+      "to": "SP-340"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1302",
+      "to": "SP-343"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1303",
+      "to": "CV-1303"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1303",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1303",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1303",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1303",
+      "to": "SP-340"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1303",
+      "to": "SP-343"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1304",
+      "to": "CV-1304"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1304",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1304",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1304",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1304",
+      "to": "SP-340"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1304",
+      "to": "SP-343"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1305",
+      "to": "CV-1305"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1305",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1305",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1305",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1305",
+      "to": "SP-340"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1305",
+      "to": "SP-343"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1306",
+      "to": "CV-1306"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1306",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1306",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1306",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1306",
+      "to": "SP-340"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1306",
+      "to": "SP-343"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1307",
+      "to": "CV-1307"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1307",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1307",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1307",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1307",
+      "to": "SP-340"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1307",
+      "to": "SP-343"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1308",
+      "to": "CV-1308"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1308",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1308",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1308",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1308",
+      "to": "SP-340"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1308",
+      "to": "SP-343"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1309",
+      "to": "CV-1309"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1309",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1309",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1309",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1309",
+      "to": "SP-340"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1309",
+      "to": "SP-343"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SP-131",
       "to": "PDS-003"
     },
@@ -77675,6 +78515,306 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-1310",
+      "to": "CV-1310"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1310",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1310",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1310",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1310",
+      "to": "SP-340"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1310",
+      "to": "SP-343"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1311",
+      "to": "CV-1311"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1311",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1311",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1311",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1311",
+      "to": "SP-340"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1311",
+      "to": "SP-343"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1312",
+      "to": "CV-1312"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1312",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1312",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1312",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1312",
+      "to": "SP-340"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1312",
+      "to": "SP-343"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1313",
+      "to": "CV-1313"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1313",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1313",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1313",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1313",
+      "to": "SP-340"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1313",
+      "to": "SP-343"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1314",
+      "to": "CV-1314"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1314",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1314",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1314",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1314",
+      "to": "SP-340"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1314",
+      "to": "SP-343"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1315",
+      "to": "CV-1315"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1315",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1315",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1315",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1315",
+      "to": "SP-340"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1315",
+      "to": "SP-343"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1316",
+      "to": "CV-1316"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1316",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1316",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1316",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1316",
+      "to": "SP-340"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1316",
+      "to": "SP-343"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1317",
+      "to": "CV-1317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1317",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1317",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1317",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1317",
+      "to": "SP-340"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1317",
+      "to": "SP-343"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1318",
+      "to": "CV-1318"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1318",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1318",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1318",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1318",
+      "to": "SP-340"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1318",
+      "to": "SP-343"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1319",
+      "to": "CV-1319"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1319",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1319",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1319",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1319",
+      "to": "SP-340"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1319",
+      "to": "SP-343"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SP-132",
       "to": "PDS-003"
     },
@@ -77692,6 +78832,36 @@
       "edge_type": "depends_on",
       "from": "SP-132",
       "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1320",
+      "to": "CV-1320"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1320",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1320",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1320",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1320",
+      "to": "SP-340"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1320",
+      "to": "SP-343"
     },
     {
       "edge_type": "depends_on",
@@ -87127,6 +88297,506 @@
       "edge_type": "depends_on",
       "from": "TCME-008",
       "to": "TCME-007"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1300",
+      "to": "CV-1300"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1300",
+      "to": "SP-1300"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1300",
+      "to": "TCME-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1300",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1300",
+      "to": "TCME-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1301",
+      "to": "CV-1301"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1301",
+      "to": "SP-1301"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1301",
+      "to": "TCME-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1301",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1301",
+      "to": "TCME-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1302",
+      "to": "CV-1302"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1302",
+      "to": "SP-1302"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1302",
+      "to": "TCME-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1302",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1302",
+      "to": "TCME-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1303",
+      "to": "CV-1303"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1303",
+      "to": "SP-1303"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1303",
+      "to": "TCME-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1303",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1303",
+      "to": "TCME-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1304",
+      "to": "CV-1304"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1304",
+      "to": "SP-1304"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1304",
+      "to": "TCME-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1304",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1304",
+      "to": "TCME-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1305",
+      "to": "CV-1305"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1305",
+      "to": "SP-1305"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1305",
+      "to": "TCME-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1305",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1305",
+      "to": "TCME-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1306",
+      "to": "CV-1306"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1306",
+      "to": "SP-1306"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1306",
+      "to": "TCME-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1306",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1306",
+      "to": "TCME-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1307",
+      "to": "CV-1307"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1307",
+      "to": "SP-1307"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1307",
+      "to": "TCME-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1307",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1307",
+      "to": "TCME-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1308",
+      "to": "CV-1308"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1308",
+      "to": "SP-1308"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1308",
+      "to": "TCME-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1308",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1308",
+      "to": "TCME-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1309",
+      "to": "CV-1309"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1309",
+      "to": "SP-1309"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1309",
+      "to": "TCME-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1309",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1309",
+      "to": "TCME-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1310",
+      "to": "CV-1310"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1310",
+      "to": "SP-1310"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1310",
+      "to": "TCME-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1310",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1310",
+      "to": "TCME-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1311",
+      "to": "CV-1311"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1311",
+      "to": "SP-1311"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1311",
+      "to": "TCME-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1311",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1311",
+      "to": "TCME-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1312",
+      "to": "CV-1312"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1312",
+      "to": "SP-1312"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1312",
+      "to": "TCME-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1312",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1312",
+      "to": "TCME-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1313",
+      "to": "CV-1313"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1313",
+      "to": "SP-1313"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1313",
+      "to": "TCME-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1313",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1313",
+      "to": "TCME-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1314",
+      "to": "CV-1314"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1314",
+      "to": "SP-1314"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1314",
+      "to": "TCME-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1314",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1314",
+      "to": "TCME-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1315",
+      "to": "CV-1315"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1315",
+      "to": "SP-1315"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1315",
+      "to": "TCME-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1315",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1315",
+      "to": "TCME-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1316",
+      "to": "CV-1316"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1316",
+      "to": "SP-1316"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1316",
+      "to": "TCME-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1316",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1316",
+      "to": "TCME-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1317",
+      "to": "CV-1317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1317",
+      "to": "SP-1317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1317",
+      "to": "TCME-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1317",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1317",
+      "to": "TCME-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1318",
+      "to": "CV-1318"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1318",
+      "to": "SP-1318"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1318",
+      "to": "TCME-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1318",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1318",
+      "to": "TCME-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1319",
+      "to": "CV-1319"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1319",
+      "to": "SP-1319"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1319",
+      "to": "TCME-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1319",
+      "to": "TCME-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TCME-1319",
+      "to": "TCME-008"
     },
     {
       "edge_type": "depends_on",
@@ -117219,7 +118889,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-04T23:02:55Z",
+  "generated_at_utc": "2026-11-05T05:13:11Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -131332,6 +133002,57 @@
       "unit_type": "acceptance_gate"
     },
     {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-1220",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "ATS-1220 - testing.runtime_enabled_for_adapter prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 7244,
+        "line": 7246,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-1221",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "ATS-1221 - W3C phase-1 per-family oracle plan",
+        "heading_level": 3,
+        "heading_line": 7393,
+        "line": 7395,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-1222",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "ATS-1222 - testing.receipt.recorded owner investigation boundary",
+        "heading_level": 3,
+        "heading_line": 7463,
+        "line": 7465,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
       "context_scope": "bitbucket_provider_identity",
       "gui_related": true,
       "owner_doc": "Plans/Bitbucket_Integration.md",
@@ -140444,6 +142165,176 @@
       "unit_type": "constraint"
     },
     {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1300",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "CV-1300 - artifacts.capture_provenance.inspected closed payload",
+        "heading_level": 3,
+        "heading_line": 24476,
+        "line": 24478,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1301",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "CV-1301 - artifacts.demonstration_video.created closed payload",
+        "heading_level": 3,
+        "heading_line": 24552,
+        "line": 24554,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1302",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "CV-1302 - artifacts.demonstration_video.failed closed payload",
+        "heading_level": 3,
+        "heading_line": 24628,
+        "line": 24630,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1303",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "CV-1303 - testing.capture.bookmarked closed payload",
+        "heading_level": 3,
+        "heading_line": 24704,
+        "line": 24706,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1304",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "CV-1304 - testing.capture.clip_saved closed payload",
+        "heading_level": 3,
+        "heading_line": 24780,
+        "line": 24782,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1305",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "CV-1305 - testing.capture.effective_quality_changed closed payload",
+        "heading_level": 3,
+        "heading_line": 24856,
+        "line": 24858,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1306",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "CV-1306 - testing.capture.health_degraded closed payload",
+        "heading_level": 3,
+        "heading_line": 24932,
+        "line": 24934,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1307",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "CV-1307 - testing.capture.health_recovered closed payload",
+        "heading_level": 3,
+        "heading_line": 25008,
+        "line": 25010,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1308",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "CV-1308 - testing.capture.interrupted closed payload",
+        "heading_level": 3,
+        "heading_line": 25084,
+        "line": 25086,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1309",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "CV-1309 - testing.capture.paused closed payload",
+        "heading_level": 3,
+        "heading_line": 25160,
+        "line": 25162,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
       "context_scope": "authpolicy_enums_provider_defaults",
       "gui_related": false,
       "owner_doc": "Plans/Contracts_V0.md",
@@ -140461,6 +142352,176 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1310",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "CV-1310 - testing.capture.provenance_rejected closed payload",
+        "heading_level": 3,
+        "heading_line": 25236,
+        "line": 25238,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1311",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "CV-1311 - testing.capture.provenance_verified closed payload",
+        "heading_level": 3,
+        "heading_line": 25312,
+        "line": 25314,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1312",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "CV-1312 - testing.capture.redaction_applied closed payload",
+        "heading_level": 3,
+        "heading_line": 25388,
+        "line": 25390,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1313",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "CV-1313 - testing.capture.resumed closed payload",
+        "heading_level": 3,
+        "heading_line": 25464,
+        "line": 25466,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1314",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "CV-1314 - testing.capture.segment_corrupt closed payload",
+        "heading_level": 3,
+        "heading_line": 25540,
+        "line": 25542,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1315",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "CV-1315 - testing.capture.segment_finalized closed payload",
+        "heading_level": 3,
+        "heading_line": 25616,
+        "line": 25618,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1316",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "CV-1316 - testing.capture.segment_recovered closed payload",
+        "heading_level": 3,
+        "heading_line": 25692,
+        "line": 25694,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1317",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "CV-1317 - testing.capture.started closed payload",
+        "heading_level": 3,
+        "heading_line": 25768,
+        "line": 25770,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1318",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "CV-1318 - testing.capture.stopped closed payload",
+        "heading_level": 3,
+        "heading_line": 25844,
+        "line": 25846,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1319",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "CV-1319 - testing.capture.target_changed closed payload",
+        "heading_level": 3,
+        "heading_line": 25920,
+        "line": 25922,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
       "context_scope": "product_auth_copy_anthropic_helper",
       "gui_related": true,
       "owner_doc": "Plans/Contracts_V0.md",
@@ -140476,6 +142537,23 @@
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1320",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "CV-1320 - testing.runtime_enabled_for_adapter closed payload",
+        "heading_level": 3,
+        "heading_line": 25996,
+        "line": 25998,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
     },
     {
       "context_scope": "retired_gemini_cli_auth_filtering",
@@ -224509,6 +226587,176 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1300",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "SP-1300 - artifacts.capture_provenance.inspected storage and reader binding",
+        "heading_level": 3,
+        "heading_line": 29484,
+        "line": 29486,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1301",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "SP-1301 - artifacts.demonstration_video.created storage and reader binding",
+        "heading_level": 3,
+        "heading_line": 29606,
+        "line": 29608,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1302",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "SP-1302 - artifacts.demonstration_video.failed storage and reader binding",
+        "heading_level": 3,
+        "heading_line": 29725,
+        "line": 29727,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1303",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "SP-1303 - testing.capture.bookmarked storage and reader binding",
+        "heading_level": 3,
+        "heading_line": 29847,
+        "line": 29849,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1304",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "SP-1304 - testing.capture.clip_saved storage and reader binding",
+        "heading_level": 3,
+        "heading_line": 29969,
+        "line": 29971,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1305",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "SP-1305 - testing.capture.effective_quality_changed storage and reader binding",
+        "heading_level": 3,
+        "heading_line": 30088,
+        "line": 30090,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1306",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "SP-1306 - testing.capture.health_degraded storage and reader binding",
+        "heading_level": 3,
+        "heading_line": 30210,
+        "line": 30212,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1307",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "SP-1307 - testing.capture.health_recovered storage and reader binding",
+        "heading_level": 3,
+        "heading_line": 30332,
+        "line": 30334,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1308",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "SP-1308 - testing.capture.interrupted storage and reader binding",
+        "heading_level": 3,
+        "heading_line": 30454,
+        "line": 30456,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1309",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "SP-1309 - testing.capture.paused storage and reader binding",
+        "heading_level": 3,
+        "heading_line": 30576,
+        "line": 30578,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
       "context_scope": "storage_batch_177_runtime_terminal_storage",
       "gui_related": false,
       "owner_doc": "Plans/storage-plan.md",
@@ -224526,6 +226774,176 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1310",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "SP-1310 - testing.capture.provenance_rejected storage and reader binding",
+        "heading_level": 3,
+        "heading_line": 30698,
+        "line": 30700,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1311",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "SP-1311 - testing.capture.provenance_verified storage and reader binding",
+        "heading_level": 3,
+        "heading_line": 30817,
+        "line": 30819,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1312",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "SP-1312 - testing.capture.redaction_applied storage and reader binding",
+        "heading_level": 3,
+        "heading_line": 30936,
+        "line": 30938,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1313",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "SP-1313 - testing.capture.resumed storage and reader binding",
+        "heading_level": 3,
+        "heading_line": 31055,
+        "line": 31057,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1314",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "SP-1314 - testing.capture.segment_corrupt storage and reader binding",
+        "heading_level": 3,
+        "heading_line": 31177,
+        "line": 31179,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1315",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "SP-1315 - testing.capture.segment_finalized storage and reader binding",
+        "heading_level": 3,
+        "heading_line": 31299,
+        "line": 31301,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1316",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "SP-1316 - testing.capture.segment_recovered storage and reader binding",
+        "heading_level": 3,
+        "heading_line": 31418,
+        "line": 31420,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1317",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "SP-1317 - testing.capture.started storage and reader binding",
+        "heading_level": 3,
+        "heading_line": 31537,
+        "line": 31539,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1318",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "SP-1318 - testing.capture.stopped storage and reader binding",
+        "heading_level": 3,
+        "heading_line": 31659,
+        "line": 31661,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1319",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "SP-1319 - testing.capture.target_changed storage and reader binding",
+        "heading_level": 3,
+        "heading_line": 31781,
+        "line": 31783,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
       "context_scope": "storage_batch_177_runtime_terminal_storage",
       "gui_related": false,
       "owner_doc": "Plans/storage-plan.md",
@@ -224541,6 +226959,23 @@
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1320",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "SP-1320 - testing.runtime_enabled_for_adapter storage and reader binding",
+        "heading_level": 3,
+        "heading_line": 31903,
+        "line": 31905,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
     },
     {
       "context_scope": "storage_batch_177_runtime_terminal_storage",
@@ -233738,6 +236173,346 @@
       },
       "status": "accepted",
       "unit_type": "command_binding"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Test_Capture_and_Motion_Evidence.md",
+      "plan_unit_id": "TCME-1300",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "TCME-1300 - artifacts.capture_provenance.inspected prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 537,
+        "line": 539,
+        "path": "Plans/Test_Capture_and_Motion_Evidence.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Test_Capture_and_Motion_Evidence.md",
+      "plan_unit_id": "TCME-1301",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "TCME-1301 - artifacts.demonstration_video.created prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 693,
+        "line": 695,
+        "path": "Plans/Test_Capture_and_Motion_Evidence.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Test_Capture_and_Motion_Evidence.md",
+      "plan_unit_id": "TCME-1302",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "TCME-1302 - artifacts.demonstration_video.failed prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 849,
+        "line": 851,
+        "path": "Plans/Test_Capture_and_Motion_Evidence.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Test_Capture_and_Motion_Evidence.md",
+      "plan_unit_id": "TCME-1303",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "TCME-1303 - testing.capture.bookmarked prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 1006,
+        "line": 1008,
+        "path": "Plans/Test_Capture_and_Motion_Evidence.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Test_Capture_and_Motion_Evidence.md",
+      "plan_unit_id": "TCME-1304",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "TCME-1304 - testing.capture.clip_saved prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 1161,
+        "line": 1163,
+        "path": "Plans/Test_Capture_and_Motion_Evidence.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Test_Capture_and_Motion_Evidence.md",
+      "plan_unit_id": "TCME-1305",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "TCME-1305 - testing.capture.effective_quality_changed prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 1316,
+        "line": 1318,
+        "path": "Plans/Test_Capture_and_Motion_Evidence.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Test_Capture_and_Motion_Evidence.md",
+      "plan_unit_id": "TCME-1306",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "TCME-1306 - testing.capture.health_degraded prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 1472,
+        "line": 1474,
+        "path": "Plans/Test_Capture_and_Motion_Evidence.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Test_Capture_and_Motion_Evidence.md",
+      "plan_unit_id": "TCME-1307",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "TCME-1307 - testing.capture.health_recovered prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 1629,
+        "line": 1631,
+        "path": "Plans/Test_Capture_and_Motion_Evidence.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Test_Capture_and_Motion_Evidence.md",
+      "plan_unit_id": "TCME-1308",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "TCME-1308 - testing.capture.interrupted prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 1785,
+        "line": 1787,
+        "path": "Plans/Test_Capture_and_Motion_Evidence.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Test_Capture_and_Motion_Evidence.md",
+      "plan_unit_id": "TCME-1309",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "TCME-1309 - testing.capture.paused prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 1941,
+        "line": 1943,
+        "path": "Plans/Test_Capture_and_Motion_Evidence.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Test_Capture_and_Motion_Evidence.md",
+      "plan_unit_id": "TCME-1310",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "TCME-1310 - testing.capture.provenance_rejected prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 2096,
+        "line": 2098,
+        "path": "Plans/Test_Capture_and_Motion_Evidence.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Test_Capture_and_Motion_Evidence.md",
+      "plan_unit_id": "TCME-1311",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "TCME-1311 - testing.capture.provenance_verified prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 2251,
+        "line": 2253,
+        "path": "Plans/Test_Capture_and_Motion_Evidence.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Test_Capture_and_Motion_Evidence.md",
+      "plan_unit_id": "TCME-1312",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "TCME-1312 - testing.capture.redaction_applied prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 2406,
+        "line": 2408,
+        "path": "Plans/Test_Capture_and_Motion_Evidence.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Test_Capture_and_Motion_Evidence.md",
+      "plan_unit_id": "TCME-1313",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "TCME-1313 - testing.capture.resumed prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 2562,
+        "line": 2564,
+        "path": "Plans/Test_Capture_and_Motion_Evidence.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Test_Capture_and_Motion_Evidence.md",
+      "plan_unit_id": "TCME-1314",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "TCME-1314 - testing.capture.segment_corrupt prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 2717,
+        "line": 2719,
+        "path": "Plans/Test_Capture_and_Motion_Evidence.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Test_Capture_and_Motion_Evidence.md",
+      "plan_unit_id": "TCME-1315",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "TCME-1315 - testing.capture.segment_finalized prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 2873,
+        "line": 2875,
+        "path": "Plans/Test_Capture_and_Motion_Evidence.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Test_Capture_and_Motion_Evidence.md",
+      "plan_unit_id": "TCME-1316",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "TCME-1316 - testing.capture.segment_recovered prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 3028,
+        "line": 3030,
+        "path": "Plans/Test_Capture_and_Motion_Evidence.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Test_Capture_and_Motion_Evidence.md",
+      "plan_unit_id": "TCME-1317",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "TCME-1317 - testing.capture.started prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 3183,
+        "line": 3185,
+        "path": "Plans/Test_Capture_and_Motion_Evidence.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Test_Capture_and_Motion_Evidence.md",
+      "plan_unit_id": "TCME-1318",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "TCME-1318 - testing.capture.stopped prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 3340,
+        "line": 3342,
+        "path": "Plans/Test_Capture_and_Motion_Evidence.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave3_w3c_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Test_Capture_and_Motion_Evidence.md",
+      "plan_unit_id": "TCME-1319",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody_and_false_evidence",
+      "source_location": {
+        "heading": "TCME-1319 - testing.capture.target_changed prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 3497,
+        "line": 3499,
+        "path": "Plans/Test_Capture_and_Motion_Evidence.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
     },
     {
       "context_scope": "todo_runtime_list_scope",
@@ -243402,10 +246177,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18750,
+    "depends_on_edge_count": 19071,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21958,
-    "node_count": 7422,
+    "edge_count": 22279,
+    "node_count": 7487,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0

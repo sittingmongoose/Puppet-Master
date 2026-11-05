@@ -1,0 +1,105 @@
+{
+  "status": "pass",
+  "claim_boundary": "phase1_planning_checks_only_no_oracle_execution_or_admission",
+  "checks": [
+    {
+      "name": "phase1-structure",
+      "command": [
+        "python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3C/validate-phase1.py"
+      ],
+      "exit_code": 0,
+      "available_gib_before": 11,
+      "seconds": 15.11,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3C/phase1-structure.log",
+      "sha256": "8c283549b6d69d8325b46a6b65b2c4e62a5757720122afb6969fbd4743101aca"
+    },
+    {
+      "name": "shard-generate-final",
+      "command": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--generate",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit_code": 0,
+      "available_gib_before": 10,
+      "seconds": 3.3,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3C/shard-generate-final.log",
+      "sha256": "4580172d0223709a6fb4d9b19629202b9fa567c072acac77a03bdc874e57c543"
+    },
+    {
+      "name": "index-generate",
+      "command": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "generate"
+      ],
+      "exit_code": 0,
+      "available_gib_before": 11,
+      "seconds": 49.69,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3C/index-generate.log",
+      "sha256": "202192746705e881535833d36967bde5fda1a5db62d26537c6bc56839de62a93"
+    },
+    {
+      "name": "shard-check",
+      "command": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--check",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit_code": 0,
+      "available_gib_before": 14,
+      "seconds": 25.15,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3C/shard-check.log",
+      "sha256": "fba1c36054a83d9c3416be7e4daee87e6c4b513f0a6d9855ec799ece79702957"
+    },
+    {
+      "name": "index-validate",
+      "command": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "exit_code": 0,
+      "available_gib_before": 13,
+      "seconds": 51.61,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3C/index-validate.log",
+      "sha256": "77b97336772e2da50cd7939783aed4599a02c615466f9dce25efacbc95ecca7e"
+    },
+    {
+      "name": "new-contracts-regression",
+      "command": [
+        "python3",
+        "scripts/pm-new-contracts-verify.py"
+      ],
+      "exit_code": 0,
+      "available_gib_before": 10,
+      "seconds": 240.51,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3C/new-contracts-regression.log",
+      "sha256": "9e315376e2c190e8c42440c89cb858fb30f5a64a4edabaf8f97ecad378404c11"
+    },
+    {
+      "name": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "available_gib_before": 8,
+      "seconds": 1.26,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3C/diff-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "self_grade_evidence": {
+    "status": "pass",
+    "cells": 252,
+    "families": 21,
+    "all_exact_quotes_and_current_file_hashes": true
+  }
+}
