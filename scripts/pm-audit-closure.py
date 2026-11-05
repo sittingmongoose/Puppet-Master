@@ -3035,7 +3035,10 @@ LEGACY_MATRIX_CLOSURE_FIELDS = frozenset({
 LEGACY_MATRIX_EVOLUTION_FIELDS = frozenset(MATRIX_REQUIRED_FIELDS - LEGACY_MATRIX_CLOSURE_FIELDS)
 LEGACY_LIST_FIELDS = frozenset({"source_atom_ids", "plan_unit_ids", "owner_docs", "detail_keys", "exact_tokens"})
 LEGACY_REF_ALT = "|".join(sorted(AUDIT_REF_FIELDS))
-_LEGACY_LABELLED = re.compile(r"^(?P<file>[^:]+?)(?P<loc>:[^\s:]+)?: (?P<body>.+)$", re.S)
+_LEGACY_REST = re.compile(r"(?P<loc>:[^\s:]+)?: (?P<body>.+)", re.S)
+# A Python repr of a string, exactly as the validator's {value!r} writes it: the whole tail of the
+# message must be that one literal, so nothing can follow it.
+_LEGACY_REPR = r"(?:'(?:[^'\\\n]|\\.)*'|\"(?:[^\"\\\n]|\\.)*\")"
 _LEGACY_STATUS_BODIES = (
     re.compile(r"^status must be BLOCKED when repair_required_count is \d+$"),
     re.compile(r"^status must not be BLOCKED when repair_required_count is 0$"),
@@ -3158,7 +3161,30 @@ def classify_legacy_format_errors(
         number = loc[1:]
         return number.isdigit() and isinstance(historical_lines, int) and int(number) <= historical_lines
 
-    parsed: list[tuple[str, re.Match[str] | None]] = [(e, _LEGACY_LABELLED.match(e)) for e in errors]
+    # A message is attributed to the one known input path it starts with, matched in full; a
+    # message that starts with no known path, or with more than one, keeps its error. A requested
+    # artifact whose name could itself spell a label (a colon or line break) disables the rule for
+    # the directory, so no file name can impersonate another file's diagnostic.
+    names = list(context.get("source_artifacts") or [])
+    if any(not isinstance(n, str) or any(ch in n for ch in ":\n\r") for n in names):
+        return list(errors), {}
+    known = {prefix + n for n in names} | {matrix_file, report_file, prefix + SCOPE_MANIFEST, prefix + IMPACT_MATRIX}
+
+    class _Label:
+        def __init__(self, file: str, loc: str | None, body: str) -> None:
+            self._groups = {"file": file, "loc": loc, "body": body}
+
+        def group(self, key: str) -> Any:
+            return self._groups[key]
+
+    def attribute(message: str) -> "_Label | None":
+        hits = [path for path in known if message.startswith(path + ":")]
+        if len(hits) != 1:
+            return None
+        rest = _LEGACY_REST.fullmatch(message[len(hits[0]):])
+        return _Label(hits[0], rest.group("loc"), rest.group("body")) if rest else None
+
+    parsed: list[tuple[str, Any]] = [(e, attribute(e)) for e in errors]
     missing_by_label: dict[str, set[str]] = {}
     for _, m in parsed:
         if not m or m.group("file") not in row_files:
@@ -3210,8 +3236,8 @@ def classify_legacy_format_errors(
                     kind = "row_field_predates_schema"
             elif file in row_files and (
                 re.fullmatch(r"finding_key \S+ does not match deterministic sfk-[0-9a-f]{24}", body)
-                or re.fullmatch(r"finding_key must use deterministic sfk-\* form, got .+", body, re.S)
-                or re.fullmatch(r"finding_key must not contain audit-specific identity .+", body, re.S)
+                or re.fullmatch(r"finding_key must use deterministic sfk-\* form, got " + _LEGACY_REPR, body)
+                or re.fullmatch(r"finding_key must not contain audit-specific identity " + _LEGACY_REPR, body)
             ):
                 if file != matrix_file or label in identity_agrees:
                     kind = "finding_key_predates_algorithm"
@@ -5204,6 +5230,21 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             check("legacy_rule_new_input_requires_newer_artifacts",
                   any(e.endswith("audit_scope_manifest.jsonl") and e.startswith("missing ") for e in third_report["errors"])
                   and any("missing required check_family coverage" in e for e in third_report["errors"]), third_report["errors"])
+            # A file name that spells another file's diagnostic cannot borrow its exceptions (Sol r3).
+            evil = "semantic_risks.jsonl:1: finding_key must use deterministic sfk-* form, got added.jsonl"
+            kept_evil, demoted_evil = classify_legacy_format_errors(legacy_dir, list(demotable), dict(ctx, source_artifacts=["semantic_risks.jsonl", evil]))
+            check("legacy_rule_colon_artifact_name_disables_rule", kept_evil == list(demotable) and not demoted_evil, demoted_evil)
+            forged = f"{lp}{evil}:1: finding_key sfk-aaaaaaaaaaaaaaaaaaaaaaaa does not match deterministic sfk-bbbbbbbbbbbbbbbbbbbbbbbb"
+            kept_forged, _ = classify_legacy_format_errors(legacy_dir, [forged], dict(ctx, source_artifacts=["semantic_risks.jsonl"]))
+            check("legacy_rule_unknown_label_path_keeps_error", kept_forged == [forged], kept_forged)
+            (third / evil).write_text(json.dumps({"severity": "high", "repair_required": True, "finding_level": "blocker",
+                                                   "summary": "new finding B", "finding_key": "sfk-" + "a" * 24}) + "\n", encoding="utf-8")
+            evil_report = validate_audit_dir(third, require_matrix=True, require_effective_status=False,
+                                             source_artifacts=["semantic_risks.jsonl", evil], registry_path=legacy_registry)
+            check("legacy_rule_colon_file_gets_full_rules", "legacy_format_rule" in evil_report
+                  and evil_report["legacy_format_rule"]["demoted_count"] == 0
+                  and any("does not match deterministic" in e and evil in e for e in evil_report["errors"]), evil_report["errors"])
+            (third / evil).unlink()
             check("legacy_rule_new_report_gets_full_rules", legacy_audit_state(third) is not None
                   and any("audit_report.json: baseline_ref must be a non-empty string" in e for e in third_report["errors"])
                   and any("audit_report.json: repair_required_count None does not match" in e for e in third_report["errors"]), third_report["errors"])
