@@ -355,7 +355,9 @@ YAML_MERGE_TAG = "tag:yaml.org,2002:merge"
 
 
 def _is_merge_key(key: Any) -> bool:
-    return isinstance(key, yaml.ScalarNode) and (key.tag == YAML_MERGE_TAG or (key.value == "<<" and key.style is None))
+    """A real YAML merge key: the composer resolved it to the merge tag. A `<<` the author tagged
+    as a string stays a literal key (Sol r9)."""
+    return isinstance(key, yaml.ScalarNode) and key.tag == YAML_MERGE_TAG
 
 
 def _mapping_has_root_key(node: yaml.MappingNode, seen: set[int]) -> bool:
@@ -365,12 +367,13 @@ def _mapping_has_root_key(node: yaml.MappingNode, seen: set[int]) -> bool:
         return False
     seen.add(id(node))
     for key, value in node.value:
+        # The literal key counts whatever tag it carries, before any merge is followed (Sol r9).
+        if isinstance(key, yaml.ScalarNode) and key.value == DEFS_ROOT_KEY:
+            return True
         if _is_merge_key(key):
             targets = value.value if isinstance(value, yaml.SequenceNode) else [value]
             if any(isinstance(t, yaml.MappingNode) and _mapping_has_root_key(t, seen) for t in targets):
                 return True
-        elif isinstance(key, yaml.ScalarNode) and key.value == DEFS_ROOT_KEY:
-            return True
     return False
 
 
@@ -2565,6 +2568,17 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
         fx.doc_suffix["Plans/Probe_Doc.md"] = ("\n\n```yaml\nbase: &b\n  command_payload_definitions:\n    format: pm.command_payload_definitions.v1\n"
                                                "<<: *b\n```\n")
 
+    for label, text in [("short merge tag", "!!merge command_payload_definitions: false"),
+                        ("full merge tag", "!<tag:yaml.org,2002:merge> command_payload_definitions: false"),
+                        ("merge-tagged quoted key", '!!merge "command_payload_definitions": false')]:
+        @case(f"fail C14: a {label} on the literal definitions key does not hide the block", 1, {"C14"})
+        def _(fx: Fixture, text=text) -> None:
+            fx.doc_suffix["Plans/Probe_Doc.md"] = "\n\n```yaml\n" + text + "\n```\n"
+
+    @case("pass: a string-tagged << key in an unrelated fence is a literal, not a merge", 0, set())
+    def _(fx: Fixture) -> None:
+        fx.doc_suffix["Plans/Probe_Doc.md"] = "\n\n```yaml\n!!str <<: 1\nother: {!!str <<: 2}\n```\n"
+
     @case("fail C14: a merged duplicate definitions block in a separate document is not lost", 1, {"C14"})
     def _(fx: Fixture) -> None:
         fx.doc_suffix["Plans/Probe_Doc.md"] = ("\n\n```yaml\nx: &d {command_payload_definitions: {format: pm.command_payload_definitions.v1, "
@@ -2680,21 +2694,37 @@ def self_test() -> int:
             failures += 1
             print(f"     expected exit={exit_expected} errors={sorted(errors_expected)} warnings={sorted(warnings_expected)}; "
                   f"got exit={exit_code} stderr={stderr!r} stdout={stdout[:500]!r}")
+    # Unit checks of merge-key resolution: a string-tagged << is literal, a plain << is a merge.
+    for name, text, expect in [("unit: string-tagged << is not a merge key", "!!str <<: 1", False),
+                               ("unit: plain << with a mapping is a merge key", "<<: {a: 1}", True)]:
+        root = yaml.compose(text, Loader=yaml.SafeLoader)
+        got = _is_merge_key(root.value[0][0])
+        print(f"{'ok' if got == expect else 'FAIL'} {name}")
+        failures += got != expect
+    for name, text, expect in [("unit: string-tagged << block does not use a merge", "command_payload_definitions:\n  x: {!!str <<: 1}", False),
+                               ("unit: merge inside a block is detected", "a: &a {b: 1}\ncommand_payload_definitions:\n  <<: *a", True)]:
+        got = _block_uses_merge(text)
+        print(f"{'ok' if got == expect else 'FAIL'} {name}")
+        failures += got != expect
     usage_cases = [("cli usage --json with a missing option value", ["--json", "--plans-root"]),
+                   ("cli usage: an abbreviated --js is rejected (exit 2, plain usage error)", ["--js"]),
                    ("cli usage --json with an unknown option", ["--json", "--bogus-option"]),
                    ("cli usage --json with a nonexistent plans root", ["--json", "--plans-root", "/nonexistent/pm-defs-check-root"])]
     for name, args in usage_cases:
         run = subprocess.run([sys.executable, str(Path(__file__).resolve()), *args], capture_output=True, text=True)
-        try:
-            body = json.loads(run.stdout)
-            ok = run.returncode == 2 and run.stderr == "" and body.get("status") == "error" and bool(body.get("error"))
-        except json.JSONDecodeError:
-            ok = False
+        if "--json" not in args:
+            ok = run.returncode == 2 and run.stdout == "" and "unrecognized arguments" in run.stderr
+        else:
+            try:
+                body = json.loads(run.stdout)
+                ok = run.returncode == 2 and run.stderr == "" and body.get("status") == "error" and bool(body.get("error"))
+            except json.JSONDecodeError:
+                ok = False
         print(f"{'ok' if ok else 'FAIL'} {name}")
         if not ok:
             failures += 1
             print(f"     got exit={run.returncode} stdout={run.stdout[:300]!r} stderr={run.stderr[:300]!r}")
-    total = len(cases) + len(cli_cases) + len(usage_cases)
+    total = len(cases) + len(cli_cases) + len(usage_cases) + 4
     print(f"self-test: {total - failures}/{total} cases passed")
     return 0 if failures == 0 else 1
 
@@ -2721,7 +2751,9 @@ def _usage_failure(message: str, want_json: bool, parser: argparse.ArgumentParse
 def main(argv: list[str] | None = None) -> int:
     raw_args = list(sys.argv[1:] if argv is None else argv)
     want_json = "--json" in raw_args
-    parser = _JsonAwareParser(description=__doc__.split("\n\n")[0])
+    # No option abbreviations: `--js` is rejected like any unknown option, so the JSON decision
+    # below and the parser agree on spelling (Sol r9).
+    parser = _JsonAwareParser(description=__doc__.split("\n\n")[0], allow_abbrev=False)
     parser.add_argument("--json", action="store_true", help="print the sorted machine report")
     parser.add_argument("--self-test", action="store_true", help="run the in-memory fixture cases; reads no repository file")
     parser.add_argument("--plans-root", type=Path, default=ROOT / "Plans", help="Plans directory (default: this repository's)")
@@ -2734,7 +2766,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.self_test:
         return self_test()
     if not args.plans_root.is_dir():
-        return _usage_failure(f"--plans-root {args.plans_root} is not a directory", want_json)
+        return _usage_failure(f"--plans-root {args.plans_root} is not a directory", args.json)
     try:
         result = run_check(Corpus(plans_root=args.plans_root.resolve()))
     except ParseError as exc:
