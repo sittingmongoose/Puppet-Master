@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Ledger_System.md`
 
-Source lines: L1617-L1712
+Source lines: L1617-L1718
 
-Source SHA256: `4d62ad27167c821894fcdafa612f3f72e42a4fe78091fd8beeec1a774d455eb8`
+Source SHA256: `402b5d0d62c16b4deed3f4ad6350e6d2ead43181b12078735ec03421e633d59f`
 
 ---
 
@@ -40,7 +40,13 @@ canonical_text: The per-audit closure check of scripts/pm-audit-closure.py appli
   identity fields give the same deterministic key as the identity fields of the registry closure it links to); an
   audit_report.json without repair_required_count or without a status; and historical closure rows over source rows
   that the compatibility inference, not an explicit repair_required or finding_level field on any row with that key,
-  treats as non-actionable. The rule never excuses a missing
+  treats as non-actionable. In those directories, and only for a file that still has its frozen bytes and is read
+  through no symlink, the compatibility inference also reads four older words as passed (DL-340) - the claim statuses
+  pass, supported_by_source_atoms and previously_closed, and a validator result whose status is expected_fail when its
+  command is one of the five governance commands the June audits expected to fail on stale generated files
+  (pm-plans-verify.py run-gates, verify-spec-lock, validate-evidence and validate-plan-graph, and pm-shard-plans.py
+  --check). Every other field of such a row (an issue list, an overclaim list, a failing status) keeps its meaning,
+  and every other expected_fail result stays actionable. The rule never excuses a missing
   closure row or any other substantive gap. An uncovered actionable source row, a missing closure matrix, a closure
   row without its source row, status, evidence, reason or registry closure, a registry link that does not hold,
   missing evidence, a stated status that contradicts the computed one, an artifact that is present but incomplete,
