@@ -461,6 +461,7 @@ def registry_membership_failures(root: Path = ROOT, registry: dict[str, Any] | N
     registry = registry if registry is not None else load(REGISTRY_PATH, root)
     ledger = {r["event_type"]: r for r in load(LEDGER_PATH, root)["rows"]}
     fails, admitted = [], []
+    present_types={row.get("event_type") for row in registry["families"]}
     for row in registry["families"]:
         et = row.get("event_type")
         if et not in ledger:
@@ -473,7 +474,7 @@ def registry_membership_failures(root: Path = ROOT, registry: dict[str, Any] | N
         else:
             admitted.append(et)
     for et, lr in ledger.items():
-        if lr["admission_status"] == "admitted_static_contract" and et not in admitted and not any(f.get("event_type") == et for f in fails):
+        if lr["admission_status"] == "admitted_static_contract" and et not in present_types and not any(f.get("event_type") == et for f in fails):
             fails.append({"check": "admitted_ledger_row_missing_from_registry", "event_type": et})
     return fails, admitted
 
@@ -1757,9 +1758,10 @@ def integrity_failures(root=ROOT):
     return failures
 
 
-def integrity_guard_removal_report(root=ROOT):
+def integrity_guard_removal_report(root=ROOT, only_targets=None):
     source=Path(__file__).read_text();cases=integrity_cases(root);table=[]
     for case in cases:
+        if only_targets is not None and case["target"] not in only_targets:continue
         tree=ast.parse(source);wanted=case["expected"]
         class Remove(ast.NodeTransformer):
             def visit_Expr(self,node):
@@ -1784,7 +1786,7 @@ def integrity_guard_removal_report(root=ROOT):
 
 
 
-def schema_guard_removal_report(root=ROOT):
+def schema_guard_removal_report(root=ROOT, only_guards=None):
     """Mutation proof at the same shape gate used by the full payload/projection/source checkers.
 
     A lexical invariant includes its regex and exact-length clauses. Removing only one
@@ -1839,9 +1841,31 @@ def schema_guard_removal_report(root=ROOT):
             rules.append((path,pointer,keyword,member))
         # All failures must describe one changed field, not several missing independent members.
         key=tuple(sorted(set(rules),key=str));groups.setdefault(key,[]).append(case)
+    def guard_name(rules):
+        return "schema:"+";".join(path+"#/"+"/".join(map(str,ptr))+":"+key+(":"+member if member else "") for path,ptr,key,member in rules)
+    def nullable_exclusivity_duplicates(rules):
+        # A nullable oneOf repeats its referenced primitive type's exclusion of null.
+        # Under a type-removal mutant that exclusivity would reject unrelated valid
+        # null leaves. Remove the named duplicate only in that mutant, preserving
+        # every branch constraint as anyOf. Canonical imported schemas are untouched.
+        names={ptr[-1] for path,ptr,key,member in rules if path==CWC_PATH and key=="type" and len(ptr)==2 and ptr[0]=="$defs" and ptr[-1] in ("non_empty_string","utc_timestamp")}
+        pairs=[]
+        def walk(node,pointer=()):
+            if isinstance(node,dict):
+                choices=node.get("oneOf",[])
+                for name in names:
+                    if len(choices)==2 and {"$ref":"#/$defs/"+name} in choices and {"type":"null"} in choices:
+                        pairs.append((CWC_PATH,pointer,"oneOf_exclusivity",None))
+                for key,value in node.items():walk(value,pointer+(key,))
+            elif isinstance(node,list):
+                for i,value in enumerate(node):walk(value,pointer+(i,))
+        if names:walk(documents[CWC_PATH])
+        return pairs
     original_load=load;table=[]
     try:
         for rules,own in groups.items():
+            if only_guards is not None and guard_name(rules) not in only_guards:continue
+            rules=tuple(rules)+tuple(nullable_exclusivity_duplicates(rules))
             overrides={}
             for path,pointer,keyword,member in rules:
                 if path not in overrides:overrides[path]=copy.deepcopy(documents[path])
@@ -1850,6 +1874,7 @@ def schema_guard_removal_report(root=ROOT):
                 if keyword=="lexical":
                     for k in ("pattern","minLength","maxLength"):node.pop(k,None)
                 elif keyword=="required":node["required"].remove(member)
+                elif keyword=="oneOf_exclusivity":node["anyOf"]=node.pop("oneOf")
                 else:node.pop(keyword,None)
             def replacement(path,where=root):return overrides[path] if path in overrides else original_load(path,where)
             globals()["load"]=replacement;validator.cache_clear();schema_registry.cache_clear()
@@ -1860,6 +1885,7 @@ def schema_guard_removal_report(root=ROOT):
                 for rp,rptr,key,member in rules:
                     if path==rp and ptr==rptr:
                         if key=="lexical" and error.validator in ("pattern","minLength","maxLength"):return True
+                        if key=="oneOf_exclusivity" and error.validator=="oneOf":return True
                         if key==error.validator and (key!="required" or member==error.message.split("'")[1]):return True
                 return any(affected(e) for e in error.context)
             for case in cases:
@@ -1874,7 +1900,7 @@ def schema_guard_removal_report(root=ROOT):
                 else:
                     # Every original error depended on the removed invariant (including reference/union contexts).
                     flipped.append(case[0])
-            table.append({"guard":"schema:"+";".join(path+"#/"+"/".join(map(str,ptr))+":"+key+(":"+member if member else "") for path,ptr,key,member in rules),"negatives_that_flip":flipped,"negatives_that_stay_rejected":stayed,"masked":masked,"unexpected_changes":unexpected,"status":"pass" if flipped and not masked and not unexpected else "fail"})
+            table.append({"guard":guard_name(rules),"negatives_that_flip":flipped,"negatives_that_stay_rejected":stayed,"masked":masked,"unexpected_changes":unexpected,"status":"pass" if flipped and not masked and not unexpected else "fail"})
             globals()["load"]=original_load;validator.cache_clear();schema_registry.cache_clear()
     finally:
         globals()["load"]=original_load;validator.cache_clear();schema_registry.cache_clear()
