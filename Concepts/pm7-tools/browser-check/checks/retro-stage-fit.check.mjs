@@ -487,9 +487,53 @@ async function film(t) {
 	}
 }
 
+// SW-23 films (sol-review-retro-1: the rebuilt head painted unposed at the stage's upper left for 1-2 frames on Retro
+// Light Name 1024 -> 740): --set film=relayout --record <mp4>, on the normal surface (case 'retro stage fit normal') or
+// the sandbox (case 'retro stage fit sandbox': its own frame resized from the window, as the recording keeps the
+// window's size). Name with a name typed in each look (--set look=, default Retro Light and Dark, NieR Light and Dark),
+// steady at 1024, then resized to 740 and back, --set reps=3 times; each resize to 740 marked '<look> rep <n> 740'.
+// After each, the no-replay measures (no power-on, the line whole and not said again) and the fit are judged; the
+// frames just after each mark are for every-frame review.
+async function filmRelayout(t, mode) {
+	let f, size;
+	if (mode === 'normal') {
+		await t.app.open({ onboarding: true, query: 'o55=screen=welcome' });
+		const href = await t.root.evaluate(() => location.href);
+		[f] = await t.openSideBySide([{ url: href, width: 1024, height: 768, label: 'SW-23 normal: Name, 1024 -> 740, the page in a frame resized as a window would be' }]);
+		size = (w, h) => t.window.evaluate(([w, h]) => { const i = document.getElementById('__bc_side_0'); i.style.width = w + 'px'; i.style.height = h + 'px'; }, [w, h]);
+	} else {
+		f = await t.app.open({ sandbox: true, onboarding: true, query: 'o55=screen=welcome' });
+		size = (w, h) => t.window.evaluate(([w, h]) => { const i = [...document.querySelectorAll('iframe')].find((x) => x.hasAttribute('sandbox')); i.style.width = w + 'px'; i.style.height = h + 'px'; i.style.flex = 'none'; }, [w, h]);
+	}
+	await f.waitForFunction(() => !!window.O55 && !!O55.S, null, { timeout: 60000 });
+	await t.emulate({ reducedMotion: 'no-preference' });
+	const reps = +t.args.reps || 3;
+	for (const look of t.args.look ? String(t.args.look).split(',') : ['retro-light', 'retro-dark', 'nier-light', 'nier-dark']) {
+		await size(1024, 768);
+		await f.waitForTimeout(600);
+		await lookAndName(t, f, look);
+		await f.waitForTimeout(2500);
+		for (let i = 1; i <= reps; i++) {
+			await t.mark(`${look} rep ${i} 1024`);
+			await f.waitForTimeout(1500);
+			const was = await stageNow(f);
+			await size(740, 768);
+			await t.mark(`${look} rep ${i} 740`);
+			await f.waitForTimeout(2200);
+			const now = await stageNow(f), tag = `film ${mode} ${look} rep ${i} 1024 -> 740 [${was.layout} -> ${now.layout}]`;
+			await t.check(`${tag}: the layout changed`, now.layout !== was.layout, now.layout);
+			if (/^retro/.test(look)) await t.check(`${tag}: the tube is not powered on again`, now.power.length === 0, now.power.join(', '));
+			await t.check(`${tag}: Pip's line not said again`, now.sayAt === was.sayAt, `said at ${was.sayAt} then ${now.sayAt}`);
+			await t.inFrame(f, () => judge(t, f, tag, { sign: true }));
+			await size(1024, 768);
+			await f.waitForTimeout(2200);
+		}
+	}
+}
+
 export const tests = {
-	'retro stage fit normal': (t) => (t.args.film ? film(t) : on('normal', fit)(t)),
-	'retro stage fit sandbox': (t) => (t.args.film ? t.check('not run: the film is of the normal surface', true) : on('sandbox', fit)(t)),
+	'retro stage fit normal': (t) => (t.args.film === 'relayout' ? on('normal', filmRelayout)(t) : t.args.film ? film(t) : on('normal', fit)(t)),
+	'retro stage fit sandbox': (t) => (t.args.film === 'relayout' ? on('sandbox', filmRelayout)(t) : t.args.film ? t.check('not run: the film is of the normal surface', true) : on('sandbox', fit)(t)),
 	'retro props every screen normal': (t) => (t.args.film ? t.check('not run under film', true) : on('normal', everyScreen)(t)),
 	'retro props every screen sandbox': (t) => (t.args.film ? t.check('not run under film', true) : on('sandbox', everyScreen)(t)),
 	'pip clear of the stage words every look normal': (t) => (t.args.film ? t.check('not run under film', true) : on('normal', clearOfWords)(t)),
