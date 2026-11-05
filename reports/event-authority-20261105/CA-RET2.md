@@ -139,4 +139,3 @@ Readiness self-test exits 1 on `case_l_verification_integration`, specifically `
 Spec Lock exits 1 with nine `stale_hash` rows. Contract-reference lint exits 1 on the same ignored audit input absent in the sparse worktree: `Plans/00-plans-index.md:255` → `Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json`. Neither failure is hidden or repaired outside this worker’s scope.
 
 The full checker suite ran before a final prose correction from “never start or reset” to “never restart”, so a first successful save reached after an earlier failed attempt is unambiguously the anchor. The final shard/index regeneration, shard/index validation, full registry/scope audit and whitespace check ran after that correction. No registry, schema, policy value, script or test changed after the full suite.
-
