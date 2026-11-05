@@ -615,7 +615,7 @@
        started stays up long enough to read. */
     /* owner: the operation a line reports (spec.speech's id), or none; a line with an owner is said and kept only while
        that is the screen's speech (ownerLive). The words on show, said again, take the owner they are said for now. */
-    ownerLive(owner) { return !owner || !!(this.spec && this.spec.speech && this.spec.speech.id === owner); }
+    ownerLive(owner) { return !owner || (owner.kind === 'ai-account' ? !!(O55.ai && O55.ai.speechLive(O55.S, owner)) : !!(this.spec && this.spec.speech && this.spec.speech.id === owner)); }
     say(text, mood, now, owner) {
       const b = this.bubble;
       text = text || ''; owner = owner || null;

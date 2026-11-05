@@ -546,12 +546,14 @@
        no "In! The folder opened." over a check that is gone, and a success for inputs already changed is not cheered
        (FO-41). The stage drops a line whose owner is gone at once (58-rig.js direct). */
     const sp = spec.speech || null;
-    const owner = !cheer || !sp ? null : won && lastSuccess.key ? sp.screen + '|' + lastSuccess.key + '|done' : sp.id;
-    if (cheer && owner && owner !== sp.id) cheer = null;
+    const aiOwner = cheer && won && S.sess.screen === 'ai' && O55.ai ? O55.ai.speechOwner(S, lastSuccess.key) : null;
+    const live = (owner) => !owner || (owner.kind === 'ai-account' ? O55.ai.speechLive(S, owner) : owner === (sp && sp.id));
+    const owner = aiOwner || (!cheer || !sp ? null : won && lastSuccess.key ? sp.screen + '|' + lastSuccess.key + '|done' : sp.id);
+    if (cheer && !live(owner)) cheer = null;
     if (cheer) { cheering = { text: O55.pipOops.cheer(cheer.key), until: performance.now() + 2600, screen: S.sess.screen, owner }; spec.sayNow = true; cheerLog.push({ at: Math.round(performance.now()), key: cheer.key, text: cheering.text, screen: S.sess.screen }); if (cheerLog.length > 40) cheerLog.shift(); }
     if (cheering && (oops || cheering.screen !== S.sess.screen || performance.now() > cheering.until)) cheering = null;
     /* (its happy face goes with it: the step it was for is no longer on show) */
-    if (cheering && cheering.owner && cheering.owner !== (sp && sp.id)) { cheering = null; st.moodOverride = null; }
+    if (cheering && !live(cheering.owner)) { cheering = null; st.moodOverride = null; }
     if (cheering) { spec.say = cheering.text; spec.sayOwner = cheering.owner; spec.pip.mood = 'happy'; }
     /* Pick a look: hovering a look has Pip watch it and say its line, silently; the look itself (the window and Pip's
        world) changes only when it is picked (Jared, O6, 2026-10-30: "it shouldnt change the themes on hover, it should

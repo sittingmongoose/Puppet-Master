@@ -70,9 +70,23 @@
       workspace: o.workspace || null, entity: o.entity || null, mode: o.mode || null, endpoint: o.endpoint || null,
       via: o.via, at: new Date().toISOString(), state: 'ready' };
   }
+  /* A key result reports one account, not the provider's aggregate readiness. Keep the actual record and
+     operation generation: removing it, replacing the session, or editing another key ends that result's speech. */
+  const keyResults = new WeakMap();
+  function speechOwner(S, key) { return (keyResults.get(S.sess) || new Map()).get(key) || null; }
+  function speechLive(S, owner) {
+    const a = S.sess.ai || {}, r = (a.accounts || {})[owner.provider];
+    return S.sess.screen === 'ai' && (a.list || []).includes(owner.record) && !!r
+      && r.attempt === owner.attempt && (r.keyRevision || 0) === owner.revision;
+  }
   function addAccount(S, p, o) {
     const r = R(S, p.id), e = record(S, p, Object.assign({ row: r }, o));
     A(S).list.push(e);
+    if (o.via === 'key') {
+      if (!keyResults.has(S.sess)) keyResults.set(S.sess, new Map());
+      const operation = 'key:' + p.id + ':' + r.attempt;
+      keyResults.get(S.sess).set(operation, { kind: 'ai-account', operation, provider: p.id, record: e, attempt: r.attempt, revision: r.keyRevision || 0 });
+    }
     Object.assign(r, { state: 'ready', adding: false, manage: false, dup: null, removing: null, remote: null, ctx: null });
     S.save(); O55.ui.refresh();
     O55.ui.charm(S.root.querySelector(`[data-key="pv-${p.id}"]`), pname(p), 'spark');
@@ -517,10 +531,11 @@
       const [kind, id] = String(key).split(':'), r = A(S).accounts[id]; if (!r) return;
       if (kind === 'ocAddr' || kind === 'ocUser' || kind === 'project') { r[kind === 'ocAddr' ? 'endpoint' : kind === 'ocUser' ? 'user' : 'project'] = v; S.save(); O55.ui.refresh(); return; }
       const flag = kind === 'paste' ? 'pasteTyped' : kind === 'ocPass' ? 'secretTyped' : 'keyTyped';
+      if (kind === 'key') r.keyRevision = (r.keyRevision || 0) + 1;
       const had = !!r[flag]; r[flag] = v.length > 0;
       /* a new key or code takes the last refusal away from under its field (Opus p62) */
       if (kind === 'key' || kind === 'paste') if (clearRefusal(S, (kind === 'key' ? 'key:' : 'code:') + id + ':' + (r.attempt || 0), r)) return;
-      if (had !== r[flag]) { S.save(); O55.ui.refresh(); }
+      if (kind === 'key' || had !== r[flag]) { S.save(); O55.ui.refresh(); }
     } }),
     onBack: () => false
   });
@@ -780,5 +795,5 @@
 
   /* the provider whose account was added last on the work computer (the stage's tick lands on its orb: Opus p51) */
   const lastReady = (S) => { const l = A(S).list.filter((e) => e.state === 'ready' && e.host === host(S).id); return l.length ? l[l.length - 1].provider : null; };
-  O55.ai = { readyIds, freeReady, shortlist, pname, mono, accounts: (S) => A(S).list.slice(), host, lastReady };
+  O55.ai = { speechOwner, speechLive, readyIds, freeReady, shortlist, pname, mono, accounts: (S) => A(S).list.slice(), host, lastReady };
 })();
