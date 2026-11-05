@@ -149,12 +149,13 @@ Raw evidence is external under `/mnt/Cursor/PuppetMaster-Evidence/event-authorit
 - `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/f18-repairs.json` — `33b61ddaefa4cc58c0565bb07708bd9f8565ded89694d1bdbebca23bfdbd5594`.
 - `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/f19-added.json` — `0e89ea5c526699bd3fff7d9902dc15b0b3d9e063733915c4ad06816d0300866d`.
 - `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/preservation.json` — `51116321bc8eab6a20831300987db1df8a6ec1aac8008067b85a17482b7ec956`.
-- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/quote-audit.json` — `6b8d27c9d3544b2a386d34818163143df3cf8566b614719b910fd19b10bec29c`.
+- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/quote-audit.json` — `d586aebd69d503408f1619c4c656b14bf55eb3c332e311d097955320381a9031`.
 - `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/currentness.json` — `5c99f673f4396a206bc852dafe6ba4c976ec1cb26b3a3ce75cdad69d6e4db75a`.
+- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/scope-integration.json` — `7f16fdf7520d9b9a8633ba1a1502bde6acfb9588244562e41239c77a4830cf1c`.
 
 ## Original contract binding/search lineage
 
-The earlier per-family searches and newly authored bindings below are retained as source lineage. Their earlier grades and round-8 proof-completeness claims are superseded by round 9. The original binding searches remain source lineage; CV-500..515 and SP-500..515 receive this round’s numeric/format amendments.
+The earlier per-family searches and newly authored bindings below are retained as source lineage. Their earlier grades and round-8 proof-completeness claims are superseded by round 9. The original binding searches remain source lineage; CV-500..515 and SP-500..515 received round 8’s numeric/format amendments.
 
 ### First-pass independent binding searches
 
@@ -265,4 +266,3 @@ New emitter: `executor.scheduler_pass.emitter.v1@1.0.0`. New operating consumer:
 - `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/pass2-id-search.json` — SHA-256 `c329cfa01802d3529a337baac0205a34824ec84317f0fe899a70af7b6c096400`.
 - `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/pass2-currentness-sha256.log` — SHA-256 `7861f231de81ca0ce756a9b27d297e2c5f2700a7f7a000697492191912f685e1`.
 - `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/pass2-runtime-baseline.json` — SHA-256 `abac3b4abdee0293aebdb2863521002a67ce5f5eaf1a7694e90518f8df898e1b`.
-
