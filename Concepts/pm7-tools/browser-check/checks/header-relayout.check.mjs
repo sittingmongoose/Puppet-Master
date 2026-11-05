@@ -1,5 +1,7 @@
 // FO-69: repeated real relayouts at the reported Name/Project header. Film is the painted-frame authority.
 export default async function(t) {
+ // A preceding sandbox check may leave the recorder on its wrapper. Start from the app URL.
+ await t.goto(t.args.page || new URL('../../../PMConcept7.html', import.meta.url).href);
  await t.viewport(1024, 768);
  const f = await t.app.open({ onboarding: true, query: 'o55=screen=welcome' });
  await f.evaluate(() => { O55.ui.applyLook('retro', 'dark'); O55.ui.go('name', { noHistory: true }); });

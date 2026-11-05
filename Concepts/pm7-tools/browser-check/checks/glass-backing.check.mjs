@@ -90,13 +90,16 @@ export async function readThrough(t, f, sel, { loseOwnInk = false } = {}) {
 		}, sel);
 		// No fixed percentage of a panel is assumed to be text. Its own reference is the contract.
 		if (!stable || (expected > 0 && covered / expected < 0.95)) return { invalid: true, reason: `geometry stable=${stable}; own glyph exclusion ${covered}/${expected}` };
-		for (let i = 0; i < own.length; i++) if (own[i]) mask[i] = 1;
+		// Exclude both captures' glyphs, including the few edge pixels that re-rasterised.
+		const referenceOwn = grow(expectedOwn, a2.width, a2.height, 2);
+		for (let i = 0; i < own.length; i++) if (own[i] || referenceOwn[i]) mask[i] = 1;
 	
 		const counted = mask.reduce((s, v) => s + (v ? 0 : 1), 0);
+		if (counted < mask.length * 0.1) return { invalid: true, reason: `only ${counted}/${mask.length} unmasked pixels` };
 		const m = changed(a2, b, mask);
 		return { rect: r, ownExpected: expected, ownCovered: covered, n: m.n, mx: m.mx, share: m.n / Math.max(1, counted), motion: 1 - counted / mask.length };
 	} finally {
-	await f.evaluate((s) => { const st = document.getElementById('bc-through'); if (st) st.remove(); document.getElementById('bc-own-reference')?.remove(); document.querySelectorAll('[data-bc-in]').forEach((n) => n.removeAttribute('data-bc-in')); const e = document.querySelector(s); if (e) { if (e.__bcStyle == null) e.removeAttribute('style'); else e.setAttribute('style', e.__bcStyle); delete e.__bcStyle; delete e.__bcCapture; } }, sel);
+	await f.evaluate((s) => { const st = document.getElementById('bc-through'); if (st) st.remove(); document.getElementById('bc-own-reference')?.remove(); document.querySelectorAll('[data-bc-in]').forEach((n) => n.removeAttribute('data-bc-in')); const e = document.querySelector(s); if (e && Object.prototype.hasOwnProperty.call(e, '__bcStyle')) { if (e.__bcStyle == null) e.removeAttribute('style'); else e.setAttribute('style', e.__bcStyle); delete e.__bcStyle; delete e.__bcCapture; } }, sel);
 	}
 }
 
