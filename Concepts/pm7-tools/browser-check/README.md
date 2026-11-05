@@ -23,6 +23,7 @@ Parallel runs are safe: each gets its own browser and run folder. Give each its 
 
 | Check file | What it asserts |
 | `diagnostics/choice-hit-bounds` | Runs the existing boundary assertions unchanged; `probeOut=<file>` retains native event targets, trusted flags and contemporaneous boxes for an unexpected outside activation. |
+| `button-copy-face` | FO-73: real Copy/Copied acknowledgments and reset preserve the inner press face; native held edge activation and look feedback in ten looks and three motion paths. |
 | `button-press-faces` | FO-73: native resting/held primary and secondary face crops in ten looks, with calibrated recording marks and hit-box drift assertions; `segment=1` films the segmented-mode magnification face. |
 | `button-press-edges` | FO-73: representative non-choice onboarding button families across screens, the Look menu and sheets; ten looks and three motion paths, held edge/corner presses and a stationary hit box. Eight holds by default; `twoPx=1` adds the 2 px side holds. |
 |---|---|
