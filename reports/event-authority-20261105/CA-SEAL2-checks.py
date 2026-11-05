@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """DL-451 isolated input/receipt regressions; fixture trees stay outside the repo."""
 import argparse
+import dis
+import types
 import copy
 import hashlib
 import importlib.util
@@ -80,6 +82,23 @@ def run(repo, output, source_map, apply_cut=None):
                 ['git', '-C', str(repo), 'rev-parse', '--absolute-git-dir']).decode().strip()))
             os.environ['PM_EA_RECOUNT_SOURCE_MAP'] = str(source_map)
             names, custody = record('positive_real_frozen_recount_597_sources', v.recount_frozen_inputs)
+            # Astra 2 B03: mutate only the supplied map, retaining all 597 sources.
+            real_map = json.loads(source_map.read_bytes())
+            probe_map = put('real-map-probe.json', encoded(real_map))
+            for label, mutate in [
+                ('extra_root_key', lambda d: d.__setitem__('extra', 'not allowed')),
+                ('wrong_schema', lambda d: d.__setitem__('schema_id', 'wrong.schema')),
+                ('relative_location', lambda d: d['locations'].__setitem__(
+                    next(iter(d['locations'])), os.path.relpath(next(iter(d['locations'].values()))))),
+            ]:
+                os.environ['PM_EA_RECOUNT_SOURCE_MAP'] = str(source_map)
+                v.recount_frozen_inputs()  # The unchanged parent verifies all sources.
+                bad = copy.deepcopy(real_map)
+                mutate(bad)
+                probe_map.write_bytes(encoded(bad))
+                os.environ['PM_EA_RECOUNT_SOURCE_MAP'] = str(probe_map)
+                record('negative_source_map_' + label, v.recount_frozen_inputs, True)
+            os.environ['PM_EA_RECOUNT_SOURCE_MAP'] = str(source_map)
             record('positive_fourth_receipt', v.recount_change_state)
             record('positive_original_DL077_predicate_through_both_anchors', v.post_august_receipt_state)
             def august_snapshot():
@@ -150,6 +169,23 @@ def run(repo, output, source_map, apply_cut=None):
                 (v.CENSUS / 'CURRENT_SOURCE_INVENTORY.json').read_bytes())['canonical_digest_sha256']
             reset_inputs(doc)
             record('negative_August_fingerprint_with_recount_membership', v.recount_frozen_inputs, True, 'source fingerprint mismatch')
+            reset_inputs()
+
+            reset_inputs()
+            unknown_map = json.loads(map_path.read_bytes())
+            unknown_map['locations']['Plans/unknown-source.json'] = locations['Plans/fixture_0.json']
+            map_path.write_bytes(encoded(unknown_map))
+            record('negative_source_map_unknown_member', v.recount_frozen_inputs, True,
+                   'invalid explicit recount source locations')
+            absolute_doc = copy.deepcopy(synthetic)
+            absolute_doc['inputs'] = {locations[k]: pin for k, pin in sources.items()}
+            put(v.RECOUNT_RECEIPT, encoded(absolute_doc))
+            v.RECOUNT_RECEIPT_SHA = sha(encoded(absolute_doc))
+            map_path.write_bytes(encoded({'schema_id': 'pm.event_authority.recount_source_locations.v1', 'locations': {}}))
+            record('positive_absolute_sources_without_map_entries', v.recount_frozen_inputs)
+            map_path.write_bytes(encoded({'schema_id': 'pm.event_authority.recount_source_locations.v1', 'locations': []}))
+            record('negative_source_map_locations_array', v.recount_frozen_inputs, True,
+                   'invalid explicit recount source locations')
             reset_inputs()
 
             # Semantic receipt faults retain a matching byte anchor, so integrity
@@ -230,6 +266,23 @@ def run(repo, output, source_map, apply_cut=None):
             put(v.RECOUNT_CHANGE, encoded(change))
             anchors()
 
+            third_raw = (root / v.MULTI_FAMILY_RECEIPT).read_bytes()
+            third_doc = json.loads(third_raw)
+            third_doc['validator_after_sha256'] = '0' * 64
+            put(v.MULTI_FAMILY_RECEIPT, encoded(third_doc))
+            bridge_change = copy.deepcopy(change)
+            bridge_change['prior_receipt']['sha256'] = sha(encoded(third_doc))
+            put(v.RECOUNT_CHANGE, encoded(bridge_change))
+            anchors()
+            def bridge_refusal():
+                if v.third_change_validator_pin() != v.RECOUNT_BEFORE_SHA:
+                    raise ValueError('third executable pin refused')
+            record('negative_third_bridge_executable_pin', bridge_refusal, True)
+            record('negative_change_requires_valid_third_bridge', v.recount_change_state, True)
+            put(v.MULTI_FAMILY_RECEIPT, third_raw)
+            put(v.RECOUNT_CHANGE, encoded(change))
+            anchors()
+
             # Outcome checks cannot supply admission: the accepted set is the
             # output of unchanged admission checks in main, explicitly injected here.
             outcome_doc = {'schema_id': 'pm.assurance.event_authority.recount_outcomes.v1',
@@ -296,6 +349,22 @@ def run(repo, output, source_map, apply_cut=None):
                 mutate(bad)
                 record('negative_exclusion_' + label, lambda bad=bad: outcomes(bad, admitted_rest), True)
 
+            alias = root / 'alias-owner.md'
+            alias.symlink_to(root / 'Plans/fixture-owner.md')
+            try:
+                for label, mutate in [
+                    ('decision_ref_grammar', lambda d: d['rows'][0].__setitem__('decision_ref', 'Wrong/Decision_Log.md#DL-998')),
+                    ('lexical_Plans_prefix', lambda d: d['rows'][0]['source_citations'][0].__setitem__('path', 'alias-owner.md')),
+                    ('line_end_boolean', lambda d: d['rows'][0]['source_citations'][0].__setitem__('line_end', True)),
+                    ('line_start_zero', lambda d: d['rows'][0]['source_citations'][0].__setitem__('line_start', 0)),
+                ]:
+                    outcomes(excluded, admitted_rest)
+                    bad = copy.deepcopy(excluded)
+                    mutate(bad)
+                    record('negative_exclusion_' + label, lambda bad=bad: outcomes(bad, admitted_rest), True)
+            finally:
+                alias.unlink()
+
             # Change the decision token alone; synchronize its observational hash.
             # Own-name source evidence and every other decision field stay valid.
             outcomes(excluded, admitted_rest)
@@ -353,9 +422,98 @@ def run(repo, output, source_map, apply_cut=None):
                 assert v.build_receipt(True, True, [{'error': 'anything'}], {}, {}, named, True)['pass'] is False
                 assert v.build_receipt(False, True, [], {}, {}, named, True)['pass'] is False
             record('combined_result_boolean_and_single_snapshot_refusals', single_snapshot)
+            named_parent = {'recount': {'complete': True}, 'august_result_before_recount': {'pass': True}}
+            for label, index, field in [
+                ('explicit_overall_false', 6, 'pass'), ('depth_false', 1, 'pass'),
+                ('recount_false', None, 'pass'), ('August_false', None, 'pass'),
+                ('denominator_observation_false', 0, 'complete_denominator_known'),
+                ('depth_observation_false', 1, 'contract_depth_complete'),
+            ]:
+                args = [True, True, [], {}, {}, copy.deepcopy(named_parent), True]
+                assert v.build_receipt(*args)[field] is True
+                if index is not None:
+                    args[index] = False
+                elif label == 'recount_false':
+                    args[5]['recount']['complete'] = False
+                else:
+                    args[5]['august_result_before_recount']['pass'] = False
+                def refuses_false(args=args, field=field):
+                    if v.build_receipt(*args)[field] is False:
+                        raise ValueError('builder false ' + field)
+                record('negative_builder_' + label, refuses_false, True)
+
+            # Execute the actual main bytecode at its recount seam, supplying
+            # a passing August result. Preserve the four production clauses and
+            # their jumps; bypass only the earlier August computation and later
+            # receipt I/O. No live approval run or executable file is changed.
+            def main_flags(complete):
+                code = v.main.__code__
+                instructions = list(dis.get_instructions(v.main))
+                start = next(i.offset for i in instructions if i.positions.lineno == 2241)
+                stop = next(i.offset for i in instructions if i.positions.lineno == 2250)
+                body = bytearray(code.co_code)
+                body[:start] = bytes([dis.opmap['NOP'], 0]) * (start // 2)
+                fields = ['complete_denominator_known', 'contract_depth_complete', 'overall_pass', 'named']
+                tail = bytearray()
+                for field in fields:
+                    index = code.co_varnames.index(field)
+                    assert index < 256
+                    tail.extend([dis.opmap['LOAD_FAST'], index])
+                tail.extend([dis.opmap['BUILD_TUPLE'], 4, dis.opmap['RETURN_VALUE'], 0])
+                body[stop:] = tail
+                seam = types.FunctionType(code.replace(co_code=bytes(body),
+                    co_argcount=code.co_nlocals, co_posonlyargcount=0,
+                    co_kwonlyargcount=0, co_exceptiontable=b''), v.main.__globals__)
+                args = [None] * code.co_nlocals
+                supplied = {'named': {'seal_prerequisites_met': True,
+                                      'seal_prerequisites_blocking_errors': []},
+                            'overall_pass': True, 'complete_denominator_known': True,
+                            'contract_depth_complete': True, 'failures': [], 'post_august_admitted': set()}
+                for field, value in supplied.items():
+                    args[code.co_varnames.index(field)] = value
+                old_recount = v.recount_validation
+                v.recount_validation = lambda admitted: ({'complete': complete}, [])
+                try:
+                    return dict(zip(fields, seam(*args)))
+                finally:
+                    v.recount_validation = old_recount
+            for field in ['complete_denominator_known', 'contract_depth_complete', 'overall_pass', 'seal_prerequisites_met']:
+                def value(flags):
+                    return flags['named'][field] if field == 'seal_prerequisites_met' else flags[field]
+                assert value(main_flags(True)) is True
+                def refuses_incomplete(field=field):
+                    flags = main_flags(False)
+                    result = flags['named'][field] if field == 'seal_prerequisites_met' else flags[field]
+                    if result is False:
+                        raise ValueError('main refuses incomplete recount: ' + field)
+                record('negative_main_incomplete_' + field, refuses_incomplete, True)
+
+            # The aggregate's positive uses the real frozen sources, coherent
+            # fourth receipt and complete helper outcomes with prior admissions.
+            os.environ['PM_EA_RECOUNT_SOURCE_MAP'] = str(source_map)
+            put(v.RECOUNT_RECEIPT, frozen_receipt)
+            v.RECOUNT_RECEIPT_SHA = sha(frozen_receipt)
+            put(v.RECOUNT_CHANGE, encoded(change))
+            anchors()
+            outcomes(outcome_doc)
+            state, issues = v.recount_validation(set(names))
+            assert state['complete'] is True and issues == [], (state, issues)
+            bad = copy.deepcopy(change)
+            bad['authority_ref'] = 'Plans/Decision_Log.md#DL-450'
+            put(v.RECOUNT_CHANGE, encoded(bad))
+            anchors()
+            def refuses_aggregate_issue():
+                state, issues = v.recount_validation(set(names))
+                assert len(issues) == 1 and issues[0]['error'] == 'recount_change_receipt_invalid', issues
+                if state['complete'] is False:
+                    raise ValueError('aggregate complete is false with its one receipt issue')
+            record('negative_aggregate_receipt_issue', refuses_aggregate_issue, True)
+            put(v.RECOUNT_CHANGE, encoded(change))
+            anchors()
+
             for label, path in [('parent', '../Plans/x'), ('absolute', '/etc/passwd'),
                                 ('empty_segment', 'Plans//x'), ('dot_segment', 'Plans/./x'),
-                                ('control', 'Plans/x\n/y'), ('backslash', 'Plans\\x'), ('colon', 'git:bad')]:
+                                ('control', 'Plans/x\n/y'), ('DEL', 'Plans/x\x7f/y'), ('backslash', 'Plans\\x'), ('colon', 'git:bad')]:
                 record('negative_unsafe_source_path_' + label, lambda path=path: v.recount_relative(path), True)
         finally:
             for key, value in original_env.items():
