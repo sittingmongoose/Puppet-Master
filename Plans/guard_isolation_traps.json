@@ -4990,6 +4990,11 @@
         "hidden_static_sites"
       ],
       "static_kind": "call_review"
+    },
+    {
+      "id": "C3-snapshot-scalar-topology",
+      "kind": "snapshot-scalar-topology",
+      "expected": "Snapshots retain scalar alias topology and detect equal-value shared rebinding, while erasing fresh identities."
     }
   ]
 }

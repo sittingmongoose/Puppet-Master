@@ -1813,13 +1813,18 @@ def _certified_snapshot(roots, root, *, identities, namespaces=False):
         # Interpreter-owned import bookkeeping is not adapter state. All other
         # bindings, including private names, are observed, even if unreferenced.
         ignored = {'__builtins__', '__loader__', '__spec__', '__cached__'}
-        return tuple((name, visit(value)) for name, value in mapping.items() if name not in ignored)
+        return tuple((visit(name), visit(value)) for name, value in mapping.items() if name not in ignored)
     def visit(obj):
         kind = type(obj)
-        if kind in (type(None), bool, int, float, str, bytes):
-            return ('scalar', encoded(evidence_value(obj)))
-        if kind is complex:
-            return ('complex', struct.pack('>dd', obj.real, obj.imag).hex())
+        if kind in (type(None), bool, int, float, complex, str, bytes):
+            if id(obj) in seen:
+                return ('ref', seen[id(obj)])
+            index = len(nodes)
+            seen[id(obj)] = index
+            keepalive.append(obj)
+            scalar = struct.pack('>dd', obj.real, obj.imag).hex() if kind is complex else encoded(evidence_value(obj))
+            nodes.append((kind.__name__, id(obj) if identities else None, scalar))
+            return ('ref', index)
         if obj is Ellipsis or obj is NotImplemented:
             return ('immutable-singleton', 'Ellipsis' if obj is Ellipsis else 'NotImplemented')
         if any(obj is value for value in immutable_builtins):
@@ -1847,7 +1852,7 @@ def _certified_snapshot(roots, root, *, identities, namespaces=False):
                 content = (_function_key(obj), visit(obj.__code__), visit(obj.__defaults__),
                            visit(obj.__kwdefaults__), visit(obj.__dict__), tuple(visit(cell) for cell in obj.__closure__ or ()),
                            visit(obj.__annotations__), visit(getattr(obj, '__type_params__', ())),
-                           obj.__name__, obj.__qualname__, visit(obj.__module__), visit(obj.__doc__),
+                           visit(obj.__name__), visit(obj.__qualname__), visit(obj.__module__), visit(obj.__doc__),
                            namespace(obj.__globals__) if namespaces else (),
                            tuple((name, visit(obj.__builtins__[name])) for name in sorted(set(obj.__code__.co_names))
                                  if name not in obj.__globals__ and name in obj.__builtins__) if namespaces else ())
@@ -1872,7 +1877,8 @@ def _certified_snapshot(roots, root, *, identities, namespaces=False):
             content = (obj.co_code.hex(), visit(obj.co_consts), obj.co_names, obj.co_varnames,
                        obj.co_freevars, obj.co_cellvars, obj.co_flags, obj.co_argcount,
                        obj.co_posonlyargcount, obj.co_kwonlyargcount, obj.co_stacksize,
-                       obj.co_exceptiontable.hex(), obj.co_linetable.hex(), obj.co_filename, obj.co_firstlineno)
+                       obj.co_exceptiontable.hex(), obj.co_linetable.hex(), obj.co_filename, obj.co_firstlineno,
+                       obj.co_name, obj.co_qualname)
         elif kind is type:
             module = sys.modules.get(obj.__module__)
             source = vars(module).get('__file__') if type(module) is types.ModuleType else None

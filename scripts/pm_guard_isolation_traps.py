@@ -118,6 +118,18 @@ def factory():
 
 def _special(g, trap, memory):
     kind = trap['kind']
+    if kind == 'snapshot-scalar-topology':
+        left = bytearray(b'a noninterned scalar identity').decode()
+        right = bytearray(b'a noninterned scalar identity').decode()
+        third = bytearray(b'a noninterned scalar identity').decode()
+        root = Path(__file__).parent
+        aliased = g._certified_snapshot([{'a': left, 'b': left}], root, identities=False)
+        detached = g._certified_snapshot([{'a': left, 'b': right}], root, identities=False)
+        equivalent = g._certified_snapshot([{'a': third, 'b': third}], root, identities=False)
+        shared_left = g._certified_snapshot([left], root, identities=True)
+        shared_right = g._certified_snapshot([right], root, identities=True)
+        caught = left == right and left is not right and aliased != detached and aliased == equivalent and shared_left != shared_right
+        return caught, {'alias_change_detected': aliased != detached, 'fresh_equivalence': aliased == equivalent, 'shared_rebinding_detected': shared_left != shared_right}
     if kind == 'os-temp-scratch':
         with tempfile.TemporaryDirectory(prefix='guardtool-portable-', dir=_scratch_parent(None)) as directory:
             return Path(directory).parent == Path(tempfile.gettempdir()), {'parent': str(Path(directory).parent)}
