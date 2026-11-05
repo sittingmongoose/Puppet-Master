@@ -71,7 +71,7 @@ Each SP unit names a real operating reader purpose, distinct consumer/projector 
 
 ## Twelve-criterion self-grade
 
-`W3A-self-grade.json` records every family and cell, current exact line/quote evidence, prior=null, change=new and canonical source hashes. This is an author grade of normative contracts, not an independent review or runtime claim.
+`W3A-self-grade.json` records every family and cell, current exact line/quote evidence, round-1 prior statuses, change=carried and canonical source hashes. This is an author grade of normative contracts, not an independent review or runtime claim.
 
 | Criterion | Result |
 |---|---|
@@ -90,7 +90,7 @@ Each SP unit names a real operating reader purpose, distinct consumer/projector 
 
 ## Criterion-12 oracle plan and standing-check accounting
 
-`W3A-oracle-plan.json` contains 3,237 guard-plan rows across all 35 families, each with a valid positive construction, a targeted negative construction and an isolation rule. It also names exact family-specific transition witnesses, restart/pending-pack/first-receipt boundaries and the two reviewed foundation dependencies. These are plans, not executed fixtures.
+`W3A-oracle-plan.json` contains 3,272 guard-plan rows across all 35 families, each with a valid positive construction, a targeted negative construction and an isolation rule. It also names exact family-specific transition witnesses, restart/pending-pack/first-receipt boundaries and the two reviewed foundation dependencies. These are plans, not executed fixtures.
 
 | Standing finding | Phase-1 coverage / remaining proof |
 |---|---|
@@ -159,7 +159,7 @@ All pre-existing prose/registry rows remain byte-identical. New units are additi
 
 Contracts units sit at the end of EventRecord's governing section before EventEnvelopeV1. Forge units sit at the end of §3.2 before command admission. Storage and ATS have additive governed addenda. The 70 Storage rows append at the families-array tail; older rows, policy objects, profile and critical/MVP lists are unchanged. Derived files are regenerated only by repository scripts.
 
-## Verification
+## Verification at the initial phase-1 head
 
 Checks are run serially, with the VM at least 6 GB available; below 6 GB the lane pauses and resumes at 7 GB. Initial disk: 70 GB available, memory: 16 GB available. `currentness-copy.json` verifies all 15 ignored currentness inputs by SHA-256 before index generation. Copy emitted permission-preservation warnings on the mounted source, but every destination content hash matched.
 
@@ -196,3 +196,103 @@ The current ASCII/reference-only event payload schemas are structurally below 4 
 **IDs used:** FGI-1200..1234; CV-1200..1234; SP-1200..1234; ATS-1200. The remaining assigned IDs are unused.
 
 Structural checker source retained for review: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3A/check_structure.py`, SHA-256 `1387fba01559d80a9d67e3f27a801a9e30be202052df6629387db9e0c79d0313`. This is schema/ref/unchanged-row QA only, not the deferred family oracle code.
+
+
+## Phase-1 review round 1: findings and responses
+
+Fix base: `14c461e7cfe7004a31ef426f4313a30318600d2e`. Implementation commit: `e4880006e5d2fc8a94997fd355f3e7cd13b61e66`.
+The phase-1 Sol review's R1 and R2 are accepted and revised in all 35 families. Independent re-review is pending; no phase-2, admission or runtime readiness is claimed. Review input: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/W3A-sol/REVIEW-phase1.md`, with its full `oracle-plan-findings.json`.
+
+- **R1 — fixed (`e4880006e5d2fc8a94997fd355f3e7cd13b61e66`).** Every SP-1200..1234 now separates correct recipes, actual seed issuance, ID membership and selector/current predicates. Within one root only the seed varies; seed reuse with the correct recipe forces ID reuse. Correct recipes plus unique ID membership entail distinct seeds. Different seeds alone do not prove distinct IDs. There is no separate seed-uniqueness refusal or claim that different predicates are duplicate enforcement. The original durable SP-278 preparation/anchor proves seed/root issuance; computed-ID equality belongs only to the recipe predicate. The replacement membership negative reads a root A,B,B: one selected current A and a verbatim authentic retired B twice, within three nodes. The replacement issuance negative uses a unique but unissued seed with a correctly recomputed distinct ID and repaired candidate commitments. The recipe negative preserves the genuine seed/root witness and uses a nonmember substitute ID. Source and allocation authority stay unchanged.
+- **R2 — fixed (`e4880006e5d2fc8a94997fd355f3e7cd13b61e66`).** Every family has its own `matched_count` guard and successful inclusive-resume positive. Its completely covered source has one exact matching M followed by genuine unrelated U. Resume revalidates/skips already-counted M, examines U and publishes cursor U with `matched_count=1`. The count-only negative proposes 2, repairing candidate-dependent copies and commitments while preserving real source/classification, coverage, genuine cursor/token/live snapshot, predecessor revision/hash and whole-root CAS. Generation-node count is a separate invariant.
+- **Retention — preserved.** All 34 pending cells and their exact questions above are unchanged. `forge.review.approved` retains its existing Approval-class binding. The retention pass maps the pending rows; this fix selects no lifetime, timestamp, population or bucket.
+- **Regrade — carried.** All 35 families were regraded across all twelve criteria with current exact owner quotes and content hashes. Before and after: membership ABSENT 35, normative PASS 316, PARTIAL 69 (34 retention and 35 oracle cells). Zero rubric-status changes. New owner evidence supports criterion 10; criterion 12 stays PARTIAL because this is a plan only.
+- **Scope — bounded.** Only `Plans/storage-plan.md` owner prose changes. Its own 92 shard/index/manifest files and the six standard PlanUnit index artifacts were regenerated. No other owner document or its shards changed. No schema, Storage value row, family registry, Decision Log, checker, test, governance lock or admission changed. No IDs were minted; FGI/CV/SP-1200..1234 and ATS-1200 remain the used set. No number/timestamp implementation, oracle code, proof machinery, pm-mail, subagent or main push.
+
+### Per-family owner-text changes
+
+Every row has both fixes. Line ranges below refer to `e4880006e5d2fc8a94997fd355f3e7cd13b61e66`; the exact revised guard paths/ranges are also in `p1fix1/responses-coverage.json`.
+
+| Family | Storage unit | R1 owner range in `Plans/storage-plan.md` | R2 owner range in `Plans/storage-plan.md` |
+|---|---|---|---|
+| `forge.api.compatibility_changed` | `SP-1200` | 29598–29614 | 29550–29556 |
+| `forge.connection.capabilities_changed` | `SP-1201` | 29783–29799 | 29735–29741 |
+| `forge.connection.reauthorized` | `SP-1202` | 29967–29983 | 29919–29925 |
+| `forge.connection.validated` | `SP-1203` | 30149–30165 | 30101–30107 |
+| `forge.mirror.connected` | `SP-1204` | 30331–30347 | 30283–30289 |
+| `forge.mirror.degraded` | `SP-1205` | 30513–30529 | 30465–30471 |
+| `forge.mirror.detached` | `SP-1206` | 30695–30711 | 30647–30653 |
+| `forge.mirror.status_changed` | `SP-1207` | 30878–30894 | 30830–30836 |
+| `forge.mirror.sync_completed` | `SP-1208` | 31061–31077 | 31013–31019 |
+| `forge.mirror.sync_started` | `SP-1209` | 31243–31259 | 31195–31201 |
+| `forge.pipeline.cancelled` | `SP-1210` | 31425–31441 | 31377–31383 |
+| `forge.pipeline.completed` | `SP-1211` | 31607–31623 | 31559–31565 |
+| `forge.pipeline.retried` | `SP-1212` | 31789–31805 | 31741–31747 |
+| `forge.pipeline.started` | `SP-1213` | 31971–31987 | 31923–31929 |
+| `forge.repository.authority_changed` | `SP-1214` | 32155–32171 | 32107–32113 |
+| `forge.repository.created` | `SP-1215` | 32337–32353 | 32289–32295 |
+| `forge.repository.discovered` | `SP-1216` | 32520–32536 | 32472–32478 |
+| `forge.repository.eligibility_changed` | `SP-1217` | 32706–32722 | 32658–32664 |
+| `forge.review.approved` | `SP-1218` | 32888–32904 | 32840–32846 |
+| `forge.review.changes_requested` | `SP-1219` | 33084–33100 | 33036–33042 |
+| `forge.review.closed` | `SP-1220` | 33277–33293 | 33229–33235 |
+| `forge.review.created` | `SP-1221` | 33459–33475 | 33411–33417 |
+| `forge.review.marked_ready` | `SP-1222` | 33641–33657 | 33593–33599 |
+| `forge.review.merged` | `SP-1223` | 33823–33839 | 33775–33781 |
+| `forge.review.reopened` | `SP-1224` | 34005–34021 | 33957–33963 |
+| `forge.review.thread.reopened` | `SP-1225` | 34188–34204 | 34140–34146 |
+| `forge.review.thread.replied` | `SP-1226` | 34371–34387 | 34323–34329 |
+| `forge.review.thread.resolved` | `SP-1227` | 34554–34570 | 34506–34512 |
+| `forge.review.updated` | `SP-1228` | 34736–34752 | 34688–34694 |
+| `forge.review.version_created` | `SP-1229` | 34919–34935 | 34871–34877 |
+| `forge.webhook.delivery_failed` | `SP-1230` | 35103–35119 | 35055–35061 |
+| `forge.webhook.delivery_recovered` | `SP-1231` | 35288–35304 | 35240–35246 |
+| `forge.webhook.received` | `SP-1232` | 35470–35486 | 35422–35428 |
+| `forge.webhook.redelivery_queued` | `SP-1233` | 35654–35670 | 35606–35612 |
+| `forge.webhook.rejected` | `SP-1234` | 35836–35852 | 35788–35794 |
+
+### Guard-isolation accounting (plan only)
+
+Execution is **NOT_RUN_PHASE_2** for the entire lane. The 3,272 rows are construction plans, not 3,272 executed proofs. Phase 2 adopts the reviewed shared number/format helper and `pm_guard_isolation.py`, inventories each field/predicate enforcement site, and proves every lane guard with all unrelated predicates enabled. Repeated sites may be grouped only for the same field and predicate. No proof-machinery sweep exemption is used to excuse R1 or R2.
+
+| Predicate in every family plan | Planned negative that must flip when only that predicate is weakened | Independent predicates that remain enabled | Executed proof |
+|---|---|---|---|
+| `generation.node_membership` | Verbatim authentic retired B repeated in A,B,B | Genuine seed/root issuance, correct ID recipes, sole selected current A, three-node bound, lifecycle and source/token facts | NOT_RUN; phase 2 |
+| `generation.seed_issuance` | Unique unissued seed with correct distinct recomputed ID | ID membership, ID recipe, selector, lifecycle, source/token and predecessor CAS | NOT_RUN; phase 2 |
+| `generation.generation_recipe` | Nonmember substituted ID with genuine original seed/root issuance and repaired references | Original allocation provenance, membership, selector/current, source/token and CAS | NOT_RUN; phase 2 |
+| `matched_count` | Count 2 instead of 1 over fully covered M,U; all dependent candidate commitments repaired | Coverage, genuine cursor/token/live source, predecessor revision/hash CAS, generation and lifecycle predicates | NOT_RUN; phase 2 |
+| Derived distinct seeds | No independent negative: correct recipe plus unique ID membership entails this fact | No multi-predicate cut or false duplicate set is introduced | Entailment documented; no runtime claim |
+| All other lane guards | Original guard constructions retained; phase 2 expands each compound description into primitive cases | Every unrelated predicate and all actual authority remain enabled | NOT_RUN; phase 2 |
+
+No native mutation or check-11 weakening is claimed for any recurring defect class. The existing standing-check table remains the plan-level accounting for all classes 1..12 and 10a. Formats, number-domain and historical-recipe execution remain shared-foundation phase-2 work. Schema/type/ref probes below establish only their stated structural scope.
+
+### Round-1 checks and exit codes
+
+Checks and generators ran one at a time. Pre-worktree disk was 107 GB available; memory was 8 GB available. Every recorded check started at 8–13 GB available; no under-6 pause was needed. All 15 ignored currentness files were copied and SHA-256 verified before index generation. The final index validates with top-level `status=pass`; runtime certification remains `blocked_runtime_certification_incomplete`.
+
+All command metadata and logs are under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3A/p1fix1/`. Full commands, exit codes, available memory, times and log hashes are in the corresponding `.result.json` files.
+
+| Check / exact command | Exit | Log SHA-256 |
+|---|---:|---|
+| **shard-generate**: `python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json` | 0 | `984126b6be07784510fec816d860b321f52d68978b5b99e7a2bcd292d5a86aa3` |
+| **index-generate**: `python3 scripts/pm-plan-index.py generate` | 0 | `46b15ed0d61ddffe24ae5ad1a2df4fd7cd90a867b4f3a7aa908b61152bac1fba` |
+| **responses-coverage**: `python3 /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3A/p1fix1/check_responses.py` | 0 | `397ab1640b3f59736a78f9c79315f95cbe1da3de6a87cc38209e610e52d978f8` |
+| **structure**: `python3 /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3A/p1fix1/check_structure.py` | 0 | `286e083d4b24b5cdac77ab086c59222ddf8c2615e7832b8c1b753673faf5a13f` |
+| **forge-followup**: `python3 scripts/pm_forge_command_followup.py` | 0 | `e463c160e5a0d22ffe74113ba42849669ee0322fc8c584170363f791b6dbd485` |
+| **forge-packet-tests**: `python3 -m unittest discover -s tests -p test_pm_forge_packet_semantics.py -v` | 0 | `6cf4ee4113c8ab305cc181f3af8d68bc683b13971fbe1cd16133f8b5c609821f` |
+| **storage-recovery**: `python3 scripts/pm-storage-recovery-contracts.py --self-test` | 0 | `e56e543c18588569abd7a299f25004750f6954e919c5571c6a669b38668eca1a` |
+| **shard-check**: `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` | 0 | `7e9b336abf34b1be511ab317aac1456585f14badaad7a90773a08a6e9d171835` |
+| **index-validate**: `python3 scripts/pm-plan-index.py validate` | 0 | `70e886ba143545d62f767eb4113d489d3e1ff5ed942846d2f5213af37ce29270` |
+
+`responses-coverage` statically checks every revised owner unit, both replacement R1 negatives, the refined recipe negative, every R2 count/resume pair, preservation of all other guard rows, the 34 original retention questions, all 420 self-grade cells, exact quotes/content pins, unchanged non-lane text and protected files. This is document QA, not an event oracle. The structural check covers 35 closed payloads, 70 Storage rows, 106 schema documents, 573 eagerly resolved reference sites, 35 schema positives and 1,331 schema negatives. Existing Forge packet tests: 17 passed. Existing Storage recovery self-test: 22 checks passed. `git diff --check`: exit 0. These existing suites do not certify the new lifecycle oracles.
+
+| Diagnostic | SHA-256 |
+|---|---|
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3A/p1fix1/responses-coverage.json` | `397ab1640b3f59736a78f9c79315f95cbe1da3de6a87cc38209e610e52d978f8` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3A/p1fix1/derived-scope.json` | `c3a5aced45ea555c7f22f4cda159fa1cf128fb6f870fdee26185ef289d97eac9` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3A/p1fix1/currentness-copy.json` | `044c5dff7d5239bd1daadf0be7fdf65f457da8866de3c1fee06067533212242c` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3A/p1fix1/check_responses.py` | `1d7dcc7e1983f8c9b2fcb850dec79d7a3006dce03d816cbebca97860afafd86a` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3A/p1fix1/check_structure.py` | `b37947d17c4edda32c504aa34325cad808ab5469c7418c7a651957c8c6443af0` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3A/p1fix1/run_check.py` | `08dbd769e7d67adec0164aabd791610e4f0c137745ed914defe83cce51e79b7b` |
+
+**Stopped:** none. No disputed findings and no new DL-045 question. Remaining work is the unchanged retention pass, independent phase-1 re-review, and phase-2 oracle implementation/proof after the reviewed foundations. Governance staleness remains for the separately assigned reseal; no reseal was attempted.
