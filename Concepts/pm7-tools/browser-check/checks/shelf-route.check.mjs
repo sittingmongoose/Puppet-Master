@@ -5,6 +5,8 @@ export default async function (t) {
   const rows=[]; let reachable=0;
   for (const target of targets) {
     await f.locator(`#activityBar .icon[data-target="${target}"]`).click();
+    await t.visible('#sidePanelSlot',target+' rail surface opened');
+    await f.waitForTimeout(500);
     const census=await f.evaluate(()=>[...document.querySelectorAll('#sidePanelSlot .sh-shelf .pm6-tb-menu-wrap')].map(w=>{
       const e=w.querySelector('.pm6-tb-menu-trigger'),m=w.querySelector('.pm6-tb-menu,.pm6-chat-more-menu');
       const r=e?.getBoundingClientRect(); const hit=r&&document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);
