@@ -49,7 +49,9 @@ export const tests = Object.fromEntries(['onboarding','tour','settings'].map(rou
         t.log(`${label}: ${JSON.stringify(box)}`);
         await t.check(`${label}: entire look palette inside viewport`,box.left>=0 && box.right<=box.w && box.top>=0 && box.bottom<=box.h,JSON.stringify(box));
         if (look.startsWith('nier') && w===860) await t.crop(`${route}-${look}-${input}`,popup,'NieR palette viewport edge');
-        await trigger.press('Escape');
+        // Settings portals own keyboard events while open; leave focus in the active listbox.
+        await (route === 'settings' ? f.locator(popup) : trigger).press('Escape');
+        await f.locator(popup).waitFor({state:'hidden'});
         await t.check(`${label}: Escape closed palette`, !(await f.locator(popup).isVisible()));
       }
     }
