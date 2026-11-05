@@ -146,7 +146,7 @@ export async function readThrough(t, f, sel, { loseOwnInk = false, resizeAfterMe
  measured.svgRows=await f.evaluate(s=>[...document.querySelector(s).querySelectorAll('svg *')].filter(n=>[...n.childNodes].some(c=>c.nodeType===3&&c.textContent.trim())).map(n=>n.getBoundingClientRect().toJSON()).filter(b=>b.width&&b.height),sel);
 	// Capture an independent own-text reference BEFORE removing any outside text.
 	// Mark the subtree by ancestry too: nodes rendered during capture must not lose ink.
-	const hideOwn = '[data-bc-in], [data-bc-in] * { color: transparent !important; -webkit-text-fill-color: transparent !important; text-shadow: none !important; transition: none !important; caret-color: transparent !important; }';
+	const hideOwn = '[data-bc-in], [data-bc-in] * { color: transparent !important; -webkit-text-fill-color: transparent !important; text-shadow: none !important; transition: none !important; caret-color: transparent !important; } [data-bc-in] text, [data-bc-in] tspan { fill: transparent !important; stroke: transparent !important; }';
 	measured.points=await installCaptureWitness(f,sel,measured,{resize:resizeAfterMeasure});
 	try {
 		await f.waitForTimeout(400);
@@ -184,7 +184,7 @@ export async function readThrough(t, f, sel, { loseOwnInk = false, resizeAfterMe
 		if (t.args.only === 'agents') await t.mark('backing outside captured');
 		// the surface's own text: where it is drawn, its re-rasterised glyphs differ a little whatever is behind; those pixels
 		// (grown by 2 px) are not counted
-		await f.evaluate((s) => { const e = document.querySelector(s); ['color', '-webkit-text-fill-color', 'text-shadow'].forEach((k) => e.style.removeProperty(k)); document.getElementById('bc-through').textContent += ' [data-bc-in], [data-bc-in] * { color: transparent !important; -webkit-text-fill-color: transparent !important; text-shadow: none !important; transition: none !important; }'; }, sel);
+		await f.evaluate(([s,css]) => { const e = document.querySelector(s); ['color', '-webkit-text-fill-color', 'text-shadow'].forEach((k) => e.style.removeProperty(k)); document.getElementById('bc-through').textContent += css; }, [sel,hideOwn]);
 		await f.waitForTimeout(350);
 		const c = await capturePaint(t, r, measured);
 		if (t.args.only === 'agents') await t.mark('backing all ink captured');
