@@ -169,7 +169,7 @@
          must never redirect pairing or discard the SSH facts and pairing choice already held for this one. */
       pairInstead(S) {
         const n = N(S), d = picked(S);
-        if (n.method !== 'ssh' || !n.useSsh || !d || !d.pm || d.id !== n.device) return;
+        if ((n.method || 'ssh') !== 'ssh' || !n.useSsh || !d || !d.pm || d.id !== n.device) return;
         n.useSsh = false; S.save(); O55.ui.go('nas-pmpair');
       },
       manualOn(S) { N(S).manual = true; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); },
