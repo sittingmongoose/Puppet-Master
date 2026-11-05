@@ -1,6 +1,6 @@
 # CA-SEAL2 — fourth recorded seal-check input change
 
-**ROUND 5 FIXES IMPLEMENTED; RE-REVIEW PENDING.** Worker CA-SEAL2-FIX5 (Codex), stream E, VM, 2026-11-05, from cycle-5-reviewed head `213087612a73068a126e17d3dfbbea941d943bf2`. B01/B02 tests are in `661e2ce1397c8537d9c687e74b7f2855e8f53f74`; B03 classifications and rerun records are in `38d74abd7f451edec049e42d1f23669c2fd71488`. Validator bytes remain frozen. Corpus 140/140; 182 removal variants, zero unclassified. This file remains the change record and branch report; earlier sections are historical, with round-4 classification claims explicitly superseded below. Final push/export/cleanup are recorded in external `fix5/DELIVERY.json`. Independent re-review and coordinated landing remain required.
+**ROUND 6 FIXES IMPLEMENTED; RE-REVIEW PENDING.** Worker CA-SEAL2-FIX6 (Codex), stream E, VM, 2026-11-05, from Astra-3-reviewed head `ea7a74e364d5a2d30be082a1fd4af314d194e37c`. B01–B06 tests and the complete coverage table are in `90c0eacee18e0862e067f0f54b9e79a11ea331f8`. Validator bytes remain frozen. Corpus 158/158; 327 coverage rows; 221 Astra variants accounted for; zero unclassified. Earlier round sections remain historical. Independent re-review and coordinated landing remain required; external `fix6/DELIVERY.json` records export/push/cleanup.
 
 ## Design in five lines
 
@@ -133,7 +133,7 @@ Exact **new fourth-receipt** entry template:
 
 The existing DL-412 entry/template remains separately required exactly as CA-SEAL specifies; there is no new DL-077 entry. Later changes to the new receipt require its authorized byte anchor to follow the final bytes.
 
-**Seal-applier exclusion:** the author, actual lander, stream lead `claude-opus-5.5:pm-ea-lead` (session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`), CA-SEAL, CA-SEAL-FIX1 through FIX8, CA-SEAL2 (Codex), CA-SEAL2-FIX1 (Codex), CA-SEAL2-FIX2 (Codex), CA-SEAL2-FIX3 (Codex), CA-SEAL2-FIX4 (Codex), CA-SEAL2-FIX5 (Codex), and every other fix worker are barred. The checked new receipt list contains author and actual lander; broader exclusions stay procedural.
+**Seal-applier exclusion:** the author, actual lander, stream lead `claude-opus-5.5:pm-ea-lead` (session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`), CA-SEAL, CA-SEAL-FIX1 through FIX8, CA-SEAL2 (Codex), CA-SEAL2-FIX1 (Codex), CA-SEAL2-FIX2 (Codex), CA-SEAL2-FIX3 (Codex), CA-SEAL2-FIX4 (Codex), CA-SEAL2-FIX5 (Codex), CA-SEAL2-FIX6 (Codex), and every other fix worker are barred. The checked new receipt list contains author and actual lander; broader exclusions stay procedural.
 
 **CA2-A02 — lead adjudication (07:35Z):** separation follows CA-SEAL's approved B′ model (pm7-build 01:27Z). The receipt records the author and actual lander. Both, the stream lead and every fix worker are barred from **applying the seal**. The lander is not required to differ from the author. The lead explicitly adjudicated Astra's stronger lander-separation criterion as beyond the approved model; this is the lead's adjudication, not a new Jared answer. In practice the actual lander is the stream lead's landing step, and a separate assignee applies the seal. No frozen-code or receipt change is made for A02.
 
@@ -474,13 +474,13 @@ All filenames below resolve under the full `E` prefix above. The compact committ
 
 ## Review round 5: findings and responses
 
-Review read in full: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/REVIEW-cycle5.md`, its five named JSON evidence files, and the FIX5 brief including the lead's 10:25Z ruling. **B01, B02 and B03 fixed; none disputed or stopped.** `H` is `reports/event-authority-20261105/CA-SEAL2-checks.py`; `S` is `reports/event-authority-20261105/CA-SEAL2-survivors.md`; `V` is the frozen validator path above. `E` is `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix5/`. Scope is tests and records only.
+Review read in full: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/REVIEW-cycle5.md`, its five named JSON evidence files, and the FIX5 brief including the lead's 10:09Z ruling. **B01, B02 and B03 fixed; none disputed or stopped.** `H` is `reports/event-authority-20261105/CA-SEAL2-checks.py`; `S` is `reports/event-authority-20261105/CA-SEAL2-survivors.md`; `V` is the frozen validator path above. `E` is `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix5/`. Scope is tests and records only.
 
 | Finding | Where / cause | Fix / commit / verification |
 |---|---|---|
 | **CA2-C5-B01** | `V:1037`; former `span_order` table row. The old proof treated every reversed span as empty, overlooking Python's negative slice endpoints. | Fixed in `661e2ce1397c8537d9c687e74b7f2855e8f53f74`, `H:376`. Add the exact two-line passing evidence parent (whole-file SHA `1eb1f83ac06e9ba6e71eb1adb3766c2d38164a892403ed2394cac2b8a69af4e9`) and change only `line_end: 1 -> -1`. The order-only cut accepts this negative, with integer types, lower/upper bounds, digest and exact-token checks enabled. All 139 peer records, including 111 peer refusal strings, remain identical. `E/supplemental-summary.json: span_order` and `E/survivor-summary.json: mandatory_isolation` assert this. Reclassified negative added in `38d74abd7f451edec049e42d1f23669c2fd71488`. |
 | **CA2-C5-B02** | `V:1043,1047,1050`; rows I094/I096/I097/I099. Terminal cards-unresolved checks a different obligation and cannot imply these four diagnostic predicates. | Fixed in `661e2ce1397c8537d9c687e74b7f2855e8f53f74`, `H:328`. Four separate negatives require their own card-row-key, lexical-path, pin-key, or event-name refusal. Each first verifies the same valid card gets its exact unresolved-card diagnostic; the terminal rule stays enabled. The Plans path is a symlink to identical reports bytes. Missing-name bytes retain a synchronized observational SHA. Each own narrow cut changes only its own negative to cards-unresolved; all 139 peers remain byte-identical as result records. Reclassified all four as negative added in `38d74abd7f451edec049e42d1f23669c2fd71488`. Replay I094/I096/I097/I099 in `E/removal.py`; inspect `E/adversarial.json: cards.matrix` and `mandatory_isolation`. |
-| **CA2-C5-B03** | `S:7,29`; twelve field-type rows, I006, I012, I021 and I026. FIX4's stipulated word "earlier" conflicted with the intended logical implication classification. | Fixed in `38d74abd7f451edec049e42d1f23669c2fd71488`. Record **pm7-build's 2026-11-05 10:25Z proof-classification ruling**: same field, same defect, logical implication plus single-site/two-site witness, regardless of evaluation order. This is not a product/governance decision or Jared quotation. Each of the sixteen rows states its implication and evidence. Fresh `E/adversarial.json` repeats 60 one-field wrong-type cases, plus 60 I012 aggregate-scan probes; each guard-only cut still refuses and the corresponding same-field value cut(s) accept. The review's `cycle5/survivor-proofs.json` supplies I006/I021/I026 single/two-site witnesses. Recheck the other five former implied rows as B01/B02 negatives. The corrected 84-row inventory and full rerun now substantiate zero unclassified. |
+| **CA2-C5-B03** | `S:7,29`; twelve field-type rows, I006, I012, I021 and I026. FIX4's stipulated word "earlier" conflicted with the intended logical implication classification. | Fixed in `38d74abd7f451edec049e42d1f23669c2fd71488`. Record **pm7-build's 2026-11-05 10:09Z proof-classification ruling**: same field, same defect, logical implication plus single-site/two-site witness, regardless of evaluation order. This is not a product/governance decision or Jared quotation. Each of the sixteen rows states its implication and evidence. Fresh `E/adversarial.json` repeats 60 one-field wrong-type cases, plus 60 I012 aggregate-scan probes; each guard-only cut still refuses and the corresponding same-field value cut(s) accept. The review's `cycle5/survivor-proofs.json` supplies I006/I021/I026 single/two-site witnesses. Recheck the other five former implied rows as B01/B02 negatives. The corrected 84-row inventory and full rerun now substantiate zero unclassified. |
 
 ### Corrected survivor inventory and removal rerun
 
@@ -544,3 +544,73 @@ Full evidence paths and SHA-256 follow. `E/README.md` gives scratch replay adapt
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/cycle5/removal-summary.json` | `10334f23932ee492c0f8c0f367a94cd3b26b66baef1d93c7674de214ef4ea6b3` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/cycle5/supplemental-summary.json` | `e02f7909f14287872a32295c8a3b3f3f622c53daa3cfd8b0d52f37c94de1e59e` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/CA-SEAL2-FIX5.md` | `9159b06efd0e94a8a8682601018165ab97c1669061668f0ca13a3402717b2d7e` |
+
+
+## Review round 6: findings and responses
+
+Review read in full: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/REVIEW-astra-3.md`, with its full predicate inventory, witnesses and replay scripts; FIX6, FIX5 and FIX4 and their named briefs/reviews also apply. All six findings are fixed; none is disputed or stopped. `H` is `reports/event-authority-20261105/CA-SEAL2-checks.py`; `V` is the frozen validator path above. `E` is `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/`. All six fixes and the coverage implementation are committed in `90c0eacee18e0862e067f0f54b9e79a11ea331f8`.
+
+| Finding | Where / cause | Fix / how to verify |
+|---|---|---|
+| **CA2-A3-B01** | `V:875–878`, existing membership helper at V:161. Four call-instantiated authority requirements had no independent negatives. | `H:330`: four negatives remove one DL-451 token apiece. Each verifies its passing parent, updates the observational section SHA and receipt byte anchor, and retains every other phrase/pin. `additional-summary.json`: `authority_required_token_0` through `_3` each loses exactly its own new negative. |
+| **CA2-A3-B02** | `V:888–890,894`. Previous nested-object cuts retained path and exact key-set checks. | `H:354`: independent path-only and extra-key negatives for prior_receipt, recount_receipt and recount_list. Digests and peer identities stay correct; the receipt byte anchor follows the changed bytes. Six `nested_*` cuts each lose only their corresponding negative. |
+| **CA2-A3-B03** | `V:1020`. The decision-section test covered the right boundary only. | `H:611`: prefix the own decision token with `x`, synchronize the section SHA and retain valid own-name evidence. The decision-left-boundary-only cut loses `negative_exclusion_decision_prefix`; right and source boundaries stay enabled. |
+| **CA2-A3-B04** | `V:2244–2247`. The main seam varied recount completion while August stayed true. | `H:734`: four cases keep recount complete and set exactly one August input false. The existing production bytecode seam retains all conjunctions. Each `main_August_*` left-operand cut loses only its matching assertion; false-recount peers remain identical. |
+| **CA2-A3-B05** | `V:1072–1074`. Only the receipt-error collection path was covered. | `H:754`: from the complete aggregate parent, change only the outcomes schema_id. Require complete=false and exactly one recount_input_or_outcome_invalid issue. Removing only that handler's append loses this control. The receipt handler and outcome-reader guards stay enabled. |
+| **CA2-A3-B06** | `V:225`, touched `multi_family_receipt_state()`. Earlier tests called a different semantic helper. | `H:372`: finalize a coherent third/fourth parent, verify both helpers, then change only the third semantic after-hash. Synchronize the third anchor, fourth prior observation and fourth anchor. The direct comparison-only cut loses only `negative_third_semantic_after_hash`. `touched-summary.json` also proves the fourth helper still refuses. |
+
+**All 17 mandatory narrow cuts lose exactly their own negative; all 157 peer records and refusal strings remain identical.** The four authority-token, six nested-identity, one boundary, four August, one aggregate and one DL-412 controls sum to 17. The two newly inventoried structural filters are outcomes, not accepting-negative witnesses. `E/audit-summary.json` asserts the exact failed-test sets and peer equality. Fresh `witnesses3.json` and `targeted.json` rederive the original survivor proofs as well as the new structural inputs.
+
+### Complete coverage and regeneration test
+
+`CA-SEAL2-coverage.json` contains all **286 syntax sites plus 41 semantic rows** from Astra's full inventory and all **84 original survivor classifications** separately. Every site names failing tests and its cut, or states its survivor/data-flow outcome with path/SHA-256 evidence. Wrappers retain separate child rows; the table also records independent regex-boundary and path-component cuts, individual span bounds, both operands of each main gate and both aggregate collection paths.
+
+`H:29` derives touched functions and inserted lines by comparing the validator AST/text with the CA-SEAL base, rather than walking only new helper names. It uses Astra's comparison, branch, Boolean-clause, predicate-call, conditional-expression and return rules, including the changed observer assignment and builder record. It regenerates semantic expansions from the expected object, required authority arguments, flags and error handlers. `H:114` rejects missing, stale, duplicate or changed site identities, unknown test references and unclassified rows. `H:790` runs it as `positive_complete_predicate_coverage`.
+
+The scratch demonstration removes one row: the test fails and names that exact missing site. A stale row also fails; intact/restored tables pass. The committed coverage summary explains site counts versus independent invariants, including Astra's 16 fixed data-return observations. No wrapper or terminal refusal is substituted for a child proof.
+
+**N01 corrected:** the lead's same-field/same-defect/any-order implication ruling was written at **2026-11-05 10:09Z**. Both the original report entries and survivor definition now use the corrected time. No product or governance answer is changed.
+
+### Round-6 checks and limits
+
+Reproduce the current corpus with `python3 -B reports/event-authority-20261105/CA-SEAL2-checks.py --source-map /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/source-locations.json --out <external-result.json>`.
+
+- **Corpus:** exit 0; 158/158; 129 recorded refusals; all 140 prior records unchanged; 597/597 real source hashes and lengths. Fresh restoration matches exactly.
+- **Original removal:** 182 variants; 126 fail tests; 56 match survivor outcomes, including the structural crashes; 0 unclassified. All cuts remain unchanged.
+- **All Astra variants:** 221; 156 fail tests, 9 structural interruptions, 56 corpus-passing classified survivors; 0 unclassified. `close_inventory.py` reruns from scratch and annotates every site.
+- **Coverage table:** 191 killed-by rows; 136 survivor/data-flow rows; 0 unclassified. See the committed short summary for each outcome count.
+- **Shard check:** exit 0, top-level pass; no owner/generated artifact changed and no regeneration.
+- **Index validation:** top-level fail; full output retained. All 30 complete failure records equal the retained round-5 array. Tracked Plans and checker inputs are unchanged from the reviewed head; no unrelated finding is repaired.
+- **Scope:** only H, the coverage table/summary, compact fix6 results, survivor table and this report change. Validator SHA-256 stays `3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72`. No Plans, scripts, receipt, .gitignore, registry, Decision Log, Spec Lock, .evidence or auto-decision edit.
+
+The original 84 classifications remain 28 negative-added, five duplicate, 16 implied, 22 frozen-only and 13 structural. New ssot/entry filters have concrete malformed JSON and AttributeError witnesses; crashes are never acceptance proofs. Fixed data-return observations are identified as such, rather than claimed as independent guard proofs.
+
+Disk/RAM passed the required 50/6 GB thresholds before checkout (107/19 GB). Replay resource checks remain enabled; checkers run sequentially. Fifteen ignored currentness inputs were copied byte-for-byte for read-only index validation, without regeneration. All cuts compile functions in memory; frozen executable bytes are never rewritten. No mailbox, subagent, browser, server, main push, admission or seal occurred. Family grades N/A; IDs used none. CA-SEAL2-FIX6 joins the procedural seal-applier exclusion.
+
+**Stopped row: none.** Coordinated assembly, actual landers/final anchors, real per-name outcomes/depth, unchanged August requirements, independent before/after review and shared-tool adoption remain integration work. The branch earns no final approval.
+
+### Retained evidence — round 6
+
+Raw runtime output stays outside the repository. The compact committed result is `CA-SEAL2-fix6-results.json`; replay instructions and copied scripts are in `E/README.md`. Copy scripts to fresh local scratch before replay. Full evidence paths and SHA-256:
+
+| Evidence path | SHA-256 |
+|---|---|
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/baseline.json` | `fe99e4084535f27cbd47951ff27777f62892c76227bb3931493e350d21866d98` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/restored.json` | `fe99e4084535f27cbd47951ff27777f62892c76227bb3931493e350d21866d98` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/removal-summary.json` | `4b7f3934bdf7f228d2d877d0acfadd19a76c2419ce7c362baafe2b96ef3b9af0` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/supplemental-summary.json` | `964ab95ca3678ff86cdf243793ab5ce5260211254421beb863c86641d92f566c` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/additional-summary.json` | `041e2c9217836013e884ecfbcc69056d48223f1208b0c401ab49ddada6afff62` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/dispatch-summary.json` | `552904a1aaefbefff54215c487d33f324235080922918264aeb3635e5a184bce` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/touched-summary.json` | `a1e5b541806ad806b5a73255b23250c246952f9b56d14128d823e86c2a95693b` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/witnesses3.json` | `6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/targeted.json` | `cdbcb5a0718e528773ab9cc4ed6d225193c7bb72f6144323a9e519e6477bc33b` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/predicate-inventory.json` | `d6a2e5e7c4ed8cab0cd4ccd8eaacb1992cd8492aaebec2bf56fdf870ab80016a` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/classification-regrade.json` | `086302e1ba06cd5d0f123dd3b4b65954a43fcfd53808fb9b4fcd9e6c977d0040` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/audit-summary.json` | `552353061c6b8574eca712f852c4e487aeea3189ca20101be189d6f27015b038` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/coverage-demo.json` | `860ad5afbbafbf922fbdf9ae1d7d82d98a028a43e67840ba4e8cc49f16dc9114` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/shard-check.json` | `3df84afb0ff89f7052554bb9700a1bc3294714b9109ec8257ee2b7ab46a86b21` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/index-validate.json` | `d621619a356376b0ede68a4ad8dd05ec89ca300ffc0d74d98f78a819d4aaa2d2` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/index-comparison.json` | `9bc72ccb7c71e0448ccd2c4704100b11efde7be5ec951fef083e0bf9a4c8d644` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/currentness-copy.json` | `ab1f0477f083f1453770147475ee39452b8f6cdcd92cdc7d9e9ad4734362d724` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/scope.json` | `7e11fcf8682fe1a76ae82b300133a0ab79586de0bd0cf137312f9e3d6333d24f` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/final-corpus.json` | `fe99e4084535f27cbd47951ff27777f62892c76227bb3931493e350d21866d98` |

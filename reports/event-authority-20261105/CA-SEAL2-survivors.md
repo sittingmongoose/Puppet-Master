@@ -1,10 +1,10 @@
-# CA-SEAL2 round 5 — complete Astra 2 survivor inventory
+# CA-SEAL2 rounds 5–6 — Astra 2 survivor inventory
 
 Reviewed baseline: `213087612a73068a126e17d3dfbbea941d943bf2`; test fixes: `661e2ce139`. Validator remains `3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72`.
 
 `V` is `Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py`; `H` is `reports/event-authority-20261105/CA-SEAL2-checks.py`. `E` is `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix5/`. `C` is `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/cycle5/`.
 
-**Corrected definition — pm7-build, 2026-11-05 10:25Z**, recorded in `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/CA-SEAL2-FIX5.md`: **implied** means a named guard **on the same field** rejects every input failing this guard **for the same defect, whatever the evaluation order**. FIX4's word "earlier" was wrong. Each implication requires both a logical implication and a site-by-site witness: this guard removed alone still rejects through the named guard; both removed accept. A terminal or aggregate refusal that checks a different field/predicate never counts. This is the lead's proof-classification ruling, not a product/governance decision or Jared quotation.
+**Corrected definition — pm7-build, 2026-11-05 10:09Z**, recorded in `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/CA-SEAL2-FIX5.md`: **implied** means a named guard **on the same field** rejects every input failing this guard **for the same defect, whatever the evaluation order**. FIX4's word "earlier" was wrong. Each implication requires both a logical implication and a site-by-site witness: this guard removed alone still rejects through the named guard; both removed accept. A terminal or aggregate refusal that checks a different field/predicate never counts. This is the lead's proof-classification ruling, not a product/governance decision or Jared quotation.
 
 **All 84 rows settled under that definition:** 28 negative added, five same-predicate duplicates, 16 implied, 22 frozen-input only, 13 structural. Corpus: 140/140, 112 recorded refusals; all 134 prior result records/refusal strings are unchanged. These outcomes describe strict JSON reachability; no final approval is awarded.
 
@@ -122,3 +122,17 @@ For the digest and path witnesses, `C/survivor-proofs.json` supplies the single-
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/cycle5/survivor-proofs.json` | `e08049c7cb1451a1916008010e11dffd20f04275831f96973faec2a023cdeb1b` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/cycle5/adversarial.json` | `bea189387b0d91b165edb6cea39b6257cc6637567fe6cb7259d016666b42b557` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/CA-SEAL2-FIX5.md` | `9159b06efd0e94a8a8682601018165ab97c1669061668f0ca13a3402717b2d7e` |
+
+
+## Round 6: additional structural sites
+
+The original 84 rows above retain their outcomes. Astra 3 additionally inventoried two type-protection sites outside that finite table. Both are **structural**, with concrete strict-JSON inputs; neither cut demonstrates acceptance. Both sites also have explicit rows in `CA-SEAL2-coverage.json`.
+
+| Site | Malformed input | Intact / own narrow cut |
+|---|---|---|
+| `recount_anchor`, V:847, `type(ssot) is dict` | `{"canonical_ssot_hashes": 1}` | Returns false / `AttributeError` at `ssot.get("files")`. |
+| `recount_anchor`, V:850, entry filter `type(v) is dict` | `{"canonical_ssot_hashes": {"files": [null]}}` | Returns false / `AttributeError` at `v.get("path")`. |
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/witnesses3.json`, SHA-256 `6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643`, `new_structural`. The conditional-expression and Boolean wrapper rows carry the same structural witness; they do not count as new independent input invariants. The complete 327-row table distinguishes syntax sites, semantic expansions and the unchanged 84 prior classifications.
+
+**N01 timestamp correction:** pm7-build's proof-classification ruling was written at **2026-11-05 10:09Z**. The report and definition above now use that time.
