@@ -39,5 +39,31 @@
       "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md",
       "sha256": "e7e8d3f3a2f23737b201becddd94ff0c707815520a366ab32758088c720927fd"
     }
-  ]
+  ],
+  "phase1_fix_round_1": {
+    "reviewed_head": "e397921e858f9b2195c4c7e8f785525495b256d9",
+    "machine": "ubuntu-agent-nas1",
+    "inputs": [
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/FIX-ROUND.md",
+        "sha256": "540e3d7cf42b8ba295a9d3951ff8e26b5f80bb9c7393e8a757d2046b9c26f657"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/WAVE3.md",
+        "sha256": "2c9be0f498dbb67a424997998507111e0c88576c6403ffe8310e14aaba742083"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/W3F-sol/REVIEW-phase1.md",
+        "sha256": "52495caeb2429041d46fc76f1060554361d9311bbf9c3b23e9eae8433ddfa91f"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3F/p1fix1/currentness-copy-sha256.json",
+        "sha256": "b72623c6887c9cb3b53eb0da0baf1e1b8c0b5d46fe116d4f25746361bbe73b8b"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3F/p1fix1/allocation-check.json",
+        "sha256": "b9abd4cd5620fbacb44a4571598f8877f8c5c749ab4003ef3b513cb729554bc7"
+      }
+    ]
+  }
 }
