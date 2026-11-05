@@ -1,5 +1,56 @@
 {
-  "blockers": [],
+  "blockers": [
+    {
+      "blocker_type": "unresolved_dependency_references",
+      "items": [
+        {
+          "field": "depends_on",
+          "plan_unit_id": "SP-237",
+          "target": "DL-401"
+        },
+        {
+          "field": "depends_on",
+          "plan_unit_id": "SP-237",
+          "target": "DL-415"
+        },
+        {
+          "field": "depends_on",
+          "plan_unit_id": "SP-237",
+          "target": "DL-416"
+        },
+        {
+          "field": "depends_on",
+          "plan_unit_id": "SP-237",
+          "target": "DL-417"
+        },
+        {
+          "field": "depends_on",
+          "plan_unit_id": "SP-237",
+          "target": "DL-418"
+        },
+        {
+          "field": "depends_on",
+          "plan_unit_id": "SP-237",
+          "target": "DL-419"
+        },
+        {
+          "field": "depends_on",
+          "plan_unit_id": "SP-237",
+          "target": "DL-420"
+        },
+        {
+          "field": "depends_on",
+          "plan_unit_id": "SP-237",
+          "target": "DL-421"
+        },
+        {
+          "field": "depends_on",
+          "plan_unit_id": "SP-291",
+          "target": "DL-401"
+        }
+      ]
+    }
+  ],
   "field_coverage": {
     "acceptance_criteria": 7421,
     "canonical_text": 7421,
@@ -18,7 +69,7 @@
     "unit_type": 7421,
     "validation_surfaces": 7421
   },
-  "generated_at_utc": "2026-11-04T20:17:38Z",
+  "generated_at_utc": "2026-11-05T05:08:37Z",
   "issues": {
     "docs_without_plan_units": [],
     "duplicate_plan_unit_ids": [],
@@ -931,7 +982,7 @@
   ],
   "schema_id": "pm.plan_index.coverage_report.v1",
   "source_scope": "top-level live Plans/*.md PlanUnit YAML fences",
-  "status": "pass",
+  "status": "fail",
   "summary": {
     "cycle_blocker_count": 0,
     "doc_count": 96,
@@ -943,6 +994,6 @@
     "parse_error_count": 0,
     "plan_unit_count": 7421,
     "unique_plan_unit_count": 7421,
-    "unresolved_dependency_reference_count": 0
+    "unresolved_dependency_reference_count": 9
   }
 }

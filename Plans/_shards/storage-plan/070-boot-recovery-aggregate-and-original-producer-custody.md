@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L23851-L23963
+Source lines: L23867-L23980
 
-Source SHA256: `860a4a568f9638b5b62b2f4d06f50796ccecee93d55176faa92d52c58d9ab79e`
+Source SHA256: `d9d056b7dbe76031867f628ef8996153d51955212454b2ffef4d9ba9a328e6c0`
 
 ---
 
@@ -93,7 +93,7 @@ canonical_text: >-
   conserve original authority and effects; mandatory backups retain coherent Boot custody.
 gui_related: false
 gui_classification_reason: Defines internal source, aggregate, original append and backup custody without visual presentation.
-depends_on: [SP-026, SP-236, SP-237, SP-278, SP-286, CV-339, DL-045, DL-083, DL-089]
+depends_on: [SP-026, SP-236, SP-237, SP-278, SP-286, CV-339, DL-045, DL-083, DL-089, DL-401]
 unblocks: []
 acceptance_criteria:
   - The exact canonical aggregate path/schema/MessagePack value preserves original occurrence, frozen membership and producer-owned input through retries.
@@ -114,6 +114,7 @@ source_lineage:
   - Plans/Decision_Log.md#DL-045
   - Plans/Decision_Log.md#DL-083
   - Plans/Decision_Log.md#DL-089
+  - Plans/Decision_Log.md#DL-401
   - reports/event-authority-20260911/step-08-storage-boot-recovery-validation.md
 negative_constraints:
   - Do not infer actual source work from filenames, regenerate frozen membership, fabricate recovery IDs, emit no-work events, or select earliest from retained payloads.
