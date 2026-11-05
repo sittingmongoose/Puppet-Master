@@ -115,7 +115,7 @@ export default async function (t) {
         selection.active.length === 1 && selection.active[0] === id, JSON.stringify(selection), {hard:true});
       await t.page.mouse.move(5, h - 5);
       if (t.args.fitProbe) {
-        for (let width=480; width<=600; width+=2) {
+        for (let width=Number(t.args.fitFrom || 480); width<=Number(t.args.fitTo || 800); width+=2) {
           await f.evaluate(width=>PMW.chatCol.setWidth(width),width);
           await f.waitForTimeout(180);
           const fit=await f.evaluate(()=>{
@@ -197,6 +197,6 @@ export default async function (t) {
     }
     t.log(`${w}x${h}: inspected ${ids.length} threads at top and bottom`);
   }
-  if (t.args.setupOnly) return;
+  if (t.args.setupOnly || t.args.fitProbe) return;
   await t.check('Pod clears controls in every size, thread and scroll position', views === threads * 2 && views > 0 && !bad.length, `${views} views; ${bad.slice(0, 12).join('; ')}`);
 }

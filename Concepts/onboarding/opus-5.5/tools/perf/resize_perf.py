@@ -1,5 +1,5 @@
 """Resize-drag regression check: Home divider, Chat edge and Left Rail must track the pointer 1:1 without
-long frames. python3 resize_perf.py <page.html> [--themes friendly-dark,...] [--port 9347]
+long frames. python3 resize_perf.py <page.html> --reference <control.html> [--themes friendly-dark,...] [--port 9347]
 
 Frame-by-frame method: an in-page sampler records, per requestAnimationFrame, the last pointer position and
 the resized element's rendered edge, so lag is measured in pixels on the frames the compositor was offered.
@@ -8,7 +8,7 @@ must not cap the slot back to its eased 240px (the width used to oscillate targe
 
 GPU: like perf.py this drives real Chrome over CDP on the Linux GPU desktop (DISPLAY/XAUTHORITY and --enable-gpu).
 Exits 1 when any assertion fails. Chrome profiles go to ~/pm-scratch."""
-import json, os, sys, time
+import json, os, sys, time, subprocess, statistics, hashlib
 from cdp import Browser
 
 args = sys.argv[1:]
@@ -162,7 +162,59 @@ def relative_gap_measure(frames, down, up):
     return floor, max(50.0, floor * 2 + 34), q([b[0] - a[0] for a, b in zip(drag, drag[1:])], 0.95)
 
 
+def paired_verdict(reference, target):
+    """Interleaved reference controls host load; a fixed ceiling prevents load hiding stalls."""
+    if len(reference) != 2 or len(target) != 2:
+        raise ValueError('two reference and two target measurements required')
+    ref = statistics.median(reference)
+    observed = statistics.median(target)
+    # Preserve the existing two-frame allowance, but derive it from actual
+    # reference DRAGS, not unrelated idle cadence. Bound even a loaded reference.
+    budget = min(200.0, ref * 2 + 34)
+    return observed <= budget and max(target) <= 200.0, budget, observed
+
+
+def paired_main():
+    reference = opt('reference')
+    if not reference:
+        print('ERROR: timing certification requires --reference <control.html>; idle-only verdicts are unstable under shared-host load', flush=True)
+        return 2
+    rows = []
+    import tempfile
+    with tempfile.TemporaryDirectory(prefix='resize-paired-') as scratch:
+        for i, page in enumerate((reference, page_file, page_file, reference)):
+            metrics = os.path.join(scratch, str(i)+'.json')
+            command = [sys.executable, __file__, page, '--themes', ','.join(THEMES),
+                       '--port', str(PORT), '--single-measurement', '--metrics', metrics]
+            result = subprocess.run(command)
+            if result.returncode or not os.path.exists(metrics):
+                print('FAIL: invalid tracking/reference measurement', flush=True)
+                return 1
+            rows.append(json.load(open(metrics)))
+    failures = []
+    expected = {theme+' '+surface for theme in THEMES for surface,_,_ in SURFACES}
+    if any(set(row) != expected for row in rows):
+        print('FAIL: incomplete per-gesture paired coverage', flush=True)
+        return 1
+    for key in rows[0]:
+        ref = [rows[i][key]['gap95'] for i in (0,3)]
+        target = [rows[i][key]['gap95'] for i in (1,2)]
+        passed,budget,gap = paired_verdict(ref,target)
+        print(f'{key} reference {ref} target {target} budget {budget:.1f}ms: {"PASS" if passed else "FAIL"}', flush=True)
+        if not passed: failures.append(key)
+    if opt('metrics'):
+        def digest(path):
+            with open(path,'rb') as f: return hashlib.sha256(f.read()).hexdigest()
+        with open(opt('metrics'),'w') as f:
+            json.dump({'reference_sha256':digest(reference),'target_sha256':digest(page_file),'order':['reference','target','target','reference'],'measurements':rows,'failures':failures},f,indent=2)
+    print('FAIL' if failures else 'PASS', flush=True)
+    return int(bool(failures))
+
+
 def main():
+    if '--single-measurement' not in args:
+        return paired_main()
+    metrics = {}
     if os.name == 'nt':
         raise RuntimeError('Use the browser-check kit on Windows; direct Chrome launches bypass GPU admission')
     b = Browser(port=PORT, width=W, height=H, extra=EXTRA, headless=True)
@@ -253,16 +305,17 @@ def main():
                 else:
                     if lag95 > 2:
                         failures.append(f"{theme} {surf}: pointer-to-edge lag p95 {lag95:.1f}px > 2px (1:1 canon)")
-                if gap95 > gap_budget:
-                    failures.append(f"{theme} {surf}: frame gap p95 {gap95:.0f}ms > budget {gap_budget:.0f}ms (2x idle floor)")
+                metrics[theme+' '+surf] = {'floor':floor,'gap95':gap95,'lag95':lag95,'range':rng,'movesPerFrame':mpf}
         wide_both_check(b, url, fam0, mode0, failures)
     finally:
         b.close()
+    if opt('metrics'):
+        with open(opt('metrics'),'w') as f: json.dump(metrics,f)
     if failures:
         print('FAIL')
         for f in failures: print(' -', f)
         return 1
-    print('PASS')
+    print('SAMPLE VALID (timing certification requires the enclosing paired series)')
     return 0
 
 
