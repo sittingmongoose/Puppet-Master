@@ -1,3 +1,112 @@
+# DCH — review round 8
+
+Branch: `plans/ea-w2-chat-20261104`. Reviewed head: `3a994263ef63354fd9e2fde754f06faec92c84be`. Pointer fixture commit: `1a61d45b2100a9990a7d469e7e5fc13eb373d0af`. Owner-domain/source/derived commit: `7c7b7abe3d665ab661f8c9a5b41246924f17e8e6`. This report and grade follow those source bytes.
+
+**Seventeen ordinary family checkers pass: 41,339 assertions, zero failures, one family/job at a time.** Worker re-grade: **9 PASS / 2 PARTIAL / 1 ABSENT** each. Retention stays PARTIAL, membership ABSENT, and the oracle cell stays PARTIAL pending shared guard-isolation adoption. The prior worker 10/1/1 claim is superseded. Cycle 8 independently established oracle PARTIAL in all seventeen but did not finish the other cells; no complete independent before-grade is invented. **Stop remains held for Jared**, with its exact unchanged question and 0 PASS / 5 PARTIAL / 7 ABSENT row. Native execution remains NOT_RUN.
+
+## Review round 8: findings and responses
+
+- **C8-B1, fixture part — fixed (`1a61d45b2100a9990a7d469e7e5fc13eb373d0af`).** `scripts/pm_dch_round5_oracles.py:224` removes the two-defect oversized-plus-inexact pointer negative. `reference/pointer` now changes one valid hex digest character and preserves its encoded size, exact decimal byte count, media type, logical value, pack body/key/metadata and every source observation. Removing only exact-reference equality makes it pass in every family; the size guard remains enabled, all other reference negatives still refuse, and restoring equality rejects it again. The generator's other negative templates were inspected: no other stale copy/two-defect template was found (inventory and reasons in fixture-audit.json). Source-version edits recommit those exact bytes; foreign IDs synchronize checkpoint/index/hash copies while same-context keys stay valid; type negatives retain equivalent comparison values or test primitive admission without unrelated copies.
+- **C8-B1, size witness — resolved as independently unreachable, not disputed and not called a duplicate.** SP-337's exact pointer is one map entry with the fixed payload_ref key, `payload:v1:` prefix, 64 lowercase hex digits, canonical unsigned-decimal byte size and fixed `application/msgpack`. Even the 20-digit uint64 maximum yields only **131 SP-236 encoded bytes**, below 16384; materializable Python byte lengths have at most 19 digits here. Thus an exact recomputed reference cannot independently violate the size guard. Both production guards remain. The replacement exact-pointer bound controls are positives; no fabricated flipping negative is claimed for the entailed defensive size predicate. `fixture-audit.json` records 17 equality-only flips and their rejected complements.
+- **S1-NUM, Storage and owner-cap portion — fixed (`7c7b7abe3d665ab661f8c9a5b41246924f17e8e6`).** Removed the global 2^53 admission/encoding ceilings in `scripts/pm_dch_events.py:169` and `:190`; preserved exact integer types and exact owner uint64 bounds for sequence/source-token/pack metadata. The DCH-only EventRecord conditional preserves uint64 sequence admission and removes the invented producer_sequence_id maximum. All seventeen selected and registered checkpoint definitions restore the original frontier/generation uint64 maxima and remove invented publication revision caps; last_sequence_id explicitly copies the Storage uint64 domain. The four affected logical payload schemas restore their original minima and uncapped owner integer domains. CV-630–646 (`Plans/Contracts_V0.md:24480`), SP-610–626 (`Plans/storage-plan.md:29501`) and ATS-305 distinguish those domains from unchanged producer route availability. Producer RFC8785 projection, physical float encoding and retained dispatch are unchanged, verified by AST/source comparisons.
+- **Cap-removal overflow containment — fixed (`7c7b7abe3d665ab661f8c9a5b41246924f17e8e6`).** Checkpoint hashing previously encoded the candidate before entering its existing physical-refusal handler. An owner-valid publication revision at 2^64 could therefore raise ValueError on a provenance path. Encoding is now contained before hashing; the same refusal boundary covers pointer and packed-body bytes, with the byte recipe unchanged. Each family has one additional structured-refusal containment control covering value, pointer and packed-body encoding; this is not a guard-isolation witness or an invented logical cap. The original failure is in overflow-before.json. One initial restoration cut the whole value handler and raised on an earlier control; it was not counted as refusal and was rerun with the original handler placement restored; the final seventeen-family campaign reruns every ordinary assertion.
+- **C8-B1, proof machinery — sweep items below.** The specified merged keys and compound cuts remain untouched for the shared tool. No new whole-lane check-11 proof is claimed. This is why the oracle grade remains PARTIAL.
+
+## New cases, guards and results
+
+`pm_dch_round8_oracles.py` adds **489 cases/family = 8,313 cases**: **4,284 negatives** and **4,029 positives**. `new-negative-index.json` gives every negative its exact name, surface and target guard, with local IDs **DCH8-N0001–DCH8-N4284**. All execute through the complete ordinary CLI, both payload editions and each checkpoint.
+
+- **Storage EventRecord sequence:** current write and incoming-retry positives at 2^53, 2^60 and 2^64−1; one-defect negatives at 2^64, −1, false, true, 1.0 and string "1". Incoming metadata is excluded from the unchanged semantic projection; valid metadata-only retries return original_result.
+- **Current and two retained checkpoint generations:** every revision, last_sequence_id, frontier_revision, selected_segment_generation, manifest_generation and recovery_epoch path has the same write/repeated-write admission matrix. Primitive negatives have no source hash, equality copy or publication observation to go stale. Full positive publications for both editions synchronize original event/index sequences and exact commitments, publication revisions, complete token/node/source-selection copies as applicable. These are synthetic admission/publication models, not native CAS/retry execution.
+- **Pack byte_size:** the same exact uint64 type/range matrix on write/retry admission, without allocating a fictitious enormous pack or pairing a false size with real bytes.
+- **Publication revision domain:** the owner is nonnegative integer, with no new logical maximum. Its 2^64 case targets existing MessagePack representability, separately from logical admission; uint64 token/sequence cases target the actual owner range. No 2^53 ceiling or new serializer is introduced.
+- **Pointer:** seventeen repaired in-limit exact-reference negatives; seventeen exact-reference bound controls replacing the masked size negatives; 34 additional uint64/runtime maximum-size positive controls. Size and equality remain distinct predicates.
+
+The initial 41,322-assertion family campaign passed before the containment repair. Its outputs and eight-minute memory hold are retained under pre-containment/. The final campaign includes 17 added containment controls and passes 41,339 assertions.
+
+Round-six cap-based expectations are corrected: 2^53 and higher valid owner values become positives; actual owner minima, uint64 overflow and existing physical representability refusals remain. Old retained recipe snapshots are unchanged. The legacy cap witnesses are historical proof inventory only, awaiting shared-tool adoption.
+
+## Family grades before and after
+
+Counts are PASS / PARTIAL / ABSENT. The prior-worker column is historical, not an independent cycle-8 certification. Every after row has its own current ACD/CV/SP citations and fresh complete-family result. The 204 prepared cells and all exact citations are checked again; Stop's row is preserved.
+
+| Family | Before: worker round 7 | Cycle 8 established | After: worker round 8 | Assertions |
+|---|---|---|---|---:|
+| `bundle.selection_forward_blocked` | 10 / 1 / 1 | oracle PARTIAL; full grade incomplete | 9 / 2 / 1 | 2375 |
+| `bundle.selection_sent_to_chat` | 10 / 1 / 1 | oracle PARTIAL; full grade incomplete | 9 / 2 / 1 | 2409 |
+| `chat.message` | 10 / 1 / 1 | oracle PARTIAL; full grade incomplete | 9 / 2 / 1 | 2391 |
+| `chat.thread_archived` | 10 / 1 / 1 | oracle PARTIAL; full grade incomplete | 9 / 2 / 1 | 2503 |
+| `chat.thread_created` | 10 / 1 / 1 | oracle PARTIAL; full grade incomplete | 9 / 2 / 1 | 2369 |
+| `chat.thread_deleted` | 10 / 1 / 1 | oracle PARTIAL; full grade incomplete | 9 / 2 / 1 | 2369 |
+| `chat.thread_worktree_bound` | 10 / 1 / 1 | oracle PARTIAL; full grade incomplete | 9 / 2 / 1 | 2367 |
+| `chat.thread_worktree_create_failed` | 10 / 1 / 1 | oracle PARTIAL; full grade incomplete | 9 / 2 / 1 | 2363 |
+| `chat.thread_worktree_merge_failed` | 10 / 1 / 1 | oracle PARTIAL; full grade incomplete | 9 / 2 / 1 | 2371 |
+| `chat.thread_worktree_merged` | 10 / 1 / 1 | oracle PARTIAL; full grade incomplete | 9 / 2 / 1 | 2375 |
+| `chat.thread_worktree_pr_created` | 10 / 1 / 1 | oracle PARTIAL; full grade incomplete | 9 / 2 / 1 | 2569 |
+| `chat.thread_worktree_pr_failed` | 10 / 1 / 1 | oracle PARTIAL; full grade incomplete | 9 / 2 / 1 | 2367 |
+| `chat.thread_worktree_pre_merge_test_failed` | 10 / 1 / 1 | oracle PARTIAL; full grade incomplete | 9 / 2 / 1 | 2733 |
+| `chat.thread_worktree_pre_merge_test_passed` | 10 / 1 / 1 | oracle PARTIAL; full grade incomplete | 9 / 2 / 1 | 2683 |
+| `chat.thread_worktree_pre_merge_test_started` | 10 / 1 / 1 | oracle PARTIAL; full grade incomplete | 9 / 2 / 1 | 2367 |
+| `chat.thread_worktree_renamed` | 10 / 1 / 1 | oracle PARTIAL; full grade incomplete | 9 / 2 / 1 | 2365 |
+| `chat.thread_worktree_unbound` | 10 / 1 / 1 | oracle PARTIAL; full grade incomplete | 9 / 2 / 1 | 2363 |
+
+## Sweep items
+
+- **PROOF-ID:** `scripts/pm_dch_guard_proofs.py:387–390` merges identifier pattern, length and format predicates.
+- **PROOF-INPUT:** the shared input wrapper (`:241`) and grouped exact-type keys (`:288`) merge different fields/predicates.
+- **PROOF-COMPOUND:** compound envelope/access instrumentation (`:340`) merges meaningful predicates at one enforcement site.
+- **PROOF-POINTER:** size/reference grouping (`:291–293`) merges distinct predicates. The size guard is entailed on exact references, never a duplicate of equality.
+- **Closure for these four:** adopt `scripts/pm_guard_isolation.py` from `plans/ea-guardtool-20261105`. No lane proof script is rebuilt or rerun. The old frozen schema/proof inventory and round-7 guard tables retain historical bytes; they contain obsolete cap witnesses and are not current certification.
+- **S1-NUM, producer portion:** unchanged RFC8785 producer-projection route (`retry_outcome`, `identity`). Unsupported exact producer inputs are still unavailable there; this must not narrow owner logical domains. Storage cap removal is closed in this round.
+- **S2-NUM:** unchanged integral-float/signed-zero normalization in `body_bytes` (current `scripts/pm_dch_events.py:174–179`); adopt the shared type/sign-preserving physical codec during the sweep.
+- **S3-NUM:** unchanged default MessagePack float64 packing (`body_bytes`); adopt shared exact float32 selection where permitted, keeping authentic original recipes.
+- **S4-NUM:** unchanged missing-provenance fallback in `record_number_rule` and retained verifier resource dispatch; adopt authenticated full original-recipe dispatch and unavailable handling. Known raw-v1/normalized-v2/strict-v3 positives remain passing.
+
+## Verification, scope and resource limits
+
+Initial `hostname`: ubuntu-agent-nas1; `df -BG /`: **471 GB available**; `free -g`: **11 GB available**, above 50/6 thresholds. Final serial family campaign minimum: **8,021,069,824 bytes (7.47 GiB)**. The family campaigns together recorded **1 pause(s), 480 seconds total**, and resumed only at or above 7 GiB. The monitor suspends below 6 GiB, rechecks every two minutes, resumes at 7 GiB, and stops only after 45 minutes continuously below 6; pre-containment/memory-events.json records that pause; memory-events.json records the final family campaign and post-memory-events.json records later check pauses. No parallel family/checker jobs, subagents or pm-mail. Fifteen ignored currentness files were copied from the shared owner and SHA-256 matched before index generation. The required sparse detached worktree is removed after pushes and deliverable copies.
+
+Source scope is CV-630–646, SP-610–626 and ATS-305; current schema companions, selected/registered checkpoint parity and targeted scripts only. Other owner prose, held Stop, `Plans/event_family_registry.json`, `Plans/Spec_Lock.json`, `Plans/auto_decisions.jsonl`, Decision Log, retained recipes/receipts/history and lane proof/frozen inventory files remain unchanged. Derived changes belong only to edited source owners; scope-audit.json records exact hashes and comparisons. No source retention/deletion choice, feature, technical identity/key/consumer binding, admission, registry append, Decision Log entry, test-file edit, reseal, landing lock or main push occurs. The two old optional memory files named by BRIEF-DRAFT were absent at the stated local paths and no replacement was found; no IDs are minted.
+
+**IDs used:** existing **ACD-610–626, CV-630–646, SP-610–626, ATS-305**; new PlanUnit/acceptance IDs: **none**. Local case labels DCH8-N0001–DCH8-N4284 are evidence only.
+
+The standard family suite re-executes all eleven standing-check-related corpora and Astra 1–9/11/12 ordinary mutations, known retained originals and format cases. Check 11 as a whole remains pending the shared proof tool; no independent full old-reader/restoration campaign or native result is inferred. S1 producer/S2/S3/S4 remain sweep-only. Broader index/integration baseline results are recorded in verification.json, without an aggregate governance pass.
+
+## Check results
+
+| Check | Exit / result |
+|---|---|
+| Seventeen final ordinary family runs | 0 each; 41,339 assertions, zero failures |
+| Focused reference fixture audit | 0; 17 equality-only flips, 14 other reference negatives/family remain rejected |
+| Full-checker defect restorations | 0 driver each; restored input cap, removed reference equality and removed value/physical overflow containment each yield structured checker failures |
+| Shard generation / check | 0 / 0; only five edited source owners |
+| Plan index generation / validation | 0 / 1; generation pass; 22 validation failures versus 23 at the unchanged reviewed baseline, zero new |
+| Storage profile | 1; 41 existing errors; exact error-list comparison recorded in verification.json |
+| Assistant contract | 1; gaps_found, errors empty; baseline comparison recorded in verification.json |
+| Source scope / exact citations / whitespace | 0; current own units and schema parity, protected bytes unchanged |
+
+## Evidence
+
+All extra evidence is in `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/fix8/`. SHA256SUMS pins retained commands, outputs, counters, target guards, scope/citation audits and monitor events. Key results:
+
+| Evidence | SHA-256 |
+|---|---|
+| `serial-campaign.json` | `61e79aea29b6df31ff1adb432203307a3ef450ec81914f942f1d380fe76db7f7` |
+| `fixture-audit.json` | `8a66e124f373f36f1365a337efb5271da206f9d6fa4feba99c4ce6ce88245882` |
+| `new-negative-index.json` | `bea150953e58c97d9772aeba646dc2fa52a4aa23b3be3a9078372de7e7701bd3` |
+| `scope-audit.json` | `4deb6679645163efbe18bf65bedd34eaa0e1a0e53e5b7c87d8a6210af6b10228` |
+| `grade-citation-check.json` | `e624ce5525f70a0b3614a69965cf1b1593e90ed91ec356d54db9d65d391d3039` |
+| `verification.json` | `846dc5563e50d53dfbbdc75b7f49375319e1593544e8fdd2ad17896b76428df7` |
+| `currentness-sha256.json` | `b72623c6887c9cb3b53eb0da0baf1e1b8c0b5d46fe116d4f25746361bbe73b8b` |
+| `pre-containment/memory-events.json` | `87f32ae02113f7469892c2b7ab13f0f4d6559c57369dd1d5d4ad77ac01be3d92` |
+| `memory-events.json` | `37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` |
+| `post-memory-events.json` | `37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` |
+| `overflow-before.json` | `f0a45ffc470fa56a42a22cb92fd867873c2985464f3b08766f4f6c88b92325f9` |
+
+---
+
+# Prior reports — historical; round 8 above supersedes preparation and proof claims
+
 # DCH — review round 7
 
 Branch: `plans/ea-w2-chat-20261104`. Reviewed head: `c21fa62e507de04c5970fb51aabb9c841182dfed`. Assessed source/fix commit: `6e175c1b8a53caf9f6ef1e505182f2fe3b87a96a`. This report and grade commit follow those source bytes.
