@@ -16,6 +16,14 @@ export default async function (t) {
     await t.check(`${w}x${h} viewport`, viewport.width === w && viewport.height === h, JSON.stringify(viewport), { hard: true });
     await f.evaluate(() => { PMW.chatCol.setHistoryPinned(false); PMW.chatCol.setKeepOpen(true); PMW.chatCol.show(); PMW.chatCol.setWidth(560); });
     await f.waitForFunction(() => PM56_DEMO.getState().historyMode === 'closed' && document.body.getAttribute('data-ph-drawer') === 'closed', null, { timeout: 10000 });
+    await f.waitForFunction(() => {
+      const e=document.querySelector('#chatPanel'), r=e?.getBoundingClientRect();
+      const key=r && [r.x,r.y,r.width,r.height].join(',');
+      const prior=window.__podChatGeometry;
+      const closed=PM56_DEMO.getState().historyMode==='closed' && document.body.getAttribute('data-ph-drawer')==='closed';
+      window.__podChatGeometry={key,count:closed && prior?.key===key ? prior.count+1 : 0};
+      return closed && Math.abs(r?.width-560)<=1 && window.__podChatGeometry.count>=4;
+    }, null, {polling:'raf',timeout:10000});
     const toggle = f.locator('.chat-header [data-action="toggle-history"]').first();
     await toggle.click();
     const pin = f.locator('.history-flyout [data-action="ph-toggle-pin"]').first();
