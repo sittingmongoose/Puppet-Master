@@ -28,7 +28,7 @@ export default async function(t) {
    // Reach it with the keyboard, then inspect the owner's visible focus paint.
    for(let i=0;i<70;i++){if(await b.evaluate(e=>e===document.activeElement))break;await t.page.keyboard.press('Tab');}
    await t.check('keyboard reaches Pair instead',await b.evaluate(e=>e===document.activeElement));
-   await t.check('visible focus',await b.evaluate(e=>{const s=getComputedStyle(e);const bracket=['::before','::after'].some(p=>{const v=getComputedStyle(e,p);return v.content!=='none'&&v.opacity!=='0'&&[v.borderTopStyle,v.borderRightStyle,v.borderBottomStyle,v.borderLeftStyle].some(b=>b!=='none');});return e.matches(':focus-visible')&&(s.outlineStyle!=='none'||s.boxShadow!=='none'||bracket);}));
+   await t.check('visible focus',await b.evaluate(e=>{const s=getComputedStyle(e);const bracket=['::before','::after'].some(p=>{const v=getComputedStyle(e,p);return v.content!=='none'&&v.opacity!=='0'&&[v.borderTopStyle,v.borderRightStyle,v.borderBottomStyle,v.borderLeftStyle].some(b=>b!=='none');});const ret=document.getElementById('o55np-reticle'),r=e.getBoundingClientRect(),q=ret?.getBoundingClientRect(),v=ret&&getComputedStyle(ret);const reticle=q&&v.visibility!=='hidden'&&+v.opacity>0&&q.left<=r.left&&q.right>=r.right&&q.top<=r.top&&q.bottom>=r.bottom&&q.width<r.width+24&&q.height<r.height+24;return e.matches(':focus-visible')&&(s.outlineStyle!=='none'||s.boxShadow!=='none'||bracket||reticle);}));
    const r=await b.boundingBox(); await t.page.mouse.move(r.x+r.width/2,r.y+r.height/2); await t.page.mouse.down();
    const held=await b.boundingBox(); await t.check('stationary press target',Math.max(...['x','y','width','height'].map(k=>Math.abs(held[k]-r[k])))<0.6);
    await t.page.mouse.up(); await A.screen('nas-pmpair');
