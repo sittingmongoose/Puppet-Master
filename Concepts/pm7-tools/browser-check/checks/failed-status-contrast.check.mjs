@@ -130,6 +130,7 @@ export default async function(t){
        const action=row.locator('.o55-row > button:not(.o55-tipq)');
        await t.visible(action, 'focused recovery action remains visible');
        const ring=await paintedFocus(row.locator('.o55-row'),action);
+       t.log('FOCUS '+JSON.stringify({route,code,look,width:w,height:h,scroll:pos,ringPixels:ring}));
        await t.check(`${route} ${code} ${look} ${w}x${h} restored keyboard focus ring paints`,ring>=8,`${ring} native ring pixels`);
        await t.check('restored action keeps visible keyboard focus',await action.evaluate(e=>{const s=getComputedStyle(e);return e.matches(':focus-visible')&&parseFloat(s.outlineWidth)>0&&s.outlineStyle!=='none';}));
       }
