@@ -2412,7 +2412,7 @@
     glow.style.left = e.clientX + 'px'; glow.style.top = e.clientY + 'px';
     document.body.appendChild(glow);
     var S = spring(380, 18, 1), fr = S.map(function (s) { return { offset: s.t / S[S.length - 1].t, transform: 'scale(' + (1 + 0.025 * Math.sin(Math.min(1, s.t / 120) * Math.PI) + 0.012 * (1 - s.x) * Math.sin(s.t / 22)).toFixed(4) + ')' }; });
-    var flex = g.matches('.o55-card, .o55-tile') ? Array.prototype.slice.call(g.children) : [g];
+    var flex = g.matches('.o55-card, .o55-tile') || (g.matches('.o55-btn') && g.closest('#pm-o55-onboarding')) ? Array.prototype.slice.call(g.children) : [g];
     flex.forEach(function (n) { n.animate(fr, { duration: S[S.length - 1].t, easing: 'linear', composite: 'add' }); });
     var size = Math.min(Math.max(r.width, r.height), 56) / 36;
     glow.animate([{ transform: 'translate(-50%,-50%) scale(.3)', opacity: 0.5 }, { transform: 'translate(-50%,-50%) scale(' + size.toFixed(2) + ')', opacity: 0 }], { duration: 420, easing: 'cubic-bezier(.2,.7,.2,1)' }).onfinish = function () { glow.remove(); };

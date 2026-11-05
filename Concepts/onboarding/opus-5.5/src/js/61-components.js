@@ -217,7 +217,7 @@
       const id = o && o.tip === false ? null : o && o.tip ? (tipOf(o.tip) ? o.tip : null) : exact(action, arg);
       /* (a link of a group whose one ? is drawn elsewhere, review's Edits, a path's crumbs: described by its note too) */
       const by = id || (tipOpen('group:' + action) ? 'group:' + action : null);
-      const html = `<button type="button" class="o55-link" data-o55-do="${esc(action)}"${arg != null ? ` data-arg="${esc(arg)}"` : ''}${by ? described(by) : ''}${U.attrs(X)}>${esc(label)}</button>`;
+      const html = `<button type="button" class="o55-link" data-o55-do="${esc(action)}"${arg != null ? ` data-arg="${esc(arg)}"` : ''}${by ? described(by) : ''}${U.attrs(X)}><span>${esc(label)}</span></button>`;
       return id ? opt(id, html, 'o55-opt-inline', 'span') : html;
     },
     /* Interior sheet: replaces part of the window's interior (never a nested dialog). */

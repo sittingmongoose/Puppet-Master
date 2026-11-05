@@ -22,6 +22,7 @@ browser-check run $K/checks --set sandbox=1                    # every check in 
 Parallel runs are safe: each gets its own browser and run folder. Give each its own copy of the build (a rebuild during a run mixes builds) and its own `--out`. The page loads as `file://`, so `--host` can't open it: to use another machine, ssh there with a checkout of the branch (`~/.local/bin/browser-check`). Motion claims need the VM, Windows or Nas1, because the Mac records about 36 fps and refuses pixel checks while recording.
 
 | Check file | What it asserts |
+| `button-press-edges` | FO-73: every visible enabled non-choice onboarding button on ten screens, ten looks and three motion paths takes held edge/corner presses without moving its hit box. |
 |---|---|
 | `place-seed-boundaries` | SW-33: original SSH and known PM saved references without a session/cache, including another backup session; constructor/toString/__proto__ cache regressions. Both surfaces. |
 | `choice-visuals` | FO-49: stationary painted native boundaries, internal content lift, zero lift for media/attribute Reduced Motion, and native keyboard focus rings, all ten looks. `--set visualShots=1` lists native crops. |

@@ -626,3 +626,22 @@ html[data-motion="reduced"] #pm-o55-onboarding :is(.o55-card, .o55-tile) { --o55
 #pm-o55-onboarding#pm-o55-onboarding :is(.o55-card, .o55-tile):focus-visible {
   outline: 2px solid var(--o55-accent) !important; outline-offset: 2px !important;
 }
+
+/* FO-73: button hit bounds never move. Press displacement and squeeze belong to
+   content; the native face keeps its material and shadow compression. */
+#pm-o55-onboarding button:not(.o55-card, .o55-tile) { --o55-button-x: 0px; --o55-button-y: 0px; --o55-button-s: 1; }
+#pm-o55-onboarding[data-family="friendly"] button:not(.o55-card, .o55-tile):active { --o55-button-s: .97; }
+#pm-o55-onboarding button.o55-btn:active { --o55-button-y: 1px; --o55-button-s: .985; }
+#pm-o55-onboarding[data-family="friendly"] button.o55-btn:active { --o55-button-x: 2px; --o55-button-y: 3px; --o55-button-s: 1; }
+#pm-o55-onboarding[data-family="retro"] button.o55-btn:active { --o55-button-x: 3px; --o55-button-y: 3px; --o55-button-s: 1; }
+html[data-o55-nier="on"] #pm-o55-onboarding button.o55-btn:active { --o55-button-x: 1px; --o55-button-y: 1px; --o55-button-s: 1; }
+#pm-o55-onboarding[data-family="glass"] button.o55-btn:not([aria-disabled="true"]):hover:not(:active) { --o55-button-y: -1px; }
+#pm-o55-onboarding button:not(.o55-card, .o55-tile) > * { translate: var(--o55-button-x) var(--o55-button-y); scale: var(--o55-button-s); transition: translate 140ms ease, scale 140ms ease; }
+#pm-o55-onboarding :is(.o55-link, .o55-suggestchip, .o55-railjump) > span { display: inline-block; }
+#pm-o55-onboarding#pm-o55-onboarding button:not(.o55-card, .o55-tile) { transform: none !important; }
+html[data-motion="reduced"] #pm-o55-onboarding button:not(.o55-card, .o55-tile) { --o55-button-x: 0px !important; --o55-button-y: 0px !important; --o55-button-s: 1 !important; }
+html[data-motion="reduced"] #pm-o55-onboarding button:not(.o55-card, .o55-tile) > * { transition: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  #pm-o55-onboarding button:not(.o55-card, .o55-tile) { --o55-button-x: 0px !important; --o55-button-y: 0px !important; --o55-button-s: 1 !important; }
+  #pm-o55-onboarding button:not(.o55-card, .o55-tile) > * { transition: none !important; }
+}

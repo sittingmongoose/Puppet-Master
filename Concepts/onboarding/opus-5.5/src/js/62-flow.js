@@ -116,7 +116,7 @@
   /* suggestion chips, with one ? for them all (group:<action>) after the last */
   F.chips = function chips(action, values, current) {
     const gid = 'group:' + action;
-    return `<div class="o55-suggest" role="group">` + values.map((v) => `<button type="button" class="o55-suggestchip${v === current ? ' o55-on' : ''}" data-o55-do="${U.esc(action)}" data-arg="${U.esc(v)}"${O55.tips.described(gid)} data-pm-hover-exempt="true" data-key="sg-${U.esc(U.slug(v))}">${U.esc(v)}</button>`).join('') + O55.tips.q(gid) + '</div>' + O55.tips.explainer(gid);
+    return `<div class="o55-suggest" role="group">` + values.map((v) => `<button type="button" class="o55-suggestchip${v === current ? ' o55-on' : ''}" data-o55-do="${U.esc(action)}" data-arg="${U.esc(v)}"${O55.tips.described(gid)} data-pm-hover-exempt="true" data-key="sg-${U.esc(U.slug(v))}"><span>${U.esc(v)}</span></button>`).join('') + O55.tips.q(gid) + '</div>' + O55.tips.explainer(gid);
   };
   /* Demo hints, O55.flow.hint(id, items, o) (Jared 2026-10-31: "Demos should have a hint to progress ... The hint
      provides ways to get the different steps out ... prefilled selections that allow the user to try it that way").
@@ -162,7 +162,7 @@
   const copyKey = (text, key) => 'copy-' + (key || U.slug(text));
   const copiedNow = (k) => !!COPIED[k];
   F.copyNote = (key) => O55.tips.explainer('copy:' + (key || ''));
-  F.copyBtn = (text, key) => { const k = copyKey(text, key); return O55.tips.opt('copy:' + (key || ''), `<button type="button" class="o55-btn o55-secondary o55-small" data-o55-do="copyText" data-arg="${U.esc(text)}" data-pm-hover-exempt="true" data-key="${U.esc(k)}">${U.esc(T(copiedNow(k) ? 'chrome.copied' : 'chrome.copy'))}</button>`, 'o55-opt-inline', 'span', { note: false }); };
+  F.copyBtn = (text, key) => { const k = copyKey(text, key); return O55.tips.opt('copy:' + (key || ''), `<button type="button" class="o55-btn o55-secondary o55-small" data-o55-do="copyText" data-arg="${U.esc(text)}" data-pm-hover-exempt="true" data-key="${U.esc(k)}"><span>${U.esc(T(copiedNow(k) ? 'chrome.copied' : 'chrome.copy'))}</span></button>`, 'o55-opt-inline', 'span', { note: false }); };
   O55.actions.copyText = function (S, text, el) {
     U.copyText(text).then((ok) => {
       if (!ok || !el || !document.contains(el)) return;
