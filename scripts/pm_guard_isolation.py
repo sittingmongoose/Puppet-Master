@@ -216,6 +216,101 @@ SCHEMA_CUTS = {**{k: "delete-one-assertion" for k in ATOMIC_SCHEMA},
 UNSUPPORTED_SCHEMA = {"pattern", "format", "patternProperties", "unevaluatedItems", "unevaluatedProperties"}
 
 
+# This is a REVIEWED classification, not the census. The census below discovers
+# its rows from the running interpreter, then checks this policy in BOTH
+# directions. Never fill missing live classes/positions with a default: a new
+# Python node must break the gate until somebody classifies it explicitly.
+PYTHON_AST_BASES = (ast.stmt, ast.expr, ast.boolop, ast.cmpop, ast.unaryop,
+                    ast.excepthandler, ast.pattern)
+PYTHON_AST_POSITIONS = ("controlling_context", "condition", "comparison_operand",
+                        "refusal_value", "accumulator_write")
+PYTHON_CLASSIFIED_NODES = """
+AnnAssign Assert Assign AsyncFor AsyncFunctionDef AsyncWith AugAssign Break
+ClassDef Continue Delete Expr For FunctionDef Global If Import ImportFrom Match
+Nonlocal Pass Raise Return Try TryStar TypeAlias While With
+Attribute Await BinOp BoolOp Call Compare Constant Dict DictComp FormattedValue
+GeneratorExp IfExp Interpolation JoinedStr Lambda List ListComp Name NamedExpr
+Set SetComp Slice Starred Subscript TemplateStr Tuple UnaryOp Yield YieldFrom
+And Or Eq NotEq Lt LtE Gt GtE Is IsNot In NotIn Invert Not UAdd USub
+ExceptHandler MatchValue MatchSingleton MatchSequence MatchMapping MatchClass
+MatchStar MatchAs MatchOr
+""".split()
+PYTHON_AST_RULES = {
+    "closed": ("fail_closed", "", "No verified per-predicate cut in this position; explicit atomic adapter required."),
+    "function": ("supported", "delegate-to-refusal-leaves", "Plain top-level function only; nested, decorated and async contexts refuse."),
+    "if": ("supported", "replace-one-controlling-Boolean-leaf", "One direct if-body context; else and nested control paths refuse."),
+    "statement": ("supported", "delegate-to-refusal-leaves", "Standalone expression wrapper only; its calls/writes are independently inventoried."),
+    "atom": ("supported", "replace-one-Boolean-leaf", "Transparent scalar read or one scalar comparison; runtime grammar and subject binding required."),
+    "boolean": ("supported", "replace-one-Boolean-leaf", "Split and/or/not recursively, retaining polarity, peers and short-circuit order."),
+    "operand": ("supported", "preserve-operand-cut-enclosing-comparison-only", "Scalar literal/access or allow-listed scalar view; never a display, comprehension, chain or opaque expression."),
+    "return": ("supported", "replace-one-Boolean-leaf", "Direct Boolean expression or literal falsy return under one supported if; returned locals refuse."),
+    "refusal": ("supported", "skip-one-fixed-refusal-or-cut-one-control-leaf", "Fixed scalar refusal payload only; extra expressions or unsupported ancestors refuse."),
+    "append": ("supported", "skip-one-error-append-or-cut-one-control-leaf", "Standalone append of exactly one scalar literal error only; other mutations refuse."),
+    "initialize": ("supported", "preserve-empty-list-initialization", "Only fresh empty-list initialization to local names; contributes no refusal predicate."),
+}
+PYTHON_AST_POLICY = {name: {p: "closed" for p in PYTHON_AST_POSITIONS}
+                     for name in PYTHON_CLASSIFIED_NODES}
+for _position, _rule, _names in (
+    ("controlling_context", "function", "FunctionDef"),
+    ("controlling_context", "if", "If"),
+    ("controlling_context", "statement", "Expr"),
+    ("condition", "atom", "Compare Name Attribute Subscript Constant Call"),
+    ("condition", "boolean", "BoolOp UnaryOp And Or Not"),
+    ("condition", "atom", "Eq NotEq Lt LtE Gt GtE Is IsNot In NotIn"),
+    ("comparison_operand", "operand", "Name Attribute Subscript Constant Call UnaryOp UAdd USub"),
+    ("refusal_value", "return", "Return Compare BoolOp UnaryOp And Or Not"),
+    ("refusal_value", "refusal", "Raise Assert Constant Call"),
+    ("accumulator_write", "append", "Expr Call"),
+    ("accumulator_write", "initialize", "Assign AnnAssign"),
+):
+    for _name in _names.split():
+        PYTHON_AST_POLICY[_name][_position] = _rule
+
+
+def python_construct_census():
+    """Generate the complete node × position table from THIS Python's ast.
+
+    The seven ASDL sum bases are abstract; their exported subclasses are the
+    concrete constructors, including zero-field operators and patterns. Do not
+    infer completeness from a hand-written sample program or node-name list.
+    """
+    live = {cls.__name__: cls for cls in vars(ast).values()
+            if isinstance(cls, type) and cls not in PYTHON_AST_BASES
+            and issubclass(cls, PYTHON_AST_BASES)}
+    errors, rows = [], []
+    for name in sorted(set(PYTHON_AST_POLICY) - set(live)):
+        errors.append("classified node does not exist in running ast: " + name)
+    for name, cls in sorted(live.items()):
+        policy = PYTHON_AST_POLICY.get(name, {})
+        for extra in sorted(set(policy) - set(PYTHON_AST_POSITIONS)):
+            errors.append(name + ": unknown position " + extra)
+        cells = {}
+        for position in PYTHON_AST_POSITIONS:
+            rule = policy.get(position)
+            if rule not in PYTHON_AST_RULES:
+                errors.append(name + ": unclassified " + position)
+                continue
+            status, cut, constraint = PYTHON_AST_RULES[rule]
+            cells[position] = {"disposition": status, "rule": rule, "cut": cut, "constraint": constraint}
+        rows.append({"node": name, "base": next(b.__name__ for b in PYTHON_AST_BASES if issubclass(cls, b)),
+                     "positions": cells})
+    totals = {s: sum(c["disposition"] == s for row in rows for c in row["positions"].values())
+              for s in ("supported", "fail_closed")}
+    return {"status": "FAIL" if errors else "PASS", "python": sys.version,
+            "implementation": sys.implementation.name, "positions": list(PYTHON_AST_POSITIONS),
+            "node_classes": len(live), "cells": len(live) * len(PYTHON_AST_POSITIONS),
+            "totals": totals, "errors": errors, "rows": rows}
+
+
+def python_node_supported(node, position):
+    """Exact-class lookup shared by discovery and the generated census gate."""
+    name = type(node).__name__
+    if getattr(ast, name, None) is not type(node):
+        return False
+    rule = PYTHON_AST_POLICY.get(name, {}).get(position, "closed")
+    return PYTHON_AST_RULES[rule][0] == "supported"
+
+
 def python_atom_reason(expression):
     """Only transparent, side-effect-free Boolean atoms get automatic cuts.
 
@@ -225,16 +320,16 @@ def python_atom_reason(expression):
     rewriting them as `and` would evaluate shared operands twice.
     """
     def value(node):
+        if not python_node_supported(node, "comparison_operand"):
+            return False
         if isinstance(node, (ast.Name, ast.Constant)):
             return True
         if isinstance(node, ast.Attribute):
             return value(node.value)
         if isinstance(node, ast.Subscript):
             return value(node.value) and value(node.slice)
-        if isinstance(node, (ast.List, ast.Tuple, ast.Set)):
-            return all(value(x) for x in node.elts)
         if isinstance(node, ast.UnaryOp) and isinstance(node.op, (ast.USub, ast.UAdd)):
-            return value(node.operand)
+            return python_node_supported(node.op, "comparison_operand") and value(node.operand)
         if isinstance(node, ast.Call) and not node.keywords:
             if isinstance(node.func, ast.Name) and node.func.id in ("len", "type"):
                 return len(node.args) == 1 and value(node.args[0])
@@ -244,11 +339,15 @@ def python_atom_reason(expression):
             if isinstance(node.func, ast.Attribute) and node.func.attr == "encode":
                 return value(node.func.value) and all(isinstance(x, ast.Constant) for x in node.args)
         return False
+    if not python_node_supported(expression, "condition"):
+        return "node fails closed in condition position: " + type(expression).__name__
     if isinstance(expression, ast.Compare):
         if len(expression.ops) != 1:
             return "chained comparison carries multiple predicates; evaluation-order-preserving adapter required"
-        if value(expression.left) and value(expression.comparators[0]):
+        if (python_node_supported(expression.ops[0], "condition") and
+                value(expression.left) and value(expression.comparators[0])):
             return ""
+        return "comparison operand is structured or outside scalar read grammar; component-preserving atomic adapter required"
     elif isinstance(expression, (ast.Name, ast.Attribute, ast.Subscript, ast.Constant)) and value(expression):
         return ""
     elif isinstance(expression, ast.Call) and value(expression):
@@ -912,6 +1011,9 @@ class AstGuards:
     prover. No whole-function replacement or catch-and-continue fallback exists.
     """
     def __init__(self, name: str, source: str, namespace: dict, *, call_predicates=None):
+        census = python_construct_census()
+        if census["errors"]:
+            raise IsolationError("Python construct census gate: " + "; ".join(census["errors"]))
         self.name, self.source, self.namespace = name, source, namespace
         self.tree = ast.parse(source)
         self.sites: dict[str, CodeSite] = {}
@@ -923,10 +1025,10 @@ class AstGuards:
 
     @staticmethod
     def _leaves(test, path=()):
-        if isinstance(test, ast.BoolOp):
+        if isinstance(test, ast.BoolOp) and python_node_supported(test.op, "condition"):
             for i, child in enumerate(test.values):
                 yield from AstGuards._leaves(child, path + (i,))
-        elif isinstance(test, ast.UnaryOp) and isinstance(test.op, ast.Not):
+        elif isinstance(test, ast.UnaryOp) and isinstance(test.op, ast.Not) and python_node_supported(test.op, "condition"):
             yield from AstGuards._leaves(test.operand, path + ("not",))
         else:
             yield path, test
@@ -941,6 +1043,25 @@ class AstGuards:
 
     def candidates(self):
         result = []
+        parents = {child: parent for parent in ast.walk(self.tree) for child in ast.iter_child_nodes(parent)}
+
+        def control_reason(node, fn):
+            # Inspect the ACTUAL ancestry, not only the last if discovered by
+            # the recursive walk. A falsy return under while must never become
+            # an unconditional predicate. Unsupported contexts block even when
+            # a nearer, otherwise-supported if has supplied a test.
+            child, owner, conditions = node, parents.get(node), 0
+            while owner is not None and owner is not fn:
+                if isinstance(owner, PYTHON_AST_BASES):
+                    if not python_node_supported(owner, "controlling_context"):
+                        return "unsupported controlling context " + type(owner).__name__ + "; atomic adapter required"
+                    if isinstance(owner, ast.If):
+                        conditions += 1
+                        if child not in owner.body or conditions > 1:
+                            return "else/nested control path has no verified per-predicate cut; atomic adapter required"
+                child, owner = owner, parents.get(owner)
+            return "" if python_node_supported(fn, "controlling_context") else "unsupported function context"
+
         for name, fn in self.functions.items():
             def walk(node, condition=None):
                 if node is not fn and isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda)):
@@ -963,18 +1084,27 @@ class AstGuards:
                         if isinstance(node, ast.Raise) and condition is None and isinstance(node.exc, ast.Call) and all(isinstance(x, ast.Constant) for x in node.exc.args):
                             reason = ""   # unconditional single refusal; no control will pass unless unreachable
                         if isinstance(node, ast.Return):
+                            if node.value is not None and not python_node_supported(node.value, "refusal_value"):
+                                reason = "return value fails closed in refusal-value position; atomic adapter required"
                             if isinstance(node.value, (ast.Name, ast.Attribute, ast.Subscript)) or (condition is None and isinstance(expression, (ast.Name, ast.Attribute, ast.Subscript))):
                                 reason = "returned name/access may carry accumulated or compound predicates; dataflow adapter required"
                             elif condition is not None and node.value is not None and not isinstance(node.value, ast.Constant):
                                 reason = "conditional return value may carry additional predicates; atomic adapter required"
-                        if isinstance(node, ast.Raise) and isinstance(node.exc, ast.Call) and any(isinstance(x, (ast.Call, ast.IfExp, ast.BoolOp, ast.NamedExpr)) for arg in node.exc.args for x in ast.walk(arg)):
-                            reason = "refusal payload evaluates additional expressions; atomic adapter required"
+                        if isinstance(node, ast.Raise) and (not isinstance(node.exc, ast.Call) or node.exc.keywords or
+                                not all(isinstance(arg, ast.Constant) and python_node_supported(arg, "refusal_value") for arg in node.exc.args)):
+                            reason = "refusal payload is not a fixed scalar constructor; atomic adapter required"
                         if isinstance(fn, ast.AsyncFunctionDef):
                             reason = "async guard requires an explicit atomic adapter"
                         if isinstance(node, ast.Raise) and node.cause is not None:
                             reason = "translated/chained raise needs an atomic adapter preserving exception origin"
                         if refusal_call and isinstance(node, ast.Expr) and isinstance(node.value.func, ast.Attribute) and node.value.func.attr != "append":
                             reason = "list/container mutation may accumulate multiple refusals; atomic adapter required"
+                        if refusal_call and isinstance(node, ast.Expr) and isinstance(node.value.func, ast.Attribute) and node.value.func.attr == "append":
+                            call = node.value
+                            if (not python_node_supported(call, "accumulator_write") or call.keywords or len(call.args) != 1
+                                    or not isinstance(call.args[0], ast.Constant)):
+                                reason = "append payload is not one fixed scalar error; atomic adapter required"
+                        reason = control_reason(node, fn) or reason
                         result.append({"function": name, "line": node.lineno,
                             "column": node.col_offset, "action": action,
                             "clause": clause or None,
@@ -990,7 +1120,6 @@ class AstGuards:
                     walk(child, next_condition)
             walk(fn)
         inventoried = {(r["line"], r["column"]) for r in result}
-        parents = {child: parent for parent in ast.walk(self.tree) for child in ast.iter_child_nodes(parent)}
         # Every call and mutation is either a covered refusal/predicate, a
         # narrowly allow-listed read-only view, or an explicit unsupported seam.
         covered = {(r["line"], r["column"]) for r in result}
@@ -1010,13 +1139,18 @@ class AstGuards:
             mutation = isinstance(node, (ast.AugAssign, ast.Delete, ast.NamedExpr, ast.Global, ast.Nonlocal))
             if isinstance(node, (ast.Assign, ast.AnnAssign)):
                 targets = node.targets if isinstance(node, ast.Assign) else [node.target]
-                fresh_empty_list = (all(isinstance(x, ast.Name) for x in targets) and isinstance(node.value, ast.List) and not node.value.elts)
+                fresh_empty_list = (python_node_supported(node, "accumulator_write") and all(isinstance(x, ast.Name) for x in targets) and isinstance(node.value, ast.List) and not node.value.elts)
                 # A consumed call already has its own unsupported seam; don't
                 # duplicate that obligation at its assignment parent.
                 consumed_call = isinstance(node.value, ast.Call)
                 mutation = not fresh_empty_list and not consumed_call
             opaque_call = (isinstance(node, ast.Call) and not covered_expression(node) and bool(python_atom_reason(node)))
-            unsupported_flow = isinstance(node, (ast.With, ast.AsyncWith, ast.Try, ast.TryStar, ast.Match, ast.Yield, ast.YieldFrom, ast.Await, ast.AsyncFor))
+            # New/unsupported statement constructors cannot be invisible just
+            # because no hand-written isinstance list mentioned them. Specific
+            # refusal/write statements have the stricter handlers above.
+            unsupported_flow = ((isinstance(node, ast.stmt) and not python_node_supported(node, "controlling_context")
+                and not isinstance(node, (ast.Raise, ast.Return, ast.Assert, ast.Assign, ast.AnnAssign))) or
+                isinstance(node, (ast.Yield, ast.YieldFrom, ast.Await)))
             if not (isinstance(node, (ast.Raise, ast.Return, ast.Assert)) or refusal_call or checkcall or mutation or opaque_call or unsupported_flow) or (node.lineno, node.col_offset) in inventoried:
                 continue
             owner, ancestry = node, []
@@ -1585,7 +1719,12 @@ def main(argv=None):
 # The small trap harness is below the engine so adapters import only one module.
 def self_test(memory=None):
     from pm_guard_isolation_traps import exercise
-    return exercise(sys.modules[__name__], memory or MemoryGate())
+    census = python_construct_census()
+    if census["errors"]:
+        return {"version": 1, "status": "FAIL", "caught": 0, "traps": [], "python_census": census}
+    report = exercise(sys.modules[__name__], memory or MemoryGate())
+    report["python_census"] = census
+    return report
 
 
 def self_test_markdown(report):
@@ -1593,6 +1732,10 @@ def self_test_markdown(report):
              "| Trap | Expected observation | Result |", "|---|---|---|"]
     for row in report["traps"]:
         lines.append(f"| {row['id']} | {row['expected']} | {'caught' if row['caught'] else 'FAILED'} |")
+    if report.get("python_census"):
+        census = report["python_census"]
+        lines += ["", f"Python construct census gate: **{census['status']}**, {census['node_classes']} classes × {len(census['positions'])} positions."]
+        lines += ["- " + error for error in census["errors"]]
     return "\n".join(lines) + "\n"
 
 

@@ -38,6 +38,8 @@ def example_suite():
 def probe(g, trap, memory):
     kind = trap["kind"]
     uri = "https://pm.invalid/traps/" + trap["id"] + ".json"
+    if kind.startswith("round4_"):
+        return round4_probe(g, trap, memory)
     if kind.startswith("round3_"):
         return round3_probe(g, trap, memory, uri)
     if kind.startswith("review_"):
@@ -586,14 +588,15 @@ def review_probe(g, trap, memory, uri):
         suite = g.Suite(trap['id'], runner, [g.Control('c', {'x': 0}, 'synthetic')], [], modules=[backend])
         report = g.run(suite, memory=memory)
         candidates = backend.candidates()
+        candidate = next(c for c in candidates if c['function'] == ('Checker.check' if kind == 'review_assigned_class_append' else 'check')
+                         and c['expression'].startswith('errors.append('))
         independent = g.asdict(runner({'x': -1}, suite.state()))
         return dict(source=source, report=report, candidates=candidates, independent_negative=independent), (
             report['status'] == 'FAIL' and report['controls'][0]['outcome'] == g.asdict(g.Outcome.accept()) and
             independent == g.asdict(g.Outcome.refuse('bad_x')) and bool(candidates) and
-            candidates[0]['function'] == ('Checker.check' if kind == 'review_assigned_class_append' else 'check') and
-            candidates[0]['action'] == 'unsupported' and bool(candidates[0].get('reason')) and
-            candidates[0]['id'] in report['unproved_guards'] and
-            any(x['id'] == candidates[0]['id'] for x in report['inventory']) and
+            candidate['action'] == 'unsupported' and bool(candidate.get('reason')) and
+            candidate['id'] in report['unproved_guards'] and
+            any(x['id'] == candidate['id'] for x in report['inventory']) and
             failure(report, 'uninventoried_code_site') and not report['rows'])
     if kind in ('review_cross_dialect', 'review_cross_dialect_child'):
         from jsonschema import validators
@@ -960,3 +963,127 @@ def python_audit(g, memory):
             'predicates': len(ids), 'candidates': candidates, 'report_status': report['status'], 'caught': caught,
             'rows': report['rows'], 'unproved_guards': report['unproved_guards']})
     return rows
+
+
+def round4_probe(g, trap, memory):
+    """Cycle-4 exact witnesses and interpreter-derived completeness gates."""
+    import ast
+    import copy
+    if trap['kind'] == 'round4_census_gate':
+        mode = trap['mode']
+        name = 'Round4UnclassifiedStatement'
+        original = copy.deepcopy(g.PYTHON_AST_POLICY)
+        try:
+            if mode == 'new_node':
+                setattr(ast, name, type(name, (ast.stmt,), {'_fields': (), '__module__': 'ast'}))
+            elif mode == 'missing_position':
+                del g.PYTHON_AST_POLICY['While']['controlling_context']
+            elif mode == 'nonexistent_node':
+                g.PYTHON_AST_POLICY[name] = {p: 'closed' for p in g.PYTHON_AST_POSITIONS}
+            else:
+                raise ValueError(mode)
+            report = g.self_test(memory)
+            try:
+                g.AstGuards('gate', 'def check(v):\n    return True\n', {})
+            except g.IsolationError as exc:
+                refused = str(exc)
+            else:
+                refused = ''
+            errors = report['python_census']['errors']
+            expected = 5 if mode == 'new_node' else 1
+            return {'mode': mode, 'gate': report, 'catalog_refusal': refused}, (
+                report['status'] == 'FAIL' and len(errors) == expected and bool(refused) and not report['traps'])
+        finally:
+            g.PYTHON_AST_POLICY.clear()
+            g.PYTHON_AST_POLICY.update(original)
+            if mode == 'new_node':
+                delattr(ast, name)
+    if trap['kind'] == 'round4_scalar_boundaries':
+        blocked = {}
+        for operand in ('(v["x"], v["y"])', '[v["x"], v["y"]]', '{v["x"], v["y"]}',
+                        '{"x": v["x"], "y": v["y"]}', '(*v,)', '[*v]',
+                        '[x for x in v]', '{x for x in v}', '{x: x for x in v}',
+                        '(x for x in v)', '(v["x"] if v["y"] else 0)',
+                        '(v["x"] + v["y"])', 'opaque(v)', 'v[0:2]'):
+            for side in ('left', 'right'):
+                expression = operand + ' == 0' if side == 'left' else '0 == ' + operand
+                blocked[expression] = g.python_atom_reason(ast.parse(expression, mode='eval').body)
+        allowed = {expr: g.python_atom_reason(ast.parse(expr, mode='eval').body)
+                   for expr in ('v["x"] == 0', 'len(v["x"].encode()) > 8', 'v.get("x", 0) >= -1')}
+        return {'blocked': blocked, 'allowed': allowed}, all(blocked.values()) and not any(allowed.values())
+    if trap['kind'] == 'round4_control_boundaries':
+        bodies = {
+            'while-if': 'while v["x"] < 0 or v["y"] < 0:\n        if True:\n            return False',
+            'while-else': 'while False:\n        pass\n    else:\n        return v["x"] >= 0 and v["y"] >= 0',
+            'for': 'for x in (v["x"], v["y"]):\n        return False',
+            'with': 'with manager():\n        return False',
+            'try': 'try:\n        return False\n    finally:\n        pass',
+            'except': 'try:\n        pass\n    except ValueError:\n        return False',
+            'match': 'match v:\n        case {"x": x} if x < 0:\n            return False',
+            'nested-if': 'if v["x"] < 0:\n        if v["y"] < 0:\n            return False',
+            'if-else': 'if v["x"] >= 0 and v["y"] >= 0:\n        pass\n    else:\n        return False',
+        }
+        rows = []
+        for name, body in bodies.items():
+            source = 'def check(v):\n    ' + body + '\n    return True\n'
+            mod = g.AstGuards('context', source, {})
+            refusal_lines = {n.lineno for n in ast.walk(mod.tree) if isinstance(n, ast.Return)
+                             and not (isinstance(n.value, ast.Constant) and n.value.value is True)}
+            refusals = [c for c in mod.candidates() if c['line'] in refusal_lines]
+            blocked = []
+            for candidate in refusals:
+                try:
+                    mod.register(candidate, 'bad', g.Invariant('/', 'must not credit unsupported control'))
+                except g.IsolationError:
+                    blocked.append(candidate['id'])
+            rows.append({'name': name, 'source': source, 'refusals': refusals, 'blocked': blocked})
+        return {'rows': rows}, all(r['refusals'] and len(r['blocked']) == len(r['refusals'])
+                                  and all(c['action'] == 'unsupported' and c['predicate_count'] is None and not c['cut'] for c in r['refusals']) for r in rows)
+
+    source, name = trap['source'], trap['id']
+    ns = {}; exec(source, ns)
+    mod = g.AstGuards(name, source, ns)
+    candidates = mod.candidates()
+    target = next(c for c in candidates if c['line'] == trap['target_line'] and c['expression'] == trap['target_expression'])
+    dispositions = {c['id']: g.Classification(c['id'], 'selector', 'unconditional literal successful terminal return')
+                    for c in candidates if c['expression'] == 'True' and c['action'] == 'predicate'}
+    def runner(value, state):
+        try:
+            result = state.modules[name].check(value)
+        except ValueError as exc:
+            return g.Outcome.refuse(str(exc))
+        return g.Outcome.accept() if result is True else g.Outcome.refuse('bad')
+    good, bad_x, bad_y = {'x': 0, 'y': 0}, {'x': -1, 'y': 0}, {'x': 0, 'y': -1}
+    reports, blocked = {}, {}
+    for mode, fields in (('single', ('x',)), ('aggregate', ('x', 'y'))):
+        invariant = g.Invariant('/x' if mode == 'single' else '/', trap['invariants'][mode])
+        try:
+            mod.register(target, 'bad', invariant, evidence='exact cycle-4 ' + mode + ' binding')
+        except g.IsolationError as exc:
+            blocked[mode] = str(exc)
+        suite = g.Suite(name + '/' + mode, runner, [g.Control('valid', good, 'synthetic')],
+            [g.Negative(f, bad_x if f == 'x' else bad_y, target['id'], 'bad', 'valid', 'only '+f) for f in fields],
+            modules=[mod], code_dispositions=dispositions)
+        reports[mode] = g.run(suite, memory=memory)
+    baseline = [g.asdict(runner(v, suite.state())) for v in (good, bad_x, bad_y)]
+    independent = {}
+    for cut, narrow_source in trap['independent_sources'].items():
+        env = {}; exec(narrow_source, env)
+        accepted = []
+        for value in (good, bad_x, bad_y):
+            try:
+                accepted.append(env['check'](value) is True)
+            except ValueError:
+                accepted.append(False)
+        independent[cut] = accepted
+    return {'source': source, 'candidate': target, 'all_candidates': candidates,
+            'single_report': reports['single'], 'aggregate_report': reports['aggregate'],
+            'blocked_registrations': blocked, 'baseline': baseline,
+            'heldout_y_before': baseline[2], 'heldout_y_after_x_cut': None,
+            'cut_unavailable': 'unsupported registration refused; no cut receives credit',
+            'independent_witnesses': independent}, (
+        baseline == [g.asdict(g.Outcome.accept()), g.asdict(g.Outcome.refuse('bad')), g.asdict(g.Outcome.refuse('bad'))]
+        and target['action'] == 'unsupported' and target['predicate_count'] is None and not target['cut']
+        and set(blocked) == {'single', 'aggregate'}
+        and all(r['status'] == 'FAIL' and target['id'] in r['unproved_guards'] and not any(row.get('proved') for row in r['rows']) for r in reports.values())
+        and independent == {'x_only_cut': [True, True, False], 'y_only_cut': [True, False, True]})

@@ -1477,6 +1477,286 @@
         "not"
       ],
       "label_count": 1
+    },
+    {
+      "id": "C4-tuple-raise",
+      "kind": "round4_predicate",
+      "expected": "unclassified; refuse single and aggregate registration; held-out peer has no credited cut; independent narrow cuts preserve peers",
+      "source": "def check(v):\n    if (v[\"x\"], v[\"y\"]) != (0, 0):\n        raise ValueError(\"bad\")\n    return True\n",
+      "target_line": 3,
+      "target_expression": "(v['x'], v['y']) != (0, 0)",
+      "invariants": {
+        "single": "x == 0",
+        "aggregate": "x == 0 AND y == 0"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v):\n    if v[\"y\"] != 0:\n        raise ValueError(\"bad\")\n    return True\n",
+        "y_only_cut": "def check(v):\n    if v[\"x\"] != 0:\n        raise ValueError(\"bad\")\n    return True\n"
+      },
+      "source_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle4/counterexamples.json",
+        "sha256": "99be81cc61a7b320834c2cdac07e1bfb6b3cd79bc1dc9122f41f3f21afe4def5",
+        "entry": "tuple-raise"
+      }
+    },
+    {
+      "id": "C4-list-raise",
+      "kind": "round4_predicate",
+      "expected": "unclassified; refuse single and aggregate registration; held-out peer has no credited cut; independent narrow cuts preserve peers",
+      "source": "def check(v):\n    if [v[\"x\"], v[\"y\"]] != [0, 0]:\n        raise ValueError(\"bad\")\n    return True\n",
+      "target_line": 3,
+      "target_expression": "[v['x'], v['y']] != [0, 0]",
+      "invariants": {
+        "single": "x == 0",
+        "aggregate": "x == 0 AND y == 0"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v):\n    if v[\"y\"] != 0:\n        raise ValueError(\"bad\")\n    return True\n",
+        "y_only_cut": "def check(v):\n    if v[\"x\"] != 0:\n        raise ValueError(\"bad\")\n    return True\n"
+      },
+      "source_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle4/counterexamples.json",
+        "sha256": "99be81cc61a7b320834c2cdac07e1bfb6b3cd79bc1dc9122f41f3f21afe4def5",
+        "entry": "list-raise"
+      }
+    },
+    {
+      "id": "C4-tuple-return",
+      "kind": "round4_predicate",
+      "expected": "unclassified; refuse single and aggregate registration; held-out peer has no credited cut; independent narrow cuts preserve peers",
+      "source": "def check(v):\n    return (v[\"x\"], v[\"y\"]) == (0, 0)\n",
+      "target_line": 2,
+      "target_expression": "(v['x'], v['y']) == (0, 0)",
+      "invariants": {
+        "single": "x == 0",
+        "aggregate": "x == 0 AND y == 0"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v):\n    if v[\"y\"] != 0:\n        raise ValueError(\"bad\")\n    return True\n",
+        "y_only_cut": "def check(v):\n    if v[\"x\"] != 0:\n        raise ValueError(\"bad\")\n    return True\n"
+      },
+      "source_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle4/counterexamples.json",
+        "sha256": "99be81cc61a7b320834c2cdac07e1bfb6b3cd79bc1dc9122f41f3f21afe4def5",
+        "entry": "tuple-return"
+      }
+    },
+    {
+      "id": "C4-list-return",
+      "kind": "round4_predicate",
+      "expected": "unclassified; refuse single and aggregate registration; held-out peer has no credited cut; independent narrow cuts preserve peers",
+      "source": "def check(v):\n    return [v[\"x\"], v[\"y\"]] == [0, 0]\n",
+      "target_line": 2,
+      "target_expression": "[v['x'], v['y']] == [0, 0]",
+      "invariants": {
+        "single": "x == 0",
+        "aggregate": "x == 0 AND y == 0"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v):\n    if v[\"y\"] != 0:\n        raise ValueError(\"bad\")\n    return True\n",
+        "y_only_cut": "def check(v):\n    if v[\"x\"] != 0:\n        raise ValueError(\"bad\")\n    return True\n"
+      },
+      "source_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle4/counterexamples.json",
+        "sha256": "99be81cc61a7b320834c2cdac07e1bfb6b3cd79bc1dc9122f41f3f21afe4def5",
+        "entry": "list-return"
+      }
+    },
+    {
+      "id": "C4-while-return-False",
+      "kind": "round4_predicate",
+      "expected": "unclassified; refuse single and aggregate registration; held-out peer has no credited cut; independent narrow cuts preserve peers",
+      "source": "def check(v):\n    while v[\"x\"] < 0 or v[\"y\"] < 0:\n        return False\n    return True\n",
+      "target_line": 3,
+      "target_expression": "False",
+      "invariants": {
+        "single": "x >= 0",
+        "aggregate": "x >= 0 AND y >= 0"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v):\n    while v[\"y\"] < 0:\n        return False\n    return True\n",
+        "y_only_cut": "def check(v):\n    while v[\"x\"] < 0:\n        return False\n    return True\n"
+      },
+      "source_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle4/counterexamples.json",
+        "sha256": "99be81cc61a7b320834c2cdac07e1bfb6b3cd79bc1dc9122f41f3f21afe4def5",
+        "entry": "while-return-False"
+      }
+    },
+    {
+      "id": "C4-while-return-None",
+      "kind": "round4_predicate",
+      "expected": "unclassified; refuse single and aggregate registration; held-out peer has no credited cut; independent narrow cuts preserve peers",
+      "source": "def check(v):\n    while v[\"x\"] < 0 or v[\"y\"] < 0:\n        return None\n    return True\n",
+      "target_line": 3,
+      "target_expression": "None",
+      "invariants": {
+        "single": "x >= 0",
+        "aggregate": "x >= 0 AND y >= 0"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v):\n    while v[\"y\"] < 0:\n        return False\n    return True\n",
+        "y_only_cut": "def check(v):\n    while v[\"x\"] < 0:\n        return False\n    return True\n"
+      },
+      "source_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle4/counterexamples.json",
+        "sha256": "99be81cc61a7b320834c2cdac07e1bfb6b3cd79bc1dc9122f41f3f21afe4def5",
+        "entry": "while-return-None"
+      }
+    },
+    {
+      "id": "C4-while-return-bare",
+      "kind": "round4_predicate",
+      "expected": "unclassified; refuse single and aggregate registration; held-out peer has no credited cut; independent narrow cuts preserve peers",
+      "source": "def check(v):\n    while v[\"x\"] < 0 or v[\"y\"] < 0:\n        return\n    return True\n",
+      "target_line": 3,
+      "target_expression": "None",
+      "invariants": {
+        "single": "x >= 0",
+        "aggregate": "x >= 0 AND y >= 0"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v):\n    while v[\"y\"] < 0:\n        return False\n    return True\n",
+        "y_only_cut": "def check(v):\n    while v[\"x\"] < 0:\n        return False\n    return True\n"
+      },
+      "source_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle4/counterexamples.json",
+        "sha256": "99be81cc61a7b320834c2cdac07e1bfb6b3cd79bc1dc9122f41f3f21afe4def5",
+        "entry": "while-return-bare"
+      }
+    },
+    {
+      "id": "C4-while-return-zero",
+      "kind": "round4_predicate",
+      "expected": "unclassified; refuse single and aggregate registration; held-out peer has no credited cut; independent narrow cuts preserve peers",
+      "source": "def check(v):\n    while v[\"x\"] < 0 or v[\"y\"] < 0:\n        return 0\n    return True\n",
+      "target_line": 3,
+      "target_expression": "0",
+      "invariants": {
+        "single": "x >= 0",
+        "aggregate": "x >= 0 AND y >= 0"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v):\n    while v[\"y\"] < 0:\n        return False\n    return True\n",
+        "y_only_cut": "def check(v):\n    while v[\"x\"] < 0:\n        return False\n    return True\n"
+      },
+      "source_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle4/counterexamples.json",
+        "sha256": "99be81cc61a7b320834c2cdac07e1bfb6b3cd79bc1dc9122f41f3f21afe4def5",
+        "entry": "while-return-zero"
+      }
+    },
+    {
+      "id": "C4-while-return-float-zero",
+      "kind": "round4_predicate",
+      "expected": "unclassified; refuse single and aggregate registration; held-out peer has no credited cut; independent narrow cuts preserve peers",
+      "source": "def check(v):\n    while v[\"x\"] < 0 or v[\"y\"] < 0:\n        return 0.0\n    return True\n",
+      "target_line": 3,
+      "target_expression": "0.0",
+      "invariants": {
+        "single": "x >= 0",
+        "aggregate": "x >= 0 AND y >= 0"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v):\n    while v[\"y\"] < 0:\n        return False\n    return True\n",
+        "y_only_cut": "def check(v):\n    while v[\"x\"] < 0:\n        return False\n    return True\n"
+      },
+      "source_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle4/counterexamples.json",
+        "sha256": "99be81cc61a7b320834c2cdac07e1bfb6b3cd79bc1dc9122f41f3f21afe4def5",
+        "entry": "while-return-float-zero"
+      }
+    },
+    {
+      "id": "C4-while-return-empty-string",
+      "kind": "round4_predicate",
+      "expected": "unclassified; refuse single and aggregate registration; held-out peer has no credited cut; independent narrow cuts preserve peers",
+      "source": "def check(v):\n    while v[\"x\"] < 0 or v[\"y\"] < 0:\n        return \"\"\n    return True\n",
+      "target_line": 3,
+      "target_expression": "''",
+      "invariants": {
+        "single": "x >= 0",
+        "aggregate": "x >= 0 AND y >= 0"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v):\n    while v[\"y\"] < 0:\n        return False\n    return True\n",
+        "y_only_cut": "def check(v):\n    while v[\"x\"] < 0:\n        return False\n    return True\n"
+      },
+      "source_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle4/counterexamples.json",
+        "sha256": "99be81cc61a7b320834c2cdac07e1bfb6b3cd79bc1dc9122f41f3f21afe4def5",
+        "entry": "while-return-empty-string"
+      }
+    },
+    {
+      "id": "C4-while-early-return",
+      "kind": "round4_predicate",
+      "expected": "unclassified; refuse single and aggregate registration; held-out peer has no credited cut; independent narrow cuts preserve peers",
+      "source": "def check(v):\n    while v[\"x\"] < 0 or v[\"y\"] < 0:\n        return False\n    return True\n",
+      "target_line": 3,
+      "target_expression": "False",
+      "invariants": {
+        "single": "x >= 0",
+        "aggregate": "x >= 0 AND y >= 0"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v):\n    while v[\"y\"] < 0:\n        return False\n    return True\n",
+        "y_only_cut": "def check(v):\n    while v[\"x\"] < 0:\n        return False\n    return True\n"
+      },
+      "source_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle4/adversarial.json",
+        "sha256": "142b654992ccb3a306d8a544945596448fef3036c33dbe977b377bdc2454641f",
+        "entry": "while-early-return"
+      }
+    },
+    {
+      "id": "C4-tuple-comparison",
+      "kind": "round4_predicate",
+      "expected": "unclassified; refuse single and aggregate registration; held-out peer has no credited cut; independent narrow cuts preserve peers",
+      "source": "def check(v):\n    if (v[\"x\"], v[\"y\"]) != (0, 0):\n        raise ValueError(\"bad\")\n    return True\n",
+      "target_line": 3,
+      "target_expression": "(v['x'], v['y']) != (0, 0)",
+      "invariants": {
+        "single": "x == 0",
+        "aggregate": "x == 0 AND y == 0"
+      },
+      "independent_sources": {
+        "x_only_cut": "def check(v):\n    if v[\"y\"] != 0:\n        raise ValueError(\"bad\")\n    return True\n",
+        "y_only_cut": "def check(v):\n    if v[\"x\"] != 0:\n        raise ValueError(\"bad\")\n    return True\n"
+      },
+      "source_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle4/adversarial.json",
+        "sha256": "142b654992ccb3a306d8a544945596448fef3036c33dbe977b377bdc2454641f",
+        "entry": "tuple-comparison"
+      }
+    },
+    {
+      "id": "C4-census-new_node",
+      "kind": "round4_census_gate",
+      "mode": "new_node",
+      "expected": "self-test FAIL before traps and AstGuards refuses until every live node position is classified and no nonexistent class is named"
+    },
+    {
+      "id": "C4-census-missing_position",
+      "kind": "round4_census_gate",
+      "mode": "missing_position",
+      "expected": "self-test FAIL before traps and AstGuards refuses until every live node position is classified and no nonexistent class is named"
+    },
+    {
+      "id": "C4-census-nonexistent_node",
+      "kind": "round4_census_gate",
+      "mode": "nonexistent_node",
+      "expected": "self-test FAIL before traps and AstGuards refuses until every live node position is classified and no nonexistent class is named"
+    },
+    {
+      "id": "C4-scalar-boundaries",
+      "kind": "round4_scalar_boundaries",
+      "expected": "unsupported grammar refuses registration; supported scalar comparison controls retain their per-predicate grammar"
+    },
+    {
+      "id": "C4-control-boundaries",
+      "kind": "round4_control_boundaries",
+      "expected": "unsupported grammar refuses registration; supported scalar comparison controls retain their per-predicate grammar"
     }
   ]
 }
