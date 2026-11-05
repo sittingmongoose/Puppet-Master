@@ -3514,7 +3514,8 @@
         "logical_payload_ref",
         "logical_payload_byte_size",
         "logical_payload_media_type",
-        "original_source_ref"
+        "original_source_ref",
+        "review_start_ref"
       ],
       "properties": {
         "schema_id": {
@@ -3551,8 +3552,12 @@
         },
         "original_source_ref": {
           "$ref": "#/$defs/safe_ref"
+        },
+        "review_start_ref": {
+          "$ref": "#/$defs/safe_ref"
         }
-      }
+      },
+      "description": "Terminal cycle body remains the complete existing pm.bsd.review_cycle.v1. review_start_ref resolves the original immutable admission wrapper; terminal result never rewrites that start. No-call-only cycles have no review_started and cannot use this started-review terminal route."
     },
     "source_finding": {
       "type": "object",
@@ -3808,7 +3813,8 @@
         "first_append_receipt": {
           "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
         }
-      }
+      },
+      "description": "Current cycle source is the authenticated source_review_start after the start barrier receipt, then source_review_cycle only when the genuine outcome exists. Terminal wrapper must join the same start; publication uses exact old-head CAS."
     },
     "head_finding": {
       "type": "object",
@@ -3929,6 +3935,176 @@
           "$ref": "#/$defs/safe_ref"
         }
       }
+    },
+    "review_start": {
+      "description": "Newly authored immutable pre-dispatch admission facts for BSD-1362/CV-1362/SP-1365. References require authentic owner custody; this logical source is separate from the six existing lifecycle record kinds and grants no physical/event admission. No result, completion latency, Usage result or no-call placeholder exists at start.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "review_admission_id",
+        "project_id",
+        "policy_revision",
+        "binding_id",
+        "bsd_assignment_id",
+        "primary_run_id",
+        "epoch",
+        "primary_generation",
+        "review_cycle_id",
+        "trigger_kind",
+        "input_manifest_ref",
+        "redaction_receipt_ref",
+        "frozen_boundary",
+        "assignment_ref",
+        "binding_ref",
+        "admission_ref",
+        "origin_context_ref",
+        "cursor_ref",
+        "requested_effective_snapshot_ref",
+        "stable_prefix_hash",
+        "trigger_reason"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.review_start.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "review_admission_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "policy_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "binding_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "bsd_assignment_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "primary_run_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "primary_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "review_cycle_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "trigger_kind": {
+          "enum": [
+            "pre_first_material_mutation",
+            "pre_high_risk_action",
+            "constraint_divergence",
+            "repeated_normalized_failure",
+            "environment_identity_change",
+            "major_verification_failure",
+            "pre_terminal_completion_claim",
+            "configured_stage_boundary",
+            "project_watch_rule",
+            "held_finding_reconfirmation"
+          ]
+        },
+        "input_manifest_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "frozen_boundary": {
+          "type": "boolean"
+        },
+        "assignment_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "binding_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "admission_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "origin_context_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "cursor_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "requested_effective_snapshot_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "stable_prefix_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "trigger_reason": {
+          "$ref": "#/$defs/identifier"
+        }
+      }
+    },
+    "source_review_start": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "subject_id",
+        "owner_operation_id",
+        "logical_schema_id",
+        "logical_schema_version",
+        "logical_payload_ref",
+        "logical_payload_byte_size",
+        "logical_payload_media_type",
+        "original_source_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.source_wrapper.review_start.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "subject_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "logical_schema_id": {
+          "const": "pm.bsd.review_start.v1"
+        },
+        "logical_schema_version": {
+          "const": "1.0.0"
+        },
+        "logical_payload_ref": {
+          "$ref": "#/$defs/payload_reference"
+        },
+        "logical_payload_byte_size": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "logical_payload_media_type": {
+          "const": "application/msgpack"
+        },
+        "original_source_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      },
+      "description": "Immutable pre-dispatch review-start body. subject_id is review_cycle_id; original_source_ref identifies the actual accepted review_admission_id. The start has no terminal result."
     }
   },
   "oneOf": [
@@ -4105,6 +4281,12 @@
     },
     {
       "$ref": "#/$defs/finding_identity_inputs"
+    },
+    {
+      "$ref": "#/$defs/review_start"
+    },
+    {
+      "$ref": "#/$defs/source_review_start"
     }
   ]
 }

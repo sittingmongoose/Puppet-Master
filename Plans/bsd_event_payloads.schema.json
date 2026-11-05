@@ -410,8 +410,8 @@
         },
         "effective_mode": {
           "enum": [
-            "auto",
-            "on"
+            "Auto",
+            "On"
           ]
         },
         "assignment_ref": {
@@ -1306,7 +1306,7 @@
         "review_cycle_id",
         "primary_run_mutated",
         "authority_granted",
-        "review_ref",
+        "review_start_ref",
         "trigger_kind",
         "input_manifest_ref",
         "redaction_receipt_ref",
@@ -1359,8 +1359,9 @@
         "authority_granted": {
           "const": false
         },
-        "review_ref": {
-          "$ref": "#/$defs/safe_ref"
+        "review_start_ref": {
+          "$ref": "#/$defs/safe_ref",
+          "description": "Exact immutable pre-dispatch review admission source from SP-1365, not the terminal pm.bsd.review_cycle.v1 record."
         },
         "trigger_kind": {
           "enum": [

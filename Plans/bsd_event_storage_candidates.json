@@ -1924,7 +1924,8 @@
         "independent reviews",
         "SP-318 physical family admission and exact SP-340 budget/migration adoption",
         "coherent source/operation/receipt/pack backup proof"
-      ]
+      ],
+      "source_join": "review_start_ref resolves the authentic source_review_start; verify identical review_cycle_id, assignment, trigger, generation, input manifest and frozen boundary before accepting a later terminal result."
     },
     {
       "family_id": "bsd_source_finding",
@@ -2115,7 +2116,6 @@
       "schema_version": "1.0.0",
       "value_schema_id": "pm.bsd.source_head.review_cycle.v1",
       "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/head_review_cycle",
-      "logical_payload_schema_ref": "Plans/back_seat_driver_contracts.schema.json#/$defs/bsd_review_cycle",
       "subject_join": "review_cycle_id",
       "owner_doc": "Plans/storage-plan.md#SP-1365",
       "producer": [
@@ -2140,7 +2140,12 @@
         "independent reviews",
         "SP-318 physical family admission and exact SP-340 budget/migration adoption",
         "coherent source/operation/receipt/pack backup proof"
-      ]
+      ],
+      "logical_payload_schema_refs": [
+        "Plans/bsd_event_storage_contracts.schema.json#/$defs/review_start",
+        "Plans/back_seat_driver_contracts.schema.json#/$defs/bsd_review_cycle"
+      ],
+      "source_join": "Start head selects source_review_start after its barrier receipt; later terminal head selects source_review_cycle only with its authentic review_start_ref and matching cycle/assignment/start facts."
     },
     {
       "family_id": "bsd_head_finding",
@@ -2201,6 +2206,44 @@
       "max_inline_bytes": 16384,
       "oversize_route": "SP-337 logical payload pack reference; whole wrapper measured separately",
       "recovery_disposition": "Canonical current owner head; authentic complete-source/current-operation/receipt join and exact old-value CAS, coherent mandatory backup; absence is not success",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "Existing logical owner redaction rules and present access/deletion checks; reference custody grants no content access",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "SP-318 physical family admission and exact SP-340 budget/migration adoption",
+        "coherent source/operation/receipt/pack backup proof"
+      ]
+    },
+    {
+      "family_id": "bsd_source_review_start",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "canonical",
+      "key_shape": "bsd_source_review_start.v1:{scope_partition}:{hex(subject_id)}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.source_wrapper.review_start.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/source_review_start",
+      "logical_payload_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/review_start",
+      "subject_join": "review_cycle_id",
+      "owner_doc": "Plans/storage-plan.md#SP-1365",
+      "producer": [
+        "BackSeatDriverService"
+      ],
+      "consumers": [
+        "BackSeatDriverService::commit_review_start",
+        "BackSeatDriverService::original_transition_source",
+        "SP-1362 exact-family operation",
+        "terminal review-cycle start join"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 logical payload pack reference; whole wrapper measured separately",
+      "recovery_disposition": "Canonical immutable pre-dispatch admission custody; no result yet; preserve start through terminal/receipt/pack coherent backup; never reconstruct from a terminal outcome or redispatch on replay.",
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
         "policy_id": "RP-RUNTIME-365D",

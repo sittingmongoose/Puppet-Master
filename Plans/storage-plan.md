@@ -30228,6 +30228,7 @@ unit_type: event_contract
 status: draft
 owner_doc: Plans/storage-plan.md
 canonical_text: |-
+  For bsd.review_started the exact original source is SP-1365 source_review_start, not source_review_cycle. The current review-cycle head initially selects that admission wrapper only after the original start barrier receipt; it selects a terminal wrapper later only after genuine outcome custody and a verified review_start_ref join. A settled start operation needs no terminal review result.
   Newly authored owner contract for bsd.review_started, prepared without admission. SP-318's physical_family_registration_pending and handler_unavailable remain in force. SP-1365 separately stages the exact original lifecycle-source wrappers. The candidate rows in Plans/bsd_event_storage_candidates.json for bsd_review_started_operation, bsd_review_started_projection and bsd_review_started_checkpoint are reviewable proposed values, not appended registry families, storage admission, a budget decision or a readiness-denominator change. An integrator must separately admit exact physical families/migration/budgets after review; no event can be made writable by these candidate rows alone. Each value uses its exact closed Plans/bsd_event_storage_contracts.schema.json definition.
   The canonical operation key is bsd_review_started_operation.v1:{scope_partition}:{hex(owner_operation_id)}; state pending_event carries the original authenticated source, event ID, key, semantic digest and durable SP-337 payload reference. state complete additionally requires the exact original first AppendReceipt. It never stores a second EventRecord or copied private body. Operation refs and their packs remain while original pending/result/receipt custody is needed, under RP-EVENT-IDENTITY-APPROOT; that lifetime protects identity and an immutable receipt, not linked content. It adopts SP-286/CV-339 first receipt/full-value v2 and SP-336/SP-347 durability explicitly. Coherent mandatory backup restores the operation, complete original source, receipt controls and payload packs together. Missing original is unavailable; it cannot be reconstructed from a GUI model or a supplied hash.
   The derived projection key is bsd_review_started_projection.v1:{scope_partition}:{hex(owner_operation_id)}. It holds only the original source/event refs and Storage identities. The derived checkpoint key is bsd_review_started_checkpoint.v1:{scope_partition}:{storage_instance_id} for projector.bsd.review_started@1.0.0. Both use RP-PROJECTION-3GEN with holds; source event retention is independently {"registry_schema_id": "pm.storage_value_registry.v2", "policy_id": "RP-RUNTIME-365D", "policy_version": "1.0.0"}. A pending retention marker is never a valid production registry reference. Every complete encoded value must stay at or below 16 KiB; SP-337 externalizes referenced bodies before limits, rather than leaving an oversized operation value. Canonical/derived placement and actual disk budgets require existing SP-340 admission, never unbounded storage.
@@ -30414,9 +30415,9 @@ unit_type: storage_contract
 status: draft
 owner_doc: Plans/storage-plan.md
 canonical_text: 'Newly authored pending original-source graph for the fifteen W3D event contracts. SP-318 remains physical_family_registration_pending
-  and no physical registry family is appended. Plans/bsd_event_storage_candidates.json stages six canonical immutable source
+  and no physical registry family is appended. Plans/bsd_event_storage_candidates.json stages seven canonical immutable source
   wrapper rows: bsd_source_policy, bsd_source_workflow_binding, bsd_source_assignment, bsd_source_review_cycle, bsd_source_finding
-  and bsd_source_quarantine. They preserve, rather than fork, the complete logical definitions pm.bsd.policy.v1, pm.bsd.workflow_binding.v1,
+  and bsd_source_quarantine, plus bsd_source_review_start for pre-dispatch admission. The original six preserve, rather than fork, the complete logical definitions pm.bsd.policy.v1, pm.bsd.workflow_binding.v1,
   pm.bsd.assignment.v1, pm.bsd.review_cycle.v1, pm.bsd.finding.v1 and pm.bsd.quarantine.v1 in Plans/back_seat_driver_contracts.schema.json.
   Each proposed key is bsd_source_<kind>.v1:{scope_partition}:{hex(subject_id)}:{hex(owner_operation_id)}; project_id supplies
   the existing policy subject, then binding_id, bsd_assignment_id, review_cycle_id, bsd_finding_id and quarantine_id supply
@@ -30425,6 +30426,28 @@ canonical_text: 'Newly authored pending original-source graph for the fifteen W3
   the complete logical body under Storage''s declared MessagePack profile; validate logical schema and all source joins before
   use. Every complete encoded wrapper separately obeys 16 KiB and actual SP-340 budgets. No unredacted transcript, protected-authentication
   content or raw quarantine output is added to an event.
+
+  The separate bsd_source_review_start wrapper uses subject_id=review_cycle_id and logical_schema_id=pm.bsd.review_start.v1,
+  with the closed review_start body in Plans/bsd_event_storage_contracts.schema.json. Its exact fields are schema tags,
+  review_admission_id, project_id, policy_revision, binding_id, bsd_assignment_id, primary_run_id, epoch, primary_generation,
+  review_cycle_id, trigger_kind, trigger_reason, input_manifest_ref, redaction_receipt_ref, frozen_boundary, assignment_ref,
+  binding_ref, admission_ref, origin_context_ref, cursor_ref, stable_prefix_hash and requested_effective_snapshot_ref.
+  These are the owner start facts from BSD sections 4/5/6/16; references resolve immutable originals, not current caller flags.
+  review_admission_id is the actual owner-issued identity of accepted review admission before provider work, never a local
+  timestamp/counter or future provider-result identity. original_source_ref resolves that admission; admission_ref proves
+  actual Shared Integration Runtime acceptance, and origin_context_ref preserves its authentic envelope lineage, actor,
+  requested/effective account and causal facts. source_state_ref and the start payload review_start_ref name this same wrapper.
+  No result, latency, no-call placeholder or terminal body is present at start. The six logical schemas remain unchanged.
+  After genuine outcome evidence exists, source_review_cycle preserves the complete existing pm.bsd.review_cycle.v1 plus
+  required review_start_ref in its wrapper. That reference joins the authentic original admission: cycle, assignment, trigger,
+  primary generation, input manifest and frozen-boundary facts must match field by field. Never synthesize silent, null or
+  another outcome to satisfy start custody, and never rewrite the start when an outcome arrives. No-call-only cycles remain
+  on their existing owner path and cannot masquerade as this started-review route. The existing review-cycle head selects the
+  start wrapper after the start barrier receipt, then a matching terminal wrapper by exact old-head CAS only when its result
+  exists. A completed start operation acknowledges its own append receipt, not a completed review. Both wrappers and all linked
+  pack bodies/receipts restore as one coherent cut; retry/recovery resolves original admission before any permitted dispatch,
+  and historical replay dispatches none. The additional start wrapper uses the same actual assignment/run RP-RUNTIME-365D
+  source-value rule and reference protections as the review wrapper; no event-history retention decision is added.
 
   Every immutable source wrapper also stores original_source_ref, resolving the genuine original owner operation and its captured accepted inputs. The finding wrapper additionally requires identity_inputs_ref, pointing to SP-337 pack bytes validated by the exact closed finding_identity_inputs definition in Plans/bsd_event_storage_contracts.schema.json. This metadata-only manifest preserves original_source_ref, the original finding_family classification token, exact affected_object_refs and rule_or_constraint_refs, and the verified evidence_fingerprint/evidence_source_ref. Its refs and fingerprint must agree with the actual original logical finding and evidence-owner commitment. It supplies the operands for CV-1350 and CV-1355..CV-1358 finding-key recomputation, never a trusted caller key. Original source custody preserves these immutable operands and their actual original admission/recipe evidence; a retained read does not reacquire a now-retired provider session or current mutable evidence. Missing original custody is still unavailable. No finding claim or raw advisor output is copied into this identity manifest.
   An original operation comes from the genuine accepted command/start/lifecycle/deadline/provider result, carrying the real
@@ -30462,7 +30485,7 @@ depends_on:
 - BSD-024
 unblocks: []
 acceptance_criteria:
-- Source wrappers bind all six existing logical kinds without registry append or handler activation.
+- Source wrappers bind all six existing logical kinds and the separate pre-dispatch review admission without registry append or handler activation.
 - Original source, lifecycle head and operation settlement use authentic custody and coherent backup.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
