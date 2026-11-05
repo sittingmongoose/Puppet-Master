@@ -11,7 +11,8 @@ import hashlib
 import json
 import msgpack
 from pathlib import Path
-from jsonschema import Draft202012Validator, FormatChecker
+from jsonschema import Draft202012Validator
+from pm_dch_formats import FormatChecker
 from pm_dch_round5_oracles import checkpoint_source, reference_storage, evaluate as evaluate5
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -86,6 +87,9 @@ def cases(m, Case=Case):
                     add(prefix+'retry_integer/'+field+'/'+str(n), 'retry_result', record, record,
                         'original_result' if n==MAX else 'invalid_input_type', expected=True)
                     if n < 1<<64:
+                        # This is a current-recipe write observation, not the independently
+                        # receipted earlier original with the same semantic body.
+                        record = {**record, 'observed_at_utc':'2026-11-04T00:00:08Z'}
                         witness = copy.deepcopy(f['historical_source']); witness['source_value_sha256'] = commitment(m, record)
                         add(prefix+'history_integer/'+field+'/'+str(n), 'acceptance_result', 'history',
                             (record,row,witness,payload_schema), n==MAX, expected=True)

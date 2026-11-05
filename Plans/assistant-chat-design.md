@@ -29802,6 +29802,8 @@ Under W.9.2/W.9.3, bind started_event_id to the actual retained chat.thread_work
 
 The terminal-to-started join first resolves the retained started EventRecord in its independently read actual Storage instance, validates its supported original envelope and Project/application payload edition, and verifies the exact original Storage commitment and current retention, authorization, deletion, hold and withdrawal facts. Resolve inline or verified SP-337 referenced bodies before comparing operation, scope, Computer, thread, worktree, command, strategy and actual outcome. Accept starts that were valid when written, including retained projector_replay_only compatibility history and a valid second Storage instance after live-state changes; a current-writer guard must never gate this historical original. Forged, withdrawn, foreign, unsupported or unavailable starts refuse. No caller-supplied started payload or fixture default supplies authority.
 
+The retained started record, its inline or SP-337 body and original Storage commitment all use record_number_rule() under CV-642–644/SP-624 protected write provenance, including raw-v1 and normalized-v2 history. Only the new terminal payload and current outcome/observation use strict-v4. A current writer/type/format guard never reaches the historical start; independently forged recipes, original bytes, withdrawal and access still refuse.
+
 ```yaml
 plan_unit_id: ACD-622
 unit_type: requirement
@@ -29849,7 +29851,10 @@ canonical_text: '### ACD-622 — chat.thread_worktree_pre_merge_test_failed
   NOT_RUN.
 
 
-  The terminal-to-started join first resolves the retained started EventRecord in its independently read actual Storage instance, validates its supported original envelope and Project/application payload edition, and verifies the exact original Storage commitment and current retention, authorization, deletion, hold and withdrawal facts. Resolve inline or verified SP-337 referenced bodies before comparing operation, scope, Computer, thread, worktree, command, strategy and actual outcome. Accept starts that were valid when written, including retained projector_replay_only compatibility history and a valid second Storage instance after live-state changes; a current-writer guard must never gate this historical original. Forged, withdrawn, foreign, unsupported or unavailable starts refuse. No caller-supplied started payload or fixture default supplies authority.'
+  The terminal-to-started join first resolves the retained started EventRecord in its independently read actual Storage instance, validates its supported original envelope and Project/application payload edition, and verifies the exact original Storage commitment and current retention, authorization, deletion, hold and withdrawal facts. Resolve inline or verified SP-337 referenced bodies before comparing operation, scope, Computer, thread, worktree, command, strategy and actual outcome. Accept starts that were valid when written, including retained projector_replay_only compatibility history and a valid second Storage instance after live-state changes; a current-writer guard must never gate this historical original. Forged, withdrawn, foreign, unsupported or unavailable starts refuse. No caller-supplied started payload or fixture default supplies authority.
+
+
+  The retained started record, its inline or SP-337 body and original Storage commitment all use record_number_rule() under CV-642–644/SP-624 protected write provenance, including raw-v1 and normalized-v2 history. Only the new terminal payload and current outcome/observation use strict-v4. A current writer/type/format guard never reaches the historical start; independently forged recipes, original bytes, withdrawal and access still refuse.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
@@ -29890,6 +29895,8 @@ Newly authored owner contract under DL-045 for `chat.thread_worktree_pre_merge_t
 Under W.9.2/W.9.3, started_event_id resolves the actual matching started EventRecord for the same original operation, scope/Server, Computer, thread, worktree, exact command and strategy. Original terminal evidence has kind=exit and exit_code=0 and the same duration; a nonzero exit, timeout, process error or another started operation cannot emit this passed family. This is a binding of existing Pass semantics, not authority to rerun tests or merge during replay.
 
 The terminal-to-started join first resolves the retained started EventRecord in its independently read actual Storage instance, validates its supported original envelope and Project/application payload edition, and verifies the exact original Storage commitment and current retention, authorization, deletion, hold and withdrawal facts. Resolve inline or verified SP-337 referenced bodies before comparing operation, scope, Computer, thread, worktree, command, strategy and actual outcome. Accept starts that were valid when written, including retained projector_replay_only compatibility history and a valid second Storage instance after live-state changes; a current-writer guard must never gate this historical original. Forged, withdrawn, foreign, unsupported or unavailable starts refuse. No caller-supplied started payload or fixture default supplies authority.
+
+The retained started record, its inline or SP-337 body and original Storage commitment all use record_number_rule() under CV-642–644/SP-624 protected write provenance, including raw-v1 and normalized-v2 history. Only the new terminal payload and current outcome/observation use strict-v4. A current writer/type/format guard never reaches the historical start; independently forged recipes, original bytes, withdrawal and access still refuse.
 
 ```yaml
 plan_unit_id: ACD-623
@@ -29933,7 +29940,10 @@ canonical_text: '### ACD-623 — chat.thread_worktree_pre_merge_test_passed
   rerun tests or merge during replay.
 
 
-  The terminal-to-started join first resolves the retained started EventRecord in its independently read actual Storage instance, validates its supported original envelope and Project/application payload edition, and verifies the exact original Storage commitment and current retention, authorization, deletion, hold and withdrawal facts. Resolve inline or verified SP-337 referenced bodies before comparing operation, scope, Computer, thread, worktree, command, strategy and actual outcome. Accept starts that were valid when written, including retained projector_replay_only compatibility history and a valid second Storage instance after live-state changes; a current-writer guard must never gate this historical original. Forged, withdrawn, foreign, unsupported or unavailable starts refuse. No caller-supplied started payload or fixture default supplies authority.'
+  The terminal-to-started join first resolves the retained started EventRecord in its independently read actual Storage instance, validates its supported original envelope and Project/application payload edition, and verifies the exact original Storage commitment and current retention, authorization, deletion, hold and withdrawal facts. Resolve inline or verified SP-337 referenced bodies before comparing operation, scope, Computer, thread, worktree, command, strategy and actual outcome. Accept starts that were valid when written, including retained projector_replay_only compatibility history and a valid second Storage instance after live-state changes; a current-writer guard must never gate this historical original. Forged, withdrawn, foreign, unsupported or unavailable starts refuse. No caller-supplied started payload or fixture default supplies authority.
+
+
+  The retained started record, its inline or SP-337 body and original Storage commitment all use record_number_rule() under CV-642–644/SP-624 protected write provenance, including raw-v1 and normalized-v2 history. Only the new terminal payload and current outcome/observation use strict-v4. A current writer/type/format guard never reaches the historical start; independently forged recipes, original bytes, withdrawal and access still refuse.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:

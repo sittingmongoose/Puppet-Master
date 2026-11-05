@@ -10,7 +10,8 @@ import copy
 import json
 import re
 from pathlib import Path
-from jsonschema import Draft202012Validator, FormatChecker
+from jsonschema import Draft202012Validator
+from pm_dch_formats import FormatChecker
 
 REBUILD=False
 FIXTURE=Path(__file__).resolve().parents[1]/'Plans/dch_schema_guard_fixtures.json'

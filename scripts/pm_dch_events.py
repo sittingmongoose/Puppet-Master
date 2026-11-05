@@ -14,7 +14,8 @@ from urllib.parse import unquote, urlparse
 import blake3
 import msgpack
 import rfc8785
-from jsonschema import Draft202012Validator, FormatChecker
+from jsonschema import Draft202012Validator
+from pm_dch_formats import FormatChecker, legacy_format_checker
 from jsonschema.exceptions import SchemaError
 from referencing import Registry, Resource
 from referencing.exceptions import NoSuchResource, Unresolvable
@@ -99,19 +100,62 @@ def schema_reference_errors(schema, path):
         errors.append(f'schema: {type(exc).__name__}: {exc}')
     return errors
 
+CURRENT_RULE = 'strict-v4'
+RETAINED_RECIPES = json.loads((ROOT/'Plans/dch_retained_recipes.json').read_text())['recipes']
+# This is the static adapter's independent Storage write-receipt catalogue,
+# never an input accepted from an event, caller, pack or checkpoint candidate.
+RECIPE_RECEIPTS = {(r['storage_instance_id'], r['source_value_sha256']): r['recipe_id']
+                  for r in json.loads((ROOT/'Plans/dch_write_recipe_receipts.json').read_text())['receipts']}
+
+def record_number_rule(provenance=None):
+    """Sole recipe selector for numbers, physical bytes and schema formats.
+
+    No provenance means a new write/current identity input: strict-v4. A retained
+    source uses the recipe bound to its independently read Store + exact source
+    commitment. Missing legacy provenance fails closed to the current recipe.
+    A claimed recipe is only checked against that authority; it never selects it.
+    Production must read this mapping from protected original write receipts;
+    this catalogue models those observations, not receipt authenticity execution.
+    """
+    if provenance is None:
+        return CURRENT_RULE
+    if type(provenance) is not dict:
+        return None
+    lookup = getattr(provenance, 'get', lambda key, default=None: default)
+    store, digest = lookup('storage_instance_id'), lookup('source_value_sha256')
+    if type(store) is not str or type(digest) is not str:
+        return None
+    recipe = RECIPE_RECEIPTS.get((str(store), str(digest)), CURRENT_RULE)
+    if lookup('recipe_id', recipe) != recipe:
+        return None
+    return recipe
+
+def stored_validator(current, path, rule):
+    """Use the entire original schema/format edition, not relaxed current prose."""
+    if rule == CURRENT_RULE:
+        return current
+    return Draft202012Validator(RETAINED_RECIPES[rule]['schemas'][path],
+                                format_checker=legacy_format_checker())
+
 def historical_read_valid(record, row, witness, envelope, payload_validator):
     """Static retained-original lookup; current live state grants no authority.
 
     The witness models independently read canonical bytes and current access,
     not an admission or a replacement for native source/custody verification.
     """
-    if not input_types_valid({'record': record, 'witness': witness}):
+    rule = record_number_rule(witness)
+    if rule is None:
         return False
+    if not input_types_valid({'record': record, 'witness': witness}, rule):
+        return False
+    envelope = stored_validator(envelope, 'Plans/event_record.schema.json', rule)
+    path = row.get('payload_schema_ref', 'Plans/dch_event_payloads/'+row['event_type'].replace('.', '_')+'.schema.json')
+    payload_validator = stored_validator(payload_validator, path, rule)
     try:
-        source_commitment = hashlib.sha256(body_bytes(record)).hexdigest()
+        source_commitment = hashlib.sha256(body_bytes(record, rule)).hexdigest()
     except (ValueError, OverflowError):
         return False
-    body = resolve_body(record, witness.get('payload_source'), witness['storage_instance_id'])
+    body = resolve_body(record, witness.get('payload_source'), witness['storage_instance_id'], rule)
     if (body is None or not envelope.is_valid(record) or not payload_validator.is_valid(body)
             or not all(witness[k] is True for k in ['retained', 'authorized', 'hold_access_allowed'])
             or witness['deleted'] is not False or witness['event_withdrawn'] is not False
@@ -120,20 +164,20 @@ def historical_read_valid(record, row, witness, envelope, payload_validator):
         return False
     # Compatibility-reader policy never calls the current append/retry oracle.
     original = {**record, 'replay_policy': 'dedupe_by_idempotency_key'}
-    return joins(original, row['event_type'], witness.get('payload_source'), witness['storage_instance_id'])
+    return joins(original, row['event_type'], witness.get('payload_source'), witness['storage_instance_id'], rule)
 
-def body_bytes(value):
+def body_bytes(value, rule=CURRENT_RULE):
     """SP-236 shortest MessagePack, recursively sorted exact UTF-8 map keys."""
     def ordered(v):
         # SP-236 shortest numeric representation: integral finite floats and
         # either signed zero have the same bytes as their integer value.
-        if type(v) is float:
+        if type(v) is float and rule != 'raw-v1':
             if not math.isfinite(v):
                 raise ValueError('non-finite number')
             if not v.is_integer():
                 return v
             v = int(v)
-        if type(v) is int and abs(v) > SAFE_INTEGER_MAX:
+        if rule == CURRENT_RULE and type(v) is int and abs(v) > SAFE_INTEGER_MAX:
             raise ValueError('integer outside DCH I-JSON safe domain')
         if isinstance(v, dict):
             return {k: ordered(v[k]) for k in sorted(v, key=lambda k: k.encode('utf-8'))}
@@ -145,13 +189,17 @@ def body_bytes(value):
     except OverflowError as exc:
         raise ValueError('integer outside DCH MessagePack domain') from exc
 
-def input_types_valid(value):
+def input_types_valid(value, rule=CURRENT_RULE):
     """Exact witness types before truth/equality/arithmetic, including bool/int.
 
     DCH declares integer slots, no floating point slots. Physical encoding still
     canonicalizes numeric aliases, so a rejected alternate cannot mint a digest.
     Schema validation owns field presence, strings, enums and logical bounds.
     """
+    if rule == 'raw-v1':
+        # Original schema validators own numeric slots; the raw encoder keeps
+        # integer-valued floats verbatim. Do not coerce their committed bytes.
+        return True
     integers = {'sequence_id', 'producer_sequence_id', 'revision', 'frontier_revision',
                 'last_sequence_id', 'selected_segment_generation', 'manifest_generation',
                 'recovery_epoch', 'expected_thread_revision', 'committed_thread_revision',
@@ -164,10 +212,10 @@ def input_types_valid(value):
     strings = {'operation_id', 'computer_id', 'actor_ref', 'schema_id', 'schema_version',
                'scope_kind', 'scope_partition', 'server_id', 'event_type'}
     if type(value) is list:
-        return all(input_types_valid(v) for v in value)
+        return all(input_types_valid(v, rule) for v in value)
     if type(value) is not dict:
         return (type(value) in [str, bool, type(None)]
-                or (type(value) is int and abs(value) <= SAFE_INTEGER_MAX))
+                or (type(value) is int and (rule != CURRENT_RULE or abs(value) <= SAFE_INTEGER_MAX)))
     for key, v in value.items():
         if type(key) is not str:
             return False
@@ -181,30 +229,30 @@ def input_types_valid(value):
             return False
         if key in strings and type(v) is not str:
             return False
-        if not input_types_valid(v):
+        if not input_types_valid(v, rule):
             return False
     return True
 
-def payload_reference(body):
-    raw = body_bytes(body)
+def payload_reference(body, rule=CURRENT_RULE):
+    raw = body_bytes(body, rule)
     return f'payload:v1:{blake3.blake3(raw).hexdigest()}:{len(raw)}:application/msgpack'
 
-def resolve_body(record, source=None, storage_instance=STORAGE_INSTANCE):
+def resolve_body(record, source=None, storage_instance=STORAGE_INSTANCE, rule=CURRENT_RULE):
     """Static SP-337 pack/readback/access fixture; not native durability proof."""
     if not input_types_valid({'record': record, 'storage_instance_id': storage_instance,
-                              **({'source': source} if source is not None else {})}):
+                              **({'source': source} if source is not None else {})}, rule):
         return None
     try:
-        body_bytes(record['payload'] if record['payload_ref'] is None else source['body'] if source else {})
+        body_bytes(record['payload'] if record['payload_ref'] is None else source['body'] if source else {}, rule)
     except (ValueError, OverflowError):
         return None
     if record['payload_ref'] is None:
-        return record['payload'] if len(body_bytes(record['payload'])) <= INLINE_LIMIT else None
+        return record['payload'] if len(body_bytes(record['payload'], rule)) <= INLINE_LIMIT else None
     if record['payload'] != {} or not source:
         return None
     body = source['body']
-    raw = body_bytes(body)
-    if (record['payload_ref'] != payload_reference(body)
+    raw = body_bytes(body, rule)
+    if (record['payload_ref'] != payload_reference(body, rule)
             or source['key'] != 'payload:v1:' + blake3.blake3(raw).hexdigest()
             or source['byte_size'] != len(raw) or source['media_type'] != 'application/msgpack'
             or source['storage_instance_id'] != storage_instance
@@ -250,8 +298,8 @@ def idempotency_key(event, payload, storage_instance=STORAGE_INSTANCE):
                 + ':' + payload['operation_id'].encode('utf-8').hex())
     return 'dch:' + identity(event, payload, storage_instance)[len('evt_dch_'):]
 
-def joins(record, event, source=None, storage_instance=STORAGE_INSTANCE):
-    p = resolve_body(record, source, storage_instance)
+def joins(record, event, source=None, storage_instance=STORAGE_INSTANCE, rule=CURRENT_RULE):
+    p = resolve_body(record, source, storage_instance, rule)
     if p is None or record['replay_policy'] != 'dedupe_by_idempotency_key':
         return False
     expected = {'event_type': event, 'event_id': identity(event, p, storage_instance),
@@ -261,14 +309,30 @@ def joins(record, event, source=None, storage_instance=STORAGE_INSTANCE):
                 'run_id': None, 'node_id': None, 'attempt_id': None}
     return valid_scope_partition(p['scope']) and all(record[k] == value for k, value in expected.items())
 
-def retry_outcome(original, retry, available=True):
+def retry_outcome(original, retry, available=True, original_provenance=None):
     """Static CV-366 oracle; does not exercise a writer, receipt or real dedupe store."""
-    if not input_types_valid({'record': original, 'retry': retry}) or type(available) is not bool:
+    rule = record_number_rule(original_provenance)
+    if rule is None or not input_types_valid({'record': original}, rule) or not input_types_valid({'retry': retry}) or type(available) is not bool:
         return 'invalid_input_type'
     if any(r['replay_policy'] == 'projector_replay_only' for r in [original, retry]):
         return 'replay_only_not_appendable'
     if any(r['replay_policy'] != 'dedupe_by_idempotency_key' for r in [original, retry]):
         return 'invalid_append_policy'
+    if original_provenance is not None:
+        # Stored original and incoming retry are different trust/type domains.
+        # The same history reader owns original bytes, schema and current custody.
+        row = {'event_type': original['event_type']}
+        path = 'Plans/dch_event_payloads/'+original['event_type'].replace('.', '_')+'.schema.json'
+        try:
+            envelope = Draft202012Validator(json.loads((ROOT/'Plans/event_record.schema.json').read_text()), format_checker=FormatChecker())
+            payload_validator = Draft202012Validator(json.loads((ROOT/path).read_text()), format_checker=FormatChecker())
+        except (OSError, ValueError):
+            return 'invalid_input_type'
+        incoming_body = resolve_body(retry, original_provenance.get('payload_source'), original_provenance['storage_instance_id'])
+        if incoming_body is None or not envelope.is_valid(retry) or not payload_validator.is_valid(incoming_body):
+            return 'invalid_input_type'
+        if not historical_read_valid(original, row, original_provenance, envelope, payload_validator):
+            return 'invalid_input_type'
     if available is False:
         return 'dedupe_unavailable'
     def lifetime(r):
@@ -283,6 +347,11 @@ def retry_outcome(original, retry, available=True):
         return 'conflict'
     def commitment(r):
         return hashlib.sha256(rfc8785.dumps({k: r[k] for k in SEMANTIC_FIELDS})).digest()
+    if rule != CURRENT_RULE and any(original[k] != retry[k] for k in SEMANTIC_FIELDS):
+        # An earlier out-of-current-domain semantic value cannot equal a valid
+        # current retry. Compare that difference without sending it to today's
+        # RFC8785 safe-domain encoder or changing its original stored recipe.
+        return 'conflict'
     try:
         return 'original_result' if commitment(original) == commitment(retry) else 'conflict'
     except (rfc8785.CanonicalizationError, OverflowError):
@@ -292,7 +361,7 @@ def retry_outcome(original, retry, available=True):
 
 def test_joins(payload, source, event):
     """Original started operation and actual terminal outcome, W.9.2/W.9.3."""
-    if not input_types_valid({'payload': payload, 'source': source}):
+    if not input_types_valid({'payload': payload, 'source': {k:v for k,v in source.items() if k not in ['started', 'started_access']}}):
         return False
     started, outcome = source['started'], source['outcome']
     schema = json.loads((ROOT/'Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_started.schema.json').read_text())
@@ -303,7 +372,7 @@ def test_joins(payload, source, event):
             Draft202012Validator(envelope, format_checker=FormatChecker()),
             Draft202012Validator(schema, format_checker=FormatChecker())):
         return False
-    p = resolve_body(started, witness.get('payload_source'), witness['storage_instance_id'])
+    p = resolve_body(started, witness.get('payload_source'), witness['storage_instance_id'], record_number_rule(witness))
     common = ['operation_id', 'scope', 'computer_id', 'thread_id', 'worktree_id', 'command', 'strategy']
     if (p is None or payload['started_event_id'] != started['event_id']
             or outcome['started_event_id'] != started['event_id']
@@ -323,7 +392,16 @@ def test_joins(payload, source, event):
 
 def checkpoint_joins(value, source, row, key):
     """Independent synthetic source/root/dataset/publication joins under SP-278."""
-    if not input_types_valid({'value': value, 'source': source}):
+    rule = record_number_rule(source.get('checkpoint_access'))
+    if rule is None:
+        return False
+    current_source = {k:v for k,v in source.items() if k not in ['event_record','event_access','payload_source','index_row','checkpoint_storage']}
+    index_metadata = {k:v for k,v in source['index_row'].items() if k != 'sequence_id'}
+    if not input_types_valid(value, rule) or not input_types_valid({'source': current_source, 'index_row': index_metadata}):
+        return False
+    schema_path = 'Plans/dch_event_payloads/dch_'+row['event_type'].replace('.', '_')+'_checkpoint.schema.json'
+    schema = Draft202012Validator(json.loads((ROOT/schema_path).read_text()), format_checker=FormatChecker())
+    if not stored_validator(schema, schema_path, rule).is_valid(value):
         return False
     token = value['source_token']
     store = source['storage_instance_id']
@@ -338,11 +416,13 @@ def checkpoint_joins(value, source, row, key):
                'payload_source': source.get('payload_source')}
     if not historical_read_valid(event, row, witness, envelope, payload_validator):
         return False
-    p = resolve_body(event, source.get('payload_source'), store)
+    p = resolve_body(event, source.get('payload_source'), store, record_number_rule(witness))
     generic_key = 'event_record_index_checkpoint.v1:' + store
     if not node:
         return False
     index = source['index_row']
+    if type(index['sequence_id']) is not type(event['sequence_id']):
+        return False
     return (value['storage_instance_id'] == token['storage_instance_id']
             == token['source_selection']['storage_instance_id'] == root['storage_instance_id'] == store
             and root['current_generation_id'] == generation and node['state'] == 'current'
@@ -378,21 +458,31 @@ def checkpoint_storage_valid(value, source, row, key):
     Logical schema validation applies to the resolved complete checkpoint.
     Every physically inline part, including the pointer, is byte measured.
     """
-    if not input_types_valid({'value': value, 'source': source}):
+    rule = record_number_rule(source.get('checkpoint_access'))
+    if rule is None:
+        return False
+    if not input_types_valid(value, rule):
+        return False
+    provenance = source.get('checkpoint_access')
+    if provenance is not None and hashlib.sha256(body_bytes(value, rule)).hexdigest() != provenance['source_value_sha256']:
         return False
     physical = source.get('checkpoint_storage')
+    if physical is not None and not input_types_valid({'pointer':physical['pointer'], 'pack':{k:v for k,v in physical['pack'].items() if k != 'body'}}):
+        return False
+    if physical is not None and not input_types_valid(physical['pack']['body'], rule):
+        return False
     try:
-        body_bytes(value)
+        body_bytes(value, rule)
     except (ValueError, OverflowError):
         return False
     if physical is None:
-        return len(body_bytes(value)) <= INLINE_LIMIT
+        return len(body_bytes(value, rule)) <= INLINE_LIMIT
     packed = physical['pack']
     pointer = physical['pointer']
-    raw = body_bytes(value)
+    raw = body_bytes(value, rule)
     return (len(body_bytes(pointer)) <= INLINE_LIMIT
-            and pointer == {'payload_ref': payload_reference(value)}
-            and packed['body'] == value
+            and pointer == {'payload_ref': payload_reference(value, rule)}
+            and body_bytes(packed['body'], rule) == raw
             and packed['key'] == 'payload:v1:' + blake3.blake3(raw).hexdigest()
             and packed['byte_size'] == len(raw)
             and packed['media_type'] == 'application/msgpack'
@@ -506,6 +596,10 @@ def main():
                       event + ': registered checkpoint exactly equals selected schema')
                 errors = reference_errors(entry['value_schema'], ROOT/path)
                 check(not errors, event + ': registered checkpoint reference closure ' + '; '.join(errors))
+        for recipe, original in RETAINED_RECIPES.items():
+            for path in ['Plans/event_record.schema.json', row['payload_schema_ref'].split('#')[0], cases[0]['schema_ref'].split('#')[0]]:
+                errors = reference_errors(original['schemas'][path], ROOT/path)
+                check(not errors, event + ': retained '+recipe+' reference closure '+path+'; '.join(errors))
         schemas.append(('Plans/event_record.schema.json', 'envelope'))
         for path, kind in schemas:
             errors = reference_errors(json.loads((ROOT/path).read_text()), ROOT/path)
@@ -737,6 +831,9 @@ def main():
     from pm_dch_round6_oracles import cases as round6_cases, evaluate as evaluate6
     for oracle in round6_cases(subject):
         check(evaluate6(subject, oracle, envelope) == oracle.expected, oracle.name.split('/')[0]+': '+oracle.name)
+    from pm_dch_round7_oracles import cases as round7_cases, evaluate as evaluate7
+    for oracle in round7_cases(subject):
+        check(evaluate7(subject, oracle, envelope) == oracle.expected, oracle.name.split('/')[0]+': '+oracle.name)
     return finish()
 
 if __name__=='__main__':

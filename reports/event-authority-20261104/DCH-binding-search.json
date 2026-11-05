@@ -12039,5 +12039,2221 @@
       "negative_evidence": "No missing persisted binding is authored in this round. The defects are divergent embedded copies and missing complete reference-closure/retained-history oracle coverage. Test witnesses model already specified original-source and access checks; they are not new records, authoritative receipts or admission.",
       "newly_authored_product_bindings": []
     }
+  },
+  "review_round_7": {
+    "source_revision": "c21fa62e507de04c5970fb51aabb9c841182dfed",
+    "unrelated_name_hits": "Storage raw-v1-only restore-point summary bindings are another scoped codec; they do not bind a DCH write recipe or justify sibling inference.",
+    "scope_note": "Own current reviewed branch canon before this repair; immutable source lineage, not a fresh current-main search. The cycle-7 review separately adjudicates later-main shared-owner changes.",
+    "families": [
+      {
+        "event_type": "bundle.selection_forward_blocked",
+        "own_units": [
+          "ACD-610",
+          "CV-630",
+          "SP-610"
+        ],
+        "source_revision": "c21fa62e507de04c5970fb51aabb9c841182dfed",
+        "search_scope": [
+          "Plans/Contracts_V0.md",
+          "Plans/storage-plan.md",
+          "Plans/assistant-chat-design.md",
+          "Plans/Decision_Log.md",
+          "Plans/event_record.schema.json",
+          "Plans/event_record_index_checkpoint.schema.json",
+          "Plans/dch_event_contracts.json",
+          "Plans/dch_event_payloads/bundle_selection_forward_blocked.schema.json",
+          "Plans/dch_event_payloads/dch_bundle_selection_forward_blocked_checkpoint.schema.json"
+        ],
+        "hits": [
+          {
+            "path": "Plans/Contracts_V0.md",
+            "sha256": "5ec85839246ff32c8c7b6a4b260371b74393ab6bcfc740b5ada7abddb69060e4",
+            "exact_family_lines": [
+              24472,
+              24474,
+              24487,
+              24490,
+              24497,
+              24499,
+              24501,
+              24576
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "sha256": "ee200cf085a018907a4d0de3083c6736b595bad5590b9cb225d4af2a60d62fae",
+            "exact_family_lines": [
+              1173,
+              8652,
+              29481,
+              29483,
+              29487,
+              29497,
+              29508,
+              29511,
+              29544,
+              29630,
+              29684
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "sha256": "fa4d038d262f85c8f6dec638d060378e619091d131037462e8f6f1dded0f6b57",
+            "exact_family_lines": [
+              29079,
+              29081,
+              29088,
+              29091,
+              29094,
+              29096,
+              29138
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd",
+            "exact_family_lines": [
+              603
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record.schema.json",
+            "sha256": "82c4ffa78837ad6362a4e9a87f50fed6dfc91df70508a7de8567c2d45f398a0e",
+            "exact_family_lines": [
+              188
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record_index_checkpoint.schema.json",
+            "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_contracts.json",
+            "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36",
+            "exact_family_lines": [
+              5
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/bundle_selection_forward_blocked.schema.json",
+            "sha256": "17aa29dbe64081527718bfc1349468525ba6e8550c2efc04fce42d8c356a034b",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/dch_bundle_selection_forward_blocked_checkpoint.schema.json",
+            "sha256": "67387becdea6c218519aa9347975105ebf115e1d8d9e498a5056bbea91368947",
+            "exact_family_lines": [
+              43,
+              260
+            ],
+            "protected_recipe_names_already_bound": false
+          }
+        ],
+        "negative_evidence": "No original-release recipe dispatcher or protected numeric/format recipe selection for this exact family exists in the searched owner/source/schema paths. Prior shared original-source, first-receipt and custody contracts are reused; no sibling supplies a family binding.",
+        "reuse": [
+          "SP-286/CV-339 original intent/result/first-receipt custody",
+          "SP-278 original source commitment and actual-instance source token",
+          "SP-236 original physical bytes",
+          "SP-337 verified body/index/readback"
+        ],
+        "newly_authored_refinement": "Protected original write-recipe provenance, exact historical schema/encoder dispatch, and mandatory current UTC/HTTPS format validation under the explicit C7-B1/S1/S2 repair. No new consumer/projector/key/event/retention/Stop decision."
+      },
+      {
+        "event_type": "bundle.selection_sent_to_chat",
+        "own_units": [
+          "ACD-611",
+          "CV-631",
+          "SP-611"
+        ],
+        "source_revision": "c21fa62e507de04c5970fb51aabb9c841182dfed",
+        "search_scope": [
+          "Plans/Contracts_V0.md",
+          "Plans/storage-plan.md",
+          "Plans/assistant-chat-design.md",
+          "Plans/Decision_Log.md",
+          "Plans/event_record.schema.json",
+          "Plans/event_record_index_checkpoint.schema.json",
+          "Plans/dch_event_contracts.json",
+          "Plans/dch_event_payloads/bundle_selection_sent_to_chat.schema.json",
+          "Plans/dch_event_payloads/dch_bundle_selection_sent_to_chat_checkpoint.schema.json"
+        ],
+        "hits": [
+          {
+            "path": "Plans/Contracts_V0.md",
+            "sha256": "5ec85839246ff32c8c7b6a4b260371b74393ab6bcfc740b5ada7abddb69060e4",
+            "exact_family_lines": [
+              907,
+              952,
+              6975,
+              6985,
+              7005,
+              7011,
+              7236,
+              7257,
+              24586,
+              24588,
+              24601,
+              24604,
+              24611,
+              24613,
+              24615,
+              24690
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "sha256": "ee200cf085a018907a4d0de3083c6736b595bad5590b9cb225d4af2a60d62fae",
+            "exact_family_lines": [
+              1172,
+              8649,
+              29695,
+              29697,
+              29701,
+              29711,
+              29722,
+              29725,
+              29758,
+              29844,
+              29898
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "sha256": "fa4d038d262f85c8f6dec638d060378e619091d131037462e8f6f1dded0f6b57",
+            "exact_family_lines": [
+              29146,
+              29148,
+              29155,
+              29158,
+              29162,
+              29164,
+              29206
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd",
+            "exact_family_lines": [
+              603
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record.schema.json",
+            "sha256": "82c4ffa78837ad6362a4e9a87f50fed6dfc91df70508a7de8567c2d45f398a0e",
+            "exact_family_lines": [
+              189
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record_index_checkpoint.schema.json",
+            "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_contracts.json",
+            "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36",
+            "exact_family_lines": [
+              29
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/bundle_selection_sent_to_chat.schema.json",
+            "sha256": "ec33d98444989b2061a0edc3469eb3c0e02d380db706a3ee41f04de190be9737",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/dch_bundle_selection_sent_to_chat_checkpoint.schema.json",
+            "sha256": "b2dc32f77b983aed0504631758a5146103a3ea4465e5523c777b35f8f8797fd2",
+            "exact_family_lines": [
+              43,
+              260
+            ],
+            "protected_recipe_names_already_bound": false
+          }
+        ],
+        "negative_evidence": "No original-release recipe dispatcher or protected numeric/format recipe selection for this exact family exists in the searched owner/source/schema paths. Prior shared original-source, first-receipt and custody contracts are reused; no sibling supplies a family binding.",
+        "reuse": [
+          "SP-286/CV-339 original intent/result/first-receipt custody",
+          "SP-278 original source commitment and actual-instance source token",
+          "SP-236 original physical bytes",
+          "SP-337 verified body/index/readback"
+        ],
+        "newly_authored_refinement": "Protected original write-recipe provenance, exact historical schema/encoder dispatch, and mandatory current UTC/HTTPS format validation under the explicit C7-B1/S1/S2 repair. No new consumer/projector/key/event/retention/Stop decision."
+      },
+      {
+        "event_type": "chat.message",
+        "own_units": [
+          "ACD-612",
+          "CV-632",
+          "SP-612"
+        ],
+        "source_revision": "c21fa62e507de04c5970fb51aabb9c841182dfed",
+        "search_scope": [
+          "Plans/Contracts_V0.md",
+          "Plans/storage-plan.md",
+          "Plans/assistant-chat-design.md",
+          "Plans/Decision_Log.md",
+          "Plans/event_record.schema.json",
+          "Plans/event_record_index_checkpoint.schema.json",
+          "Plans/dch_event_contracts.json",
+          "Plans/dch_event_payloads/chat_message.schema.json",
+          "Plans/dch_event_payloads/dch_chat_message_checkpoint.schema.json"
+        ],
+        "hits": [
+          {
+            "path": "Plans/Contracts_V0.md",
+            "sha256": "5ec85839246ff32c8c7b6a4b260371b74393ab6bcfc740b5ada7abddb69060e4",
+            "exact_family_lines": [
+              24700,
+              24702,
+              24715,
+              24718,
+              24724,
+              24727,
+              24728,
+              24803
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "sha256": "ee200cf085a018907a4d0de3083c6736b595bad5590b9cb225d4af2a60d62fae",
+            "exact_family_lines": [
+              1663,
+              2048,
+              2139,
+              10968,
+              13447,
+              29487,
+              29557,
+              29701,
+              29771,
+              29909,
+              29911,
+              29915,
+              29925,
+              29936,
+              29939,
+              29977,
+              29989,
+              30062,
+              30115,
+              30132,
+              30202,
+              30345,
+              30416,
+              30559,
+              30629,
+              30773,
+              30843,
+              30987,
+              31057,
+              31201,
+              31271,
+              31415,
+              31485,
+              31629,
+              31699,
+              31843,
+              31914,
+              32058,
+              32129,
+              32273,
+              32346,
+              32493,
+              32563,
+              32707,
+              32777
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "sha256": "fa4d038d262f85c8f6dec638d060378e619091d131037462e8f6f1dded0f6b57",
+            "exact_family_lines": [
+              29214,
+              29216,
+              29223,
+              29226,
+              29230,
+              29231,
+              29273
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd",
+            "exact_family_lines": [
+              603
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record.schema.json",
+            "sha256": "82c4ffa78837ad6362a4e9a87f50fed6dfc91df70508a7de8567c2d45f398a0e",
+            "exact_family_lines": [
+              190
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record_index_checkpoint.schema.json",
+            "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_contracts.json",
+            "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36",
+            "exact_family_lines": [
+              53
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/chat_message.schema.json",
+            "sha256": "824275c08aceedb8e5bee45ec8bed16fb71c836db8fe5a83da378a6eaaa949c6",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/dch_chat_message_checkpoint.schema.json",
+            "sha256": "9f119051215a702d95407bc2c07c2a76c66812d603a2513e99c33ea6a96fda1e",
+            "exact_family_lines": [
+              43,
+              260
+            ],
+            "protected_recipe_names_already_bound": false
+          }
+        ],
+        "negative_evidence": "No original-release recipe dispatcher or protected numeric/format recipe selection for this exact family exists in the searched owner/source/schema paths. Prior shared original-source, first-receipt and custody contracts are reused; no sibling supplies a family binding.",
+        "reuse": [
+          "SP-286/CV-339 original intent/result/first-receipt custody",
+          "SP-278 original source commitment and actual-instance source token",
+          "SP-236 original physical bytes",
+          "SP-337 verified body/index/readback"
+        ],
+        "newly_authored_refinement": "Protected original write-recipe provenance, exact historical schema/encoder dispatch, and mandatory current UTC/HTTPS format validation under the explicit C7-B1/S1/S2 repair. No new consumer/projector/key/event/retention/Stop decision."
+      },
+      {
+        "event_type": "chat.thread_archived",
+        "own_units": [
+          "ACD-613",
+          "CV-633",
+          "SP-613"
+        ],
+        "source_revision": "c21fa62e507de04c5970fb51aabb9c841182dfed",
+        "search_scope": [
+          "Plans/Contracts_V0.md",
+          "Plans/storage-plan.md",
+          "Plans/assistant-chat-design.md",
+          "Plans/Decision_Log.md",
+          "Plans/event_record.schema.json",
+          "Plans/event_record_index_checkpoint.schema.json",
+          "Plans/dch_event_contracts.json",
+          "Plans/dch_event_payloads/chat_thread_archived.schema.json",
+          "Plans/dch_event_payloads/dch_chat_thread_archived_checkpoint.schema.json"
+        ],
+        "hits": [
+          {
+            "path": "Plans/Contracts_V0.md",
+            "sha256": "5ec85839246ff32c8c7b6a4b260371b74393ab6bcfc740b5ada7abddb69060e4",
+            "exact_family_lines": [
+              977,
+              7406,
+              26308,
+              26310,
+              26325,
+              26328,
+              26334,
+              26337,
+              26339,
+              26422
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "sha256": "ee200cf085a018907a4d0de3083c6736b595bad5590b9cb225d4af2a60d62fae",
+            "exact_family_lines": [
+              1636,
+              10778,
+              32915,
+              32917,
+              32921,
+              32931,
+              32942,
+              32945,
+              32978,
+              32990,
+              33065,
+              33120
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "sha256": "fa4d038d262f85c8f6dec638d060378e619091d131037462e8f6f1dded0f6b57",
+            "exact_family_lines": [
+              30193,
+              30195,
+              30202,
+              30205,
+              30215,
+              30217,
+              30264
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd",
+            "exact_family_lines": [
+              603
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record.schema.json",
+            "sha256": "82c4ffa78837ad6362a4e9a87f50fed6dfc91df70508a7de8567c2d45f398a0e",
+            "exact_family_lines": [
+              191
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record_index_checkpoint.schema.json",
+            "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_contracts.json",
+            "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36",
+            "exact_family_lines": [
+              78
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/chat_thread_archived.schema.json",
+            "sha256": "6dba2776a5407ec6df57ac2383f54e3d799876c8d41c9ce9011787def9702270",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/dch_chat_thread_archived_checkpoint.schema.json",
+            "sha256": "e44f873bca0c4c5b38cc484045de2be03185d99663e64f77e1fbbed36bc018d1",
+            "exact_family_lines": [
+              43,
+              260
+            ],
+            "protected_recipe_names_already_bound": false
+          }
+        ],
+        "negative_evidence": "No original-release recipe dispatcher or protected numeric/format recipe selection for this exact family exists in the searched owner/source/schema paths. Prior shared original-source, first-receipt and custody contracts are reused; no sibling supplies a family binding.",
+        "reuse": [
+          "SP-286/CV-339 original intent/result/first-receipt custody",
+          "SP-278 original source commitment and actual-instance source token",
+          "SP-236 original physical bytes",
+          "SP-337 verified body/index/readback"
+        ],
+        "newly_authored_refinement": "Protected original write-recipe provenance, exact historical schema/encoder dispatch, and mandatory current UTC/HTTPS format validation under the explicit C7-B1/S1/S2 repair. No new consumer/projector/key/event/retention/Stop decision."
+      },
+      {
+        "event_type": "chat.thread_created",
+        "own_units": [
+          "ACD-614",
+          "CV-634",
+          "SP-614"
+        ],
+        "source_revision": "c21fa62e507de04c5970fb51aabb9c841182dfed",
+        "search_scope": [
+          "Plans/Contracts_V0.md",
+          "Plans/storage-plan.md",
+          "Plans/assistant-chat-design.md",
+          "Plans/Decision_Log.md",
+          "Plans/event_record.schema.json",
+          "Plans/event_record_index_checkpoint.schema.json",
+          "Plans/dch_event_contracts.json",
+          "Plans/dch_event_payloads/chat_thread_created.schema.json",
+          "Plans/dch_event_payloads/dch_chat_thread_created_checkpoint.schema.json"
+        ],
+        "hits": [
+          {
+            "path": "Plans/Contracts_V0.md",
+            "sha256": "5ec85839246ff32c8c7b6a4b260371b74393ab6bcfc740b5ada7abddb69060e4",
+            "exact_family_lines": [
+              977,
+              7405,
+              24813,
+              24815,
+              24828,
+              24831,
+              24837,
+              24840,
+              24842,
+              24916
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "sha256": "ee200cf085a018907a4d0de3083c6736b595bad5590b9cb225d4af2a60d62fae",
+            "exact_family_lines": [
+              1636,
+              1663,
+              2048,
+              10777,
+              10969,
+              13448,
+              30126,
+              30128,
+              30132,
+              30142,
+              30153,
+              30156,
+              30189,
+              30275,
+              30328
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "sha256": "fa4d038d262f85c8f6dec638d060378e619091d131037462e8f6f1dded0f6b57",
+            "exact_family_lines": [
+              29281,
+              29283,
+              29290,
+              29293,
+              29296,
+              29298,
+              29340
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd",
+            "exact_family_lines": [
+              603
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record.schema.json",
+            "sha256": "82c4ffa78837ad6362a4e9a87f50fed6dfc91df70508a7de8567c2d45f398a0e",
+            "exact_family_lines": [
+              192
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record_index_checkpoint.schema.json",
+            "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_contracts.json",
+            "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36",
+            "exact_family_lines": [
+              111
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/chat_thread_created.schema.json",
+            "sha256": "10a5e1905253cef4e3a325965756e6a9683fe136858c6a857a0dec77b65bce9a",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/dch_chat_thread_created_checkpoint.schema.json",
+            "sha256": "ec10eca680ec6429966a1b2853d6610bf5417de6f41bc163be70914575e37cc9",
+            "exact_family_lines": [
+              43,
+              260
+            ],
+            "protected_recipe_names_already_bound": false
+          }
+        ],
+        "negative_evidence": "No original-release recipe dispatcher or protected numeric/format recipe selection for this exact family exists in the searched owner/source/schema paths. Prior shared original-source, first-receipt and custody contracts are reused; no sibling supplies a family binding.",
+        "reuse": [
+          "SP-286/CV-339 original intent/result/first-receipt custody",
+          "SP-278 original source commitment and actual-instance source token",
+          "SP-236 original physical bytes",
+          "SP-337 verified body/index/readback"
+        ],
+        "newly_authored_refinement": "Protected original write-recipe provenance, exact historical schema/encoder dispatch, and mandatory current UTC/HTTPS format validation under the explicit C7-B1/S1/S2 repair. No new consumer/projector/key/event/retention/Stop decision."
+      },
+      {
+        "event_type": "chat.thread_deleted",
+        "own_units": [
+          "ACD-615",
+          "CV-635",
+          "SP-615"
+        ],
+        "source_revision": "c21fa62e507de04c5970fb51aabb9c841182dfed",
+        "search_scope": [
+          "Plans/Contracts_V0.md",
+          "Plans/storage-plan.md",
+          "Plans/assistant-chat-design.md",
+          "Plans/Decision_Log.md",
+          "Plans/event_record.schema.json",
+          "Plans/event_record_index_checkpoint.schema.json",
+          "Plans/dch_event_contracts.json",
+          "Plans/dch_event_payloads/chat_thread_deleted.schema.json",
+          "Plans/dch_event_payloads/dch_chat_thread_deleted_checkpoint.schema.json"
+        ],
+        "hits": [
+          {
+            "path": "Plans/Contracts_V0.md",
+            "sha256": "5ec85839246ff32c8c7b6a4b260371b74393ab6bcfc740b5ada7abddb69060e4",
+            "exact_family_lines": [
+              977,
+              7407,
+              24926,
+              24928,
+              24941,
+              24944,
+              24950,
+              24953,
+              24955,
+              25029
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "sha256": "ee200cf085a018907a4d0de3083c6736b595bad5590b9cb225d4af2a60d62fae",
+            "exact_family_lines": [
+              1636,
+              10779,
+              30339,
+              30341,
+              30345,
+              30355,
+              30366,
+              30369,
+              30403,
+              30489,
+              30542
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "sha256": "fa4d038d262f85c8f6dec638d060378e619091d131037462e8f6f1dded0f6b57",
+            "exact_family_lines": [
+              29348,
+              29350,
+              29357,
+              29360,
+              29364,
+              29365,
+              29408
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd",
+            "exact_family_lines": [
+              603
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record.schema.json",
+            "sha256": "82c4ffa78837ad6362a4e9a87f50fed6dfc91df70508a7de8567c2d45f398a0e",
+            "exact_family_lines": [
+              193
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record_index_checkpoint.schema.json",
+            "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_contracts.json",
+            "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36",
+            "exact_family_lines": [
+              135
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/chat_thread_deleted.schema.json",
+            "sha256": "c6673b4af362d5606bbe7c9326f4264c4dff0a690e0bc287551f82e9fd4b7769",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/dch_chat_thread_deleted_checkpoint.schema.json",
+            "sha256": "dd000a999f13856f89f1b55136bda454e28763f4a5e70ee242e419bf28f53282",
+            "exact_family_lines": [
+              43,
+              260
+            ],
+            "protected_recipe_names_already_bound": false
+          }
+        ],
+        "negative_evidence": "No original-release recipe dispatcher or protected numeric/format recipe selection for this exact family exists in the searched owner/source/schema paths. Prior shared original-source, first-receipt and custody contracts are reused; no sibling supplies a family binding.",
+        "reuse": [
+          "SP-286/CV-339 original intent/result/first-receipt custody",
+          "SP-278 original source commitment and actual-instance source token",
+          "SP-236 original physical bytes",
+          "SP-337 verified body/index/readback"
+        ],
+        "newly_authored_refinement": "Protected original write-recipe provenance, exact historical schema/encoder dispatch, and mandatory current UTC/HTTPS format validation under the explicit C7-B1/S1/S2 repair. No new consumer/projector/key/event/retention/Stop decision."
+      },
+      {
+        "event_type": "chat.thread_worktree_bound",
+        "own_units": [
+          "ACD-616",
+          "CV-636",
+          "SP-616"
+        ],
+        "source_revision": "c21fa62e507de04c5970fb51aabb9c841182dfed",
+        "search_scope": [
+          "Plans/Contracts_V0.md",
+          "Plans/storage-plan.md",
+          "Plans/assistant-chat-design.md",
+          "Plans/Decision_Log.md",
+          "Plans/event_record.schema.json",
+          "Plans/event_record_index_checkpoint.schema.json",
+          "Plans/dch_event_contracts.json",
+          "Plans/dch_event_payloads/chat_thread_worktree_bound.schema.json",
+          "Plans/dch_event_payloads/dch_chat_thread_worktree_bound_checkpoint.schema.json"
+        ],
+        "hits": [
+          {
+            "path": "Plans/Contracts_V0.md",
+            "sha256": "5ec85839246ff32c8c7b6a4b260371b74393ab6bcfc740b5ada7abddb69060e4",
+            "exact_family_lines": [
+              983,
+              7456,
+              25039,
+              25041,
+              25054,
+              25057,
+              25064,
+              25066,
+              25068,
+              25143
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "sha256": "ee200cf085a018907a4d0de3083c6736b595bad5590b9cb225d4af2a60d62fae",
+            "exact_family_lines": [
+              1636,
+              1638,
+              1642,
+              10781,
+              10836,
+              30553,
+              30555,
+              30559,
+              30569,
+              30580,
+              30583,
+              30616,
+              30702,
+              30756
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "sha256": "fa4d038d262f85c8f6dec638d060378e619091d131037462e8f6f1dded0f6b57",
+            "exact_family_lines": [
+              2990,
+              3033,
+              3365,
+              18921,
+              18949,
+              19110,
+              19138,
+              21189,
+              29416,
+              29418,
+              29425,
+              29428,
+              29431,
+              29433,
+              29475
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd",
+            "exact_family_lines": [
+              603
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record.schema.json",
+            "sha256": "82c4ffa78837ad6362a4e9a87f50fed6dfc91df70508a7de8567c2d45f398a0e",
+            "exact_family_lines": [
+              194
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record_index_checkpoint.schema.json",
+            "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_contracts.json",
+            "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36",
+            "exact_family_lines": [
+              159
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/chat_thread_worktree_bound.schema.json",
+            "sha256": "daab4bdc9785d66a159eba3bc96f9ff34ef592efe48cbe5ad46ace1138585a34",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/dch_chat_thread_worktree_bound_checkpoint.schema.json",
+            "sha256": "26cebbdb8877805b577845bf6a4e8545dfb0a2d2fc024daf0ec44d2f509b1ee2",
+            "exact_family_lines": [
+              43,
+              260
+            ],
+            "protected_recipe_names_already_bound": false
+          }
+        ],
+        "negative_evidence": "No original-release recipe dispatcher or protected numeric/format recipe selection for this exact family exists in the searched owner/source/schema paths. Prior shared original-source, first-receipt and custody contracts are reused; no sibling supplies a family binding.",
+        "reuse": [
+          "SP-286/CV-339 original intent/result/first-receipt custody",
+          "SP-278 original source commitment and actual-instance source token",
+          "SP-236 original physical bytes",
+          "SP-337 verified body/index/readback"
+        ],
+        "newly_authored_refinement": "Protected original write-recipe provenance, exact historical schema/encoder dispatch, and mandatory current UTC/HTTPS format validation under the explicit C7-B1/S1/S2 repair. No new consumer/projector/key/event/retention/Stop decision."
+      },
+      {
+        "event_type": "chat.thread_worktree_create_failed",
+        "own_units": [
+          "ACD-617",
+          "CV-637",
+          "SP-617"
+        ],
+        "source_revision": "c21fa62e507de04c5970fb51aabb9c841182dfed",
+        "search_scope": [
+          "Plans/Contracts_V0.md",
+          "Plans/storage-plan.md",
+          "Plans/assistant-chat-design.md",
+          "Plans/Decision_Log.md",
+          "Plans/event_record.schema.json",
+          "Plans/event_record_index_checkpoint.schema.json",
+          "Plans/dch_event_contracts.json",
+          "Plans/dch_event_payloads/chat_thread_worktree_create_failed.schema.json",
+          "Plans/dch_event_payloads/dch_chat_thread_worktree_create_failed_checkpoint.schema.json"
+        ],
+        "hits": [
+          {
+            "path": "Plans/Contracts_V0.md",
+            "sha256": "5ec85839246ff32c8c7b6a4b260371b74393ab6bcfc740b5ada7abddb69060e4",
+            "exact_family_lines": [
+              986,
+              7459,
+              25153,
+              25155,
+              25168,
+              25171,
+              25178,
+              25180,
+              25182,
+              25257
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "sha256": "ee200cf085a018907a4d0de3083c6736b595bad5590b9cb225d4af2a60d62fae",
+            "exact_family_lines": [
+              1645,
+              10839,
+              30767,
+              30769,
+              30773,
+              30783,
+              30794,
+              30797,
+              30830,
+              30916,
+              30970
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "sha256": "fa4d038d262f85c8f6dec638d060378e619091d131037462e8f6f1dded0f6b57",
+            "exact_family_lines": [
+              3368,
+              21192,
+              29483,
+              29485,
+              29492,
+              29495,
+              29498,
+              29500,
+              29542
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd",
+            "exact_family_lines": [
+              603
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record.schema.json",
+            "sha256": "82c4ffa78837ad6362a4e9a87f50fed6dfc91df70508a7de8567c2d45f398a0e",
+            "exact_family_lines": [
+              195
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record_index_checkpoint.schema.json",
+            "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_contracts.json",
+            "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36",
+            "exact_family_lines": [
+              183
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/chat_thread_worktree_create_failed.schema.json",
+            "sha256": "d0a48e9e13b221fa9f644e38bd5bc83a84d27491204d3718dfbbfe000a57a2e8",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/dch_chat_thread_worktree_create_failed_checkpoint.schema.json",
+            "sha256": "79e43d7f61651d22998fe80cfb91818915c4c02fdc70cbbb26e5cd4bc761c2dd",
+            "exact_family_lines": [
+              43,
+              260
+            ],
+            "protected_recipe_names_already_bound": false
+          }
+        ],
+        "negative_evidence": "No original-release recipe dispatcher or protected numeric/format recipe selection for this exact family exists in the searched owner/source/schema paths. Prior shared original-source, first-receipt and custody contracts are reused; no sibling supplies a family binding.",
+        "reuse": [
+          "SP-286/CV-339 original intent/result/first-receipt custody",
+          "SP-278 original source commitment and actual-instance source token",
+          "SP-236 original physical bytes",
+          "SP-337 verified body/index/readback"
+        ],
+        "newly_authored_refinement": "Protected original write-recipe provenance, exact historical schema/encoder dispatch, and mandatory current UTC/HTTPS format validation under the explicit C7-B1/S1/S2 repair. No new consumer/projector/key/event/retention/Stop decision."
+      },
+      {
+        "event_type": "chat.thread_worktree_merge_failed",
+        "own_units": [
+          "ACD-618",
+          "CV-638",
+          "SP-618"
+        ],
+        "source_revision": "c21fa62e507de04c5970fb51aabb9c841182dfed",
+        "search_scope": [
+          "Plans/Contracts_V0.md",
+          "Plans/storage-plan.md",
+          "Plans/assistant-chat-design.md",
+          "Plans/Decision_Log.md",
+          "Plans/event_record.schema.json",
+          "Plans/event_record_index_checkpoint.schema.json",
+          "Plans/dch_event_contracts.json",
+          "Plans/dch_event_payloads/chat_thread_worktree_merge_failed.schema.json",
+          "Plans/dch_event_payloads/dch_chat_thread_worktree_merge_failed_checkpoint.schema.json"
+        ],
+        "hits": [
+          {
+            "path": "Plans/Contracts_V0.md",
+            "sha256": "5ec85839246ff32c8c7b6a4b260371b74393ab6bcfc740b5ada7abddb69060e4",
+            "exact_family_lines": [
+              988,
+              7461,
+              25267,
+              25269,
+              25282,
+              25285,
+              25292,
+              25294,
+              25296,
+              25371
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "sha256": "ee200cf085a018907a4d0de3083c6736b595bad5590b9cb225d4af2a60d62fae",
+            "exact_family_lines": [
+              1647,
+              10841,
+              30981,
+              30983,
+              30987,
+              30997,
+              31008,
+              31011,
+              31044,
+              31130,
+              31184
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "sha256": "fa4d038d262f85c8f6dec638d060378e619091d131037462e8f6f1dded0f6b57",
+            "exact_family_lines": [
+              3370,
+              21231,
+              29550,
+              29552,
+              29559,
+              29562,
+              29565,
+              29567,
+              29609
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd",
+            "exact_family_lines": [
+              603
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record.schema.json",
+            "sha256": "82c4ffa78837ad6362a4e9a87f50fed6dfc91df70508a7de8567c2d45f398a0e",
+            "exact_family_lines": [
+              196
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record_index_checkpoint.schema.json",
+            "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_contracts.json",
+            "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36",
+            "exact_family_lines": [
+              207
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/chat_thread_worktree_merge_failed.schema.json",
+            "sha256": "dc5f192c2e05f1c6e3af14e23e6ae2d5d9cc3f57db8df86d7885d709d18bb93a",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/dch_chat_thread_worktree_merge_failed_checkpoint.schema.json",
+            "sha256": "1bf2c81e6ff7ebe55614b62027dc7b691bdbb57b40527dd6f291d03854e63a9a",
+            "exact_family_lines": [
+              43,
+              260
+            ],
+            "protected_recipe_names_already_bound": false
+          }
+        ],
+        "negative_evidence": "No original-release recipe dispatcher or protected numeric/format recipe selection for this exact family exists in the searched owner/source/schema paths. Prior shared original-source, first-receipt and custody contracts are reused; no sibling supplies a family binding.",
+        "reuse": [
+          "SP-286/CV-339 original intent/result/first-receipt custody",
+          "SP-278 original source commitment and actual-instance source token",
+          "SP-236 original physical bytes",
+          "SP-337 verified body/index/readback"
+        ],
+        "newly_authored_refinement": "Protected original write-recipe provenance, exact historical schema/encoder dispatch, and mandatory current UTC/HTTPS format validation under the explicit C7-B1/S1/S2 repair. No new consumer/projector/key/event/retention/Stop decision."
+      },
+      {
+        "event_type": "chat.thread_worktree_merged",
+        "own_units": [
+          "ACD-619",
+          "CV-639",
+          "SP-619"
+        ],
+        "source_revision": "c21fa62e507de04c5970fb51aabb9c841182dfed",
+        "search_scope": [
+          "Plans/Contracts_V0.md",
+          "Plans/storage-plan.md",
+          "Plans/assistant-chat-design.md",
+          "Plans/Decision_Log.md",
+          "Plans/event_record.schema.json",
+          "Plans/event_record_index_checkpoint.schema.json",
+          "Plans/dch_event_contracts.json",
+          "Plans/dch_event_payloads/chat_thread_worktree_merged.schema.json",
+          "Plans/dch_event_payloads/dch_chat_thread_worktree_merged_checkpoint.schema.json"
+        ],
+        "hits": [
+          {
+            "path": "Plans/Contracts_V0.md",
+            "sha256": "5ec85839246ff32c8c7b6a4b260371b74393ab6bcfc740b5ada7abddb69060e4",
+            "exact_family_lines": [
+              987,
+              7460,
+              25381,
+              25383,
+              25396,
+              25399,
+              25406,
+              25408,
+              25410,
+              25485
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "sha256": "ee200cf085a018907a4d0de3083c6736b595bad5590b9cb225d4af2a60d62fae",
+            "exact_family_lines": [
+              1646,
+              10840,
+              31195,
+              31197,
+              31201,
+              31211,
+              31222,
+              31225,
+              31258,
+              31344,
+              31398
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "sha256": "fa4d038d262f85c8f6dec638d060378e619091d131037462e8f6f1dded0f6b57",
+            "exact_family_lines": [
+              3369,
+              21230,
+              29617,
+              29619,
+              29626,
+              29629,
+              29632,
+              29634,
+              29676
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd",
+            "exact_family_lines": [
+              603
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record.schema.json",
+            "sha256": "82c4ffa78837ad6362a4e9a87f50fed6dfc91df70508a7de8567c2d45f398a0e",
+            "exact_family_lines": [
+              197
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record_index_checkpoint.schema.json",
+            "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_contracts.json",
+            "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36",
+            "exact_family_lines": [
+              231
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/chat_thread_worktree_merged.schema.json",
+            "sha256": "8a8594320f184e90f201dec8da5db61a24d733b84ec5dcd89ea88f780183421b",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/dch_chat_thread_worktree_merged_checkpoint.schema.json",
+            "sha256": "37fc97b1c61a35b1d7267b35f4acb4582f391c43ce840cdd6a61a146f8018652",
+            "exact_family_lines": [
+              43,
+              260
+            ],
+            "protected_recipe_names_already_bound": false
+          }
+        ],
+        "negative_evidence": "No original-release recipe dispatcher or protected numeric/format recipe selection for this exact family exists in the searched owner/source/schema paths. Prior shared original-source, first-receipt and custody contracts are reused; no sibling supplies a family binding.",
+        "reuse": [
+          "SP-286/CV-339 original intent/result/first-receipt custody",
+          "SP-278 original source commitment and actual-instance source token",
+          "SP-236 original physical bytes",
+          "SP-337 verified body/index/readback"
+        ],
+        "newly_authored_refinement": "Protected original write-recipe provenance, exact historical schema/encoder dispatch, and mandatory current UTC/HTTPS format validation under the explicit C7-B1/S1/S2 repair. No new consumer/projector/key/event/retention/Stop decision."
+      },
+      {
+        "event_type": "chat.thread_worktree_pr_created",
+        "own_units": [
+          "ACD-620",
+          "CV-640",
+          "SP-620"
+        ],
+        "source_revision": "c21fa62e507de04c5970fb51aabb9c841182dfed",
+        "search_scope": [
+          "Plans/Contracts_V0.md",
+          "Plans/storage-plan.md",
+          "Plans/assistant-chat-design.md",
+          "Plans/Decision_Log.md",
+          "Plans/event_record.schema.json",
+          "Plans/event_record_index_checkpoint.schema.json",
+          "Plans/dch_event_contracts.json",
+          "Plans/dch_event_payloads/chat_thread_worktree_pr_created.schema.json",
+          "Plans/dch_event_payloads/dch_chat_thread_worktree_pr_created_checkpoint.schema.json"
+        ],
+        "hits": [
+          {
+            "path": "Plans/Contracts_V0.md",
+            "sha256": "5ec85839246ff32c8c7b6a4b260371b74393ab6bcfc740b5ada7abddb69060e4",
+            "exact_family_lines": [
+              989,
+              7462,
+              25495,
+              25497,
+              25510,
+              25513,
+              25520,
+              25522,
+              25524,
+              25599
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "sha256": "ee200cf085a018907a4d0de3083c6736b595bad5590b9cb225d4af2a60d62fae",
+            "exact_family_lines": [
+              1648,
+              10842,
+              31409,
+              31411,
+              31415,
+              31425,
+              31436,
+              31439,
+              31472,
+              31558,
+              31612
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "sha256": "fa4d038d262f85c8f6dec638d060378e619091d131037462e8f6f1dded0f6b57",
+            "exact_family_lines": [
+              3371,
+              21232,
+              29684,
+              29686,
+              29693,
+              29696,
+              29698,
+              29700,
+              29742
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd",
+            "exact_family_lines": [
+              603
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record.schema.json",
+            "sha256": "82c4ffa78837ad6362a4e9a87f50fed6dfc91df70508a7de8567c2d45f398a0e",
+            "exact_family_lines": [
+              198
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record_index_checkpoint.schema.json",
+            "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_contracts.json",
+            "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36",
+            "exact_family_lines": [
+              255
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/chat_thread_worktree_pr_created.schema.json",
+            "sha256": "09b4d511faa62d002479cffb5f95339fe03c9dadc6612ce9d42d3dce75e52747",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/dch_chat_thread_worktree_pr_created_checkpoint.schema.json",
+            "sha256": "fa8f823fc743cb9aa8b82502d0936261db367b918d3624d11969a8fdf15cf236",
+            "exact_family_lines": [
+              43,
+              260
+            ],
+            "protected_recipe_names_already_bound": false
+          }
+        ],
+        "negative_evidence": "No original-release recipe dispatcher or protected numeric/format recipe selection for this exact family exists in the searched owner/source/schema paths. Prior shared original-source, first-receipt and custody contracts are reused; no sibling supplies a family binding.",
+        "reuse": [
+          "SP-286/CV-339 original intent/result/first-receipt custody",
+          "SP-278 original source commitment and actual-instance source token",
+          "SP-236 original physical bytes",
+          "SP-337 verified body/index/readback"
+        ],
+        "newly_authored_refinement": "Protected original write-recipe provenance, exact historical schema/encoder dispatch, and mandatory current UTC/HTTPS format validation under the explicit C7-B1/S1/S2 repair. No new consumer/projector/key/event/retention/Stop decision."
+      },
+      {
+        "event_type": "chat.thread_worktree_pr_failed",
+        "own_units": [
+          "ACD-621",
+          "CV-641",
+          "SP-621"
+        ],
+        "source_revision": "c21fa62e507de04c5970fb51aabb9c841182dfed",
+        "search_scope": [
+          "Plans/Contracts_V0.md",
+          "Plans/storage-plan.md",
+          "Plans/assistant-chat-design.md",
+          "Plans/Decision_Log.md",
+          "Plans/event_record.schema.json",
+          "Plans/event_record_index_checkpoint.schema.json",
+          "Plans/dch_event_contracts.json",
+          "Plans/dch_event_payloads/chat_thread_worktree_pr_failed.schema.json",
+          "Plans/dch_event_payloads/dch_chat_thread_worktree_pr_failed_checkpoint.schema.json"
+        ],
+        "hits": [
+          {
+            "path": "Plans/Contracts_V0.md",
+            "sha256": "5ec85839246ff32c8c7b6a4b260371b74393ab6bcfc740b5ada7abddb69060e4",
+            "exact_family_lines": [
+              990,
+              995,
+              7429,
+              7439,
+              7463,
+              25609,
+              25611,
+              25624,
+              25627,
+              25634,
+              25636,
+              25638,
+              25713
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "sha256": "ee200cf085a018907a4d0de3083c6736b595bad5590b9cb225d4af2a60d62fae",
+            "exact_family_lines": [
+              1649,
+              1654,
+              10843,
+              31623,
+              31625,
+              31629,
+              31639,
+              31650,
+              31653,
+              31686,
+              31772,
+              31826
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "sha256": "fa4d038d262f85c8f6dec638d060378e619091d131037462e8f6f1dded0f6b57",
+            "exact_family_lines": [
+              3268,
+              3272,
+              3372,
+              20521,
+              20547,
+              21233,
+              29750,
+              29752,
+              29759,
+              29762,
+              29765,
+              29767,
+              29809
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd",
+            "exact_family_lines": [
+              603
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record.schema.json",
+            "sha256": "82c4ffa78837ad6362a4e9a87f50fed6dfc91df70508a7de8567c2d45f398a0e",
+            "exact_family_lines": [
+              199
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record_index_checkpoint.schema.json",
+            "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_contracts.json",
+            "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36",
+            "exact_family_lines": [
+              279
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/chat_thread_worktree_pr_failed.schema.json",
+            "sha256": "ffbf1b7761228f38d2d537345945d51094126129bd88d562814358cc4f2c130b",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/dch_chat_thread_worktree_pr_failed_checkpoint.schema.json",
+            "sha256": "41d18e0a4d6cbc5471fbd0a64dcdf7932da6c4a44a1bd2b6cd0cab786974302f",
+            "exact_family_lines": [
+              43,
+              260
+            ],
+            "protected_recipe_names_already_bound": false
+          }
+        ],
+        "negative_evidence": "No original-release recipe dispatcher or protected numeric/format recipe selection for this exact family exists in the searched owner/source/schema paths. Prior shared original-source, first-receipt and custody contracts are reused; no sibling supplies a family binding.",
+        "reuse": [
+          "SP-286/CV-339 original intent/result/first-receipt custody",
+          "SP-278 original source commitment and actual-instance source token",
+          "SP-236 original physical bytes",
+          "SP-337 verified body/index/readback"
+        ],
+        "newly_authored_refinement": "Protected original write-recipe provenance, exact historical schema/encoder dispatch, and mandatory current UTC/HTTPS format validation under the explicit C7-B1/S1/S2 repair. No new consumer/projector/key/event/retention/Stop decision."
+      },
+      {
+        "event_type": "chat.thread_worktree_pre_merge_test_failed",
+        "own_units": [
+          "ACD-622",
+          "CV-642",
+          "SP-622"
+        ],
+        "source_revision": "c21fa62e507de04c5970fb51aabb9c841182dfed",
+        "search_scope": [
+          "Plans/Contracts_V0.md",
+          "Plans/storage-plan.md",
+          "Plans/assistant-chat-design.md",
+          "Plans/Decision_Log.md",
+          "Plans/event_record.schema.json",
+          "Plans/event_record_index_checkpoint.schema.json",
+          "Plans/dch_event_contracts.json",
+          "Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_failed.schema.json",
+          "Plans/dch_event_payloads/dch_chat_thread_worktree_pre_merge_test_failed_checkpoint.schema.json"
+        ],
+        "hits": [
+          {
+            "path": "Plans/Contracts_V0.md",
+            "sha256": "5ec85839246ff32c8c7b6a4b260371b74393ab6bcfc740b5ada7abddb69060e4",
+            "exact_family_lines": [
+              993,
+              7466,
+              25723,
+              25725,
+              25740,
+              25743,
+              25750,
+              25752,
+              25754,
+              25832
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "sha256": "ee200cf085a018907a4d0de3083c6736b595bad5590b9cb225d4af2a60d62fae",
+            "exact_family_lines": [
+              1652,
+              1654,
+              10846,
+              10862,
+              31837,
+              31839,
+              31843,
+              31853,
+              31864,
+              31867,
+              31901,
+              31987,
+              32041
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "sha256": "fa4d038d262f85c8f6dec638d060378e619091d131037462e8f6f1dded0f6b57",
+            "exact_family_lines": [
+              3375,
+              21274,
+              29817,
+              29819,
+              29830,
+              29833,
+              29836,
+              29838,
+              29898
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd",
+            "exact_family_lines": [
+              603
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record.schema.json",
+            "sha256": "82c4ffa78837ad6362a4e9a87f50fed6dfc91df70508a7de8567c2d45f398a0e",
+            "exact_family_lines": [
+              200
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record_index_checkpoint.schema.json",
+            "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_contracts.json",
+            "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36",
+            "exact_family_lines": [
+              303
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_failed.schema.json",
+            "sha256": "cf3435b5636613c192cc76f1396fc9a3f4ee010958ec82a0aeb4bed5e2426636",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/dch_chat_thread_worktree_pre_merge_test_failed_checkpoint.schema.json",
+            "sha256": "8730be2f2f9f5420838cc6b6f043fdd4a2d8d55781d78c1bb936dfdc257f068f",
+            "exact_family_lines": [
+              43,
+              260
+            ],
+            "protected_recipe_names_already_bound": false
+          }
+        ],
+        "negative_evidence": "No original-release recipe dispatcher or protected numeric/format recipe selection for this exact family exists in the searched owner/source/schema paths. Prior shared original-source, first-receipt and custody contracts are reused; no sibling supplies a family binding.",
+        "reuse": [
+          "SP-286/CV-339 original intent/result/first-receipt custody",
+          "SP-278 original source commitment and actual-instance source token",
+          "SP-236 original physical bytes",
+          "SP-337 verified body/index/readback"
+        ],
+        "newly_authored_refinement": "Protected original write-recipe provenance, exact historical schema/encoder dispatch, and mandatory current UTC/HTTPS format validation under the explicit C7-B1/S1/S2 repair. No new consumer/projector/key/event/retention/Stop decision."
+      },
+      {
+        "event_type": "chat.thread_worktree_pre_merge_test_passed",
+        "own_units": [
+          "ACD-623",
+          "CV-643",
+          "SP-623"
+        ],
+        "source_revision": "c21fa62e507de04c5970fb51aabb9c841182dfed",
+        "search_scope": [
+          "Plans/Contracts_V0.md",
+          "Plans/storage-plan.md",
+          "Plans/assistant-chat-design.md",
+          "Plans/Decision_Log.md",
+          "Plans/event_record.schema.json",
+          "Plans/event_record_index_checkpoint.schema.json",
+          "Plans/dch_event_contracts.json",
+          "Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_passed.schema.json",
+          "Plans/dch_event_payloads/dch_chat_thread_worktree_pre_merge_test_passed_checkpoint.schema.json"
+        ],
+        "hits": [
+          {
+            "path": "Plans/Contracts_V0.md",
+            "sha256": "5ec85839246ff32c8c7b6a4b260371b74393ab6bcfc740b5ada7abddb69060e4",
+            "exact_family_lines": [
+              992,
+              7465,
+              25842,
+              25844,
+              25859,
+              25862,
+              25869,
+              25871,
+              25873,
+              25951
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "sha256": "ee200cf085a018907a4d0de3083c6736b595bad5590b9cb225d4af2a60d62fae",
+            "exact_family_lines": [
+              1651,
+              1654,
+              10845,
+              10862,
+              32052,
+              32054,
+              32058,
+              32068,
+              32079,
+              32082,
+              32116,
+              32202,
+              32256
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "sha256": "fa4d038d262f85c8f6dec638d060378e619091d131037462e8f6f1dded0f6b57",
+            "exact_family_lines": [
+              3374,
+              21273,
+              29906,
+              29908,
+              29919,
+              29922,
+              29925,
+              29927,
+              29982
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd",
+            "exact_family_lines": [
+              603
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record.schema.json",
+            "sha256": "82c4ffa78837ad6362a4e9a87f50fed6dfc91df70508a7de8567c2d45f398a0e",
+            "exact_family_lines": [
+              201
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record_index_checkpoint.schema.json",
+            "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_contracts.json",
+            "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36",
+            "exact_family_lines": [
+              327
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_passed.schema.json",
+            "sha256": "3b33f776b1b5e31e204a6079151b3429694ddf8ac028ec99cd55c5a812fcaa36",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/dch_chat_thread_worktree_pre_merge_test_passed_checkpoint.schema.json",
+            "sha256": "a7fb90b362e455ca5353e894acfc80e9bdeba8bc220c4964f5a34c8e5f2b3b40",
+            "exact_family_lines": [
+              43,
+              260
+            ],
+            "protected_recipe_names_already_bound": false
+          }
+        ],
+        "negative_evidence": "No original-release recipe dispatcher or protected numeric/format recipe selection for this exact family exists in the searched owner/source/schema paths. Prior shared original-source, first-receipt and custody contracts are reused; no sibling supplies a family binding.",
+        "reuse": [
+          "SP-286/CV-339 original intent/result/first-receipt custody",
+          "SP-278 original source commitment and actual-instance source token",
+          "SP-236 original physical bytes",
+          "SP-337 verified body/index/readback"
+        ],
+        "newly_authored_refinement": "Protected original write-recipe provenance, exact historical schema/encoder dispatch, and mandatory current UTC/HTTPS format validation under the explicit C7-B1/S1/S2 repair. No new consumer/projector/key/event/retention/Stop decision."
+      },
+      {
+        "event_type": "chat.thread_worktree_pre_merge_test_started",
+        "own_units": [
+          "ACD-624",
+          "CV-644",
+          "SP-624"
+        ],
+        "source_revision": "c21fa62e507de04c5970fb51aabb9c841182dfed",
+        "search_scope": [
+          "Plans/Contracts_V0.md",
+          "Plans/storage-plan.md",
+          "Plans/assistant-chat-design.md",
+          "Plans/Decision_Log.md",
+          "Plans/event_record.schema.json",
+          "Plans/event_record_index_checkpoint.schema.json",
+          "Plans/dch_event_contracts.json",
+          "Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_started.schema.json",
+          "Plans/dch_event_payloads/dch_chat_thread_worktree_pre_merge_test_started_checkpoint.schema.json"
+        ],
+        "hits": [
+          {
+            "path": "Plans/Contracts_V0.md",
+            "sha256": "5ec85839246ff32c8c7b6a4b260371b74393ab6bcfc740b5ada7abddb69060e4",
+            "exact_family_lines": [
+              991,
+              7464,
+              25961,
+              25963,
+              25978,
+              25981,
+              25988,
+              25991,
+              25993,
+              26070
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "sha256": "ee200cf085a018907a4d0de3083c6736b595bad5590b9cb225d4af2a60d62fae",
+            "exact_family_lines": [
+              1650,
+              1654,
+              10844,
+              10860,
+              10862,
+              32267,
+              32269,
+              32273,
+              32283,
+              32296,
+              32299,
+              32333,
+              32419,
+              32476
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "sha256": "fa4d038d262f85c8f6dec638d060378e619091d131037462e8f6f1dded0f6b57",
+            "exact_family_lines": [
+              3373,
+              21272,
+              29821,
+              29860,
+              29990,
+              29992,
+              29999,
+              30002,
+              30006,
+              30007,
+              30050
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd",
+            "exact_family_lines": [
+              603
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record.schema.json",
+            "sha256": "82c4ffa78837ad6362a4e9a87f50fed6dfc91df70508a7de8567c2d45f398a0e",
+            "exact_family_lines": [
+              202
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record_index_checkpoint.schema.json",
+            "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_contracts.json",
+            "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36",
+            "exact_family_lines": [
+              351
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_started.schema.json",
+            "sha256": "7adca7ae1bab89d9be2f4e830a7a86f0816ab5cd162e5026242261411809d843",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/dch_chat_thread_worktree_pre_merge_test_started_checkpoint.schema.json",
+            "sha256": "024f9f63c503ff727f52fdb34139bb4a150e96d279f190a477cefe8a488a413e",
+            "exact_family_lines": [
+              43,
+              260
+            ],
+            "protected_recipe_names_already_bound": false
+          }
+        ],
+        "negative_evidence": "No original-release recipe dispatcher or protected numeric/format recipe selection for this exact family exists in the searched owner/source/schema paths. Prior shared original-source, first-receipt and custody contracts are reused; no sibling supplies a family binding.",
+        "reuse": [
+          "SP-286/CV-339 original intent/result/first-receipt custody",
+          "SP-278 original source commitment and actual-instance source token",
+          "SP-236 original physical bytes",
+          "SP-337 verified body/index/readback"
+        ],
+        "newly_authored_refinement": "Protected original write-recipe provenance, exact historical schema/encoder dispatch, and mandatory current UTC/HTTPS format validation under the explicit C7-B1/S1/S2 repair. No new consumer/projector/key/event/retention/Stop decision."
+      },
+      {
+        "event_type": "chat.thread_worktree_renamed",
+        "own_units": [
+          "ACD-625",
+          "CV-645",
+          "SP-625"
+        ],
+        "source_revision": "c21fa62e507de04c5970fb51aabb9c841182dfed",
+        "search_scope": [
+          "Plans/Contracts_V0.md",
+          "Plans/storage-plan.md",
+          "Plans/assistant-chat-design.md",
+          "Plans/Decision_Log.md",
+          "Plans/event_record.schema.json",
+          "Plans/event_record_index_checkpoint.schema.json",
+          "Plans/dch_event_contracts.json",
+          "Plans/dch_event_payloads/chat_thread_worktree_renamed.schema.json",
+          "Plans/dch_event_payloads/dch_chat_thread_worktree_renamed_checkpoint.schema.json"
+        ],
+        "hits": [
+          {
+            "path": "Plans/Contracts_V0.md",
+            "sha256": "5ec85839246ff32c8c7b6a4b260371b74393ab6bcfc740b5ada7abddb69060e4",
+            "exact_family_lines": [
+              985,
+              7458,
+              26080,
+              26082,
+              26095,
+              26098,
+              26105,
+              26107,
+              26109,
+              26184
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "sha256": "ee200cf085a018907a4d0de3083c6736b595bad5590b9cb225d4af2a60d62fae",
+            "exact_family_lines": [
+              1644,
+              10838,
+              32487,
+              32489,
+              32493,
+              32503,
+              32514,
+              32517,
+              32550,
+              32636,
+              32690
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "sha256": "fa4d038d262f85c8f6dec638d060378e619091d131037462e8f6f1dded0f6b57",
+            "exact_family_lines": [
+              3061,
+              3367,
+              19285,
+              19294,
+              19315,
+              21191,
+              30058,
+              30060,
+              30067,
+              30070,
+              30073,
+              30075,
+              30117
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd",
+            "exact_family_lines": [
+              603
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record.schema.json",
+            "sha256": "82c4ffa78837ad6362a4e9a87f50fed6dfc91df70508a7de8567c2d45f398a0e",
+            "exact_family_lines": [
+              203
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record_index_checkpoint.schema.json",
+            "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_contracts.json",
+            "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36",
+            "exact_family_lines": [
+              375
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/chat_thread_worktree_renamed.schema.json",
+            "sha256": "c18855a481e0ce330735ebc9adee3146e5090e7cc68ed4e5089b876413c76266",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/dch_chat_thread_worktree_renamed_checkpoint.schema.json",
+            "sha256": "53b9c722a43e89a5d83ad1d84cafb91f00e17d3f58c1cf3b06fcd3a391a2008b",
+            "exact_family_lines": [
+              43,
+              260
+            ],
+            "protected_recipe_names_already_bound": false
+          }
+        ],
+        "negative_evidence": "No original-release recipe dispatcher or protected numeric/format recipe selection for this exact family exists in the searched owner/source/schema paths. Prior shared original-source, first-receipt and custody contracts are reused; no sibling supplies a family binding.",
+        "reuse": [
+          "SP-286/CV-339 original intent/result/first-receipt custody",
+          "SP-278 original source commitment and actual-instance source token",
+          "SP-236 original physical bytes",
+          "SP-337 verified body/index/readback"
+        ],
+        "newly_authored_refinement": "Protected original write-recipe provenance, exact historical schema/encoder dispatch, and mandatory current UTC/HTTPS format validation under the explicit C7-B1/S1/S2 repair. No new consumer/projector/key/event/retention/Stop decision."
+      },
+      {
+        "event_type": "chat.thread_worktree_unbound",
+        "own_units": [
+          "ACD-626",
+          "CV-646",
+          "SP-626"
+        ],
+        "source_revision": "c21fa62e507de04c5970fb51aabb9c841182dfed",
+        "search_scope": [
+          "Plans/Contracts_V0.md",
+          "Plans/storage-plan.md",
+          "Plans/assistant-chat-design.md",
+          "Plans/Decision_Log.md",
+          "Plans/event_record.schema.json",
+          "Plans/event_record_index_checkpoint.schema.json",
+          "Plans/dch_event_contracts.json",
+          "Plans/dch_event_payloads/chat_thread_worktree_unbound.schema.json",
+          "Plans/dch_event_payloads/dch_chat_thread_worktree_unbound_checkpoint.schema.json"
+        ],
+        "hits": [
+          {
+            "path": "Plans/Contracts_V0.md",
+            "sha256": "5ec85839246ff32c8c7b6a4b260371b74393ab6bcfc740b5ada7abddb69060e4",
+            "exact_family_lines": [
+              984,
+              7457,
+              26194,
+              26196,
+              26209,
+              26212,
+              26219,
+              26221,
+              26223,
+              26298
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "sha256": "ee200cf085a018907a4d0de3083c6736b595bad5590b9cb225d4af2a60d62fae",
+            "exact_family_lines": [
+              1638,
+              1643,
+              10837,
+              32701,
+              32703,
+              32707,
+              32717,
+              32728,
+              32731,
+              32764,
+              32850,
+              32904
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "sha256": "fa4d038d262f85c8f6dec638d060378e619091d131037462e8f6f1dded0f6b57",
+            "exact_family_lines": [
+              2990,
+              2996,
+              3127,
+              3158,
+              3366,
+              18922,
+              18950,
+              19637,
+              21190,
+              30125,
+              30127,
+              30134,
+              30137,
+              30141,
+              30142,
+              30185
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd",
+            "exact_family_lines": [
+              603
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record.schema.json",
+            "sha256": "82c4ffa78837ad6362a4e9a87f50fed6dfc91df70508a7de8567c2d45f398a0e",
+            "exact_family_lines": [
+              204
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/event_record_index_checkpoint.schema.json",
+            "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_contracts.json",
+            "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36",
+            "exact_family_lines": [
+              399
+            ],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/chat_thread_worktree_unbound.schema.json",
+            "sha256": "868049dac35efce63de9de62e1878d7970780ce8e981d0e2cfe3c339d3169fea",
+            "exact_family_lines": [],
+            "protected_recipe_names_already_bound": false
+          },
+          {
+            "path": "Plans/dch_event_payloads/dch_chat_thread_worktree_unbound_checkpoint.schema.json",
+            "sha256": "8828a6505f247a8ab2a96fa47fc5351a3a76cbe1764acc79c69092d721888638",
+            "exact_family_lines": [
+              43,
+              260
+            ],
+            "protected_recipe_names_already_bound": false
+          }
+        ],
+        "negative_evidence": "No original-release recipe dispatcher or protected numeric/format recipe selection for this exact family exists in the searched owner/source/schema paths. Prior shared original-source, first-receipt and custody contracts are reused; no sibling supplies a family binding.",
+        "reuse": [
+          "SP-286/CV-339 original intent/result/first-receipt custody",
+          "SP-278 original source commitment and actual-instance source token",
+          "SP-236 original physical bytes",
+          "SP-337 verified body/index/readback"
+        ],
+        "newly_authored_refinement": "Protected original write-recipe provenance, exact historical schema/encoder dispatch, and mandatory current UTC/HTTPS format validation under the explicit C7-B1/S1/S2 repair. No new consumer/projector/key/event/retention/Stop decision."
+      }
+    ]
   }
 }

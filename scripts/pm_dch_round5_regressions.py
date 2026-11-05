@@ -28,7 +28,7 @@ def run(name, family=None):
     if name == 'C5-B1_default_instance':
         replace('joins', 'identity(event, p, storage_instance)', 'identity(event, p)')
     elif name == 'C5-B2_oversized_checkpoint_inline':
-        replace('checkpoint_storage_valid', 'return len(body_bytes(value)) <= INLINE_LIMIT', 'return True')
+        replace('checkpoint_storage_valid', 'return len(body_bytes(value, rule)) <= INLINE_LIMIT', 'return True')
     elif name == 'C5-B2_checkpoint_reference_custody':
         replace('checkpoint_storage_valid', "all(packed[k] is True for k in ['authorized', 'hold_access_allowed', 'bytes_durable', 'index_durable', 'readback_verified'])", 'True')
     elif name == 'C5-B3_C4-B2_original_edition':
@@ -44,10 +44,10 @@ def run(name, family=None):
     elif name == 'N1_Astra10_numeric_encoding':
         source=inspect.getsource(m.body_bytes)
         start=source.index('        # SP-236 shortest numeric representation:')
-        end=source.index('        if type(v) is int and abs(v) > SAFE_INTEGER_MAX:', start)
+        end=source.index('        if rule == CURRENT_RULE and type(v) is int and abs(v) > SAFE_INTEGER_MAX:', start)
         exec(source[:start]+source[end:],m.__dict__)
     elif name == 'Astra11_exact_types':
-        m.input_types_valid=lambda value: True
+        m.input_types_valid=lambda value, *args: True
     elif name == 'C4-B1_history_limit':
         stored=json.loads((ROOT/'Plans/storage_value_registry.json').read_text())
         for c in json.loads((ROOT/'Plans/dch_checkpoint_fixtures.json').read_text()):

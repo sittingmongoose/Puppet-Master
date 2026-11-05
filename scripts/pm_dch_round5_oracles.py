@@ -10,7 +10,8 @@ from dataclasses import dataclass
 import hashlib
 import json
 from pathlib import Path
-from jsonschema import Draft202012Validator, FormatChecker
+from jsonschema import Draft202012Validator
+from pm_dch_formats import FormatChecker
 
 ROOT = Path(__file__).resolve().parents[1]
 

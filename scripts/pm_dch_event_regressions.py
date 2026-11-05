@@ -65,10 +65,10 @@ def run(job, family_only=False):
         f['record']['event_id'] = m.identity(family, f['valid'])
         f['record']['idempotency_key'] = m.idempotency_key(family, f['valid'])
     elif name == '4_inline_size_guard_removed':
-        def resolve(record, source=None, storage_instance=m.STORAGE_INSTANCE):
+        def resolve(record, source=None, storage_instance=m.STORAGE_INSTANCE, rule=m.CURRENT_RULE):
             if record['event_type'] == family and record['payload_ref'] is None:
                 return record['payload']
-            return original_resolve(record, source, storage_instance)
+            return original_resolve(record, source, storage_instance, rule)
         m.resolve_body = resolve
     elif name == '5_payload_identifier_lf':
         for f in cases:
@@ -89,8 +89,8 @@ def run(job, family_only=False):
     elif name == '5_history_identifier_lf':
         checkpoint['with_history']['history'][0]['source_token']['generation_anchor_sha256'] += '\n'
     elif name == '6_whole_record_retry':
-        def retry(a, b, available=True):
-            result = original_retry(a, b, available)
+        def retry(a, b, available=True, original_provenance=None):
+            result = original_retry(a, b, available, original_provenance)
             if a['event_type'] == family and result == 'original_result' and a != b:
                 return 'conflict'
             return result
@@ -177,10 +177,10 @@ def run(job, family_only=False):
             f['record']['payload'] = copy.deepcopy(f['valid'])
             f['record']['payload_ref'] = None
     elif name == 'B2_payload_reference_support_removed':
-        def resolve(record, source=None, storage_instance=m.STORAGE_INSTANCE):
+        def resolve(record, source=None, storage_instance=m.STORAGE_INSTANCE, rule=m.CURRENT_RULE):
             if record['event_type'] == family and record['payload_ref'] is not None:
                 return None
-            return original_resolve(record, source, storage_instance)
+            return original_resolve(record, source, storage_instance, rule)
         m.resolve_body = resolve
     else:
         raise ValueError(name)

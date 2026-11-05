@@ -14,7 +14,8 @@ import importlib.util
 import json
 from pathlib import Path
 from unittest.mock import patch
-from jsonschema import Draft202012Validator, FormatChecker, validators
+from jsonschema import Draft202012Validator, validators
+from pm_dch_formats import FormatChecker
 from pm_dch_schema_guard_proofs import normalize, aliases, generate, SchemaContractDrift
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -197,6 +198,13 @@ def corpus(m):
     cases.extend(round5_cases(m, Case))
     from pm_dch_round6_oracles import cases as round6_cases
     cases.extend(round6_cases(m, Case))
+    from pm_dch_round7_oracles import cases as round7_cases
+    cases.extend(round7_cases(m, Case))
+    from pm_dch_round7_oracles import BAD_DATES,GOOD_DATES,BAD_URLS,GOOD_URLS
+    for name,bad,good in [('date-time',BAD_DATES,GOOD_DATES),('uri',BAD_URLS+['https://[fe80::1%eth0]/pull/1'],GOOD_URLS)]:
+        for i,value in enumerate(bad+good):
+            add('format_parser/'+name+'/'+str(i),'format_parser',name,value,expected=i>=len(bad))
+
     if m.SELECTED_FAMILY in ['chat.thread_worktree_pre_merge_test_failed','chat.thread_worktree_pre_merge_test_passed']:
         # The retained-start reader validates this dependency schema. Include
         # its independent raw witnesses even in a selected terminal-family run.
@@ -220,14 +228,20 @@ class Proof:
         self.removed=set();self.seen={};self.aliases={};self.schema_paths={};self.validation_cache={}
         self.schemas={};self.adapters={};self.failures=set();self.current_case=None
         self.m._guard=self.guard
+        from pm_dch_format_guard_proofs import mutant
+        import pm_dch_formats as formats
+        self.parser_originals={'date-time':formats.utc_datetime,'uri':formats.https_uri}
+        self.parser_mutants={name:{'format parser: '+guard:mutant(fn,guard) for guard in (['UTC grammar','UTC calendar','UTC hour','UTC minute','UTC second'] if name=='date-time' else ['HTTPS grammar','HTTPS IPv6','HTTPS IPv6 zone'])} for name,fn in self.parser_originals.items()}
+        self.parser_cache={}
+        self.m.FormatChecker=self.format_checker
         # Controlled lookup evidence is fixture input, available only to the
         # missing-generation mutant. It restores lookup context, never success.
         self.m._generation_witness=lambda source: copy.deepcopy(source['generation_lookup_witness'])
         original_types=self.m.input_types_valid
-        def exact_types(value):
+        def exact_types(value, *args):
             # One recursive type boundary, deliberately called by several
             # readers. Named duplicates enforce the identical input fact.
-            return self.guard('input: exact witness types',original_types(value),True)
+            return self.guard('input: exact witness types',original_types(value, *args),True)
         self.m.input_types_valid=exact_types
         self.instrument()
         self.m.Draft202012Validator=self.validator
@@ -235,15 +249,35 @@ class Proof:
         self.cases=corpus(self.m)
         self.exploration=generate(self,Case)
         original_resolve=self.m.resolve_body
-        def materialize(record,source=None,storage_instance=self.m.STORAGE_INSTANCE):
+        def materialize(record,source=None,storage_instance=self.m.STORAGE_INSTANCE,rule=self.m.CURRENT_RULE):
             key='transport: original reference materialization'
             if record['payload_ref'] is not None and source is None:
                 self.seen.setdefault(key,{'kind':'structural branch'});self.failures.add(key)
                 if key in self.removed:
                     positive=next((c for c in self.cases if c.surface=='transport' and c.expected is True and c.args[0]['event_id']==record['event_id']),None)
                     if positive:source=positive.args[2]
-            return original_resolve(record,source,storage_instance)
+            return original_resolve(record,source,storage_instance,rule)
         self.m.resolve_body=materialize
+    def parser_value(self,name,value):
+        # One actual predicate removal is used consistently in every schema
+        # invocation, retained-source join and direct parser case in the corpus.
+        original=self.parser_originals[name]
+        signature=(name,json.dumps(value,sort_keys=True))
+        if signature not in self.parser_cache:
+            baseline=original(value)
+            results={key:fn(value) for key,fn in self.parser_mutants[name].items()}
+            self.parser_cache[signature]=(baseline,results)
+        baseline,results=self.parser_cache[signature]
+        if baseline is False:
+            for key,result in results.items():
+                if result is True:
+                    self.seen.setdefault(key,{'kind':'function'});self.failures.add(key)
+        return next((result for key,result in results.items() if key in self.removed),baseline)
+    def format_checker(self):
+        checker=FormatChecker()
+        for name in self.parser_originals:
+            checker.checks(name)(lambda value,name=name:self.parser_value(name,value))
+        return checker
     def guard(self,key,value,accept):
         key=self.group(key)
         self.seen.setdefault(key,{'kind':'function','accepting_value':accept})
@@ -251,9 +285,11 @@ class Proof:
         return accept if key in self.removed else value
     def group(self,key):
         import re
-        if ': not input_types_valid(' in key:return 'input: exact witness types'
+        if key == "checkpoint_joins: type(index['sequence_id']) is not type(event['sequence_id'])":return 'input: exact witness types'
+        if key in ['record_number_rule: type(store) is not str','record_number_rule: type(digest) is not str','record_number_rule: type(provenance) is not dict']:return 'input: exact witness types'
+        if 'not input_types_valid(' in key:return 'input: exact witness types'
         if key in ["checkpoint_storage_valid: len(body_bytes(pointer)) <= INLINE_LIMIT",
-                   "checkpoint_storage_valid: pointer == {'payload_ref': payload_reference(value)}"]:
+                   "checkpoint_storage_valid: pointer == {'payload_ref': payload_reference(value, rule)}"]:
             return 'checkpoint storage: bounded exact SP-337 pointer (named duplicate shape/size)'
         function_groups={
             "archive_joins: payload['archive_origin'] == 'manual'":'archive: manual payload origin',
@@ -272,6 +308,9 @@ class Proof:
         if key.startswith('schema: ') and '/properties/scope/required/scope_kind' in key:
             return key.replace('/required/scope_kind','/properties/scope_kind/edition_tag')
         if key.startswith('schema: '):
+            if ('pm.dch_event.' in key and '/properties/ts/' in key) or ('/event_record/' in key and '/$defs/date_time_string/' in key):
+                if key.endswith(('/identifier_shape','/format','/pattern','/minLength','/maxLength')):
+                    return 'format: payload ts / EventRecord UTC grammar (named duplicate copies)'
             if 'pm.storage_value.dch_' in key and '/history/' not in key:
                 if key.endswith('/properties/consumer_id/const'):return 'checkpoint: consumer identity'
                 if key.endswith('/properties/projector_id/const'):return 'checkpoint: projector identity'
@@ -294,7 +333,7 @@ class Proof:
 
     def instrument(self):
         tree=ast.parse((ROOT/'scripts/pm_dch_events.py').read_text())
-        target={'historical_read_valid','resolve_body','joins','test_joins','checkpoint_joins','checkpoint_storage_valid','archive_joins','body_bytes'}
+        target={'historical_read_valid','resolve_body','joins','test_joins','checkpoint_joins','checkpoint_storage_valid','archive_joins','body_bytes','record_number_rule'}
         proof=self
         class Wrap(ast.NodeTransformer):
             def __init__(self,name):self.name=name
@@ -304,12 +343,12 @@ class Proof:
                 # Delegation and materialization null checks duplicate the
                 # underlying boundary, rather than introduce an independent rule.
                 text=ast.unparse(n)
-                if text.startswith(('joins(', 'valid_scope_partition(', 'checkpoint_storage_valid(', 'not historical_read_valid(')) or text in ['body is None','p is None','not node','not source']:
+                if text.startswith(('joins(', 'valid_scope_partition(', 'checkpoint_storage_valid(', 'not historical_read_valid(')) or text in ['body is None','p is None','not node','not source','rule is None'] or text.startswith('not stored_validator('):
                     return n
                 key=self.name+': '+text
                 return ast.copy_location(ast.Call(ast.Name('_guard',ast.Load()),[ast.Constant(key),n,ast.Constant(accept)],[]),n)
             def visit_If(self,n):
-                if self.name=='body_bytes' and ast.unparse(n.test)=='type(v) is int and abs(v) > SAFE_INTEGER_MAX':
+                if self.name=='body_bytes' and ast.unparse(n.test)=='rule == CURRENT_RULE and type(v) is int and (abs(v) > SAFE_INTEGER_MAX)':
                     n.test=self.atom(n.test,False)
                 if self.name=='checkpoint_joins' and ast.unparse(n.test)=='not node':
                     replacement=ast.parse("if not node:\n    if _guard('checkpoint: source generation exists', False, True):\n        node = _generation_witness(source)\n    else:\n        return False").body[0]
@@ -337,6 +376,8 @@ class Proof:
                 exec(compile(ast.Module([n],type_ignores=[]),str(ROOT/'scripts/pm_dch_events.py'),'exec'),self.m.__dict__)
     def validator(self,schema,**kwargs):
         signature=json.dumps(schema,sort_keys=True)
+        if 'date-time' not in kwargs.get('format_checker',FormatChecker()).checkers:
+            signature += ':original-format-recipe'
         if signature in self.adapters:return self.adapters[signature]
         if signature not in self.schemas:
             canonical=normalize(copy.deepcopy(schema));doc=canonical.get('$id','anonymous:'+hashlib.sha256(signature.encode()).hexdigest())
@@ -375,7 +416,9 @@ class Proof:
                     if key not in proof.removed:yield error
             handlers[keyword]=wrapped
         V=validators.extend(Draft202012Validator,handlers)
-        actual=V(canonical,format_checker=FormatChecker())
+        supplied=kwargs.get('format_checker',FormatChecker())
+        checker=self.format_checker() if 'date-time' in supplied.checkers else supplied
+        actual=V(canonical,format_checker=checker)
         class Adapter:
             def is_valid(self,value):
                 old=getattr(proof,'edition',None)
@@ -435,6 +478,7 @@ class Proof:
                 valid=not m.schema_reference_errors(*a) if s=='references' else a[0]==a[1]
             if not valid:self.failures.add(key)
             return True if key in self.removed else valid
+        if s=='format_parser':return self.parser_value(*a)
         if s=='payload':return self.validator(a[0]).is_valid(a[1])
         if s=='types':return m.input_types_valid(*a)
         if s in ['numeric_bytes','equal_bytes','invalid_lexeme_refused','null_payload_unavailable']:
@@ -480,6 +524,11 @@ class Proof:
             return self.envelope.is_valid(r) and m.joins(r,e,src) and b is not None and self.validator(schema).is_valid(b)
         if s=='test':return self.validator(a[3]).is_valid(a[0]) and m.test_joins(*a[:3])
         if s=='archive':return self.validator(a[2]).is_valid(a[0]) and m.archive_joins(*a[:2])
+        if s in ['retained_retry','retained_retry_result']:
+            from pm_dch_round7_oracles import evaluate
+            return evaluate(m,c,self.envelope)
+        if s=='recipe_selector':return m.record_number_rule(*a) is not None
+        if s=='retained_checkpoint':return m.checkpoint_joins(*a)
         if s=='checkpoint':return self.validator(a[4]).is_valid(a[0]) and m.checkpoint_joins(*a[:4])
         raise ValueError(s)
     def run(self,out):
@@ -495,7 +544,7 @@ class Proof:
         for key in keys:
             # Only cases that reached this guard can possibly change. Replaying
             # the others yields their cached baseline (all other guards restored).
-            affected=[c for c in self.cases if key in traces[c.name] and (c.name not in schema_blocks or any(required<={key} for required in schema_blocks[c.name]))]
+            affected=[c for c in self.cases if key in traces[c.name] and (key.startswith('format parser: ') or c.name not in schema_blocks or any(required<={key} for required in schema_blocks[c.name]))]
             self.removed={key};flips=[];errors=[]
             for c in affected:
                 try:
