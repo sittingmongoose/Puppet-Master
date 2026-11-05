@@ -1,5 +1,71 @@
 {
-  "blockers": [],
+  "blockers": [
+    {
+      "blocker_type": "unresolved_dependency_references",
+      "items": [
+        {
+          "field": "depends_on",
+          "plan_unit_id": "SP-237",
+          "target": "DL-453"
+        },
+        {
+          "field": "depends_on",
+          "plan_unit_id": "SP-237",
+          "target": "DL-454"
+        },
+        {
+          "field": "depends_on",
+          "plan_unit_id": "SP-237",
+          "target": "DL-455"
+        },
+        {
+          "field": "depends_on",
+          "plan_unit_id": "SP-237",
+          "target": "DL-456"
+        },
+        {
+          "field": "depends_on",
+          "plan_unit_id": "SP-237",
+          "target": "DL-457"
+        },
+        {
+          "field": "depends_on",
+          "plan_unit_id": "SP-237",
+          "target": "DL-458"
+        },
+        {
+          "field": "depends_on",
+          "plan_unit_id": "SP-237",
+          "target": "DL-459"
+        },
+        {
+          "field": "depends_on",
+          "plan_unit_id": "SP-237",
+          "target": "DL-460"
+        },
+        {
+          "field": "depends_on",
+          "plan_unit_id": "SP-237",
+          "target": "DL-461"
+        },
+        {
+          "field": "depends_on",
+          "plan_unit_id": "SP-237",
+          "target": "DL-462"
+        },
+        {
+          "field": "depends_on",
+          "plan_unit_id": "SP-237",
+          "target": "DL-463"
+        },
+        {
+          "field": "depends_on",
+          "plan_unit_id": "SP-237",
+          "target": "DL-464"
+        }
+      ]
+    }
+  ],
   "field_coverage": {
     "acceptance_criteria": 7488,
     "canonical_text": 7488,
@@ -18,7 +84,7 @@
     "unit_type": 7488,
     "validation_surfaces": 7488
   },
-  "generated_at_utc": "2026-11-05T14:25:26Z",
+  "generated_at_utc": "2026-11-05T17:41:36Z",
   "issues": {
     "docs_without_plan_units": [],
     "duplicate_plan_unit_ids": [],
@@ -931,7 +997,7 @@
   ],
   "schema_id": "pm.plan_index.coverage_report.v1",
   "source_scope": "top-level live Plans/*.md PlanUnit YAML fences",
-  "status": "pass",
+  "status": "fail",
   "summary": {
     "cycle_blocker_count": 0,
     "doc_count": 96,
@@ -943,6 +1009,6 @@
     "parse_error_count": 0,
     "plan_unit_count": 7488,
     "unique_plan_unit_count": 7488,
-    "unresolved_dependency_reference_count": 0
+    "unresolved_dependency_reference_count": 12
   }
 }

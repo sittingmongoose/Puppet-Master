@@ -80277,6 +80277,66 @@
     {
       "edge_type": "depends_on",
       "from": "SP-237",
+      "to": "DL-453"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-237",
+      "to": "DL-454"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-237",
+      "to": "DL-455"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-237",
+      "to": "DL-456"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-237",
+      "to": "DL-457"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-237",
+      "to": "DL-458"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-237",
+      "to": "DL-459"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-237",
+      "to": "DL-460"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-237",
+      "to": "DL-461"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-237",
+      "to": "DL-462"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-237",
+      "to": "DL-463"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-237",
+      "to": "DL-464"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-237",
       "to": "SP-028"
     },
     {
@@ -117820,7 +117880,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-05T14:25:25Z",
+  "generated_at_utc": "2026-11-05T17:41:36Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -228009,8 +228069,8 @@
       "source_location": {
         "heading": "SP-235 - Case L Migration Backup And Canonical Redb Recovery",
         "heading_level": 3,
-        "heading_line": 17813,
-        "line": 17815,
+        "heading_line": 17868,
+        "line": 17870,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228026,8 +228086,8 @@
       "source_location": {
         "heading": "SP-236 - Case L SeglogFrameV2 Durability And Recovery",
         "heading_level": 3,
-        "heading_line": 17854,
-        "line": 17856,
+        "heading_line": 17909,
+        "line": 17911,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228043,8 +228103,8 @@
       "source_location": {
         "heading": "SP-237 - Case L Retention Compaction Deletion And Quarantine",
         "heading_level": 3,
-        "heading_line": 17900,
-        "line": 17902,
+        "heading_line": 17955,
+        "line": 17957,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228060,8 +228120,8 @@
       "source_location": {
         "heading": "SP-238 - Case L Storage IO Admission And Recovery",
         "heading_level": 3,
-        "heading_line": 17943,
-        "line": 17945,
+        "heading_line": 18001,
+        "line": 18003,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228077,8 +228137,8 @@
       "source_location": {
         "heading": "SP-239 - Case L Aggregate Lock And Viewer Envelope",
         "heading_level": 3,
-        "heading_line": 17979,
-        "line": 17981,
+        "heading_line": 18037,
+        "line": 18039,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228094,8 +228154,8 @@
       "source_location": {
         "heading": "SP-240 - Case L Root Continuity Relocation And Fallback Branch",
         "heading_level": 3,
-        "heading_line": 18015,
-        "line": 18017,
+        "heading_line": 18073,
+        "line": 18075,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228111,8 +228171,8 @@
       "source_location": {
         "heading": "SP-241 - Case L EventRecord Scope Legacy And Dedupe Persistence",
         "heading_level": 3,
-        "heading_line": 18055,
-        "line": 18057,
+        "heading_line": 18113,
+        "line": 18115,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228128,8 +228188,8 @@
       "source_location": {
         "heading": "SP-242 - Case L Safe Point Restore Transaction And Restore Point Storage",
         "heading_level": 3,
-        "heading_line": 18094,
-        "line": 18096,
+        "heading_line": 18152,
+        "line": 18154,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228145,8 +228205,8 @@
       "source_location": {
         "heading": "SP-243 - Case L Required MVP Storage Family Routing",
         "heading_level": 3,
-        "heading_line": 18136,
-        "line": 18138,
+        "heading_line": 18194,
+        "line": 18196,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228162,8 +228222,8 @@
       "source_location": {
         "heading": "SP-244 - Debug Workspace Persistence Keys",
         "heading_level": 3,
-        "heading_line": 18354,
-        "line": 18356,
+        "heading_line": 18412,
+        "line": 18414,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228179,8 +228239,8 @@
       "source_location": {
         "heading": "SP-245 - Home Workspace Layout Transaction And Recovery",
         "heading_level": 3,
-        "heading_line": 18304,
-        "line": 18306,
+        "heading_line": 18362,
+        "line": 18364,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228196,8 +228256,8 @@
       "source_location": {
         "heading": "SP-246 - Shared Runtime Storage Engine And Family Routing",
         "heading_level": 3,
-        "heading_line": 18490,
-        "line": 18492,
+        "heading_line": 18548,
+        "line": 18550,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228213,8 +228273,8 @@
       "source_location": {
         "heading": "SP-247 - Shared Runtime Forward Migration And Artifact-Backed Recovery",
         "heading_level": 3,
-        "heading_line": 18531,
-        "line": 18533,
+        "heading_line": 18589,
+        "line": 18591,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228230,8 +228290,8 @@
       "source_location": {
         "heading": "SP-248 - Usage View-State Persistence Surface",
         "heading_level": 3,
-        "heading_line": 18588,
-        "line": 18590,
+        "heading_line": 18646,
+        "line": 18648,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228247,8 +228307,8 @@
       "source_location": {
         "heading": "SP-249 - Settled Widget Layout Versioning Migration And Write Boundary",
         "heading_level": 3,
-        "heading_line": 18687,
-        "line": 18689,
+        "heading_line": 18745,
+        "line": 18747,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228264,8 +228324,8 @@
       "source_location": {
         "heading": "SP-250 - Home Workspace Cross-Axis And Semantic Preset Persistence",
         "heading_level": 3,
-        "heading_line": 18780,
-        "line": 18782,
+        "heading_line": 18838,
+        "line": 18840,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228281,8 +228341,8 @@
       "source_location": {
         "heading": "SP-251 - Contract-Family Persistence Disposition Layer",
         "heading_level": 3,
-        "heading_line": 18870,
-        "line": 18872,
+        "heading_line": 18928,
+        "line": 18930,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228298,8 +228358,8 @@
       "source_location": {
         "heading": "SP-252 - Product Onboarding Draft-First Storage Migration",
         "heading_level": 3,
-        "heading_line": 18930,
-        "line": 18932,
+        "heading_line": 18988,
+        "line": 18990,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228315,8 +228375,8 @@
       "source_location": {
         "heading": "SP-253 - Registered Redaction Contracts And Protected-Auth Exclusion",
         "heading_level": 3,
-        "heading_line": 19036,
-        "line": 19038,
+        "heading_line": 19094,
+        "line": 19096,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228332,8 +228392,8 @@
       "source_location": {
         "heading": "SP-254 - Consolidated Forge/Backup/tsnet Durable-Metadata And Redaction Boundary",
         "heading_level": 3,
-        "heading_line": 19190,
-        "line": 19192,
+        "heading_line": 19248,
+        "line": 19250,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228349,8 +228409,8 @@
       "source_location": {
         "heading": "Working Notebook And Context Transition Storage Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 19368,
-        "line": 19389,
+        "heading_line": 19426,
+        "line": 19447,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228366,8 +228426,8 @@
       "source_location": {
         "heading": "Working Notebook And Context Transition Storage Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 19368,
-        "line": 19423,
+        "heading_line": 19426,
+        "line": 19481,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228383,8 +228443,8 @@
       "source_location": {
         "heading": "Working Notebook And Context Transition Storage Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 19368,
-        "line": 19457,
+        "heading_line": 19426,
+        "line": 19515,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228400,8 +228460,8 @@
       "source_location": {
         "heading": "SP-258 - Durable Research Decision Dispositions And Clarification Resume",
         "heading_level": 3,
-        "heading_line": 19509,
-        "line": 19511,
+        "heading_line": 19567,
+        "line": 19569,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228417,8 +228477,8 @@
       "source_location": {
         "heading": "SP-259 - Compaction Completion Persistence",
         "heading_level": 3,
-        "heading_line": 19599,
-        "line": 19601,
+        "heading_line": 19657,
+        "line": 19659,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228434,8 +228494,8 @@
       "source_location": {
         "heading": "SP-260 - Native History Metadata And Isolated View Persistence Boundary",
         "heading_level": 3,
-        "heading_line": 19709,
-        "line": 19711,
+        "heading_line": 19767,
+        "line": 19769,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228451,8 +228511,8 @@
       "source_location": {
         "heading": "SP-261 - History Index Rebuild And Completion Receipt Consumers",
         "heading_level": 3,
-        "heading_line": 19789,
-        "line": 19791,
+        "heading_line": 19847,
+        "line": 19849,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228468,8 +228528,8 @@
       "source_location": {
         "heading": "SP-262 - Browser Event Retention And Recovery Consumer",
         "heading_level": 3,
-        "heading_line": 19665,
-        "line": 19667,
+        "heading_line": 19723,
+        "line": 19725,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228485,8 +228545,8 @@
       "source_location": {
         "heading": "SP-265 - Run-start filtered index checkpoint and four-reader boundary",
         "heading_level": 3,
-        "heading_line": 19919,
-        "line": 19923,
+        "heading_line": 19977,
+        "line": 19981,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228502,8 +228562,8 @@
       "source_location": {
         "heading": "SP-266 - Browser workspace-created single-family persistence binding",
         "heading_level": 3,
-        "heading_line": 20302,
-        "line": 20304,
+        "heading_line": 20360,
+        "line": 20362,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228519,8 +228579,8 @@
       "source_location": {
         "heading": "SP-268 — Restore-point deletion custody and checkpoint",
         "heading_level": 3,
-        "heading_line": 22611,
-        "line": 22613,
+        "heading_line": 22669,
+        "line": 22671,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228536,8 +228596,8 @@
       "source_location": {
         "heading": "SP-269 — Restore-point final retention summary custody",
         "heading_level": 3,
-        "heading_line": 20601,
-        "line": 20603,
+        "heading_line": 20659,
+        "line": 20661,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228553,8 +228613,8 @@
       "source_location": {
         "heading": "Exact producer projection, native bookkeeping and history joins",
         "heading_level": 3,
-        "heading_line": 21807,
-        "line": 21819,
+        "heading_line": 21865,
+        "line": 21877,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228570,8 +228630,8 @@
       "source_location": {
         "heading": "SP-271 - Historical child-status exact source reader",
         "heading_level": 3,
-        "heading_line": 20806,
-        "line": 20808,
+        "heading_line": 20864,
+        "line": 20866,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228587,8 +228647,8 @@
       "source_location": {
         "heading": "SP-272 — Restore-point delete original-result custody",
         "heading_level": 3,
-        "heading_line": 22707,
-        "line": 22709,
+        "heading_line": 22765,
+        "line": 22767,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228604,8 +228664,8 @@
       "source_location": {
         "heading": "Slot migration-generation custody and activation",
         "heading_level": 3,
-        "heading_line": 22085,
-        "line": 22107,
+        "heading_line": 22143,
+        "line": 22165,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228621,8 +228681,8 @@
       "source_location": {
         "heading": "SP-274 - Create restore-point original result custody",
         "heading_level": 3,
-        "heading_line": 20693,
-        "line": 20695,
+        "heading_line": 20751,
+        "line": 20753,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228638,8 +228698,8 @@
       "source_location": {
         "heading": "SP-275 — Restore-point expiry custody and checkpoint",
         "heading_level": 3,
-        "heading_line": 22907,
-        "line": 22909,
+        "heading_line": 22965,
+        "line": 22967,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228655,8 +228715,8 @@
       "source_location": {
         "heading": "SP-277 - Historical Goal degradation direct source reader",
         "heading_level": 3,
-        "heading_line": 20904,
-        "line": 20906,
+        "heading_line": 20962,
+        "line": 20964,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228672,8 +228732,8 @@
       "source_location": {
         "heading": "Generic EventRecord index checkpoint and publication",
         "heading_level": 3,
-        "heading_line": 21263,
-        "line": 21311,
+        "heading_line": 21321,
+        "line": 21369,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228689,8 +228749,8 @@
       "source_location": {
         "heading": "SP-279 — Storage integrity finding custody and checkpoint-free read",
         "heading_level": 3,
-        "heading_line": 23593,
-        "line": 23595,
+        "heading_line": 23651,
+        "line": 23653,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228706,8 +228766,8 @@
       "source_location": {
         "heading": "SP-280 - Exact historical Goal scheduling contract",
         "heading_level": 3,
-        "heading_line": 21084,
-        "line": 21086,
+        "heading_line": 21142,
+        "line": 21144,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228723,8 +228783,8 @@
       "source_location": {
         "heading": "SP-281 — Restore-point created custody and checkpoint",
         "heading_level": 3,
-        "heading_line": 20424,
-        "line": 20428,
+        "heading_line": 20482,
+        "line": 20486,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228740,8 +228800,8 @@
       "source_location": {
         "heading": "SP-282 - Browser workspace-reset single-family persistence binding",
         "heading_level": 3,
-        "heading_line": 21646,
-        "line": 21648,
+        "heading_line": 21704,
+        "line": 21706,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228757,8 +228817,8 @@
       "source_location": {
         "heading": "SP-285 — Restore-point admission and retained-read phases",
         "heading_level": 3,
-        "heading_line": 23059,
-        "line": 23061,
+        "heading_line": 23117,
+        "line": 23119,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228774,8 +228834,8 @@
       "source_location": {
         "heading": "SP-286 - First AppendReceipt Custody And Restore Admission",
         "heading_level": 3,
-        "heading_line": 22355,
-        "line": 22357,
+        "heading_line": 22413,
+        "line": 22415,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228791,8 +228851,8 @@
       "source_location": {
         "heading": "SP-287 - Goal Body Physical Custody And Thread Lifetime",
         "heading_level": 3,
-        "heading_line": 22480,
-        "line": 22482,
+        "heading_line": 22538,
+        "line": 22540,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228808,8 +228868,8 @@
       "source_location": {
         "heading": "SP-288 - Legal Hold Transition And Original SIR Custody",
         "heading_level": 3,
-        "heading_line": 23275,
-        "line": 23277,
+        "heading_line": 23333,
+        "line": 23335,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228825,8 +228885,8 @@
       "source_location": {
         "heading": "SP-289 - Original Standard Certification Custody",
         "heading_level": 3,
-        "heading_line": 23402,
-        "line": 23404,
+        "heading_line": 23460,
+        "line": 23462,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228842,8 +228902,8 @@
       "source_location": {
         "heading": "SP-290 - Platform Capability Decision Custody",
         "heading_level": 3,
-        "heading_line": 23798,
-        "line": 23800,
+        "heading_line": 23856,
+        "line": 23858,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228859,8 +228919,8 @@
       "source_location": {
         "heading": "SP-291 - Boot Recovery Aggregate and Original Producer Custody",
         "heading_level": 3,
-        "heading_line": 23935,
-        "line": 23937,
+        "heading_line": 23993,
+        "line": 23995,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228876,8 +228936,8 @@
       "source_location": {
         "heading": "SP-292 - Boot Earliest Receipt Continuity and Activation",
         "heading_level": 3,
-        "heading_line": 24036,
-        "line": 24038,
+        "heading_line": 24094,
+        "line": 24096,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228893,8 +228953,8 @@
       "source_location": {
         "heading": "SP-293 - Recovery Original Action Custody and Publication",
         "heading_level": 3,
-        "heading_line": 24132,
-        "line": 24134,
+        "heading_line": 24190,
+        "line": 24192,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228910,8 +228970,8 @@
       "source_location": {
         "heading": "SP-294 - Goal start original command custody and publication",
         "heading_level": 2,
-        "heading_line": 24207,
-        "line": 24209,
+        "heading_line": 24265,
+        "line": 24267,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228927,8 +228987,8 @@
       "source_location": {
         "heading": "SP-295 - Compaction Original Native Source Controls",
         "heading_level": 3,
-        "heading_line": 24370,
-        "line": 24372,
+        "heading_line": 24428,
+        "line": 24430,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228944,8 +229004,8 @@
       "source_location": {
         "heading": "SP-296 - Compaction Original Phase and Observation Custody",
         "heading_level": 3,
-        "heading_line": 24406,
-        "line": 24408,
+        "heading_line": 24464,
+        "line": 24466,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228961,8 +229021,8 @@
       "source_location": {
         "heading": "SP-297 - Compaction Original Settlement and Seven-Day Detail Retirement",
         "heading_level": 3,
-        "heading_line": 24442,
-        "line": 24444,
+        "heading_line": 24500,
+        "line": 24502,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228978,8 +229038,8 @@
       "source_location": {
         "heading": "SP-298 - Passive Goal Creation Read And Original Member Boundaries",
         "heading_level": 3,
-        "heading_line": 24537,
-        "line": 24539,
+        "heading_line": 24595,
+        "line": 24597,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228995,8 +229055,8 @@
       "source_location": {
         "heading": "SP-299 - Original Goal Update Physical And Transaction Custody",
         "heading_level": 3,
-        "heading_line": 24742,
-        "line": 24743,
+        "heading_line": 24800,
+        "line": 24801,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229012,8 +229072,8 @@
       "source_location": {
         "heading": "SP-300 - Exact historical goal.progressed source reader",
         "heading_level": 3,
-        "heading_line": 24816,
-        "line": 24818,
+        "heading_line": 24874,
+        "line": 24876,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229029,8 +229089,8 @@
       "source_location": {
         "heading": "SP-301 - Exact historical goal.replanned source reader",
         "heading_level": 3,
-        "heading_line": 24918,
-        "line": 24920,
+        "heading_line": 24976,
+        "line": 24978,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229046,8 +229106,8 @@
       "source_location": {
         "heading": "SP-302 - Exact historical goal.stopped source reader",
         "heading_level": 3,
-        "heading_line": 25020,
-        "line": 25022,
+        "heading_line": 25078,
+        "line": 25080,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229063,8 +229123,8 @@
       "source_location": {
         "heading": "SP-303 - Exact historical goal.verification_decided source reader",
         "heading_level": 3,
-        "heading_line": 25122,
-        "line": 25124,
+        "heading_line": 25180,
+        "line": 25182,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229080,8 +229140,8 @@
       "source_location": {
         "heading": "SP-304 - Original cancellation stages and custody",
         "heading_level": 3,
-        "heading_line": 25224,
-        "line": 25226,
+        "heading_line": 25282,
+        "line": 25284,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229097,8 +229157,8 @@
       "source_location": {
         "heading": "SP-305 - Execution binding custody and original append reservation",
         "heading_level": 3,
-        "heading_line": 25401,
-        "line": 25403,
+        "heading_line": 25459,
+        "line": 25461,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229114,8 +229174,8 @@
       "source_location": {
         "heading": "Exact physical codec and commitments",
         "heading_level": 4,
-        "heading_line": 25596,
-        "line": 25625,
+        "heading_line": 25654,
+        "line": 25683,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229131,8 +229191,8 @@
       "source_location": {
         "heading": "Original backup, restore and identity",
         "heading_level": 4,
-        "heading_line": 25726,
-        "line": 25738,
+        "heading_line": 25784,
+        "line": 25796,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229148,8 +229208,8 @@
       "source_location": {
         "heading": "Retention, original lifetime and restore",
         "heading_level": 4,
-        "heading_line": 25880,
-        "line": 25896,
+        "heading_line": 25938,
+        "line": 25954,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229165,8 +229225,8 @@
       "source_location": {
         "heading": "Event and native qualification boundary",
         "heading_level": 4,
-        "heading_line": 26045,
-        "line": 26051,
+        "heading_line": 26103,
+        "line": 26109,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229182,8 +229242,8 @@
       "source_location": {
         "heading": "Existing readiness validator representation gap",
         "heading_level": 4,
-        "heading_line": 26187,
-        "line": 26203,
+        "heading_line": 26245,
+        "line": 26261,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229199,8 +229259,8 @@
       "source_location": {
         "heading": "Exact physical and source registration",
         "heading_level": 4,
-        "heading_line": 26330,
-        "line": 26338,
+        "heading_line": 26388,
+        "line": 26396,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229216,8 +229276,8 @@
       "source_location": {
         "heading": "Exact delta registration and successor selection",
         "heading_level": 4,
-        "heading_line": 26491,
-        "line": 26503,
+        "heading_line": 26549,
+        "line": 26561,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229233,8 +229293,8 @@
       "source_location": {
         "heading": "Storage, retention and installation boundary",
         "heading_level": 5,
-        "heading_line": 26628,
-        "line": 26637,
+        "heading_line": 26686,
+        "line": 26695,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229250,8 +229310,8 @@
       "source_location": {
         "heading": "SP-314 — Original Standard authority families and fresh whole stored profiles (2026-09-20)",
         "heading_level": 2,
-        "heading_line": 26706,
-        "line": 26708,
+        "heading_line": 26764,
+        "line": 26766,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229267,8 +229327,8 @@
       "source_location": {
         "heading": "SP-315 — Certified producer current and retained source disclosure (2026-09-21)",
         "heading_level": 2,
-        "heading_line": 26804,
-        "line": 26806,
+        "heading_line": 26862,
+        "line": 26864,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229284,8 +229344,8 @@
       "source_location": {
         "heading": "SP-316 — Seven compact authority families, eleven v7 profile-qualified wrapper routes and atomic native/Event release (2026-09-21)",
         "heading_level": 2,
-        "heading_line": 26864,
-        "line": 26866,
+        "heading_line": 26922,
+        "line": 26924,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229301,8 +229361,8 @@
       "source_location": {
         "heading": "SP-317 — Two projection/checkpoint families and exact RP-PROJECTION-3GEN transaction/generation/cutover obligations (2026-09-21)",
         "heading_level": 2,
-        "heading_line": 26937,
-        "line": 26939,
+        "heading_line": 26995,
+        "line": 26997,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229318,8 +229378,8 @@
       "source_location": {
         "heading": "SP-318 - Back Seat Driver Lifecycle Contract-Family Disposition",
         "heading_level": 3,
-        "heading_line": 19111,
-        "line": 19113,
+        "heading_line": 19169,
+        "line": 19171,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229335,8 +229395,8 @@
       "source_location": {
         "heading": "SP-319 - Terminal workgroup moved passive source and checkpoint disposition",
         "heading_level": 3,
-        "heading_line": 27160,
-        "line": 27162,
+        "heading_line": 27218,
+        "line": 27220,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229352,8 +229412,8 @@
       "source_location": {
         "heading": "SP-320 - Coordination event persistence binding",
         "heading_level": 3,
-        "heading_line": 27368,
-        "line": 27370,
+        "heading_line": 27426,
+        "line": 27428,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229369,8 +229429,8 @@
       "source_location": {
         "heading": "SP-321 - Project Creation-Recovery Context Durable Custody",
         "heading_level": 3,
-        "heading_line": 27440,
-        "line": 27442,
+        "heading_line": 27498,
+        "line": 27500,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229386,8 +229446,8 @@
       "source_location": {
         "heading": "SP-322 - Durable application update successful-check basis",
         "heading_level": 3,
-        "heading_line": 27496,
-        "line": 27498,
+        "heading_line": 27554,
+        "line": 27556,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229403,8 +229463,8 @@
       "source_location": {
         "heading": "SP-323 - Project automation pause original custody",
         "heading_level": 3,
-        "heading_line": 27556,
-        "line": 27558,
+        "heading_line": 27614,
+        "line": 27616,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229420,8 +229480,8 @@
       "source_location": {
         "heading": "SP-330 - The v2 Home Layout Record, Its Transaction And The Migration From v1",
         "heading_level": 3,
-        "heading_line": 27647,
-        "line": 27649,
+        "heading_line": 27705,
+        "line": 27707,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229437,8 +229497,8 @@
       "source_location": {
         "heading": "SP-331 - Terminal Appearance Storage",
         "heading_level": 3,
-        "heading_line": 27812,
-        "line": 27814,
+        "heading_line": 27870,
+        "line": 27872,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229454,8 +229514,8 @@
       "source_location": {
         "heading": "SP-332 - Terminal Records Re-Scoped To One Session Per Tab, And Saved Scrollback",
         "heading_level": 3,
-        "heading_line": 27934,
-        "line": 27936,
+        "heading_line": 27992,
+        "line": 27994,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229471,8 +229531,8 @@
       "source_location": {
         "heading": "SP-333 - Editor Appearance And Wallpaper Settings Levels",
         "heading_level": 3,
-        "heading_line": 28033,
-        "line": 28035,
+        "heading_line": 28091,
+        "line": 28093,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229488,8 +229548,8 @@
       "source_location": {
         "heading": "SP-334 - Wonderer Record Boundary And Grill Me Slot Migration",
         "heading_level": 3,
-        "heading_line": 28093,
-        "line": 28095,
+        "heading_line": 28151,
+        "line": 28153,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229505,8 +229565,8 @@
       "source_location": {
         "heading": "SP-335 - Seglog Compression Profile And Seal-Time Repack",
         "heading_level": 3,
-        "heading_line": 28170,
-        "line": 28172,
+        "heading_line": 28228,
+        "line": 28230,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229522,8 +229582,8 @@
       "source_location": {
         "heading": "SP-336 - One Data Sync Per Commit Group, Full Flush For Barrier Events, Atomic Store Creation",
         "heading_level": 3,
-        "heading_line": 28234,
-        "line": 28236,
+        "heading_line": 28292,
+        "line": 28294,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229539,8 +229599,8 @@
       "source_location": {
         "heading": "SP-337 - Store-Once Payloads In Content-Addressed Packs",
         "heading_level": 3,
-        "heading_line": 28346,
-        "line": 28348,
+        "heading_line": 28404,
+        "line": 28406,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229556,8 +229616,8 @@
       "source_location": {
         "heading": "SP-338 - Render-Ready Chat Pages And The Open-Path Gate",
         "heading_level": 3,
-        "heading_line": 28403,
-        "line": 28405,
+        "heading_line": 28461,
+        "line": 28463,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229573,8 +229633,8 @@
       "source_location": {
         "heading": "SP-339 - No Always-On JSON Copies; Dump, Inspect, Tail And Export",
         "heading_level": 3,
-        "heading_line": 28469,
-        "line": 28471,
+        "heading_line": 28527,
+        "line": 28529,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229590,8 +229650,8 @@
       "source_location": {
         "heading": "SP-340 - redb Value Limits, Two Files, Quick Repair And Scheduled Compaction",
         "heading_level": 3,
-        "heading_line": 28535,
-        "line": 28537,
+        "heading_line": 28593,
+        "line": 28595,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229607,8 +229667,8 @@
       "source_location": {
         "heading": "SP-341 - Parquet Archive, DuckDB On Demand And Kept Usage History",
         "heading_level": 3,
-        "heading_line": 28588,
-        "line": 28590,
+        "heading_line": 28646,
+        "line": 28648,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229624,8 +229684,8 @@
       "source_location": {
         "heading": "SP-342 - Storage Engine Requirements And The SQLite Ban",
         "heading_level": 3,
-        "heading_line": 28647,
-        "line": 28649,
+        "heading_line": 28705,
+        "line": 28707,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229641,8 +229701,8 @@
       "source_location": {
         "heading": "SP-343 - Lossless WebP Screenshots And Exact Evidence Media",
         "heading_level": 3,
-        "heading_line": 28715,
-        "line": 28717,
+        "heading_line": 28773,
+        "line": 28775,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229658,8 +229718,8 @@
       "source_location": {
         "heading": "SP-344 - Storage Release Gates On Every OS",
         "heading_level": 3,
-        "heading_line": 28766,
-        "line": 28768,
+        "heading_line": 28824,
+        "line": 28826,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229675,8 +229735,8 @@
       "source_location": {
         "heading": "SP-345 - Data Placement Away From Desktop Indexers",
         "heading_level": 3,
-        "heading_line": 28820,
-        "line": 28822,
+        "heading_line": 28878,
+        "line": 28880,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229692,8 +229752,8 @@
       "source_location": {
         "heading": "SP-346 - Frame Compression Descriptor And The Sealed Segment Container",
         "heading_level": 3,
-        "heading_line": 28882,
-        "line": 28884,
+        "heading_line": 28940,
+        "line": 28942,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229709,8 +229769,8 @@
       "source_location": {
         "heading": "SP-347 - The Group Commit Control Frame",
         "heading_level": 3,
-        "heading_line": 28965,
-        "line": 28967,
+        "heading_line": 29023,
+        "line": 29025,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229726,8 +229786,8 @@
       "source_location": {
         "heading": "SP-348 - Sparse Settings Levels Writers History And Join Custody",
         "heading_level": 3,
-        "heading_line": 29041,
-        "line": 29043,
+        "heading_line": 29099,
+        "line": 29101,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229743,8 +229803,8 @@
       "source_location": {
         "heading": "SP-349 - App Chat Root Everyday Runtime Recovery And UI Custody",
         "heading_level": 3,
-        "heading_line": 29110,
-        "line": 29112,
+        "heading_line": 29168,
+        "line": 29170,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229760,8 +229820,8 @@
       "source_location": {
         "heading": "SP-350 - Conversion Cutover Sealed Source Undo And Payload Custody",
         "heading_level": 3,
-        "heading_line": 29240,
-        "line": 29242,
+        "heading_line": 29298,
+        "line": 29300,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229777,8 +229837,8 @@
       "source_location": {
         "heading": "SP-351 - Application Goal Crew Coordination Source And Backup Custody",
         "heading_level": 3,
-        "heading_line": 29310,
-        "line": 29312,
+        "heading_line": 29368,
+        "line": 29370,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229794,8 +229854,8 @@
       "source_location": {
         "heading": "SP-352 - Application Plan Schedule Cancel And Pause Physical Editions",
         "heading_level": 3,
-        "heading_line": 29431,
-        "line": 29433,
+        "heading_line": 29489,
+        "line": 29491,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229811,8 +229871,8 @@
       "source_location": {
         "heading": "SP-353 - Permission And Project Build Authority Durable Bindings",
         "heading_level": 3,
-        "heading_line": 29519,
-        "line": 29521,
+        "heading_line": 29577,
+        "line": 29579,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -245122,16 +245182,77 @@
   "schema_id": "pm.plan_index.dependencies.v1",
   "source_plan_unit_index": "Plans/.plan_index/plan_units.jsonl",
   "summary": {
-    "build_order_available": true,
+    "build_order_available": false,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18855,
+    "depends_on_edge_count": 18867,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22065,
+    "edge_count": 22077,
     "node_count": 7488,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3210,
-    "unresolved_reference_count": 0
+    "unresolved_reference_count": 12
   },
-  "unresolved_references": []
+  "unresolved_references": [
+    {
+      "field": "depends_on",
+      "plan_unit_id": "SP-237",
+      "target": "DL-453"
+    },
+    {
+      "field": "depends_on",
+      "plan_unit_id": "SP-237",
+      "target": "DL-454"
+    },
+    {
+      "field": "depends_on",
+      "plan_unit_id": "SP-237",
+      "target": "DL-455"
+    },
+    {
+      "field": "depends_on",
+      "plan_unit_id": "SP-237",
+      "target": "DL-456"
+    },
+    {
+      "field": "depends_on",
+      "plan_unit_id": "SP-237",
+      "target": "DL-457"
+    },
+    {
+      "field": "depends_on",
+      "plan_unit_id": "SP-237",
+      "target": "DL-458"
+    },
+    {
+      "field": "depends_on",
+      "plan_unit_id": "SP-237",
+      "target": "DL-459"
+    },
+    {
+      "field": "depends_on",
+      "plan_unit_id": "SP-237",
+      "target": "DL-460"
+    },
+    {
+      "field": "depends_on",
+      "plan_unit_id": "SP-237",
+      "target": "DL-461"
+    },
+    {
+      "field": "depends_on",
+      "plan_unit_id": "SP-237",
+      "target": "DL-462"
+    },
+    {
+      "field": "depends_on",
+      "plan_unit_id": "SP-237",
+      "target": "DL-463"
+    },
+    {
+      "field": "depends_on",
+      "plan_unit_id": "SP-237",
+      "target": "DL-464"
+    }
+  ]
 }
