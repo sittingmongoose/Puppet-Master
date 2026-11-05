@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8746-L10154
+Source lines: L8747-L10147
 
-Source SHA256: `4e63072d696e548a13cfc5e00caf6c555470aa4715a2398bd944498cb5268d27`
+Source SHA256: `3a8a28f9c33b0923707842f58734c35a70fc12f1af19c595e04b08942d3b6b5c`
 
 ---
 
@@ -1041,15 +1041,7 @@ command_payload_definition_map:
       doc: Plans/UI_Command_Catalog.md
       unit: UCC-054
       field: compatibility_only_notes
-      quote: cmd.git.worktree.open_files, request_prune, and switch are compatibility aliases
-  - token: cmd.git.worktree.request_prune
-    disposition: compatibility_alias
-    evidence:
-      doc: Plans/UI_Command_Catalog.md
-      unit: UCC-054
-      field: compatibility_only_notes
-      quote: cmd.git.worktree.open_files, request_prune, and switch are compatibility aliases
-    note: Q5 resolution 5 makes it its own command; the UCC-054 note changes in a later commit.
+      quote: cmd.git.worktree.open_files
   - token: cmd.git.worktree.switch
     disposition: compatibility_alias
     targets:
@@ -1058,7 +1050,7 @@ command_payload_definition_map:
       doc: Plans/UI_Command_Catalog.md
       unit: UCC-054
       field: compatibility_only_notes
-      quote: cmd.git.worktree.open_files, request_prune, and switch are compatibility aliases
+      quote: and switch are compatibility aliases
     note: '2.5C: compatibility alias for select plus open until callers migrate.'
   - token: cmd.k8s.*
     disposition: compatibility_alias
