@@ -85,22 +85,22 @@ export const tests = {
  'SW01 long idle jobs wait for a still pointer': async t => {
   // A job that holds the main thread long in one task (the editor sheet's idle build, ~170 ms; the sound engine's
   // AudioContext, 54-117 ms) is asked through PM_BUSY.idle with quiet: 600. While the pointer moves, a quiet job must
-  // not run; it runs once the pointer has been still 600 ms. A plain idle job asked beside it runs first, so idle time
-  // came while the quiet one waited (before the quiet option both ran in the same idle period, 253 ms after the last
-  // move). Real pointer moves over the page, no synthetic events.
+  // not run; it runs once the pointer has been still 600 ms. Both are asked with a 1 s timeout, so the idle callback
+  // comes during the motion even when the page leaves no idle time: the plain job runs then, the quiet one asks again
+  // (before the quiet option it ran during the motion too). Real pointer moves over the page, no synthetic events.
   const f=await t.app.open();
   await f.evaluate(()=>{window.__moves=[];window.addEventListener('pointermove',e=>window.__moves.push(performance.now()),{capture:true,passive:true});
    window.__quietRan=[];window.__plainRan=[];});
   const box=await t.page.locator('body').boundingBox();
   await t.page.mouse.move(box.x+300,box.y+200);
-  await f.evaluate(()=>{PM_BUSY.idle(()=>window.__quietRan.push(performance.now()),0,{quiet:600});PM_BUSY.idle(()=>window.__plainRan.push(performance.now()));});
+  await f.evaluate(()=>{window.__asked=performance.now();PM_BUSY.idle(()=>window.__quietRan.push(performance.now()),1000,{quiet:600});PM_BUSY.idle(()=>window.__plainRan.push(performance.now()),1000);});
   const t0=Date.now();let k=0;
   while(Date.now()-t0<2500){k++;await t.page.mouse.move(box.x+300+(k%25)*12,box.y+200+(k%9)*10);await t.page.waitForTimeout(40);}
   const stopped=await f.evaluate(()=>window.__moves.at(-1));
   await f.waitForFunction(()=>window.__quietRan.length>0,null,{timeout:5000}).catch(()=>{});
-  const r=await f.evaluate(()=>({quiet:window.__quietRan,plain:window.__plainRan,moves:window.__moves.length,first:window.__moves[0],last:window.__moves.at(-1)}));
-  await t.check('pointer moved through the window',r.moves>15,JSON.stringify({moves:r.moves}));
-  await t.check('a plain idle job asked beside it ran first',r.plain.length===1&&r.quiet.length===1&&r.plain[0]<r.quiet[0],JSON.stringify(r));
+  const r=await f.evaluate(()=>({quiet:window.__quietRan,plain:window.__plainRan,asked:window.__asked,moves:window.__moves.length,first:window.__moves[0],last:window.__moves.at(-1)}));
+  await t.check('pointer moved through the window',r.moves>15&&r.last-r.asked>1500,JSON.stringify({moves:r.moves,asked:r.asked,last:r.last}));
+  await t.check('the plain idle job asked beside it ran during the motion',r.plain.length===1&&r.plain[0]<r.last,JSON.stringify(r));
   await t.check('the quiet job ran once, 600 ms or more after the last pointer move',r.quiet.length===1&&r.quiet[0]-r.last>=600,JSON.stringify({quiet:r.quiet,last:r.last,stopped,gap:r.quiet[0]-r.last}));
  },
  'SW11 duplicate titles select identity': async t => {
