@@ -12,6 +12,11 @@ export default async function (t) {
     await t.viewport(w, h);
     const f = await t.app.open();
     await t.app.look('nier-dark');
+    // The theme attribute changes under the cover. A cold look is not yet
+    // interactive just because the requested colours have been applied.
+    await f.waitForFunction(() => !window.PM_THEME_TRANSITION?.busy?.() &&
+      !window.PM_LOOK_COVERED?.() && window.PM_NIER?.wanted?.() === window.PM_NIER?.on?.(),
+      null, {timeout:20000});
     const viewport = await f.evaluate(() => ({ width: innerWidth, height: innerHeight }));
     await t.check(`${w}x${h} viewport`, viewport.width === w && viewport.height === h, JSON.stringify(viewport), { hard: true });
     if(t.args.traceHistory) await f.evaluate(() => {
