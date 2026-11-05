@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18948,
+    "depends_on_edge_count": 19008,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22156,
-    "node_count": 7455,
+    "edge_count": 22216,
+    "node_count": 7466,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-04T22:27:02Z",
+  "generated_at_utc": "2026-11-05T06:22:59Z",
   "gui_related_units": {
     "count": 3791,
     "units": [
@@ -34991,8 +34991,8 @@
         "source_location": {
           "heading": "Slot migration-generation custody and activation",
           "heading_level": 3,
-          "heading_line": 22015,
-          "line": 22037,
+          "heading_line": 22025,
+          "line": 22047,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35002,8 +35002,8 @@
         "source_location": {
           "heading": "SP-279 — Storage integrity finding custody and checkpoint-free read",
           "heading_level": 3,
-          "heading_line": 23523,
-          "line": 23525,
+          "heading_line": 23533,
+          "line": 23535,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35013,8 +35013,8 @@
         "source_location": {
           "heading": "SP-330 - The v2 Home Layout Record, Its Transaction And The Migration From v1",
           "heading_level": 3,
-          "heading_line": 28154,
-          "line": 28156,
+          "heading_line": 28176,
+          "line": 28178,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35024,8 +35024,8 @@
         "source_location": {
           "heading": "SP-331 - Terminal Appearance Storage",
           "heading_level": 3,
-          "heading_line": 28319,
-          "line": 28321,
+          "heading_line": 28341,
+          "line": 28343,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35035,8 +35035,8 @@
         "source_location": {
           "heading": "SP-332 - Terminal Records Re-Scoped To One Session Per Tab, And Saved Scrollback",
           "heading_level": 3,
-          "heading_line": 28441,
-          "line": 28443,
+          "heading_line": 28463,
+          "line": 28465,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35046,8 +35046,8 @@
         "source_location": {
           "heading": "SP-333 - Editor Appearance And Wallpaper Settings Levels",
           "heading_level": 3,
-          "heading_line": 28540,
-          "line": 28542,
+          "heading_line": 28562,
+          "line": 28564,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35057,8 +35057,8 @@
         "source_location": {
           "heading": "SP-338 - Render-Ready Chat Pages And The Open-Path Gate",
           "heading_level": 3,
-          "heading_line": 28910,
-          "line": 28912,
+          "heading_line": 28932,
+          "line": 28934,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35068,8 +35068,8 @@
         "source_location": {
           "heading": "SP-339 - No Always-On JSON Copies; Dump, Inspect, Tail And Export",
           "heading_level": 3,
-          "heading_line": 28976,
-          "line": 28978,
+          "heading_line": 28998,
+          "line": 29000,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35079,8 +35079,8 @@
         "source_location": {
           "heading": "SP-340 - redb Value Limits, Two Files, Quick Repair And Scheduled Compaction",
           "heading_level": 3,
-          "heading_line": 29050,
-          "line": 29052,
+          "heading_line": 29072,
+          "line": 29074,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35090,8 +35090,8 @@
         "source_location": {
           "heading": "SP-341 - Parquet Archive, DuckDB On Demand And Kept Usage History",
           "heading_level": 3,
-          "heading_line": 29103,
-          "line": 29105,
+          "heading_line": 29125,
+          "line": 29127,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -41725,10 +41725,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 7455,
+  "plan_unit_count": 7466,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2777,
+      "high": 2788,
       "low": 9,
       "medium": 29,
       "standard": 4640
@@ -43410,6 +43410,7 @@
       "historical_goal_event_source_and_checkpoint_authority": 1,
       "historical_goal_oracle_drift": 1,
       "historical_handoff_drift": 1,
+      "historical_original_authority_laundering": 11,
       "historical_projection_and_ghost_evidence": 1,
       "historical_reference_reactivation": 3,
       "historical_run_focus": 1,
@@ -45881,7 +45882,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 7238,
+      "accepted": 7249,
       "retired": 194,
       "superseded": 23
     },
@@ -45939,7 +45940,7 @@
       "operational_policy": 1,
       "optional_requirement": 1,
       "owner_boundary": 45,
-      "owner_contract": 16,
+      "owner_contract": 27,
       "owner_map": 6,
       "platform_requirement": 1,
       "pricing_contract": 1,
@@ -46079,7 +46080,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "441121857cf08caee41815ac7bd0b3b7feec2957f3fd96cbb297fdd72571134d",
+        "expected": "e39ce53819f1619474804edcdf0431b7598df1e2b36539e49f62f70aee213a80",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {
@@ -46115,8 +46116,20 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "605f8185d957222830679784c73d128f0f9c4fa67dc985fe152596c52decc192",
+        "expected": "aa8aaa943e27ffc9be79cc62049dbc4bc36ccd2b3955891b8ecfa9b1b5f6230d",
         "source_path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/00-plans-index.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Architecture_Invariants.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
@@ -46128,6 +46141,18 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Backup_Restore_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Collaborative_Workflows.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Commands_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Containers_Registry_and_Unraid.md"
       },
       {
@@ -46136,7 +46161,15 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Crosswalk.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/DRY_Rules.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Decision_Log.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
@@ -46144,7 +46177,27 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/FileManager.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/FileSafe.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/FinalGUISpec.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Forge_Integrations.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/GitLab_Integration.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Glossary.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
@@ -46152,7 +46205,23 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Jujutsu_Integration.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/MCP_Integration.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Multi-Account.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Multi-Account_Connection_Spec.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Orchestrator_Page.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
@@ -46160,7 +46229,27 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Personas.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Plan_Document_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Planning_Ledger_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Planning_Wizard.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Plugins_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Project_Sync_and_Backbone.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
@@ -46168,7 +46257,27 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Remote_Access_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Run_Modes.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Scheduling_and_Quota_Resume.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Server_System.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
@@ -46176,7 +46285,43 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Shared_Integration_Runtime.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Skills_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Source_Control_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Spec_Lock.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Test_Capture_and_Motion_Evidence.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Tools.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/UI_Command_Catalog.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/UI_Wiring_Rules.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Widget_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Wiring_Matrix.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
@@ -46184,7 +46329,19 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Working_Notebook.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/agent-rules-context.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/assistant-chat-design.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/assistant-memory-subsystem.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
@@ -46192,11 +46349,67 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/assistant_chat_contracts.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/automation_authority_contracts.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/final_gui_interaction_contracts.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/glyph_catalog.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/guided_tour_contracts.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/human-in-the-loop.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/newtools.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/orchestrator-subagent-integration.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/path_reference_registry.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/pm7_canon.fixtures.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/pm7_control_bindings.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/product_onboarding_contract_fixtures.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/product_onboarding_contracts.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/projects_refresh_command_bindings.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/runtime_integration_disposition.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/server_command_gap_adjudication.json"
       },
       {
         "error": "event_authority_currentness_source_drift",
@@ -46217,6 +46430,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/touch_closure.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/usage-feature.md"
       },
       {
         "bulk_registration_allowed": false,

@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L24514-L27210
+Source lines: L24524-L27232
 
-Source SHA256: `59ba89b11f45f854d665be07625e8c1b24f1919124f7574e5b416d542380656f`
+Source SHA256: `4a078cf2666ed3aa7f7ede3d2dddf750bad484eea3597f7c2e820c11461f6aba`
 
 ---
 
@@ -381,6 +381,9 @@ This binding selects the unchanged authoritative whole v2 payload and original s
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-069, ContractName:Plans/Contracts_V0.md#CV-343, ContractName:Plans/storage-plan.md#SP-278, SchemaID:pm.goal_runtime_event.goal_progressed.schema.v2
 
+
+**DG-OWN-D O6 adoption (2026-11-05, newly authored owner contract).** For exactly `goal.progressed`, this reader explicitly adopts SP-1143 and its separate ATS-1119 `progressed` entry/resolver/row-validator/answer-builder/inspection/disclosure suite, preserving its own SP-420 missing-proof outcome and SP-339 actual consumer. This is an oracle and boundary completion; it grants no current writer, historical instance, new retention, registry or native authority.
+
 ### SP-301 - Exact historical goal.replanned source reader
 
 ```yaml
@@ -487,6 +490,9 @@ This binding selects the unchanged authoritative whole v2 payload and original s
 **Original admission proof, operating consumer and oracle fixture (newly authored owner contract under DL-045, 2026-11-04).** For `goal.replanned` (`Plans/event_family_registry.json#/families/15`, payload `pm.goal_runtime_event.goal_replanned.schema.v2`), this reader adopts SP-420 by name: original lawful admission of a record is proved only by SP-420's pair for that exact record. SP-420's search found no owner unit that names a writer for this payload version, and GRS-070 with CV-344 refuses current writers, so member 2 resolves for no `goal.replanned` record. This reader's own rule reports a missing admission fact as an unresolved obligation. So every `goal.replanned` lookup whose current generic source read and permission authorize the complete raw observation returns `unresolved_historical_validation` with `original_admission` among its obligations, and every other lookup returns `unavailable`. No lookup of this family returns `verified_historical` under current canon. The production wiring row `catalog.runtime_replan` still lists `goal.replanned` as an expected event of `cmd.runtime.replan`; GRS-070 refuses that emission, the row is not writer admission, and a record appended through it would have no member 2. **Operating consumer.** The operating consumers are SP-339's `pm inspect` and the record inspector F3-666 opened through `cmd.storage.open_value`. When the record they open is a `goal.replanned` EventRecord, they call `storage.goal_replanned_history_read.v1@1.0.0` with that record's own `{project_id, goal_id, event_id, sequence_id}` and take its historical interpretation and validation disposition only from this reader's answer; they add no other family-specific interpretation, and neither turns an answer into a control, Goal state, To-Do or action. `pm tail` and `pm export` list and export the stored record under SP-339 without calling this reader. **Oracles.** The closed answer is `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_replanned_history_answer`; `Plans/goal_replanned_history_contract_fixtures.json` holds its positive and negative cases, checked by `python3 scripts/pm_goal_history_reader_fixtures.py`.
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-070, ContractName:Plans/Contracts_V0.md#CV-344, ContractName:Plans/storage-plan.md#SP-278, SchemaID:pm.goal_runtime_event.goal_replanned.schema.v2
+
+
+**DG-OWN-D O6 adoption (2026-11-05, newly authored owner contract).** For exactly `goal.replanned`, this reader explicitly adopts SP-1144 and its separate ATS-1119 `replanned` entry/resolver/row-validator/answer-builder/inspection/disclosure suite, preserving its own SP-420 missing-proof outcome and SP-339 actual consumer. This is an oracle and boundary completion; it grants no current writer, historical instance, new retention, registry or native authority.
 
 ### SP-302 - Exact historical goal.stopped source reader
 
@@ -595,6 +601,9 @@ This binding selects the unchanged authoritative whole v2 payload and original s
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-071, ContractName:Plans/Contracts_V0.md#CV-345, ContractName:Plans/storage-plan.md#SP-278, SchemaID:pm.goal_runtime_event.goal_stopped.schema.v2
 
+
+**DG-OWN-D O6 adoption (2026-11-05, newly authored owner contract).** For exactly `goal.stopped`, this reader explicitly adopts SP-1145 and its separate ATS-1119 `stopped` entry/resolver/row-validator/answer-builder/inspection/disclosure suite, preserving its own SP-420 missing-proof outcome and SP-339 actual consumer. This is an oracle and boundary completion; it grants no current writer, historical instance, new retention, registry or native authority.
+
 ### SP-303 - Exact historical goal.verification_decided source reader
 
 ```yaml
@@ -701,6 +710,9 @@ This binding selects the unchanged authoritative whole v2 payload and original s
 **Original admission proof, operating consumer and oracle fixture (newly authored owner contract under DL-045, 2026-11-04).** For `goal.verification_decided` (`Plans/event_family_registry.json#/families/20`, payload `pm.goal_runtime_event.goal_verification_decided.schema.v2`), this reader adopts SP-420 by name: original lawful admission of a record is proved only by SP-420's pair for that exact record. SP-420's search found no owner unit that names a writer for this payload version, and GRS-072 with CV-346 refuses current writers, so member 2 resolves for no `goal.verification_decided` record. This reader's own rule reports a missing admission fact as an unresolved obligation. So every `goal.verification_decided` lookup whose current generic source read and permission authorize the complete raw observation returns `unresolved_historical_validation` with `original_admission` among its obligations, and every other lookup returns `unavailable`. No lookup of this family returns `verified_historical` under current canon. **Operating consumer.** The operating consumers are SP-339's `pm inspect` and the record inspector F3-666 opened through `cmd.storage.open_value`. When the record they open is a `goal.verification_decided` EventRecord, they call `storage.goal_verification_decided_history_read.v1@1.0.0` with that record's own `{project_id, goal_id, event_id, sequence_id}` and take its historical interpretation and validation disposition only from this reader's answer; they add no other family-specific interpretation, and neither turns an answer into a control, Goal state, To-Do or action. `pm tail` and `pm export` list and export the stored record under SP-339 without calling this reader. **Oracles.** The closed answer is `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_verification_decided_history_answer`; `Plans/goal_verification_decided_history_contract_fixtures.json` holds its positive and negative cases, checked by `python3 scripts/pm_goal_history_reader_fixtures.py`.
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-072, ContractName:Plans/Contracts_V0.md#CV-346, ContractName:Plans/storage-plan.md#SP-278, SchemaID:pm.goal_runtime_event.goal_verification_decided.schema.v2
+
+
+**DG-OWN-D O6 adoption (2026-11-05, newly authored owner contract).** For exactly `goal.verification_decided`, this reader explicitly adopts SP-1146 and its separate ATS-1119 `verification_decided` entry/resolver/row-validator/answer-builder/inspection/disclosure suite, preserving its own SP-420 missing-proof outcome and SP-339 actual consumer. This is an oracle and boundary completion; it grants no current writer, historical instance, new retention, registry or native authority.
 
 ### SP-420 - Historical Goal record original admission proof
 

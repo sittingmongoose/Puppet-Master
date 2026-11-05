@@ -20823,6 +20823,9 @@ At the original reader entry, before the first returning decoder, resolver, vali
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-060, ContractName:Plans/Contracts_V0.md#CV-334, ContractName:Plans/Runtime_Artifacts_Panel.md, SchemaID:pm.storage_value.event_record_index.v2
 
+
+**DG-OWN-D O6 adoption (2026-11-05, newly authored owner contract).** For exactly `goal.child_status_changed`, this reader explicitly adopts SP-1140 and its separate ATS-1119 `child_status` entry/resolver/row-validator/answer-builder/inspection/disclosure suite, preserving its own SP-420 missing-proof outcome and SP-339 actual consumer. This is an oracle and boundary completion; it grants no current writer, historical instance, new retention, registry or native authority.
+
 ### SP-277 - Historical Goal degradation direct source reader
 
 ```yaml
@@ -21007,6 +21010,9 @@ preserved_exact_tokens:
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-061, ContractName:Plans/Contracts_V0.md#CV-335, ContractName:Plans/storage-plan.md#SP-277, ContractName:Plans/Decision_Log.md#DL-039
 
+
+**DG-OWN-D O6 adoption (2026-11-05, newly authored owner contract).** For exactly `goal.degraded`, this reader explicitly adopts SP-1141 and its separate ATS-1119 `degraded` entry/resolver/row-validator/answer-builder/inspection/disclosure suite, preserving its own SP-420 missing-proof outcome and SP-339 actual consumer. This is an oracle and boundary completion; it grants no current writer, historical instance, new retention, registry or native authority.
+
 ### SP-280 - Exact historical Goal scheduling contract
 
 ```yaml
@@ -21188,6 +21194,8 @@ preserved_exact_tokens:
 **Original admission proof, operating consumer and oracle fixture (newly authored owner contract under DL-045, 2026-11-04).** For `goal.scheduled` (`Plans/event_family_registry.json#/families/16`, payload `pm.goal_runtime_event.goal_scheduled.schema.v2`), this reader adopts SP-420 by name: original lawful admission of a record is proved only by SP-420's pair for that exact record. SP-420's search found no owner unit that names a writer for this payload version, and GRS-062 with CV-336 refuses current writers, so member 2 resolves for no `goal.scheduled` record. This reader's own rule already makes unresolved historical admission custody return `unavailable`. So every `goal.scheduled` lookup returns `unavailable` until member 2 is shown, and `original_admission` is never an unresolved obligation of this reader. No lookup of this family returns `verified_historical` under current canon. **Closed answer.** The ephemeral answer has exactly eight required fields: `kind`, `reader_binding`, `selector`, `original_event`, `original_validation`, `unresolved_obligations`, `read_token`, `action_authority`. `selector` is exactly the request `{project_id, goal_id, event_id, sequence_id}`. `reader_binding` is the constant `storage.goal_scheduled_history_read.v1@1.0.0`. `kind` is `verified_historical | unresolved_historical_validation | unavailable`, with `original_validation` respectively `verified | unresolved | unavailable`, and `action_authority` is always `none`. The first two kinds carry the complete unchanged original EventRecord and the full SP-278 read token; `unavailable` carries null for both and an empty obligation array. `verified_historical` has an empty obligation array. `unresolved_historical_validation` has a nonempty unique array drawn only from `original_producer_authority`, `original_revision_cas`, `original_predecessor_state`, `original_queue_admission`, `original_budget_snapshot`, `original_permission_evidence`, `original_recovery_truth`, `original_runtime_identity`, `original_idempotency`, `original_referenced_record`, `original_row_predicate`, each naming one unproved D-R11 predicate of this row; it is allowed only when the current generic source read and permission authorize the complete raw observation. No answer adds dynamic source text, a partial or redacted original or a lifecycle claim. **Operating consumer.** The operating consumers are SP-339's `pm inspect` and the record inspector F3-666 opened through `cmd.storage.open_value`. When the record they open is a `goal.scheduled` EventRecord, they call `storage.goal_scheduled_history_read.v1@1.0.0` with that record's own `{project_id, goal_id, event_id, sequence_id}` and take its historical interpretation and validation disposition only from this reader's answer; they add no other family-specific interpretation, and neither turns an answer into a control, Goal state, To-Do or action. `pm tail` and `pm export` list and export the stored record under SP-339 without calling this reader. **Oracles.** The closed answer is `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_scheduled_history_answer`; `Plans/goal_scheduled_history_contract_fixtures.json` holds its positive and negative cases, checked by `python3 scripts/pm_goal_history_reader_fixtures.py`.
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-062, ContractName:Plans/Contracts_V0.md#CV-336, ContractName:Plans/storage-plan.md#SP-280, ContractName:Plans/Scheduling_and_Quota_Resume.md, ContractName:Plans/Decision_Log.md#DL-045
+
+**DG-OWN-D O6 adoption (2026-11-05, newly authored owner contract).** For exactly `goal.scheduled`, this reader explicitly adopts SP-1142 and its separate ATS-1119 `scheduled` entry/resolver/row-validator/answer-builder/inspection/disclosure suite, preserving its own SP-420 missing-proof outcome and SP-339 actual consumer. This is an oracle and boundary completion; it grants no current writer, historical instance, new retention, registry or native authority.
 
 <a id="generic-eventrecord-index-checkpoint-and-publication"></a>
 ### Generic EventRecord index checkpoint and publication
@@ -21572,6 +21580,8 @@ owner-approved successor/version, install/rebuild through StorageMigrationCoordi
 verify scope/coverage/currentness/deletion, then activate the adopted reader.
 No silent zero-cursor reset, sibling reuse, bulk Browser admission, history rewrite,
 global count override or governance reseal follows.
+
+
 
 ### SP-282 - Browser workspace-reset single-family persistence binding
 
@@ -24884,6 +24894,9 @@ This binding selects the unchanged authoritative whole v2 payload and original s
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-069, ContractName:Plans/Contracts_V0.md#CV-343, ContractName:Plans/storage-plan.md#SP-278, SchemaID:pm.goal_runtime_event.goal_progressed.schema.v2
 
+
+**DG-OWN-D O6 adoption (2026-11-05, newly authored owner contract).** For exactly `goal.progressed`, this reader explicitly adopts SP-1143 and its separate ATS-1119 `progressed` entry/resolver/row-validator/answer-builder/inspection/disclosure suite, preserving its own SP-420 missing-proof outcome and SP-339 actual consumer. This is an oracle and boundary completion; it grants no current writer, historical instance, new retention, registry or native authority.
+
 ### SP-301 - Exact historical goal.replanned source reader
 
 ```yaml
@@ -24990,6 +25003,9 @@ This binding selects the unchanged authoritative whole v2 payload and original s
 **Original admission proof, operating consumer and oracle fixture (newly authored owner contract under DL-045, 2026-11-04).** For `goal.replanned` (`Plans/event_family_registry.json#/families/15`, payload `pm.goal_runtime_event.goal_replanned.schema.v2`), this reader adopts SP-420 by name: original lawful admission of a record is proved only by SP-420's pair for that exact record. SP-420's search found no owner unit that names a writer for this payload version, and GRS-070 with CV-344 refuses current writers, so member 2 resolves for no `goal.replanned` record. This reader's own rule reports a missing admission fact as an unresolved obligation. So every `goal.replanned` lookup whose current generic source read and permission authorize the complete raw observation returns `unresolved_historical_validation` with `original_admission` among its obligations, and every other lookup returns `unavailable`. No lookup of this family returns `verified_historical` under current canon. The production wiring row `catalog.runtime_replan` still lists `goal.replanned` as an expected event of `cmd.runtime.replan`; GRS-070 refuses that emission, the row is not writer admission, and a record appended through it would have no member 2. **Operating consumer.** The operating consumers are SP-339's `pm inspect` and the record inspector F3-666 opened through `cmd.storage.open_value`. When the record they open is a `goal.replanned` EventRecord, they call `storage.goal_replanned_history_read.v1@1.0.0` with that record's own `{project_id, goal_id, event_id, sequence_id}` and take its historical interpretation and validation disposition only from this reader's answer; they add no other family-specific interpretation, and neither turns an answer into a control, Goal state, To-Do or action. `pm tail` and `pm export` list and export the stored record under SP-339 without calling this reader. **Oracles.** The closed answer is `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_replanned_history_answer`; `Plans/goal_replanned_history_contract_fixtures.json` holds its positive and negative cases, checked by `python3 scripts/pm_goal_history_reader_fixtures.py`.
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-070, ContractName:Plans/Contracts_V0.md#CV-344, ContractName:Plans/storage-plan.md#SP-278, SchemaID:pm.goal_runtime_event.goal_replanned.schema.v2
+
+
+**DG-OWN-D O6 adoption (2026-11-05, newly authored owner contract).** For exactly `goal.replanned`, this reader explicitly adopts SP-1144 and its separate ATS-1119 `replanned` entry/resolver/row-validator/answer-builder/inspection/disclosure suite, preserving its own SP-420 missing-proof outcome and SP-339 actual consumer. This is an oracle and boundary completion; it grants no current writer, historical instance, new retention, registry or native authority.
 
 ### SP-302 - Exact historical goal.stopped source reader
 
@@ -25098,6 +25114,9 @@ This binding selects the unchanged authoritative whole v2 payload and original s
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-071, ContractName:Plans/Contracts_V0.md#CV-345, ContractName:Plans/storage-plan.md#SP-278, SchemaID:pm.goal_runtime_event.goal_stopped.schema.v2
 
+
+**DG-OWN-D O6 adoption (2026-11-05, newly authored owner contract).** For exactly `goal.stopped`, this reader explicitly adopts SP-1145 and its separate ATS-1119 `stopped` entry/resolver/row-validator/answer-builder/inspection/disclosure suite, preserving its own SP-420 missing-proof outcome and SP-339 actual consumer. This is an oracle and boundary completion; it grants no current writer, historical instance, new retention, registry or native authority.
+
 ### SP-303 - Exact historical goal.verification_decided source reader
 
 ```yaml
@@ -25204,6 +25223,9 @@ This binding selects the unchanged authoritative whole v2 payload and original s
 **Original admission proof, operating consumer and oracle fixture (newly authored owner contract under DL-045, 2026-11-04).** For `goal.verification_decided` (`Plans/event_family_registry.json#/families/20`, payload `pm.goal_runtime_event.goal_verification_decided.schema.v2`), this reader adopts SP-420 by name: original lawful admission of a record is proved only by SP-420's pair for that exact record. SP-420's search found no owner unit that names a writer for this payload version, and GRS-072 with CV-346 refuses current writers, so member 2 resolves for no `goal.verification_decided` record. This reader's own rule reports a missing admission fact as an unresolved obligation. So every `goal.verification_decided` lookup whose current generic source read and permission authorize the complete raw observation returns `unresolved_historical_validation` with `original_admission` among its obligations, and every other lookup returns `unavailable`. No lookup of this family returns `verified_historical` under current canon. **Operating consumer.** The operating consumers are SP-339's `pm inspect` and the record inspector F3-666 opened through `cmd.storage.open_value`. When the record they open is a `goal.verification_decided` EventRecord, they call `storage.goal_verification_decided_history_read.v1@1.0.0` with that record's own `{project_id, goal_id, event_id, sequence_id}` and take its historical interpretation and validation disposition only from this reader's answer; they add no other family-specific interpretation, and neither turns an answer into a control, Goal state, To-Do or action. `pm tail` and `pm export` list and export the stored record under SP-339 without calling this reader. **Oracles.** The closed answer is `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_verification_decided_history_answer`; `Plans/goal_verification_decided_history_contract_fixtures.json` holds its positive and negative cases, checked by `python3 scripts/pm_goal_history_reader_fixtures.py`.
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-072, ContractName:Plans/Contracts_V0.md#CV-346, ContractName:Plans/storage-plan.md#SP-278, SchemaID:pm.goal_runtime_event.goal_verification_decided.schema.v2
+
+
+**DG-OWN-D O6 adoption (2026-11-05, newly authored owner contract).** For exactly `goal.verification_decided`, this reader explicitly adopts SP-1146 and its separate ATS-1119 `verification_decided` entry/resolver/row-validator/answer-builder/inspection/disclosure suite, preserving its own SP-420 missing-proof outcome and SP-339 actual consumer. This is an oracle and boundary completion; it grants no current writer, historical instance, new retention, registry or native authority.
 
 ### SP-420 - Historical Goal record original admission proof
 
@@ -30275,6 +30297,9 @@ Individually adopt SP-420's two-member proof for this exact record: its own reta
 
 **Withdrawal.** Current writers in both scopes are already cut off by GRS-205, before dedupe including equal-key retries. Reader withdrawal or unsupported schema stops this binding and preserves source/schema/retention; it grants no sibling fallback, app adoption or transformed current event. Generic index rebuild remains solely SP-278's owner operation with fresh generation/frontier fences; there is no family state to rebuild. Approved unused app withdrawal is a registry-checkpoint follow-up only.
 
+
+**DG-OWN-D O6 adoption (2026-11-05, newly authored owner contract).** For exactly `goal.evidence_captured`, this reader explicitly adopts SP-1147 and its separate ATS-1119 `evidence_captured` entry/resolver/row-validator/answer-builder/inspection/disclosure suite, preserving its own SP-420 missing-proof outcome and SP-339 actual consumer. This is an oracle and boundary completion; it grants no current writer, historical instance, new retention, registry or native authority.
+
 ### SP-432 - Historical goal.receipt_recorded reader custody
 
 ```yaml
@@ -30335,6 +30360,9 @@ Individually adopt SP-420's two-member proof for this exact record: its own reta
 
 **Withdrawal.** Current writers in both scopes are already cut off by GRS-206, before dedupe including equal-key retries. Reader withdrawal or unsupported schema stops this binding and preserves source/schema/retention; it grants no sibling fallback, app adoption or transformed current event. Generic index rebuild remains solely SP-278's owner operation with fresh generation/frontier fences; there is no family state to rebuild. Approved unused app withdrawal is a registry-checkpoint follow-up only.
 
+
+**DG-OWN-D O6 adoption (2026-11-05, newly authored owner contract).** For exactly `goal.receipt_recorded`, this reader explicitly adopts SP-1148 and its separate ATS-1119 `receipt_recorded` entry/resolver/row-validator/answer-builder/inspection/disclosure suite, preserving its own SP-420 missing-proof outcome and SP-339 actual consumer. This is an oracle and boundary completion; it grants no current writer, historical instance, new retention, registry or native authority.
+
 ### SP-433 - Historical goal.tool_check_recorded reader custody
 
 ```yaml
@@ -30394,3 +30422,488 @@ Individually adopt SP-420's two-member proof for this exact record: its own reta
 **Consumer, replay and custody.** SP-339 pm inspect / F3-666 call this exact binding for its original event and consume only its historical interpretation. Repeated reads recompute the same observation under current source/fence, never append or replay an action. This family's checkpoint is individually none_required: no durable state projector, cursor, idempotency ledger, acknowledgment, receipt or any owned write. SP-278's generic checkpoint remains mandatory. Canonical source/first receipts retain RP-AUTHORITY-INDEFINITE@1.0.0; lookup/index retains RP-EVENT-INDEX-SOURCE@1.0.0. Referenced evidence/output/receipt retention, thread deletion, permissions, holds, backup and identity-preserving restore follow their existing separate owners. A ref creates no hold or right to reacquire disposed source/control bytes; canonical receipts are not rebuildable from index/events. Reject unhandled secrets rather than partially redacting an original. This reader performs no quarantine/recovery write or payload resurrection. Bodies above the current 16 KiB ingest cap follow SP-337 under their source owner; no new over-limit inline positive or payload-reference codec is claimed here.
 
 **Withdrawal.** Current writers in both scopes are already cut off by GRS-207, before dedupe including equal-key retries. Reader withdrawal or unsupported schema stops this binding and preserves source/schema/retention; it grants no sibling fallback, app adoption or transformed current event. Generic index rebuild remains solely SP-278's owner operation with fresh generation/frontier fences; there is no family state to rebuild. Approved unused app withdrawal is a registry-checkpoint follow-up only.
+
+**DG-OWN-D O6 adoption (2026-11-05, newly authored owner contract).** For exactly `goal.tool_check_recorded`, this reader explicitly adopts SP-1149 and its separate ATS-1119 `tool_check_recorded` entry/resolver/row-validator/answer-builder/inspection/disclosure suite, preserving its own SP-420 missing-proof outcome and SP-339 actual consumer. This is an oracle and boundary completion; it grants no current writer, historical instance, new retention, registry or native authority.
+
+
+## DG-OWN-D exact historical reader boundary completion (2026-11-05)
+
+### SP-1140 - goal.child_status_changed complete original reader and disclosure boundaries
+
+```yaml
+plan_unit_id: SP-1140
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 (2026-11-05), independently for goal.child_status_changed. SP-271 and GRS-060/CV-334 remain this exact reader's governing contracts; storage.goal_child_status_history_read.v1@1.0.0, selector {project_id, event_id, sequence_id}, and its existing closed eight-field answer are reused without a new public method, persisted value or reader version. SP-339 pm inspect and F3-666 take interpretation only from this exact binding. Entry, original resolver, row validator, answer builder, inspection entry and final disclosure are independently callable boundaries, each subject to the complete predicate below; an internal-call label conveys no authority.
+  Before the first returning helper, each boundary independently captures the immutable selector, actual selected Storage/root/index generation/dataset, complete live SP-278 ten-field token and actual source/access/deletion/hold/maintenance fence. The durable token, if another owner stores it, remains the nine-field token without redb_snapshot_id; this reader stores none. Resolve the exact encoded Project partition/key and full source cursor/frame/CRC/durable-watermark proof under SP-278. Capture immutable birth and complete advancing frontier separately, including nonmatching same-generation appends, translations, excluded/retired inputs and current source selection; equality of a caller's copies cannot authenticate them.
+  Adopt SP-420's original accepted-at-issue pair explicitly for this family: independently resolve its exact original SP-286 receipt custody and accepted-at-issue writer owner unit plus the approved checkpoint for this exact type/schema/version. The original owner/contract reference is resolved from retained owner custody; checkpoint and owner claims in two supplied objects are not the approval source. Compare the complete original receipt, Storage/event/key/type/schema and original value/semantic commitments using their actual original CV-339/SP-286 recipe/version. Preserve exact retained v1 receipt semantics without backfilling v2 commitment; use full-value resolution only where that original custody provides it. Identity-preserving backup/restore carries the same original receipt, source identity and admission, with independently current restored source/fences. It never creates member 2. Missing SP-420 member 2 returns unavailable with null event/token and no obligations. Current canon demonstrates no such original writer; conditional TEST_ONLY originals are not historical instances or producer admissions.
+  Resolve every required own original predecessor/runtime/reference/decision/evidence role before claiming verified_historical; enumerate required roles from this family's original contract so a missing role cannot vanish from an iteration. Each referenced source is joined on original identity, owner and accepted revision/currentness, not self-consistent requested/resolved labels. Validate the original child identity, actual predecessor and successor, and the legal edge in the independently resolved original child contract. The original parent is nonterminal and unchanged; completed children require the original completion receipt and failed/blocked/degraded children require their actual result or receipt. Preserve optional lease/result/receipt references and absence-means-false parent_action_required without filling stored bytes. A child never completes its parent or recreates topology.
+  Every allowed referenced body read adopts its original source owner's SP-337 route: resolve that exact existing reference, original identity/recipe, actual permission/retention/hold, BLAKE3, byte size and media type, verify returned bytes and retain references in the EventRecord. Large referenced bodies remain in packs; verify complete bounded stored metadata/value parts under their existing SP-340 limit. No new envelope payload_ref codec or over-limit current inline writer is authorized; a missing original route is unavailable, never default-filled. Lawful retained inline/compatibility/replay-only originals are not subjected to today's writer limit, state, format or recipe. S1 and O12/S2 adoption remain the shared sweep; this unit invents no serializer or numeric range.
+  Independently derive the ENTIRE permitted eight-field answer from actual captured originals before candidate builders. Every helper's own entry repeats that capture for its actual input. After its last returning helper, and again at the original caller's final disclosure, a pure typed predicate compares the complete candidate, selector, original source/admission/reference facts and complete current owner/source/token/fence to the independent expectation. No helper, serializer, copy or response builder may run between the final predicate and release. Any changed authority or candidate discards the result; no cached validator success or coherent obsolete token grants disclosure. Unavailable contains no original event/token; unresolved lists only this family's existing fixed missing-obligation identifiers and grants no authority.
+  Current writers remain prohibited in both scopes, before dedupe including equal old keys and replay-only inputs. Read/retry/interruption/withdrawal cannot append, approve, dispatch, clear Stop, mutate state or source, write quarantine, rebuild a projection or advance a family checkpoint. This family's checkpoint is individually none_required; the actual generic SP-278 proof remains mandatory. Existing RP-AUTHORITY-INDEFINITE source/receipt and RP-EVENT-INDEX-SOURCE lookup custody, referenced-body owner lifetimes, access, deletion, holds, coherent backup/restore and withdrawal remain unchanged. ATS-1119 defines this family's separate child_status complete-input suite; native execution is NOT_RUN. Static cases and the shared sweep never admit an actual source.
+gui_related: false
+gui_classification_reason: Internal historical-read authority and oracle boundaries; no new visual surface.
+split_recommended: false
+depends_on: ["SP-271", "SP-278", "SP-286", "SP-420", "SP-339"]
+unblocks: []
+acceptance_criteria:
+- "goal.child_status_changed independently adopts the complete original resolver/helper/final disclosure contract and ATS-1119 suite."
+- "An independently authenticated original pair, full original row/reference predicates and current owner fence precede verified disclosure."
+- "Every independently callable boundary refuses altered candidates and changed source/access/token after its last helper; read-only effects remain zero."
+validation_surfaces:
+- "python3 scripts/pm_goal_own_d_oracles.py"
+- "python3 scripts/pm_goal_history_reader_fixtures.py"
+- "Plans/goal_history_reader_outputs.schema.json"
+risk_class: historical_original_authority_laundering
+reasoning_tier: high
+context_scope: sp-1140_historical_reader_boundaries
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#O6
+preserved_exact_tokens: ["goal.child_status_changed", "storage.goal_child_status_history_read.v1@1.0.0", "none_required", "SP-420", "SP-339"]
+negative_constraints:
+- No registry, admission, Decision Log, retained schema, retention, writer or native-runtime authority change.
+- No new physical number codec, invented bound or weaker retained-recipe selector.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-1141 - goal.degraded complete original reader and disclosure boundaries
+
+```yaml
+plan_unit_id: SP-1141
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 (2026-11-05), independently for goal.degraded. SP-277 and GRS-061/CV-335 remain this exact reader's governing contracts; storage.goal_degraded_history_read.v1@1.0.0, selector {project_id, goal_id, event_id, sequence_id}, and its existing closed eight-field answer are reused without a new public method, persisted value or reader version. SP-339 pm inspect and F3-666 take interpretation only from this exact binding. Entry, original resolver, row validator, answer builder, inspection entry and final disclosure are independently callable boundaries, each subject to the complete predicate below; an internal-call label conveys no authority.
+  Before the first returning helper, each boundary independently captures the immutable selector, actual selected Storage/root/index generation/dataset, complete live SP-278 ten-field token and actual source/access/deletion/hold/maintenance fence. The durable token, if another owner stores it, remains the nine-field token without redb_snapshot_id; this reader stores none. Resolve the exact encoded Project partition/key and full source cursor/frame/CRC/durable-watermark proof under SP-278. Capture immutable birth and complete advancing frontier separately, including nonmatching same-generation appends, translations, excluded/retired inputs and current source selection; equality of a caller's copies cannot authenticate them.
+  Adopt SP-420's original accepted-at-issue pair explicitly for this family: independently resolve its exact original SP-286 receipt custody and accepted-at-issue writer owner unit plus the approved checkpoint for this exact type/schema/version. The original owner/contract reference is resolved from retained owner custody; checkpoint and owner claims in two supplied objects are not the approval source. Compare the complete original receipt, Storage/event/key/type/schema and original value/semantic commitments using their actual original CV-339/SP-286 recipe/version. Preserve exact retained v1 receipt semantics without backfilling v2 commitment; use full-value resolution only where that original custody provides it. Identity-preserving backup/restore carries the same original receipt, source identity and admission, with independently current restored source/fences. It never creates member 2. Missing SP-420 member 2 returns unavailable with null event/token and no obligations. Current canon demonstrates no such original writer; conditional TEST_ONLY originals are not historical instances or producer admissions.
+  Resolve every required own original predecessor/runtime/reference/decision/evidence role before claiming verified_historical; enumerate required roles from this family's original contract so a missing role cannot vanish from an iteration. Each referenced source is joined on original identity, owner and accepted revision/currentness, not self-consistent requested/resolved labels. Resolve the original tier, affected required check and mutation, exception evidence, risk acceptance, approval subset and prior/current risk facts from their own retained sources. required_check_affected, mutation_affected, exception_required and risk_accepted must each be actual booleans before interpretation; 0, 1, empty or nonempty strings, null, arrays and objects are not booleans. Preserve the original Strong/Standard restrictions, nonempty risks/actions and materially changed risk/currentness on a repeated degradation. Original allowed_actions remain data with no live dispatch.
+  Every allowed referenced body read adopts its original source owner's SP-337 route: resolve that exact existing reference, original identity/recipe, actual permission/retention/hold, BLAKE3, byte size and media type, verify returned bytes and retain references in the EventRecord. Large referenced bodies remain in packs; verify complete bounded stored metadata/value parts under their existing SP-340 limit. No new envelope payload_ref codec or over-limit current inline writer is authorized; a missing original route is unavailable, never default-filled. Lawful retained inline/compatibility/replay-only originals are not subjected to today's writer limit, state, format or recipe. S1 and O12/S2 adoption remain the shared sweep; this unit invents no serializer or numeric range.
+  Independently derive the ENTIRE permitted eight-field answer from actual captured originals before candidate builders. Every helper's own entry repeats that capture for its actual input. After its last returning helper, and again at the original caller's final disclosure, a pure typed predicate compares the complete candidate, selector, original source/admission/reference facts and complete current owner/source/token/fence to the independent expectation. No helper, serializer, copy or response builder may run between the final predicate and release. Any changed authority or candidate discards the result; no cached validator success or coherent obsolete token grants disclosure. Unavailable contains no original event/token; unresolved lists only this family's existing fixed missing-obligation identifiers and grants no authority.
+  Current writers remain prohibited in both scopes, before dedupe including equal old keys and replay-only inputs. Read/retry/interruption/withdrawal cannot append, approve, dispatch, clear Stop, mutate state or source, write quarantine, rebuild a projection or advance a family checkpoint. This family's checkpoint is individually none_required; the actual generic SP-278 proof remains mandatory. Existing RP-AUTHORITY-INDEFINITE source/receipt and RP-EVENT-INDEX-SOURCE lookup custody, referenced-body owner lifetimes, access, deletion, holds, coherent backup/restore and withdrawal remain unchanged. ATS-1119 defines this family's separate degraded complete-input suite; native execution is NOT_RUN. Static cases and the shared sweep never admit an actual source.
+gui_related: false
+gui_classification_reason: Internal historical-read authority and oracle boundaries; no new visual surface.
+split_recommended: false
+depends_on: ["SP-277", "SP-278", "SP-286", "SP-420", "SP-339"]
+unblocks: []
+acceptance_criteria:
+- "goal.degraded independently adopts the complete original resolver/helper/final disclosure contract and ATS-1119 suite."
+- "An independently authenticated original pair, full original row/reference predicates and current owner fence precede verified disclosure."
+- "Every independently callable boundary refuses altered candidates and changed source/access/token after its last helper; read-only effects remain zero."
+validation_surfaces:
+- "python3 scripts/pm_goal_own_d_oracles.py"
+- "python3 scripts/pm_goal_history_reader_fixtures.py"
+- "Plans/goal_history_reader_outputs.schema.json"
+risk_class: historical_original_authority_laundering
+reasoning_tier: high
+context_scope: sp-1141_historical_reader_boundaries
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#O6
+preserved_exact_tokens: ["goal.degraded", "storage.goal_degraded_history_read.v1@1.0.0", "none_required", "SP-420", "SP-339"]
+negative_constraints:
+- No registry, admission, Decision Log, retained schema, retention, writer or native-runtime authority change.
+- No new physical number codec, invented bound or weaker retained-recipe selector.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-1142 - goal.scheduled complete original reader and disclosure boundaries
+
+```yaml
+plan_unit_id: SP-1142
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 (2026-11-05), independently for goal.scheduled. SP-280 and GRS-062/CV-336 remain this exact reader's governing contracts; storage.goal_scheduled_history_read.v1@1.0.0, selector {project_id, goal_id, event_id, sequence_id}, and its existing closed eight-field answer are reused without a new public method, persisted value or reader version. SP-339 pm inspect and F3-666 take interpretation only from this exact binding. Entry, original resolver, row validator, answer builder, inspection entry and final disclosure are independently callable boundaries, each subject to the complete predicate below; an internal-call label conveys no authority.
+  Before the first returning helper, each boundary independently captures the immutable selector, actual selected Storage/root/index generation/dataset, complete live SP-278 ten-field token and actual source/access/deletion/hold/maintenance fence. The durable token, if another owner stores it, remains the nine-field token without redb_snapshot_id; this reader stores none. Resolve the exact encoded Project partition/key and full source cursor/frame/CRC/durable-watermark proof under SP-278. Capture immutable birth and complete advancing frontier separately, including nonmatching same-generation appends, translations, excluded/retired inputs and current source selection; equality of a caller's copies cannot authenticate them.
+  Adopt SP-420's original accepted-at-issue pair explicitly for this family: independently resolve its exact original SP-286 receipt custody and accepted-at-issue writer owner unit plus the approved checkpoint for this exact type/schema/version. The original owner/contract reference is resolved from retained owner custody; checkpoint and owner claims in two supplied objects are not the approval source. Compare the complete original receipt, Storage/event/key/type/schema and original value/semantic commitments using their actual original CV-339/SP-286 recipe/version. Preserve exact retained v1 receipt semantics without backfilling v2 commitment; use full-value resolution only where that original custody provides it. Identity-preserving backup/restore carries the same original receipt, source identity and admission, with independently current restored source/fences. It never creates member 2. Missing SP-420 member 2 returns unavailable with null event/token and no obligations. Current canon demonstrates no such original writer; conditional TEST_ONLY originals are not historical instances or producer admissions.
+  Resolve every required own original predecessor/runtime/reference/decision/evidence role before claiming verified_historical; enumerate required roles from this family's original contract so a missing role cannot vanish from an iteration. Each referenced source is joined on original identity, owner and accepted revision/currentness, not self-consistent requested/resolved labels. Validate the original scheduling edge, all six scheduler reasons, four priorities and three next actions. Original blocked/stopped predecessors need their actual recovery/revalidation receipt. Dispatch required its original queue identity, eligibility no later than the append observation, positive remaining owner budget, permission allow, writer-capable Storage and resolved recovery; waiting branches do not dispatch. Reading any branch preserves the current Stop epoch and creates no timer, queue admission, budget use or continuation.
+  Every allowed referenced body read adopts its original source owner's SP-337 route: resolve that exact existing reference, original identity/recipe, actual permission/retention/hold, BLAKE3, byte size and media type, verify returned bytes and retain references in the EventRecord. Large referenced bodies remain in packs; verify complete bounded stored metadata/value parts under their existing SP-340 limit. No new envelope payload_ref codec or over-limit current inline writer is authorized; a missing original route is unavailable, never default-filled. Lawful retained inline/compatibility/replay-only originals are not subjected to today's writer limit, state, format or recipe. S1 and O12/S2 adoption remain the shared sweep; this unit invents no serializer or numeric range.
+  Independently derive the ENTIRE permitted eight-field answer from actual captured originals before candidate builders. Every helper's own entry repeats that capture for its actual input. After its last returning helper, and again at the original caller's final disclosure, a pure typed predicate compares the complete candidate, selector, original source/admission/reference facts and complete current owner/source/token/fence to the independent expectation. No helper, serializer, copy or response builder may run between the final predicate and release. Any changed authority or candidate discards the result; no cached validator success or coherent obsolete token grants disclosure. Unavailable contains no original event/token; unresolved lists only this family's existing fixed missing-obligation identifiers and grants no authority.
+  Current writers remain prohibited in both scopes, before dedupe including equal old keys and replay-only inputs. Read/retry/interruption/withdrawal cannot append, approve, dispatch, clear Stop, mutate state or source, write quarantine, rebuild a projection or advance a family checkpoint. This family's checkpoint is individually none_required; the actual generic SP-278 proof remains mandatory. Existing RP-AUTHORITY-INDEFINITE source/receipt and RP-EVENT-INDEX-SOURCE lookup custody, referenced-body owner lifetimes, access, deletion, holds, coherent backup/restore and withdrawal remain unchanged. ATS-1119 defines this family's separate scheduled complete-input suite; native execution is NOT_RUN. Static cases and the shared sweep never admit an actual source.
+gui_related: false
+gui_classification_reason: Internal historical-read authority and oracle boundaries; no new visual surface.
+split_recommended: false
+depends_on: ["SP-280", "SP-278", "SP-286", "SP-420", "SP-339"]
+unblocks: []
+acceptance_criteria:
+- "goal.scheduled independently adopts the complete original resolver/helper/final disclosure contract and ATS-1119 suite."
+- "An independently authenticated original pair, full original row/reference predicates and current owner fence precede verified disclosure."
+- "Every independently callable boundary refuses altered candidates and changed source/access/token after its last helper; read-only effects remain zero."
+validation_surfaces:
+- "python3 scripts/pm_goal_own_d_oracles.py"
+- "python3 scripts/pm_goal_history_reader_fixtures.py"
+- "Plans/goal_history_reader_outputs.schema.json"
+risk_class: historical_original_authority_laundering
+reasoning_tier: high
+context_scope: sp-1142_historical_reader_boundaries
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#O6
+preserved_exact_tokens: ["goal.scheduled", "storage.goal_scheduled_history_read.v1@1.0.0", "none_required", "SP-420", "SP-339"]
+negative_constraints:
+- No registry, admission, Decision Log, retained schema, retention, writer or native-runtime authority change.
+- No new physical number codec, invented bound or weaker retained-recipe selector.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-1143 - goal.progressed complete original reader and disclosure boundaries
+
+```yaml
+plan_unit_id: SP-1143
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 (2026-11-05), independently for goal.progressed. SP-300 and GRS-069/CV-343 remain this exact reader's governing contracts; storage.goal_progressed_history_read.v1@1.0.0, selector {project_id, goal_id, event_id, sequence_id}, and its existing closed eight-field answer are reused without a new public method, persisted value or reader version. SP-339 pm inspect and F3-666 take interpretation only from this exact binding. Entry, original resolver, row validator, answer builder, inspection entry and final disclosure are independently callable boundaries, each subject to the complete predicate below; an internal-call label conveys no authority.
+  Before the first returning helper, each boundary independently captures the immutable selector, actual selected Storage/root/index generation/dataset, complete live SP-278 ten-field token and actual source/access/deletion/hold/maintenance fence. The durable token, if another owner stores it, remains the nine-field token without redb_snapshot_id; this reader stores none. Resolve the exact encoded Project partition/key and full source cursor/frame/CRC/durable-watermark proof under SP-278. Capture immutable birth and complete advancing frontier separately, including nonmatching same-generation appends, translations, excluded/retired inputs and current source selection; equality of a caller's copies cannot authenticate them.
+  Adopt SP-420's original accepted-at-issue pair explicitly for this family: independently resolve its exact original SP-286 receipt custody and accepted-at-issue writer owner unit plus the approved checkpoint for this exact type/schema/version. The original owner/contract reference is resolved from retained owner custody; checkpoint and owner claims in two supplied objects are not the approval source. Compare the complete original receipt, Storage/event/key/type/schema and original value/semantic commitments using their actual original CV-339/SP-286 recipe/version. Preserve exact retained v1 receipt semantics without backfilling v2 commitment; use full-value resolution only where that original custody provides it. Identity-preserving backup/restore carries the same original receipt, source identity and admission, with independently current restored source/fences. It never creates member 2. Missing SP-420 member 2 returns unresolved_historical_validation with original_admission only while the generic source/access independently permit the complete raw original; otherwise unavailable. Current canon demonstrates no such original writer; conditional TEST_ONLY originals are not historical instances or producer admissions.
+  Resolve every required own original predecessor/runtime/reference/decision/evidence role before claiming verified_historical; enumerate required roles from this family's original contract so a missing role cannot vanish from an iteration. Each referenced source is joined on original identity, owner and accepted revision/currentness, not self-consistent requested/resolved labels. Resolve the authentic original revision/CAS and committed predecessor/successor. Preserve the four original status pairs, nonempty disjoint TaskDelta union, exact original artifact identities/hashes and progress fingerprint from their original source. Repeated progress requires the original repeat/continuation-count and unchanged-artifact/no-progress evidence; do not invent a new fingerprint recipe or infer progress from present artifacts. No To-Do, WorkNode or Goal projection is rebuilt.
+  Every allowed referenced body read adopts its original source owner's SP-337 route: resolve that exact existing reference, original identity/recipe, actual permission/retention/hold, BLAKE3, byte size and media type, verify returned bytes and retain references in the EventRecord. Large referenced bodies remain in packs; verify complete bounded stored metadata/value parts under their existing SP-340 limit. No new envelope payload_ref codec or over-limit current inline writer is authorized; a missing original route is unavailable, never default-filled. Lawful retained inline/compatibility/replay-only originals are not subjected to today's writer limit, state, format or recipe. S1 and O12/S2 adoption remain the shared sweep; this unit invents no serializer or numeric range.
+  Independently derive the ENTIRE permitted eight-field answer from actual captured originals before candidate builders. Every helper's own entry repeats that capture for its actual input. After its last returning helper, and again at the original caller's final disclosure, a pure typed predicate compares the complete candidate, selector, original source/admission/reference facts and complete current owner/source/token/fence to the independent expectation. No helper, serializer, copy or response builder may run between the final predicate and release. Any changed authority or candidate discards the result; no cached validator success or coherent obsolete token grants disclosure. Unavailable contains no original event/token; unresolved lists only this family's existing fixed missing-obligation identifiers and grants no authority.
+  Current writers remain prohibited in both scopes, before dedupe including equal old keys and replay-only inputs. Read/retry/interruption/withdrawal cannot append, approve, dispatch, clear Stop, mutate state or source, write quarantine, rebuild a projection or advance a family checkpoint. This family's checkpoint is individually none_required; the actual generic SP-278 proof remains mandatory. Existing RP-AUTHORITY-INDEFINITE source/receipt and RP-EVENT-INDEX-SOURCE lookup custody, referenced-body owner lifetimes, access, deletion, holds, coherent backup/restore and withdrawal remain unchanged. ATS-1119 defines this family's separate progressed complete-input suite; native execution is NOT_RUN. Static cases and the shared sweep never admit an actual source.
+gui_related: false
+gui_classification_reason: Internal historical-read authority and oracle boundaries; no new visual surface.
+split_recommended: false
+depends_on: ["SP-300", "SP-278", "SP-286", "SP-420", "SP-339"]
+unblocks: []
+acceptance_criteria:
+- "goal.progressed independently adopts the complete original resolver/helper/final disclosure contract and ATS-1119 suite."
+- "An independently authenticated original pair, full original row/reference predicates and current owner fence precede verified disclosure."
+- "Every independently callable boundary refuses altered candidates and changed source/access/token after its last helper; read-only effects remain zero."
+validation_surfaces:
+- "python3 scripts/pm_goal_own_d_oracles.py"
+- "python3 scripts/pm_goal_history_reader_fixtures.py"
+- "Plans/goal_history_reader_outputs.schema.json"
+risk_class: historical_original_authority_laundering
+reasoning_tier: high
+context_scope: sp-1143_historical_reader_boundaries
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#O6
+preserved_exact_tokens: ["goal.progressed", "storage.goal_progressed_history_read.v1@1.0.0", "none_required", "SP-420", "SP-339"]
+negative_constraints:
+- No registry, admission, Decision Log, retained schema, retention, writer or native-runtime authority change.
+- No new physical number codec, invented bound or weaker retained-recipe selector.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-1144 - goal.replanned complete original reader and disclosure boundaries
+
+```yaml
+plan_unit_id: SP-1144
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 (2026-11-05), independently for goal.replanned. SP-301 and GRS-070/CV-344 remain this exact reader's governing contracts; storage.goal_replanned_history_read.v1@1.0.0, selector {project_id, goal_id, event_id, sequence_id}, and its existing closed eight-field answer are reused without a new public method, persisted value or reader version. SP-339 pm inspect and F3-666 take interpretation only from this exact binding. Entry, original resolver, row validator, answer builder, inspection entry and final disclosure are independently callable boundaries, each subject to the complete predicate below; an internal-call label conveys no authority.
+  Before the first returning helper, each boundary independently captures the immutable selector, actual selected Storage/root/index generation/dataset, complete live SP-278 ten-field token and actual source/access/deletion/hold/maintenance fence. The durable token, if another owner stores it, remains the nine-field token without redb_snapshot_id; this reader stores none. Resolve the exact encoded Project partition/key and full source cursor/frame/CRC/durable-watermark proof under SP-278. Capture immutable birth and complete advancing frontier separately, including nonmatching same-generation appends, translations, excluded/retired inputs and current source selection; equality of a caller's copies cannot authenticate them.
+  Adopt SP-420's original accepted-at-issue pair explicitly for this family: independently resolve its exact original SP-286 receipt custody and accepted-at-issue writer owner unit plus the approved checkpoint for this exact type/schema/version. The original owner/contract reference is resolved from retained owner custody; checkpoint and owner claims in two supplied objects are not the approval source. Compare the complete original receipt, Storage/event/key/type/schema and original value/semantic commitments using their actual original CV-339/SP-286 recipe/version. Preserve exact retained v1 receipt semantics without backfilling v2 commitment; use full-value resolution only where that original custody provides it. Identity-preserving backup/restore carries the same original receipt, source identity and admission, with independently current restored source/fences. It never creates member 2. Missing SP-420 member 2 returns unresolved_historical_validation with original_admission only while the generic source/access independently permit the complete raw original; otherwise unavailable. Current canon demonstrates no such original writer; conditional TEST_ONLY originals are not historical instances or producer admissions.
+  Resolve every required own original predecessor/runtime/reference/decision/evidence role before claiming verified_historical; enumerate required roles from this family's original contract so a missing role cannot vanish from an iteration. Each referenced source is joined on original identity, owner and accepted revision/currentness, not self-consistent requested/resolved labels. Preserve every original interruption class, impact_summary, new_revision equality, original revision/CAS, seven next_action edges, exact unique affected-child/decision correspondence, WorkNode references and remaining-evidence currentness. Resolve original child decisions and evidence through their own owner records, not present WorkGraph or Goal state. Neither reader nor inspector dispatches current Replan; the separate O10 goal_run.replanned source/wiring work remains required.
+  Every allowed referenced body read adopts its original source owner's SP-337 route: resolve that exact existing reference, original identity/recipe, actual permission/retention/hold, BLAKE3, byte size and media type, verify returned bytes and retain references in the EventRecord. Large referenced bodies remain in packs; verify complete bounded stored metadata/value parts under their existing SP-340 limit. No new envelope payload_ref codec or over-limit current inline writer is authorized; a missing original route is unavailable, never default-filled. Lawful retained inline/compatibility/replay-only originals are not subjected to today's writer limit, state, format or recipe. S1 and O12/S2 adoption remain the shared sweep; this unit invents no serializer or numeric range.
+  Independently derive the ENTIRE permitted eight-field answer from actual captured originals before candidate builders. Every helper's own entry repeats that capture for its actual input. After its last returning helper, and again at the original caller's final disclosure, a pure typed predicate compares the complete candidate, selector, original source/admission/reference facts and complete current owner/source/token/fence to the independent expectation. No helper, serializer, copy or response builder may run between the final predicate and release. Any changed authority or candidate discards the result; no cached validator success or coherent obsolete token grants disclosure. Unavailable contains no original event/token; unresolved lists only this family's existing fixed missing-obligation identifiers and grants no authority.
+  Current writers remain prohibited in both scopes, before dedupe including equal old keys and replay-only inputs. Read/retry/interruption/withdrawal cannot append, approve, dispatch, clear Stop, mutate state or source, write quarantine, rebuild a projection or advance a family checkpoint. This family's checkpoint is individually none_required; the actual generic SP-278 proof remains mandatory. Existing RP-AUTHORITY-INDEFINITE source/receipt and RP-EVENT-INDEX-SOURCE lookup custody, referenced-body owner lifetimes, access, deletion, holds, coherent backup/restore and withdrawal remain unchanged. ATS-1119 defines this family's separate replanned complete-input suite; native execution is NOT_RUN. Static cases and the shared sweep never admit an actual source.
+gui_related: false
+gui_classification_reason: Internal historical-read authority and oracle boundaries; no new visual surface.
+split_recommended: false
+depends_on: ["SP-301", "SP-278", "SP-286", "SP-420", "SP-339"]
+unblocks: []
+acceptance_criteria:
+- "goal.replanned independently adopts the complete original resolver/helper/final disclosure contract and ATS-1119 suite."
+- "An independently authenticated original pair, full original row/reference predicates and current owner fence precede verified disclosure."
+- "Every independently callable boundary refuses altered candidates and changed source/access/token after its last helper; read-only effects remain zero."
+validation_surfaces:
+- "python3 scripts/pm_goal_own_d_oracles.py"
+- "python3 scripts/pm_goal_history_reader_fixtures.py"
+- "Plans/goal_history_reader_outputs.schema.json"
+risk_class: historical_original_authority_laundering
+reasoning_tier: high
+context_scope: sp-1144_historical_reader_boundaries
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#O6
+preserved_exact_tokens: ["goal.replanned", "storage.goal_replanned_history_read.v1@1.0.0", "none_required", "SP-420", "SP-339"]
+negative_constraints:
+- No registry, admission, Decision Log, retained schema, retention, writer or native-runtime authority change.
+- No new physical number codec, invented bound or weaker retained-recipe selector.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-1145 - goal.stopped complete original reader and disclosure boundaries
+
+```yaml
+plan_unit_id: SP-1145
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 (2026-11-05), independently for goal.stopped. SP-302 and GRS-071/CV-345 remain this exact reader's governing contracts; storage.goal_stopped_history_read.v1@1.0.0, selector {project_id, goal_id, event_id, sequence_id}, and its existing closed eight-field answer are reused without a new public method, persisted value or reader version. SP-339 pm inspect and F3-666 take interpretation only from this exact binding. Entry, original resolver, row validator, answer builder, inspection entry and final disclosure are independently callable boundaries, each subject to the complete predicate below; an internal-call label conveys no authority.
+  Before the first returning helper, each boundary independently captures the immutable selector, actual selected Storage/root/index generation/dataset, complete live SP-278 ten-field token and actual source/access/deletion/hold/maintenance fence. The durable token, if another owner stores it, remains the nine-field token without redb_snapshot_id; this reader stores none. Resolve the exact encoded Project partition/key and full source cursor/frame/CRC/durable-watermark proof under SP-278. Capture immutable birth and complete advancing frontier separately, including nonmatching same-generation appends, translations, excluded/retired inputs and current source selection; equality of a caller's copies cannot authenticate them.
+  Adopt SP-420's original accepted-at-issue pair explicitly for this family: independently resolve its exact original SP-286 receipt custody and accepted-at-issue writer owner unit plus the approved checkpoint for this exact type/schema/version. The original owner/contract reference is resolved from retained owner custody; checkpoint and owner claims in two supplied objects are not the approval source. Compare the complete original receipt, Storage/event/key/type/schema and original value/semantic commitments using their actual original CV-339/SP-286 recipe/version. Preserve exact retained v1 receipt semantics without backfilling v2 commitment; use full-value resolution only where that original custody provides it. Identity-preserving backup/restore carries the same original receipt, source identity and admission, with independently current restored source/fences. It never creates member 2. Missing SP-420 member 2 returns unresolved_historical_validation with original_admission only while the generic source/access independently permit the complete raw original; otherwise unavailable. Current canon demonstrates no such original writer; conditional TEST_ONLY originals are not historical instances or producer admissions.
+  Resolve every required own original predecessor/runtime/reference/decision/evidence role before claiming verified_historical; enumerate required roles from this family's original contract so a missing role cannot vanish from an iteration. Each referenced source is joined on original identity, owner and accepted revision/currentness, not self-consistent requested/resolved labels. Preserve all four original interruption boundaries, reason, actual safe point, resumability and complete child/tool settlement evidence. before_mutation has no settlement or safe point; after_mutation_before_settlement has actual incomplete-settlement evidence and resumable=false. A true resumable original requires its original safe-point, resolved recovery, permission and complete settlements. Repeated stopped originals require a materially new boundary. Current Stop/GoalRun ownership and epochs remain untouched.
+  Every allowed referenced body read adopts its original source owner's SP-337 route: resolve that exact existing reference, original identity/recipe, actual permission/retention/hold, BLAKE3, byte size and media type, verify returned bytes and retain references in the EventRecord. Large referenced bodies remain in packs; verify complete bounded stored metadata/value parts under their existing SP-340 limit. No new envelope payload_ref codec or over-limit current inline writer is authorized; a missing original route is unavailable, never default-filled. Lawful retained inline/compatibility/replay-only originals are not subjected to today's writer limit, state, format or recipe. S1 and O12/S2 adoption remain the shared sweep; this unit invents no serializer or numeric range.
+  Independently derive the ENTIRE permitted eight-field answer from actual captured originals before candidate builders. Every helper's own entry repeats that capture for its actual input. After its last returning helper, and again at the original caller's final disclosure, a pure typed predicate compares the complete candidate, selector, original source/admission/reference facts and complete current owner/source/token/fence to the independent expectation. No helper, serializer, copy or response builder may run between the final predicate and release. Any changed authority or candidate discards the result; no cached validator success or coherent obsolete token grants disclosure. Unavailable contains no original event/token; unresolved lists only this family's existing fixed missing-obligation identifiers and grants no authority.
+  Current writers remain prohibited in both scopes, before dedupe including equal old keys and replay-only inputs. Read/retry/interruption/withdrawal cannot append, approve, dispatch, clear Stop, mutate state or source, write quarantine, rebuild a projection or advance a family checkpoint. This family's checkpoint is individually none_required; the actual generic SP-278 proof remains mandatory. Existing RP-AUTHORITY-INDEFINITE source/receipt and RP-EVENT-INDEX-SOURCE lookup custody, referenced-body owner lifetimes, access, deletion, holds, coherent backup/restore and withdrawal remain unchanged. ATS-1119 defines this family's separate stopped complete-input suite; native execution is NOT_RUN. Static cases and the shared sweep never admit an actual source.
+gui_related: false
+gui_classification_reason: Internal historical-read authority and oracle boundaries; no new visual surface.
+split_recommended: false
+depends_on: ["SP-302", "SP-278", "SP-286", "SP-420", "SP-339"]
+unblocks: []
+acceptance_criteria:
+- "goal.stopped independently adopts the complete original resolver/helper/final disclosure contract and ATS-1119 suite."
+- "An independently authenticated original pair, full original row/reference predicates and current owner fence precede verified disclosure."
+- "Every independently callable boundary refuses altered candidates and changed source/access/token after its last helper; read-only effects remain zero."
+validation_surfaces:
+- "python3 scripts/pm_goal_own_d_oracles.py"
+- "python3 scripts/pm_goal_history_reader_fixtures.py"
+- "Plans/goal_history_reader_outputs.schema.json"
+risk_class: historical_original_authority_laundering
+reasoning_tier: high
+context_scope: sp-1145_historical_reader_boundaries
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#O6
+preserved_exact_tokens: ["goal.stopped", "storage.goal_stopped_history_read.v1@1.0.0", "none_required", "SP-420", "SP-339"]
+negative_constraints:
+- No registry, admission, Decision Log, retained schema, retention, writer or native-runtime authority change.
+- No new physical number codec, invented bound or weaker retained-recipe selector.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-1146 - goal.verification_decided complete original reader and disclosure boundaries
+
+```yaml
+plan_unit_id: SP-1146
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 (2026-11-05), independently for goal.verification_decided. SP-303 and GRS-072/CV-346 remain this exact reader's governing contracts; storage.goal_verification_decided_history_read.v1@1.0.0, selector {project_id, goal_id, event_id, sequence_id}, and its existing closed eight-field answer are reused without a new public method, persisted value or reader version. SP-339 pm inspect and F3-666 take interpretation only from this exact binding. Entry, original resolver, row validator, answer builder, inspection entry and final disclosure are independently callable boundaries, each subject to the complete predicate below; an internal-call label conveys no authority.
+  Before the first returning helper, each boundary independently captures the immutable selector, actual selected Storage/root/index generation/dataset, complete live SP-278 ten-field token and actual source/access/deletion/hold/maintenance fence. The durable token, if another owner stores it, remains the nine-field token without redb_snapshot_id; this reader stores none. Resolve the exact encoded Project partition/key and full source cursor/frame/CRC/durable-watermark proof under SP-278. Capture immutable birth and complete advancing frontier separately, including nonmatching same-generation appends, translations, excluded/retired inputs and current source selection; equality of a caller's copies cannot authenticate them.
+  Adopt SP-420's original accepted-at-issue pair explicitly for this family: independently resolve its exact original SP-286 receipt custody and accepted-at-issue writer owner unit plus the approved checkpoint for this exact type/schema/version. The original owner/contract reference is resolved from retained owner custody; checkpoint and owner claims in two supplied objects are not the approval source. Compare the complete original receipt, Storage/event/key/type/schema and original value/semantic commitments using their actual original CV-339/SP-286 recipe/version. Preserve exact retained v1 receipt semantics without backfilling v2 commitment; use full-value resolution only where that original custody provides it. Identity-preserving backup/restore carries the same original receipt, source identity and admission, with independently current restored source/fences. It never creates member 2. Missing SP-420 member 2 returns unresolved_historical_validation with original_admission only while the generic source/access independently permit the complete raw original; otherwise unavailable. Current canon demonstrates no such original writer; conditional TEST_ONLY originals are not historical instances or producer admissions.
+  Resolve every required own original predecessor/runtime/reference/decision/evidence role before claiming verified_historical; enumerate required roles from this family's original contract so a missing role cannot vanish from an iteration. Each referenced source is joined on original identity, owner and accepted revision/currentness, not self-consistent requested/resolved labels. Validate each original passed/failed/blocked edge, assigned verifier, actual audit/verification cycle and committed successor. Passed requires original closure/evidence with empty findings/risks; failed requires findings; blocked retains risk/block references. Strong third-repeat cases resolve the original assigned adjudicator. Original closure/currentness belongs to the original cycle; present reviews cannot fill gaps. Passed is no completion or current certification authority.
+  Every allowed referenced body read adopts its original source owner's SP-337 route: resolve that exact existing reference, original identity/recipe, actual permission/retention/hold, BLAKE3, byte size and media type, verify returned bytes and retain references in the EventRecord. Large referenced bodies remain in packs; verify complete bounded stored metadata/value parts under their existing SP-340 limit. No new envelope payload_ref codec or over-limit current inline writer is authorized; a missing original route is unavailable, never default-filled. Lawful retained inline/compatibility/replay-only originals are not subjected to today's writer limit, state, format or recipe. S1 and O12/S2 adoption remain the shared sweep; this unit invents no serializer or numeric range.
+  Independently derive the ENTIRE permitted eight-field answer from actual captured originals before candidate builders. Every helper's own entry repeats that capture for its actual input. After its last returning helper, and again at the original caller's final disclosure, a pure typed predicate compares the complete candidate, selector, original source/admission/reference facts and complete current owner/source/token/fence to the independent expectation. No helper, serializer, copy or response builder may run between the final predicate and release. Any changed authority or candidate discards the result; no cached validator success or coherent obsolete token grants disclosure. Unavailable contains no original event/token; unresolved lists only this family's existing fixed missing-obligation identifiers and grants no authority.
+  Current writers remain prohibited in both scopes, before dedupe including equal old keys and replay-only inputs. Read/retry/interruption/withdrawal cannot append, approve, dispatch, clear Stop, mutate state or source, write quarantine, rebuild a projection or advance a family checkpoint. This family's checkpoint is individually none_required; the actual generic SP-278 proof remains mandatory. Existing RP-AUTHORITY-INDEFINITE source/receipt and RP-EVENT-INDEX-SOURCE lookup custody, referenced-body owner lifetimes, access, deletion, holds, coherent backup/restore and withdrawal remain unchanged. ATS-1119 defines this family's separate verification_decided complete-input suite; native execution is NOT_RUN. Static cases and the shared sweep never admit an actual source.
+gui_related: false
+gui_classification_reason: Internal historical-read authority and oracle boundaries; no new visual surface.
+split_recommended: false
+depends_on: ["SP-303", "SP-278", "SP-286", "SP-420", "SP-339"]
+unblocks: []
+acceptance_criteria:
+- "goal.verification_decided independently adopts the complete original resolver/helper/final disclosure contract and ATS-1119 suite."
+- "An independently authenticated original pair, full original row/reference predicates and current owner fence precede verified disclosure."
+- "Every independently callable boundary refuses altered candidates and changed source/access/token after its last helper; read-only effects remain zero."
+validation_surfaces:
+- "python3 scripts/pm_goal_own_d_oracles.py"
+- "python3 scripts/pm_goal_history_reader_fixtures.py"
+- "Plans/goal_history_reader_outputs.schema.json"
+risk_class: historical_original_authority_laundering
+reasoning_tier: high
+context_scope: sp-1146_historical_reader_boundaries
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#O6
+preserved_exact_tokens: ["goal.verification_decided", "storage.goal_verification_decided_history_read.v1@1.0.0", "none_required", "SP-420", "SP-339"]
+negative_constraints:
+- No registry, admission, Decision Log, retained schema, retention, writer or native-runtime authority change.
+- No new physical number codec, invented bound or weaker retained-recipe selector.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-1147 - goal.evidence_captured complete original reader and disclosure boundaries
+
+```yaml
+plan_unit_id: SP-1147
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 (2026-11-05), independently for goal.evidence_captured. SP-431 and GRS-205/CV-424 remain this exact reader's governing contracts; storage.goal_evidence_captured_history_read.v1@1.0.0, selector {project_id, goal_id, event_id, sequence_id}, and its existing closed eight-field answer are reused without a new public method, persisted value or reader version. SP-339 pm inspect and F3-666 take interpretation only from this exact binding. Entry, original resolver, row validator, answer builder, inspection entry and final disclosure are independently callable boundaries, each subject to the complete predicate below; an internal-call label conveys no authority.
+  Before the first returning helper, each boundary independently captures the immutable selector, actual selected Storage/root/index generation/dataset, complete live SP-278 ten-field token and actual source/access/deletion/hold/maintenance fence. The durable token, if another owner stores it, remains the nine-field token without redb_snapshot_id; this reader stores none. Resolve the exact encoded Project partition/key and full source cursor/frame/CRC/durable-watermark proof under SP-278. Capture immutable birth and complete advancing frontier separately, including nonmatching same-generation appends, translations, excluded/retired inputs and current source selection; equality of a caller's copies cannot authenticate them.
+  Adopt SP-420's original accepted-at-issue pair explicitly for this family: independently resolve its exact original SP-286 receipt custody and accepted-at-issue writer owner unit plus the approved checkpoint for this exact type/schema/version. The original owner/contract reference is resolved from retained owner custody; checkpoint and owner claims in two supplied objects are not the approval source. Compare the complete original receipt, Storage/event/key/type/schema and original value/semantic commitments using their actual original CV-339/SP-286 recipe/version. Preserve exact retained v1 receipt semantics without backfilling v2 commitment; use full-value resolution only where that original custody provides it. Identity-preserving backup/restore carries the same original receipt, source identity and admission, with independently current restored source/fences. It never creates member 2. Missing SP-420 member 2 returns unavailable with null event/token and no obligations. Current canon demonstrates no such original writer; conditional TEST_ONLY originals are not historical instances or producer admissions.
+  Resolve every required own original predecessor/runtime/reference/decision/evidence role before claiming verified_historical; enumerate required roles from this family's original contract so a missing role cannot vanish from an iteration. Each referenced source is joined on original identity, owner and accepted revision/currentness, not self-consistent requested/resolved labels. Preserve the nonterminal unchanged original state, evidence identity/kind, actual content hash/provenance, source-span locator and bounds, currentness, outer/inner redaction and any original snapshot/retention references. Resolve evidence content and source records through their actual owners; a supplied hash cannot establish provenance. Non-validator evidence needs original spans and artifact snapshots their original snapshot. Unknown currentness cannot prove verification/completion. Refuse both-scope new and equal-retry writers before dedupe.
+  Every allowed referenced body read adopts its original source owner's SP-337 route: resolve that exact existing reference, original identity/recipe, actual permission/retention/hold, BLAKE3, byte size and media type, verify returned bytes and retain references in the EventRecord. Large referenced bodies remain in packs; verify complete bounded stored metadata/value parts under their existing SP-340 limit. No new envelope payload_ref codec or over-limit current inline writer is authorized; a missing original route is unavailable, never default-filled. Lawful retained inline/compatibility/replay-only originals are not subjected to today's writer limit, state, format or recipe. S1 and O12/S2 adoption remain the shared sweep; this unit invents no serializer or numeric range.
+  Independently derive the ENTIRE permitted eight-field answer from actual captured originals before candidate builders. Every helper's own entry repeats that capture for its actual input. After its last returning helper, and again at the original caller's final disclosure, a pure typed predicate compares the complete candidate, selector, original source/admission/reference facts and complete current owner/source/token/fence to the independent expectation. No helper, serializer, copy or response builder may run between the final predicate and release. Any changed authority or candidate discards the result; no cached validator success or coherent obsolete token grants disclosure. Unavailable contains no original event/token; unresolved lists only this family's existing fixed missing-obligation identifiers and grants no authority.
+  Current writers remain prohibited in both scopes, before dedupe including equal old keys and replay-only inputs. Read/retry/interruption/withdrawal cannot append, approve, dispatch, clear Stop, mutate state or source, write quarantine, rebuild a projection or advance a family checkpoint. This family's checkpoint is individually none_required; the actual generic SP-278 proof remains mandatory. Existing RP-AUTHORITY-INDEFINITE source/receipt and RP-EVENT-INDEX-SOURCE lookup custody, referenced-body owner lifetimes, access, deletion, holds, coherent backup/restore and withdrawal remain unchanged. ATS-1119 defines this family's separate evidence_captured complete-input suite; native execution is NOT_RUN. Static cases and the shared sweep never admit an actual source.
+gui_related: false
+gui_classification_reason: Internal historical-read authority and oracle boundaries; no new visual surface.
+split_recommended: false
+depends_on: ["SP-431", "SP-278", "SP-286", "SP-420", "SP-339"]
+unblocks: []
+acceptance_criteria:
+- "goal.evidence_captured independently adopts the complete original resolver/helper/final disclosure contract and ATS-1119 suite."
+- "An independently authenticated original pair, full original row/reference predicates and current owner fence precede verified disclosure."
+- "Every independently callable boundary refuses altered candidates and changed source/access/token after its last helper; read-only effects remain zero."
+validation_surfaces:
+- "python3 scripts/pm_goal_own_d_oracles.py"
+- "python3 scripts/pm_goal_history_reader_fixtures.py"
+- "Plans/goal_history_reader_outputs.schema.json"
+risk_class: historical_original_authority_laundering
+reasoning_tier: high
+context_scope: sp-1147_historical_reader_boundaries
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#O6
+preserved_exact_tokens: ["goal.evidence_captured", "storage.goal_evidence_captured_history_read.v1@1.0.0", "none_required", "SP-420", "SP-339"]
+negative_constraints:
+- No registry, admission, Decision Log, retained schema, retention, writer or native-runtime authority change.
+- No new physical number codec, invented bound or weaker retained-recipe selector.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-1148 - goal.receipt_recorded complete original reader and disclosure boundaries
+
+```yaml
+plan_unit_id: SP-1148
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 (2026-11-05), independently for goal.receipt_recorded. SP-432 and GRS-206/CV-425 remain this exact reader's governing contracts; storage.goal_receipt_recorded_history_read.v1@1.0.0, selector {project_id, goal_id, event_id, sequence_id}, and its existing closed eight-field answer are reused without a new public method, persisted value or reader version. SP-339 pm inspect and F3-666 take interpretation only from this exact binding. Entry, original resolver, row validator, answer builder, inspection entry and final disclosure are independently callable boundaries, each subject to the complete predicate below; an internal-call label conveys no authority.
+  Before the first returning helper, each boundary independently captures the immutable selector, actual selected Storage/root/index generation/dataset, complete live SP-278 ten-field token and actual source/access/deletion/hold/maintenance fence. The durable token, if another owner stores it, remains the nine-field token without redb_snapshot_id; this reader stores none. Resolve the exact encoded Project partition/key and full source cursor/frame/CRC/durable-watermark proof under SP-278. Capture immutable birth and complete advancing frontier separately, including nonmatching same-generation appends, translations, excluded/retired inputs and current source selection; equality of a caller's copies cannot authenticate them.
+  Adopt SP-420's original accepted-at-issue pair explicitly for this family: independently resolve its exact original SP-286 receipt custody and accepted-at-issue writer owner unit plus the approved checkpoint for this exact type/schema/version. The original owner/contract reference is resolved from retained owner custody; checkpoint and owner claims in two supplied objects are not the approval source. Compare the complete original receipt, Storage/event/key/type/schema and original value/semantic commitments using their actual original CV-339/SP-286 recipe/version. Preserve exact retained v1 receipt semantics without backfilling v2 commitment; use full-value resolution only where that original custody provides it. Identity-preserving backup/restore carries the same original receipt, source identity and admission, with independently current restored source/fences. It never creates member 2. Missing SP-420 member 2 returns unavailable with null event/token and no obligations. Current canon demonstrates no such original writer; conditional TEST_ONLY originals are not historical instances or producer admissions.
+  Resolve every required own original predecessor/runtime/reference/decision/evidence role before claiming verified_historical; enumerate required roles from this family's original contract so a missing role cannot vanish from an iteration. Each referenced source is joined on original identity, owner and accepted revision/currentness, not self-consistent requested/resolved labels. Resolve the actual original receipt identity/kind/tier and certifier decision, validator outputs and the COMPLETE required child/WorkNode dependency set from the original certifier owner; the event cannot declare its own required set. Compare exact dependency membership, preserved running/verifying/repairing/degraded/blocked state, and original rejection/block evidence where required. Approved-exception history needs its original approval and residual-risk/incomplete-item dispositions, never a new waiver. Refuse both-scope new and equal-retry writers before dedupe.
+  Every allowed referenced body read adopts its original source owner's SP-337 route: resolve that exact existing reference, original identity/recipe, actual permission/retention/hold, BLAKE3, byte size and media type, verify returned bytes and retain references in the EventRecord. Large referenced bodies remain in packs; verify complete bounded stored metadata/value parts under their existing SP-340 limit. No new envelope payload_ref codec or over-limit current inline writer is authorized; a missing original route is unavailable, never default-filled. Lawful retained inline/compatibility/replay-only originals are not subjected to today's writer limit, state, format or recipe. S1 and O12/S2 adoption remain the shared sweep; this unit invents no serializer or numeric range.
+  Independently derive the ENTIRE permitted eight-field answer from actual captured originals before candidate builders. Every helper's own entry repeats that capture for its actual input. After its last returning helper, and again at the original caller's final disclosure, a pure typed predicate compares the complete candidate, selector, original source/admission/reference facts and complete current owner/source/token/fence to the independent expectation. No helper, serializer, copy or response builder may run between the final predicate and release. Any changed authority or candidate discards the result; no cached validator success or coherent obsolete token grants disclosure. Unavailable contains no original event/token; unresolved lists only this family's existing fixed missing-obligation identifiers and grants no authority.
+  Current writers remain prohibited in both scopes, before dedupe including equal old keys and replay-only inputs. Read/retry/interruption/withdrawal cannot append, approve, dispatch, clear Stop, mutate state or source, write quarantine, rebuild a projection or advance a family checkpoint. This family's checkpoint is individually none_required; the actual generic SP-278 proof remains mandatory. Existing RP-AUTHORITY-INDEFINITE source/receipt and RP-EVENT-INDEX-SOURCE lookup custody, referenced-body owner lifetimes, access, deletion, holds, coherent backup/restore and withdrawal remain unchanged. ATS-1119 defines this family's separate receipt_recorded complete-input suite; native execution is NOT_RUN. Static cases and the shared sweep never admit an actual source.
+gui_related: false
+gui_classification_reason: Internal historical-read authority and oracle boundaries; no new visual surface.
+split_recommended: false
+depends_on: ["SP-432", "SP-278", "SP-286", "SP-420", "SP-339"]
+unblocks: []
+acceptance_criteria:
+- "goal.receipt_recorded independently adopts the complete original resolver/helper/final disclosure contract and ATS-1119 suite."
+- "An independently authenticated original pair, full original row/reference predicates and current owner fence precede verified disclosure."
+- "Every independently callable boundary refuses altered candidates and changed source/access/token after its last helper; read-only effects remain zero."
+validation_surfaces:
+- "python3 scripts/pm_goal_own_d_oracles.py"
+- "python3 scripts/pm_goal_history_reader_fixtures.py"
+- "Plans/goal_history_reader_outputs.schema.json"
+risk_class: historical_original_authority_laundering
+reasoning_tier: high
+context_scope: sp-1148_historical_reader_boundaries
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#O6
+preserved_exact_tokens: ["goal.receipt_recorded", "storage.goal_receipt_recorded_history_read.v1@1.0.0", "none_required", "SP-420", "SP-339"]
+negative_constraints:
+- No registry, admission, Decision Log, retained schema, retention, writer or native-runtime authority change.
+- No new physical number codec, invented bound or weaker retained-recipe selector.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-1149 - goal.tool_check_recorded complete original reader and disclosure boundaries
+
+```yaml
+plan_unit_id: SP-1149
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 (2026-11-05), independently for goal.tool_check_recorded. SP-433 and GRS-207/CV-426 remain this exact reader's governing contracts; storage.goal_tool_check_recorded_history_read.v1@1.0.0, selector {project_id, goal_id, event_id, sequence_id}, and its existing closed eight-field answer are reused without a new public method, persisted value or reader version. SP-339 pm inspect and F3-666 take interpretation only from this exact binding. Entry, original resolver, row validator, answer builder, inspection entry and final disclosure are independently callable boundaries, each subject to the complete predicate below; an internal-call label conveys no authority.
+  Before the first returning helper, each boundary independently captures the immutable selector, actual selected Storage/root/index generation/dataset, complete live SP-278 ten-field token and actual source/access/deletion/hold/maintenance fence. The durable token, if another owner stores it, remains the nine-field token without redb_snapshot_id; this reader stores none. Resolve the exact encoded Project partition/key and full source cursor/frame/CRC/durable-watermark proof under SP-278. Capture immutable birth and complete advancing frontier separately, including nonmatching same-generation appends, translations, excluded/retired inputs and current source selection; equality of a caller's copies cannot authenticate them.
+  Adopt SP-420's original accepted-at-issue pair explicitly for this family: independently resolve its exact original SP-286 receipt custody and accepted-at-issue writer owner unit plus the approved checkpoint for this exact type/schema/version. The original owner/contract reference is resolved from retained owner custody; checkpoint and owner claims in two supplied objects are not the approval source. Compare the complete original receipt, Storage/event/key/type/schema and original value/semantic commitments using their actual original CV-339/SP-286 recipe/version. Preserve exact retained v1 receipt semantics without backfilling v2 commitment; use full-value resolution only where that original custody provides it. Identity-preserving backup/restore carries the same original receipt, source identity and admission, with independently current restored source/fences. It never creates member 2. Missing SP-420 member 2 returns unavailable with null event/token and no obligations. Current canon demonstrates no such original writer; conditional TEST_ONLY originals are not historical instances or producer admissions.
+  Resolve every required own original predecessor/runtime/reference/decision/evidence role before claiming verified_historical; enumerate required roles from this family's original contract so a missing role cannot vanish from an iteration. Each referenced source is joined on original identity, owner and accepted revision/currentness, not self-consistent requested/resolved labels. Resolve the original tool-call identity/name/check and actual permission decision, including approval/block evidence where applicable; preserve the unchanged admitted original state. Passed with allow/not_applicable needs original output/log; failed/blocked/unknown needs original log; deny and approval_required cannot pass. Follow-on mutation is a different original event. Resolve output/log content through its own source/access/redaction owner and disclose only the original references and current truthful disposition. Refuse both-scope new and equal-retry writers before dedupe.
+  Every allowed referenced body read adopts its original source owner's SP-337 route: resolve that exact existing reference, original identity/recipe, actual permission/retention/hold, BLAKE3, byte size and media type, verify returned bytes and retain references in the EventRecord. Large referenced bodies remain in packs; verify complete bounded stored metadata/value parts under their existing SP-340 limit. No new envelope payload_ref codec or over-limit current inline writer is authorized; a missing original route is unavailable, never default-filled. Lawful retained inline/compatibility/replay-only originals are not subjected to today's writer limit, state, format or recipe. S1 and O12/S2 adoption remain the shared sweep; this unit invents no serializer or numeric range.
+  Independently derive the ENTIRE permitted eight-field answer from actual captured originals before candidate builders. Every helper's own entry repeats that capture for its actual input. After its last returning helper, and again at the original caller's final disclosure, a pure typed predicate compares the complete candidate, selector, original source/admission/reference facts and complete current owner/source/token/fence to the independent expectation. No helper, serializer, copy or response builder may run between the final predicate and release. Any changed authority or candidate discards the result; no cached validator success or coherent obsolete token grants disclosure. Unavailable contains no original event/token; unresolved lists only this family's existing fixed missing-obligation identifiers and grants no authority.
+  Current writers remain prohibited in both scopes, before dedupe including equal old keys and replay-only inputs. Read/retry/interruption/withdrawal cannot append, approve, dispatch, clear Stop, mutate state or source, write quarantine, rebuild a projection or advance a family checkpoint. This family's checkpoint is individually none_required; the actual generic SP-278 proof remains mandatory. Existing RP-AUTHORITY-INDEFINITE source/receipt and RP-EVENT-INDEX-SOURCE lookup custody, referenced-body owner lifetimes, access, deletion, holds, coherent backup/restore and withdrawal remain unchanged. ATS-1119 defines this family's separate tool_check_recorded complete-input suite; native execution is NOT_RUN. Static cases and the shared sweep never admit an actual source.
+gui_related: false
+gui_classification_reason: Internal historical-read authority and oracle boundaries; no new visual surface.
+split_recommended: false
+depends_on: ["SP-433", "SP-278", "SP-286", "SP-420", "SP-339"]
+unblocks: []
+acceptance_criteria:
+- "goal.tool_check_recorded independently adopts the complete original resolver/helper/final disclosure contract and ATS-1119 suite."
+- "An independently authenticated original pair, full original row/reference predicates and current owner fence precede verified disclosure."
+- "Every independently callable boundary refuses altered candidates and changed source/access/token after its last helper; read-only effects remain zero."
+validation_surfaces:
+- "python3 scripts/pm_goal_own_d_oracles.py"
+- "python3 scripts/pm_goal_history_reader_fixtures.py"
+- "Plans/goal_history_reader_outputs.schema.json"
+risk_class: historical_original_authority_laundering
+reasoning_tier: high
+context_scope: sp-1149_historical_reader_boundaries
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#O6
+preserved_exact_tokens: ["goal.tool_check_recorded", "storage.goal_tool_check_recorded_history_read.v1@1.0.0", "none_required", "SP-420", "SP-339"]
+negative_constraints:
+- No registry, admission, Decision Log, retained schema, retention, writer or native-runtime authority change.
+- No new physical number codec, invented bound or weaker retained-recipe selector.
+owner_hints:
+- Plans/storage-plan.md
+```

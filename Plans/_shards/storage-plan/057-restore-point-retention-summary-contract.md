@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L20445-L21314
+Source lines: L20445-L21322
 
-Source SHA256: `59ba89b11f45f854d665be07625e8c1b24f1919124f7574e5b416d542380656f`
+Source SHA256: `4a078cf2666ed3aa7f7ede3d2dddf750bad484eea3597f7c2e820c11461f6aba`
 
 ---
 
@@ -389,6 +389,9 @@ At the original reader entry, before the first returning decoder, resolver, vali
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-060, ContractName:Plans/Contracts_V0.md#CV-334, ContractName:Plans/Runtime_Artifacts_Panel.md, SchemaID:pm.storage_value.event_record_index.v2
 
+
+**DG-OWN-D O6 adoption (2026-11-05, newly authored owner contract).** For exactly `goal.child_status_changed`, this reader explicitly adopts SP-1140 and its separate ATS-1119 `child_status` entry/resolver/row-validator/answer-builder/inspection/disclosure suite, preserving its own SP-420 missing-proof outcome and SP-339 actual consumer. This is an oracle and boundary completion; it grants no current writer, historical instance, new retention, registry or native authority.
+
 ### SP-277 - Historical Goal degradation direct source reader
 
 ```yaml
@@ -573,6 +576,9 @@ preserved_exact_tokens:
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-061, ContractName:Plans/Contracts_V0.md#CV-335, ContractName:Plans/storage-plan.md#SP-277, ContractName:Plans/Decision_Log.md#DL-039
 
+
+**DG-OWN-D O6 adoption (2026-11-05, newly authored owner contract).** For exactly `goal.degraded`, this reader explicitly adopts SP-1141 and its separate ATS-1119 `degraded` entry/resolver/row-validator/answer-builder/inspection/disclosure suite, preserving its own SP-420 missing-proof outcome and SP-339 actual consumer. This is an oracle and boundary completion; it grants no current writer, historical instance, new retention, registry or native authority.
+
 ### SP-280 - Exact historical Goal scheduling contract
 
 ```yaml
@@ -754,6 +760,8 @@ preserved_exact_tokens:
 **Original admission proof, operating consumer and oracle fixture (newly authored owner contract under DL-045, 2026-11-04).** For `goal.scheduled` (`Plans/event_family_registry.json#/families/16`, payload `pm.goal_runtime_event.goal_scheduled.schema.v2`), this reader adopts SP-420 by name: original lawful admission of a record is proved only by SP-420's pair for that exact record. SP-420's search found no owner unit that names a writer for this payload version, and GRS-062 with CV-336 refuses current writers, so member 2 resolves for no `goal.scheduled` record. This reader's own rule already makes unresolved historical admission custody return `unavailable`. So every `goal.scheduled` lookup returns `unavailable` until member 2 is shown, and `original_admission` is never an unresolved obligation of this reader. No lookup of this family returns `verified_historical` under current canon. **Closed answer.** The ephemeral answer has exactly eight required fields: `kind`, `reader_binding`, `selector`, `original_event`, `original_validation`, `unresolved_obligations`, `read_token`, `action_authority`. `selector` is exactly the request `{project_id, goal_id, event_id, sequence_id}`. `reader_binding` is the constant `storage.goal_scheduled_history_read.v1@1.0.0`. `kind` is `verified_historical | unresolved_historical_validation | unavailable`, with `original_validation` respectively `verified | unresolved | unavailable`, and `action_authority` is always `none`. The first two kinds carry the complete unchanged original EventRecord and the full SP-278 read token; `unavailable` carries null for both and an empty obligation array. `verified_historical` has an empty obligation array. `unresolved_historical_validation` has a nonempty unique array drawn only from `original_producer_authority`, `original_revision_cas`, `original_predecessor_state`, `original_queue_admission`, `original_budget_snapshot`, `original_permission_evidence`, `original_recovery_truth`, `original_runtime_identity`, `original_idempotency`, `original_referenced_record`, `original_row_predicate`, each naming one unproved D-R11 predicate of this row; it is allowed only when the current generic source read and permission authorize the complete raw observation. No answer adds dynamic source text, a partial or redacted original or a lifecycle claim. **Operating consumer.** The operating consumers are SP-339's `pm inspect` and the record inspector F3-666 opened through `cmd.storage.open_value`. When the record they open is a `goal.scheduled` EventRecord, they call `storage.goal_scheduled_history_read.v1@1.0.0` with that record's own `{project_id, goal_id, event_id, sequence_id}` and take its historical interpretation and validation disposition only from this reader's answer; they add no other family-specific interpretation, and neither turns an answer into a control, Goal state, To-Do or action. `pm tail` and `pm export` list and export the stored record under SP-339 without calling this reader. **Oracles.** The closed answer is `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_scheduled_history_answer`; `Plans/goal_scheduled_history_contract_fixtures.json` holds its positive and negative cases, checked by `python3 scripts/pm_goal_history_reader_fixtures.py`.
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-062, ContractName:Plans/Contracts_V0.md#CV-336, ContractName:Plans/storage-plan.md#SP-280, ContractName:Plans/Scheduling_and_Quota_Resume.md, ContractName:Plans/Decision_Log.md#DL-045
+
+**DG-OWN-D O6 adoption (2026-11-05, newly authored owner contract).** For exactly `goal.scheduled`, this reader explicitly adopts SP-1142 and its separate ATS-1119 `scheduled` entry/resolver/row-validator/answer-builder/inspection/disclosure suite, preserving its own SP-420 missing-proof outcome and SP-339 actual consumer. This is an oracle and boundary completion; it grants no current writer, historical instance, new retention, registry or native authority.
 
 <a id="generic-eventrecord-index-checkpoint-and-publication"></a>
 ### Generic EventRecord index checkpoint and publication
