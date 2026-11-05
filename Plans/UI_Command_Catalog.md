@@ -7605,11 +7605,15 @@ canonical_text: Teach guided GUI commands include help-icon launch, /teach launc
   UI, and optional Do it execution only for explicitly safe actions. Mutations require confirmation, permission
   gates, and activity transparency. Degraded states include missing target, stale navigation, permission denied,
   unavailable command, model/capability fallback, missing help entry, and user stop, each with a visible next action.
+  Amended 2026-11-05 under DL-333, following DL-127, typing /teach opens the Teach popup through cmd.chat.teach.capture
+  and is not a Teacher launch; the Teacher keeps the help-icon launch and the intent-classified natural-language route
+  of CS-053.
 gui_related: true
 gui_classification_reason: Defines user-visible guided action commands, route/highlight controls, mutation confirmation,
   and degraded action handling.
 depends_on:
 - PS-122
+- DL-127
 unblocks:
 - ATS-014
 acceptance_criteria:
