@@ -107,15 +107,16 @@ export const tests = {
     await row.scrollIntoViewIfNeeded(); await row.click();
     await t.until(`${look} ${id} opens`, () => window.O55.S.open && !!document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)'));
     await f.waitForFunction(()=>{const e=document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)');return e && !e.matches('.o55-hold,.o55-entering') && e.innerText.trim().length>0;},null,{timeout:15000});
-    await t.equal(`${look} ${id} owner screen`, () => f.evaluate(() => O55.S.sess.screen),id);
-    await t.equal(`${look} ${id} keeps look`,()=>f.evaluate(()=>PMLogo.look()),look);
-    await t.check(`${look} ${id} pane has content`,await f.locator('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)').innerText().then(x=>x.trim().length>0));
-    const note=f.locator('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-do="tip"]:visible').first();
-    // A deliberate negative fixture proves a missing control cannot silently pass.
+    // Capture launch facts together, then open Help immediately: a pairing fixture
+    // can finish while separate diagnostic reads run and remove its Resend control.
     if(t.args.helpSelftest==='missing') await f.locator('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-do="tip"]').evaluateAll(es=>es.forEach(e=>e.remove()));
-    await t.check(`${look} ${id} help control exists`,await note.count()>0);
-    if(!await note.count()) throw new Error(`${look} ${id}: required help control missing`);
-    await note.click();
+    const launch=await f.evaluate(()=>{const layer=document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out)'),tips=[...layer.querySelectorAll('[data-o55-do="tip"]')].filter(e=>e.getClientRects().length&&getComputedStyle(e).visibility==='visible');return{screen:O55.S.sess.screen,look:PMLogo.look(),content:layer.innerText.trim(),helpCount:tips.length,tip:tips[0]?.dataset.arg};});
+    await t.check(`${look} ${id} help control exists`,launch.helpCount>0);
+    if(!launch.helpCount) throw new Error(`${look} ${id}: required help control missing`);
+    await f.locator(`#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-do="tip"][data-arg="${launch.tip}"]:visible`).first().click();
+    await t.equal(`${look} ${id} owner screen`,launch.screen,id);
+    await t.equal(`${look} ${id} keeps look`,launch.look,look);
+    await t.check(`${look} ${id} pane has content`,launch.content.length>0);
     // A full-box hit probe can select stage SVG decoration around this prose.
     // Require the note and its rendered body to be visible instead.
     await f.waitForFunction(()=>{const e=document.querySelector('#pm7ob-explainer');if(!e)return false;const r=e.getBoundingClientRect();if(!(r.width>0&&r.height>0&&r.right>0&&r.bottom>0&&r.x<innerWidth&&r.y<innerHeight))return false;for(let n=e;n;n=n.parentElement){const s=getComputedStyle(n);if(s.display==='none'||s.visibility!=='visible'||Number(s.opacity)===0)return false;}return true;});
