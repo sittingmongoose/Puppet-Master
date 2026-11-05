@@ -7,7 +7,7 @@ async function actualPlateRow(t) {
  await f.evaluate(()=>{const b=document.createElement('button');b.dataset.kind='crew';b.dataset.auto='0';PM56_EXT.run('collab-open-configure',b,new Event('click'));const c=PM56_EXT.ctx();if(c.renderOverlays)c.renderOverlays();});
  const sel='figure.pmx-plate';await f.waitForSelector(sel);await f.waitForTimeout(1800);
  const row=await f.evaluate(s=>{const e=document.querySelector(s);e.id='review-real-plate';const q=[...e.querySelectorAll('svg text,svg foreignObject span')].find(n=>n.getBoundingClientRect().width>25);q.id='review-real-row';return {html:q.outerHTML,box:q.getBoundingClientRect().toJSON(),plate:e.getBoundingClientRect().toJSON()};},sel);
- const dir=t.args.inputs?path.join(String(t.args.inputs),'actual-plate-row'):path.join(t.dir||'/home/sittingmongoose/pm-scratch/fo-visual-c4','actual-plate-row');await mkdir(dir,{recursive:true});
+ const dir=t.args.inputs?path.join(String(t.args.inputs),'actual-plate-row'):null;if(dir)await mkdir(dir,{recursive:true});
  let count=0;const trace=[];
  const page=new Proxy(t.page,{get(target,key){if(key==='screenshot')return async opts=>{const i=count++;
   if(i===2)await f.evaluate(()=>{const e=document.getElementById('review-real-row');e.__reviewStyle=e.getAttribute('style');const scale=(e.getScreenCTM?.()||e.closest('svg')?.getScreenCTM?.())?.a||1;e.style.setProperty('transform','translateX('+(1/(devicePixelRatio*scale))+'px)','important');});
@@ -15,13 +15,13 @@ async function actualPlateRow(t) {
  };const v=target[key];return typeof v==='function'?v.bind(target):v;}});
  const wrapped=new Proxy(t,{get(target,key){return key==='page'?page:target[key];}});
  let m;try{m=await readThrough(wrapped,f,'#review-real-plate',{inputDir:dir});}finally{await f.evaluate(()=>{const e=document.getElementById('review-real-row');if(e.__reviewStyle==null)e.removeAttribute('style');else e.setAttribute('style',e.__reviewStyle);});}
- await writeFile(path.join(dir,'result.json'),JSON.stringify({row,trace,result:m},null,2));
+ if(dir)await writeFile(path.join(dir,'result.json'),JSON.stringify({row,trace,result:m},null,2));
  await t.check('real product plate: internal row moved in reference/outside/all-ink captures',trace.length===5&&trace.slice(2).every(x=>Math.abs(x.row.x-trace[0].row.x-1)<.05),JSON.stringify(trace));
  await t.check('real product plate: moved own row invalidates sample',m?.invalid===true&&m.share===undefined,JSON.stringify({invalid:m?.invalid,reason:m?.reason,share:m?.share,ownStability:m?.ownStability}));
  const measured=await f.evaluate(()=>{const b=document.getElementById('review-real-plate').getBoundingClientRect(),dpr=devicePixelRatio,left=Math.round(b.left*dpr),top=Math.round(b.top*dpr),w=Math.round(b.width*dpr),h=Math.round(b.height*dpr);return {sourceRect:JSON.stringify(b.toJSON()),dpr,rect:{x:(left+2)/dpr,y:(top+2)/dpr,width:(w-4)/dpr,height:(h-4)/dpr}};});
  const plain=await capturePaint(t,measured.rect,measured);measured.points=await installCaptureWitness(f,'#review-real-plate',measured);await f.waitForTimeout(250);const marked=await capturePaint(t,measured.rect,measured);
  let outside=0,inside=0;for(let i=0,p=0;i<plain.data.length;i+=4,p++)if([0,1,2,3].some(k=>plain.data[i+k]!==marked.data[i+k])){if(marked.outlineMask[p])inside++;else outside++;}
- await writeFile(path.join(dir,'isolation-plain.png'),plain.paintPng);await writeFile(path.join(dir,'isolation-marked.png'),marked.paintPng);await writeFile(path.join(dir,'isolation.json'),JSON.stringify({outside,inside,capture:marked.capture},null,2));await cleanupCaptureWitness(f,'#review-real-plate');
+ if(dir){await writeFile(path.join(dir,'isolation-plain.png'),plain.paintPng);await writeFile(path.join(dir,'isolation-marked.png'),marked.paintPng);await writeFile(path.join(dir,'isolation.json'),JSON.stringify({outside,inside,capture:marked.capture},null,2));}await cleanupCaptureWitness(f,'#review-real-plate');
  await t.check('real product plate: marker changes no measured pixels outside band',outside===0&&marked.capture.valid&&marked.capture.ownValid,JSON.stringify({outside,inside}));
 }
 

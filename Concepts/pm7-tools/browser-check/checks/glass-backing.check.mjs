@@ -217,7 +217,8 @@ export async function readThrough(t, f, sel, { loseOwnInk = false, resizeAfterMe
 		const faults = { ownInkLoss: loseOwnInk ? expected>0 && retainedInk/expected<.05 : null, ownRowMove: moveOwnRow ? rowInk>50&&rowMatched/rowInk>.995 : null };
 		const ownStability=ownInkStability({a1,a2,reference,b,c});
   ownStability.svg=svgInkStability(a2,reference,b,c,measured.svgRows,r,measured.dpr);
-  ownStability.stable=ownStability.stable&&ownStability.svg.stable;
+  ownStability.svgFirst=svgInkStability(a1,reference,b,c,measured.svgRows,r,measured.dpr);
+  ownStability.stable=ownStability.stable&&ownStability.svg.stable&&ownStability.svgFirst.stable;
 		const snap=value=>{if(!value)return null;const b=JSON.parse(value);return JSON.stringify([b.x,b.y,b.width,b.height].map(v=>Math.round(v*measured.dpr)));};
 		const geometryStable = snap(stable.sourceRect) === snap(stable.setupRect) && snap(stable.sourceRect) === snap(stable.endRect) && captures.every(c=>c.valid);
 		if (!geometryStable || !ownStability.stable || (expected > 0 && covered / expected < 0.95)) return { invalid: true, reason: `geometry stable=${geometryStable}; own ink stable=${ownStability.stable}; own glyph exclusion ${covered}/${expected}`, rect: r, geometry: stable, captures, ownStability, faults };
