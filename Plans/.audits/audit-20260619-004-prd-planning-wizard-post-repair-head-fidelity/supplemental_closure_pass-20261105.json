@@ -1,0 +1,35 @@
+{
+  "audit_id": "audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity",
+  "closures": [
+    {
+      "appended_line": 21,
+      "appended_row_sha256": "533d3b3f3e95f44a3027c2b694125225a86397d9d551a3a06d0f1fe2de5cc0e8",
+      "closes": {
+        "claim_status": "source_lineage_supported_with_index_shape_warning",
+        "plan_unit_id": "PNC-014",
+        "source_artifact": "planunit_source_claims.jsonl",
+        "source_row": 31
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Plan_To_Node_Compilation.md#unit=PNC-014": "46c60cc1a52579a60cdd18e9c0b97815171f36684f284e9a6339a798728082b8"
+      },
+      "observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "registry_closure_id": "closure-audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity-repair-002",
+      "registry_closure_reaudit": "closure-reaudit-20261104 rerun batch B12, registry line 262: worker, Sol and Astra agree supported",
+      "via_matrix_line": 2
+    }
+  ],
+  "decision": {
+    "decision_record": "Plans/Decision_Log.md#DL-334",
+    "owner_unit": "Plans/Planning_Ledger_System.md#PLS-026",
+    "source": "Jared, \"approve all\", T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z (stream C question 7, option (a)); extended to the other June audits with uncovered rows by pm7-build's relay of the same approved option (pm-mail 1105030457-ade2, 2026-11-05)"
+  },
+  "matrix": {
+    "original_rows": 20,
+    "original_sha256": "c26272509f73b1310153a9433b85575f9f53e209a694cc5430e6c3b32d0f4eff",
+    "path": "repair_closure_matrix.jsonl"
+  },
+  "pass_id": "audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity-supplemental-20261105",
+  "reviews": "pending: Sol 6.1 max, then Astra max, blind (stream C review rule)",
+  "schema_id": "pm.audit_supplemental_closure_pass.v1"
+}
