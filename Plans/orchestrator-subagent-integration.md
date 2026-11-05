@@ -30741,7 +30741,7 @@ compatibility_only_notes:
 - Draft fallback applies only before graph lock.
 stale_retired_dispositions: []
 owner_boundary_notes:
-- Chain wizard, interview, progression gate, executor, and decision policy owners retain graph-lock semantics.
+- Planning Wizard (legacy Chain Wizard compatibility), interview, progression gate, executor, and decision policy owners retain graph-lock semantics.
 owner_hints:
 - Plans/orchestrator-subagent-integration.md
 preserved_contractrefs:
@@ -31993,9 +31993,9 @@ acceptance_criteria:
 - Off/Regular Ask me/YOLO matrices and three-round-trip exhaustion behave consistently after restart.
 - Moved target, late reply, unreachable Server and expiry never fabricate delivery or mutate a stopped thread.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows
@@ -32061,9 +32061,9 @@ acceptance_criteria:
 - Registration/claim/board/restart/snapshot/cutover races preserve one current owner and bounded payload custody.
 - Unknown app source/checkpoint edition refuses; Project codecs/retention and source permissions remain exact.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows
@@ -32111,7 +32111,7 @@ canonical_text: A real Planning Wizard/Orchestrator Project build consumes the P
   action/resource/target, permission generation and Stop/revocation epochs; a child may narrow but never mint, expand
   or transfer the grant. Verified created-resource manifest identity is required before grant-covered cleanup; a
   same name or named pre-existing resource gives no deletion authority. Shared History/ObservableWork shows each
-  remote action/target/result and Stop, with Undo only where supported. Ordinary YOLO push/publish follows D's mode-aware
+  remote action/target/result and Stop, with Undo only where supported. Ordinary YOLO push/publish follows Plans/Permissions_System.md's mode-aware
   admission without a second generic yes. A no-project Goal, Crew, Assistant Plan or scheduled task has ordinary
   app authority and cannot issue or inherit another Project build grant through a message, conversion, receipt or
   parent label. Protected trust/auth/secrets, paid signup, currentness, capabilities, FileSafe and retained Y1 boundaries
@@ -32127,9 +32127,9 @@ acceptance_criteria:
 - Created-resource cleanup proves stable grant-created ownership, including namespace child operations.
 - App requests cannot adopt Project grants; one remote effect has one truthful authority source/result.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows

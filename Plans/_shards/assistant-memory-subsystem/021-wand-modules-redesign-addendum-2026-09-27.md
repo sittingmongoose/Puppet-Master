@@ -4,7 +4,7 @@ Source: `Plans/assistant-memory-subsystem.md`
 
 Source lines: L2690-L3149
 
-Source SHA256: `f0493b3f44b352436041e7d206c70d7638402625d9ebba5acf3993556991abd2`
+Source SHA256: `0ac24d47058681d382a613bafe4b88d171044b5cb01c12938830f21d0d7ea2f0`
 
 ---
 
@@ -421,8 +421,8 @@ acceptance_criteria:
 - Conversion and export retain source restrictions, stored verification_state and evidence pointers; absent
   authority cannot become Verified or shared.
 validation_surfaces:
-- Phase 2 F companion/schema and semantic fixtures (not run in phase 1).
-- Post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.
+- scripts/pm-projects-refresh-contracts.py
+- future post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.
 risk_class: scope_authority_or_custody_drift
 reasoning_tier: high
 context_scope: project_and_application_scope

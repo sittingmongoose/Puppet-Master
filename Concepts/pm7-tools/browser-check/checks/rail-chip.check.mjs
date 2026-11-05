@@ -11,6 +11,9 @@
 // next frames are read: the chip's centre against its item's box (the rail's current bead and label, the chosen tab), as
 // an offset from where it sat before the change. A frame where it is more than 1.5 px off is a late frame; there must be
 // none, and it must end where it started on the item. The wizard has no language switch besides Plain English and Expert.
+// --set selftest=throw (a rail step that throws inside its frame callback) and --set selftest=jump (p77's Continue replaced
+// by a jump past nas-identity) break the case on purpose: the check must fail, the first in that frame; --set
+// selftest=cached (the scan case meets a cached list) must fail too.
 const FRAMES = 24;
 
 // window.__chipKind picks the strip: 'rail' or 'seg'
@@ -55,20 +58,25 @@ function measureSrc() {
 	};
 }
 
-// do `act` inside a frame, then read the chip in each of the next frames (each read shows what the frame before painted)
+// do `act` inside a frame, then read the chip in each of the next frames (each read shows what the frame before painted).
+// Every frame callback here answers its promise either way: one that throws (a missing strip, an act that fails) rejects
+// at once with the error, so the case fails with it in that frame instead of waiting on a promise nothing will answer
+// (browser-check 2.0.6 gives up on such a wait only 15 s later)
 async function framesAfter(f, act, n) {
-	return f.evaluate(([actSrc, mSrc, n]) => new Promise((res) => {
+	return f.evaluate(([actSrc, mSrc, n]) => new Promise((res, rej) => {
 		const measure = (0, eval)('(' + mSrc + ')'), act = (0, eval)('(' + actSrc + ')');
 		const out = [];
 		requestAnimationFrame(() => {
-			const before = measure();
-			act();
-			const tick = () => { out.push(measure()); if (out.length < n) requestAnimationFrame(tick); else res({ before, out }); };
-			requestAnimationFrame(tick);
+			try {
+				const before = measure();
+				act();
+				const tick = () => { try { out.push(measure()); if (out.length < n) requestAnimationFrame(tick); else res({ before, out }); } catch (e) { rej(e); } };
+				requestAnimationFrame(tick);
+			} catch (e) { rej(e); }
 		});
 	}), [act.toString(), measureSrc().toString(), n]);
 }
-const framesNow = (f, n) => f.evaluate(([mSrc, n]) => new Promise((res) => { const m = (0, eval)(mSrc), o = []; const tick = () => { o.push(m()); if (o.length < n) requestAnimationFrame(tick); else res(o); }; requestAnimationFrame(tick); }), [measureSrc().toString(), n]);
+const framesNow = (f, n) => f.evaluate(([mSrc, n]) => new Promise((res, rej) => { const m = (0, eval)(mSrc), o = []; const tick = () => { try { o.push(m()); if (o.length < n) requestAnimationFrame(tick); else res(o); } catch (e) { rej(e); } }; requestAnimationFrame(tick); }), [measureSrc().toString(), n]);
 
 const talkBtn = () => { document.querySelector('#pm-o55-onboarding .o55-talkslot button').click(); };
 const soundBtn = () => { document.querySelector('#pm-o55-onboarding .o55-soundslot button').click(); };
@@ -99,9 +107,10 @@ async function pass(t, f, kind, steps, sizes, out) {
 		if (!rest.lens) { out.noChip.push(`${kind}:${look}`); continue; }
 		out.withChip.push(`${kind}:${look}`);
 		if (!rest.covers) out.bad.push(`${kind} ${look} at rest: the chip does not cover "${rest.pos.name}"`);
-		// strict: late frames fail. The window's size is changed by viewport emulation, not by a person's resize, and the SSH
-		// tabs' rows there showed 1-2 late frames on integration 61b70dca1f with and without p77's change (none at M6): those
-		// rows report their late frames and are judged on where the chip ends (lane found's report, p77)
+		// strict: late frames fail, the window's size rows of both strips too. The SSH tabs' window-height rows were only
+		// reported (1-2 late frames since 61b70dca1f) until SW-25: 60-ui-core's holdColumn re-centred the held column on a
+		// resize inside an unchanged scroller, which glass.js's size watch never saw (fo-welcome b49b1402a4); they are strict
+		// now, and fail on a page without that fix
 		const judge = (name, before, frames, end, strict = true) => {
 			const last = frames[frames.length - 1];
 			const mx = Math.round((last.pos.x - before.pos.x) * 10) / 10, my = Math.round((last.pos.y - before.pos.y) * 10) / 10;
@@ -112,7 +121,8 @@ async function pass(t, f, kind, steps, sizes, out) {
 			if ((strict && late) || off(end)) out.bad.push(`${kind} ${look} ${name}: strip moved ${mx}, ${my} px; ${late} late frame(s); chip ends ${endOff} off`);
 		};
 		for (const [name, act] of steps) {
-			const r = await framesAfter(f, act, FRAMES);
+			const t0 = Date.now();
+			const r = await framesAfter(f, act, FRAMES).catch((e) => { throw new Error(`${kind} ${look} ${name}: a frame callback threw, ${Date.now() - t0} ms after the change: ${String(e && e.message || e).split('\n')[0]}`); });
 			await f.waitForTimeout(700);
 			judge(name, r.before, r.out, await f.evaluate(measure));
 		}
@@ -120,9 +130,10 @@ async function pass(t, f, kind, steps, sizes, out) {
 		for (const [w, h] of sizes) {
 			const before = await f.evaluate(measure);
 			await t.viewport(w, h);
-			const frames = await framesNow(f, FRAMES);
+			const t0 = Date.now();
+			const frames = await framesNow(f, FRAMES).catch((e) => { throw new Error(`${kind} ${look} window ${w}x${h}: a frame callback threw, ${Date.now() - t0} ms after the resize: ${String(e && e.message || e).split('\n')[0]}`); });
 			await f.waitForTimeout(700);
-			judge(`window ${w}x${h}`, before, frames, await f.evaluate(measure), kind !== 'seg');
+			judge(`window ${w}x${h}`, before, frames, await f.evaluate(measure));
 		}
 	}
 }
@@ -145,7 +156,10 @@ export default async function (t) {
 	const rail = await go(['c-route'].concat(await f.evaluate(() => Object.keys(window.O55.screens.defs).filter((id) => window.O55.screens.defs[id].chapter === 'computer'))));
 	await f.waitForTimeout(1200);
 	t.log(`rail: screen ${rail}`);
+	// --set selftest=throw: a step that throws inside its frame callback; the case must fail with that error at once
+	const selfThrow = ['selftest: a throw inside a frame callback', () => { throw new Error('rail-chip selftest: thrown inside a frame callback'); }];
 	await pass(t, f, 'rail', [
+		...(t.args.selftest === 'throw' ? [selfThrow] : []),
 		['Expert', talkBtn], ['Plain English', talkBtn],
 		['sound off', soundBtn], ['sound on', soundBtn],
 		['look menu open', lookBtn], ['look menu closed', lookBtn]
@@ -158,16 +172,48 @@ export default async function (t) {
 	await t.check('M6: the SSH tabs screen opens (nas-find)', nas === 'nas-find', `screen ${nas}`, { hard: true });
 	await f.waitForFunction(() => document.querySelectorAll('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-card[data-o55-do="device"]').length >= 2, null, { timeout: 15000 });
 	await f.waitForTimeout(1200);
-	// the scan's arrival re-centres the content too: SMB, then SSH again, and the chip must end on SSH once the list is back
 	await f.evaluate(() => { window.__chipKind = 'seg'; });
 	const tab = (v) => f.evaluate((a) => document.querySelector(`#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-seg button[data-arg="${a}"]`).click(), v);
-	await tab('smb'); await f.waitForTimeout(1200); await tab('ssh');
-	const scanBefore = await f.evaluate(measureSrc());
-	await f.waitForFunction(() => document.querySelectorAll('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-card[data-o55-do="device"]').length >= 2, null, { timeout: 15000 });
-	await f.waitForTimeout(900);
-	const scanAfter = await f.evaluate(measureSrc());
-	t.log(`seg scan: tabs moved ${scanAfter.pos.y - scanBefore.pos.y} px as the list came back; chip at ${scanAfter.lens ? scanAfter.dx + ', ' + scanAfter.dy : 'gone'} px from SSH`);
-	await t.check('M6: after a scan lists the devices, the chip is on the SSH tab', scanAfter.lens && Math.abs(scanAfter.dy) <= 1.5 && Math.abs(scanAfter.dx) <= 1.5 && scanAfter.pos.name === 'SSH', JSON.stringify(scanAfter));
+	const listed = () => f.waitForFunction(() => document.querySelectorAll('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-card[data-o55-do="device"]').length >= 2, null, { timeout: 15000 });
+	// SW-42: the scan case once went SMB, then SSH again, and met the cached list, so nothing arrived. Now the page's own
+	// discovery is reset first (O55.flow.reset of 'discover:ssh', as on a first visit to the step), so going back to SSH
+	// shows "Looking for devices" and then the list. In each look the frames from the tab press until 24 frames after the
+	// list arrives are read: the scan must have run, and the chip must end on SSH. The tabs do not move as the list
+	// arrives: the column's top is held from the moment the screen comes in (60-ui-core holdColumn, p76) and only a resize
+	// centres it again, so a scan is not a re-centre and the chip has nothing to follow here (the device-card and window
+	// rows test that). Movement and the frames off the tab are logged, not judged: they are rAF reads, and a one-frame
+	// reading needs a film to confirm. --set selftest=cached keeps the cached list (the old case): it must fail.
+	const scanBad = [], scanRows = [];
+	for (const look of (t.args.looks ? t.args.looks.split(',') : LOOKS)) {
+		const why = await lookOn(f, look); if (why) { scanBad.push(`${look}: ${why}`); continue; }
+		await go(['nas-find']); await listed(); await f.waitForTimeout(1200);
+		await tab('smb'); await f.waitForTimeout(1200); await tab('ssh'); await listed(); await f.waitForTimeout(900);
+		const rest = await f.evaluate(measureSrc());
+		await tab('smb'); await f.waitForTimeout(1200);
+		if (t.args.selftest !== 'cached') await f.evaluate(() => window.O55.flow.reset(window.O55.S, 'discover:ssh'));
+		const r = await f.evaluate(([mSrc]) => new Promise((res, rej) => {
+			const m = (0, eval)('(' + mSrc + ')'), L = '#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) ', out = []; let arrived = -1, looked = false;
+			requestAnimationFrame(() => { try {
+				document.querySelector(L + '.o55-seg button[data-arg="ssh"]').click();
+				const tick = () => { try {
+					const cards = document.querySelectorAll(L + '.o55-card[data-o55-do="device"]').length, looking = !!document.querySelector(L + '[data-key="scan"]');
+					looked = looked || looking; out.push(Object.assign(m(), { cards, looking }));
+					if (arrived < 0 && looked && cards >= 2) arrived = out.length - 1;
+					if ((arrived >= 0 && out.length >= arrived + 24) || out.length >= 360) res({ out, arrived, looked }); else requestAnimationFrame(tick);
+				} catch (e) { rej(e); } };
+				requestAnimationFrame(tick);
+			} catch (e) { rej(e); } });
+		}), [measureSrc().toString()]);
+		if (!r.looked || r.arrived < 0) { scanBad.push(`${look}: no scan ran (the list was there at once: a cached scan proves nothing)`); scanRows.push(`${look}: cached`); continue; }
+		const pre = r.out[Math.max(0, r.arrived - 1)], last = r.out[r.out.length - 1], moved = Math.round((last.pos.y - pre.pos.y) * 10) / 10;
+		const judged = r.out.slice(Math.max(0, r.arrived - 2));
+		const off = (x) => !x.lens || Math.abs(x.dx - rest.dx) > 1.5 || Math.abs(x.dy - rest.dy) > 1.5;
+		const late = rest.lens ? judged.filter(off).length : 0;
+		scanRows.push(`${look}: scan ran, list after ${r.arrived} frames; tabs moved ${sign(moved)} px as it arrived; ${rest.lens ? `frames off the tab ${late}/${judged.length} (logged); chip at the end ${last.lens ? sign(Math.round((last.dx - rest.dx) * 10) / 10) + ', ' + sign(Math.round((last.dy - rest.dy) * 10) / 10) + ' px' : 'gone'}` : 'no chip in this look'}`);
+		if (rest.lens && off(last)) scanBad.push(`${look}: once the scan's list arrived the chip ended off the SSH tab (${last.lens ? last.dx + ', ' + last.dy : 'gone'})`);
+	}
+	scanRows.forEach((x) => t.log('seg scan ' + x));
+	await t.check('M6/SW-42: a scan that really runs (not a cached list) ends with the chip on the SSH tab, in every look', scanBad.length === 0, scanBad.join('; '));
 	await pass(t, f, 'seg', [
 		['Media server chosen', card('Media server')], ['Home NAS chosen', card('Home NAS')]
 	], [[1920, 900], [1920, 1080]], out);
@@ -194,7 +240,7 @@ export default async function (t) {
 		// a look change finishes with a reveal of its own that draws the screen again; the case starts once it is over
 		await f.waitForFunction(() => !window.O55.S.vt && !document.querySelector('#pm-o55-onboarding .o55-layer.o55-out'), null, { timeout: 15000 });
 		await f.waitForTimeout(1500);
-		const r = await f.evaluate((n) => new Promise((res) => {
+		const r = await f.evaluate(([n, selftest]) => new Promise((res, rej) => {
 			const ghosts = () => {
 				const win = document.querySelector('#pm-o55-onboarding .o55-win'), hb = win.querySelector('.o55-head').getBoundingClientRect();
 				const on = [...win.querySelectorAll('.o55-pane > .o55-layer:not(.o55-out) .o55-seg button.o55-on')].map((e) => e.getBoundingClientRect());
@@ -207,18 +253,23 @@ export default async function (t) {
 				const lens = !document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-seg .lg-lenses-under .lg-lens');
 				// the next screen comes in as a person brings it in: Continue on the chosen NAS (a pick is only an answer once
 				// continued, the lead's rule 3, so a bare jump would reach the identity screen with no NAS); a click that throws
-				// ends the case with the error, rather than leaving this promise unanswered
-				try { document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-foot .o55-primary').click(); } catch (e) { res({ before, frames, lens, screen: window.O55.S.sess.screen, error: String(e && e.message || e) }); return; }
-				const tick = () => { frames.push(ghosts()); if (frames.length < n) requestAnimationFrame(tick); else res({ before, frames, lens, screen: window.O55.S.sess.screen }); };
+				// ends the case with the error, rather than leaving this promise unanswered. --set selftest=jump jumps past the
+				// identity screen to Name instead, which the guard below must fail
+				try { if (selftest === 'jump') window.O55.ui.go('name'); else document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-foot .o55-primary').click(); } catch (e) { res({ before, frames, lens, screen: window.O55.S.sess.screen, error: String(e && e.message || e) }); return; }
+				const tick = () => { try { frames.push(ghosts()); if (frames.length < n) requestAnimationFrame(tick); else res({ before, frames, lens, screen: window.O55.S.sess.screen, history: (window.O55.S.sess.history || []).slice(-3) }); } catch (e) { rej(e); } };
 				requestAnimationFrame(tick);
 			});
-		}), FRAMES);
+		}), [FRAMES, t.args.selftest || '']);
 		if (r.error) { ghostBad.push(`${look}: the jump to nas-identity threw: ${r.error}`); continue; }
+		// the frames above measure nas-find giving way to the identity screen, as the film did: a Continue that lands anywhere
+		// else (a jump past nas-identity: a NAS already trusted, a Puppet Master NAS's pairing, a forced go) measured another
+		// transition, and fails the case rather than passing it silently
+		if (r.screen !== 'nas-identity') { ghostBad.push(`${look}: Continue from nas-find reached ${r.screen}, not nas-identity (history ${(r.history || []).join(' > ')}): a jump past the identity screen is not the transition this case measures`); continue; }
 		const late = r.frames.filter((g) => g > 0).length;
 		// and back: the tabs' screen comes in, and its chip, where one is shown, sits on the chosen tab as painted (with the
 		// entrance's movement) in every frame
 		await f.waitForTimeout(900);
-		const back = await f.evaluate((n) => new Promise((res) => {
+		const back = await f.evaluate((n) => new Promise((res, rej) => {
 			const off = () => {
 				const win = document.querySelector('#pm-o55-onboarding .o55-win'), hb = win.querySelector('.o55-head').getBoundingClientRect();
 				const on = win.querySelector('.o55-pane > .o55-layer:not(.o55-out) .o55-seg button.o55-on'); if (!on) return 'none';
@@ -228,7 +279,7 @@ export default async function (t) {
 				return Math.min(...ls.map((x) => Math.hypot((o.left + o.right) / 2 - (x.b.left + x.b.right) / 2, (o.top + o.bottom) / 2 - (x.b.top + x.b.bottom) / 2)));
 			};
 			const frames = [];
-			requestAnimationFrame(() => { window.O55.ui.go('nas-find'); const tick = () => { frames.push(off()); if (frames.length < n) requestAnimationFrame(tick); else res(frames); }; requestAnimationFrame(tick); });
+			requestAnimationFrame(() => { try { window.O55.ui.go('nas-find'); const tick = () => { try { frames.push(off()); if (frames.length < n) requestAnimationFrame(tick); else res(frames); } catch (e) { rej(e); } }; requestAnimationFrame(tick); } catch (e) { rej(e); } });
 		}), FRAMES);
 		const astray = back.filter((d) => d !== 'none' && d > 3).length, shown = back.filter((d) => d !== 'none').length;
 		ghostRows.push(`${look}: to ${r.screen}; ${r.lens ? 'chip in the window layer' : 'chip inside its strip'}; frames with the old chip left: ${late}/${FRAMES}${late ? ' (' + r.frames.map((g) => (g ? 'x' : '.')).join('') + ')' : ''}; back: chip shown ${shown}/${FRAMES}, off its tab ${astray} (${back.map((d) => (d === 'none' ? '-' : d > 3 ? 'x' : '.')).join('')})`);

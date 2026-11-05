@@ -4584,9 +4584,9 @@ acceptance_criteria:
 - Unknown scope, fabricated Project, focus-derived identity and mismatched outer/inner scope refuse.
 - Planning Wizard/PRD Builder/Orchestrator remain Project-bound; no app build creates WorkNodes.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows

@@ -166,7 +166,7 @@ Orchestrator worker identity rows from `Orchestrator_Page` / `Orchestrator_Page.
 
 Amended 2026-10-09 (DL-180, DL-184): the Bottom Panel is no longer a fixed shell zone. Home's primary content is one universal panel system, an n-ary split tree of panels that each hold any tab kind, Terminal, Problems, Output, Ports and Debug Console included, with a full-width bottom row in the default layout that is an ordinary panel row (F3-630, F3-635); the chat is a fixed column on the right that moves only by Pop out (F3-637); and no box with a coloured side, no emoji and no pills appear anywhere (F3-648). The sentences below that said otherwise are amended in place.
 
-This document is the authoritative GUI specification for the Puppet Master desktop application, replacing the retired Rust/Iced-lineage GUI with a Slint 1.17.1 implementation on Rust stable 1.96.1. The design follows an IDE-shell layout (Activity Bar + Primary Content + Side Panel, with a chat column on the right; Home's primary content is one universal panel system) with ten built-in themes across five families (Basic, Friendly, Glass, Retro, NieR; untouched first-open/fresh-project factory default Basic Dark) backed by deterministic built-in palette variants plus user-created custom themes, detachable side panels, and rearrangeable dashboards that open as tabs. An existing project's explicit saved theme and layout always win over that factory seed, and a copied project receives a detached theme/layout snapshot that does not follow its source project.
+This document is the authoritative GUI specification for the Puppet Master desktop application, replacing the retired Rust/Iced-lineage GUI with a Slint 1.17.1 implementation on Rust stable 1.96.1. The design follows an IDE-shell layout (Activity Bar + Primary Content + Side Panel, with a chat column on the right; Home's primary content is one universal panel system) with ten built-in themes across five families (Basic, Friendly, Glass, Retro, NieR; bundled/pre-claim fallback Basic Dark; new Projects follow Your usual settings) backed by deterministic built-in palette variants plus user-created custom themes, detachable side panels, and rearrangeable dashboards that open as tabs. Theme resolves through SSYS-002/059's applicable Everywhere/Device/Project values; Basic Dark applies only when none exists. Existing saved layouts survive. A settings copy brings only source-owned values by default, with effective values copied only through Keep them fixed (SSYS-062); copied own values and layouts remain detached from the source.
 
 The current GUI uses a two-row header with 16 flat navigation buttons above a single full-width content area. This wastes screen real estate and forces constant page-switching. The new layout follows a three-column IDE shell inspired by VS Code / JetBrains, dressed in the existing retro-futuristic aesthetic.
 
@@ -258,7 +258,7 @@ The local SVG manifest includes `icon_id`, file path, semantic label, theme beha
 
 ### 2.7 GUI Web Dev/Test Workflow
 
-The web GUI development workflow uses a local trusted daemon plus a static web route, fixture mode, browser automation smoke tests, screenshots/state capture, deterministic state hooks, and fast rebuild/reload loops. Development preview controls may expose reload, fixture-mode selection, screenshot/state capture, and daemon capability inspection only in configured development or automated-test builds. Production builds must not enable dev/test, MCP, live-preview, fixture, or browser automation controls unless an explicit production configuration authorizes that capability and records the permission/audit surface. Development and test builds of both the Slint desktop and the Leptos web GUI also expose test-build observability to test agents (`Plans/Automated_Testing_System.md#ATS-067`); production builds never include it, and no production configuration can enable it.
+The web GUI development workflow uses a local trusted daemon plus a static web route, fixture mode, browser automation smoke tests, screenshots/state capture, deterministic state hooks, and fast rebuild/reload loops. Development preview controls may expose reload, fixture-mode selection, screenshot/state capture, and daemon capability inspection only in configured development or automated-test builds. Production builds must not enable dev/test, MCP, live-preview, or browser automation controls unless an explicit production configuration authorizes that capability and records the permission/audit surface. Fixture mode is a developer and test tool for building Puppet Master, not a prototype scenario picker or a product run-mode switch. Deterministic fixture data stays isolated and labelled; it cannot enter production owner state, satisfy production admission, or earn readiness, production receipt or real-work credit. No production configuration enables fixture mode. Development and test builds of both the Slint desktop and the Leptos web GUI also expose test-build observability to test agents (`Plans/Automated_Testing_System.md#ATS-067`); production builds never include it, and no production configuration can enable it.
 
 ### 2.8 What Is NOT Used
 
@@ -942,124 +942,11 @@ plan_unit_id: F3-503
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Home surface drag, drop, insertion, reflow, float, dock, and resize use one draft-model
-  Pointer Events transaction, shared diamond resizers, and shared four-edge scroll dissolve;
-  pointermove is preview-only and one changed end commits once. Amended 2026-08-13 - drop
-  preview is footprint-true and change-gated (the placeholder carries the pickup-time
-  footprint at the correct flex order and re-seats only on a host or insertion-index change,
-  one FLIP reflow wave per change with a 16 ms stagger); window exit is invalid_target and
-  floating is explicit-only; hosts carry visible-surface caps (left/right 3, top/bottom 2,
-  floating 4, home_main uncapped) with overflow spilling to home_main; resize is
-  adjacent-pair pixel transfer against pixel-frozen sibling bases with fair-share minimum
-  degradation (effective min = min(nominal, container/visibleCount)), unified host clamp
-  bands, a floating bottom-right corner handle driving both axes, commit without a full
-  re-render (no settle flash), and a render-time no-dead-space invariant that re-sums
-  visible home_main bases to the host width so degenerate persisted layouts self-heal.
-  Amended 2026-08-13 (tweak wave) - the drop preview projects the TARGET geometry (fair
-  share of the destination host; full width plus track thickness for row-axis docks),
-  retiring the same-day pickup-footprint preview; a pickup that never left the source
-  surface's rect resolves to the source placement and a preview-expanded host never
-  captures the hit-test for its preview growth. Row-axis docks add a full-width track
-  handle driving the dock's thickness through the persisted size.cross_basis_px field
-  (host-max semantics, host-band clamped, migrated from basis_px), alongside within-row
-  pair width transfer on the column dividers. Amended 2026-08-13 (wave 3) - target
-  adoption has a two-frame hysteresis, mid-FLIP surfaces are excluded from hit-testing
-  (data-pm-home-flip), drag auto-scroll re-applies only on actual scroll or pointer
-  movement, the placeholder previews the dragged surface's proportional projected width
-  (mirroring the normalizeMainRowBases re-sum), and the PM_EDGE band geometry defers
-  during all Home gestures (move and workgroup join resize in the
-  pm-resizing/PM_DRAGEND deferral). Amended 2026-08-14 (wave 7) - Home screen scroll
-  lock: every host locks horizontal travel via overflow-x clip, overflow-y auto, and
-  overscroll-behavior none on the attribute-doubled selector
-  .pm-home-host[data-pm-home-host]. The doubled specificity is REQUIRED, not
-  decorative: the scroll-frost enrolment stamps pm6-bottom-scroll (a base
-  overflow auto rule later in the cascade) onto every host at runtime, and a
-  single-class rule loses that fight silently. A horizontal wheel over the
-  dashboard, editors, or terminal moves zero scrollLeft anywhere in the workspace,
-  no scrollbar gutters render, and vertical scrolling stays intact. Amended
-  2026-08-13 (wave 4) - host targeting is
-  latch-based and purely geometric: buildDockLatch freezes per-dock entry and exit
-  bands at pickup (entry = the committed dock rect unioned with the 28 px edge strip;
-  exit = the anticipated opened track plus a 44 px slack), and elementsFromPoint is
-  fully retired from drop-target resolution; the wave-3 two-frame hysteresis remains
-  for slot flapping within a host. Amended 2026-08-15 (wave 8) - HOME SCROLL KILL,
-  corrected mechanism. The wave-7 claim that "overflow-x: clip" beside
-  "overflow-y: auto" forbids programmatic scrollLeft is FALSE and is retired with this
-  dated disposition: per CSS Overflow 3 section 3.1, when one axis is clip and the
-  other is neither visible nor clip, the clip value COMPUTES TO HIDDEN, so the hosts
-  remained scroll containers - programmatic scrollLeft still moved 12 px, reachable by
-  focus, scrollIntoView and find - and on Safari 15 and earlier the clip declaration is
-  dropped outright, leaving true overflow-x: auto scrollers. Wave 8 removes the
-  overflow at its three measured sources instead (all measured on the 1920 by 1080
-  default layout). (a) EMPTY DOCK BOX, 8 px: .pm-home-host.pm-home-host-empty now also
-  sets "padding: 0", because the runtime scroll-frost enrolment stamps
-  pm6-bottom-scroll on every host and that base rule carries padding var(--sm), which
-  floored an empty dock's border-box at 8 px on a 0 px grid track and laid it past the
-  grid's content edge; the (0,2,0) selector beats the stamped (0,1,0) rule regardless
-  of block order. Drop previews are unaffected - syncHostGeometry drops the empty class
-  as soon as a draft places a surface there, and the dock latch uses frozen screen
-  bands. (b) FROST BANDS, 22 px: PM_EDGE builds four 30 px .pm-edge-band divs per
-  enrolled scrollport and appends them to the host grid, including for the zero-width
-  empty dock, whose band reached 30 px past the grid edge; layoutBands() now sets
-  display none on all four bands (write-if-changed) and returns whenever the scrollport
-  measures clientWidth <= 0 or clientHeight <= 0, and the existing per-element
-  ResizeObserver revives them the moment the dock gains real size. (c) PAIRLESS LAST
-  DIVIDER, 12 px: home_main emitted a resize divider on its LAST visible surface, which
-  had no right-hand partner - beginResize found no nextId, gesture.pair stayed null and
-  updateResize fell back to the diluted single-basis path that the pair-transfer
-  rebuild retired - and its decorative 16 by 56 grab-glow pseudo overhung the host's
-  right edge by about 11 px. The row-dock last-sibling divider suppression therefore
-  extends to home_main (pairRow = rowDock || surface.host === "home_main"), so a
-  home_main with N visible surfaces renders exactly N-1 dividers; dock_left and
-  dock_right KEEP their last-surface dividers with this dated disposition, because on
-  the column docks that handle drives the dock track itself through previewResize. The
-  wave-7 diagnosis that blamed the tab silhouette for the residue is also retired: the
-  silhouette's flare box overhangs the START edge, which does not count toward
-  scrollWidth in LTR, so it contributes ZERO horizontal overflow. BELT: overflow clip
-  on BOTH axes for #pm-home-workspace, .pm-home-host-grid and
-  #panel-dashboard.pm-home-owned - none of the three needs auto on either axis, so clip
-  legally destroys them as scroll containers in Chromium and Safari 16+;
-  #panel-dashboard was previously overflow hidden and silently held 26 px of scrollable
-  overflow. SCROLLBARS: the wave-7 host declaration "scrollbar-color: var(--border-light)
-  transparent" is REMOVED with this dated disposition - it beat the scrollbar opt-in
-  list's transparent idle ink and produced an always-visible thumb - and hosts get
-  ID-anchored zeroing instead, "#pm-home-workspace .pm-home-host { scrollbar-width:
-  none; }" plus "#pm-home-workspace .pm-home-host::-webkit-scrollbar { width: 0;
-  height: 0; }". Every host had been opted into the 10 px webkit scrollbar list by the
-  same pm6-bottom-scroll stamp, and on Safari 16 and 17 scrollbar-width is unsupported,
-  so those webkit bars were exactly the space-stealing bars the user reported; the
-  (1,1,x) selectors win by specificity on every engine, order-independent, and are
-  scoped to the HOST element only, so pane-internal scrollers (.pm6-dash-scroll,
-  .pm-home-terminal-body, chat streams, bottom-panel content, and .editor-code's
-  minimap-only policy) keep their existing behaviour. The wave-7 observation that the
-  doubled attribute specificity is REQUIRED against the pm6-bottom-scroll stamp
-  SURVIVES and is reused by the empty-dock padding rule. DELIBERATE DOCUMENTED
-  EXCEPTION: inside the max-width 1320 px media block, home_main returns to
-  overflow-x auto - below that width the min-width floors intentionally stop shrinking
-  surfaces past a readable size, and without the auto about 23 px or more of pane
-  content would be clipped unreachable at 880 px and below; the zero-width scrollbar
-  rules keep even that scroll bar invisible. Verified live at 1920 by 1080:
-  #pm-home-workspace, .pm-home-host-grid, #panel-dashboard and all five hosts report
-  scrollWidth == clientWidth and scrollHeight == clientHeight; forcing scrollLeft = 50
-  on each leaves it at 0; a wheel storm of 8 horizontal plus 8 vertical wheels over the
-  dashboard, the editor tab strip and the terminal produced zero scrollLeft anywhere
-  and the workspace's x stayed 279; the empty right dock measures 0 px wide and its
-  four PM_EDGE bands report display none; home_main shows 2 dividers for 3 visible
-  surfaces. At 1180 px home_main computes overflow-x auto with a zero scrollbar gutter,
-  and returns to the clip path at 1920.
-  Amended 2026-10-09 (DL-180): the transaction, the shared resizer glow and recovery, the four-edge scroll dissolve, the
-  change-gated landing preview, the hysteresis, the latch-based geometric targeting, the invalid_target window exit and
-  the scroll lock now serve panels and tabs in the split tree (F3-630): what moves is a whole panel or a tab, the
-  targets are panel edge bands, strips, the centre's outer edge and the "+N" list, and F3-630 owns the edge bands,
-  thresholds, dwell, hysteresis and motion. Retired with this dated disposition: the five hosts, the host caps (left and
-  right 3, top and bottom 2, floating 4) and host_full, the per-kind fair-share minimums and the host clamp bands (a
-  panel's minimum is F3-635's), floating surfaces and their corner handle, the row-dock size.cross_basis_px track, and
-  the deliberate below-1320 px home_main overflow-x auto exception: the centre never scrolls sideways and narrow windows
-  follow F3-636's ladder.
-  Amended 2026-10-10 (lead ruling L13): a lost pointer capture is a cancel, as DR-066's cancel set says: it commits
-  nothing and restores the exact earlier layout. The 2026-08-12 rule that loss of pointer capture alone is not a
-  cancellation vector is retired.
+canonical_text: |-
+  Panel and tab drag, drop, insertion, reflow and resize use DR-066’s one draft-model pointer transaction and F3-630’s split-tree targets. Pointer movement is preview-only; one changed valid release commits once, without a full re-render or settle flash. An unchanged release dispatches no mutation. Escape, pointercancel, lostpointercapture and an invalid_target window exit cancel and restore the exact earlier layout. A lost pointer capture never commits (lead ruling L13, 2026-10-10).
+  Keep the shared diamond resizers and recovery, four-edge scroll dissolve, change-gated target-footprint landing preview, one reflow wave per changed host or insertion index, geometric latch-based targeting and hysteresis. A pickup that never leaves its source resolves to its original placement; preview growth and moving transforms must not capture the hit-test. Auto-scroll reapplies only when scrolling or pointer movement changes it. Shared scroll-dissolve geometry defers during a held move or resize and catches up once after the gesture.
+  F3-630 owns panel edge bands, tab strips, centre outer-edge and overflow-list targets, thresholds, dwell, hysteresis and motion. Adjacent-panel resize transfers size between the actual pair, respects F3-635’s panel minimum and leaves no dead space; no pairless divider starts a resize. The centre never scrolls sideways, empty or hidden regions create no decorative overflow, pane-internal vertical scrolling remains usable, and narrow windows follow F3-636’s ladder. Reduced Motion retains accurate previews and final geometry without travelling reflow.
+  DL-180 retires the old five-host Home model, per-host surface caps and host_full, host-specific fair-share minimums/clamp bands, floating surfaces and corner handle, row-dock size.cross_basis_px track and the below-1320 px horizontal-scroll exception. Their browser selector, cascade, scroll-band and layout-function repairs are source history, not product implementation requirements.
 gui_related: true
 gui_classification_reason: This unit owns visible layout gestures, previews, resize feedback, scrolling-edge treatment, and recovery.
 split_recommended: false
@@ -1072,7 +959,7 @@ acceptance_criteria:
 - Every new vertical or horizontal scrollport enrolls in the shared four-edge dissolve system with no-overflow and reduced-motion handling.
 - "The landing preview projects the target geometry (the share F3-630's insertion rule gives a panel split from a panel edge band or the centre's outer edge, or the tab's slot in the destination strip) and re-seats only when the resolved target (an edge band, a strip, the outer edge or the \"+N\" list) or the insertion index changes; a pickup still inside its source panel resolves to the source placement, a panel expanded only by the preview never captures the hit-test for that expansion, and dragging past the workspace root shows the invalid_target no-drop state and never floats the panel or tab (amended 2026-10-09, DL-180; F3-630)."
 - "Every split resizes by adjacent-pair transfer on its own dividers and keeps its own proportions; the row-dock size.cross_basis_px track is retired (amended 2026-10-09, DL-180; F3-630)."
-- A candidate drop target must survive two consecutive resolved frames before the placeholder re-seats; a surface carrying data-pm-home-flip is invisible to the drag hit-test; auto-scroll does not re-apply without actual scroll or pointer movement; and the placeholder's previewed width equals the proportional share the post-commit normalizeMainRowBases re-sum would grant (wave 3, 2026-08-13).
+- A candidate drop target must survive two consecutive resolved frames before the placeholder re-seats; moving or reflowing surfaces are excluded from the drag hit-test; auto-scroll does not re-apply without actual scroll or pointer movement; and the placeholder's previewed geometry equals the destination geometry computed by F3-630's current layout owner (two-frame stability retained from wave 3, 2026-08-13; DL-180).
 - "Drop targeting reads only latched geometry: every panel's edge bands and strip and the centre's outer edge band freeze at pickup, and no drop-target resolution reads the painted element stack, so approaching a panel edge produces exactly one target transition and one landing preview per approach (wave 4, 2026-08-13; amended 2026-10-09, DL-180; F3-630)."
 - "A divider drag transfers pixels between the two panels it separates only (+N/-N exactly), other panels are untouched, and commit produces no settle flash; each panel stops at its own minimum (F3-635, never less than 280 x 120 px) and a panel dragged below half its minimum collapses to its strip, and no Home surface floats (amended 2026-10-09, DL-180; F3-630)."
 - "At render, boot, and window resize the split tree's proportions fill the centre with no dead space and a degenerate persisted layout self-heals on normalization; host caps and host_full are retired (amended 2026-10-09, DL-180; F3-630)."
@@ -1081,8 +968,8 @@ acceptance_criteria:
 - "Host scrollbars occupy zero space on every engine (scrollbar-width none plus a zero-size ::-webkit-scrollbar), and the centre never scrolls sideways at any width; the below-1320 px overflow-x exception is retired (amended 2026-10-09, DL-180; F3-636)."
 - "Panels and tabs move with this transaction: nothing dispatches during a drag, a changed release commits one command, and every cancel path restores the exact earlier layout (F3-630)."
 validation_surfaces:
-- "Verify transactional panel/tab gestures: no dispatch during preview, one changed-release command, exact cancel restoration, stable identity and reduced-motion behavior."
-- "Cases written for the retired four-panel Home model do not prove this row; replacement executable cases are owed (ATS-075/076)."
+- "future Verify transactional panel/tab gestures: no dispatch during preview, one changed-release command, exact cancel restoration, stable identity and reduced-motion behavior."
+- "future Cases written for the retired four-panel Home model do not prove this row; replacement executable cases are owed (ATS-075/076)."
 risk_class: home_gesture_regression
 reasoning_tier: standard
 context_scope: pmconcept7_home_gestures
@@ -1091,7 +978,9 @@ node_compile_hint:
   mode: home_gesture_transaction
   create_worknodes: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): --pm-home-pad-y and --pm-home-gap-y were prototype spacing properties; the retained workspace uses semantic spacing with 2 px vertical padding, not those custom-property spellings."
 - PMConcept7_Home_Workspace_Audit_Packet_v1/shared/01_REQUIREMENTS.jsonl
+- "DL-260 source lineage only (no product API or implementation obligation): The retired Home prototype used PM_EDGE, PM_DRAGEND, pm-resizing, data-pm-home-flip, normalizeMainRowBases, buildDockLatch, syncHostGeometry, layoutBands and .pm-home-host/pm6-bottom-scroll/.pm-edge-band selectors. The August 2026 browser fixes and measured scroll values document that retired implementation only; F3-630/635/636 and DR-066 govern current panel/tab behavior."
 preserved_exact_tokens: [pointercancel, lostpointercapture, four-edge scroll dissolve]
 negative_constraints:
 - Do not dispatch commands, events, or persistence writes on pointermove.
@@ -1121,7 +1010,7 @@ canonical_text: >-
   docks and in-canvas floating only, treats popup presentation as direct-user-activation
   optional degradation, and falls back honestly when blocked. Amended 2026-08-13 - PM7
   retires the base full-screen chat overlay; every non-docked chat mode routes to the
-  single in-canvas float system (PM_HOME_WORKSPACE.popOutChat), which shows no scrim,
+  single in-canvas float system (retired concept implementation), which shows no scrim,
   cannot cover the title bar, and cannot produce a second chat surface. Floating is never
   a boot state; persisted floating surfaces demote to last_docked_host at boot with a
   storage.boot_demote_floating receipt.
@@ -1153,9 +1042,9 @@ acceptance_criteria:
 - "In the desktop app Pop out opens the one chat in its own window and Dock back returns it to its column; no panel or tab floats (amended 2026-10-09, DL-180; F3-637)."
 - "The web client shows no Pop out for the chat, and the chat stays in its column (amended 2026-10-10, lead ruling L6; F3-637)."
 validation_surfaces:
-- "Verify the native pop-out and web-client boundaries of F3-504/F3-637, including one chat instance and no web-client Chat Pop out."
-- "Cases written for the retired four-panel Home model do not prove this row; replacement executable cases are owed (ATS-075/076)."
-- python3 scripts/pm-plan-index.py validate
+- "future Verify the native pop-out and web-client boundaries of F3-504/F3-637, including one chat instance and no web-client Chat Pop out."
+- "future Cases written for the retired four-panel Home model do not prove this row; replacement executable cases are owed (ATS-075/076)."
+- "scripts/pm-plan-index.py"
 risk_class: home_platform_claim_drift
 reasoning_tier: standard
 context_scope: pmconcept7_home_platform
@@ -1166,6 +1055,7 @@ node_compile_hint:
 source_lineage:
 - PMConcept7_Home_Workspace_Audit_Packet_v1/shared/06_WEB_SLINT_FEASIBILITY.md
 - "Plans/Decision_Log.md#DL-187"
+- "DL-260 source lineage only (no product API or implementation obligation): PM_HOME_WORKSPACE.popOutChat was the old concept chat float adapter, superseded by DL-180/F3-637."
 preserved_exact_tokens: [Slint 1.17.1, Wayland, direct user activation, in-canvas floating]
 negative_constraints:
 - Do not claim OS docking or unrestricted popup placement as a web guarantee.
@@ -1203,39 +1093,40 @@ canonical_text: >-
   firm low-bounce spring while the canvas stays stationary and the connected shape visibly travels rather than
   crossfading. The shape recomputes stable target bounds on window resize, tab-width change, theme or motion
   change, and fonts-ready. Reduced motion removes the spring travel and retains immediate state changes. Amended
-  2026-08-13 - the tab rail is a translucent plate (--ed-rail-solid split from --ed-rail-bg at 72 percent alpha)
+  2026-08-13 - the tab rail is a translucent plate with separate opaque and translucent fill roles, at 72 percent alpha,
   over the existing backdrop blur so scrolled code ghosts under the strip; the concave shoulders are masked
   cutouts through which the frosted rail shows while the active tab and the canvas keep the shared opaque fill;
-  the silhouette layer mounts only after a successful measure and mounts as the strip's last child (slot 0 is
-  uncontested: the grip moved out of the strip to the surface corner); fitters are mutation-free in steady
-  state. Amended 2026-08-13 (tweak wave) - the silhouette geometry is redesigned: the strip is 40 px tall (36 px
+  the silhouette layer appears only after a successful measure and draws above the strip without competing with
+  its grip or tab controls; fitters are mutation-free in steady state. Amended 2026-08-13 (tweak wave) - the
+  silhouette geometry is redesigned: the strip is 40 px tall (36 px
   on the dashboard) with a near-full-height active tab, a 13 px squircle crown that is theme-tunable through
-  --ed-top-radius (friendly 16, glass 14, retro 6), and shoulder and canvas radii of 12 px, retiring the 10 px
-  canvas / 8 px cutout maxima; the JS now writes only the contact PROGRESS custom properties --ed-lp and --ed-rp
-  (0..1 per side, same 20 px threshold) and the CSS derives the per-theme radii from them; corner caps render
+  the shared crown-radius token (friendly 16, glass 14, retro 6), and shoulder and canvas radii of 12 px, retiring the 10 px
+  canvas / 8 px cutout maxima; the shared tab renderer derives per-theme radii from independent contact progress
+  (0..1 per side, same 20 px threshold); corner caps render
   the canvas-corner morph at the visible rail boundary; tabs start flush at the panel's left edge; per-theme
   skins apply (friendly mint canvas with lime active label, glass plate with edge highlight, retro sharp corners
   with lime). The dashboard tab strip (Main/Metrics/Monitoring) enrolls in the same connected-surface system -
-  EDSHAPE syncs .dashboard-tabs and the dashboard header plate uses the shared rail recipe at the same alpha -
+  the shared tab presentation owner updates that strip, and the dashboard header plate uses the shared rail
+  recipe at the same alpha -
   while the title-bar page tabs keep their sliding ink (the F3-464 boundary is unchanged). The editor scrollbar
   is excluded from the frosted rail band via a scrollbar-track margin. Amended 2026-08-13 (wave 3) - the
-  silhouette gains theme skin tokens: --ed-shape-outline, --ed-shape-crown with --ed-shape-crown-h, and
-  --ed-tab-inactive-ring with its ring radius. Retro draws its signature hard outline with square inactive-tab
+  silhouette gains shared theme tokens for its outline, crown material and height, and inactive-tab ring and
+  radius. Retro draws its signature hard outline with square inactive-tab
   rings; basic draws a 2 px accent-blue crown over a 9 px top radius; glass draws a three-edge glass-edge bevel
   and re-tunes the rail alpha to 84 percent (the wave-2 88 percent value is retired with this dated
   disposition). Wave-3 follow-up (2026-08-13): the retro outline lives on the ACTIVE TAB as a three-edge inset
   ring that snaps on arrival, not on the travelling connected shape - the outline-on-the-travelling-shape
   rendering is retired with this dated disposition. Amended 2026-08-14 (wave 6) - silhouette construction canon:
-  the connected shape is ONE JS-composed clip-path path() per frame. The crown corners are
+  the connected shape is one shared geometric path per frame. The crown corners are
   superellipse-approximating cubic beziers with a handle factor of 0.5523 + 0.35 x progress, and each side
   descends through an ogee - a concave flare of radius shoulder-max x progress into a convex neck of radius
   canvas-max x progress landing tangent on the canvas line. This renders identically in Safari and Chromium,
   which is the explicit motivation: the corner-shape/superellipse enhancement path was engine-split
-  (Chromium-only). The glass bevel becomes a 1 px --glass-edge crown strip clipped by the same path. Morph gap
+  (Chromium-only). The glass bevel becomes a 1 px crown strip using the shared Glass edge token, clipped by the same path. Morph gap
   canon (measured against the reference explainer's debug HUD): progress = clamp(gap / 20 px, 0, 1) LINEAR; the
   canvas(neck) to shoulder(flare) radii ratio is 10:8; each side's gap is the distance to the NEAREST CONTACT -
   the static strip content-box edge or the adjacent tab's transform-free layout edge - and the strip-end caps
-  key off the strip box edges only. Glass-dark deepens --ed-rail-solid via a 55 percent black canvas-bg mix so
+  key off the strip box edges only. Glass-dark deepens the opaque rail fill via a 55 percent black canvas-bg mix so
   the silhouette is visible (measured: about 1 sRGB channel level before, 16 levels after). Wave-6 follow-up
   (2026-08-14, defect-fix refinement of the path canon): the ogee construction is height-clamped - flare and
   neck scale together to fit below the crown (the unclamped first cut inverted the wall segment into a visible
@@ -1252,55 +1143,32 @@ canonical_text: >-
   matching the reference explainer's two-corner model (tab cutout r and canvas r are separate corners). Both
   ogee constructions - the height-clamped 0.55-handle form and the 0.9/0.18 asymmetric-handle retune - are
   retired with this dated disposition as a misreading of the reference. Fourth follow-up (2026-08-14, the second
-  corner made literal): the CANVAS surface's own top corners round via real animated border-radius on the editor
-  area (calc of --ed-lp/--ed-rp x --ed-canvas-rx-max), driven by the same per-side edge progress as the tab, so
+  corner made literal): the CANVAS surface's own top corners round on the editor area (per-side contact progress
+  times the maximum canvas-corner radius), driven by the same per-side edge progress as the tab, so
   the panel corner and the tab cutout JOIN when flush (both flat = one continuous surface) and the corner blooms
   back as the tab moves away. The masked wedge caps for editor panes are retired with this dated disposition -
   they painted rail-coloured overlays at the strip ends and were invisible at panel scale; the dashboard header
   caps are unchanged this round. Radii retuned for legibility: shoulder-rx-max 14 px default / 16 friendly / 8
   retro, canvas-rx-max 16 px default / 18 friendly / 10 retro. Fifth follow-up (2026-08-14): corner-notch
-  CONTRAST canon - the shape-on editor pane's own background is --ed-cap-bg (the rail-over-canvas composite), so
+  CONTRAST canon - the editor pane behind the measured silhouette uses the rail-over-canvas composite fill, so
   the rounded-away canvas corner reveals a visibly darker backdrop; a corner exposing a same-tone backdrop reads
   as no corner (user-reported: the radius was applying at 18 px yet invisible). Strip heights re-tune with this
-  dated disposition: editor 40 to 35 px and dashboard 36 to 31 px (--ed-strip-h, --pm6-editor-tabs-h,
-  --pm6-dash-head-h; the resizer column top follows 44 to 39 px), with the minimap/code alignment verified
+  dated disposition: editor 40 to 35 px and dashboard 36 to 31 px (the resizer column top follows 44 to 39 px), with the minimap/code alignment verified
   intact under the new tokens. Sixth follow-up (2026-08-14, both found by watched inspection): the fourth
   follow-up's animated border-radius canvas corner is RETIRED with cause - the canvas slides UNDER the
   translucent rail (the scroll frost), so the area's true box corner is invisible and a border-radius there
   rounds nothing a user can see. The masked wedge caps are RESTORED as the canonical frost-preserving
-  construction for the VISIBLE emergence line, now filled with var(--ed-rail-solid) - the old --ed-cap-bg
+  construction for the VISIBLE emergence line, now filled with the opaque rail fill - the old rail-over-canvas
   composite fill was the invisibility cause, not the wedge architecture - at 18 px (20 friendly) width by 16 px
-  height (--ed-corner-ry 12 to 16; --ed-canvas-rx-max 18 default / 20 friendly), and the shape-on pane
-  background stays --ed-rail-solid. Dashboard retro is UNBLOCKED: the dashboard pill neutralization uses
-  !important, and important declarations beat CSS animations, so all background-based retro effects were dead on
-  dashboard tabs (the DOS blink rendered as an empty box - its non-important color applied while its background
-  lost); effect-classed tabs ([class*="pm-retro"]) now escape the important rule via :not() and receive a
-  normal-weight twin that keeps the pill suppressed without outranking keyframes. Seventh follow-up
-  (2026-08-14): the sixth follow-up's exemption left the dashboard CRT fill dead through a SPECIFICITY TIE - the
-  effect rules and the normal-weight neutralization twin both weighed (0,5,0), and the twin, later in the
-  assembled cascade, won the tie for plain background declarations (phosphor survived only through its
-  keyframes, which sit above the normal cascade). All fourteen retro effect selectors now include .ed-shape-on,
-  weighing (0,6,0) and outranking the twin; the tied (0,5,0) effect selectors are retired with this dated
-  disposition. Watched verification: the phosphor block, the DOS full inversion, and the CRT scanline wipe all
-  paint on dashboard tabs. The editor minimap is the ONLY code-pane scrollbar - native scrollbars are suppressed
+  height (the vertical corner-radius token 12 to 16; the maximum canvas-corner radius 18 default / 20 friendly), and the pane
+  background behind the measured silhouette stays the opaque rail fill. The shared tab presentation owner keeps the Retro phosphor block, DOS full inversion and CRT scanline wipe visible on dashboard and editor tabs. Neutralizing the ordinary tab plate must not suppress an effect’s foreground, fill or background. The editor minimap is the ONLY code-pane scrollbar - native scrollbars are suppressed
   - and the minimap band aligns with the frosted rail via margin rather than padding, retiring the wave-2
   scrollbar-track-margin exclusion with this dated disposition. Amended 2026-08-15 (wave 8), SNAP-WHILE-DRAGGING
   CONTRACT: this unit's 1:1 canon above ("direct dragging is one-to-one with the pointer and corner values are
   derived from the tab position in the same frame with no independent easing") and its negative constraint
   against easing corner values independently of the tab position were being VIOLATED by the shipped build, and
-  are restored rather than retired. The violation was structural, not decorative: grabbing a NON-ACTIVE tab
-  flips the strip's active key, so sync() read the lastActive change as a selection, set animate = true and
-  sprang the plate across over roughly 12 frames while the carried tab painted nothing, and sub-0.5 px
-  pointermoves then parked in the spring-preservation early return and held that state indefinitely. Contract
-  with this dated disposition: ANY EDSHAPE sync taken while the strip contains a .tab.dragging child must SNAP -
-  draggingLive is computed immediately after the lastActive update, it forces animate = false, and the
-  spring-preservation guard is qualified by "&& !draggingLive" so the snap branch cancels the in-flight rAF,
-  jumps x and w to target, zeroes velocities and paints in the activating frame. Click, snap and keyboard
-  SELECTION springs are explicitly unaffected, as is the release settle owned by the reorder gesture. Measured:
-  worst plate-versus-tab lag 0.00 px over 2,615 samples of a deliberately slow non-active drag; 18 distinct
-  monotonic intermediates on a click-to-select, no overshoot. Also with this dated disposition, a per-theme
-  silhouette SKIN is added under the wave-6 skin family: glass gains a drag-scoped frost, [data-theme^="glass"]
-  .editor-tabs.ed-shape-on:has(.tab.dragging) .ed-tab-shape { opacity: .92; } - slightly see-through but never
+  are restored rather than retired. Picking up a non-active tab first updates the shared active-tab state. During any live reorder, its carried label, silhouette position and width, and contact corners resolve from the same current pointer position in the activating frame, without independent selection easing. Activation cancels any in-flight selection animation, zeros residual velocities and snaps the plate to its target; even sub-0.5 px moves cannot preserve an old spring or leave the underlying tab exposed. Click, snap and keyboard selection springs remain unchanged, as does the reorder owner’s release settle. Also with this dated disposition, a per-theme
+  silhouette SKIN is added under the wave-6 skin family: Glass uses 0.92 silhouette opacity during the drag only, slightly see-through but never
   legible, honouring the user's "like a blur" request. The drag plate adds no independent backdrop blur; F3-652
   owns its Liquid Glass material and optics budget, superseding the former one-blur-per-pane cap. The
   steady-state plate remains fully opaque in all ten themes; measured live at .92 mid-drag in glass-dark and 1
@@ -1324,10 +1192,10 @@ unblocks: []
 acceptance_criteria:
 - "The active tab, its corner helpers and the code canvas resolve to one fill token, the rail resolves darker, and no border or seam separates the active tab from the canvas at any frame."
 - "leftProgress and rightProgress are computed independently against a 20 px threshold; a flush side renders canvasRx 0 and cutoutRx 0 while the opposite side keeps its corner."
-- "Only the horizontal extent of a corner animates, driven by the per-side contact progress --ed-lp/--ed-rp against the 20 px window; the crown, shoulder and flare radii per look are F3-631's (amended 2026-10-09, DL-180; the tweak-wave 13, 16, 14 and 6 px crowns are lineage)."
+- "Only the horizontal extent of a corner animates, driven by the per-side contact progress against the 20 px window; the crown, shoulder and flare radii per look are F3-631's (amended 2026-10-09, DL-180; the tweak-wave 13, 16, 14 and 6 px crowns are lineage)."
 - "Every panel's strip, a dashboard tab's panel included, participates in the same connected-surface system, and tabs start flush at the panel's left edge (amended 2026-10-09, DL-180; F3-631, F3-638)."
 - "Per-look silhouette skins follow F3-631 and F3-647: no look draws an accent crown strip, an underline or a separately coloured plate on the active tab; Glass keeps its 1 px glass rim along the fused shape's crown as part of its material, never in an accent colour (amended 2026-10-09, DL-180)."
-- "The silhouette is one JS-composed clip-path path() per frame (superellipse-approximating crown cubics, handle factor 0.5523 + 0.35 x progress; ogee descents with a 10:8 canvas-neck to shoulder-flare ratio), progress is linear in gap/20, per-side gap measures to the nearest contact (strip content-box edge or adjacent tab's transform-free layout edge), strip-end caps key off the strip box only, and rendering is identical in Safari and Chromium (wave 6, 2026-08-14)."
+- "The silhouette is one shared geometric path per frame (superellipse-approximating crown cubics, handle factor 0.5523 + 0.35 x progress; ogee descents with a 10:8 canvas-neck to shoulder-flare ratio), progress is linear in gap/20, per-side gap measures to the nearest contact (strip content-box edge or adjacent tab's transform-free layout edge), strip-end caps key off the strip box only, and rendering is identical in Safari and Chromium (wave 6, 2026-08-14)."
 - "The editor minimap is the only code-pane scrollbar; native scrollbars are suppressed and the minimap band aligns with the frosted rail via margin, not padding."
 - "Dragging tracks the pointer one-to-one with corner values derived in the same frame; selection by click, snap or keyboard produces the identical transition."
 - "Any silhouette sync taken while the strip contains a dragging tab snaps in the same frame rather than springing, including the sync caused by grabbing a non-active tab, and sub-pixel pointer moves never preserve an in-flight spring during a drag; selection springs are unaffected (wave 8, 2026-08-15)."
@@ -1335,12 +1203,12 @@ acceptance_criteria:
 - "No dark pinhole at a join, no one-frame square or round pop at the start or end of a transition, and no shrinking circular dimple near a collision boundary."
 - "Resizing the window or changing tab widths recomputes stable target bounds; reduced motion snaps without spring travel."
 - "The rail band ghosts scrolled content beneath it in non-glass themes (pixels change when the code canvas scrolls under the strip); Glass consumes F3-652's Liquid Glass material and optics budget; the active tab and canvas keep the shared opaque fill so the join stays seamless."
-- "The silhouette never renders half-dressed: chrome classes apply only after a successful measure, so --ed-shape-x/--ed-shape-w are never stuck at zero while the strip is in the shape-on state, and the shape layer mounts as the strip's last child without contending for slot 0."
+- "The shared tab presentation owner reveals the silhouette only after a successful measure, with its position and width valid in the first visible frame; layer ordering never displaces the strip’s grip or tab controls."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
-- "Verify the contact-aware tab silhouette, drag tracking, join geometry, opacity and reduced-motion behavior against F3-505 and F3-631."
-- "Cases written for the retired four-panel Home model do not prove this row; replacement executable cases are owed (ATS-075/076)."
-- python3 scripts/pm-plan-index.py validate
+- "future contact-aware tab silhouette acceptance: drag tracking, join geometry, opacity and reduced-motion behavior against F3-505 and F3-631."
+- "future replacement executable cases under ATS-075/076; cases for the retired four-panel Home model do not prove this row."
+- scripts/pm-plan-index.py
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
@@ -1349,8 +1217,12 @@ node_compile_hint:
   mode: contact_aware_editor_tab_silhouette
   create_worknodes: false
 source_lineage:
+- "DL-260/DL-280 source lineage only (no product DOM, CSS, JavaScript or exact-token obligation): .dashboard-tabs, EDSHAPE, clip-path path(), strip last-child/slot-0 mounting, shape-on classes, --ed-lp/--ed-rp, --ed-shape-x/--ed-shape-w, --ed-rail-solid/--ed-rail-bg, --ed-top-radius, --ed-shape-outline, --ed-shape-crown/--ed-shape-crown-h, --ed-tab-inactive-ring, --ed-canvas-rx-max, --ed-cap-bg, --ed-corner-ry and --glass-edge were the concept silhouette renderer’s selectors and paint bridges. Product geometry, materials and synchronization stay with F3-505/F3-631/F3-647."
+- "DL-260 source lineage only (no product API or implementation obligation): The browser’s drag-scoped Glass selector was an adapter to the retained 0.92 drag opacity: glass gains a drag-scoped frost, [data-theme^=\"glass\"] .editor-tabs.ed-shape-on:has(.tab.dragging) .ed-tab-shape { opacity: .92; } -"
+- "DL-260 source lineage only (no product API or implementation obligation): The prototype snap-while-dragging repair and measured samples below are source evidence, not a required EDSHAPE/sync/draggingLive/animation-frame API: The violation was structural, not decorative: grabbing a NON-ACTIVE tab flips the strip's active key, so sync() read the lastActive change as a selection, set animate = true and sprang the plate across over roughly 12 frames while the carried tab painted nothing, and sub-0.5 px pointermoves then parked in the spring-preservation early return and held that state indefinitely. Contract with this dated disposition: ANY EDSHAPE sync taken while the strip contains a .tab.dragging child must SNAP - draggingLive is computed immediately after the lastActive update, it forces animate = false, and the spring-preservation guard is qualified by \"&& !draggingLive\" so the snap branch cancels the in-flight rAF, jumps x and w to target, zeroes velocities and paints in the activating frame. Click, snap and keyboard SELECTION springs are explicitly unaffected, as is the release settle owned by the reorder gesture. Measured: worst plate-versus-tab lag 0.00 px over 2,615 samples of a deliberately slow non-active drag; 18 distinct monotonic intermediates on a click-to-select, no overshoot."
+- "DL-260 source lineage only (no product API or implementation obligation): The historical browser repair used --pm6-editor-tabs-h/--pm6-dash-head-h and the following CSS precedence changes; these are not native product code requirements: Dashboard retro is UNBLOCKED: the dashboard pill neutralization uses !important, and important declarations beat CSS animations, so all background-based retro effects were dead on dashboard tabs (the DOS blink rendered as an empty box - its non-important color applied while its background lost); effect-classed tabs ([class*=\"pm-retro\"]) now escape the important rule via :not() and receive a normal-weight twin that keeps the pill suppressed without outranking keyframes. Seventh follow-up (2026-08-14): the sixth follow-up's exemption left the dashboard CRT fill dead through a SPECIFICITY TIE - the effect rules and the normal-weight neutralization twin both weighed (0,5,0), and the twin, later in the assembled cascade, won the tie for plain background declarations (phosphor survived only through its keyframes, which sit above the normal cascade). All fourteen retro effect selectors now include .ed-shape-on, weighing (0,6,0) and outranking the twin; the tied (0,5,0) effect selectors are retired with this dated disposition. Watched verification: the phosphor block, the DOS full inversion, and the CRT scanline wipe all paint on dashboard tabs."
 - "Concepts/PMConcept7.html (source-lineage-only per Plans/usage-feature.md)"
-preserved_exact_tokens: ["20", "10", "8", "13", "12", "clamp", "squircle", "--ed-lp", "--ed-rp"]
+preserved_exact_tokens: ["20", "10", "8", "13", "12", "clamp", "squircle"]
 negative_constraints:
 - "Do not render the active-editor-tab treatment as a pill or an underline sliding between labels."
 - "Do not retain a decorative notch where the tab and the canvas are flush."
@@ -1692,7 +1564,7 @@ the trimmed F3-448 inventory with no notifications item or bell. The generated
 concept may use `footer.pm7-statusbar`; production Slint consumes the semantic
 zone rather than that DOM selector. Spacing otherwise remains 4 px between
 zones and at the outer sides with no Home page gutter; the Home workspace's
-vertical padding remains 2 px through `--pm-home-pad-y`/`--pm-home-gap-y`.
+vertical padding remains 2 px through the native workspace spacing tokens.
 
 PM7 amendment 2026-10-29 (A1, B1–B6, D5, G3/G4): the title bar is 40 px, 46 px in Glass; Pip + wordmark precede project box A. The status group is agents/questions and processes/needs-input, folding Orchestrator into Agents. Resources is a third panel tab and has no CPU/RAM status item. The current F3-034/F3-035 requirements supersede the retained lineage diagram.
 
@@ -2168,7 +2040,7 @@ Amended 2026-10-09 (DL-180): Home's panels, tabs and chat column persist in the 
 User-facing selector contract:
 - The GUI MUST expose exactly ten built-in theme variants, organized as five theme families (Basic, Friendly, Glass, Retro, NieR) x two schemes (dark, light): `Basic Dark`, `Basic Light`, `Friendly Dark`, `Friendly Light`, `Glass Dark`, `Glass Light`, `Retro Dark`, `Retro Light`, `NieR Dark`, and `NieR Light` (Q22).
 - In addition to the variant set, the selector carries a presentation mode dimension: Light, Dark, and Auto. Auto resolves the selected family to its dark or light variant by following the operating system appearance (`prefers-color-scheme`) and updates live when the OS setting changes; Light and Dark pin the scheme manually.
-- The untouched first-open/fresh-project factory default is family Basic with mode Dark (`Basic Dark`). This seed applies only when no committed project theme exists; an explicit saved project selection survives open/reopen and project switching. A copied project materializes the source selection as its own detached snapshot, so later source-project changes do not propagate. Prior active statements naming `Friendly Dark` as the default are superseded by this later factory-default contract; `Friendly Dark` remains one of the ten supported variants (Q22).
+- The bundled/pre-claim fallback is family Basic with mode Dark (`Basic Dark`). A new Project follows Your usual settings through the applicable Everywhere/Device/Project ladder (SSYS-002/059); absence of a Project own value does not bypass an applicable app-level value. An explicit saved Project selection survives open/reopen and switching. A settings copy brings source-owned values by default; only Advanced Keep them fixed copies effective values into detached destination own values (SSYS-062). Later source-Project changes never propagate. Prior active statements naming `Friendly Dark` as the factory default are superseded; `Friendly Dark` remains one of the ten supported variants (Q22).
 - Migration lineage (superseded 2026-07-16 by the four-family promotion, kept findable for token continuity): the prior contract read "The GUI MUST expose exactly three built-in theme choices: `Retro Dark`, `Retro Light`, and `Basic`", where `Basic` internally resolved to light or dark palette tokens without creating a fourth user-facing built-in theme promise.
 
 ### 6.2 Theme Token Table (Retro/Basic variants; Friendly and Glass variant tables are in the Theme System addendum - 2026-07-16)
@@ -2284,7 +2156,7 @@ impl ThemeVariant {
 The architecture supports unlimited user-created themes beyond the ten built-in variants.
 
 **Built-in themes (ship with app):**
-- Basic Dark, Basic Light, Friendly Dark, Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, NieR Dark, NieR Light (the ten variants in §6.1-6.2 and the Theme System addendum - 2026-07-16). Basic Dark is the untouched first-open/fresh-project factory seed; the former Friendly Dark default is superseded, while project-saved selections remain authoritative after initialization.
+- Basic Dark, Basic Light, Friendly Dark, Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, NieR Dark, NieR Light (the ten variants in §6.1-6.2 and the Theme System addendum - 2026-07-16). Basic Dark is the bundled/pre-claim fallback when no applicable saved look exists; a new Project follows Your usual settings through SSYS-002/059, and saved own values retain their admitted precedence. The former Friendly Dark factory default is superseded.
 
 **Custom theme file format:** Custom themes are defined as TOML files in `~/.puppet-master/themes/<name>.toml`. Each file specifies token overrides; any token not specified inherits from any built-in variant base named by a `base` field (`basic-*`, `retro-*`, `glass-*`, or `friendly-*`).
 
@@ -3332,7 +3204,7 @@ Activity bar remains at 48px at all breakpoints. At < 720px, it becomes the prim
 
 The shared `/binder` and document-review surfaces use the same responsive rule: left binder rail owns document switching/status, right binder rail or drawer owns annotation management, selection actions stay in the inline `AnnotationActionMenu`, ephemeral send-to-chat state stays in `ContextChipStrip`, and chat itself remains a separate panel rather than embedded inside the binder review surface.
 
-The concept lineage from `Concepts/PuppetMasterDashComp.html` (`/PuppetMasterDashComp.html`) narrows the binder placement without making the concept file a live owner. Wizard review uses a binder-style layout: the left document list `/sidebar` contains `wizard-doc-pill`, the central document content area is `wizard-binder-view`, and the top binder toolbar is `wizard-binder-toolbar`. Annotation UI belongs in a right-side drawer, `/rail`, or overlay inside binder content, not in the left document rail and not in a browser-style `annotation-review` modal. Chat remains the separate `#chatPanel` / `chatPanel` side panel with its own thread list, composer, `queued-intervention` strip, footer, and context-usage display; `send-to-chat` chips live in that chat composer through `ContextChipStrip`.
+Wizard review uses the shared binder layout of F3-199: the left document rail owns switching/status, the centre owns document content, and the top toolbar owns review controls. Annotation management uses the right rail, drawer or content overlay, with selection actions in AnnotationActionMenu. Assistant Chat stays in its separate side panel with its own thread list, composer, queued-intervention strip, footer and context-usage display; ContextChipStrip supplies the composer’s send-to-chat chips. Prototype DOM spellings are bounded source lineage in F3-199.
 
 ---
 
@@ -3541,7 +3413,7 @@ Amended 2026-10-09 (DL-180): the Home layout lives in the v2 Home layout record 
 | `terminal_appearance_presets:v1` | Computer-local per-user terminal preset library; logical custody and deferred native physical storage are SP-331's (2026-10-16, DL-207) | Existing typed local Save/Rename/Delete/Undo actions; native persistence remains deferred |
 | `activity_bar_order:v1` | Ordered list of activity bar item IDs + separator position | On change (debounced 300ms) |
 | `theme:v1` | Theme family + presentation mode (Light/Dark/Auto), with the resolved ThemeVariant enum value kept for readers | On change |
-| `glass_background_mode:v1` | Retired compatibility input since 2026-10-15; SSYS-054 owns shared Wallpaper and SP-333 owns migration of old mesh/depth/minimal values | No active writer |
+| `glass_background_mode:v1` | Retired compatibility input since 2026-10-15; SSYS-054 owns shared Wallpaper and SP-333 excludes discovered concept preferences from product migration | No active writer |
 | `glass_alpha:v1` | Glass surface alpha between its floor (Glass Dark 0.35, Glass Light 0.45) and 1, default 0.55 (SSYS-010; amended 2026-10-17, DL-228, it read: clamps 0.35-0.85 and 0.45-0.88) | On change (debounced 300ms) |
 | `editor_workspace_state.v1:{project_id}` | Canonical project-wide editor workspace state: open tabs, active tab, and per-tab scroll/cursor presentation; contains no unsaved buffer bytes | On change (debounced 500ms) |
 | `filetree_state:v1:{project_id}` | Expanded folder set, local filter text, and tree scroll position | On change (debounced 300ms) |
@@ -4288,7 +4160,7 @@ These decisions are final and must not be revisited during implementation:
 2. **winit + Skia only** -- Skia on the GPU by default, Skia's own CPU raster as the only fallback, extended by Puppet Master's Skia renderer extensions (F3-582); FemtoVG and Slint's separate software renderer are retired (DL-139); on a software GPU adapter the CPU raster is always used, even over an explicit GPU choice, with a warning that no GPU was detected
 3. **No React/Tauri product UI** -- native desktop is Rust + Slint `.slint` markup; the web GUI is a Rust Leptos client drawn with browser elements and CSS, with JavaScript limited to generated or minimal glue (DL-139, F3-583)
 4. **IDE shell layout** -- Activity Bar + Side Panel (left) + Primary Content + chat column (right); Home's primary content is one universal panel system (amended 2026-10-09, DL-180: the Bottom Panel is no longer a zone; F3-630, F3-637)
-5. **Five theme families / ten built-in themes** -- Basic Dark, Basic Light, Friendly Dark, Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, NieR Dark, NieR Light (Q22) (built-in variants + custom themes via TOML). The untouched first-open/fresh-project factory default is Basic Dark; explicit saved project theme/layout customization survives, and a copied project receives a detached snapshot. This supersedes the Friendly Dark default and the earlier three-family lock while preserving both as historical lineage.
+5. **Five theme families / ten built-in themes** -- Basic Dark, Basic Light, Friendly Dark, Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, NieR Dark, NieR Light (Q22) (built-in variants + custom themes via TOML). Basic Dark is the bundled/pre-claim fallback; a new Project follows Your usual settings through SSYS-002/059. Explicit saved theme/layout customization survives. Settings copy brings source-owned values by default, or effective values only through Keep them fixed; copied own values and layouts remain detached. This supersedes the Friendly Dark default and the earlier three-family lock while preserving both as historical lineage.
 6. **Settings and presentation ownership** -- `Plans/Settings_System.md` owns the Settings shell and ordinary-setting semantics; `Plans/newtools.md` N2-151 owns the Doctor registry/router/projection; auth/account owners retain Login; Final GUI owns their K3-shell presentation, chrome, theme, layout, and motion rather than a unified semantic Settings + Login + Doctor owner.
 7. **Event-driven updates** via `invoke_from_event_loop`, not polling
 8. **redb for layout persistence**, seglog for events, Tantivy for search. Amended 2026-10-31 (DL-270): the storage stack is owned by storage-plan SP-335 to SP-345: seglog with sealed-segment zstd, a content-addressed payload store, canonical and derived redb in two files, Tantivy, a Parquet archive read by embedded DuckDB, and SQLite banned for PM-owned stores (SP-342).
@@ -9908,8 +9780,8 @@ canonical_text: >-
   The Slint theme global exposes the canonical ThemeMode values for all ten built-in variants (friendly-dark,
   friendly-light, glass-dark, glass-light, retro-dark, retro-light, basic-light, basic-dark) and theme token
   properties for colors, accents, retro effects, paper texture, borders, padding, scrollbar width, line height,
-  and base font size, with the property defaults illustrative per active variant and basic-dark as the untouched
-  first-open/fresh-project factory mode. The former friendly-dark default is superseded lineage. The
+  and base font size, with the property defaults illustrative per active variant and basic-dark as the bundled/pre-claim
+  fallback only. A fresh Project follows Your usual settings through the applicable SSYS-002/059 ladder. The former friendly-dark default is superseded lineage. The
   ThemePresentationMode dimension (light, dark, auto) resolves family + mode to one of the same eight token
   sets; in auto the effective variant tracks the OS appearance (prefers-color-scheme) live and feeds the
   identical per-variant tokens. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes
@@ -16559,11 +16431,7 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Concept lineage from `Concepts/PuppetMasterDashComp.html` narrows wizard binder placement
-  without making that concept file a live owner: the left rail contains `wizard-doc-pill`,
-  central content is `wizard-binder-view`, the top toolbar is `wizard-binder-toolbar`,
-  annotation UI is right-side/drawer/overlay, and chat remains the separate `#chatPanel` /
-  `chatPanel` side panel with `ContextChipStrip` send-to-chat chips.
+  The shared binder review surface keeps document switching and status in the left rail, document content in the centre, and review controls in the top toolbar. Annotation management uses a right-side rail, drawer or content overlay; the left document rail and a separate browser-style annotation modal cannot host it. Assistant Chat remains a separate side panel with its own thread list, composer, queued-intervention strip, footer and context-usage display; ContextChipStrip supplies the composer’s ephemeral send-to-chat chips.
 gui_related: true
 gui_classification_reason: >-
   This unit preserves concept-lineage placement constraints without making the concept file a
@@ -16588,21 +16456,13 @@ node_compile_hint:
   mode: binder_review_placement_and_chat_separation
   create_worknodes: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): Concepts/PuppetMasterDashComp.html used /PuppetMasterDashComp.html, wizard-doc-pill, wizard-binder-view, wizard-binder-toolbar, annotation-review, #chatPanel/chatPanel and queued-intervention markup. F3-199 retains placement and chat separation without those DOM identities."
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0133"
 preserved_exact_tokens:
-- "Concepts/PuppetMasterDashComp.html"
-- "/PuppetMasterDashComp.html"
-- "wizard-doc-pill"
-- "wizard-binder-view"
-- "wizard-binder-toolbar"
-- "annotation-review"
-- "#chatPanel"
-- "chatPanel"
-- "queued-intervention"
 - "send-to-chat"
 - "ContextChipStrip"
 negative_constraints:
-- "Annotation UI must not live in the left document rail or in a browser-style `annotation-review` modal."
+- "Annotation UI must not live in the left document rail or in a separate browser-style annotation modal."
 - "Chat must remain a separate side panel, not embedded inside the binder review surface."
 compatibility_only_notes: []
 stale_retired_dispositions: []
@@ -17550,7 +17410,7 @@ unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "A genuinely fresh Project seeds Basic Dark plus factory layout, existing explicit saved theme/layout survives startup and switching, and a copied Project owns an independent detached destination snapshot."
+- "A fresh Project follows Your usual settings through SSYS-002/059, using Basic Dark only when no applicable look exists, and starts with factory layout unless an explicit saved layout applies. Existing appearance values and layouts survive startup and switching. Copy brings source-owned settings by default, effective values only through Keep them fixed, and detached layout state through its layout owner."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
@@ -20597,7 +20457,7 @@ canonical_text: >-
   warning that no GPU was detected), Slint as the only native UI framework (replacing it needs a new owner
   decision; a GPUI fork was rejected on 2026-10-02), and Puppet Master's Skia renderer extensions (DL-139), no
   React or Tauri product UI with the web GUI a Rust Leptos client (DL-139), IDE shell layout, five theme
-  families (ten built-in themes, untouched first-open/fresh-project factory default Basic Dark; the former
+  families (ten built-in themes, bundled/pre-claim fallback Basic Dark; new Projects follow Your usual settings; the former
   Friendly Dark and prior three-family defaults remain superseded lineage), Settings owned by
   `Plans/Settings_System.md`, the Doctor registry/router/projection owned by `Plans/newtools.md` N2-151, Login
   retained by auth/account owners, and Final GUI limited to their presentation, chrome, theme, layout, and
@@ -27488,7 +27348,7 @@ negative_constraints:
   - Do not drop GUI-specific recovery rules that supplement the canonical summary.
   - Do not let stale addenda re-own blocked/recovery semantics after the canonical GUI summary.
 compatibility_only_notes:
-  - Plans/chain-wizard-flexibility.md remains the wizard_status / wizard blocked lifecycle consumer/existing-coverage surface; F3-392 does not create a duplicate chain-wizard owner.
+  - Plans/Planning_Wizard.md#PWIZ-038 owns wizard_status and the wizard blocked lifecycle (DL-330); retired Plans/chain-wizard-flexibility.md is source lineage only, and F3-392 does not create a duplicate wizard-lifecycle owner.
   - Earlier addenda headings are compatibility/source-lineage sections and must not be parsed as peer canonical sections.
   - >-
     Anchor aliases for SR-002 resolve preserved old heading tokens to the current
@@ -29715,22 +29575,9 @@ plan_unit_id: F3-417
 unit_type: decision
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Puppet Master targets Slint 1.17.1 for the active GUI platform. Native desktop uses Slint Winit with Skia as the
-  only compiled renderer on Windows, Linux, and macOS, extended by Puppet Master's Skia renderer extensions (F3-582);
-  selection order is explicit SLINT_BACKEND override, persisted preference, Winit + Skia on the GPU, then Winit +
-  Skia CPU (winit-skia-software), and FemtoVG and Slint's separate software renderer are retired (DL-139); on a
-  software GPU adapter the Skia CPU raster is always used, even over an explicit GPU choice, with a warning that no
-  GPU was detected, and the CPU raster is a supported, tested path (F3-033). The first
-  GUI build includes native desktop plus a Rust Leptos web GUI compiled to WebAssembly, rendered in the browser with
-  browser elements and CSS, and served by the trusted local daemon, rather than React, Tauri, or TypeScript (F3-583).
-  Browser-only WASM cannot claim PTY, filesystem, process/container, CEF, tray, native-window, or raw OS drag/drop
-  authority; those OS-owned capabilities route through the trusted local daemon with authenticated local origin or
-  pairing, origin/CSRF protection, capability probe, permission request, receipt/audit event, redaction, degraded
-  reason, and deterministic agent-test hooks. Web capability state values are native_full, web_supported_direct,
-  web_supported_via_trusted_local_daemon, web_simulated_or_degraded, and web_disabled. Production GUI source uses
-  bundled SVGs through stable icon_id entries and must not use emoji, emoji-like pictographs, Unicode pseudo-icons,
-  network/CDN icons, or icon-only controls without accessible labels and non-icon state text.
+canonical_text: |-
+  Puppet Master targets Slint 1.17.1 for the active GUI platform. Native desktop uses Slint Winit with Skia as the only compiled renderer on Windows, Linux, and macOS, extended by Puppet Master's Skia renderer extensions (F3-582); selection order is explicit SLINT_BACKEND override, persisted preference, Winit + Skia on the GPU, then Winit + Skia CPU (winit-skia-software), and FemtoVG and Slint's separate software renderer are retired (DL-139); on a software GPU adapter the Skia CPU raster is always used, even over an explicit GPU choice, with a warning that no GPU was detected, and the CPU raster is a supported, tested path (F3-033). The first GUI build includes native desktop plus a Rust Leptos web GUI compiled to WebAssembly, rendered in the browser with browser elements and CSS, and served by the trusted local daemon, rather than React, Tauri, or TypeScript (F3-583). Browser-only WASM cannot claim PTY, filesystem, process/container, CEF, tray, native-window, or raw OS drag/drop authority; those OS-owned capabilities route through the trusted local daemon with authenticated local origin or pairing, origin/CSRF protection, capability probe, permission request, receipt/audit event, redaction, degraded reason, and deterministic agent-test hooks. Web capability state values are native_full, web_supported_direct, web_supported_via_trusted_local_daemon, web_simulated_or_degraded, and web_disabled. Production GUI source uses bundled SVGs through stable icon_id entries and must not use emoji, emoji-like pictographs, Unicode pseudo-icons, network/CDN icons, or icon-only controls without accessible labels and non-icon state text.
+  The web GUI development workflow keeps the local trusted daemon plus static web route, fixture mode, browser automation smoke tests, screenshots/state capture, deterministic state hooks and fast rebuild/reload. Fixture mode is a developer and test tool for building Puppet Master, not a prototype scenario picker or a product run-mode switch. Deterministic fixture data stays isolated and labelled; it cannot enter production owner state, satisfy production admission, or earn readiness, production receipt or real-work credit. No production configuration enables fixture mode.
 gui_related: true
 gui_classification_reason: This unit locks GUI platform, renderer, web GUI, visible capability, and icon policy decisions.
 split_recommended: false
@@ -29742,16 +29589,17 @@ depends_on:
 - ATS-023
 unblocks: []
 acceptance_criteria:
-- Active Slint toolkit references in live owner docs and Spec_Lock use Slint 1.17.1, while old versions remain only in audit/source-lineage history.
-- Native renderer fallback order is explicit and preserves SLINT_BACKEND override authority before persisted preference and compiled defaults, except that a software GPU adapter always gets the Skia CPU raster with a no-GPU warning (F3-033).
-- Web GUI capability claims use the approved capability states and route OS-owned capabilities through the trusted local daemon.
-- Production icons use bundled SVG icon_id manifest entries, accessible labels, fallback text, and non-icon state text; emoji/pictographic pseudo-icons and remote icon sources are forbidden.
-- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this decision.
+- "Active Slint toolkit references in live owner docs and Spec_Lock use Slint 1.17.1, while old versions remain only in audit/source-lineage history."
+- "Native renderer fallback order is explicit and preserves SLINT_BACKEND override authority before persisted preference and compiled defaults, except that a software GPU adapter always gets the Skia CPU raster with a no-GPU warning (F3-033)."
+- "Web GUI capability claims use the approved capability states and route OS-owned capabilities through the trusted local daemon."
+- "Production icons use bundled SVG icon_id manifest entries, accessible labels, fallback text, and non-icon state text; emoji/pictographic pseudo-icons and remote icon sources are forbidden."
+- "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this decision."
+- "Fixture mode is present only in development/test builds beside the trusted daemon/static web route, browser smoke tests, screenshots/state capture and deterministic hooks; there is no prototype scenario picker or product run-mode switch."
+- "Fixture inputs and resulting captures are labelled test evidence, never production admission, owner state, readiness, production receipts or proof that real work ran. Production configuration cannot enable fixture mode."
 validation_surfaces:
-- python3 scripts/pm-gui-asset-policy.py
-- python3 scripts/pm-plans-verify.py validate-gui-asset-policy
-- python3 scripts/pm-plans-verify.py verify-spec-lock
-- python3 scripts/pm-plan-index.py validate
+- "scripts/pm-gui-asset-policy.py"
+- "scripts/pm-plans-verify.py"
+- "scripts/pm-plan-index.py"
 risk_class: gui_platform_currentness_drift
 reasoning_tier: high
 context_scope: fable_20260706_gui_platform_currentness_repair
@@ -29788,13 +29636,15 @@ preserved_exact_tokens:
 - "web_simulated_or_degraded"
 - "web_disabled"
 - "icon_id"
-- "no emoji"
+- "bundled SVGs"
 negative_constraints:
 - "Do not create WorkNodes, NodeSeeds, queues, implementation files, runtime launches, or production build artifacts."
 - "Do not allow browser-only WASM to pretend it directly owns OS capabilities."
 - "Do not use React, Tauri, or TypeScript for the Leptos web GUI."
 - "Do not compile or ship FemtoVG or Slint's separate software renderer in desktop builds."
 - "Do not use emoji, emoji-like pictographs, Unicode pseudo-icons, network/CDN icons, or icon-only state carriers in production GUI source."
+- "Do not add a prototype scenario picker or a fixture-backed product run mode."
+- "Do not admit fixture data as production state or award readiness, production receipt or real-work credit to fixtures."
 compatibility_only_notes:
 - "Slint 1.17.0, Slint 1.15.1, PMConcept terminal transcripts, and FABLE pre-repair wording are source-lineage/history only after this repair."
 stale_retired_dispositions:
@@ -30051,7 +29901,7 @@ canonical_text: >-
   chrome-reduced to the message stream, composer, and quick-reply chips with gated send.
   Stream and footer content resolve per thread, and context boxes are
   thread-scoped. The unified component is consumed by wizard embedding and promoted surfaces,
-  and the separate `#chatPanel` side panel mount remains canonical.
+  and the separate Assistant Chat side panel remains canonical.
 gui_related: true
 gui_classification_reason: This unit defines visible chat component mounts and per-instance chrome presentation.
 split_recommended: false
@@ -30060,7 +29910,7 @@ unblocks: []
 acceptance_criteria:
 - "Docked panel, floating window, and wizard-embedded chat instances render from one chat component, template, and state source distinguished only by chrome flags."
 - "Embedded mode keeps the message stream, composer, quick-reply chips, and gated send while omitting thread rail, thread search, issues and worktree indicators, persona and model selectors, mode strip, and panel toggles."
-- "The separate #chatPanel side panel mount remains canonical and is not replaced by embedded instances."
+- "The separate Assistant Chat side panel remains canonical and is not replaced by embedded instances."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -30075,16 +29925,16 @@ node_compile_hint:
   mode: chat_component_unification_and_embedded_chrome_flags
   create_worknodes: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): #chatPanel was the browser concept’s docked chat mount selector. F3-420 requires a separate Assistant Chat side panel rendered by the shared component, not that mount identity."
 - "Plans/FinalGUISpec.md:2092"
 - "Plans/assistant-chat-design.md"
 - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
 preserved_exact_tokens:
-- "#chatPanel"
 - "quick-reply chips"
 - "embedded"
 - "floating"
 negative_constraints:
-- "Chat must remain available as the separate side panel; embedded instances must not replace the #chatPanel mount."
+- "Chat must remain available as the separate side panel; embedded instances must not replace the Assistant Chat side panel."
 compatibility_only_notes:
 - "Slint portability: per-instance chrome flags map to conditional widget composition; embedded chat chrome requires no arbitrary-content backdrop blur or SVG filters, color styling is precomputed, and any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
 stale_retired_dispositions:
@@ -30110,11 +29960,7 @@ canonical_text: >-
   visible. When the tab strip overflows its width, a width-aware "+N more" overflow chip
   collects non-active tabs into a picker with per-item close, keeping the active tab visible.
   Non-file tabs, including thread context detail tabs and browser preview tabs, participate in
-  the same close and overflow behavior. Amended 2026-08-13 - tab drag-reorder is canonical
-  and persists on all four editor panes: pane 1 through the open-tab model, panes 2 through 4
-  through strip-owned order lists reasserted by every fitter and mirrored to the Home
-  overlay's buffer order via the pm6:ed-tab-order event; a newly opened tab inserts at its
-  model index. The +N more chip and its picker render in the shared app portal-menu family
+  the same close and overflow behavior. Tab drag-reorder persists through the shared panel/tab layout owner, and every strip projection and overflow fitter respects that committed order; a newly opened tab inserts at its model index (F3-630/F3-631). The +N more chip and its picker render in the shared app portal-menu family
   (portal recipe, sprout-in opening, neutral chip treatment) rather than as a bespoke pill.
   Amended 2026-08-13 (tweak wave) - the dedicated per-pane close glyph on editor panels is
   retired; the kebab menu's Close Panel row is the single pane-close affordance. Pane-close
@@ -30132,10 +29978,7 @@ canonical_text: >-
   CONTENT box, so padding reserve can never be occupied by tabs; the actions-cluster
   reserve has a 44 px floor covering the kebab column and grip lane even when the
   cluster is empty. Extended (final wave-3 build): the overflow condition itself is
-  content-box child-edge measurement at all three fitter sites
-  (edStripContentOverflows: rightmost in-flow child edge vs clientWidth minus the
-  padding-right reserve, skipping the actions span, the shape layer, and
-  display:none children) - the naive scrollWidth comparison is retired with this
+  content-box child-edge measurement at every shared overflow-fitting site (the rightmost visible in-flow tab edge against the available content width after the trailing actions/grip reserve, excluding controls, decorative shape layers and hidden children) - the naive scrollWidth comparison is retired with this
   dated disposition because scrollWidth equals clientWidth on a non-overflowing
   strip, which collapsed all tabs into the picker. Amended 2026-08-13 (wave 4) - the
   HTML5 drag-and-drop reorder mechanism is retired (and with it the wave-3
@@ -30152,21 +29995,7 @@ canonical_text: >-
   Amended 2026-08-15 (wave 8) - the wave-7 drag-cover fix stands (opacity 1 and
   the z 39 / z 40 sandwich are unchanged) but was INCOMPLETE: it addressed the
   plate's opacity and stacking, not the mechanism that still exposed the tab
-  underneath. That mechanism was the GRAB-SPRING. Grabbing a NON-ACTIVE tab
-  flips the strip's active key, so EDSHAPE.sync() consumed the lastActive change
-  as a selection event, set animate = true and SPRUNG the travelling plate
-  across the strip over roughly 12 frames while the carried tab itself paints
-  nothing (its background is transparent under .ed-shape-on) - the tab beneath
-  showed through for the whole flight. Worse, pointermoves smaller than 0.5 px
-  landed in the spring-preservation early-return guard, which held that hole
-  open indefinitely on slow, careful drags. It was also a live violation of the
-  1:1-no-independent-easing canon this unit shares with F3-505. The fix, with
-  this dated disposition: sync() computes
-  draggingLive = Boolean(strip.querySelector('.tab.dragging')) immediately after
-  the lastActive update and forces animate = false whenever it is true, and the
-  spring-preservation guard gains "&& !draggingLive" so the snap branch runs -
-  cancelling the in-flight rAF, jumping x and w to target, zeroing both
-  velocities and painting - in the same frame the gesture activates. Selection
+  underneath. The shared tab owner must treat pickup as a live drag before resolving a selection change. In the activating frame it cancels any in-flight selection spring, snaps the plate’s position and width to the carried tab, zeros both residual velocities and paints the fused silhouette without independent easing. Sub-0.5 px pointer moves cannot retain a stale spring or expose the tab underneath. Selection
   springs are untouched, release settle is untouched (the reorder gesture still
   owns the 160 ms settle transition plus its per-frame snap ride), and retro
   themes already forced animate = false. Verified live: worst plate-versus-tab
@@ -30192,7 +30021,7 @@ acceptance_criteria:
 - "The \"+N\" list opens in the one overlay root with no bespoke accent glow (F3-633, DR-067; amended 2026-10-09, DL-180)."
 - "\"+N\" follows F3-631's width cascade and F3-633, fitting live on tab add and remove, and a newly opened tab stays visible (amended 2026-10-09, DL-180; the chip-left-of-actions placement is lineage)."
 - "Tab drag-reorder animates: no native drag ghost, the dragged tab tracks the pointer transform-only with its layout at the insertion slot, reduced motion is instant, and the silhouette stays at the insertion slot throughout; as of wave 4 the gesture is pointer-capture (4 px threshold, 1:1 translateX glide, 220 ms neighbour FLIP, 200 ms low-bounce settle), works identically in Safari, survives its first re-slot, and defers the model re-render to settle-end."
-- "Grabbing a NON-ACTIVE tab never springs the travelling plate: any EDSHAPE sync while the strip contains .tab.dragging snaps in-frame, so the plate never lags the carried tab and never exposes the tab underneath (worst lag 0.00 px over 2,615 slow-drag samples), while click-to-select springs still travel (18 monotonic intermediate positions, no overshoot) (wave 8, 2026-08-15)."
+- "Grabbing a non-active tab cancels selection easing and snaps the fused plate to its current position and width in the activating frame, with zero residual velocities and zero plate-versus-tab lag, even on sub-0.5 px moves; click-to-select still travels monotonically with no overshoot and the reorder release settle remains unchanged (F3-505/F3-631)."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -30206,6 +30035,7 @@ node_compile_hint:
   mode: editor_tab_close_pane_close_and_tab_overflow
   create_worknodes: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): edStripContentOverflows was a concept content-box measurement helper and pm6:ed-tab-order its local synchronization event. Neither is a product API/event obligation. The old EDSHAPE/sync/draggingLive spring repair was: That mechanism was the GRAB-SPRING. Grabbing a NON-ACTIVE tab flips the strip's active key, so EDSHAPE.sync() consumed the lastActive change as a selection event, set animate = true and SPRUNG the travelling plate across the strip over roughly 12 frames while the carried tab itself paints nothing (its background is transparent under .ed-shape-on) - the tab beneath showed through for the whole flight. Worse, pointermoves smaller than 0.5 px landed in the spring-preservation early-return guard, which held that hole open indefinitely on slow, careful drags. It was also a live violation of the 1:1-no-independent-easing canon this unit shares with F3-505. The fix, with this dated disposition: sync() computes draggingLive = Boolean(strip.querySelector('.tab.dragging')) immediately after the lastActive update and forces animate = false whenever it is true, and the spring-preservation guard gains \"&& !draggingLive\" so the snap branch runs - cancelling the in-flight rAF, jumping x and w to target, zeroing both velocities and painting - in the same frame the gesture activates."
 - "Plans/FinalGUISpec.md:1653-1656"
 - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
 preserved_exact_tokens:
@@ -30242,9 +30072,8 @@ canonical_text: >-
   the stream wrap: content-sized at max-content with a max-width of the stream minus side
   margins, single-row nowrap layout with tight padding. The stream is see-through around the
   pill: the message stream extends behind the pill, stream content may scroll beneath it, and
-  no opaque band or full-width strip renders around the pill. A stack-height variable
-  (--chat-footer-stack-height) and a footer inset (--chat-footer-inset, computed as footer
-  height plus bottom offset plus 8px clearance) reserve bottom content space inside the
+  no opaque band or full-width strip renders around the pill. The shared chat layout owner measures the footer stack and computes a bottom inset
+  from footer height plus bottom offset plus 8px clearance, reserving bottom content space inside the
   scrollport (a content inset, not a scrollport shrink) so the newest row clears the pill when
   pinned, and position the jump-to-latest control above the pill at a higher z-order. The
   jump-to-latest control stays hidden until the stream is scrolled away from the bottom by
@@ -30263,14 +30092,14 @@ depends_on: [F3-131, F3-189, F3-420, DL-184]
 unblocks: []
 acceptance_criteria:
 - "The footer pill floats centered over the stream, sized to its content with no fixed side gutters, in both the docked panel and the floating window; the stream is visible around and beneath the pill, with no opaque band or full-width strip."
-- "The bottom content inset tracks measured footer height through --chat-footer-stack-height and --chat-footer-inset (footer height plus bottom offset plus 8px clearance) inside the scrollport, and stream content may scroll beneath the pill."
+- "The bottom content inset tracks measured footer height through the shared chat layout owner (footer height plus bottom offset plus 8px clearance) inside the scrollport, and stream content may scroll beneath the pill."
 - "The jump-to-latest control renders above the footer pill at a higher z-order, appears only when scrolled more than 24px away from the bottom, and returns the stream to the latest message."
 - "Pinned-to-bottom reserve changes re-scroll so the newest content stays visible above the pill; stream children do not flex-shrink."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 - "The footer has no capsule shape in any look (amended 2026-10-09, DL-184; F3-648)."
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- "scripts/pm-plan-migration.py"
+- "scripts/pm-plan-index.py"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
@@ -30280,12 +30109,11 @@ node_compile_hint:
   mode: chat_footer_pill_and_jump_to_latest_geometry
   create_worknodes: false
 source_lineage:
+- "DL-260/DL-280 source lineage only (no product CSS or exact-token obligation): --chat-footer-stack-height and --chat-footer-inset were concept measurement/paint bridges; F3-422 retains the footer reserve arithmetic and scroll behavior through the shared chat layout owner."
 - "Plans/FinalGUISpec.md:13639"
 - "Plans/assistant-chat-design.md:4086"
 - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
 preserved_exact_tokens:
-- "--chat-footer-stack-height"
-- "--chat-footer-inset"
 - "max-content"
 - "24"
 - "8px"
@@ -30312,11 +30140,7 @@ canonical_text: >-
   The chat composer lays out with attach plus the ELI5, YOLO, and CREW toggles on the left
   rail, and the rewind FAB followed by icon-only send and stop controls (inline SVG glyphs)
   on the right with an extra gap between rewind and send. The header selector row renders
-  Persona, Model, and Mode as equal-shrink slots whose labels ellipsize when narrow. The
-  floating chat window enforces a minimum and default width floor of 380px via
-  max(380px, min(var(--floating-chat-w), 40vw)) so the selector row is not clipped on first
-  open. The docked #chatPanel mount and the floating #floatingChat mount render both layouts
-  from the shared chat template of the unified component.
+  Persona, Model, and Mode as equal-shrink slots whose labels ellipsize when narrow. The desktop app’s popped-out chat window enforces a minimum and default width floor of 380px so the selector row is not clipped on first open. The docked Assistant Chat side panel and the popped-out window render both layouts from the unified chat component’s shared template (F3-420/F3-637).
   Amended 2026-10-09 (DL-180): the chat no longer floats inside the window or the page. This 380px floor now holds only
   for the chat's popped-out window in the desktop app (F3-504, F3-637), which the user sizes and places above it; the
   chat column's own width is F3-637's.
@@ -30342,15 +30166,13 @@ node_compile_hint:
   mode: composer_selector_row_and_floating_width_floor
   create_worknodes: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): #chatPanel and #floatingChat were browser concept mount selectors; max(380px, min(var(--floating-chat-w), 40vw)) was its retired in-page width expression. Native presentation retains the 380px desktop-window floor and the shared chat component."
 - "Plans/FinalGUISpec.md:10800"
 - "Plans/FinalGUISpec.md:10582"
 - "Plans/assistant-chat-design.md:186"
 - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
 preserved_exact_tokens:
 - "380px"
-- "40vw"
-- "#chatPanel"
-- "#floatingChat"
 - "ELI5"
 - "YOLO"
 - "CREW"
@@ -30524,16 +30346,12 @@ node_compile_hint:
   mode: per_family_theme_token_contract
   create_worknodes: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): --pm6-rb-shadow-hard was the concept CSS alias for the Retro hard offset shadow in the Theme Token Tables. The per-variant shadow values remain spec data, with no CSS-property-name obligation."
 - "Plans/FinalGUISpec.md:978"
 - "Plans/FinalGUISpec.md:7491"
 - "Plans/FinalGUISpec.md:7699"
 - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
-preserved_exact_tokens:
-- "--accent-primary"
-- "--accent-primary-rgb"
-- "--graph-pending"
-- "--diff-added-bg"
-- "--ease-default"
+preserved_exact_tokens: []
 negative_constraints:
 - "Do not derive theme token values at runtime; per-variant tables carry precomputed constants."
 compatibility_only_notes:
@@ -30691,7 +30509,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Glass themes expose a user-facing transparency control bound to --glass-alpha. Defaults are
+  Glass themes expose a user-facing transparency control bound to the shared Glass transparency scalar. Defaults are
   .60 for glass-dark and .55 for glass-light. Values clamp per theme: .35 through .85 for
   glass-dark and .45 through .88 for glass-light. Changes apply live to every alpha-driven
   glass fill and persist at glass_alpha:v1. The slider is a glass-only setting and renders
@@ -30707,14 +30525,14 @@ split_recommended: false
 depends_on: [F3-427, F3-444]
 unblocks: []
 acceptance_criteria:
-- "The --glass-alpha control defaults to .60 on glass-dark and .55 on glass-light."
+- "The Glass transparency control defaults to .60 on glass-dark and .55 on glass-light."
 - "Values clamp to .35 through .85 on glass-dark and .45 through .88 on glass-light."
 - "Slider changes apply live to alpha-driven glass fills and persist at glass_alpha:v1."
 - "The slider is glass-only."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- "scripts/pm-plan-migration.py"
+- "scripts/pm-plan-index.py"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
@@ -30724,11 +30542,11 @@ node_compile_hint:
   mode: glass_alpha_transparency_slider
   create_worknodes: false
 source_lineage:
+- "DL-260/DL-280 source lineage only (no product CSS or exact-token obligation): --glass-alpha was the concept paint scalar; current Glass transparency remains owned by SSYS-010 and F3-652, with existing storage compatibility names unchanged."
 - "Plans/FinalGUISpec.md:964"
 - "Plans/FinalGUISpec.md:2292"
 - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
 preserved_exact_tokens:
-- "--glass-alpha"
 - ".60"
 - ".55"
 - ".35"
@@ -30826,6 +30644,7 @@ node_compile_hint:
   mode: friendly_family_ingredients_and_font_rules
   create_worknodes: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): The former Friendly cozy CSS hooks were --pm6-cozy-mint, --pm6-cozy-sky, --pm6-cozy-coral, --pm6-cozy-lav, --pm6-cozy-butter, --pm6-cozy-card-base, --pm6-cozy-mix, --pm6-cozy-border-mix, --pm6-cozy-chrome, --pm6-cozy-chrome-border, --pm6-cozy-field, --pm6-cozy-dot, --pm6-cozy-glow-mint, --pm6-cozy-glow-lav, --pm6-cozy-glow-sky. Their colors, surface/border mix ratios, dot geometry and static corner glows remain product design values; these browser aliases and color-mix/gradient implementations are not product API or custom-property obligations."
 - Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)
 - Plans/Decision_Log.md#DL-161 (owner request, 2026-10-09)
 - 'Plans/Decision_Log.md#DL-161 (owner follow-ups, 2026-10-09 and 2026-10-10: scripts and the code face)'
@@ -30946,6 +30765,12 @@ Settings appearance overrides (2026-09-27): the per-variant tables below are wha
 
 ### Theme Token Tables (F3-426 spec data)
 
+The shared theme owner retains the token roles and literal design values below. CSS selectors, source-part
+labels, root/local cascade descriptions and browser paint-expression syntax in these tables are
+**source_lineage only (DL-260/DL-280)**, with no product DOM, CSS or exact-token obligation. Product renderers
+resolve the corresponding roles and values through F3-426/F3-431 and the current presentation owners; later
+Glass, Wallpaper, tab and editor amendments remain authoritative.
+
 Values below are transcribed verbatim from the concept CSS: `Concepts/pm6-build/parts/02-css-tokens.part.html` (root contract :28-66, theme blocks :140-552, glass background stage :554-733), `Concepts/pm6-build/parts/03-css-glass-a.part.html` (:19-49, :59-153), `Concepts/pm6-build/parts/04-css-glass-b.part.html` (:11-56, :138-196), `Concepts/pm6-build/parts/10x-pm6-css-global.part.html` (:139-176 friendly chrome), `Concepts/pm6-build/parts/10-css-settings.part.html` (:580-590, :912-940), and `Concepts/pm6-build/parts/29-js-settings-engine.part.html` (:60-86 alpha clamps). Values containing `calc()`, `color-mix()`, or `var()` chains are runtime-derived in concept; precompute per F3-431. Since 2026-10-08 the retro-dark and retro-light tables carry PMConcept7's retro values instead (DL-151; see the dated note after F3-426).
 
 #### Root fallback contract (`:root`, 02-css-tokens.part.html:28-66)
@@ -31019,7 +30844,7 @@ Source since 2026-10-08 (DL-151): PMConcept7's retro-dark, `Concepts/PMConcept7.
 | Graph | `--graph-planning` | `#9db4d0` |
 | Graph | `--graph-gating` | `#d8b93c` |
 | Elevation | `--shadow` | `3px 3px 0 rgba(107,118,84,.55)` |
-| Elevation | `--pm6-rb-shadow-hard` | `3px 3px 0 rgba(107,118,84,.55)` |
+| Elevation | Hard offset shadow | `3px 3px 0 rgba(107,118,84,.55)` |
 | Elevation | `--elev-1` | `2px 2px 0 rgba(74,83,58,.68)` |
 | Elevation | `--elev-2` | `3px 3px 0 rgba(107,118,84,.56)` |
 | Elevation | `--elev-3` | `5px 5px 0 rgba(107,118,84,.5)` |
@@ -31075,7 +30900,7 @@ Source since 2026-10-08 (DL-151): PMConcept7's retro-light, `Concepts/PMConcept7
 | Graph | `--graph-planning` | `#42A5F5` |
 | Graph | `--graph-gating` | `#AB47BC` |
 | Elevation | `--shadow` | `3px 3px 0 rgba(26,26,26,.30)` |
-| Elevation | `--pm6-rb-shadow-hard` | `3px 3px 0 rgba(26,26,26,.30)` |
+| Elevation | Hard offset shadow | `3px 3px 0 rgba(26,26,26,.30)` |
 | Elevation | `--elev-1` | `2px 2px 0 rgba(26,26,26,.22)` |
 | Elevation | `--elev-2` | `3px 3px 0 rgba(26,26,26,.30)` |
 | Elevation | `--elev-3` | `5px 5px 0 rgba(26,26,26,.30)` |
@@ -31417,7 +31242,11 @@ The concept shows seven diff-tint custom properties per variant for six variants
 
 Companion editor treatments carried in the same span (04-css-glass-b.part.html:144-196), for completeness of the :138-196 extraction:
 
-| Family scope | Rule | Value |
+This is a concept selector/declaration inventory. The shared appearance owner retains the matching minimap,
+change-mark, viewport-indicator and current-line design values; the selector and CSS declaration spellings are
+source lineage only. F3-505/F3-631/F3-639/F3-647 govern current tab and editor presentation.
+
+| Family scope | Source selector (lineage only) | Design value / source declaration |
 |---|---|---|
 | glass-dark | `.editor-minimap` | `background: rgba(16,10,32,0.5); border-left: 1px solid rgba(255,255,255,0.04);` |
 | glass-dark | `.minimap-heat-strip` | `box-shadow: none;` |
@@ -31469,7 +31298,11 @@ Lineage (amended 2026-10-17, DL-228): this table records the 2026-07 PM6 parts. 
 
 #### Backdrop-filter budget (F3-431 enumeration)
 
-| Scope | Surface | Filter | Concept source |
+Concept selectors and filter syntax in this inventory are source lineage for F3-431's renderer remediation,
+not required product markup or paint APIs. The stated surface/material values and native popup capability
+boundary remain with F3-431/F3-582 and the later F3-652 Glass owner.
+
+| Scope | Surface / concept selector (lineage only) | Material value / source filter | Source or product owner |
 |---|---|---|---|
 | Glass themes | `.app-shell` | `blur(34px) saturate(160%)` | 03-css-glass-a.part.html:71-72 |
 | Glass themes | `.floating-chat` | `blur(34px) saturate(160%)` | 03-css-glass-a.part.html:148-149 |
@@ -31490,27 +31323,27 @@ Mesh/Depth/Minimal, including the former mesh default below, are historical sour
 | `depth` | Container carries the base sky plus blur; two parallax wrappers `.pm6-par-far` and `.pm6-par-near` (inset `-8%`); far wrapper `::before` billow layer; six cloud puffs `.pm6-gbg-shape` (three far, three near) | `blur(14px) saturate(1.15)` dark, `blur(14px) saturate(1.12)` light (on the container) | Far billow drift `pm-sky-drift 160s`; puff float `pm-float` with per-shape `--float-dur` of `100s`, `84s`, `72s` (far) and `68s`, `76s`, `64s` (near); pointer parallax `translate3d(calc(var(--par-x, 0) * 4px), calc(var(--par-y, 0) * 2px), 0)` far and `translate3d(calc(var(--par-x, 0) * 10px), calc(var(--par-y, 0) * 6px), 0)` near; all killed under reduced motion | Base sky, far billow layer, and near puff layer baked as separate pre-blurred bitmaps so `--par-x`/`--par-y` offsets still apply per layer |
 | `minimal` | Base gradient sky only (`.pm6-gbg-minimal`), no billow layers | none (static gradients, no filter) | none (static) | One flat gradient bitmap per variant |
 
-#### Friendly cozy pastel hooks (02-css-tokens.part.html:477-492, 536-551)
+#### Friendly category palette and material values (F3-426/F3-430)
 
-| Token | friendly-dark | friendly-light |
+| Presentation role | friendly-dark | friendly-light |
 |---|---|---|
-| `--pm6-cozy-mint` | `#6FDABC` | `#5FD0B0` |
-| `--pm6-cozy-sky` | `#6FC6E8` | `#5AB9E0` |
-| `--pm6-cozy-coral` | `#FFAD93` | `#FF9E80` |
-| `--pm6-cozy-lav` | `#C3B1E4` | `#B39DDB` |
-| `--pm6-cozy-butter` | `#FFD97F` | `#FFD166` |
-| `--pm6-cozy-card-base` | `#2A2731` | `#FFFFFF` |
-| `--pm6-cozy-mix` | `14%` | `11%` |
-| `--pm6-cozy-border-mix` | `34%` | `30%` |
-| `--pm6-cozy-chrome` | `rgba(40,36,48,.60)` | `rgba(255,255,255,.65)` |
-| `--pm6-cozy-chrome-border` | `rgba(255,255,255,.08)` | `rgba(255,255,255,.85)` |
-| `--pm6-cozy-field` | `rgba(255,255,255,.06)` | `rgba(255,255,255,.70)` |
-| `--pm6-cozy-dot` | `rgba(190,180,210,.06)` | `rgba(122,109,140,.10)` |
-| `--pm6-cozy-glow-mint` | `rgba(95,208,176,.10)` | `rgba(95,208,176,.16)` |
-| `--pm6-cozy-glow-lav` | `rgba(179,157,219,.12)` | `rgba(179,157,219,.18)` |
-| `--pm6-cozy-glow-sky` | `rgba(90,185,224,.09)` | `rgba(90,185,224,.14)` |
+| Mint category pastel | `#6FDABC` | `#5FD0B0` |
+| Sky category pastel | `#6FC6E8` | `#5AB9E0` |
+| Coral category pastel | `#FFAD93` | `#FF9E80` |
+| Lavender category pastel | `#C3B1E4` | `#B39DDB` |
+| Butter category pastel | `#FFD97F` | `#FFD166` |
+| Category surface base | `#2A2731` | `#FFFFFF` |
+| Category surface mix | `14%` | `11%` |
+| Category border mix | `34%` | `30%` |
+| Frosted chrome fill | `rgba(40,36,48,.60)` | `rgba(255,255,255,.65)` |
+| Frosted chrome border | `rgba(255,255,255,.08)` | `rgba(255,255,255,.85)` |
+| Field fill | `rgba(255,255,255,.06)` | `rgba(255,255,255,.70)` |
+| Dot-grid ink | `rgba(190,180,210,.06)` | `rgba(122,109,140,.10)` |
+| Mint corner glow | `rgba(95,208,176,.10)` | `rgba(95,208,176,.16)` |
+| Lavender corner glow | `rgba(179,157,219,.12)` | `rgba(179,157,219,.18)` |
+| Sky corner glow | `rgba(90,185,224,.09)` | `rgba(90,185,224,.14)` |
 
-The friendly ground (10x-pm6-css-global.part.html:139-147) composes the dot grid as `radial-gradient(var(--pm6-cozy-dot) 1px, transparent 1.5px) 0 0 / 18px 18px` over three pastel corner glows and `var(--background)`; the dot-grid tile size `18px` is the F3-430 preserved token. Category pastels are consumed via `color-mix()` against `--pm6-cozy-card-base` with `--pm6-cozy-mix` and `--pm6-cozy-border-mix` ratios (runtime-derived in concept; precompute per F3-431).
+The Friendly ground has 1 px ink dots fading to transparent by 1.5 px, repeated on an 18px by 18px grid over three static pastel corner glows and the background. The dot-grid tile size `18px` remains F3-430's preserved token. Category surfaces and borders combine the category pastel with the surface base using the table's surface and border mix percentages. All resulting per-variant colors are precomputed through F3-431; the native theme owner chooses its implementation tokens.
 
 ## Settings System Addendum - 2026-07-16
 
@@ -32077,7 +31910,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: |-
-  The instant-apply model binds specific settings to live shell surfaces: the theme setting drives the theme engine and persists at `theme:v1`; the shared Wallpaper setting drives F3-653 through SSYS-054 and SP-333; `glass_background_mode:v1` is a retired migration input with no live writer; the glass alpha setting drives `--glass-alpha` within the per-theme clamps of F3-429 and persists at `glass_alpha:v1`; the reduce-animations setting drives the application reduced-motion state; and the chat layout mode setting drove the chat mount layout until it retired (amended 2026-10-10, DL-187: general.visual.chat-layout-mode retires with no options; the chat is a fixed column, F3-637, and a stored Overlay or Detached value is ignored and cleared on first read, SSYS-050). Each binding applies on change with no reload. The concept's interface-density live-apply hook had no consumer and is demo residue excluded from this canonical wiring map. SSYS-002/059 and F3-670 supply the single effective result for Default → Everywhere → Computer (Device for screen rows) → Project → existing owner/chat/run/tab levels, with Managed constraints and the declared more-careful/Computer-ceiling exceptions. App contexts omit Project. Own values remain sparse; detached copied own values do not follow their source Project. Existing theme:v1/glass_alpha:v1 names are compatibility/reader bindings, not additional independent writers; SP-348 owns level storage.
+  The instant-apply model binds specific settings to live shell surfaces: the theme setting drives the theme engine and persists at `theme:v1`; the shared Wallpaper setting drives F3-653 through SSYS-054 and SP-333; `glass_background_mode:v1` is a retired migration input with no live writer; the glass alpha setting drives the shared Glass transparency scalar within the per-theme clamps of F3-429 and persists at `glass_alpha:v1`; the reduce-animations setting drives the application reduced-motion state; and the chat layout mode setting drove the chat mount layout until it retired (amended 2026-10-10, DL-187: general.visual.chat-layout-mode retires with no options; the chat is a fixed column, F3-637, and a stored Overlay or Detached value is ignored and cleared on first read, SSYS-050). Each binding applies on change with no reload. The concept's interface-density live-apply hook had no consumer and is demo residue excluded from this canonical wiring map. SSYS-002/059 and F3-670 supply the single effective result for Default → Everywhere → Computer (Device for screen rows) → Project → existing owner/chat/run/tab levels, with Managed constraints and the declared more-careful/Computer-ceiling exceptions. App contexts omit Project. Own values remain sparse; detached copied own values do not follow their source Project. Existing theme:v1/glass_alpha:v1 names are compatibility/reader bindings, not additional independent writers; SP-348 owns level storage.
 gui_related: true
 gui_classification_reason: This unit defines visible live-apply bindings between settings and shell surfaces.
 split_recommended: false
@@ -32091,8 +31924,8 @@ acceptance_criteria:
 - The interface-density hook is excluded from the wiring map as demo residue and gains no canonical binding.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- "scripts/pm-plan-migration.py"
+- "scripts/pm-plan-index.py"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
@@ -32102,6 +31935,7 @@ node_compile_hint:
   mode: settings_live_apply_wiring_map
   create_worknodes: false
 source_lineage:
+- "DL-260/DL-280 source lineage only (no product CSS or exact-token obligation): --glass-alpha was the concept paint scalar; current Glass transparency remains owned by SSYS-010 and F3-652, with existing storage compatibility names unchanged."
 - Plans/FinalGUISpec.md:1329
 - Plans/FinalGUISpec.md:2291
 - Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
@@ -32111,7 +31945,6 @@ preserved_exact_tokens:
 - "theme:v1"
 - "glass_background_mode:v1"
 - "glass_alpha:v1"
-- "--glass-alpha"
 negative_constraints:
 - "Do not promote the concept's interface-density hook into the live-apply wiring map; it had no consumer and is demo residue."
 compatibility_only_notes:
@@ -32133,7 +31966,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: |-
-  `Plans/settings_inventory.json` is the canonical inventory registry of the live settings across 12 categories; 1010 is the pre-pass starting census. Its shape is owned by `Plans/settings_inventory.schema.json` with schema_id `pm.settings_inventory.v1`; layering metadata is owner-validated before use. Registry rows carry id, label, desc, type, options, default, scope, tier, recommended, curated, search, badges, and related_features, where related_features is the sparse mapping vocabulary consumed by the curation service usage-signal layer (F3-437). The demo runtime fields value, status, and src are dropped and excluded by the schema: setting values live in real settings storage, status is derived live per F3-435, and src was concept scaffolding. Registry provenance pins the concept sidecar extraction `Concepts/pm6-build/sidecar/pm_settings_data.json` at sha256 9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d as source-lineage-only. Settings surfaces, including search, category chips, bloom modals, shelves, row renderers, and the Project Settings Modal, bind to this registry rather than hardcoding inventory rows. Amended 2026-10-17 (DL-228): each row's label, desc and option words in this inventory are the one wording the product renders for it, on every surface that draws the row: Settings, hosted controls (SSYS-044) and the Customize screens (DR-068). A concept's own row wording, such as the onboarding Settings kit's plain-language rows.d labels and help, is a proposal until adopted here. Amended 2026-10-17 (DL-230, Jared): the concept's plain-language labels and help are adopted for the rows it rewrote (for example Theme Mode as "Light or dark", UI Scale as "Size of everything", Reduce Animations as "Reduce motion") in one wording pass: a row's label and desc are its rows.d label and help, its old label stays one of its search aliases, and its option words are option_labels, display words for stored option values that never change what is stored (a value without an entry shows as stored). The Customize words (Fill and Fit for Picture Fit, Still for Background Motion's Off, the materials' "plastic", "Less colour", "Grain", "Text drawing") are adopted the same way (DR-068). Retired rows keep their words. The rows carry option_labels beside options; the schema admits it. Amended 2026-10-29 (S1–S9, D5; PM7): Admit general.visual.pip-parts and general.interaction.status-bar-words, historically taking the inventory from 1009 to 1011; Q22 retires one row, yielding 1010. SSYS-056/057 own their defaults/placement; Parts is one multiselect, not a Pip master or sound row. Amended Q22, Jared 2026-10-30 (DL-257): the current family/variant and inventory census supersede earlier counts. Historical census token 1011 is retained solely as pre-Q22 lineage. Every live row carries reviewed layering metadata; legacy scope remains lineage and does not determine the offered level menu. F-d’s seven canonical additions preserve the twelve category prefixes and the unchanged 38 manager keys; recompute the actual census after collision checks, never display an invented fixed count. F3-670 consumes canonical code.execution.projects-folder, code.execution.no-project-chats-folder, general.interaction.no-project-default-computer, safety.rules.cross-project-read-policy, safety.rules.allow-project-reading, safety.rules.incoming-chat-messages and safety.rules.computer-use. The earlier assistant.* proposal spellings are source-lineage only and accept no write alias.
+  `Plans/settings_inventory.json` is the canonical inventory registry of the live settings across 12 categories; 1010 is the pre-pass starting census. Its shape is owned by `Plans/settings_inventory.schema.json` with schema_id `pm.settings_inventory.v1`; layering metadata is owner-validated before use. Registry rows carry id, label, desc, type, options, default, scope, tier, recommended, curated, search, badges, and related_features, where related_features is the sparse mapping vocabulary consumed by the curation service usage-signal layer (F3-437). The demo runtime fields value, status, and src are dropped and excluded by the schema: setting values live in real settings storage, status is derived live per F3-435, and src was concept scaffolding. Registry provenance pins the concept sidecar extraction `Concepts/pm6-build/sidecar/pm_settings_data.json` at sha256 9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d as source-lineage-only. Settings surfaces, including search, category chips, bloom modals, shelves, row renderers, and the Project Settings Modal, bind to this registry rather than hardcoding inventory rows. Amended 2026-10-17 (DL-228): each row's label, desc and option words in this inventory are the one wording the product renders for it, on every surface that draws the row: Settings, hosted controls (SSYS-044) and the Customize screens (DR-068). A concept's own row wording, such as the onboarding Settings kit's plain-language rows.d labels and help, is a proposal until adopted here. Amended 2026-10-17 (DL-230, Jared): the concept's plain-language labels and help are adopted for the rows it rewrote (for example Theme Mode as "Light or dark", UI Scale as "Size of everything", Reduce Animations as "Reduce motion") in one wording pass: a row's label and desc are its rows.d label and help, its old label stays one of its search aliases, and its option words are option_labels, display words for stored option values that never change what is stored (a value without an entry shows as stored). The Customize words (Fill and Fit for Picture Fit, Still for Background Motion's Off, the materials' "plastic", "Less colour", "Grain", "Text drawing") are adopted the same way (DR-068). Retired rows keep their words. The rows carry option_labels beside options; the schema admits it. Amended 2026-10-29 (S1–S9, D5; PM7): Admit general.visual.pip-parts and general.interaction.status-bar-words, historically taking the inventory from 1009 to 1011; Q22 retires one row, yielding 1010. SSYS-056/057 own their defaults/placement; Parts is one multiselect, not a Pip master or sound row. Amended Q22, Jared 2026-10-30 (DL-257): the current family/variant and inventory census supersede earlier counts. Historical census token 1011 is retained solely as pre-Q22 lineage. Every live row carries reviewed layering metadata; legacy scope remains lineage and does not determine the offered level menu. The seven canonical inventory additions preserve the twelve category prefixes and the unchanged 38 manager keys; recompute the actual census after collision checks, never display an invented fixed count. F3-670 consumes canonical code.execution.projects-folder, code.execution.no-project-chats-folder, general.interaction.no-project-default-computer, safety.rules.cross-project-read-policy, safety.rules.allow-project-reading, safety.rules.incoming-chat-messages and safety.rules.computer-use. The earlier assistant.* proposal spellings are source-lineage only and accept no write alias.
 gui_related: true
 gui_classification_reason: This unit binds the visible settings surfaces to their canonical inventory registry.
 split_recommended: false
@@ -32412,10 +32245,6 @@ preserved_exact_tokens:
 - "settings_suggestions_dismissed:v1"
 - "theme:v1"
 - "activity_bar_order:v1"
-- "pm.theme"
-- "pm.glassBg"
-- "pm.glassAlpha"
-- "pm.activity_bar_order:v2"
 negative_constraints:
 - "Do not register any new storage keys in this addendum other than glass_background_mode:v1, glass_alpha:v1, settings_recents:v1, and settings_suggestions_dismissed:v1; canonical keys remain theme:v1 and activity_bar_order:v1."
 - "Do not promote the concept localStorage names pm.theme, pm.glassBg, pm.glassAlpha, or pm.activity_bar_order:v2 as canonical keys; they are demo shims preserved as lineage only."
@@ -32505,15 +32334,14 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Shell elements carrying the sheen treatment, approximately 40 shell elements, keep their place as hover
-  targets: the sheen class marks them into the F3-465 merged hover system, which owns their whole hover look
-  and motion. The former sheen hover-lift and its glow (the base, Friendly and Glass `.pm-sheen:hover` lift,
+  targets: their shared presentation role enrolls them in the F3-465 merged hover system, which owns their whole hover look and motion. The former sheen hover-lift and its glow (the base, Friendly and Glass `.pm-sheen:hover` lift,
   border and glow) are retired in favour of F3-465 (DL-171), and no sheen element carries a hover-lift or
   glow of its own. Hover is driven by event delegation from a shared pointer handler and executed through
   compositor-friendly writes rather than per-frame style writes. Amended 2026-10-16 (SSYS-054/SP-333): the
   former glass depth background mode and its pointer parallax obligation are retired compatibility/source
   lineage; no current Wallpaper selection enables that old mode or revives its sampler. All active
   document-level pointer-move work, including the F3-465 hover driver, remains merged into a single shared
-  document pointer-move handler (`window.PM7_PMOVE` in the concept) that every consumer hooks into rather
+  document pointer-move handler that every consumer hooks into rather
   than listening itself. The retired parallax sampler stays inactive under every motion preference; F3-465
   sets the active hover's reduced-motion form.
 gui_related: true
@@ -32571,7 +32399,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: 'All staged notices appear beneath the title-bar bell/stack on every page, including Usage. Four urgency
-  levels share this staging owner: Quiet confirmations last 3.4 s and leave no alert-store entry; Notice lasts 3.4 s,
+  levels share this staging owner: Quiet confirmations last 3.4s and leave no alert-store entry; Notice lasts 3.4 s,
   Attention 5.2 s and Blocking 6.8 s before joining F3-453''s lasting inbox. Reading timers are not shortened by Animation
   speed; hovering any toast or focusing within one holds every staged timer, with a visible remaining-time line. Newest
   is on top and at most five stage together; overflow retires the oldest quiet notice or moves the oldest lasting notice
@@ -32585,12 +32413,12 @@ canonical_text: 'All staged notices appear beneath the title-bar bell/stack on e
   prompt may arrive again. Tour page notes use the quiet staging route. F3-1, Jared 2026-10-30, replaces the earlier
   Jared #19 control-clearance rule: on every page the notice stage hangs tight below the title bar at the bell. The first
   card starts at the theme selector menu''s resting top while the inbox is closed, not at a fixed distance below the
-  title-bar bottom. F3-1 final GUI 70b30f482f maps that top to #themeMenuWrap''s bottom plus MENU_GAP (6 px); selector
+  title-bar bottom. F3-1 final GUI 70b30f482f maps that top to the resting bottom of the theme selector control plus the shared 6 px menu gap; selector
   height varies by look, so title-bar-bottom plus 6 px is not equivalent. Placement may lift the stage with a negative
   drop to match the resting top. If no selector is drawn, preserve the title-bar-based nonnegative-drop fallback. Native
   components use equivalent owner geometry, not a new persisted DOM or placement field. Home panel strips and the chat
   head add no vertical clearance or page-specific offset. Lead ruling 2026-10-30 (mail 1030131044-4c44, preserving Jared''s
-  bf5115d9d9 fix): while the shared inbox is open the stage sits under it, retaining the existing --pmn-push offset;
+  bf5115d9d9 fix): while the shared inbox is open the stage sits under it, retaining the shared inbox owner’s measured stage offset;
   the inbox itself hangs from the bell. This open-inbox state exception is the lead''s interpretation, separate from
   Jared''s quoted F3-1 words. Otherwise notices may cover the controls beneath them. Page changes and relevant title-bar
   geometry changes recompute the bell anchor, never reuse another page''s coordinates. The stage remains inside the viewport;
@@ -32619,7 +32447,7 @@ canonical_text: 'All staged notices appear beneath the title-bar bell/stack on e
   (A4, D9, G10; PM7): D9 Notify me uses the alert owner once per item with coalescing; no view-local notification store.
   OS Pip faces follow A4; new OS badge/flow implementation is deferred under G10 and later reads the shared needs-you
   projection. DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell
-  inbox through the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu
+  inbox through the shared inbox owner’s measured stage offset; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu
   resting-top placement and entry/exit click guards remain.'
 gui_related: true
 gui_classification_reason: This unit defines visible ephemeral toast staging, lifetime, and dismissal behavior.
@@ -32650,11 +32478,11 @@ acceptance_criteria:
   placement/removal instantly; pending placement is still guarded. Settled cards keep their existing source/owner actions
   and read semantics.
 - 'DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell inbox through
-  the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
+  the shared inbox owner’s measured stage offset; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
   and entry/exit click guards remain.'
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- "scripts/pm-plan-migration.py"
+- "scripts/pm-plan-index.py"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
@@ -32664,6 +32492,7 @@ node_compile_hint:
   mode: toast_stack_contract
   create_worknodes: false
 source_lineage:
+- "DL-260/DL-280 source lineage only (no product DOM or CSS obligation): #themeMenuWrap, MENU_GAP and --pmn-push were concept selector/paint shims. F3-447 owns the theme-menu resting-top anchor; F3-461 supplies the inbox owner’s resting/destination-height stage offset, update triggers and close cleanup."
 - Plans/FinalGUISpec.md:1484
 - Plans/FinalGUISpec.md:1918
 - Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
@@ -33124,16 +32953,12 @@ canonical_text: 'The title-bar bell and unread stack sit between page tabs and s
   shows the bell glyph; marks hold 3:1 on severity-tinted cards. Amended 2026-10-29 (A4, D9; PM7): Keep every in-app
   kind mark beside its copy and the single title-bar notification entry. Only Friendly’s app tile and OS notification
   branding become Pip; completion notices route through this alert owner and never add a second affordance. A4 A, Jared
-  2026-10-30; joined PM7 review fix 4c49e10567: Friendly''s .pmn-tile-pip draws one decorative 24 px PMLogo mark. The
-  item''s severity maps through the existing status key and PMLogo.moodFor: info→idle, success→complete, warn→waiting,
-  error→failed. Its kind glyph remains in .pmn-kind beside the title''s text node; the tile is no additional control.
-  Other looks retain their kind-glyph tile. Toasts, banners and inbox rows repaint through the same fillTile owner in
-  src/js/19-notify.js when the look changes. F3-1, Jared 2026-10-30: the stage hangs tight under this bell on every page;
-  its first card uses the theme selector menu''s resting top while the inbox is closed (#themeMenuWrap bottom plus MENU_GAP,
-  6 px in 70b30f482f), not title-bar bottom plus that gap. It may cover controls and the chat head. F3-447 owns that
+  2026-10-30; joined PM7 review fix 4c49e10567: Friendly’s notification tile draws one decorative 24 px shared Pip mark. The item’s severity maps through the existing status/mood owner: info→idle, success→complete, warn→waiting,
+  error→failed. Its kind glyph remains beside the title; the tile is no additional control. Other looks retain their kind-glyph tile. Toasts, banners and inbox rows repaint through the same shared notification presentation owner when the look changes. F3-1, Jared 2026-10-30: the stage hangs tight under this bell on every page;
+  its first card uses the theme selector menu''s resting top while the inbox is closed (the resting bottom of the theme selector control plus the shared 6 px menu gap), not title-bar bottom plus that gap. It may cover controls and the chat head. F3-447 owns that
   anchor, the lead''s open-inbox push exception and the entry/exit click guard on every page (F3-5), including Usage''s
   local pointer styling; no per-page or control-clearance placement survives. DL-259, Jared 2026-10-31: Q2 A: Jared confirmed
-  on 2026-10-31 that staged toasts stay below the open bell inbox through the existing --pmn-push; it is his ruling,
+  on 2026-10-31 that staged toasts stay below the open bell inbox through the shared inbox owner’s measured stage offset; it is his ruling,
   not an unresolved lead exception. Closed-inbox theme-menu resting-top placement and entry/exit click guards remain.'
 gui_related: true
 gui_classification_reason: This unit defines the visible title-bar notification stack, staging, join, and count badge behavior.
@@ -33151,11 +32976,11 @@ acceptance_criteria:
   material since the 2026-10-15 publication, and Reduced Motion removes spatial/typing effects.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 - 'DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell inbox through
-  the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
+  the shared inbox owner’s measured stage offset; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
   and entry/exit click guards remain.'
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- "scripts/pm-plan-migration.py"
+- "scripts/pm-plan-index.py"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
@@ -33165,6 +32990,7 @@ node_compile_hint:
   mode: title_bar_notification_stack_and_count_badge
   create_worknodes: false
 source_lineage:
+- "DL-260/DL-280 source lineage only (no product DOM or CSS obligation): #themeMenuWrap, MENU_GAP and --pmn-push were concept selector/paint shims. F3-447 owns the theme-menu resting-top anchor; F3-461 supplies the inbox owner’s resting/destination-height stage offset, update triggers and close cleanup."
 - Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)
 - Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)
 - /mnt/Cursor/share/puppet-master/2026-10-13-notifications/NOTES.md, SHA-256 f09d2b8856652950762b6580b8ebab43022bdf053272738f52720de25922a895
@@ -33174,10 +33000,9 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-glass-review--JARED-FEEDBACK.md,
   SHA-256 8fe51092727cd7d2a319228114448e4bf8ac42e673461aff6968ac46ecf53d5a (source lineage; not native
   certification)
+- "DL-260 source lineage only (no product API or implementation obligation): .pmn-tile-pip, .pmn-kind, PMLogo.mark/moodFor and fillTile in src/js/19-notify.js were concept notification rendering adapters."
 preserved_exact_tokens:
 - "count badge"
-- "rgba(0,0,0,.72)"
-- "4%"
 negative_constraints:
 - Do not reintroduce a bottom-right standing toast stack, a status-bar notifications bell, an activity-bar
   notifications shortcut or unread dot, or a dedicated Notifications side panel affordance.
@@ -33232,21 +33057,17 @@ canonical_text: 'Clicking the title-bar notification stack expands a sprout inbo
   countdown ("Expires in N s", FileSafe''s 60 s hold), a folded group offers "N more" and "Show less", and an action
   that opens a page reads "Open <page>". Amended 2026-10-29 (D9; PM7): Completion delivery user uses this alert store,
   deduplicated/coalesced by work identity and completion generation, with one durable notice and its existing transient
-  treatment. Agent delivery never wakes a user-stopped thread. L8 B, PM7 Step4, 2026-10-30: the live #pmnPanel inbox
-  is explicitly a consumer of DR-079’s PM6_SPROUT lifecycle, including open/close and size changes. Alert content/acknowledgment/routing/focus
-  remain here and in F3-453; no separate per-look inbox motion owner is exempted. The retired #rsPanel is not evidence
-  of live-inbox closure. F3-1, Jared 2026-10-30, with the lead''s explicit 2026-10-30 open-inbox exception (mail 1030131044-4c44,
-  preserving bf5115d9d9): this inbox hangs from the bell, and while it is open the stage sits under it via the existing
-  --pmn-push offset. When closed the stage returns tight below the title bar at the bell, aligned to the theme menu’s
+  treatment. Agent delivery never wakes a user-stopped thread. L8 B, PM7 Step4, 2026-10-30: the live notification inbox consumes DR-079’s shared menu lifecycle, including open/close and size changes. Alert content/acknowledgment/routing/focus
+  remain here and in F3-453; no separate per-look inbox motion owner is exempted. A retired source panel is not evidence of live-inbox closure. F3-1, Jared 2026-10-30, with the lead''s explicit 2026-10-30 open-inbox exception (mail 1030131044-4c44,
+  preserving bf5115d9d9): this inbox hangs from the bell, and while it is open the stage sits under it via the shared inbox owner’s measured stage offset. When closed the stage returns tight below the title bar at the bell, aligned to the theme menu’s
   resting top under its selector wrapper (F3-447). No chat-head or control-clearance offset is added. The existing inbox
   owner, actions, keyboard focus and alert lifecycle stay here; the exception is the lead''s ruling, not an added quote
-  from Jared. F3-6, final GUI 5abe285507, 2026-10-30: publish the authoritative push only after PM6_SPROUT has opened
-  the inbox and restored its layout visibility, on first open and every reopen. Read its resting layout height, never
+  from Jared. F3-6, final GUI 5abe285507, 2026-10-30: publish the authoritative push only after the shared menu owner has opened the inbox and restored its layout visibility, on first open and every reopen. Read its resting layout height, never
   the opening transform’s temporary bounding rectangle; during the owner’s height spring use its destination height.
   Recompute after content/height changes and window resize, and clear the offset on close. Preserve the existing gap
   (8 px in this concept), menu-sprout ownership and the one stage; no page-local timer, list or persisted geometry is
   added. DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell inbox
-  through the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top
+  through the shared inbox owner’s measured stage offset; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top
   placement and entry/exit click guards remain.'
 gui_related: true
 gui_classification_reason: This unit defines the visible sprout inbox panel, its dismiss and clear motions, and kind-specific compact action rows.
@@ -33265,11 +33086,11 @@ acceptance_criteria:
 - The inbox list bottom fade starts at 96% and bottom padding keeps card bottoms unclipped.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 - 'DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell inbox through
-  the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
+  the shared inbox owner’s measured stage offset; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
   and entry/exit click guards remain.'
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- "scripts/pm-plan-migration.py"
+- "scripts/pm-plan-index.py"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
@@ -33279,8 +33100,10 @@ node_compile_hint:
   mode: notification_inbox_sprout_panel_and_kind_action_rows
   create_worknodes: false
 source_lineage:
+- "DL-260/DL-280 source lineage only (no product DOM or CSS obligation): #themeMenuWrap, MENU_GAP and --pmn-push were concept selector/paint shims. F3-447 owns the theme-menu resting-top anchor; F3-461 supplies the inbox owner’s resting/destination-height stage offset, update triggers and close cleanup."
 - "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
 - "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
+- "DL-260 source lineage only (no product API or implementation obligation): #pmnPanel, retired #rsPanel and PM6_SPROUT were concept inbox selectors/lifecycle adapters; native presentation keeps the resting-height measurement and shared menu owner."
 preserved_exact_tokens:
 - "Details"
 - "primary_route_payload"
@@ -33509,19 +33332,14 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Every hoverable card, row, tile and icon in PMConcept7, the Usage plates included, runs one merged magnet and
+  Every hoverable product card, row, tile and icon, the Usage plates included, runs one merged magnet and
   spotlight hover system (PMH, DL-171). It replaces both the PM8 magnet, ring, wash and bloom and the Usage
   page's own plate lift and pointer sheen, and DR-072 makes it the single owner of the hover grammar. One shared
-  self-suspending animation driver rides the single merged document pointer-move handler that F3-446 owns
-  (`window.PM7_PMOVE` in the concept); no element has a pointer-move listener of its own. The driver runs only
+  self-suspending animation driver rides the single merged document pointer-move handler that F3-446 owns; no element has a pointer-move listener of its own. The driver runs only
   while a spring is unsettled, the NieR reticle travels, or a pointer or scroll change is pending, so it stops
   once a pointer resting on a box has settled, and nothing animates at idle except the explicitly approved
   Friendly breathing ring while a control is hovered. Box rects are read when the hover enters a scope and after
-  a scroll, a resize or a change inside that scope, never for every box on every frame. Targets are the
-  outermost match of the set: markup that opts in with `data-pmh` (its value names the kind, card, row, tile or
-  icon, and an empty value means card), every sheen-treated element, and the listed card, row, tile and icon
-  classes. `data-pmh="off"` takes an element out of the set even when its class matches, and nothing inside
-  `[data-pm-hover-exempt]` is a target or hovers one. Nested targets resolve to the outer box, and overlaying
+  a scroll, a resize or a change inside that scope, never for every box on every frame. DR-072's shared hover owner enrolls targets by semantic kind: card, row, tile, icon or small control; an enrolled target with no explicit kind uses card. Shared presentation roles, including sheen-treated surfaces, may enroll eligible targets, but an explicit opt-out overrides role enrollment. An exempt subtree admits no hover targets and cannot activate an ancestor target. Resolve the outermost eligible target through this owner, without requiring DOM attributes or CSS classes. Nested targets resolve to the outer box, and overlaying
   panels do not light boxes beneath them (occlusion). Intensity is one continuous field: 0 at the bleed distance
   outside a box, partial at its edge and full a short ramp inside, with no snap at edges, so a neighbour inside
   the bleed catches the light on its near edge and gets no magnet and no plate. In Basic, Friendly and Glass the
@@ -33586,7 +33404,7 @@ split_recommended: false
 depends_on: [F3-446, DL-171]
 unblocks: [DR-072]
 acceptance_criteria:
-  - "Every card, row, tile and icon target in PMConcept7, the Usage plates included, takes its hover from this one system; no surface keeps a second hover engine, a `.pm-sheen:hover` lift or glow, or a pointer sheen of its own."
+  - "Every product card, row, tile and icon target, the Usage plates included, takes its hover from this one system; no surface keeps a second hover engine, a `.pm-sheen:hover` lift or glow, or a pointer sheen of its own."
   - "One shared driver services every target through the single merged document pointer-move handler and adds no pointer-move listener; two seconds after the pointer leaves there is no hover-owned animation frame or running hover animation, and a pointer resting still adds no hover work after settling except the approved Friendly control ring, which stops on leave or hide."
   - "In Basic, Friendly and Glass the magnet moves a hovered card at most about 2.5 px at an edge, through the standalone translate channel only; icons and the Usage plates never move."
   - "The pointer light is a small soft pool, about 90 to 100 px in radius on cards, revealing a pre-painted sheen and hairline under the content; the emitted glow is restrained as in the current PMH reference, pre-painted, opacity-only, and stays at the box's rest rect while the box leans."
@@ -33594,7 +33412,7 @@ acceptance_criteria:
   - "Retro shows Raise (a 2 px hard-cut rise on a 3 to 5 px hard shadow whose far edge stays put, then a 1 px phosphor rule one 33 ms tick later, released in the reverse order) and NieR shows Lock-on (four 8 px ink corners stepping closed in two steps over 90 ms, then an ink line at .6, cutting between cards), gated by the brackets part with the ink-line fallback; neither shows a soft light, glow, blur, lean or neighbour light."
   - "Under Reduced Motion there is no magnet, travel, pointer-following light or neighbour light, and every family shows its hover state instantly; on a software-rendered path the field, light and plate are off and the magnet stops."
   - "A hover writes no inherited custom property and restyles no subtree beyond the hovered box and its lit neighbours, and no box-shadow or filter animates on a large element."
-  - "`data-pmh` opts markup in with a kind, `data-pmh=\"off\"` opts it out, nothing inside `[data-pm-hover-exempt]` hovers, and editor/terminal text has no card magnet; strip/header small controls use the shared control marker and resize dividers use F3-657."
+  - "DR-072/F3-465 enrolls targets by semantic kind, defaults unspecified enrolled kinds to card, honors explicit opt-out over role enrollment, and exempts a subtree from targeting or activating an ancestor; editor/terminal text has no card magnet, strip/header small controls use the shared control marker, and resize dividers use F3-657."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
   - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q20: Glass has only the F3-465/PMH shared hover light on registered edge-glow objects, including Usage/Home widgets, cards, tiles and rows. Remove the independent sheet-wide lg-shine/light, pointer listener and stale data-lg-lit. Its central sheen is at Basic’s level (Glass Dark white 4.5 percent, Glass Light accent 4.5 percent); edge glow is unchanged. Plain panels, bars and dialog ground do not light merely because the pointer crosses them. Retro and NieR retain their non-soft-light forms and existing Reduced Motion, software and gesture holds."
 validation_surfaces:
@@ -33609,6 +33427,7 @@ node_compile_hint:
   mode: magnet_spotlight_hover_system
   create_worknodes: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): data-pmh (including its empty/default-card and off forms), data-pm-hover-exempt, and the concept class selector list were browser enrollment hooks. Product kind enrollment, opt-out and subtree exemptions belong to DR-072/F3-465."
 - Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)
 - Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)
 - Concepts/onboarding/opus-5.5/src/js/18-hover.js and src/css/22-hover.css (the PMH engine and its look; concept
@@ -34336,7 +34155,7 @@ canonical_text: >-
   Amended 2026-10-29 (D7; PM7): Its ordering, lifecycle words and stale strip are reused by F3-664’s platform
   panel and Home Agents board. The rail remains deep management; all named product owners are included, no
   Orchestrator-only narrowing. D7, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): the
-  rail and Home board consume DR-078’s PM7_WORK_UI.list/agentGroup/agentSummary instead of a second agent list
+  rail and Home board consume DR-078’s shared owner-backed row/filter/summary renderer instead of a second agent list
   or clock. The rail keeps this deep-view lineage/queue contract and four shelves; the Home frame and filter
   keep their own layout. State words, needs-you identity and row actions are the same projection, with
   spelled-out rail ages and hidden-view teardown/catch-up.
@@ -34353,8 +34172,8 @@ acceptance_criteria:
 - "The panel renders no file-locks section; only declared touch sets and file-activity claims appear."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- "scripts/pm-plan-migration.py"
+- "scripts/pm-plan-index.py"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
@@ -34367,6 +34186,7 @@ source_lineage:
 - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves winning concept; source-lineage-only per Plans/usage-feature.md)"
 - "Plans/orchestrator-subagent-integration.md (OSI-175, OSI-190, OSI-425..OSI-432 registry-mirror and tracking canon)"
 - "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
+- "DL-260 source lineage only (no product API or implementation obligation): PM7_WORK_UI.list/agentGroup/agentSummary were concept Work renderer adapters."
 preserved_exact_tokens:
 - "queued"
 - "running"
@@ -34543,12 +34363,12 @@ unblocks: []
 acceptance_criteria:
 - "No rail-panel popup is ever clipped by a panel scroller, accordion clip wrapper, or transform containing block; the Slint surface for every such popup is PopupWindow."
 - "Opening an expander rotates exactly one chevron (its own header chevron); nested collapsed rows inside an open ancestor keep right-pointing chevrons."
-- "Label shortening decisions are made by measurement against available width via the declared fit ladder; no label truncation decision keys off the min/mid/wide tier attribute."
+- "Label shortening decisions are made by measurement against available width via the declared fit ladder; no label truncation decision keys off the min/mid/wide layout tier."
 - "Panel activation animates once and leaves no persistent animation on the active view; accordion remeasure never runs on continuous drag frames."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- "scripts/pm-plan-migration.py"
+- "scripts/pm-plan-index.py"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
@@ -34562,11 +34382,11 @@ source_lineage:
 - "Plans/Decision_Log.md#DL-162 (owner decision, 2026-10-09; amends (3) for the left rail)"
 - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)"
 - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (source-lineage-only)"
+- "DL-260/DL-280 source lineage only (no product DOM or exact-token obligation): data-fit recorded the concept's measured label-fit choice; F3-480 and the later F3-620 left-rail amendment own product fitting."
 preserved_exact_tokens:
 - "PopupWindow"
-- "data-fit"
 negative_constraints:
-- "Do not re-clip popups inside panel scrollers; do not decide label truncation from width-tier attributes; do not leave persistent enter animations on active views."
+- "Do not re-clip popups inside panel scrollers; do not decide label truncation from layout tiers; do not leave persistent enter animations on active views."
 compatibility_only_notes:
 - "Slint portability: popup layering via PopupWindow; label variants precomputed and chosen by measured width; enter animation is a one-shot property animation; no arbitrary-content backdrop blur, no SVG filters, precomputed color math."
 stale_retired_dispositions:
@@ -35699,37 +35519,23 @@ owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
 
-### F3-496 - Run & Debug Demo Concept Integration
+### F3-496 - Retired Prototype Composition
 
 ```yaml
 plan_unit_id: F3-496
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The PMConcept7 reference shows a `panel-run` view implementing
-  F3-485 through F3-488 with fixture data: two sessions (a paused parent
-  "tastebook-api — cargo run" and a running child attach session), a populated
-  locals scope, two watches, a four-frame main thread, and line, conditional,
-  logpoint, and disabled breakpoints plus exception filter rows. The bottom Debug
-  tab in the demo implements F3-490's empty and attached states. The demo session
-  store mirrors F3-483's state machine so demo actions (start, stop, select,
-  reveal) drive both surfaces. Concepts/pm6-build/** remains illustrative
-  source-lineage only per Plans/usage-feature.md.
-  Amended 2026-10-09 (DL-180): there is no bottom zone. The demo's bottom Debug tab is a Debug Console tab in the home
-  panels. The Debug tab is a tab of the Debug Console tool kind (debug_console, F3-635) in whichever panel holds it,
-  placed beside the terminals by F3-634's tool affinity; the default Home layout's tools row is where it usually lands
-  (F3-630).
+  Retired under DL-260. This identifier preserves historical links only and creates no active product
+  requirement or implementation obligation. Live debugger semantics remain with F3-483 through F3-491.
 gui_related: true
-gui_classification_reason: This unit defines the demo-renderable fixture composition of the run/debug rail panel and bottom tab.
+gui_classification_reason: Retires prototype-only UI obligations.
 split_recommended: false
 depends_on: [F3-485, F3-490, DL-180]
 unblocks: []
 acceptance_criteria:
-- "The PMConcept7 demo `panel-run` view renders F3-485..F3-488 with the stated fixture data (two sessions, populated locals, two watches, four-frame main thread, four breakpoint kinds plus exception filters)."
-- "The demo bottom Debug tab renders F3-490's empty and attached states."
-- "Demo actions (start, stop, select, reveal) drive both surfaces through a demo store mirroring F3-483's state machine."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+- No active product work is compiled from this retired identifier.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -35739,24 +35545,21 @@ context_scope: run_debug_revival
 implementation_surfaces:
 - "Plans/FinalGUISpec.md"
 node_compile_hint:
-  mode: run_debug_demo_concept_integration
+  mode: retired_source_lineage_only
   create_worknodes: false
 source_lineage:
 - "user-decision:2026-07-27-run-debug-revival"
 - "Concepts/pm6-build (PMConcept7 demo; source-lineage-only per Plans/usage-feature.md)"
 - "zed-industries/zed crates/debugger_ui (research lineage)"
-preserved_exact_tokens:
-- "panel-run"
-- "tastebook-api — cargo run"
+preserved_exact_tokens: []
 negative_constraints:
 - "Do not treat Concepts/pm6-build/** demo data, HTML, CSS, or class names as spec or implementation input; it stays illustrative source-lineage only per Plans/usage-feature.md."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
-compatibility_only_notes:
-- "Slint portability: demo fixtures map to static model data behind the same Slint model views used by the live surfaces."
+compatibility_only_notes: []
 stale_retired_dispositions:
-- "Amended 2026-10-09 (DL-180): the demo's bottom Debug tab reads as a Debug Console tab (F3-635)."
+- Prototype composition is source lineage only under DL-260.
 owner_boundary_notes:
-- "This unit owns only demo fixture composition; live panel, tab, and state-machine semantics stay owned by F3-483 through F3-491."
+- Live panel, tab and state-machine semantics remain with F3-483 through F3-491.
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
@@ -35774,28 +35577,21 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The PMConcept7 reference shows the eight Cozy Shelves rail panels (File Manager, Search,
-  Source Control, GitHub Actions, Docker, Testing, Agents, Runtime Artifacts). The c2 panel ids carry over verbatim
-  (panel-files/search/source/git/docker/artifacts/testing/agents); the retired
-  pm6-panel-testing and pm6-panel-agents ids migrate to panel-testing and
-  panel-agents everywhere (activity bar data-targets, panels.show, hook census).
-  Shared behaviors run on the integrated layer: the spring accordion with
-  keyboard/aria per F3-472, body-portaled rail menus per F3-480, measure-based
-  data-fit label shortening driven by a ResizeObserver on the side-panel slot,
-  one-shot panel enter per F3-480 (the slideInLeft animation on .side-panel-view
-  is removed), the --cat-* category palette per F3-474, and the File Manager
-  context menu keeping its hook id fileContextMenu. The File Manager keeps its
-  c2 explorer/changed/open segmented tabs, measured tree animator, hover quick
-  actions, multi-select, filter, hide-ignored, and worktree root menu.
+  The eight Cozy Shelves rail panels (File Manager, Search, Source Control, GitHub Actions, Docker,
+  Testing, Agents, Runtime Artifacts) use their existing production panel destinations and command routes.
+  Prototype DOM identifiers and hook migrations are source lineage only.
+  The rail uses F3-472 shelf keyboard/accessibility behavior, F3-480 menus, measure-based label fitting
+  and one entry animation per activation, and F3-474 category colors.
+  File Manager behavior remains with its owner.
 gui_related: true
-gui_classification_reason: This unit records the user-visible integration of the winning rail panels into the PMConcept7 shell.
+gui_classification_reason: This unit records the user-visible integration of the winning rail panels in the application shell.
 split_recommended: false
 depends_on: [F3-471, F3-472, F3-474, F3-480]
 unblocks: []
 acceptance_criteria:
-- "All eight panels open from the activity bar in the PMConcept7 reference with every expander collapsed by default except the c2-sanctioned open shelves (File Manager MODIFIED/ADDED/UNTRACKED/OPEN EDITORS and the Artifacts INVESTIGATION shelf)."
-- "Accordion expand/collapse works by click and Enter/Space with aria-expanded syncing; rail menus paint above shelves and restore their home node on close."
-- "The slideInLeft animation no longer appears on .side-panel-view; panel entrance runs once per activation via .pm-panel-enter."
+- "All eight panels open from the activity bar in the application with every expander collapsed by default except the c2-sanctioned open shelves (File Manager MODIFIED/ADDED/UNTRACKED/OPEN EDITORS and the Artifacts INVESTIGATION shelf)."
+- "Accordion expand/collapse works by click and Enter/Space with aria-expanded syncing; rail menus paint above shelves and close through the shared menu owner."
+- "Panel entrance runs once per activation under F3-480; competing entrance animations do not replay."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -35811,18 +35607,14 @@ source_lineage:
 - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (winning concept; source-lineage-only)"
 - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (winning files concept; source-lineage-only)"
 - "Concepts/ChatGuiUpdates2.md (Cozy Shelves rail concepts 2026-07-27 contracts; source-lineage-only)"
-preserved_exact_tokens:
-- "fileContextMenu"
-- "panel-testing"
-- "panel-agents"
-- "slideInLeft"
+preserved_exact_tokens: []
 negative_constraints:
 - "Do not treat Concepts/pm6-build/** as implementation authority; it remains illustrative source-lineage only."
 compatibility_only_notes:
 - "Slint portability follows F3-473: only transform/opacity/height animations, portal menus map to PopupWindow, label fitting by measure never by width class."
 stale_retired_dispositions: []
 owner_boundary_notes:
-- "F3-472 owns the shelf-expander contract and F3-480 owns the presentation repairs; this unit records their appearance in the PMConcept7 reference and owns no new presentation rules."
+- "F3-472 owns the shelf-expander contract and F3-480 owns the presentation repairs; this unit records their appearance in the application and owns no new presentation rules."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
@@ -35836,14 +35628,14 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The F3-471 width envelope (240 minimum, 280 default, 480 maximum) is applied to
-  the PM7 shell: --files-panel-w defaults to 280px, the narrow-range 220px floors
-  become 240px (220 remains the adversarial test-only width and is not a product
-  floor), the side-panel-slot clamp becomes min-width 240px and max-width
-  min(480px, 50vw), the drag resizer caps at 480px, and the former !important
-  220px narrow-viewport override now resolves through the 240px floor. The
-  data-wtier attribute is computed on the slot by measure (min under 250px, mid
-  through 400px, wide above) and gates layout chrome only, never label text per
-  F3-480's measure-based fitting rule.
+  the product shell's panel host: its default width is 280px, its minimum is
+  240px and its maximum is the lesser of 480px and half the viewport width,
+  with the same bounds on drag resize and narrow viewports. The 220px width
+  remains an adversarial test-only case and is never a product floor. The
+  panel presentation owner derives layout tiers from measured host width
+  (min under 250px, mid from 250px through 400px, wide above 400px). Tiers gate
+  layout chrome only. Labels fit by measurement under F3-480, with the later
+  F3-620 amendment controlling left-rail fitting.
 gui_related: true
 gui_classification_reason: This unit pins the user-visible side panel width behavior of the PM7 shell to the ratified envelope.
 split_recommended: false
@@ -35851,11 +35643,12 @@ depends_on: [F3-471, F3-497]
 unblocks: []
 acceptance_criteria:
 - "The side panel defaults to 280px, clamps between 240px and 480px (viewport permitting), and no 220px product floor remains in the shell."
-- "data-wtier on the slot reflects the measured width and gates only layout chrome."
+- "The panel host's measured width selects min below 250px, mid from 250px through 400px and wide above 400px; these tiers gate layout chrome only."
+- "The viewport clamp is the lesser of 480px and half the viewport width; label fitting remains measurement-based under F3-480 and F3-620."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- "scripts/pm-plan-migration.py"
+- "scripts/pm-plan-index.py"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: pm7_cozy_shelves_integration
@@ -35865,14 +35658,14 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/FinalGUISpec.md (F3-471 width envelope pin)"
+- "DL-260/DL-280 source lineage only (no product DOM, CSS or exact-token obligation): --files-panel-w, the side-panel-slot CSS clamp and !important narrow-viewport repair, and data-wtier were concept implementations of the retained panel width and chrome-tier rules."
 preserved_exact_tokens:
 - "240"
 - "280"
 - "480"
-- "data-wtier"
 negative_constraints:
 - "Do not reintroduce a 220px product floor; 220 remains adversarial test-only."
-- "Do not gate label text on data-wtier; labels shorten by measure only (F3-480)."
+- "Do not gate label text on layout tiers; labels fit by measure under F3-480 and the later F3-620 left-rail amendment."
 compatibility_only_notes:
 - "Slint: the same clamp constants apply to the Slint panel host; measure-based fitting maps to layout re-evaluation, not width-class breakpoints."
 stale_retired_dispositions: []
@@ -35890,15 +35683,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The activity bar carries a Debug icon directly below the Tests icon as its own
-  entry (rail label "Debug", opening the Debug & Run panel per F3-482), wired
-  with data-target="panel-run", making the cmd.panel.switch run_debug
-  destination resolve to a real, reachable panel for the first time in the PMConcept7
-  reference. The Testing and Agents panel ids are canonical as panel-testing and
-  panel-agents (the retired pm6-panel-testing and pm6-panel-agents ids are gone
-  from markup, data-targets, and the hook census). Icon order and Ctrl+number
-  bindings remain user-adjustable per the existing customization contract; the
-  hotkey handler live-queries icon order and never hardcodes this icon's index.
+  The Debug activity-bar entry below Tests opens the Debug & Run panel through cmd.panel.switch
+  with panel_id run_debug (F3-482). Panel identities and shortcuts follow the shared production model.
+  Icon order and Ctrl+number bindings remain user-adjustable; shortcut assignment follows current icon order.
+  The Debug Console tool tab (debug_console, F3-635) is placed by F3-634 tool affinity, usually beside
+  terminals in the default Home layout (F3-630).
 gui_related: true
 gui_classification_reason: This unit defines the user-visible activity bar entry and panel id canon for the reactivated Debug & Run panel.
 split_recommended: false
@@ -35906,7 +35695,7 @@ depends_on: [F3-482, F3-497]
 unblocks: []
 acceptance_criteria:
 - "The Debug icon appears below Tests and opens the Debug & Run panel; cmd.panel.switch with panel_id run_debug resolves to the same view."
-- "No pm6-panel-testing or pm6-panel-agents id remains in the built document."
+- "Testing and Agents open their existing production destinations; retired prototype DOM identifiers grant no alternate route."
 - "Reordering icons by drag changes Ctrl+number assignment without code changes."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:
@@ -35923,16 +35712,15 @@ source_lineage:
 - "user-decision:2026-07-27-run-debug-revival"
 preserved_exact_tokens:
 - "Debug"
-- "panel-run"
 - "run_debug"
 negative_constraints:
 - "Do not pin a fixed ordinal or Ctrl+N index for the Debug icon in canonical docs."
-- "Do not resurrect the pm6-panel-testing or pm6-panel-agents ids."
+- "Prototype DOM identifiers grant no alternate production route."
 compatibility_only_notes:
 - "Slint: the activity bar model carries the same entries; hotkey assignment follows the model order, not a constant table."
 stale_retired_dispositions: []
 owner_boundary_notes:
-- "F3-482 owns the Debug & Run panel identity and placement canon; this unit owns the PMConcept7 reference presentation and the panel id cleanup."
+- "F3-482 owns the Debug & Run panel identity and placement canon; this unit consumes that identity through the activity bar."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
@@ -35945,23 +35733,17 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Two superseded side-panel views are retired from the PMConcept7 reference: panel-unraid
-  (a self-declared redirect stub whose destination lives in the Docker panel's
-  Publish view) and pm6-panel-notify (the Notifications side panel, retired when
-  the title-bar notification stack became the sole in-app notification
-  affordance per the 2026-07-23 promotion). Their hook-census rows, dead render
-  wiring, and prototype action registrations (panels.ack, panels.snooze,
-  panels.test_run, panels.debug_start, panels.git_commit, panels.docker_view,
-  panels.art_filter) are removed with them; ack/snooze lifecycle semantics
-  continue unchanged on the title-bar stack per F3-447/F3-460.
+  The title-bar stack remains the sole in-app notification affordance, with ack/snooze lifecycle
+  semantics owned by F3-447/F3-460. Docker Publish uses its existing product owner route.
+  Prototype hook-census and engine registrations are source lineage only.
 gui_related: true
 gui_classification_reason: This unit records the removal of user-visible panel views that canon already retired or redirected.
 split_recommended: false
 depends_on: [F3-497]
 unblocks: []
 acceptance_criteria:
-- "No panel-unraid or pm6-panel-notify view remains in the built document, and no activity-bar icon references them."
-- "The named prototype action registrations no longer exist in the demo engine registry."
+- "Notifications use only the title-bar stack. Docker Publish uses its existing product owner route."
+
 - "Notifications remain available exclusively through the title-bar stack."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:
@@ -35976,16 +35758,14 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/FinalGUISpec.md (F3-447/F3-460 title-bar notification canon)"
-preserved_exact_tokens:
-- "panel-unraid"
-- "pm6-panel-notify"
+preserved_exact_tokens: []
 negative_constraints:
 - "Do not reintroduce a Notifications side panel; the title-bar stack is the sole notification affordance."
 - "Do not resurrect the removed prototype action ids as canonical commands."
 compatibility_only_notes:
 - "None."
 stale_retired_dispositions:
-- "The old Run & Debug demo view (panel-run markup with a launch-config dropdown and static session cards) is replaced by the Debug & Run panel per F3-485/F3-496."
+- "Prototype views create no product obligations under DL-260; Debug & Run follows F3-485."
 owner_boundary_notes:
 - "F3-447/F3-460 own the notification affordance decision; this unit records only the view removal mechanics."
 owner_hints:
@@ -36573,7 +36353,7 @@ canonical_text: |-
   DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged. generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or mirror authority.
   DL-273, Jared 2026-11-01: Saved onboarding selections follow PWIZ-024 retirement invalidation on entry and resume. The wizard returns to explicit admitted service/address/account selection and never presents the retired selection or its authorization and Review as current.
   DL-273, Jared 2026-11-01: Source Control service controls and their activation consume the same current admission rule from PWIZ-024. A restored card choice cannot expose an eligible service action or open sign-in merely because the main online-service draft is unpicked; the person must select an admitted choice again.
-  FO-22, 2026-11-02: The visible step and typed Back control consume PWIZ-021’s current-answer navigation and PWIZ-024’s source-step entry/resume rules. Abandoned steps do not reappear through Back or subsequent Continue; fresh Review and a resumed service chooser keep their valid Back destination. Missing service identity is shown as a choice to make, never as an empty service name, raw enum or unresolved placeholder. F3-669/PWIZ-037 consume the same reviewed setup draft for New Project; all six entry ways, inspected full paths and retained spaces, Settings-only JJ object format, typed Starters, Standard backup and detached Your usual settings are owner-driven. Only Planning Wizard, PRD Builder and Orchestrator retain the no-project workflow gate; Goals/Crew/Plan/Deep Plan/scheduled tasks remain available. This supersedes only earlier Later/provider-deferred and universal no-Project Settings wording; current-answer FO-22 Back/Edit/Review, current DL-273 admission, all protected-auth/Recovery Kit gates, quiet Almost ready and O12 phases remain.
+  FO-22, 2026-11-02: The visible step and typed Back control consume PWIZ-021’s current-answer navigation and PWIZ-024’s source-step entry/resume rules. Abandoned steps do not reappear through Back or subsequent Continue; fresh Review and a resumed service chooser keep their valid Back destination. Missing service identity is shown as a choice to make, never as an empty service name, raw enum or unresolved placeholder. F3-669/PWIZ-037 consume the same reviewed setup draft for New Project; all six entry ways, inspected full paths and retained spaces, Settings-only JJ object format, typed Starters and Standard backup are owner-driven. Your usual settings follows the resolved Everywhere ladder without copying; detached copies from Saved setups or source Projects remain separate owner-driven choices. Only Planning Wizard, PRD Builder and Orchestrator retain the no-project workflow gate; Goals/Crew/Plan/Deep Plan/scheduled tasks remain available. This supersedes only earlier Later/provider-deferred and universal no-Project Settings wording; current-answer FO-22 Back/Edit/Review, current DL-273 admission, all protected-auth/Recovery Kit gates, quiet Almost ready and O12 phases remain.
 gui_related: true
 gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic motion.
 split_recommended: false
@@ -36616,14 +36396,17 @@ acceptance_criteria:
   including NieR Light/Dark with Adjust NieR opening the same editor (F3-598); no independent checkbox remains (Q22).
 - The ten-theme choice (Q22), the header Look menu and the NieR Mode editor panel each emit `ui.onboarding.choose_look`
   (intents choose_look, toggle_look_menu and toggle_look_editor; preview_nier is retired by Q22) with no owner route,
-  no `cmd.theme.*` and no Settings transaction; the previewed look is written with the Project at commit, a later change
-  through the same Settings binding when the window finishes or closes (DL-153).
+  no `cmd.theme.*` and no Settings transaction during preview. An accepted look commits once through the Settings owner
+  at its explicit admissible Everywhere/Device/Project level (DL-286); a Project own choice at actual Project commit,
+  a Later/app choice at the accepted application/Device boundary, and pre-claim preview only ephemerally. Later changes
+  use the same Settings binding when the window finishes or closes (DL-153).
 - 'Beyond welcome, the onboarding header keeps a persistent Look menu (`Change the look`: five families including NieR
   plus Light/Dark and the retained Adjust NieR button (Q22)) and sound control reachable by keyboard on every stage;
   Look changes preview presentation without dispatching owner work and persist only through the Settings owner (`general.visual.theme`,
   `general.visual.theme-mode`, and for NieR the retained `general.visual.nier-parts` and `general.visual.nier-background`
-  (Q22)) with a verified current Project binding after commit or connection; Project Later and every no-Project state
-  allow only ephemeral preview without durable writes, while the sound control binds to the Settings-owned `general.interaction.sound-effects`
+  (Q22)) at the explicitly accepted admissible Everywhere/Device/Project level (SSYS-002/059, DL-286); a Project write
+  requires a verified current Project binding, while Project Later and No project may persist at admitted app levels.
+  Only pre-claim/unbound preview stays ephemeral. The sound control binds to the Settings-owned `general.interaction.sound-effects`
   effective pref with an explicit `Sound off — click to turn on` state, honors effective Reduced Motion, and audio never
   carries a status alone.'
 - The header Look menu exposes its open state and family/mode choices as menuitemradio options including NieR as a menuitemradio
@@ -36644,16 +36427,15 @@ acceptance_criteria:
   real results; stale, unconfirmed, or expanded plans dispatch nothing.
 - 'DL-259 H2/FF-20: first_project exposes New, Existing and Restore as three aligned keyboard-reachable groups; Existing’s
   local/online/device choices open in its joined tray, before the other groups. All four semantic source intents stay
-  reachable without an unrelated More/Other disclosure, and Project Later works. Each choice creates only a draft. Start
-  fresh is the settings default; explicit copy offers a searchable real-Project picker, source-context summary and Settings
-  preview, never bulk copies secrets, machine paths, runtime state, or account capability.'
+  reachable without an unrelated More/Other disclosure, and Project Later works. Each choice creates only a draft. Your usual settings is the settings default;
+  explicit copy offers a searchable real-Project picker, source-context summary and Settings preview, never bulk copies secrets, machine paths, runtime state, or account capability.'
 - 'Source-control setup keeps two independent visible axes: local Safe History uses Git or Jujutsu on the selected computer,
   while an optional forge account/repository keeps a separate online copy; Jujutsu is never presented as an account,
   website, or online-copy provider, and FileSafe is described only as complementary local recovery.'
 - 'After current Review confirmation, a new-project owner route follows the reviewed Safe History choice through `cmd.project.new_local`
-  and its backend-native child owner: local Git initializes only when the reviewed draft selected Git, a reviewed Jujutsu
-  choice routes through the existing Jujutsu owner route and is never silently substituted with Git, and explicit no-history
-  initializes no Git per PJCT-007 and Project_System.md:93; local-engine selection uses the canonical Source Control
+  and its backend-native child owner: Git and Jujutsu are equal local history choices under PJCT-009, existing verified history wins, and a folder
+  without a repository still initializes the reviewed Git-or-Jujutsu backend. A reviewed Jujutsu choice routes through
+  its existing owner route and is never silently substituted with Git; local-engine selection uses the canonical Source Control
   owner, while GitHub, GitLab, Azure DevOps, Bitbucket, Forgejo and Gitea account verification, repository creation/selection,
   visibility, and binding remain explicit forge/auth owner routes. Forgejo and Gitea each require the person’s own server
   (DL-273).'
@@ -36900,15 +36682,13 @@ acceptance_criteria:
   data and exact return destinations, show a human-readable missing choice, and never paint an empty Creating or unselected-service details screen.'
 
 validation_surfaces:
-- Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (owner-referenced
-  eleven/six/deferred stage graphs, draft/copy/preflight/commit/paid/free phase fences; F3-521 retains the separate v3
-  Guided Tour contract)
-- Plans/product_onboarding_contracts.schema.json and Plans/product_onboarding_contract_fixtures.json (v2 owner actions,
-  durable bounded draft, exact commit/result binding and phase continuation)
+- Plans/final_gui_interaction_contracts.schema.json
+- Plans/final_gui_interaction_contract_fixtures.json
+- Plans/product_onboarding_contracts.schema.json
+- Plans/product_onboarding_contract_fixtures.json
 - tests/test_pm_onboarding_phases.py
 - tests/test_pm_settings_draft_transfer.py
-- Verify F3-520's onboarding presentation, owner-bound actions, ephemeral pre-Project look choices, return routes, interruption/reversal,
-  accessibility and short-window behavior.
+- future verify F3-520's onboarding presentation, owner-bound actions, ephemeral pre-Project look choices, return routes, interruption/reversal, accessibility and short-window behavior.
 - future ten-theme, Reduced Motion, interruption, reversal, and short-window film review
 risk_class: onboarding_overload_or_motion_blocking
 reasoning_tier: high
@@ -36969,56 +36749,52 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
   /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F06,A-F09,C-F02,C-F11,E-F07,E-F08
 preserved_exact_tokens:
-- welcome
-- simple_path
-- first_project
-- source_control_setup
-- server_storage_client
-- remote_access_setup
-- review_setup_plan
-- automatic_preparation
-- ready
-- connect_existing
-- Get Started
-- Begin setup
-- Confirm and prepare
-- Continue Setup
-- Open Repository
-- Delete Repository
-- Do this later
-- Run setup wizard
-- Reset Layout
-- ui.onboarding.start
-- home_menu
-- Start a new project
-- Open a folder here
-- Bring one from online
-- Restore a backup
-- Safe History
-- FileSafe
-- Local or VPN
-- You can connect through a VPN too
-- Reverse proxy
-- Puppet Master Remote Link
-- SSH/SFTP
-- 1.2-1.5 seconds
-- 420-560 ms
-- 60-80 ms
-- 120-220 ms
-- 700 ms
-- puppet_master
-- cmd.client.pair.start
-- source_access_authorization_refs
-- Source Location
-- Change the look
-- Sound on — click to mute
-- Sound off — click to turn on
-- general.visual.theme
-- general.visual.theme-mode
-- general.interaction.sound-effects
-- NieR Mode
-- Adjust NieR look
-- menuitemcheckbox
+- "welcome"
+- "simple_path"
+- "first_project"
+- "source_control_setup"
+- "server_storage_client"
+- "remote_access_setup"
+- "review_setup_plan"
+- "automatic_preparation"
+- "ready"
+- "connect_existing"
+- "Get Started"
+- "Begin setup"
+- "Confirm and prepare"
+- "Continue Setup"
+- "Open Repository"
+- "Delete Repository"
+- "Do this later"
+- "Run setup wizard"
+- "Reset Layout"
+- "ui.onboarding.start"
+- "home_menu"
+- "Open a folder here"
+- "Restore a backup"
+- "Safe History"
+- "FileSafe"
+- "Local or VPN"
+- "You can connect through a VPN too"
+- "Reverse proxy"
+- "Puppet Master Remote Link"
+- "SSH/SFTP"
+- "1.2-1.5 seconds"
+- "420-560 ms"
+- "60-80 ms"
+- "120-220 ms"
+- "700 ms"
+- "puppet_master"
+- "cmd.client.pair.start"
+- "source_access_authorization_refs"
+- "Source Location"
+- "Change the look"
+- "Sound off — click to turn on"
+- "general.visual.theme"
+- "general.visual.theme-mode"
+- "general.interaction.sound-effects"
+- "NieR Mode"
+- "Adjust NieR look"
 negative_constraints:
 - Do not render Product Onboarding as a full-page route or replacement application experience.
 - Do not restore F3-411's four-screen/provider-first choreography.
@@ -37030,8 +36806,9 @@ negative_constraints:
   Connected Server pairing/trust, restore, repository/filesystem mutation, or Project commit before exact current Review
   confirmation. Do not treat a detected account, reachable endpoint, ref prefix, cached result, or GUI choice as owner
   authorization.
-- Do not initialize local Git for an explicit no-history choice, substitute Git for a reviewed Jujutsu choice, or let
-  a legacy `init_git` payload summary override the reviewed PJCT-007 draft binding.
+- Offer only Git and Jujutsu as equal local history choices under PJCT-009; preserve existing verified history and
+  initialize the reviewed backend when the folder has no repository. Do not substitute Git for a reviewed Jujutsu choice
+  or let a legacy `init_git` payload summary override the reviewed PJCT-007 draft binding.
 - Do not hide any of the four First Project choices behind More/Other project choices or frontload unrelated advanced
   Settings.
 - Do not use left-edge accent rails, floating footer actions that cover scrollable content, multiple simultaneously expanded
@@ -37046,8 +36823,9 @@ negative_constraints:
 - Do not add a surface-owned physics loop or require unsupported effects; F3-663’s approved bounded solver/CRT/world
   effects obey O2 and the supported reduced-motion/capability path. Filter replacements require a look-preserving recorded
   A/B.
-- Include family nier in the ten-theme choices and Look menu (Q22); do not write a NieR choice durably before the existing
-  Project binding exists.
+- Include family nier in the ten-theme choices and Look menu (Q22); commit only through the Settings owner at an
+  explicitly accepted admissible level. A Project own write requires a real Project binding; Later/app writes use
+  admitted app levels and pre-claim/unbound preview stays ephemeral (DL-286).
 - Do not move server, provider, Project, backup/restore, authentication, or persistence ownership into Final GUI.
 - Do not let the Home relaunch item create a second onboarding controller, persistence record, or domain command.
 - Do not promote browser-concept projections, route previews, local persistence, or receipts into production owner-work,
@@ -37104,10 +36882,11 @@ acceptance_criteria:
   retained Adjust NieR button (Q22) whose editor opens as a popup dialog above the Tour) and sound control reachable
   by keyboard on every step: Look choices apply through the Settings owner (`general.visual.theme`, `general.visual.theme-mode`,
   and for NieR the retained `general.visual.nier-parts` and `general.visual.nier-background` (Q22)) at once with presentation-only
-  effect under the verified current Project binding and the Tour follows its effective theme; Project switching rebinds
-  both controls, while no-Project state permits only ephemeral preview without durable writes. The sound control binds
+  effect at the explicitly accepted admissible Everywhere/Device/Project level, and the Tour follows the same effective
+  value. Project switching re-resolves both controls; No project permits admitted app-level persistence, while only
+  pre-claim/unbound preview remains ephemeral (SSYS-002/059, DL-286). The sound control binds
   to the Settings-owned `general.interaction.sound-effects` effective pref with an explicit `Sound off — click to turn
-  on` state; both are shared chrome controls with Project-scoped persistence and neither becomes a tour-specific preference
+  on` state; both are shared chrome controls using their Settings-declared levels and neither becomes a tour-specific preference
   toggle beside `ui.guided_tour.toggle_eli5`. Neither is a `ui.guided_tour.*` action: five-family Look choices (Q22),
   live editor edits and the sound control dispatch cmd.settings.transaction.preview then cmd.settings.transaction.apply,
   and Adjust NieR emits ui.settings.nier_editor.open (DL-153).'
@@ -37128,8 +36907,8 @@ acceptance_criteria:
 - The learner changes an answer rather than an Edit button silently choosing for them; only the dependent shared-access
   consequence changes, unaffected outcomes retain object identity/position, and an unsure answer stays unresolved.
 - 'Assistant Chat opens first through its real shell action and keeps the same conversation throughout; successful Finish
-  lands on the real Planning Wizard, not Chat, without starting work (amended 2026-10-09, DL-180: the chat is not moved
-  by the Tour).'
+  lands on the real Planning Wizard when a committed Project exists, otherwise in No project chat on the named
+  Computer, without starting work or fabricating a practice Project (DL-287). The chat is not moved by the Tour (DL-180).'
 - Teacher's built-in example is deterministic and local, presents an ordinary-language question and answer in the real
   Chat surface, and uses no provider, model, network, token budget, protected browser content, or AI-plan execution.
 - 'Teacher normal and ELI5 answers preserve the same facts but are materially different: Normal gives useful adult-beginner
@@ -37155,7 +36934,7 @@ acceptance_criteria:
   work. Late local-stream callbacks are fenced to their original session and conversation, and missing usage telemetry
   is not zero-use proof. Ordinary conversations keep their normal behavior.
 - Every automatic non-interaction scene transition puts programmatic focus on the current h2 scene heading with tabindex=-1
-  and the documented programmatic-focus-landmark exemption; it never auto-focuses an action or opens a visual PMHoverTag,
+  and the documented programmatic-focus-landmark exemption; it never auto-focuses an action or opens a visual shared hover-help overlay,
   while exact coached interactions wait for the person to focus or activate the real target.
 - Teacher practice uses the exact novice composer placeholder `Ask Teacher anything about Puppet Master…`; Skip reinstates
   the exact pre-tour placeholder and pre-tour layout rather than leaving Teacher copy or a partial tour arrangement behind.
@@ -37164,7 +36943,8 @@ acceptance_criteria:
   in product copy.
 - Pause, Back, valid forward navigation, and Skip remain reachable and operational. Close/reload resumes the last safe
   step after owner-state revalidation. Skip restores captured layout/Chat state/focus; Finish tour restores by default
-  and keeps demonstrated layout only after explicit selection, then focuses the real Planning Wizard. Failed restoration
+  and keeps demonstrated layout only after explicit selection, then focuses the real Planning Wizard for a committed
+  Project or No project chat on the named Computer otherwise (DL-287). Failed restoration
   exposes recovery, never false completion.
 - Effective Reduced Motion uses restrained transitions that preserve sequence and cause/effect, focus, hierarchy, announcements,
   and action parity. Settings changes are honored without discarding the step; hidden/collapsed surfaces stop decorative
@@ -37351,7 +37131,7 @@ owner_boundary_notes:
 owner_hints: [Plans/FinalGUISpec.md, Plans/newtools.md, Plans/Settings_System.md]
 ```
 
-### F3-523 - Global PMHoverTag Overlay And Accessibility
+### F3-523 - Global Hover Help Overlay And Accessibility
 
 ```yaml
 plan_unit_id: F3-523
@@ -37359,7 +37139,7 @@ unit_type: interaction_contract
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: |-
-  One shared PMHoverTag and HoverTagController renders theme-native hover/focus help in a shared overlay root for every actionable or focusable control, truncated value, technical identifier, status, badge, chart mark, disabled control, and dynamic state such as pin/unpin, unless a documented static-copy or decorative exemption applies. A one-line tag has at least 24 px height, 8 px horizontal padding, and compact 12 px text; detailed tags emphasize line one and use 11 px explanatory text. Tags are at most 280 px wide, keep an 8 px anchor gap and 8 px viewport margin, center above, flip below, and clamp to every edge. Persistent accessible descriptions bind immediately, while the visible tag waits for deliberate intent: at least 1600 ms of pointer residence and 1100 ms of stationary intent within a 5 px radius, or 1000 ms of continuous keyboard focus. Pointer movement beyond that radius, target movement, pointer press, a scroll that moves the anchor, or departure before the thresholds resets or cancels the pending opening; pointer departure after opening uses a 160 ms grace period; Escape closes. A pointer press on an anchor closes its open tag, and that anchor's tag stays closed until the pointer leaves it (amended 2026-10-08, DL-145; scroll narrowed 2026-10-23, DL-232). Copy is concise, human, contextual, and consequence-first. It explains what the control does, its current state, shortcut, full value, consequence, or human disabled reason without falling back to raw command IDs, schema/route IDs, DOM labels, machine tokens, or developer jargon; dynamic pin/unpin and other changing states remain current. While Product Onboarding or Guided Tour is open, only anchors inside the active overlay may open tags. Pending or open tags outside it close, outside description nodes temporarily lose tooltip semantics and accessibility exposure, and their stable relationships restore when the overlay closes. Non-Retro entrance is the reference 240 ms translate/scale/fade; Retro uses 140 ms stepped motion with no scale; Reduced Motion is immediate. Glass follows live transparency while maintaining readable contrast. Initial and live census work is frame-bounded, performs one startup pass, and ignores exact old/current attribute reassertions while retaining every real semantic change, so unrelated application reconciliation cannot create a perpetual tooltip invalidation loop or steal Onboarding or Guided Tour's animation budget. Amended 2026-10-17 (DL-228): a tag never covers a primary action such as the chat's Send: it slides along its side or flips, and with no clear place it stays shut while its accessible description is still read. File references and tabs keep their path or name literally (a reference's tag is its path and line), the one exception to replacing paths, file names and host:port text with generic words. Focus the application moves, by an open, a reveal, a panel focus change or F6, opens no tag until the pointer reaches that control or focus moves on; the 1000 ms keyboard-focus tag is for focus the person moves with Tab or the arrows. Documented exemptions also include a picker plate (`menu`: its rows without their own label, Back and the search field already show their names; a row given its own hover label keeps its tag) and a Settings field whose label and help line sit beside it (`labelled-field`). DL-259 QA2 M2, 2026-10-31: technical-identifier candidacy requires a small element that actually presents the identifier, or an explicit technical-identifier declaration. Transcript, whole-message and card containers do not qualify merely because they carry internal identity, render, sort or scroll keys; such internal keys never create a technical tooltip target. An explicit technical declaration remains eligible, and a container’s own semantic control label may independently qualify it under this same shared controller. The origin word opens F3-670’s Details panel; it is visible and keyboard reachable without waiting for a hover tag. Hover help, labels, accessible descriptions and exact full paths keep the existing shared controller rules and FO-20 material. No new tooltip system or automatic theme write is introduced.
+  One shared hover-help overlay and controller render theme-native hover/focus help in a shared overlay root for every actionable or focusable control, truncated value, technical identifier, status, badge, chart mark, disabled control, and dynamic state such as pin/unpin, unless a documented static-copy or decorative exemption applies. A one-line tag has at least 24 px height, 8 px horizontal padding, and compact 12 px text; detailed tags emphasize line one and use 11 px explanatory text. Tags are at most 280 px wide, keep an 8 px anchor gap and 8 px viewport margin, center above, flip below, and clamp to every edge. Persistent accessible descriptions bind immediately, while the visible tag waits for deliberate intent: at least 1600 ms of pointer residence and 1100 ms of stationary intent within a 5 px radius, or 1000 ms of continuous keyboard focus. Pointer movement beyond that radius, target movement, pointer press, a scroll that moves the anchor, or departure before the thresholds resets or cancels the pending opening; pointer departure after opening uses a 160 ms grace period; Escape closes. A pointer press on an anchor closes its open tag, and that anchor's tag stays closed until the pointer leaves it (amended 2026-10-08, DL-145; scroll narrowed 2026-10-23, DL-232). Copy is concise, human, contextual, and consequence-first. It explains what the control does, its current state, shortcut, full value, consequence, or human disabled reason without falling back to raw command IDs, schema/route IDs, DOM labels, machine tokens, or developer jargon; dynamic pin/unpin and other changing states remain current. While Product Onboarding or Guided Tour is open, only anchors inside the active overlay may open tags. Pending or open tags outside it close, outside description nodes temporarily lose tooltip semantics and accessibility exposure, and their stable relationships restore when the overlay closes. Non-Retro entrance is the reference 240 ms translate/scale/fade; Retro uses 140 ms stepped motion with no scale; Reduced Motion is immediate. Glass follows live transparency while maintaining readable contrast. Initial and live census work is frame-bounded, performs one startup pass, and ignores exact old/current attribute reassertions while retaining every real semantic change, so unrelated application reconciliation cannot create a perpetual tooltip invalidation loop or steal Onboarding or Guided Tour's animation budget. Amended 2026-10-17 (DL-228): a tag never covers a primary action such as the chat's Send: it slides along its side or flips, and with no clear place it stays shut while its accessible description is still read. File references and tabs keep their path or name literally (a reference's tag is its path and line), the one exception to replacing paths, file names and host:port text with generic words. Focus the application moves, by an open, a reveal, a panel focus change or F6, opens no tag until the pointer reaches that control or focus moves on; the 1000 ms keyboard-focus tag is for focus the person moves with Tab or the arrows. Documented exemptions also include a picker plate (`menu`: its rows without their own label, Back and the search field already show their names; a row given its own hover label keeps its tag) and a Settings field whose label and help line sit beside it (`labelled-field`). DL-259 QA2 M2, 2026-10-31: technical-identifier candidacy requires a small element that actually presents the identifier, or an explicit technical-identifier declaration. Transcript, whole-message and card containers do not qualify merely because they carry internal identity, render, sort or scroll keys; such internal keys never create a technical tooltip target. An explicit technical declaration remains eligible, and a container’s own semantic control label may independently qualify it under this same shared controller. The origin word opens F3-670’s Details panel; it is visible and keyboard reachable without waiting for a hover tag. Hover help, labels, accessible descriptions and exact full paths keep the existing shared controller rules and FO-20 material. No new tooltip system or automatic theme write is introduced.
 gui_related: true
 gui_classification_reason: This unit owns the global tooltip overlay's paint, geometry, timing, and accessible attachment.
 split_recommended: false
@@ -37400,17 +37180,19 @@ acceptance_criteria:
   target. An explicit technical declaration remains eligible, and a container’s own semantic control label may independently
   qualify it under this same shared controller.'
 validation_surfaces:
-  - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (separate 1600 ms pointer-residence, 1100 ms stationary-intent, 5 px radius, 1000 ms visual-focus dwell, immediate accessible-description binding, and 160 ms departure-grace fields are required for current acceptance)"
-  - "Verify the F3-523 hover-tag census and pointer, keyboard, Escape, grace, collision, zoom, theme, transparency and reduced-motion acceptance."
+  - Plans/final_gui_interaction_contracts.schema.json
+  - Plans/final_gui_interaction_contract_fixtures.json
+  - future Verify the F3-523 hover-tag census and pointer, keyboard, Escape, grace, collision, zoom, theme, transparency and reduced-motion acceptance.
   - future hover census, pointer/keyboard/Escape/grace/collision/zoom/theme/transparency/reduced-motion tests
 risk_class: hover_overlay_accessibility_or_census_drift
 reasoning_tier: high
 context_scope: global_pm_hover_tag
 implementation_surfaces:
   - Plans/FinalGUISpec.md
-  - future native Slint PMHoverTag and HoverTagController components
+  - future native Slint shared hover-help overlay and controller components
 node_compile_hint: {mode: global_hover_tag_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): PMHoverTag and HoverTagController were concept hover-help component/controller names; attributeOldValue was browser observer plumbing. F3-523 specifies the shared overlay and controller by role, with typed anchors, accessibility bindings, dwell/cancellation and bounded work, not an implementation symbol."
 - Concepts/chat-assistant-concepts/5.6 Pro/PM_Chat_Assistant_5.6_Pro_Standalone.html
 - Concepts/pm7-tools/global_hover_tags_source.py
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/chatpip/REPORT.md — F5 candidate rule, 2026-10-31;
@@ -37418,7 +37200,22 @@ source_lineage:
   only.
 - /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
   /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F10
-preserved_exact_tokens: [PMHoverTag, HoverTagController, 24px, 8px, 12px, 11px, 280px, 1600 ms, 1100 ms, 5 px, 1000 ms, 160 ms, 240 ms, 140 ms, role=tooltip, aria-describedby, general.interaction.show-tooltips, attributeOldValue]
+preserved_exact_tokens:
+- "24 px"
+- "8 px"
+- "12 px"
+- "11 px"
+- "280 px"
+- "1600 ms"
+- "1100 ms"
+- "5 px"
+- "1000 ms"
+- "160 ms"
+- "240 ms"
+- "140 ms"
+- "role=tooltip"
+- "aria-describedby"
+- "general.interaction.show-tooltips"
 negative_constraints:
   - "Do not invent domain commands for opening, closing, or repositioning a hover tag; these are typed local UI actions."
   - "Do not remove accessible explanatory text when visual tooltips are disabled."
@@ -37440,10 +37237,10 @@ unit_type: acceptance_contract
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Settings, Doctor, Product Onboarding, Guided Tour, and PMHoverTag target Rust stable plus Slint 1.17.1.
+  Settings, Doctor, Product Onboarding, Guided Tour, and the shared hover-help overlay target Rust stable plus Slint 1.17.1.
   Settings binds the owner inventory and manager projections through stable typed models and variable-height
   virtualization; Doctor binds stable normalized finding IDs; Onboarding and Tour bind their owner state
-  machines; PMHoverTag binds typed anchor geometry, timers, hover/focus state, accessible description identity,
+  machines; the shared hover-help overlay binds typed anchor geometry, timers, hover/focus state, accessible description identity,
   and theme tokens. Essential behavior uses native properties, models, transforms, opacity, scale,
   clipping/masking, vector shapes, bounded timelines, and precomputed tokens/assets. PMConcept7
   HTML/JavaScript/localStorage, DOM selectors, CSS viewport logic, browser physics, Canvas/WebGL, arbitrary
@@ -37507,7 +37304,7 @@ canonical_text: >-
   roster/detail geometry, document/index/detail continuity, or responsive host behavior. Its detail uses calm
   progressive tabs for overview, update review, access/runtime bounds, and integrity/evidence. Compact cards
   show Plugins System owner facts rather than a copied runtime reducer. Every exact cmd.agent_plugin.* action is
-  focusable, PMHoverTag-described, theme-native across Basic, Friendly, Glass, and Retro light/dark, and visibly
+  focusable, described by F3-523’s shared hover help, theme-native across Basic, Friendly, Glass, and Retro light/dark, and visibly
   handler_unavailable until a native owner handler exists. Invoking an unavailable action opens one truthful
   bounded explanation without changing plugin fixture state, fabricating success, issuing a production receipt,
   or emitting an EventRecord. The Doctor projects eight separate Plugins System findings and returns to the
@@ -37522,7 +37319,7 @@ acceptance_criteria:
   - "K3 geometry remains within the frozen manifest; only plugin detail content, owner-action chrome, theme paint, hover overlay, and named mild chrome adaptations differ."
   - "Overview separates package/plugin identities, three generations, manifest lane, required/optional component state, adapter round trips, conformance, and freshness."
   - "Update, Access, and Integrity tabs progressively disclose complete diff/reapproval/rollback, permissions/containment/runtime bounds, and supply-chain/bounded-evidence facts without a dense configuration wall."
-  - "The exact twelve command controls expose handler_unavailable, a human disabled reason, typed PluginCommandResult, receipt-only/no-EventRecord policy, stable accessible name, and PMHoverTag consequence text."
+  - "The exact twelve command controls expose handler_unavailable, a human disabled reason, typed PluginCommandResult, receipt-only/no-EventRecord policy, stable accessible name, and shared hover-help consequence text."
   - "Legacy generic Add/Edit/Test/More, Permissions, Discover, and Remove paths fail closed for plugins and cannot mutate the concept fixture."
   - "Pointer, keyboard, narrow widths, all ten themes, full/Reduced Motion, hover/focus help, Doctor routing, and no-state-change assertions pass in the browser concept; results remain non-native evidence."
   - "The consolidated final film includes the Plugins owner projection, all four progressive detail tabs, one truthful handler-unavailable command path, and an exact Doctor-to-Plugins return route without promoting the recording to native or runtime proof."
@@ -37547,7 +37344,18 @@ source_lineage:
   - Plans/Plugins_System.md#PLUG-070
   - Plans/Settings_System.md#SSYS-024
   - Plans/newtools.md#N2-154
-preserved_exact_tokens: [250 px, 62 px, plugin.json, pm-plugin.json, cmd.agent_plugin, handler_unavailable, PluginCommandResult, EventRecord, PMHoverTag, Basic, Friendly, Glass, Retro, Reduced Motion]
+preserved_exact_tokens:
+- "250 px"
+- "62 px"
+- "cmd.agent_plugin"
+- "handler_unavailable"
+- "PluginCommandResult"
+- "EventRecord"
+- "Basic"
+- "Friendly"
+- "Glass"
+- "Retro"
+- "Reduced Motion"
 negative_constraints:
   - "Do not create a second Plugins System owner, package reducer, permission reducer, update engine, runtime manager, or Doctor repair path in the GUI."
   - "Do not replace K3 geometry with cards, a new sidebar, a full-page plugin surface, Back chrome, or breadcrumbs."
@@ -38836,9 +38644,7 @@ Amended 2026-10-09 (DL-180): a plan opens as a plan tab in the universal panels 
   the run view (ACD-480). The remaining families keep the native presentation above, with Processes governed by ACD-505.
   Second scoped exception (2026-10-08, DL-147): the To-Dos rows of item 2 are one-line checklist rows like the
   To-Do hover preview, inside the native panel (F3-593).
-- **Read-Only Demonstration Semantics (APR-067):** Read-only inspection fixtures and demo cards
-  render findings, diagnostics, and code views without interactive mutation controls or misleading
-  active buttons, clearly labeling the static or demo nature of the content.
+- Read-only inspection views render findings, diagnostics and code evidence without interactive mutation controls or misleading active buttons.
 
 ### 25. Settings Manager Presentation Grammar Across All 38 Managers and Projections
 
@@ -38896,7 +38702,7 @@ Amended 2026-10-09 (DL-180): a plan opens as a plan tab in the universal panels 
   29. `server-backup-restore` (Server-level disaster recovery)
   30. `project-backup` (Project-level archive and backup)
   31. `updates` (Application update channels and policies)
-  32. `project-defaults-templates` (Project scaffolding templates)
+  32. `project-defaults-templates` (Saved setups: detached configuration; Project-owned Starters are a separate child)
   33. `onboarding-guided-tour` (Run Onboarding Again, Guided Tour resume and replay, onboarding flags)
   34. `doctor` (System health checks, diagnostics)
   35. `usage-budgets` (Spend limits, token quotas)
@@ -39141,7 +38947,7 @@ canonical_text: 'The Assistant wand menu structures commands into compact, organ
   command list. The chat composer strictly excludes internal-browser launch controls, preserving independent URL and
   attachment capabilities.  Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement.'
 gui_related: true
-gui_classification_reason: Governs wand menu grouping, composer browser boundary, and demo fixture isolation.
+gui_classification_reason: Governs wand menu grouping and the composer browser boundary.
 depends_on:
 - F3-531
 unblocks: []
@@ -39283,7 +39089,7 @@ canonical_text: >-
   USER-REFERENCE-LAYOUT-ROLLBACK-20260908, apart from the scoped exceptions of F3-580 (DL-122) and the
   To-Do rows of F3-593 (DL-147), superseding the reference-video flat-row and forced single-column layout
   while preserving concise hierarchy, clear progress/state grouping, and quiet action rows. Read-only
-  inspection fixtures present findings and code evidence without interactive mutation controls.
+  inspection views present findings and code evidence without interactive mutation controls.
 gui_related: true
 gui_classification_reason: Governs collaboration configuration popups, footer styling, Single Agent Review
   invariant, and all ten Activity Detail families.
@@ -39297,7 +39103,7 @@ acceptance_criteria:
 - Switching to Single Agent Review reactively reduces draft reviewer count to exactly one.
 - All ten Activity Detail families apply the native card and grid presentation grammar with concise hierarchy,
   superseding the reference-video flat-row prescription, apart from the scoped exceptions of F3-580 and F3-593.
-- Read-only inspection demos render findings without interactive mutation controls.
+- Read-only inspection views render findings, diagnostics and code evidence without interactive mutation controls or misleading active buttons.
 validation_surfaces:
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: collaboration_popup_or_activity_family_grammar_drift
@@ -39338,7 +39144,7 @@ unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: |-
-  Under USER-SETTINGS-MANAGER-REFRESH-20260908 the Settings manager presentation grammar gains four principles beyond the six restored native ones: no header-level action strip, at most six tabs, exactly one labeled Advanced disclosure per manager view, and one side-panel anatomy shared by manager drawers and the setting Details inspector (identity header, sectioned body, quiet footer, spring open and material close, no decorative accent bars, inspector width tokens unchanged). Manager workspaces of the published concept are presentation groupings over the unchanged 38-key registry: separate Code & Tools workspaces for Skills, Plugins, MCP Servers, and Commands & Shortcuts; one System workspace Server & Project Location; Single Owners and Browser & SCM governance as Advanced disclosures; Back Seat Driver as its own kit manager. Domain switches obey F3-513, built-in sounds are labelled demonstration tones per F3-405, and All Settings scrolls with the page while remaining virtualized per SSYS-005. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls. The unchanged project-defaults-templates manager route shows separate Saved setups and Starters / My starters children. Saved setups are detached configuration, Starters are Project-owned file sets (PJCT-011); no 39th manager. Home/reach/project switches/whole Project versions use SSYS-061 and domain owners; library reach Every project includes No project, Project-owned things do not. Persona management remains the existing Settings Agent Config realization, with no second editor.
+  Under USER-SETTINGS-MANAGER-REFRESH-20260908 the Settings manager presentation grammar gains four principles beyond the six restored native ones: no header-level action strip, at most six tabs, exactly one labeled Advanced disclosure per manager view, and one side-panel anatomy shared by manager drawers and the setting Details inspector (identity header, sectioned body, quiet footer, spring open and material close, no decorative accent bars, inspector width tokens unchanged). Manager workspaces of the published concept are presentation groupings over the unchanged 38-key registry: separate Code & Tools workspaces for Skills, Plugins, MCP Servers, and Commands & Shortcuts; one System workspace Server & Project Location; Single Owners and Browser & SCM governance as Advanced disclosures; Back Seat Driver as its own kit manager. Domain switches obey F3-513, built-in sounds preview their selected available asset or admitted synthesized recipe with F3-405’s shared player, provenance, explicit-gesture, playback/Stop/replacement/cleanup and unavailable/decode-failure rules; preview never claims notification delivery, and All Settings scrolls with the page while remaining virtualized per SSYS-005. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls. The unchanged project-defaults-templates manager route shows separate Saved setups and Starters / My starters children. Saved setups are detached configuration, Starters are Project-owned file sets (PJCT-011); no 39th manager. Home/reach/project switches/whole Project versions use SSYS-061 and domain owners; library reach Every project includes No project, Project-owned things do not. Persona management remains the existing Settings Agent Config realization, with no second editor.
 gui_related: true
 gui_classification_reason: Owns the visible manager presentation grammar, workspace grouping, and side-panel anatomy of every Settings manager in the published concept.
 split_recommended: false
@@ -39351,8 +39157,8 @@ acceptance_criteria:
   - "Ten themes at 760, 960, and 1440 px render the key managers with zero horizontal overflow."
   - "(USER-SETTINGS-MANAGER-REFRESH-20260909) Status tokens instead of pills, concept-drawn listboxes and menus with the shared popout motion, independently scrolling rosters, a two-column sound grid, ordered account and route lists with inline priority controls, and inline manager-topic settings rendered exactly once (F3-551)."
 validation_surfaces:
-  - "Verify F3-543's manager presentation, status tokens, menus, scrolling, row placement and motion against the current Settings owner."
-  - python3 scripts/pm-plans-verify.py run-gates
+- "future Verify F3-543's manager presentation, status tokens, menus, scrolling, row placement and motion against the current Settings owner."
+- "scripts/pm-plans-verify.py"
 risk_class: manager_presentation_regression_or_motion_flash
 reasoning_tier: high
 context_scope: settings_manager_presentation
@@ -39371,10 +39177,10 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
   /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F03,B-F01,B-F13,E-F05
 preserved_exact_tokens:
-  - "No Top Action Bar"
-  - "Bounded Tabs"
-  - "Exactly One Advanced Disclosure"
-  - "Side Panel Anatomy"
+- "header-level action strip"
+- "six tabs"
+- "Advanced disclosure"
+- "side-panel anatomy"
 negative_constraints:
   - Do not reintroduce a per-manager top action bar or more than six tabs.
   - Do not give the Details inspector or a drawer a decorative accent bar.
@@ -40777,7 +40583,7 @@ split_recommended: false
 depends_on: [ACD-469, DL-180]
 unblocks: []
 acceptance_criteria:
-  - "No demo thread overflows the transcript sideways at a 234px pane or at full width."
+  - "No product Chat transcript overflows sideways at full width or at a 234px popped-out desktop Chat pane; main-window Chat follows F3-637."
   - "Needs-you actions wrap; ledger titles ellipsize; long tokens break."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -41004,7 +40810,7 @@ canonical_text: >-
   scroll-to-bottom control; the transcript keeps its bottom padding for that floating stack. The quota-wait
   strip and the dock stay in flow beneath the decision host, so bottom to top the order is composer, dock,
   quota-wait strip, decision host, then the floating pill and queue. QA round 2, Jared 2026-10-30; DL-258; GUI
-  7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run a 60000
+  7d586bad18: Q13/CC5: the owner-backed work dock provider gives a live process and the next pending scheduled run a 60000
   ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work
   identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a
   restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines
@@ -41026,10 +40832,10 @@ acceptance_criteria:
   - "The dock sits between the quota-wait strip and the composer and never overlaps the transcript, the Activity bar pill or the decision host."
   - "With the dock showing, the last transcript item clears the Activity bar pill at settled bottom scroll."
   - "The Back Seat Driver eye reflects the owner projection and is absent when Back Seat Driver is off."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and the panel. Q14/H9: Glass’s Activity bar and composer dock lines join Activity Detail, panel, System status, Stop/Quit list, History and hover/attachment cards on the persona/model menu’s near-opaque plate. The needs line keeps its warm wash over that plate. Settings dialogs and drawers flatten that same menu tint over the look’s ground so background labels cannot read through; ordinary panes keep their existing material. This is consumer treatment, no global Glass token change or extra backdrop-filter."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the owner-backed work dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and the panel. Q14/H9: Glass’s Activity bar and composer dock lines join Activity Detail, panel, System status, Stop/Quit list, History and hover/attachment cards on the persona/model menu’s near-opaque plate. The needs line keeps its warm wash over that plate. Settings dialogs and drawers flatten that same menu tint over the look’s ground so background labels cannot read through; ordinary panes keep their existing material. This is consumer treatment, no global Glass token change or extra backdrop-filter."
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
+- "scripts/pm-shard-plans.py"
+- "scripts/pm-plan-index.py"
 risk_class: composer_stack_collision
 reasoning_tier: high
 context_scope: chat_composer_stack
@@ -41044,6 +40850,7 @@ node_compile_hint:
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) sections 3.2, 4.3 C14-C15, 7.8, 8.6, 10.1 item f"
   - "IMPACT-REGISTER B-FGS-03 (NOW part; the footer pill part compiled 2026-09-27 from DL-129), B-FGS-12 (APR-004 part)"
+  - "DL-260 source lineage only (no product API or implementation obligation): PM_WORK was the concept work-projection adapter; dock eligibility and lifetime are DR-078/ACD-476 product presentation rules."
 preserved_exact_tokens:
   - "dock"
   - "files chips"
@@ -42645,7 +42452,7 @@ plan_unit_id: F3-590
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: 'Every icon control in the assistant chat names itself through the shared PMHoverTag of F3-523, never
+canonical_text: 'Every icon control in the assistant chat names itself through the shared hover-help overlay of F3-523, never
   through a native title (DL-145). This includes the controls the concept used to title natively: the editor''s Return
   to chat and its tabs, the model picker''s provider rail and favourite stars, the history drawer''s status marks and
   resize handle, thread-search result actions, the thread-operation dialog''s close, the Schedule Message send-time track,
@@ -42701,10 +42508,9 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/LEAD-RULINGS-20261008.txt, SHA-256 546fa6cc210c40b50a6a5db5f4d6e436af82c2e3d9541796b214bb27061d80c7"
   - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
 preserved_exact_tokens:
-  - "PMHoverTag"
-  - "native title"
-  - "deliberate dwell"
-  - "Previews are the one exception"
+- "native title"
+- "deliberate dwell"
+- "Previews are the one exception"
 negative_constraints:
   - "Do not restate or change F3-523's thresholds in this unit."
   - "Do not open a hover tag inside an open activity bar domain preview, and do not extend the preview exception to any other surface."
@@ -42953,8 +42759,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Amended 2026-10-29 (X1/X3, PC1–PC5, O8, S1–S9; DL-239): every individual agent is Pip, drawn by the one
-  PMLogo.kit-backed puppet primitive, never a second legacy figure or an avatar/initials. This supersedes DL-149
+  Amended 2026-10-29 (X1/X3, PC1–PC5, O8, S1–S9; DL-239): every individual agent is Pip, drawn by the one shared puppet primitive, never a second legacy figure or an avatar/initials. This supersedes DL-149
   card 6’s still setup sheets, old body/limb geometry and puppet-native status silhouettes. Teams, specialists,
   plates, run cards/views, Activity rows and live agent cards share the primitive; category marks at ≤16 px
   remain robot (X1). Roles match full Persona name then last word, unknown hard hat: Coordinator/chat assistant
@@ -42996,8 +42801,7 @@ canonical_text: >-
   product implementation. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone,
   head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings,
   holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the
-  plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast
-  plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing
+  plate’s result/topology, not puppet strings. The one shared person-silhouette renderer, owned by F3-594, serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing
   meaning.
 gui_related: true
 gui_classification_reason: Defines how every agent is drawn in the assistant chat and the wand module sheets.
@@ -43018,10 +42822,10 @@ acceptance_criteria:
   - "Every role prop is distinguishable in grayscale at the sizes the surfaces use."
   - "Optional sheet Pip motion uses the shared bounded rig and parts; run cards/views retain their scoped one-shot/live-work budget, and Reduced Motion keeps state feedback with no nonessential travel."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one shared person-silhouette renderer, owned by F3-594, serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning."
 validation_surfaces:
-- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-- python3 scripts/pm-plan-index.py validate
+- "scripts/pm-shard-plans.py"
+- "scripts/pm-plan-index.py"
 risk_class: agent_mark_presentation_drift
 reasoning_tier: high
 context_scope: chat_tweaks_20261007
@@ -43032,6 +42836,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): ppYou, PX_YOU and pnYou were concept person-drawing adapters and small-size maps, not native product API or primitive identities. F3-594 owns the shared person-silhouette renderer."
 - Plans/Decision_Log.md#DL-218
 - Plans/Decision_Log.md#DL-149
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md, SHA-256 acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe
@@ -43040,6 +42845,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/nier-puppets-final-handoff.md, SHA-256 492a3bbeae1285f1dd1d55dfbdc87da3bfa9fce207c9ef01a9f2005abb0ddfa0
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/PM7-COORDINATION-20261008.md, SHA-256 c31bdbf5c69cf7f3110b2bbdc63258848bba8eee69da4154f976c295e2881002
 - Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)
+- "DL-260 source lineage only (no product API or implementation obligation): PMLogo.kit was the concept’s shared Pip drawing adapter."
 preserved_exact_tokens:
 - marionette puppet
 - puppet primitive
@@ -43097,7 +42903,7 @@ canonical_text: 'One cast plate grammar draws every collaboration graph, in the 
   crown/hat. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in
   each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection
   to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings.
-  The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings
+  The one shared person-silhouette renderer, owned by F3-594, serves crew diagrams, cast plates, run cards and rosters. Optional agent strings
   and the single Pip primitive retain their existing meaning. DL-259 FS-1, 2026-10-31, supersedes Q17’s dimming: hover/focus
   emphasis begins only at an actual control in its affects region, including an embedded plate control; plain text, empty
   space and the picture alone trigger none. Affected marks take a one-pixel theme accent ring, with the shared soft glow
@@ -43127,8 +42933,7 @@ acceptance_criteria:
   by this unit.
 - 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s
   materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross,
-  and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou
-  drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive
+  and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one shared person-silhouette renderer, owned by F3-594, serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive
   retain their existing meaning. DL-259 FS-1, 2026-10-31, supersedes Q17’s dimming: hover/focus emphasis begins only
   at an actual control in its affects region, including an embedded plate control; plain text, empty space and the picture
   alone trigger none. Affected marks take a one-pixel theme accent ring, with the shared soft glow in Glass and ink in
@@ -43157,6 +42962,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): ppYou, PX_YOU and pnYou were concept person-drawing adapters and small-size maps, not native product API or primitive identities. F3-594 owns the shared person-silhouette renderer."
 - Plans/Decision_Log.md#DL-218
 - Plans/Decision_Log.md#DL-149
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md, SHA-256 acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe
@@ -43448,7 +43254,8 @@ preserved_exact_tokens:
 negative_constraints:
 - Do not retain an independent NieR override; list family nier and its two variants as ordinary choices (Q22).
 - Do not open the NieR Mode editor as a dialog over the onboarding window.
-- Do not write a NieR choice durably before the Project binding exists.
+- Do not persist a NieR choice outside the explicitly accepted admissible Settings level; a Project own write needs
+  its real binding, while Later/No project may commit at admitted app levels and only pre-claim/unbound preview is ephemeral.
 - Do not use a game asset, game audio or a character likeness.
 - Q22 adds family nier and two variants. Do not add a NieR part, settings key, command, route, tour action or onboarding action
   other than ui.onboarding.choose_look.
@@ -43671,8 +43478,7 @@ canonical_text: >-
   round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each
   family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or
   connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology,
-  not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and
-  rosters. Optional agent strings and the single Pip primitive retain their existing meaning.
+  not puppet strings. The one shared person-silhouette renderer, owned by F3-594, serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning.
 gui_related: true
 gui_classification_reason: Defines how the collaboration cast plates stay visible as rosters grow in setup sheets and run views.
 split_recommended: false
@@ -43683,7 +43489,7 @@ acceptance_criteria:
   - "A roster scrolls in its own region only while its slot shows its floor drawing."
   - "The wrap's strings are straight, and its fork and join connect every row to the lead and to You."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one shared person-silhouette renderer, owned by F3-594, serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -43697,6 +43503,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "DL-260 source lineage only (no product API or implementation obligation): ppYou, PX_YOU and pnYou were concept person-drawing adapters and small-size maps, not native product API or primitive identities. F3-594 owns the shared person-silhouette renderer."
   - "Plans/Decision_Log.md#DL-154"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-popup-graphs-20261009/JARED_REQUEST.md, SHA-256 46723a8829ea87fc5e01a261d81e92e32f3f1bc2e8a428af6704b1e3a91229e2"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-popup-graphs-20261009/SURVEY-BEFORE.md, SHA-256 b4036f1bffdf0bfb65f40fa5062540f60960b072bb46c667a7bcb00f26e0ac5f"
@@ -44246,7 +44053,7 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-159, ContractName:Plans/Final
 
 ## DL-162 — The Left Rail Takes The Polish Design (2026-10-09)
 
-This addendum compiles the owner decision DL-162: on 2026-10-09 Jared chose concept D, "Polish", of the left-rail review copy `Concepts/LeftRailPMConcept7.html` for the left rail. Polish keeps the Cozy Shelves structure and its coloured shelf boxes (F3-472, F3-474, F3-497) and polishes them: tighter geometry where horizontal space is short, one readable type ladder, statuses as glyph and word instead of pills, text that fits by layout instead of by abbreviation, the chat's picker for every dropdown, and motion in each theme family's own voice. The units below own the rail's presentation only; behaviour, state vocabularies and commands stay with the panel owners (`Plans/FileManager.md`, `Plans/Source_Control_System.md`, `Plans/Jujutsu_Integration.md`, `Plans/WorktreeGitImprovement.md`, `Plans/GitHub_Integration.md`, `Plans/Containers_Registry_and_Unraid.md`, `Plans/Automated_Testing_System.md`, `Plans/Runtime_Artifacts_Panel.md`, and the Run & Debug and Agents units F3-482 to F3-496, F3-452 and F3-477), and `Plans/DRY_Rules.md#DR-057` keeps this grammar in one place. F3-480 (3) is amended in place for the rail. The concept is source lineage only (`Concepts/leftrail-redesign/src/concepts/d/` at commit c93e341606): its class names, its measured pixel values outside these units and its demo data are not canon. Settled later on 2026-10-09 under the same decision: the Jujutsu view of Source Control has its own five tabs (DL-163, F3-623 and F3-624); the remaining six panels and the bottom Debug tab take this grammar through amendments in their owner units, with no new command, action or wiring row; and the activity bar's More tray is F3-625. Published on 2026-10-09: `Concepts/PMConcept7.html` carries the Polish rail, built into it through the opus-5.5 build from the same concept sources the review copy uses, and the review copy `Concepts/LeftRailPMConcept7.html` keeps concepts A, B and C and "Original", the rail before Polish (still reached as `current`), for comparison. The NieR Mode kit reaches the rail through two hooks it now names, a cursor hook for rail rows and picker items and a brackets hook for chosen tabs whose box changes when chosen (F3-621); both are concept plumbing, not canon.
+This addendum compiles the owner decision DL-162: on 2026-10-09 Jared chose concept D, "Polish", of the left-rail review copy `Concepts/LeftRailPMConcept7.html` for the left rail. Polish keeps the Cozy Shelves structure and its coloured shelf boxes (F3-472, F3-474, F3-497) and polishes them: tighter geometry where horizontal space is short, one readable type ladder, statuses as glyph and word instead of pills, text that fits by layout instead of by abbreviation, the chat's picker for every dropdown, and motion in each theme family's own voice. The units below own the rail's presentation only; behaviour, state vocabularies and commands stay with the panel owners (`Plans/FileManager.md`, `Plans/Source_Control_System.md`, `Plans/Jujutsu_Integration.md`, `Plans/WorktreeGitImprovement.md`, `Plans/GitHub_Integration.md`, `Plans/Containers_Registry_and_Unraid.md`, `Plans/Automated_Testing_System.md`, `Plans/Runtime_Artifacts_Panel.md`, and the Run & Debug and Agents units F3-482 to F3-495, F3-452 and F3-477), and `Plans/DRY_Rules.md#DR-057` keeps this grammar in one place. F3-480 (3) is amended in place for the rail. The concept is source lineage only (`Concepts/leftrail-redesign/src/concepts/d/` at commit c93e341606): its class names, its measured pixel values outside these units and its demo data are not canon. Settled later on 2026-10-09 under the same decision: the Jujutsu view of Source Control has its own five tabs (DL-163, F3-623 and F3-624); the remaining six panels and the bottom Debug tab take this grammar through amendments in their owner units, with no new command, action or wiring row; and the activity bar's More tray is F3-625. Published on 2026-10-09: `Concepts/PMConcept7.html` carries the Polish rail, built into it through the opus-5.5 build from the same concept sources the review copy uses, and the review copy `Concepts/LeftRailPMConcept7.html` keeps concepts A, B and C and "Original", the rail before Polish (still reached as `current`), for comparison. The NieR Mode kit reaches the rail through two hooks it now names, a cursor hook for rail rows and picker items and a brackets hook for chosen tabs whose box changes when chosen (F3-621); both are concept plumbing, not canon.
 
 Amended 2026-10-09 (DL-180): the bottom Debug tab named above is now a tab of the Debug Console tool kind (`debug_console`, F3-635) in whichever panel holds it, placed beside the terminals by F3-634; there is no bottom zone (F3-490 as amended). Nothing else in this addendum changes.
 
@@ -45268,7 +45075,7 @@ F3-041, F3-060, F3-061, F3-066 to F3-068, F3-071, F3-072, F3-102, F3-132, F3-140
 F3-162, F3-195, F3-202, F3-205, F3-206, F3-217, F3-225, F3-234, F3-271, F3-276 to F3-278, F3-281, F3-282, F3-297,
 F3-421 to F3-423, F3-445, F3-463, F3-464, F3-466, F3-467, F3-469, F3-476, F3-516, F3-517, F3-520, F3-521, F3-540,
 F3-565 and F3-569; and, where their DL-162 notes or text name the bottom Debug tab or the bottom zone, the Run & Debug
-units F3-483, F3-484, F3-490 to F3-492, F3-495 and F3-496 and the DL-162 addendum's heading paragraph, which now point
+units F3-483, F3-484, F3-490 to F3-492, F3-495 and the DL-162 addendum's heading paragraph, which now point
 at the Debug Console tool kind. The left rail otherwise keeps its own canon (DL-162, DL-163, F3-618 to F3-625, DR-057):
 its side panels, their segmented strips, its More tray and its looks are not home panels and are not changed here. The
 terminal tab's own chrome, features, appearance, effects, faces, images and agents are F3-640 to F3-646
@@ -46703,7 +46510,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: |-
-  A dashboard is a tab kind (F3-635), not a singleton surface (DL-180, D10). Every dashboard tab holds its own board on the Usage board engine (DL-186): it shows the Usage page's widget design and can show every Usage widget, and Plans/usage-feature.md#UF-062's rule that every Usage widget can be hosted on the dashboard now holds. Boards are built for more than one widget source: Usage widgets now, Orchestrator widgets after the Orchestrator page's own redesign, and other sources later, each under its own label (Plans/Widget_System.md#WS-030); the widget commands' payloads do not change. The built-in dashboards are Home (`dashboard:home`, pinned in the default layout, F3-630), Metrics (`dashboard:metrics`), Monitoring (`dashboard:monitoring`) and Agents (`dashboard:agents`), and a person can make custom dashboards with n from 1 to 9999 (`dashboard:dash-<n>`, called "Dashboard <n>" until renamed). Home, Metrics and Monitoring start from their own sets of Usage widgets (WS-030); a new custom dashboard starts empty. The old Home widgets (run progress, lanes and results) have left Home until Orchestrator widgets join the board engine after that page's redesign, and there is no Home (current) board (Jared, P1 B). Agents is drawn by the dashboard kind itself, not by the board engine: one card per agent at work, each opening that agent's transcript as a kept tab (Alt+click in a new panel), with the filters All agents, Working, Needs you, Waiting and Finished in its Show menu; it has no widgets and no board record, and resetting it means its filter (lead ruling F7). A dashboard tab sits in the same tab strip as every other tab (F3-631): it has no strip of its own and no second tab model. Inside the tab the board is the Usage widget board: its widget grid, its gestures, gravity and Tidy behave exactly as on the Usage page, each settled change one transaction (Plans/Widget_System.md#WS-019), and they act inside the tab only, never laying out panels (DR-066). The board lays out on the Usage board's tracks and width classes (Plans/Widget_System.md#WS-017), measured on the tab's own width, never the window (F3-635), and it sits on Home's tab surface, not the Usage page's background, in every look (P11). Each board's contents are kept per project (`widget_layout:v1:<project_id>:<board_id>`; the keys, the one-time adoption of an older key and the records are Plans/Widget_System.md#WS-030's and Plans/storage-plan.md's), so a project switch shows each dashboard tab with that project's board and a project lists only its own custom dashboards. A dashboard's widget layout is never stored inside the Home layout record, and Home's panels are not widgets. The header row is F3-635's shared row. Its left side shows the dashboard's name, the Live mark while Live readings are on and the board holds a Usage widget, the widget count ("N widgets", "1 widget" or "No widgets") and the range, with the scope when it is not all usage; its right side shows Add widget, Board and Maximize (Restore while maximized; Shift+Escape). The Live mark is the Usage page's own indicator in each look's words (Live; Retro [LIVE]; NieR Mode LIVE) and pulses once for each live change the board applies, never between them and never under Reduced Motion. On Agents the left side counts the agents at work ("N agents · N working · N need you", and "Showing <filter>" under a filter) and Show takes the place of Add widget and Board. Add widget opens a searchable list ("Find a widget") of every widget the board can be given: a section for each Usage room in the Usage page's room order (F3-514), then the Usage widgets that belong to no room, then one section for each other widget source under its label. Each row's second line names its room or source and what kind of widget it is in plain words; a widget already on the board is checked and disabled with the reason "Already on this dashboard". Choosing one adds it (cmd.widget.add), scrolls to it and moves focus onto it. The Board menu holds, in order: Dashboards (Home, Metrics, Monitoring, Agents, this project's custom dashboards by name with their widget counts, and New dashboard; the current one checked); This dashboard (Range, Scope, Start from, Save as preset..., Tidy, Reset widgets); Live (Live readings); and, on a custom dashboard only, after a hairline, Rename dashboard... and Delete dashboard.... On Agents it holds Dashboards and Show. On an empty board Save as preset... and Tidy are disabled with their reasons ("Add a widget first", "Nothing to tidy yet"). Range (Last 5 hours, Last 24 hours, Last 7 days, Last 30 days) and Scope (All current usage, Work accounts, Personal accounts, or one provider) belong to each dashboard and change only its board, independent of the Usage page's (P2); choosing one is the typed local action ui.widget_board.set_view, view state kept in the board's record with no receipt and no event (lead ruling F1). Live readings is the Usage page's own Live / Paused choice, one switch shared with the Usage page (Plans/usage-feature.md#UF-107). Tidy and Reset widgets are the board's own (WS-019, WS-030): Reset widgets returns Home, Metrics and Monitoring to their default sets and a custom dashboard to empty. Start from lists the sets a board can start from in four groups (P4): This dashboard (the board's own default), Dashboard starter, Usage rooms (the Usage page's 13 room sets, in its room order) and Your presets. Each row's second line says what the set holds, a preset adding the day it was saved, and the active set is checked; a filter field ("Find a room or a preset") appears once there are more than three presets. Choosing a set replaces the board's widgets with it through one cmd.widget.reset_layout naming the set (set_id; WS-030). Because Start from replaces the widgets, an Undo notice then shows at the foot of the tab for 8 s, held while the pointer or focus is on it and for 3 s after; it ends at the next change to the board's widgets, on Escape (focus returns to Board), on a project switch and when the tab closes, and Undo puts the board back as it was and says so. Amended 2026-10-10 (lead ruling): Undo dispatches one cmd.widget.reset_layout with { scope: room, room: <board_id>, restore_revision }, restore_revision being the board's committed layout revision just before that Start from, with one receipt and only while the notice is up; it never carries set_id, the owner puts back exactly that revision's records, a restore is refused without dispatch if any other change was committed on the board since, excluding the preset hold's own settling resizes, and Undo is disabled with its reason, and it emits no workspace.layout_changed (WS-030, UCC-200). The empty board's Start from... button opens the same list. Presets are the person's own, kept across projects and offered on every dashboard (WS-030). Save as preset... asks for a name, starting from the dashboard's name made unique; a name is trimmed, its spaces collapsed and kept to at most 80 characters, and a preset saved without one is called "Preset <n>". With no presets, Your presets holds "Save this dashboard as a preset..."; with some, its last row, "Rename or delete presets", lists them, each with Start from this preset, Rename preset... and Delete preset... behind a confirm (Delete preset or Keep it). A dashboard that started from a deleted preset keeps its widgets. A preset keeps the widgets shown at each board width class with their sizes and settings, never the board's own range and scope. Saving, renaming and deleting a preset are the typed local actions ui.widget_preset.save, ui.widget_preset.rename and ui.widget_preset.delete, with no command; using one is cmd.widget.reset_layout with set_id user:<id> (lead ruling F2). New dashboard, in the Board menu, the "+" menu's Dashboard sub-row (F3-632) and the catalog, makes a custom dashboard (D35); so does a new tab or a split in a panel whose usual kind is the dashboard (Ctrl+T, F3-632). It starts empty and is called "Dashboard <n>". Rename dashboard... asks for a name and renames the tab with cmd.panel_tab.rename; renaming the tab renames the dashboard too, and clearing the tab's label gives back "Dashboard <n>". A name is trimmed and kept to at most 80 characters, and is kept per project with the board (WS-030). The name shows on the tab, in the header row, in the Board menu, in the "+" menu and in the catalog. Delete dashboard... asks first ("Delete <name>?": Delete dashboard, whose widgets cannot be brought back, or Keep it), then closes the tab (cmd.panel_tab.close), drops it from the reopen list and forgets its board and its name; it leaves the "+" menu and the catalog. Home, Metrics, Monitoring and Agents can be reset but never deleted, and show neither Rename dashboard... nor Delete dashboard...; a label the person gives one of their tabs names that tab only (F3-631). A closed custom dashboard keeps its board while it can be reopened from the reopen list and is forgotten when it leaves the list, unless it is open as a tab; the built-in dashboards keep theirs (P6). A saved named layout keeps the boards of the dashboards it holds, at most 64 KB of them per named layout; a larger save keeps the layout without its boards and says so (lead ruling F3; Plans/storage-plan.md#SP-330); applying the layout puts back the boards it kept, and a named layout saved before this applies as before. Amended 2026-10-31 (DL-270): the 64 KB per named layout is a payload budget; board contents larger than the 16 KiB value cap are kept by payload reference (SP-337, SP-340), and SP-330 owns the stored form. A board's first show plays the Usage page's calm reading-order entrance, and none under Reduced Motion (P7). An empty board shows an invitation over the board, which stays laid out beneath it: a small sketch of a board, "<Name> is empty", one line saying what to do, and Add widget and Start from... buttons; a new, empty dashboard puts focus on its Add widget, and otherwise focus goes to the board's first card in reading order. Details on a widget opens the Usage page at that widget's room with its inspector open (P8). Live readings apply to dashboards too, each board separately, with the Usage page's idle rule (F3-628, UF-107): nothing animates at idle except one live change per applied batch while Live is on, and a board that is not on screen does no live work (P12). This supersedes F3-279's exact four-widget catalogue and the dashboard catalogue limit of Appendix C.4 and C.4.1, F3-517's "distinct tab models" for Home and Dashboard and its Dashboard-frozen resize peers (with F3-515's and F3-518's), section 7.2's singleton dashboard, and the dashboard's own Main, Metrics and Monitoring strip of F3-505. Measurements: the Agents tab body pads its cards 12, 12 and 16 px, or 8, 8 and 12 px below 420 px of width; Agents cards sit in tracks at least 240 px wide, one column below 420 px; the header row is icon-only below 520 px and hidden below 150 px (F3-635). The Board menu is 320 px wide, Start from 340 px and Add widget 380 px. The Live mark is a 7 px dot with a 1.5 px ring, 6 px from its word set at weight 550, in the ok colour (Friendly's lavender #6F55A8, #D2C4EE in dark, DL-214; Glass with a 6 px glow); Retro shows [LIVE] and a 6 x 11 px block and NieR Mode LIVE and a 6 px ink diamond, both in the code face; its pulse is a 240 ms two-step blink in Retro and NieR Mode and, in the other looks, a 600 ms ring that grows from 0.6 to 2.2 times and fades. The Undo notice sits 16 px above the tab's foot (10 px below 420 px of width), centred, with 12.5/18 px text and a 28 px Undo button with a 14 % accent fill (outlined in Retro and NieR Mode); it enters in 220 ms, rising 8 px, and leaves in 160 ms, with no motion under Reduced Motion. The empty board's invitation has 24, 20 and 32 px of padding; its sketch of three 44 px tracks by 30 px rows hides below 320 px of height and its line below 220 px; its title is 15/21 px and its line 12.5/18 px, at most 360 px wide; its buttons sit 18 px below, 8 px apart; its tiles enter 40 ms apart over 320 ms and its words and buttons follow from 160 ms, 50 ms apart, with no motion under Reduced Motion. The Agents clock ticks every 1 s while shown; a filter other than All agents is that tab's own state, saved about 250 ms after it changes. The Dashboard plus sub-row keeps the four built-ins and New dashboard inline; Your dashboards opens this project's custom dashboards by name with their widget counts and search above 7 (F3-632). A custom board's number is one more than the largest across open tabs, the reopen list, this project's stores, unadopted unscoped board stores, names and live boards; past 9999, opening falls back to Home. An unknown board opens Home; dashboard:new creates one and dashboard:current resolves to dashboard:home. Custom names collapse whitespace before trimming, at most 80 characters; a clash with a built-in or another of this project's dashboards gains 2, 3 and so on, and an empty or default Dashboard <n> name clears the stored name. Preset names use the same uniqueness rule among presets. The current dashboard in Board and the active set in Start from are checked and focused. Board shows Empty for a zero-widget custom board's detail; Start from shows the active set's label, Save as preset... says Reuse these widgets anywhere, and Reset widgets says Back to its default widgets or Back to an empty dashboard. Add widget labels the Usage widgets without a room More widgets. An Undo notice follows a Reset widgets that changed anything as well as Start from; its restore_revision is the committed revision immediately before that operation. The owner writes and reads that revision's captured envelope in this project, with one receipt and no workspace.layout_changed, and restore_revision never accompanies set_id. Undo's availability is checked on a commit that leaves the notice up, on pointer or focus entering it and on its click; if stale, the envelope is invalid or the board is gone, nothing dispatches, Undo is aria-disabled at 50 % opacity, and the notice text and button's hover detail give the reason. Preset-hold resizes settle the set and never end the notice or make its revision stale. The notice is at most the body width minus 24 px, with padding 5, 5, 5 and 14 px and a 14 px gap; its text ellipsizes, Retro and NieR's Undo reverses on hover, and Glass uses a 30 px blur at saturation 1.5. NieR's Live word is 11.5 px in the code face with 0.08 em spacing. The empty board stays laid out but is visually hidden under its invitation; its three-track sketch has 6 px gaps and sits 20 px above the title, whose weight is 620. A board card focused by an API move or resize returns focus to a menu, prompt, header or Undo notice that held it, unless the person pressed or pointed on a board, pressed Tab or F6, or the kind deliberately focused it within 600 ms. A project switch rebinds every mounted board whose tab the new layout keeps, hidden ones included, reloads custom names and refreshes the catalog; an unmounted tab writes to its prior project. A named layout restores only envelopes saved for the current project, skipping another project's envelope; a custom board that the applied layout does not hold keeps its current contents. Amended 2026-10-16 (DL-214; Jared's 2026-10-15 panel item 1): the Home board opens as the pinned 36 px Home tab from every path, the "+" menu, the Board menu and a page's subtab, never as a second, unpinned tab at natural width. D7, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): dashboard:agents uses PM7_WORK_UI.list, agentGroup and agentSummary over PM_WORK, the same rows/needs-you set as the platform panel and Agents rail. Its existing frame, All/Working/Needs you/Waiting/Finished filter and short time form stay with this owner; no private AGENTS list or clock owns different agents. DR-078 defines subscription teardown and show-time catch-up. Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement. No project has its own SP-349 Home layout and boards, shared across that Server’s app chats rather than one fresh bucket per thread. Selecting or converting into a Project loads that Project’s saved UI state or its fresh defaults; do not import app boards into it. Saved named layouts remain per person; saved board snapshots apply only to the exact saved scope/Server/Project identity and are skipped elsewhere, including null-board snapshots. Keep the 64 KB board-payload cap, 16 KiB redb cap, one Assistant node, existing geometry and view-state/event distinctions. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
+  A dashboard is a tab kind (F3-635), not a singleton surface (DL-180, D10). Every dashboard tab holds its own board on the Usage board engine (DL-186): it shows the Usage page's widget design and can show every Usage widget, and Plans/usage-feature.md#UF-062's rule that every Usage widget can be hosted on the dashboard now holds. Boards are built for more than one widget source: Usage widgets now, Orchestrator widgets after the Orchestrator page's own redesign, and other sources later, each under its own label (Plans/Widget_System.md#WS-030); the widget commands' payloads do not change. The built-in dashboards are Home (`dashboard:home`, pinned in the default layout, F3-630), Metrics (`dashboard:metrics`), Monitoring (`dashboard:monitoring`) and Agents (`dashboard:agents`), and a person can make custom dashboards with n from 1 to 9999 (`dashboard:dash-<n>`, called "Dashboard <n>" until renamed). Home, Metrics and Monitoring start from their own sets of Usage widgets (WS-030); a new custom dashboard starts empty. The old Home widgets (run progress, lanes and results) have left Home until Orchestrator widgets join the board engine after that page's redesign, and there is no Home (current) board (Jared, P1 B). Agents is drawn by the dashboard kind itself, not by the board engine: one card per agent at work, each opening that agent's transcript as a kept tab (Alt+click in a new panel), with the filters All agents, Working, Needs you, Waiting and Finished in its Show menu; it has no widgets and no board record, and resetting it means its filter (lead ruling F7). A dashboard tab sits in the same tab strip as every other tab (F3-631): it has no strip of its own and no second tab model. Inside the tab the board is the Usage widget board: its widget grid, its gestures, gravity and Tidy behave exactly as on the Usage page, each settled change one transaction (Plans/Widget_System.md#WS-019), and they act inside the tab only, never laying out panels (DR-066). The board lays out on the Usage board's tracks and width classes (Plans/Widget_System.md#WS-017), measured on the tab's own width, never the window (F3-635), and it sits on Home's tab surface, not the Usage page's background, in every look (P11). Each board's contents are kept per project (`widget_layout:v1:<project_id>:<board_id>`; the keys, the one-time adoption of an older key and the records are Plans/Widget_System.md#WS-030's and Plans/storage-plan.md's), so a project switch shows each dashboard tab with that project's board and a project lists only its own custom dashboards. A dashboard's widget layout is never stored inside the Home layout record, and Home's panels are not widgets. The header row is F3-635's shared row. Its left side shows the dashboard's name, the Live mark while Live readings are on and the board holds a Usage widget, the widget count ("N widgets", "1 widget" or "No widgets") and the range, with the scope when it is not all usage; its right side shows Add widget, Board and Maximize (Restore while maximized; Shift+Escape). The Live mark is the Usage page's own indicator in each look's words (Live; Retro [LIVE]; NieR Mode LIVE) and pulses once for each live change the board applies, never between them and never under Reduced Motion. On Agents the left side counts the agents at work ("N agents · N working · N need you", and "Showing <filter>" under a filter) and Show takes the place of Add widget and Board. Add widget opens a searchable list ("Find a widget") of every widget the board can be given: a section for each Usage room in the Usage page's room order (F3-514), then the Usage widgets that belong to no room, then one section for each other widget source under its label. Each row's second line names its room or source and what kind of widget it is in plain words; a widget already on the board is checked and disabled with the reason "Already on this dashboard". Choosing one adds it (cmd.widget.add), scrolls to it and moves focus onto it. The Board menu holds, in order: Dashboards (Home, Metrics, Monitoring, Agents, this project's custom dashboards by name with their widget counts, and New dashboard; the current one checked); This dashboard (Range, Scope, Start from, Save as preset..., Tidy, Reset widgets); Live (Live readings); and, on a custom dashboard only, after a hairline, Rename dashboard... and Delete dashboard.... On Agents it holds Dashboards and Show. On an empty board Save as preset... and Tidy are disabled with their reasons ("Add a widget first", "Nothing to tidy yet"). Range (Last 5 hours, Last 24 hours, Last 7 days, Last 30 days) and Scope (All current usage, Work accounts, Personal accounts, or one provider) belong to each dashboard and change only its board, independent of the Usage page's (P2); choosing one is the typed local action ui.widget_board.set_view, view state kept in the board's record with no receipt and no event (lead ruling F1). Live readings is the Usage page's own Live / Paused choice, one switch shared with the Usage page (Plans/usage-feature.md#UF-107). Tidy and Reset widgets are the board's own (WS-019, WS-030): Reset widgets returns Home, Metrics and Monitoring to their default sets and a custom dashboard to empty. Start from lists the sets a board can start from in four groups (P4): This dashboard (the board's own default), Dashboard starter, Usage rooms (the Usage page's 13 room sets, in its room order) and Your presets. Each row's second line says what the set holds, a preset adding the day it was saved, and the active set is checked; a filter field ("Find a room or a preset") appears once there are more than three presets. Choosing a set replaces the board's widgets with it through one cmd.widget.reset_layout naming the set (set_id; WS-030). Because Start from replaces the widgets, an Undo notice then shows at the foot of the tab for 8 s, held while the pointer or focus is on it and for 3 s after; it ends at the next change to the board's widgets, on Escape (focus returns to Board), on a project switch and when the tab closes, and Undo puts the board back as it was and says so. Amended 2026-10-10 (lead ruling): Undo dispatches one cmd.widget.reset_layout with { scope: room, room: <board_id>, restore_revision }, restore_revision being the board's committed layout revision just before that Start from, with one receipt and only while the notice is up; it never carries set_id, the owner puts back exactly that revision's records, a restore is refused without dispatch if any other change was committed on the board since, excluding the preset hold's own settling resizes, and Undo is disabled with its reason, and it emits no workspace.layout_changed (WS-030, UCC-200). The empty board's Start from... button opens the same list. Presets are the person's own, kept across projects and offered on every dashboard (WS-030). Save as preset... asks for a name, starting from the dashboard's name made unique; a name is trimmed, its spaces collapsed and kept to at most 80 characters, and a preset saved without one is called "Preset <n>". With no presets, Your presets holds "Save this dashboard as a preset..."; with some, its last row, "Rename or delete presets", lists them, each with Start from this preset, Rename preset... and Delete preset... behind a confirm (Delete preset or Keep it). A dashboard that started from a deleted preset keeps its widgets. A preset keeps the widgets shown at each board width class with their sizes and settings, never the board's own range and scope. Saving, renaming and deleting a preset are the typed local actions ui.widget_preset.save, ui.widget_preset.rename and ui.widget_preset.delete, with no command; using one is cmd.widget.reset_layout with set_id user:<id> (lead ruling F2). New dashboard, in the Board menu, the "+" menu's Dashboard sub-row (F3-632) and the catalog, makes a custom dashboard (D35); so does a new tab or a split in a panel whose usual kind is the dashboard (Ctrl+T, F3-632). It starts empty and is called "Dashboard <n>". Rename dashboard... asks for a name and renames the tab with cmd.panel_tab.rename; renaming the tab renames the dashboard too, and clearing the tab's label gives back "Dashboard <n>". A name is trimmed and kept to at most 80 characters, and is kept per project with the board (WS-030). The name shows on the tab, in the header row, in the Board menu, in the "+" menu and in the catalog. Delete dashboard... asks first ("Delete <name>?": Delete dashboard, whose widgets cannot be brought back, or Keep it), then closes the tab (cmd.panel_tab.close), drops it from the reopen list and forgets its board and its name; it leaves the "+" menu and the catalog. Home, Metrics, Monitoring and Agents can be reset but never deleted, and show neither Rename dashboard... nor Delete dashboard...; a label the person gives one of their tabs names that tab only (F3-631). A closed custom dashboard keeps its board while it can be reopened from the reopen list and is forgotten when it leaves the list, unless it is open as a tab; the built-in dashboards keep theirs (P6). A saved named layout keeps the boards of the dashboards it holds, at most 64 KB of them per named layout; a larger save keeps the layout without its boards and says so (lead ruling F3; Plans/storage-plan.md#SP-330); applying the layout puts back the boards it kept, and a named layout saved before this applies as before. Amended 2026-10-31 (DL-270): the 64 KB per named layout is a payload budget; board contents larger than the 16 KiB value cap are kept by payload reference (SP-337, SP-340), and SP-330 owns the stored form. A board's first show plays the Usage page's calm reading-order entrance, and none under Reduced Motion (P7). An empty board shows an invitation over the board, which stays laid out beneath it: a small sketch of a board, "<Name> is empty", one line saying what to do, and Add widget and Start from... buttons; a new, empty dashboard puts focus on its Add widget, and otherwise focus goes to the board's first card in reading order. Details on a widget opens the Usage page at that widget's room with its inspector open (P8). Live readings apply to dashboards too, each board separately, with the Usage page's idle rule (F3-628, UF-107): nothing animates at idle except one live change per applied batch while Live is on, and a board that is not on screen does no live work (P12). This supersedes F3-279's exact four-widget catalogue and the dashboard catalogue limit of Appendix C.4 and C.4.1, F3-517's "distinct tab models" for Home and Dashboard and its Dashboard-frozen resize peers (with F3-515's and F3-518's), section 7.2's singleton dashboard, and the dashboard's own Main, Metrics and Monitoring strip of F3-505. Measurements: the Agents tab body pads its cards 12, 12 and 16 px, or 8, 8 and 12 px below 420 px of width; Agents cards sit in tracks at least 240 px wide, one column below 420 px; the header row is icon-only below 520 px and hidden below 150 px (F3-635). The Board menu is 320 px wide, Start from 340 px and Add widget 380 px. The Live mark is a 7 px dot with a 1.5 px ring, 6 px from its word set at weight 550, in the ok colour (Friendly's lavender #6F55A8, #D2C4EE in dark, DL-214; Glass with a 6 px glow); Retro shows [LIVE] and a 6 x 11 px block and NieR Mode LIVE and a 6 px ink diamond, both in the code face; its pulse is a 240 ms two-step blink in Retro and NieR Mode and, in the other looks, a 600 ms ring that grows from 0.6 to 2.2 times and fades. The Undo notice sits 16 px above the tab's foot (10 px below 420 px of width), centred, with 12.5/18 px text and a 28 px Undo button with a 14 % accent fill (outlined in Retro and NieR Mode); it enters in 220 ms, rising 8 px, and leaves in 160 ms, with no motion under Reduced Motion. The empty board's invitation has 24, 20 and 32 px of padding; its sketch of three 44 px tracks by 30 px rows hides below 320 px of height and its line below 220 px; its title is 15/21 px and its line 12.5/18 px, at most 360 px wide; its buttons sit 18 px below, 8 px apart; its tiles enter 40 ms apart over 320 ms and its words and buttons follow from 160 ms, 50 ms apart, with no motion under Reduced Motion. The Agents clock ticks every 1 s while shown; a filter other than All agents is that tab's own state, saved about 250 ms after it changes. The Dashboard plus sub-row keeps the four built-ins and New dashboard inline; Your dashboards opens this project's custom dashboards by name with their widget counts and search above 7 (F3-632). A custom board's number is one more than the largest across open tabs, the reopen list, this project's stores, unadopted unscoped board stores, names and live boards; past 9999, opening falls back to Home. An unknown board opens Home; dashboard:new creates one and dashboard:current resolves to dashboard:home. Custom names collapse whitespace before trimming, at most 80 characters; a clash with a built-in or another of this project's dashboards gains 2, 3 and so on, and an empty or default Dashboard <n> name clears the stored name. Preset names use the same uniqueness rule among presets. The current dashboard in Board and the active set in Start from are checked and focused. Board shows Empty for a zero-widget custom board's detail; Start from shows the active set's label, Save as preset... says Reuse these widgets anywhere, and Reset widgets says Back to its default widgets or Back to an empty dashboard. Add widget labels the Usage widgets without a room More widgets. An Undo notice follows a Reset widgets that changed anything as well as Start from; its restore_revision is the committed revision immediately before that operation. The owner writes and reads that revision's captured envelope in this project, with one receipt and no workspace.layout_changed, and restore_revision never accompanies set_id. Undo's availability is checked on a commit that leaves the notice up, on pointer or focus entering it and on its click; if stale, the envelope is invalid or the board is gone, nothing dispatches, Undo is aria-disabled at 50 % opacity, and the notice text and button's hover detail give the reason. Preset-hold resizes settle the set and never end the notice or make its revision stale. The notice is at most the body width minus 24 px, with padding 5, 5, 5 and 14 px and a 14 px gap; its text ellipsizes, Retro and NieR's Undo reverses on hover, and Glass uses a 30 px blur at saturation 1.5. NieR's Live word is 11.5 px in the code face with 0.08 em spacing. The empty board stays laid out but is visually hidden under its invitation; its three-track sketch has 6 px gaps and sits 20 px above the title, whose weight is 620. A board card focused by an API move or resize returns focus to a menu, prompt, header or Undo notice that held it, unless the person pressed or pointed on a board, pressed Tab or F6, or the kind deliberately focused it within 600 ms. A project switch rebinds every mounted board whose tab the new layout keeps, hidden ones included, reloads custom names and refreshes the catalog; an unmounted tab writes to its prior project. A named layout restores only envelopes saved for the current project, skipping another project's envelope; a custom board that the applied layout does not hold keeps its current contents. Amended 2026-10-16 (DL-214; Jared's 2026-10-15 panel item 1): the Home board opens as the pinned 36 px Home tab from every path, the "+" menu, the Board menu and a page's subtab, never as a second, unpinned tab at natural width. D7, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): The Home Agents board uses DR-078’s shared owner-backed row/filter/summary renderer over the same work and needs-you identities as the platform panel and Agents rail. Its existing frame, All/Working/Needs you/Waiting/Finished filter and short time form stay with this owner; no private AGENTS list or clock owns different agents. DR-078 defines subscription teardown and show-time catch-up. Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement. No project has its own SP-349 Home layout and boards, shared across that Server’s app chats rather than one fresh bucket per thread. Selecting or converting into a Project loads that Project’s saved UI state or its fresh defaults; do not import app boards into it. Saved named layouts remain per person; saved board snapshots apply only to the exact saved scope/Server/Project identity and are skipped elsewhere, including null-board snapshots. Keep the 64 KB board-payload cap, 16 KiB redb cap, one Assistant node, existing geometry and view-state/event distinctions. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: Defines how a dashboard looks and behaves as a tab kind in any panel.
 split_recommended: false
@@ -46725,8 +46532,8 @@ acceptance_criteria:
   - "A board's first show plays the reading-order entrance (none under Reduced Motion); Details opens the Usage page's inspector for that widget; a board that is not on screen does no live work, and nothing animates at idle except one live change per applied batch while Live is on."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
+- "scripts/pm-shard-plans.py"
+- "scripts/pm-plan-index.py"
 risk_class: home_panels_terminal_redesign_drift
 reasoning_tier: high
 context_scope: home_panels_terminal
@@ -46774,6 +46581,7 @@ source_lineage:
   (landed main c0305227f7; Jared approved lavender 2026-10-15; source lineage)
 - /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
   /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
+- "DL-260 source lineage only (no product API or implementation obligation): dashboard:agents used PM7_WORK_UI.list/agentGroup/agentSummary over PM_WORK; these were concept adapters, not product API requirements."
 preserved_exact_tokens:
   - "dashboard:home"
   - "dashboard:dash-<n>"
@@ -49409,23 +49217,18 @@ canonical_text: >-
   drawing. The fixed app-level tray set follows A1’s app-icon logic rather than a Project’s changing look:
   macOS template ink, Windows Basic Dark colour; seven status faces and A3 precedence remain. The exported
   manifest under the title lane icons directory is source/export evidence, not certification of a signed
-  native bundle. Source APIs are PMLogo.mark/svg/dataUrl/favicon/tierFor/period/kit/TRAY/trayFace and the
-  static pm7-brand-mark block, pm-brand-mark/pm-brand-word and app-name data-mode full|mark; the title mark
-  remains non-interactive.
+  native bundle. The shared brand owner supplies static and live marks and density variants; the title mark remains non-interactive.
   A1/W1-40, PM7 Step4 audit: lock the Basic Dark release-asset EXPORT palette used when no live page is
   painted: bg #121212, ctl #E8E8E8, pin #9E9E9E, str #7A8290, head #64B5F6, tile #2D2D2D, edge
   rgba(255,255,255,.08). These fixed file-export values are distinct from live token-role mixing;
   app/tray/favicon exports use this one palette rather than resampling per surface.
   A4 A, PM7 Step4 review fix: F3-460 owns Friendly's decorative 24 px notification Pip tile and its existing
-  status-key mood mapping, with the kind glyph beside the title. It consumes PMLogo.mark/moodFor/onLook,
-  never a second renderer or a new binding. OS notification branding remains a native integration requirement;
+  status-key mood mapping, with the kind glyph beside the title. It consumes the shared brand renderer and status/mood projection, never a second renderer or a new binding. OS notification branding remains a native integration requirement;
   the concept tile does not certify OS delivery or a native notification bundle.
   A5/PC2, PM7 companion review fix1, 2026-10-30 (Astra A6/Muse1): surface_status_faces.agents describes chat
   agent rows. Working uses the public working mood, rendered as the distinct three-dot dots face by the
-  shared kit; think remains the intentional chat reviewing/recovering face. Platform rows consume
-  PMLogo.STATUS_FACE: working/reviewing/recovering use working/dots, mixed uses oops and skipped idle. These
-  are decorative surface differences over unchanged typed status keys. X3 B remains mandatory: the uncalled
-  eyes:false plain-band kit capability is legacy/gallery-only and no product caller may use it.
+  shared kit; think remains the intentional chat reviewing/recovering face. Platform rows consume the shared status-face mapping: working/reviewing/recovering use working/dots, mixed uses oops and skipped idle. These
+  are decorative surface differences over unchanged typed status keys. X3 B remains mandatory: the plain-band drawing without eyes is legacy/gallery-only and no product caller may use it.
   A1/A3/L4, PM7 companion review fix1, 2026-10-30 (Astra A1, title re-export): manifest.json in the title
   lane icons bundle is SHA-256 2261d7719089a80b40c144dc6733d55850eb9b88c1418362102c43a0fd9f9500, re-hashed
   for all 141 files. Its two animated Working SVGs are byte-equal to the final kit at ff9476a5c8: micro
@@ -49450,9 +49253,9 @@ acceptance_criteria:
   still under Reduced Motion/NieR.
 - Full A5 defaults and surface-specific overrides preserve all 22 typed keys and complete A3 tray precedence.
 validation_surfaces:
-- python3 scripts/pm-shard-plans.py --check
-- python3 scripts/pm-plan-index.py validate
-- python3 scripts/pm-plans-verify.py run-gates
+- "scripts/pm-shard-plans.py"
+- "scripts/pm-plan-index.py"
+- "scripts/pm-plans-verify.py"
 risk_class: owner_drift
 reasoning_tier: high
 context_scope: pm7_build_20261029
@@ -49468,6 +49271,7 @@ source_lineage:
 - Concepts/onboarding/opus-5.5-pip/README.md
 - Concepts/chat-assistant-concepts/opus-5.5-pip/README.md
 - "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
+- "DL-260 source lineage only (no product API or implementation obligation): PMLogo.mark/svg/dataUrl/favicon/tierFor/period/kit/TRAY/trayFace/moodFor/onLook/STATUS_FACE, eyes:false, pm7-brand-mark, pm-brand-mark/pm-brand-word and app-name data-mode full|mark were concept API/markup spellings. The accepted Pip geometry, palette, status mappings and native export provenance remain product requirements."
 preserved_exact_tokens:
 - '#121212'
 - '#E8E8E8'
@@ -49495,7 +49299,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: |-
-  B1–B7; DL-236. A Tab is the only product project-box design: 28 px tab height, shared type/resting ink, PMG folder, drawn chevron, hairline between the box and page tabs. Name truncates; density folds to folder. For a Project the visible label remains its bare name; the fixed app entry is No project. The visible Project label remains the bare Project name; path/branch and full name are in the hover tag and two-line menu rows with monogram, shared status mark and state words. Chosen row and its tile use Basic tinted chip, Friendly mint plate, Glass clear lens, Retro reverse video, NieR ink bar. Opening the menu may show the box’s chosen chip beside the selected page’s chip (F3-652 exception B4). One row renderer serves onboarding-created and existing Projects. Projects view stays primary; this secondary menu opens with ui.project_switcher.open and Ctrl+Shift+P. Pick dispatches cmd.project.switch_active_tab(project_id); Ctrl/Cmd+Enter dispatches cmd.project.open_in_new_workspace_tab(project_id); All projects navigates to Projects. Menu closure restores focus. Badge reads the shared work and dirty-buffer owners: waiting > blocked > working > change-modified > idle, preserving other states in the accessible description. Never conflate blocked and needs-you. A native layout observer resynchronizes the lens and tab ink after layout and before paint, honoring resize-drag pause/defer rules, without lazySync’s 140 ms delay or synthetic resize. Zero painted frames show a displaced chip at ~1390 px or full width, including long-name picks and folds. NieR’s cover reveals an already-correct chip; its input guard ends with the cover (B7), with any other failure documented. Shared hover engine and --pm-switch-* materials own hover/selection; Retro/NieR chevron steps, Reduced Motion is instant. Live status comes only from its current owner projection. B2 visible menu heading is Projects, with Ctrl Shift P shown. Page-tab height remains 28 px inside the 40 px title bar (46 px Glass); the heading does not replace the bare Project label. B5, PM7 Step4, 2026-10-30: Unsaved changes means a Home tab has dirty/unsaved buffers in the active Project or the actual app workspace for No project. Home autosaves layout; a layout change alone never raises this badge. PMW.unsaved/PMW.noteUnsaved and pm7.home.unsaved provide the concept’s buffer-owner observation to PM_WORK.project; waiting > blocked > working > change-modified > idle remains the priority. The accessible words are Unsaved changes, never Unsaved layout. The joined code exposes PM_PROJECT_BOX row/add/select/state/states/refresh/open/close/log and PM_TB_DENSITY apply/schedule; these adapters keep the declared cmd.project.* and ui.project_switcher.* identities. PM_LG.syncScope synchronizes the selected lens before paint. pm7.project.command and pm7.project.ui_action are concept dispatch logs, not new persisted product events. The No project row uses the same switch/open-new-tab primaries with target_kind=no_project and null Project; the app workspace/tab ID is real, never a scratch Project. Keep all chip/cover/frame/focus rules and current owner status precedence; disclose the work Computer on phone/web and in the chat Where line.
+  B1–B7; DL-236. A Tab is the only product project-box design: 28 px tab height, shared type/resting ink, PMG folder, drawn chevron, hairline between the box and page tabs. Name truncates; density folds to folder. For a Project the visible label remains its bare name; the fixed app entry is No project. The visible Project label remains the bare Project name; path/branch and full name are in the hover tag and two-line menu rows with monogram, shared status mark and state words. Chosen row and its tile use Basic tinted chip, Friendly mint plate, Glass clear lens, Retro reverse video, NieR ink bar. Opening the menu may show the box’s chosen chip beside the selected page’s chip (F3-652 exception B4). One row renderer serves onboarding-created and existing Projects. Projects view stays primary; this secondary menu opens with ui.project_switcher.open and Ctrl+Shift+P. Pick dispatches cmd.project.switch_active_tab(project_id); Ctrl/Cmd+Enter dispatches cmd.project.open_in_new_workspace_tab(project_id); All projects navigates to Projects. Menu closure restores focus. Badge reads the shared work and dirty-buffer owners: waiting > blocked > working > change-modified > idle, preserving other states in the accessible description. Never conflate blocked and needs-you. A native layout observer resynchronizes the lens and tab ink after layout and before paint, honoring resize-drag pause/defer rules, without a delayed or synthetic resize. Zero painted frames show a displaced chip at ~1390 px or full width, including long-name picks and folds. NieR’s cover reveals an already-correct chip; its input guard ends with the cover (B7), with any other failure documented. Shared hover engine and --pm-switch-* materials own hover/selection; Retro/NieR chevron steps, Reduced Motion is instant. Live status comes only from its current owner projection. B2 visible menu heading is Projects, with Ctrl Shift P shown. Page-tab height remains 28 px inside the 40 px title bar (46 px Glass); the heading does not replace the bare Project label. B5, PM7 Step4, 2026-10-30: Unsaved changes means a Home tab has dirty/unsaved buffers in the active Project or the actual app workspace for No project. Home autosaves layout; a layout change alone never raises this badge. The shared dirty-buffer owner supplies the work projection; waiting > blocked > working > change-modified > idle remains the priority. The accessible words are Unsaved changes, never Unsaved layout. One shared Project-row renderer and title-bar density owner preserve the declared cmd.project.* and ui.project_switcher.* identities and synchronize the selected lens before paint. Presentation observations create no new persisted product events. The No project row uses the same switch/open-new-tab primaries with target_kind=no_project and null Project; the app workspace/tab ID is real, never a scratch Project. Keep all chip/cover/frame/focus rules and current owner status precedence; disclose the work Computer on phone/web and in the chat Where line.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -49515,10 +49319,9 @@ acceptance_criteria:
 - NieR reveals a correctly placed chip and its input guard ends with the cover; no synthetic resize or 140
   ms deferred lens route.
 validation_surfaces:
-- python3 scripts/pm-shard-plans.py --check
-- python3 scripts/pm-plan-index.py validate
-- 60 fps GPU recordings at 860/1024/1280/~1390/1920 px, all ten looks and Reduced Motion; count exposed wrong-chip
-  frames
+- "scripts/pm-shard-plans.py"
+- "scripts/pm-plan-index.py"
+- "future 60 fps GPU recordings at 860/1024/1280/~1390/1920 px, all ten looks and Reduced Motion; count exposed wrong-chip frames"
 risk_class: owner_drift
 reasoning_tier: high
 context_scope: pm7_build_20261029
@@ -49534,6 +49337,7 @@ source_lineage:
 - Concepts/project-picker-concepts/opus-5.5/README.md
 - /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
   /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F11,E-F02
+- "DL-260 source lineage only (no product API or implementation obligation): PMW.unsaved/PMW.noteUnsaved, pm7.home.unsaved, PM_WORK.project, PM_PROJECT_BOX, PM_TB_DENSITY, PM_LG.syncScope, lazySync and pm7.project.command/ui_action were concept implementation and dispatch-log names."
 preserved_exact_tokens:
 - cmd.project.switch_active_tab
 - cmd.project.open_in_new_workspace_tab
@@ -49558,7 +49362,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: |-
-  X2, RM1, L1–L8; DL-237. One loader owner serves every indeterminate wait: pages, panels, splash, buttons, sign-ins/checks, chat thinking, project refresh, Planning Wizard reads, Orchestrator waits, Compacting, answer preparation/submission, Usage refresh, browser navigation, onboarding and Settings managers. Busy-tab content waiting opts in; item/tab state remains status vocabulary, with Q11’s working-agent row-loader exception. Preserve skeletons where layout is known (F3-172) and measured determinate bars; terminal program output and decoration are not application loaders. No reduced-motion 30 percent stub may imply measured progress. The one opt-in/class contract sizes from em/baseline. Think represents chat thinking, Swing is the default, Hop is a short wait ending successfully. Friendly springs at 1.8 s, Glass glides 2.6 s, Basic eases 1.7 s, Retro samples eight frames/1.2 s, scaled by Animation speed on one shared clock. String endpoints remain connected. Pause offscreen, hidden, idle and during body.pm-resizing; defer idle work until PM_DRAGEND. No motion below 12 px. Reduced Motion keeps only control opacity breath and blink as wait-feedback exception, never travel; needs-you remains louder. NieR always routes to Diamond loaders or its existing disabled-part fallback, never animated Pip. Loader and Orbit hand off: one visible Pip per reply, with no duplicate or empty frame. Drawing is decorative aria-hidden; the host has aria-busy or role=status and a meaningful accessible wait label, announced once rather than by every Pip. No loader preference or switch. The first-paint owner reads the exact app or Project resolved look without another theme copy. All 35 inventoried sites and the missing Settings/tab busy states consume this owner; the loader rollout report records each site. L8 B (Jared 2026-10-30): this build removes menu-sprout duplication. DR-079 is the one sprout owner for every menu; chat menus.js, Usage PMU.menu and Home PMW.menu delegate to it with no private animation implementation. L1 reference sizes, amended by accepted review L-2 (PM7 Step4, 2026-10-30): splash 128 px, Working row 18 px, chat thinking placeholder 16 px, busy button 14 px, content-wait tab 14 px and panel 40 px. Busy buttons retain their existing height and baseline; the former 16 px button/18 px thinking defaults are superseded. The shared em/baseline contract fits each host; the <12 px still gate and item-state st-working distinction continue to apply. L4/L5 and review L-1, PM7 Step4, 2026-10-30: every tier, including 12–18 px micro loaders, uses Swing ×1, Think ×1.15 and Hop ×0.78 of its family base period; there is no micro-tier ×0.85 exception. Pixel frame delays are exact fractions of the resulting period, with no blank frame. The joined owner is PM_PIP_LOADER (html/mount/busy/refresh/motion/hold/held/clock/stats), backed by PMLogo.period and PMLogo.clock; opt-in data-pip-loader, data-pip-px and pml-ld, with owner-written data-pml-run/data-pml-redraw/--pml-k. Home uses PMW.loader/frames.button{busy}, Settings PM51.btn/bound.action{busy}/waitOn/waiting, chat its kept wait slots and Terminal pmt-card-ld. The terminal’s one running command card and transcript Working head are wait hosts; terminal gutter/item-state marks remain shared status glyphs. Host aria-busy/status and one-Pip thinking/Orbit handoff still apply. L4/W5-14, PM7 Step4 audit: PMLogo.MOTION is the sole family motion token row (dur, amp, wave and label), read by PMLogo.period/clock and the shared loader; it is not a per-view timing table. Think/Hop multipliers use the kit’s two-decimal period rounding at every tier. Q11 B, Jared 2026-10-30: only live Work rows animate, capped to rows on screen. Working, checking and retrying agents use the shared Think loader; running process marks move on the shared document clock. Waiting, waiting-dep, blocked, finished/done, stopped and scheduled rows stay still. Offscreen rows, drags, hidden tabs and effective Reduced Motion hold recognizable rest poses. The panel, Agents rail and Home board consume the same row renderer and eligibility policy. Lead clarification 1030183348-18bd permits no NieR exemption: a working NieR agent uses its existing Diamond loader owner and L7 part/fallback rules, never animated Pip; running NieR process marks move in their existing material language. The 2200 ms category-head breath remains distinct and below needs-you priority. No polling loop, command, event, setting, state or extra loader owner is added. SSYS-002/059 and F3-670 supply the single effective result for Default → Everywhere → Computer (Device for screen rows) → Project → existing owner/chat/run/tab levels, with Managed constraints and the declared more-careful/Computer-ceiling exceptions. App contexts omit Project. Own values remain sparse; detached copied own values do not follow their source Project.
+  X2, RM1, L1–L8; DL-237. One loader owner serves every indeterminate wait: pages, panels, splash, buttons, sign-ins/checks, chat thinking, project refresh, Planning Wizard reads, Orchestrator waits, Compacting, answer preparation/submission, Usage refresh, browser navigation, onboarding and Settings managers. Busy-tab content waiting opts in; item/tab state remains status vocabulary, with Q11’s working-agent row-loader exception. Preserve skeletons where layout is known (F3-172) and measured determinate bars; terminal program output and decoration are not application loaders. No reduced-motion 30 percent stub may imply measured progress. The one shared loader sizes from the host’s text metrics and baseline. Think represents chat thinking, Swing is the default, Hop is a short wait ending successfully. Friendly springs at 1.8 s, Glass glides 2.6 s, Basic eases 1.7 s, Retro samples eight frames/1.2 s, scaled by Animation speed on one shared clock. String endpoints remain connected. Pause offscreen, hidden, idle and during a drag or resize; defer idle work until the shared drag gate clears. No motion below 12 px. Reduced Motion keeps only control opacity breath and blink as wait-feedback exception, never travel; needs-you remains louder. NieR always routes to Diamond loaders or its existing disabled-part fallback, never animated Pip. Loader and Orbit hand off: one visible Pip per reply, with no duplicate or empty frame. Drawing is decorative aria-hidden; the host has aria-busy or role=status and a meaningful accessible wait label, announced once rather than by every Pip. No loader preference or switch. The first-paint owner reads the exact app or Project resolved look without another theme copy. All 35 inventoried sites and the missing Settings/tab busy states consume this owner; the loader rollout report records each site. L8 B (Jared 2026-10-30): this build removes menu-sprout duplication. DR-079 is the one sprout owner for every menu; chat, Usage and Home menus delegate to it with no private animation implementation. L1 reference sizes, amended by accepted review L-2 (PM7 Step4, 2026-10-30): splash 128 px, Working row 18 px, chat thinking placeholder 16 px, busy button 14 px, content-wait tab 14 px and panel 40 px. Busy buttons retain their existing height and baseline; the former 16 px button/18 px thinking defaults are superseded. The shared em/baseline contract fits each host; the <12 px still gate and item-state working distinction continue to apply. L4/L5 and review L-1, PM7 Step4, 2026-10-30: every tier, including 12–18 px micro loaders, uses Swing ×1, Think ×1.15 and Hop ×0.78 of its family base period; there is no micro-tier ×0.85 exception. Pixel frame delays are exact fractions of the resulting period, with no blank frame. One shared loader lifecycle and clock serves Home, Settings busy controls, chat wait slots and Terminal wait hosts; no surface supplies a private renderer, timing table or lifecycle. The terminal’s one running command card and transcript Working head are wait hosts; terminal gutter/item-state marks remain shared status glyphs. Host aria-busy/status and one-Pip thinking/Orbit handoff still apply. L4/W5-14, PM7 Step4 audit: The shared family motion tokens supply duration, amplitude, wave and label to the one loader clock; it is not a per-view timing table. Think/Hop multipliers use the kit’s two-decimal period rounding at every tier. Q11 B, Jared 2026-10-30: only live Work rows animate, capped to rows on screen. Working, checking and retrying agents use the shared Think loader; running process marks move on the shared document clock. Waiting, waiting-dep, blocked, finished/done, stopped and scheduled rows stay still. Offscreen rows, drags, hidden tabs and effective Reduced Motion hold recognizable rest poses. The panel, Agents rail and Home board consume the same row renderer and eligibility policy. Lead clarification 1030183348-18bd permits no NieR exemption: a working NieR agent uses its existing Diamond loader owner and L7 part/fallback rules, never animated Pip; running NieR process marks move in their existing material language. The 2200 ms category-head breath remains distinct and below needs-you priority. No polling loop, command, event, setting, state or extra loader owner is added. SSYS-002/059 and F3-670 supply the single effective result for Default → Everywhere → Computer (Device for screen rows) → Project → existing owner/chat/run/tab levels, with Managed constraints and the declared more-careful/Computer-ceiling exceptions. App contexts omit Project. Own values remain sparse; detached copied own values do not follow their source Project.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -49578,10 +49382,10 @@ acceptance_criteria:
   - "Q11: working/checking/retrying rows animate in all ten looks; waiting/dependency/blocked/finished/stopped/scheduled rows stay still; offscreen, drag, hidden-tab and Reduced Motion gates hold."
   - "Q11: the working-agent loader uses the one Think owner, with NieR Diamond/fallback rather than animated Pip; process marks reuse their own status rhythm/clock."
 validation_surfaces:
-- python3 scripts/pm-shard-plans.py --check
-- python3 scripts/pm-plan-index.py validate
-- python3 scripts/pm7-build-check.py
-- python3 scripts/pm-plans-verify.py run-gates
+- "scripts/pm-shard-plans.py"
+- "scripts/pm-plan-index.py"
+- "scripts/pm7-build-check.py"
+- "scripts/pm-plans-verify.py"
 risk_class: owner_drift
 reasoning_tier: high
 context_scope: pm7_build_20261029
@@ -49598,6 +49402,8 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)
 - /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
   /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F04,A-F08,A-F09,C-F11,B-F13
+- "DL-260 source lineage only (no product API or implementation obligation): menus.js, PMU.menu and PMW.menu were the concept menu adapters."
+- "DL-260 source lineage only (no product API or implementation obligation): PM_PIP_LOADER, PMLogo.MOTION/period/clock, PMW.loader, PM51.btn, frames.button/bound.action busy adapters, waitOn/waiting, data-pip-loader/data-pip-px/data-pml-run/data-pml-redraw, pml-ld, --pml-k, pmt-card-ld, st-working, body.pm-resizing and PM_DRAGEND were concept implementation spellings."
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -49812,7 +49618,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: |-
-  D1–D14, G4/G8–G10, X1; DL-240–DL-255. The two status-bar controls open one platform-wide projection at Agents or Processes; Resources is its third tab, not a CPU/RAM bar indicator. Every Assistant thread, Orchestrator, Planning Wizard, PRD Builder, Scout, agent/subagent, process and scheduled run is in scope, with explicit Project/server/environment identity. Questions leads Agents, each question/agent listed once and counted in its owning surface group; Needs input leads Processes, running processes grouped under their starting agent, then Scheduled, Finished this session and collapsed read-only System services linking System status. Agent processes links select that owner’s process filter. Shared F3-477 ordering/row anatomy/freshness match the Agents deep rail and Home board; stale is one explicit strip, never healthy zeros. Subagents remain in their own chat domain and appear here as process owners, not duplicate process work. Resources replaces the old Task manager layout: sortable CPU/memory/ports table and inspector grouped by server/environment for the current Project plus shared computer/services (Q12), never one assumed machine. SIR-054 defines subordinate ProcessFacts and per-server samples. Sample only while Resources is open and visible, stop on close/hidden; unknown/stale is labelled. Agents/Processes/Resources are tabs only: no Side by side, no Home panel tab (deferred), no panel keyboard-shortcut/OS badge rollout in this build. Desktop Pop out moves the same view/state into one window; no second runtime, and unsupported clients show their reason. Floating panel, quit dialog and exit animations use DR-067’s overlay owner and near-opaque Glass menu plate. Stop per item and Stop all (thread/platform target list) use cmd.work.stop and D8 process-group semantics; restart/input/completion routing use UCC-210. Questions and process input remain separate counts over one needs-you set. G6 Clear finished is offered only on Processes and hides this view’s finished process/scheduled rows, never agents or owner records. Lost follows reconciliation, warning; Stopping uses pending until observed exit, Stopped skipped, Scheduled pending, Done complete, Failed failed with exit N. Live category glyphs robot/processes use the shared 2200 ms beat below needs-you, Reduced Motion lit/still; Q11 live rows animate under visibility/clock gates; individual agents use the shared loader. Design narrow and NieR readouts without hiding meaning; accessibility retains full words even in Numbers. G4/G8/D14 Resources tab head reuses gauge (no third new category glyph). While selected, visible and receiving current live samples, it shares the subtle 2200 ms category breath below needs-you; its internal drawing remains still. No active subscription, stale/unavailable data, hidden/offscreen/drag state or Reduced Motion uses a travelling loop; retain the lit recognizable rest pose and full freshness words. Resource rows remain still. Opening/closing visibility starts/stops only this tab’s host sampling subscription. D5/D6 repeat activation: clicking the status item whose tab is already open closes the panel through ui.work_panel.close and returns focus to that status item. Clicking the other item selects its tab in the same panel without a close/reopen; first activation opens its own tab. Keyboard activation is identical. Popped-out routing follows the same one-view identity and returns focus on close. D6: the popped-out desktop panel is one draggable, user-sized window preserving Project/tab/filter selection; it is a view of the same projection, not another runtime. Closing restores focus to its originating status item. D11/G4, PM7 Step4, 2026-10-30: System status is a small read-only overlay popover, reached from the existing status-bar System status item and the Processes System services link. ui.system_status.open and ui.system_status.close are typed local visibility actions, with statusbar.system_status, work.open_system_status and system_status.close binding families. Service owner links use the existing ui.settings.route.open action and system_status.service.open_settings binding, selecting code.editing.lsp-server-catalog for language servers, system.mcp.server-list for MCP servers or web.index.enable for the search index. They open Settings and reveal the owner row without writing a value or controlling a service. The popover has close/Escape/outside closure, return focus and the common overlay/Glass plate; unavailable owner navigation says why. The joined concept owner is PM7_WORK_UI in src/js/48-work.js: open/close/toggle/tab/isOpen, detail/tail/patchTicks, confirmThread/confirmPlatform, quit and paintBar; #pm7-work owns the three tabs and #pm7-work-dialog the reviewed Stop/Quit list. PM_WORK remains the only projection. Concept view IDs platform and thread:<id> map to the invoking view, not a new persistence key. Counts.finished/failed describe the Processes list, while finishedAgents belongs to Agents. Environment headings count all displayed state groups. Resource samples re-sort under the selected column, deferring row movement while the pointer/focus is in the table. These concept APIs/fixtures do not certify native handlers or windows. G4/D7/D9, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): Resources has Time after State; [data-work-time] uses the shared clock and the Time sort compares startedAt with stable title ties. Sample immediately on subscription and every 2 s only while open/visible; unknown/stale remains explicit. Narrow Resources keeps the omitted Time/Port/Started by facts reachable in the inspector and accessible description. PM7_WORK_UI.list/agentGroup/agentSummary supply the rail and Home Agents consumers per DR-078. Panel drags use body.pm-resizing and release/pointercancel notifies PM_DRAGEND so shared motion resumes once. Per-kind completion defaults stay DL-248’s agent for scripts/tests/builds and user for server/db/watcher; Quiet remains an explicit choice. D7/D8/D13, PM7 companion review fix1, 2026-10-30 (Astra A2/A3): work.open_owner is ui.work_panel.select with an owner-row value, owner_id, destination agents|subagents, invoking view and focus; Subagents also binds its exact thread_id. It never opens a transcript. Actual Open thread uses cmd.chat.open_thread for the item’s bound Assistant thread; actual Open surface is ui.work_panel.open_surface, a local navigation request to the resolved owner surface with work identity and focus, unavailable if that owner cannot be reached. Copy command is ui.work_panel.copy_command, a local clipboard request over the selected current command; clipboard refusal cannot report success. Open port reuses cmd.browser.open_workspace_preview with a server/environment-authoritative URL and CV-360 placement, never an assumed client localhost. A scheduled-row Cancel reuses cmd.chat.schedule_message.cancel with the exact schedule identity/revision and owner gates; it is not PID Stop and never enters WorkTarget. Rerun reuses cmd.terminal.rerun for a new invocation through the terminal owner, with an explicit new-session request when needed; Restart keeps cmd.work.restart for restartable live server/db/watcher work. Concept W.restart/W.stop adapters do not replace those native owner routes. Q11 B, Jared 2026-10-30: only live Work rows animate, capped to rows on screen. Working, checking and retrying agents use the shared Think loader; running process marks move on the shared document clock. Waiting, waiting-dep, blocked, finished/done, stopped and scheduled rows stay still. Offscreen rows, drags, hidden tabs and effective Reduced Motion hold recognizable rest poses. The panel, Agents rail and Home board consume the same row renderer and eligibility policy. Lead clarification 1030183348-18bd permits no NieR exemption: a working NieR agent uses its existing Diamond loader owner and L7 part/fallback rules, never animated Pip; running NieR process marks move in their existing material language. The 2200 ms category-head breath remains distinct and below needs-you priority. No polling loop, command, event, setting, state or extra loader owner is added. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope creates no Stop/Restart/Stop all or service-control authority. Q14/H9: Glass’s Activity bar and composer dock lines join Activity Detail, panel, System status, Stop/Quit list, History and hover/attachment cards on the persona/model menu’s near-opaque plate. The needs line keeps its warm wash over that plate. Settings dialogs and drawers flatten that same menu tint over the look’s ground so background labels cannot read through; ordinary panes keep their existing material. This is consumer treatment, no global Glass token change or extra backdrop-filter. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
+  D1–D14, G4/G8–G10, X1; DL-240–DL-255. The two status-bar controls open one platform-wide projection at Agents or Processes; Resources is its third tab, not a CPU/RAM bar indicator. Every Assistant thread, Orchestrator, Planning Wizard, PRD Builder, Scout, agent/subagent, process and scheduled run is in scope, with explicit Project/server/environment identity. Questions leads Agents, each question/agent listed once and counted in its owning surface group; Needs input leads Processes, running processes grouped under their starting agent, then Scheduled, Finished this session and collapsed read-only System services linking System status. Agent processes links select that owner’s process filter. Shared F3-477 ordering/row anatomy/freshness match the Agents deep rail and Home board; stale is one explicit strip, never healthy zeros. Subagents remain in their own chat domain and appear here as process owners, not duplicate process work. Resources replaces the old Task manager layout: sortable CPU/memory/ports table and inspector grouped by server/environment for the current Project plus shared computer/services (Q12), never one assumed machine. SIR-054 defines subordinate ProcessFacts and per-server samples. Sample only while Resources is open and visible, stop on close/hidden; unknown/stale is labelled. Agents/Processes/Resources are tabs only: no Side by side, no Home panel tab (deferred), no panel keyboard-shortcut/OS badge rollout in this build. Desktop Pop out moves the same view/state into one window; no second runtime, and unsupported clients show their reason. Floating panel, quit dialog and exit animations use DR-067’s overlay owner and near-opaque Glass menu plate. Stop per item and Stop all (thread/platform target list) use cmd.work.stop and D8 process-group semantics; restart/input/completion routing use UCC-210. Questions and process input remain separate counts over one needs-you set. G6 Clear finished is offered only on Processes and hides this view’s finished process/scheduled rows, never agents or owner records. Lost follows reconciliation, warning; Stopping uses pending until observed exit, Stopped skipped, Scheduled pending, Done complete, Failed failed with exit N. Live category glyphs robot/processes use the shared 2200 ms beat below needs-you, Reduced Motion lit/still; Q11 live rows animate under visibility/clock gates; individual agents use the shared loader. Design narrow and NieR readouts without hiding meaning; accessibility retains full words even in Numbers. G4/G8/D14 Resources tab head reuses gauge (no third new category glyph). While selected, visible and receiving current live samples, it shares the subtle 2200 ms category breath below needs-you; its internal drawing remains still. No active subscription, stale/unavailable data, hidden/offscreen/drag state or Reduced Motion uses a travelling loop; retain the lit recognizable rest pose and full freshness words. Resource rows remain still. Opening/closing visibility starts/stops only this tab’s host sampling subscription. D5/D6 repeat activation: clicking the status item whose tab is already open closes the panel through ui.work_panel.close and returns focus to that status item. Clicking the other item selects its tab in the same panel without a close/reopen; first activation opens its own tab. Keyboard activation is identical. Popped-out routing follows the same one-view identity and returns focus on close. D6: the popped-out desktop panel is one draggable, user-sized window preserving Project/tab/filter selection; it is a view of the same projection, not another runtime. Closing restores focus to its originating status item. D11/G4, PM7 Step4, 2026-10-30: System status is a small read-only overlay popover, reached from the existing status-bar System status item and the Processes System services link. ui.system_status.open and ui.system_status.close are typed local visibility actions, with statusbar.system_status, work.open_system_status and system_status.close binding families. Service owner links use the existing ui.settings.route.open action and system_status.service.open_settings binding, selecting code.editing.lsp-server-catalog for language servers, system.mcp.server-list for MCP servers or web.index.enable for the search index. They open Settings and reveal the owner row without writing a value or controlling a service. The popover has close/Escape/outside closure, return focus and the common overlay/Glass plate; unavailable owner navigation says why. The panel, detail views, status bar and reviewed Stop/Quit list consume DR-078’s one owner-backed work projection and shared renderer. Every local view binds its exact invoking platform or thread identity without creating a persistence key. Finished/failed process counts remain distinct from finished agent counts. Environment headings count all displayed state groups. Resource samples re-sort under the selected column, deferring row movement while the pointer/focus is in the table. Static fixtures do not certify native handlers or windows. G4/D7/D9, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): Resources has Time after State; Time values use the shared clock and Time sorting compares run start times with stable title ties. Sample immediately on subscription and every 2 s only while open/visible; unknown/stale remains explicit. Narrow Resources keeps the omitted Time/Port/Started by facts reachable in the inspector and accessible description. The rail and Home Agents consumers use DR-078’s shared row/filter/summary renderer. Panel drags pause shared motion; release or pointer cancellation clears the drag gate and resumes eligible motion once. Per-kind completion defaults stay DL-248’s agent for scripts/tests/builds and user for server/db/watcher; Quiet remains an explicit choice. D7/D8/D13, PM7 companion review fix1, 2026-10-30 (Astra A2/A3): work.open_owner is ui.work_panel.select with an owner-row value, owner_id, destination agents|subagents, invoking view and focus; Subagents also binds its exact thread_id. It never opens a transcript. Actual Open thread uses cmd.chat.open_thread for the item’s bound Assistant thread; actual Open surface is ui.work_panel.open_surface, a local navigation request to the resolved owner surface with work identity and focus, unavailable if that owner cannot be reached. Copy command is ui.work_panel.copy_command, a local clipboard request over the selected current command; clipboard refusal cannot report success. Open port reuses cmd.browser.open_workspace_preview with a server/environment-authoritative URL and CV-360 placement, never an assumed client localhost. A scheduled-row Cancel reuses cmd.chat.schedule_message.cancel with the exact schedule identity/revision and owner gates; it is not PID Stop and never enters WorkTarget. Rerun reuses cmd.terminal.rerun for a new invocation through the terminal owner, with an explicit new-session request when needed; Restart keeps cmd.work.restart for restartable live server/db/watcher work. Concept W.restart/W.stop adapters do not replace those native owner routes. Q11 B, Jared 2026-10-30: only live Work rows animate, capped to rows on screen. Working, checking and retrying agents use the shared Think loader; running process marks move on the shared document clock. Waiting, waiting-dep, blocked, finished/done, stopped and scheduled rows stay still. Offscreen rows, drags, hidden tabs and effective Reduced Motion hold recognizable rest poses. The panel, Agents rail and Home board consume the same row renderer and eligibility policy. Lead clarification 1030183348-18bd permits no NieR exemption: a working NieR agent uses its existing Diamond loader owner and L7 part/fallback rules, never animated Pip; running NieR process marks move in their existing material language. The 2200 ms category-head breath remains distinct and below needs-you priority. No polling loop, command, event, setting, state or extra loader owner is added. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope creates no Stop/Restart/Stop all or service-control authority. Q14/H9: Glass’s Activity bar and composer dock lines join Activity Detail, panel, System status, Stop/Quit list, History and hover/attachment cards on the persona/model menu’s near-opaque plate. The needs line keeps its warm wash over that plate. Settings dialogs and drawers flatten that same menu tint over the look’s ground so background labels cannot read through; ordinary panes keep their existing material. This is consumer treatment, no global Glass token change or extra backdrop-filter. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -49835,11 +49641,11 @@ acceptance_criteria:
   - "Q11: the working-agent loader uses the one Think owner, with NieR Diamond/fallback rather than animated Pip; process marks reuse their own status rhythm/clock."
   - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope creates no Stop/Restart/Stop all or service-control authority. Q14/H9: Glass’s Activity bar and composer dock lines join Activity Detail, panel, System status, Stop/Quit list, History and hover/attachment cards on the persona/model menu’s near-opaque plate. The needs line keeps its warm wash over that plate. Settings dialogs and drawers flatten that same menu tint over the look’s ground so background labels cannot read through; ordinary panes keep their existing material. This is consumer treatment, no global Glass token change or extra backdrop-filter."
 validation_surfaces:
-- python3 scripts/pm-shard-plans.py --check
-- python3 scripts/pm-plan-index.py validate
-- Concepts/background-activity/opus-5.5/HANDOFF.md (22 checks rewritten for native owner surfaces)
-- 60 fps GPU recordings across ten looks, narrow/short widths and Reduced Motion
-- python3 scripts/pm7-build-check.py
+- "scripts/pm-shard-plans.py"
+- "scripts/pm-plan-index.py"
+- "Concepts/background-activity/opus-5.5/HANDOFF.md"
+- "future 60 fps GPU recordings across ten looks, narrow/short widths and Reduced Motion"
+- "scripts/pm7-build-check.py"
 risk_class: owner_drift
 reasoning_tier: high
 context_scope: pm7_build_20261029
@@ -49855,6 +49661,7 @@ source_lineage:
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
 - /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
   /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
+- "DL-260 source lineage only (no product API or implementation obligation): PM7_WORK_UI and PM_WORK in src/js/48-work.js, #pm7-work/#pm7-work-dialog, [data-work-time], startedAt, body.pm-resizing and PM_DRAGEND were concept APIs/selectors/fields. Product counts, stable sorting, visible-only sampling, motion gates and owner routing do not require those spellings."
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -50063,8 +49870,8 @@ acceptance_criteria:
 - Open/Details/More are keyboard accessible with full-path access and truthful backup facts.
 - Remove, archive, rename and Delete data retain distinct effects.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -50112,7 +49919,7 @@ canonical_text: |-
   New Project, onboarding First Project and Make a project from this chat render PJCT-009’s same reviewed draft engine; PWIZ-037 owns valid sections, Edit/Back and fresh Review. The launcher accepts a link, folder or address and offers six equal entry ways: new, folder, online, another device/storage, restore and from-chat. Ways are presentations, not extra registry kinds or generic clone commands. One guided page has a live review, clearly labelled section Edit and a named final action. Changing way/source/Computer invalidates abandoned fields, reach/access proofs, selected backend/source and old Review; Back visits only steps valid for current answers, preserving PM7 FO-22.
   Where work runs and where files sit are distinct. Show the named Computer, complete path, backing device/NAS/share and available space from the owner. Folder names keep spaces. The selected Computer’s Projects folder is the Computer-only setting, not a hardcoded Documents destination. Read-only inspection on local/Server/SSH/PM/SMB/NFS/mounted routes reports history/backend, branch/bookmark, dirty state, remotes/online identity, submodules/LFS/hooks, duplicate registered-copy and partial/not-looked facts. A discovered origin is evidence only: Link it, Leave it unlinked and Make a new online copy require their exact chosen authority. Duplicate copies suggest Open [project] on [Computer] without blocking.
   Git and Jujutsu are equal local history choices; a fresh form may initially choose Git, existing history wins, and supported content inspection can explain a Git suggestion. No setup object-format picker or no-history option. Online-copy fields use FGI-023’s offered service/profile/privacy/admission and real create/recovery chain. GitHub/GHES Contribute shows original/fork/upstream/head/base with the native branch/bookmark; elsewhere use the team-project Make a change to offer branch default, with Work on it directly one tap away. Just copy it remains a separate acquisition choice.
-  Start with uses Project-owned Starters/My starters; Saved setups/Your usual settings is detached own-value/thing/account configuration with Advanced exact selection, Keep them fixed and Notifications & limits. Reach, installation and destination AI readiness are distinct; keys/logins/pairings never travel. README/ignore/licence live once in online-copy Advanced; the ignore default remains its setting. Backup shows destination before sign-in, safe test/Use existing, inclusion and daily schedule, Standard retention with Advanced real counts/timezone/time and human Recovery Kit save/check. Optional Later is honest.
+  Start with uses Project-owned Starters/My starters; Your usual settings follows the resolved Everywhere ladder without copying. Saved setups and source Projects supply detached own-value/thing/account configuration through Advanced: choose what to copy, with Keep them fixed and Notifications & limits (SSYS-062). Reach, installation and destination AI readiness are distinct; keys/logins/pairings never travel. README/ignore/licence live once in online-copy Advanced; the ignore default remains its setting. Backup shows destination before sign-in, safe test/Use existing, inclusion and daily schedule, Standard retention with Advanced real counts/timezone/time and human Recovery Kit save/check. Optional Later is honest.
   Creating advances only from owner phase receipts. Unknown remote effects reconcile before retry; retained Continue/Open/Delete recovery names exact prerequisites and never repeats settled work. Listed Project commit precedes chat cutover. Later still sets up AI on the named Computer and returns to No project; Almost ready remains calm without usable AI. No preview, animation or transport success implies Project registration, source binding, backup verification or native availability.
   SSH host trust and public-key installation render SRV-018/RAS-017 through cmd.server.ssh.trust and cmd.server.ssh.public_key.install. Preview shows the exact captured host/account/key and currentness; protected apply belongs to the person on the initiating active Client. Return preserves the setup draft and exact owner result, including changed-key refusal, stale state, unknown effect or handler_unavailable. No concept alias, Client pairing, key copy or setup animation grants this authority; secret input stays with the protected auth broker.
 gui_related: true
@@ -50133,8 +49940,8 @@ acceptance_criteria:
 - Backup/copy/recovery/Later are truthful and preserve current PM7 admission and auth fences.
 - SSH setup uses SRV-018 preview and protected human apply, retaining the exact draft and owner result on refusal or return.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -50194,7 +50001,7 @@ canonical_text: |-
   Render one pm.settings_effective_value.v1 from SSYS-002/059 for the exact user/Computer/Host/Device/Project/thing/thread/run context. Default → Everywhere → Computer → Project → existing owner levels is the ordinary chain, Managed remains above; screen rows use Device, not Computer. The atomic look pair uses offered Everywhere/Device/Project levels; Reduce motion combines OS OR Everywhere/Device/Project and has no Computer rung. More-careful safety and Computer-ceiling exceptions remain explicit. Requested/effective and owner Reason stay visible. Computer means the Server doing work plus the actual Host where tools/paths matter; Device is the client in front of the person, Execution Environment remains its finer runtime context.
   A factory difference shows Changed plus a 1px outline around the control; an outline or colour alone carries no meaning. No side stripe, status pill or default noise. The trailing origin word (Everywhere, named Computer or Project) opens Details; quiet all-default rows say Details. Show where each setting comes from starts Off and shows origin without rewriting values. Changed is effective-versus-factory, Varies is different elsewhere, and Set here means an own value, so those marks remain independent.
   The 350px Details panel retains shared drawer reflow/material and a visible labelled Close. It starts Used everywhere, except …, then exact context/requested/effective/Reason, offered level groups, Where it applies, up to six differences with the rest disclosed, searchable Set for choices with reasons, Choosing here changes, existing help/choices, and the last three Recent changes with exact Undo/Set it back. Change view freezes target context. Disabled/managed/offline/stale/conflict/limited-device states retain readable reasons, keyboard reachability, focus, Escape and live outcome notes. No missing writer is a saved result.
-  Human row edits write where the value comes from and show one note naming actor/place plus narrow Only for [Project/Computer] retarget/Undo. Agents follow SSYS-065’s narrowest authorized target and D mode rules; these are not the same targeting policy. Search offers Changed, Set here, Varies, Per computer and Per project; Differences/Compare and Reset choose their actual target. Multi-Computer outcomes are done/not_reached/refused with no offline queue. Joining setups has accepted 30-day Undo; ordinary change Undo keeps its owner policy.
+  Human row edits write where the value comes from and show one note naming actor/place plus narrow Only for [Project/Computer] retarget/Undo. Agents follow SSYS-065’s narrowest authorized target and PS-146/147/148 mode/grant admission; these are not the same targeting policy. Search offers Changed, Set here, Varies, Per computer and Per project; Differences/Compare and Reset choose their actual target. Multi-Computer outcomes are done/not_reached/refused with no offline queue. Joining setups has accepted 30-day Undo; ordinary change Undo keeps its owner policy.
   All 38 managers retain exact keys/owners. A thing has home, reach, declared project switches and whole Project versions by stable ID, independent of ordinary rows and Computer installation/readiness. Every project reach includes No project only for a library thing; Project-owned or external read-only things keep their restrictions. Source/version trust and protected built-ins remain. Settings orchestrates contributed owner transactions and never writes owner records itself. Saved setups and Starters are separate children of the existing route, no 39th manager. Hosted controls, Usage, Customize and first paint use the same resolver/transaction/wording. All chats/All terminals/All editors writes Everywhere; narrower origins/overrides and masking are shown. q-035 is resolved in current canon.
 gui_related: true
 gui_classification_reason: Defines visible controls, layout, accessible states and exact returns.
@@ -50212,8 +50019,8 @@ acceptance_criteria:
 - Panel keyboard/narrow-host/Close/focus/Undo and masked outcomes are truthful.
 - Five Settings primaries and all 38 manager owners are preserved.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -50276,7 +50083,7 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: |-
   No project is a real application chat with null Project, fixed title-bar row and CV-365 scope. The New split button, Where chooser and Here/All chats list show the work Computer; phone/web always names it. Choose place before the first message; the first user message mints the durable thread identity. Pre-message saved files use a draft identity adopted once. The visible <home>/Puppet Master Chats/<unique title> folder is created at first saved file/command, never for talking or internal Plan records, and Rename leaves it where it is. Folder open does not mkdir; deleting it needs an explicitly chosen checkbox, off by default. Work Computer is fixed after the first message. Continue elsewhere creates a linked new chat; unavailable Computers stay listed as not answering, without auto-archive, auto-claim or failover.
   Ask/Agent/Debug, file/terminal/browser tools, Goals, all existing collaboration kinds/Crew Auto, Plan/Deep Plan and scheduled messages/tasks are available with real roots/capabilities/permission. Only Planning Wizard, PRD Builder and Orchestrator have the workflow Needs a project gate. An action intrinsically targeting a Project still requires its actual target. Teach omits Project and uses the existing public_safe Everywhere tier, without a Computer memory corpus. Notebook, memory, history and permitted roots remain bound to their actual thread/parent; an opaque ID or Crew membership is no cross-thread read grant.
-  Every chat can explicitly list/read permitted other Projects via projects.*. Metadata listing is distinct from content consent. Show requested/looked_in/not_looked_in(reason)/partial(missing range) coverage, including empty/filtered results, in the one quiet expandable formatter. Never silently search current focus or merge ambient indexes/notebooks/private memory. Request preview uses ui.thread.request.preview or ui.thread.spawn.preview and Send uses the existing cmd.thread.request/spawn owner, not a new chat transport. From another chat/Open/Reply/Accept/Decline shows exact sender/receiver/request. Receiving Off refuses; unseen Regular Ask me can read/answer only until accepted; receiver YOLO uses its own authority. Three automatic round trips then user extension, one-day offline expiry and stable per-thread ordering. Source reads/outward exposure follow D, no sender mode escalates a receiver.
+  Every chat can explicitly list/read permitted other Projects via projects.*. Metadata listing is distinct from content consent. Show requested/looked_in/not_looked_in(reason)/partial(missing range) coverage, including empty/filtered results, in the one quiet expandable formatter. Never silently search current focus or merge ambient indexes/notebooks/private memory. Request preview uses ui.thread.request.preview or ui.thread.spawn.preview and Send uses the existing cmd.thread.request/spawn owner, not a new chat transport. From another chat/Open/Reply/Accept/Decline shows exact sender/receiver/request. Receiving Off refuses; unseen Regular Ask me can read/answer only until accepted; receiver YOLO uses its own authority. Three automatic round trips then user extension, one-day offline expiry and stable per-thread ordering. Source reads and outward exposure follow PS-144/146/148 admission; no sender mode escalates a receiver.
   Stage-3 computer use consumes T-186's closed computer.screen, computer.pointer and computer.keys tool census and PS-145 admission. It starts off until task-bound per-chat/per-app permission names the actual Computer/apps and separately admits disclosure of scrubbed screen pictures to the named AI service; YOLO cannot supply that disclosure or expand the app set. Show Using the screen of [Computer] with a labelled Stop throughout the session. Stop and two Esc presses call the same cmd.computer_use.stop owner for the exact chat/session/Computer/controller generation, fence queued input and release only that session's controller. Protected sign-in/password/secret surfaces stay excluded and images remain transient, outside chat image history. Details and app selection are typed local actions; actual input uses the Tools owner. Missing desktop, DAE-safe path, schema/registry/native-adapter/ActiveToolNamespaceReceipt joins or current authority shows unavailable before capture or input, with the exact originating strip/return and no inferred computer.* EventRecord.
   Make a project from this chat and Move this chat into a project are equal choices, neither preselected. Show the plain statement naming target/Computer/files/moved/stayed work, a live current preview and a final button naming the action. Existing Project defaults to separate Git branch/worktree or admitted JJ change/bookmark and a picked folder; direct main is Advanced and never a YOLO default. Same files skip, Different offers draft/keep-both; block unsaved overwrite and do no history graft. New Project must be listed before cutover. Regular apply is the person; guarded YOLO apply records task, explicit destination, current preview and fresh destination authority without clicking a human button. Ambiguous convert this still asks its destination.
   Copy/check precedes cutover. Keep thread ID and full destination-owned conversation with original lineage; seal the source for Undo. Fence active Goal/Crew/Plan work, claims and timers, and use N25 linked destination records or a separately complete owner rebind; ordinary immutable records are never retargeted. A current move manifest accounts for files, history/payloads, notebook/memory, work associations, schedules, To-Dos/artifacts, indexes, permissions and layouts. Paused cross-Computer work exposes Resume/Cancel with both Servers, never hidden offline queueing or two live histories. Divider, PM Notify and report show moved/stayed/held/failed, exact target and owner Undo.
@@ -50299,8 +50106,8 @@ acceptance_criteria:
 - Both conversions/paused recovery/report/Undo account for every CV-367 family and preserve one writer.
 - Screen use remains off until admitted; the strip Stop and double Esc fence only the named session, with unavailable joins and protected prompts refused before capture/input.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -50389,8 +50196,8 @@ acceptance_criteria:
 - Same-path/different-Host and different-thread board/notebook content remains isolated.
 - Conversion keeps historical binding and exact new destination admission.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -50454,8 +50261,8 @@ acceptance_criteria:
 - No agent self-issuance or same-name cleanup; changed target/Stop/revoke blocks final dispatch.
 - Remote outcomes remain truthful and link existing owner receipts.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -50520,8 +50327,8 @@ acceptance_criteria:
 - App pause is visibly separate, user-only and missing-custody fail-closed.
 - Conversion/Stop/timer races have explicit paused or refused outcomes without duplicate dispatch.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows

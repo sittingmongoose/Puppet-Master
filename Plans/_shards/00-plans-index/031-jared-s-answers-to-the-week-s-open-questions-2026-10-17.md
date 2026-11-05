@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L6245-L6328
+Source lines: L6251-L6336
 
-Source SHA256: `07eb6191df0e1330a806aae38f3763eeb348839e8e108a5209429d81dabe8245`
+Source SHA256: `048e5da55b7cc3fe1009461554f5433781a7ab03ecde1054f96d953b063b7c67`
 
 ---
 
@@ -22,7 +22,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/00-plans-index.md
 canonical_text: |-
-  Current pass-two ownership routes are: SSYS-002/059–065 and DR-084/085 for Settings classification/resolution, writers, detached copy and presentation; SRV-016/017 for same-owner settings follow and app work Computer custody, RAS for existing routes; MA-074/MACS-006 for destination readiness/protected app auth; Models for its lead-accepted scoped-owner tier edition with explicit no-Persona/no-stage Conservative rule. q-035 is resolved in live canon and source-memory ledgers remain unchanged.
+  Current ownership routes are: SSYS-002/059–065 and DR-084/085 for Settings classification/resolution, writers, detached copy and presentation; SRV-016/017 for same-owner settings follow and app work Computer custody, RAS for existing routes; MA-074/MACS-006 for destination readiness/protected app auth; Models MS-005/099/100 for its accepted scoped-owner tier edition with explicit no-Persona/no-stage Conservative rule. q-035 is resolved in live canon and source-memory ledgers remain unchanged.
 
   ACD-508–511 owns No project/place/folder, explicit reads/requests and conversion; T-185/186/187 and PS-145 own access, roots and computer use. GRS-086/087, CWR-045 and OSI-439/440 own app Goal/Crew/continuity/coordination and immutable conversion. APR-073/074, PLS-024, PDS-023 and SQR-019/020 own app Plan/Deep Plan, exact scheduled targets and independent operational pause; ordinary Assistant scoped bundles do not create product Plans or WorkNodes. Only Planning Wizard, PRD Builder and Orchestrator retain no-project workflow gates; real Project-target/capability checks remain distinct.
 
@@ -48,7 +48,9 @@ acceptance_criteria:
 - Latest no-project rulings, resolved q-035, precise historical supersession and admitted service limits are coherent.
 - This is owner routing and indexability only, not runtime/readiness/governance or a ledger compile.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-settings-layering-check.py
+- scripts/pm-plans-verify.py
 risk_class: owner_route_or_supersession_drift
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103

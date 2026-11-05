@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L28302-L29076
+Source lines: L28284-L29056
 
-Source SHA256: `a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d`
+Source SHA256: `286c122ca3de84e4f6e7e3bfc7e476e3732a05f2be6594add4ee6244789f01f2`
 
 ---
 
@@ -293,14 +293,11 @@ canonical_text: >-
   uses its actual container. Activity/History/attachment floating Glass plates use persona/model menu
   plate. Friendly/Glass context ring is continuous, antialiased and never segmented by broken transforms.
   All ten looks, widths 860/1024/1280/~1390/1920, narrow/short, Reduced Motion and drag budgets are
-  acceptance surfaces. G9/C5, PM7 Step4 final-source reconciliation, 2026-10-30: the activity lane report and
-  pm7-port/css/20-controls.css resolve PM7-C5-CONTEXT-RING. The conic background tiled into a 1 px faint
-  border (Friendly 6 percent, Glass 9 percent alpha), exposing slivers; Glass’s clear --surface middle disc
-  exposed the meter as a pie. The hosted Basic/Friendly/Glass owner now draws the meter on its own ::before
-  layer, cut to an approximately 3 px ring with a radial mask; the
-  middle is the header’s ground and no gradient tiles into the border. Retro/NieR retain their own drawings.
-  This records the reported concept cause/drawing rule; native continuous antialiased rendering at actual
-  widths/DPR/Reduced Motion remains acceptance, not certification by this source note. G1 B (Jared
+  acceptance surfaces. G9/C5: the shared presentation owner draws the Basic/Friendly/Glass context meter as
+  a continuous antialiased ring approximately 3 px thick. Its middle matches the header ground, with no
+  tiled gradient slivers at the border or meter fill leaking into the middle. Retro/NieR retain their own
+  drawings. Actual widths, device pixel ratios and Reduced Motion remain native acceptance surfaces;
+  concept diagnosis or a static drawing is not certification. G1 B (Jared
   2026-10-30): Pin/unpin is the view-local ui.activity_detail.pin action
   (binding chat.activity.pin), default false. Pinned Activity Detail stays open across thread switches and
   reprojects the selected thread’s data; unpinned detail closes on a thread switch. Pin changes lifetime only:
@@ -327,11 +324,11 @@ acceptance_criteria:
 - Glass Activity/History/attachment plates use the same menu token, and C5 remains an explicit measured acceptance/investigation
   until the GUI report records its fix.
 validation_surfaces:
-- python3 scripts/pm-shard-plans.py --check
-- python3 scripts/pm-plan-index.py validate
-- Concepts/background-activity/opus-5.5/HANDOFF.md (22 checks rewritten for native owner surfaces)
-- 60 fps GPU recordings across ten looks, narrow/short widths and Reduced Motion
-- python3 scripts/pm7-build-check.py
+  - scripts/pm-shard-plans.py
+  - scripts/pm-plan-index.py
+  - Concepts/background-activity/opus-5.5/HANDOFF.md
+  - future 60 fps GPU recordings across ten looks, narrow/short widths and Reduced Motion
+  - scripts/pm7-build-check.py
 risk_class: owner_drift
 reasoning_tier: high
 context_scope: pm7_build_20261029
@@ -345,6 +342,7 @@ source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/background-activity/opus-5.5/README.md
 - "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
+- "DL-260 source lineage only (no product stylesheet, selector or implementation obligation): the activity lane report and pm7-port/css/20-controls.css resolved PM7-C5-CONTEXT-RING; a conic background tiled into a faint 1 px border (Friendly 6 percent, Glass 9 percent alpha), while a clear --surface disc exposed the meter as a pie. The concept repair used an isolated ::before layer and radial mask; native rendering must satisfy the shared visual invariant."
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -479,7 +477,7 @@ canonical_text: 'No project is a first-class chat place with project_id=null, sc
   rung. Selected account_resolution uses MA-074 on the exact work Computer. No Basic Dark flash or no-project Settings
   write ban. N15 Set up a project later still performs protected AI setup on that Computer in app scope, then lands
   in No project chat; Guided Tour Finish/Skip returns to that exact app chat/layout without a practice Project or
-  claiming an unexecuted Project step completed. Computer use consumes T-186/D policy: named Computer, task-allowed
+  claiming an unexecuted Project step completed. Computer use consumes T-186/PS-145 policy: named Computer, task-allowed
   apps, separate provider screen disclosure and protected-auth exclusion, with a visible session-bound strip/Stop
   and existing double-Esc stop; it is no root grant or hidden desktop access. Delivery stages are chat/Goals/Crew/Plan/Deep
   Plan/schedules/conversion, then cross-project reads/requests, then computer use/continue elsewhere/cross-computer
@@ -504,9 +502,9 @@ acceptance_criteria:
 - Empty/filtered Here lists state coverage and offer All chats; narrow labels remain text, with the shared container-width
   rules.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows
@@ -553,18 +551,18 @@ canonical_text: Every chat may explicitly read permitted Projects and request wo
   list/status exposes only information the person may open and honors source-project Off; content reads use a named
   set or all, source-Computer checks on every read and provider exposure/secret scrub. Regular offers This time
   / For this chat / Always on this computer / No; a named reference grants only its explicit subject. YOLO uses
-  D's explicit task-scoped mode authority and invents no human consent or Always rule. Every read appears in Activity.
+  Plans/Permissions_System.md's explicit task-scoped mode authority and invents no human consent or Always rule. Every read appears in Activity.
   One coverage formatter records requested, looked_in, not_looked_in with reasons and partial with missing ranges;
   empty/partial replies and empty/filtered UI always disclose coverage, with a quiet expandable line. Archived Projects
   are skipped unless named. Notebooks, private memory, credentials, safe copies and denied files remain excluded.
-  An outgoing request shows exact target, task text and effect before Regular Send or D-admitted YOLO dispatch.
+  An outgoing request shows exact target, task text and effect before Regular Send or YOLO dispatch under PS-145.
   Sender authority never changes receiver mode; Off refuses, and unseen Regular Ask me requests remain read/answer-only
   until accepted. A person-reviewed send may satisfy that message's receiving choice, but is never fabricated for
   YOLO. Delivery is ordered at a safe turn boundary, distinct from the person's two-slot composer queue; request
   results/replies are idempotent and route by stable thread after conversion. From another chat uses chat_message_in,
   names sender and recipient, and never impersonates user input. At most three automatic round trips occur; extending
   that budget requires the person. Offline delivery waits and expires after one day with a truthful result. The
-  has-read provenance mark survives; N19 outward actions use D's mode-aware disclosure/actual-effect rules, including
+  has-read provenance mark survives; N19 outward actions use Plans/Permissions_System.md's mode-aware disclosure/actual-effect rules, including
   ordinary YOLO publication, and never hide coverage. CV-365 freezes preview as ui.thread.request.preview or ui.thread.spawn.preview,
   a typed local redacted draft projection without persistence, outbox commit, EventRecord or authority. Send uses
   the existing cmd.thread.request and cmd.thread.spawn sole handlers with the explicit ThreadRequestFacadeRequestV2/ResultV2
@@ -586,9 +584,9 @@ acceptance_criteria:
 - Reply after conversion follows thread identity with current destination checks; repeated delivery produces no
   duplicate turn or billing.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows
@@ -667,9 +665,9 @@ acceptance_criteria:
   effect.
 - Regular person and YOLO guarded route share one owner transaction; YOLO never defaults to main or publication.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows
@@ -751,9 +749,9 @@ acceptance_criteria:
 - Expiry purges only eligible source-chat content, retaining separately required canonical task/audit bodies and
   references.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows

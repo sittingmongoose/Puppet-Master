@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3584-L4742
+Source lines: L3590-L4728
 
-Source SHA256: `dd347352cddb25f2be08d51b81df50cec81d13a55f6543ff71176a198f390d58`
+Source SHA256: `ec31e72135a20b97f0cf6eb893d2b7ddfedd51dcbc640599df316eb2a454ab3e`
 
 ---
 
@@ -567,7 +567,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: |-
-  One wallpaper registry supplies stable ids, family/order, names, dark/light assets, thumbnails and defaults to every wallpaper consumer. Plans/wallpaper_catalog.json is that registry; F3-653 owns presentation, SSYS-054 owns the single Settings-resolved choice at its declared levels and SP-333 owns storage. No theme, Settings gallery, onboarding or native renderer keeps a competing list or default. Picking through any surface uses the Settings transaction, never a wallpaper-specific settings store or duplicate command. The terminal Lens consumes the same selected print and catalog as Glass; it never derives another wallpaper from computed page styling or stores a second choice. The six NieR prints derive from the original scene drawings, while their native packaged assets are registered here. Amended 2026-10-16 (DL-217, the motion lanes): every consumer of the selected print, the terminal Lens and Glass's optics included, asks the one wallpaper owner for it through a synchronous, cache-only query by print id and mode. The query answers the print's prepared source, not cached yet, or no image, and it reads no page style. A consumer told not cached yet keeps its fallback until the owner announces the print, and a watch on the selected print never forces a style recalculation. In the concept this is PM_WALLPAPERS.sourceUrl(id, mode), returning a URL, undefined or null. Amended 2026-10-16 (DL-217, the Settings and Glass lanes): the owner prepares a print and its frost before the choice is published, and fills the source query's cache first. Preparing nearby and visible choices ahead of a pick runs at idle, one job at a time, pauses for input, Settings navigation and the shared busy signal, and never delays a pick; hover or keyboard focus prepares the intended tile after a short quiet pause, and a press requests it at once, still behind those guards. A cancelled or stale preparation changes nothing on screen and only the newest pick commits; a pick whose preparation fails still commits through the ordinary print and frost fallback, so no pick is lost. Glass alone keeps the decoded prints, the visible gallery choices among them within a bounded budget, and a byte-bounded frost cache; the gallery keeps no image cache of its own. Amended 2026-10-17 (DL-222, DL-223): preparing prints at idle follows ACD-475 and does not restate that rule. The owner prepares a print and its frost before the choice commits. The print may start fading before the frost is ready (F3-653); the setting still writes at the pick. An intent, hover or keyboard focus after a short quiet pause, or a press, never waits behind background preparation of another print. A pick or intent for a print runs whatever preparation is left at once (review r1). This unit still owns the cache-only query and the rule that a failed preparation still commits. Amended 2026-10-17 (DL-228): the requirement is one synchronous, cache-only print query; the concept's page API for it is lineage, not an interface the rebuild keeps. A wallpaper joins the catalog only with a Dark and a Light print, each composed with a quiet middle and its detail toward the edges (opaque looks cover the middle with panels and Glass frosts what sits behind a sheet) and drawn at the contrast its mode's text needs; its thumbnails are made from the same print, and the gallery never decodes a full print. Byte and pixel budgets are the packager's.
+  One wallpaper registry supplies stable ids, family/order, names, dark/light assets, thumbnails and defaults to every wallpaper consumer. Plans/wallpaper_catalog.json is that registry; F3-653 owns presentation, SSYS-054 owns the single Settings-resolved choice at its declared levels and SP-333 owns storage. No theme, Settings gallery, onboarding or native renderer keeps a competing list or default. Picking through any surface uses the Settings transaction, never a wallpaper-specific settings store or duplicate command. The terminal Lens consumes the same selected print and catalog as Glass; it never derives another wallpaper from computed page styling or stores a second choice. The six NieR prints derive from the original scene drawings, while their native packaged assets are registered here. Amended 2026-10-16 (DL-217, the motion lanes): every consumer of the selected print, the terminal Lens and Glass's optics included, asks the one wallpaper owner for it through a synchronous, cache-only query by print id and mode. The query answers the print's prepared source, not cached yet, or no image, and it reads no page style. A consumer told not cached yet keeps its fallback until the owner announces the print, and a watch on the selected print never forces a style recalculation. The shared source query distinguishes an available print, not cached yet and no selected image. Amended 2026-10-16 (DL-217, the Settings and Glass lanes): the owner prepares a print and its frost before the choice is published, and fills the source query's cache first. Preparing nearby and visible choices ahead of a pick runs at idle, one job at a time, pauses for input, Settings navigation and the shared busy signal, and never delays a pick; hover or keyboard focus prepares the intended tile after a short quiet pause, and a press requests it at once, still behind those guards. A cancelled or stale preparation changes nothing on screen and only the newest pick commits; a pick whose preparation fails still commits through the ordinary print and frost fallback, so no pick is lost. Glass alone keeps the decoded prints, the visible gallery choices among them within a bounded budget, and a byte-bounded frost cache; the gallery keeps no image cache of its own. Amended 2026-10-17 (DL-222, DL-223): preparing prints at idle follows ACD-475 and does not restate that rule. The owner prepares a print and its frost before the choice commits. The print may start fading before the frost is ready (F3-653); the setting still writes at the pick. An intent, hover or keyboard focus after a short quiet pause, or a press, never waits behind background preparation of another print. A pick or intent for a print runs whatever preparation is left at once (review r1). This unit still owns the cache-only query and the rule that a failed preparation still commits. Amended 2026-10-17 (DL-228): the requirement is one synchronous, cache-only print query; the concept's page API for it is lineage, not an interface the rebuild keeps. A wallpaper joins the catalog only with a Dark and a Light print, each composed with a quiet middle and its detail toward the edges (opaque looks cover the middle with panels and Glass frosts what sits behind a sheet) and drawn at the contrast its mode's text needs; its thumbnails are made from the same print, and the gallery never decodes a full print. Byte and pixel budgets are the packager's.
 gui_related: true
 gui_classification_reason: One wallpaper catalog and one writer.
 split_recommended: false
@@ -582,9 +582,9 @@ acceptance_criteria:
 - Preparing a print at idle follows ACD-475. An intent never waits behind another print's background preparation,
   a pick runs the remaining bake at once, and the print may fade before its frost commits (F3-653).
 validation_surfaces:
-- python3 scripts/pm-shard-plans.py --check
-- python3 scripts/pm-plan-index.py validate
-- python3 scripts/pm-plans-verify.py run-gates
+- "scripts/pm-shard-plans.py"
+- "scripts/pm-plan-index.py"
+- "scripts/pm-plans-verify.py"
 risk_class: owner_drift
 reasoning_tier: high
 context_scope: one_wallpaper_catalog_and_one_writer
@@ -622,6 +622,7 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-motion-fixes/pm7-liquid-glass/F6-NOTES.md,
   SHA-256 86b0f12a17d3eab6becf2410e1c5950a6c619066c8a6d683ba57328a9fef7899 (fade-first, option (c);
   decision lineage)
+- "DL-260 source lineage only (no product API or implementation obligation): PM_WALLPAPERS.sourceUrl(id, mode), with URL/undefined/null results, demonstrated the wallpaper source query in the concept."
 preserved_exact_tokens: []
 negative_constraints: []
 stale_retired_dispositions:
@@ -838,8 +839,7 @@ canonical_text: >-
   contextual Swing/Think/Hop, per-family timing, size/accessibility and pause gates. Preserve layout skeletons
   and determinate bars; working status remains st-working. NieR routes to its Diamond owner/fallback. No surface
   spinner, loader-setting or duplicate thinking/Orbit Pip. L8 B (Jared 2026-10-30): this build removes
-  menu-sprout duplication. DR-079 is the one sprout owner for every menu; chat menus.js, Usage PMU.menu and Home
-  PMW.menu delegate to it with no private animation implementation. Q11 B, Jared 2026-10-30: only live Work rows
+  menu-sprout duplication. DR-079 is the one sprout owner for every menu; chat, Usage and Home menus delegate to it with no private animation implementation. Q11 B, Jared 2026-10-30: only live Work rows
   animate, capped to rows on screen. Working, checking and retrying agents use the shared Think loader; running
   process marks move on the shared document clock. Waiting, waiting-dep, blocked, finished/done, stopped and
   scheduled rows stay still. Offscreen rows, drags, hidden tabs and effective Reduced Motion hold recognizable
@@ -863,10 +863,10 @@ acceptance_criteria:
   - "Q11: working/checking/retrying rows animate in all ten looks; waiting/dependency/blocked/finished/stopped/scheduled rows stay still; offscreen, drag, hidden-tab and Reduced Motion gates hold."
   - "Q11: the working-agent loader uses the one Think owner, with NieR Diamond/fallback rather than animated Pip; process marks reuse their own status rhythm/clock."
 validation_surfaces:
-- python3 scripts/pm-shard-plans.py --check
-- python3 scripts/pm-plan-index.py validate
-- python3 scripts/pm7-build-check.py
-- python3 scripts/pm-plans-verify.py run-gates
+- "scripts/pm-shard-plans.py"
+- "scripts/pm-plan-index.py"
+- "scripts/pm7-build-check.py"
+- "scripts/pm-plans-verify.py"
 risk_class: owner_drift
 reasoning_tier: high
 context_scope: pm7_build_20261029
@@ -880,6 +880,7 @@ source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
 - "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
+- "DL-260 source lineage only (no product API or implementation obligation): menus.js, PMU.menu and PMW.menu were the concept menu adapters."
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -900,7 +901,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: |-
-  D2/D5–D14, G4/G7: thread Processes, status items/panel, Agents rail, Home Agents board, tray/project badge and composer attention are filtered OperationalAwareness over ObservableWork and registry lineage. No consumer owns a separate list/count/status/needs-you set. Executor/terminal owns subordinate ProcessFacts; host monitor owns server/environment resource samples while Resources is open only. Actions route to one owner command/handler; services are read-only and stop lists are generation-bound. D7, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): PM7_WORK_UI.list(host, options), agentGroup and agentSummary in src/js/48-work.js are the shared row/filter/summary adapters. The rail #panel-agents [data-work-rail] keeps its four shelves (Needs you, Active with lineage, Queued, Recently completed); Home dashboard:agents in 30-dashboard.js keeps its frame/filter. Both read PM_WORK and the same needs-you set; the live owner projection and shared clock remain the sole inputs. list refreshes on change, patchTicks updates times/progress/output, hidden lists catch up on show, and destroy removes subscriptions/observers. Rail uses spelled-out ages; Home keeps its short time form. These source adapters demonstrate the projection boundary without certifying native runtime. Q11 B, Jared 2026-10-30: only live Work rows animate, capped to rows on screen. Working, checking and retrying agents use the shared Think loader; running process marks move on the shared document clock. Waiting, waiting-dep, blocked, finished/done, stopped and scheduled rows stay still. Offscreen rows, drags, hidden tabs and effective Reduced Motion hold recognizable rest poses. The panel, Agents rail and Home board consume the same row renderer and eligibility policy. Lead clarification 1030183348-18bd permits no NieR exemption: a working NieR agent uses its existing Diamond loader owner and L7 part/fallback rules, never animated Pip; running NieR process marks move in their existing material language. The 2200 ms category-head breath remains distinct and below needs-you priority. No polling loop, command, event, setting, state or extra loader owner is added. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope creates no Stop/Restart/Stop all or service-control authority. Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and the panel.
+  D2/D5–D14, G4/G7: thread Processes, status items/panel, Agents rail, Home Agents board, tray/project badge and composer attention are filtered OperationalAwareness over ObservableWork and registry lineage. No consumer owns a separate list/count/status/needs-you set. Executor/terminal owns subordinate ProcessFacts; host monitor owns server/environment resource samples while Resources is open only. Actions route to one owner command/handler; services are read-only and stop lists are generation-bound. One shared owner-backed row/filter/summary renderer serves the panel, Agents rail and Home Agents board. The rail keeps its four shelves (Needs you, Active with lineage, Queued, Recently completed); Home keeps its frame/filter. All consume the same live work projection, needs-you identities and shared clock. Owner changes refresh the projection; the shared tick updates visible times/progress/output. Hidden views catch up when shown, and disposal removes subscriptions and observers. Rail uses spelled-out ages; Home keeps its short time form. No surface owns a second agent list, clock or renderer. Q11 B, Jared 2026-10-30: only live Work rows animate, capped to rows on screen. Working, checking and retrying agents use the shared Think loader; running process marks move on the shared document clock. Waiting, waiting-dep, blocked, finished/done, stopped and scheduled rows stay still. Offscreen rows, drags, hidden tabs and effective Reduced Motion hold recognizable rest poses. The panel, Agents rail and Home board consume the same row renderer and eligibility policy. Lead clarification 1030183348-18bd permits no NieR exemption: a working NieR agent uses its existing Diamond loader owner and L7 part/fallback rules, never animated Pip; running NieR process marks move in their existing material language. The 2200 ms category-head breath remains distinct and below needs-you priority. No polling loop, command, event, setting, state or extra loader owner is added. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope creates no Stop/Restart/Stop all or service-control authority. Q13/CC5: the owner-backed work dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and the panel.
 
   The shared work/History projection also includes application ordinary chat, request-started turns, Goals, Crew, Assistant Plan/Deep Plan and scheduled messages/tasks under their actual Server/thread/Computer and parent lineage. App and Project Pause/Stop epochs remain operational owner state. Scope filters cannot relabel another scope's work or create a second action list. Only Planning Wizard/PRD Builder/Orchestrator retain no-project workflow gates; their existing Project run requirements remain.
 gui_related: false
@@ -911,17 +912,18 @@ depends_on:
 - SIR-054
 unblocks: []
 acceptance_criteria:
-  - "Counts, rows, freshness and attention agree across thread/status/panel/rail/board/tray/composer filters."
-  - "ProcessFacts and resource samples resolve their sole Executor/terminal/host owner with stable identity."
-  - "No surface-private runtime list/stop handler or system-service mutation is introduced."
-  - "Q11: working/checking/retrying rows animate in all ten looks; waiting/dependency/blocked/finished/stopped/scheduled rows stay still; offscreen, drag, hidden-tab and Reduced Motion gates hold."
-  - "Q11: the working-agent loader uses the one Think owner, with NieR Diamond/fallback rather than animated Pip; process marks reuse their own status rhythm/clock."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope creates no Stop/Restart/Stop all or service-control authority. Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and the panel."
+- "Counts, rows, freshness and attention agree across thread/status/panel/rail/board/tray/composer filters."
+- "ProcessFacts and resource samples resolve their sole Executor/terminal/host owner with stable identity."
+- "No surface-private runtime list/stop handler or system-service mutation is introduced."
+- "Q11: working/checking/retrying rows animate in all ten looks; waiting/dependency/blocked/finished/stopped/scheduled rows stay still; offscreen, drag, hidden-tab and Reduced Motion gates hold."
+- "Q11: the working-agent loader uses the one Think owner, with NieR Diamond/fallback rather than animated Pip; process marks reuse their own status rhythm/clock."
+- "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope creates no Stop/Restart/Stop all or service-control authority. Q13/CC5: the owner-backed work dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and the panel."
+- "The rail preserves Needs you, Active with lineage, Queued and Recently completed; shared rows retain rail versus Home time formatting, show-time catch-up and subscription/observer cleanup."
 validation_surfaces:
-- python3 scripts/pm-shard-plans.py --check
-- python3 scripts/pm-plan-index.py validate
-- python3 scripts/pm7-build-check.py
-- python3 scripts/pm-plans-verify.py run-gates
+- "scripts/pm-shard-plans.py"
+- "scripts/pm-plan-index.py"
+- "scripts/pm7-build-check.py"
+- "scripts/pm-plans-verify.py"
 risk_class: owner_drift
 reasoning_tier: high
 context_scope: pm7_build_20261029
@@ -934,6 +936,7 @@ node_compile_hint:
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/background-activity/opus-5.5/README.md
+- "DL-260 source lineage only (no product API or implementation obligation): PM7_WORK_UI.list(host, options), agentGroup, agentSummary, patchTicks and destroy in src/js/48-work.js, #panel-agents [data-work-rail], dashboard:agents in 30-dashboard.js and PM_WORK were concept projection/renderer adapters. Their names are not product APIs or DOM requirements."
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -950,32 +953,10 @@ plan_unit_id: DR-079
 unit_type: requirement
 status: accepted
 owner_doc: Plans/DRY_Rules.md
-canonical_text: >-
-  L8 B, Jared 2026-10-30: one shared menu sprout owner supplies every menu’s origin, open/close
-  lifecycle, family motion tokens, Reduced Motion settle, drag/hidden pause and teardown. Chat menus.js,
-  Usage PMU.menu and Home PMW.menu delegate to that owner instead of carrying duplicate sprout
-  implementations. This build closes the former L8 DRY debt. Menus retain their existing items, routing,
-  focus and availability contracts; sharing motion dispatches no command or runtime write. L8 B, PM7 Step4,
-  2026-10-30: the shared implementation is window.PM6_SPROUT in base/script/pm7-sprout.js with
-  base/style/pm7-sprout.css, registered as pm7-sprout-js/css. Its contract is open(el, afterOpen, anchor,
-  opts), close(el, done, opts), isOpen, aim, resize, morph, bounce, keep and reduced; pm-sprout/pm-sprout-edge opt in and
-  the owner writes is-open/is-closing/is-size-bounce and six --pm6-sprout-* values. Legacy selector adapters
-  may keep their names only while using that same lifecycle. Title, chat/worktree/sidecar, Settings, rail
-  PMR.menu/filterMenu, Usage PMU.menu, Home PMW.menu, PMMenu/File Manager and live notification inbox
-  #pmnPanel all consume it; there is no inbox exemption. The standalone chat reads the same owner files.
-  Preserve each trigger’s opening origin/fade, one speed-scaled close timeline, last-relevant-transition
-  completion with cancellation/reopen guards and bounded fallback, and drag hold even for motion already in
-  flight. L8 B, joined review fixes at 4c49e10567: opts.origin accepts corner (default), trigger, or
-  {ox,oy,tx,ty,sx,sy}; opts.shown waits for timely painted entrance frames, and close opts.instant settles
-  immediately. The shared --pm6-sprout-fade-in/--pm6-sprout-fade-ease inputs preserve the consumers' fades
-  (160 ms for Home/Usage/chat, 140 ms default). morph(el, from, to, opts) moves the same box between
-  {left,top,width,height} geometries: height-only changes use the shared height spring/size bounce;
-  a level's width/place change uses its opts.shape duration/easing, with the same motion gates.
-  Shared presentation APIs create no new product command or saved key. L8 B, PM7 Step4 final-source alignment,
-  2026-10-30 (integration e9b15abc64): the owner also supplies --pm6-sprout-height-ease. A growing resize may
-  overshoot; a shrinking resize or height-only morph settles without passing below its content. A drag
-  catching an in-flight morph settles it at the end. All editor overflow menus (.pm-ed-overflow-menu) use the
-  same open/close owner, and superseded local styles/lifecycles are retired.
+canonical_text: |-
+  L8 B, Jared 2026-10-30: one shared menu sprout owner supplies every menu's origin, open/close lifecycle, family motion tokens, Reduced Motion settle, drag/hidden pause and teardown. Title-bar, chat, worktree, sidecar, Settings, rail/filter, Usage, Home, File Manager, editor overflow and live notification inbox menus all consume this owner, including standalone chat. No consumer keeps a private sprout lifecycle or inbox exemption. Items, placement, routing, focus and availability stay with their existing owners; sharing presentation creates no command, Settings row, event, saved key or runtime write.
+  Preserve each trigger's opening origin and fade, corner/edge origin by default and trigger-relative or explicit geometry when required by its consumer. Opening completion waits for timely painted entrance frames. The one speed-scaled close timeline holds opacity until its final fade, completes after the last relevant transition with a bounded fallback, and guards cancellation and reopen so an obsolete completion cannot hide or dispose a reopened menu. Instant close and Reduced Motion settle immediately. Return focus through the invoking consumer's contract and remove obsolete animation callbacks and observers on teardown.
+  Home, Usage and chat keep their 160 ms entrance fades; the shared default is 140 ms. One owner supplies resize and morph behavior on the same box: height-only changes use the shared height spring/size bounce; width or placement changes use the consumer's family duration/easing. A growing resize may overshoot; a shrinking resize or height-only morph never passes below its content. Drag and hidden gates apply even to motion already in flight; a drag catching an in-flight morph settles it at the end. Consumers keep no independent height, bounce, completion or cleanup implementation.
 gui_related: true
 gui_classification_reason: Defines one visible menu motion and lifecycle owner.
 split_recommended: false
@@ -985,15 +966,16 @@ depends_on:
 - ACD-439
 unblocks: []
 acceptance_criteria:
-- All menu consumers use one sprout implementation; chat menus.js, Usage PMU.menu and Home PMW.menu have no
-  private copies.
-- Every consumer preserves its family tokens, origin, focus return, Reduced Motion and teardown behavior.
-- The shared sprout is presentation only and creates no command, Settings row, event or runtime write.
+- "Every menu, including the live inbox and editor overflow menus, delegates open, close, resize and morph to one sprout lifecycle without a surface-private copy."
+- "Opening origin/fade and timely painted completion, one speed-scaled late-fade close, last-transition completion, bounded fallback, cancellation and reopen guards preserve the visible consumer contract."
+- "Focus return, instant close, Reduced Motion, in-flight drag/hidden gates and teardown use the same owner."
+- "Height growth may overshoot, shrink never undershoots content, width/place morph keeps its family timing, and a caught morph settles at drag end."
+- "The shared sprout is presentation only and creates no command, Settings row, event, saved key or runtime write."
 validation_surfaces:
-- python3 scripts/pm7-build-check.py
-- python3 scripts/pm-shard-plans.py --check
-- python3 scripts/pm-plan-index.py validate
-- GUI source audit and 60 fps menu recordings across all ten looks and Reduced Motion
+- "scripts/pm7-build-check.py"
+- "scripts/pm-shard-plans.py"
+- "scripts/pm-plan-index.py"
+- "future GUI source audit and 60 fps menu recordings across all ten looks and Reduced Motion"
 risk_class: owner_drift
 reasoning_tier: high
 context_scope: pm7_build_20261029
@@ -1008,10 +990,8 @@ node_compile_hint:
 source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)
 - reports/pm7-build-20261029/IDS.md
-preserved_exact_tokens:
-- menus.js
-- PMU.menu
-- PMW.menu
+- "DL-260 source lineage only (no product API or implementation obligation): The PM7 source used window.PM6_SPROUT in base/script/pm7-sprout.js and base/style/pm7-sprout.css (pm7-sprout-js/css registrations), open(el, afterOpen, anchor, opts), close(el, done, opts), isOpen/aim/resize/morph/bounce/keep/reduced, origin/shown/instant/shape options, pm-sprout/pm-sprout-edge, is-open/is-closing/is-size-bounce and --pm6-sprout-* values. menus.js, PMR.menu/filterMenu, PMU.menu, PMW.menu, PMMenu, #pmnPanel and .pm-ed-overflow-menu were concept consumers, not required native APIs, selectors, classes or registrations."
+preserved_exact_tokens: []
 negative_constraints:
 - Do not keep a per-surface sprout implementation or mark the L8 duplication deferred.
 owner_hints:

@@ -1070,17 +1070,19 @@
     ];
   }
   /* The one check per route. A configured route that passes becomes Ready and is turned on
-     (reaching ready sets enabled = true); a route the user turned off keeps its Off state. */
+     (reaching ready sets enabled = true); a route the user turned off keeps its Off state. The result opens when the
+     check has finished, as Check this server's does (servers-test): while the row still says Checking there is no
+     result to show (SW-30: it opened at once, beside the row's Checking, for the fixture's 700 ms). */
   function runRouteCheck(r) {
     if (r.status === 'testing') return;
     const wasOff = r.status === 'off', settles = r.kind !== 'lan' && r.status !== 'active';
     if (settles) { r.status = 'testing'; refresh(); }
-    PM51.check({ title: `Check route · ${r.name}`, steps: checkSteps(r), outcome: 'Checked · example data' });
     window.setTimeout(() => {
       const cur = routeById(r.id); if (!cur) return;
       cur.lastCheck = 'Just now';
       if (settles && cur.status === 'testing') { cur.status = wasOff ? 'off' : 'ready'; if (!wasOff) cur.enabled = true; }
       refresh();
+      PM51.check({ title: `Check route · ${cur.name}`, steps: checkSteps(cur), outcome: 'Checked · example data' });
     }, settles ? 700 : 0);
   }
   function syncRouteSheet(r, el) {

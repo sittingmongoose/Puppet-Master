@@ -4,7 +4,7 @@ Source: `Plans/Permissions_System.md`
 
 Source lines: L1292-L7859
 
-Source SHA256: `f2390c30383160c10085e8e037d332c605cc838256a825363b0d5562478ffa86`
+Source SHA256: `dc1aae046c22b416b6e298461970289c3cb8e59d9d378dd3f8e6bfcfdea81c2a`
 
 ---
 
@@ -3573,7 +3573,7 @@ plan_unit_id: PS-064
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "The Permissions UI includes a global wildcard default dropdown and a per-tool overrides table with tool category, action dropdown, granular expand affordance, and inline inherited, overridden, and effective provenance."
+canonical_text: "The Permissions UI includes a global wildcard default dropdown and a per-tool overrides table with tool category, action dropdown, granular expand affordance, and inline origin words (Computer or Project name, or Everywhere) opening Details with requested/effective values and the narrowing reason (PS-144, DL-283)."
 gui_related: true
 gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings UI, GUI controls, or copy behavior."
 split_recommended: false
@@ -3608,12 +3608,12 @@ preserved_exact_tokens:
 - "Per-tool overrides"
 - "category badge"
 - "expand chevron"
-- "Inherited"
-- "Overridden"
-- "Effective"
+- "Everywhere"
+- "Details"
+- "requested/effective"
 - "/inheritance/fallback"
 negative_constraints:
-- "Override display is inline, not modal-only."
+- "Permission origin is inline and opens Details; inherit/override wording is not product copy."
 preserved_contractrefs: []
 compatibility_only_notes: []
 stale_retired_dispositions: []

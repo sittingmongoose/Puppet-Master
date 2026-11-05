@@ -2,9 +2,9 @@
 
 Source: `Plans/FileManager.md`
 
-Source lines: L4936-L4996
+Source lines: L4936-L4994
 
-Source SHA256: `3996097e3ab9dbc61c391860625de9f78f78f263621da0b912a2faa4930ed44f`
+Source SHA256: `08c08e27362f9819b974590e550cbefdc4b5e151d8c46ebed2101817194ea2b0`
 
 ---
 
@@ -24,8 +24,7 @@ canonical_text: >-
   Concepts/PMConcept7.html: explorer/changed/open segmented tabs, a measured-height tree
   animator with full keyboard tree model, hover quick actions per row kind,
   multi-select with a selection bar, type-ahead filter, hide-ignored toggle,
-  collapse-all, worktree root menu, and the sprout context menu whose hook id
-  remains fileContextMenu. The context menu's Delete affordance follows the F2-205
+  collapse-all, worktree root menu, and the sprout context menu. The context menu's Delete affordance follows the F2-205
   trash-first decision (OS-trash soft delete with undo toast; permanent delete
   stays behind the fail-closed confirm; explicit disclosure when trash is
   impossible), and Open with / Copy path submenu entries keep their c2 command
@@ -55,7 +54,6 @@ source_lineage:
 - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (winning files concept; source-lineage-only)"
 - "Plans/FileSafe.md (F2-205 trash-first delete decision)"
 preserved_exact_tokens:
-- "fileContextMenu"
 - "explorer"
 - "changed"
 - "open"

@@ -372,14 +372,18 @@ def validate() -> dict[str, Any]:
             "missing": sorted(required_resize_must_not - interaction_must_not),
         })
     persistence_must = set(persistence_contract.get("must", []))
+    # DL-260 and Jared 2026-11-04 ("demos/demo controls shouldn't be in the plan docs"): the PMConcept7 prototype
+    # envelope imports (pm7:usage:prototype:workspace:v12/v11, pm7:usage:v10) are concept mechanics, not product
+    # obligations, so this check now requires the real persistence invariants instead.
     required_persistence_must = {
-        "pm7:usage:prototype:workspace:v12:demo_only_noncanonical_lineage",
-        "pm7:usage:prototype:workspace:v11:one_time_prior_envelope_import",
-        "pm7:usage:v10:bounded_legacy_import_when_no_valid_envelope",
+        "settled_only",
+        "versioned_migration",
+        "explicit_fallback_disposition",
+        "widget_layout:v1:usage:owner_committed_UsageWidgetLayoutRecord",
     }
     if not required_persistence_must.issubset(persistence_must):
         failures.append({
-            "error": "usage_demo_lineage_contract_missing",
+            "error": "usage_persistence_contract_missing",
             "missing": sorted(required_persistence_must - persistence_must),
         })
 

@@ -4444,7 +4444,101 @@
           "minLength": 1,
           "maxLength": 256
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "settings_preview_ref": {
+                "type": "null"
+              }
+            },
+            "required": [
+              "settings_preview_ref"
+            ]
+          },
+          "then": {
+            "properties": {
+              "settings_preview_sha256": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "settings_preview_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "settings_preview_ref"
+            ]
+          },
+          "then": {
+            "properties": {
+              "settings_preview_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "project_id": {
+                "type": "null"
+              }
+            },
+            "required": [
+              "project_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "settings_rebind_ref": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "project_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "project_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "settings_preview_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "settings_preview_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "settings_rebind_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        }
+      ]
     },
     "acquisition_provenance_v1": {
       "type": "object",

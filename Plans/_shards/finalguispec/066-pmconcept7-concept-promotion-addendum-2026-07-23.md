@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L33089-L33930
+Source lines: L32918-L33749
 
-Source SHA256: `5219317d3f6de37616de475f8713f24e8d655c778fdc8df3544ad7e22bd18a4d`
+Source SHA256: `4cc841071214af7f59a3f0bb3156dfa4d7b7c3e42564e13f9b8b24a742ced53c`
 
 ---
 
@@ -46,16 +46,12 @@ canonical_text: 'The title-bar bell and unread stack sit between page tabs and s
   shows the bell glyph; marks hold 3:1 on severity-tinted cards. Amended 2026-10-29 (A4, D9; PM7): Keep every in-app
   kind mark beside its copy and the single title-bar notification entry. Only Friendly’s app tile and OS notification
   branding become Pip; completion notices route through this alert owner and never add a second affordance. A4 A, Jared
-  2026-10-30; joined PM7 review fix 4c49e10567: Friendly''s .pmn-tile-pip draws one decorative 24 px PMLogo mark. The
-  item''s severity maps through the existing status key and PMLogo.moodFor: info→idle, success→complete, warn→waiting,
-  error→failed. Its kind glyph remains in .pmn-kind beside the title''s text node; the tile is no additional control.
-  Other looks retain their kind-glyph tile. Toasts, banners and inbox rows repaint through the same fillTile owner in
-  src/js/19-notify.js when the look changes. F3-1, Jared 2026-10-30: the stage hangs tight under this bell on every page;
-  its first card uses the theme selector menu''s resting top while the inbox is closed (#themeMenuWrap bottom plus MENU_GAP,
-  6 px in 70b30f482f), not title-bar bottom plus that gap. It may cover controls and the chat head. F3-447 owns that
+  2026-10-30; joined PM7 review fix 4c49e10567: Friendly’s notification tile draws one decorative 24 px shared Pip mark. The item’s severity maps through the existing status/mood owner: info→idle, success→complete, warn→waiting,
+  error→failed. Its kind glyph remains beside the title; the tile is no additional control. Other looks retain their kind-glyph tile. Toasts, banners and inbox rows repaint through the same shared notification presentation owner when the look changes. F3-1, Jared 2026-10-30: the stage hangs tight under this bell on every page;
+  its first card uses the theme selector menu''s resting top while the inbox is closed (the resting bottom of the theme selector control plus the shared 6 px menu gap), not title-bar bottom plus that gap. It may cover controls and the chat head. F3-447 owns that
   anchor, the lead''s open-inbox push exception and the entry/exit click guard on every page (F3-5), including Usage''s
   local pointer styling; no per-page or control-clearance placement survives. DL-259, Jared 2026-10-31: Q2 A: Jared confirmed
-  on 2026-10-31 that staged toasts stay below the open bell inbox through the existing --pmn-push; it is his ruling,
+  on 2026-10-31 that staged toasts stay below the open bell inbox through the shared inbox owner’s measured stage offset; it is his ruling,
   not an unresolved lead exception. Closed-inbox theme-menu resting-top placement and entry/exit click guards remain.'
 gui_related: true
 gui_classification_reason: This unit defines the visible title-bar notification stack, staging, join, and count badge behavior.
@@ -73,11 +69,11 @@ acceptance_criteria:
   material since the 2026-10-15 publication, and Reduced Motion removes spatial/typing effects.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 - 'DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell inbox through
-  the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
+  the shared inbox owner’s measured stage offset; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
   and entry/exit click guards remain.'
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- "scripts/pm-plan-migration.py"
+- "scripts/pm-plan-index.py"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
@@ -87,6 +83,7 @@ node_compile_hint:
   mode: title_bar_notification_stack_and_count_badge
   create_worknodes: false
 source_lineage:
+- "DL-260/DL-280 source lineage only (no product DOM or CSS obligation): #themeMenuWrap, MENU_GAP and --pmn-push were concept selector/paint shims. F3-447 owns the theme-menu resting-top anchor; F3-461 supplies the inbox owner’s resting/destination-height stage offset, update triggers and close cleanup."
 - Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)
 - Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)
 - /mnt/Cursor/share/puppet-master/2026-10-13-notifications/NOTES.md, SHA-256 f09d2b8856652950762b6580b8ebab43022bdf053272738f52720de25922a895
@@ -96,10 +93,9 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-glass-review--JARED-FEEDBACK.md,
   SHA-256 8fe51092727cd7d2a319228114448e4bf8ac42e673461aff6968ac46ecf53d5a (source lineage; not native
   certification)
+- "DL-260 source lineage only (no product API or implementation obligation): .pmn-tile-pip, .pmn-kind, PMLogo.mark/moodFor and fillTile in src/js/19-notify.js were concept notification rendering adapters."
 preserved_exact_tokens:
 - "count badge"
-- "rgba(0,0,0,.72)"
-- "4%"
 negative_constraints:
 - Do not reintroduce a bottom-right standing toast stack, a status-bar notifications bell, an activity-bar
   notifications shortcut or unread dot, or a dedicated Notifications side panel affordance.
@@ -154,21 +150,17 @@ canonical_text: 'Clicking the title-bar notification stack expands a sprout inbo
   countdown ("Expires in N s", FileSafe''s 60 s hold), a folded group offers "N more" and "Show less", and an action
   that opens a page reads "Open <page>". Amended 2026-10-29 (D9; PM7): Completion delivery user uses this alert store,
   deduplicated/coalesced by work identity and completion generation, with one durable notice and its existing transient
-  treatment. Agent delivery never wakes a user-stopped thread. L8 B, PM7 Step4, 2026-10-30: the live #pmnPanel inbox
-  is explicitly a consumer of DR-079’s PM6_SPROUT lifecycle, including open/close and size changes. Alert content/acknowledgment/routing/focus
-  remain here and in F3-453; no separate per-look inbox motion owner is exempted. The retired #rsPanel is not evidence
-  of live-inbox closure. F3-1, Jared 2026-10-30, with the lead''s explicit 2026-10-30 open-inbox exception (mail 1030131044-4c44,
-  preserving bf5115d9d9): this inbox hangs from the bell, and while it is open the stage sits under it via the existing
-  --pmn-push offset. When closed the stage returns tight below the title bar at the bell, aligned to the theme menu’s
+  treatment. Agent delivery never wakes a user-stopped thread. L8 B, PM7 Step4, 2026-10-30: the live notification inbox consumes DR-079’s shared menu lifecycle, including open/close and size changes. Alert content/acknowledgment/routing/focus
+  remain here and in F3-453; no separate per-look inbox motion owner is exempted. A retired source panel is not evidence of live-inbox closure. F3-1, Jared 2026-10-30, with the lead''s explicit 2026-10-30 open-inbox exception (mail 1030131044-4c44,
+  preserving bf5115d9d9): this inbox hangs from the bell, and while it is open the stage sits under it via the shared inbox owner’s measured stage offset. When closed the stage returns tight below the title bar at the bell, aligned to the theme menu’s
   resting top under its selector wrapper (F3-447). No chat-head or control-clearance offset is added. The existing inbox
   owner, actions, keyboard focus and alert lifecycle stay here; the exception is the lead''s ruling, not an added quote
-  from Jared. F3-6, final GUI 5abe285507, 2026-10-30: publish the authoritative push only after PM6_SPROUT has opened
-  the inbox and restored its layout visibility, on first open and every reopen. Read its resting layout height, never
+  from Jared. F3-6, final GUI 5abe285507, 2026-10-30: publish the authoritative push only after the shared menu owner has opened the inbox and restored its layout visibility, on first open and every reopen. Read its resting layout height, never
   the opening transform’s temporary bounding rectangle; during the owner’s height spring use its destination height.
   Recompute after content/height changes and window resize, and clear the offset on close. Preserve the existing gap
   (8 px in this concept), menu-sprout ownership and the one stage; no page-local timer, list or persisted geometry is
   added. DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell inbox
-  through the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top
+  through the shared inbox owner’s measured stage offset; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top
   placement and entry/exit click guards remain.'
 gui_related: true
 gui_classification_reason: This unit defines the visible sprout inbox panel, its dismiss and clear motions, and kind-specific compact action rows.
@@ -187,11 +179,11 @@ acceptance_criteria:
 - The inbox list bottom fade starts at 96% and bottom padding keeps card bottoms unclipped.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 - 'DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell inbox through
-  the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
+  the shared inbox owner’s measured stage offset; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
   and entry/exit click guards remain.'
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- "scripts/pm-plan-migration.py"
+- "scripts/pm-plan-index.py"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
@@ -201,8 +193,10 @@ node_compile_hint:
   mode: notification_inbox_sprout_panel_and_kind_action_rows
   create_worknodes: false
 source_lineage:
+- "DL-260/DL-280 source lineage only (no product DOM or CSS obligation): #themeMenuWrap, MENU_GAP and --pmn-push were concept selector/paint shims. F3-447 owns the theme-menu resting-top anchor; F3-461 supplies the inbox owner’s resting/destination-height stage offset, update triggers and close cleanup."
 - "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
 - "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
+- "DL-260 source lineage only (no product API or implementation obligation): #pmnPanel, retired #rsPanel and PM6_SPROUT were concept inbox selectors/lifecycle adapters; native presentation keeps the resting-height measurement and shared menu owner."
 preserved_exact_tokens:
 - "Details"
 - "primary_route_payload"
@@ -431,19 +425,14 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Every hoverable card, row, tile and icon in PMConcept7, the Usage plates included, runs one merged magnet and
+  Every hoverable product card, row, tile and icon, the Usage plates included, runs one merged magnet and
   spotlight hover system (PMH, DL-171). It replaces both the PM8 magnet, ring, wash and bloom and the Usage
   page's own plate lift and pointer sheen, and DR-072 makes it the single owner of the hover grammar. One shared
-  self-suspending animation driver rides the single merged document pointer-move handler that F3-446 owns
-  (`window.PM7_PMOVE` in the concept); no element has a pointer-move listener of its own. The driver runs only
+  self-suspending animation driver rides the single merged document pointer-move handler that F3-446 owns; no element has a pointer-move listener of its own. The driver runs only
   while a spring is unsettled, the NieR reticle travels, or a pointer or scroll change is pending, so it stops
   once a pointer resting on a box has settled, and nothing animates at idle except the explicitly approved
   Friendly breathing ring while a control is hovered. Box rects are read when the hover enters a scope and after
-  a scroll, a resize or a change inside that scope, never for every box on every frame. Targets are the
-  outermost match of the set: markup that opts in with `data-pmh` (its value names the kind, card, row, tile or
-  icon, and an empty value means card), every sheen-treated element, and the listed card, row, tile and icon
-  classes. `data-pmh="off"` takes an element out of the set even when its class matches, and nothing inside
-  `[data-pm-hover-exempt]` is a target or hovers one. Nested targets resolve to the outer box, and overlaying
+  a scroll, a resize or a change inside that scope, never for every box on every frame. DR-072's shared hover owner enrolls targets by semantic kind: card, row, tile, icon or small control; an enrolled target with no explicit kind uses card. Shared presentation roles, including sheen-treated surfaces, may enroll eligible targets, but an explicit opt-out overrides role enrollment. An exempt subtree admits no hover targets and cannot activate an ancestor target. Resolve the outermost eligible target through this owner, without requiring DOM attributes or CSS classes. Nested targets resolve to the outer box, and overlaying
   panels do not light boxes beneath them (occlusion). Intensity is one continuous field: 0 at the bleed distance
   outside a box, partial at its edge and full a short ramp inside, with no snap at edges, so a neighbour inside
   the bleed catches the light on its near edge and gets no magnet and no plate. In Basic, Friendly and Glass the
@@ -508,7 +497,7 @@ split_recommended: false
 depends_on: [F3-446, DL-171]
 unblocks: [DR-072]
 acceptance_criteria:
-  - "Every card, row, tile and icon target in PMConcept7, the Usage plates included, takes its hover from this one system; no surface keeps a second hover engine, a `.pm-sheen:hover` lift or glow, or a pointer sheen of its own."
+  - "Every product card, row, tile and icon target, the Usage plates included, takes its hover from this one system; no surface keeps a second hover engine, a `.pm-sheen:hover` lift or glow, or a pointer sheen of its own."
   - "One shared driver services every target through the single merged document pointer-move handler and adds no pointer-move listener; two seconds after the pointer leaves there is no hover-owned animation frame or running hover animation, and a pointer resting still adds no hover work after settling except the approved Friendly control ring, which stops on leave or hide."
   - "In Basic, Friendly and Glass the magnet moves a hovered card at most about 2.5 px at an edge, through the standalone translate channel only; icons and the Usage plates never move."
   - "The pointer light is a small soft pool, about 90 to 100 px in radius on cards, revealing a pre-painted sheen and hairline under the content; the emitted glow is restrained as in the current PMH reference, pre-painted, opacity-only, and stays at the box's rest rect while the box leans."
@@ -516,7 +505,7 @@ acceptance_criteria:
   - "Retro shows Raise (a 2 px hard-cut rise on a 3 to 5 px hard shadow whose far edge stays put, then a 1 px phosphor rule one 33 ms tick later, released in the reverse order) and NieR shows Lock-on (four 8 px ink corners stepping closed in two steps over 90 ms, then an ink line at .6, cutting between cards), gated by the brackets part with the ink-line fallback; neither shows a soft light, glow, blur, lean or neighbour light."
   - "Under Reduced Motion there is no magnet, travel, pointer-following light or neighbour light, and every family shows its hover state instantly; on a software-rendered path the field, light and plate are off and the magnet stops."
   - "A hover writes no inherited custom property and restyles no subtree beyond the hovered box and its lit neighbours, and no box-shadow or filter animates on a large element."
-  - "`data-pmh` opts markup in with a kind, `data-pmh=\"off\"` opts it out, nothing inside `[data-pm-hover-exempt]` hovers, and editor/terminal text has no card magnet; strip/header small controls use the shared control marker and resize dividers use F3-657."
+  - "DR-072/F3-465 enrolls targets by semantic kind, defaults unspecified enrolled kinds to card, honors explicit opt-out over role enrollment, and exempts a subtree from targeting or activating an ancestor; editor/terminal text has no card magnet, strip/header small controls use the shared control marker, and resize dividers use F3-657."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
   - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q20: Glass has only the F3-465/PMH shared hover light on registered edge-glow objects, including Usage/Home widgets, cards, tiles and rows. Remove the independent sheet-wide lg-shine/light, pointer listener and stale data-lg-lit. Its central sheen is at Basic’s level (Glass Dark white 4.5 percent, Glass Light accent 4.5 percent); edge glow is unchanged. Plain panels, bars and dialog ground do not light merely because the pointer crosses them. Retro and NieR retain their non-soft-light forms and existing Reduced Motion, software and gesture holds."
 validation_surfaces:
@@ -531,6 +520,7 @@ node_compile_hint:
   mode: magnet_spotlight_hover_system
   create_worknodes: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): data-pmh (including its empty/default-card and off forms), data-pm-hover-exempt, and the concept class selector list were browser enrollment hooks. Product kind enrollment, opt-out and subtree exemptions belong to DR-072/F3-465."
 - Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)
 - Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)
 - Concepts/onboarding/opus-5.5/src/js/18-hover.js and src/css/22-hover.css (the PMH engine and its look; concept

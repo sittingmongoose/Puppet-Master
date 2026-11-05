@@ -152,7 +152,7 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/LSPSupport.md, C
 
 ## 1. File Manager panel
 
-**Done when:** the tree lists files beneath the exact bound Project root or explicit app Computer/chat/granted directory; selecting a file uses §4.1/F-090; virtualized 10k+ rows remain usable; expansion restores by exact place/root/workspace identity. Open failed, directory read failure/Retry, empty root and inaccessible subfolders remain explicit. An inaccessible subfolder is not enumerated. Project expansion keeps `file_manager/expanded/{project_id}`; F supplies a separate versioned app key with actual Server/root/workspace identity. Hide ignored stays default off (ignored dimmed), and row cap remains 10_000 with the existing setting/Show more behavior. Without an admitted app directory show a picker/empty state; never enumerate home or another Project implicitly.
+**Done when:** the tree lists files beneath the exact bound Project root or explicit app Computer/chat/granted directory; selecting a file uses §4.1/F-090; virtualized 10k+ rows remain usable; expansion restores by exact place/root/workspace identity. Open failed, directory read failure/Retry, empty root and inaccessible subfolders remain explicit. An inaccessible subfolder is not enumerated. Project expansion keeps `file_manager/expanded/{project_id}`; app expansion requires a separate versioned key from the storage owner with actual Server/root/workspace identity. Hide ignored stays default off (ignored dimmed), and row cap remains 10_000 with the existing setting/Show more behavior. Without an admitted app directory show a picker/empty state; never enumerate home or another Project implicitly.
 
 Day-to-day tree interaction is implementation-ready and carries implementation-readiness detail: header search is an active repo/worktree tree filter, not universal search, full-text search, or a mixed-root result surface. Matching includes name-only and repo-relative path matches; ignored files remain dimmed by default or absent when Hide ignored is enabled. Floating-window File Manager behavior uses the same filter, `/worktree-aware` repo_id/worktree_id context, and Source Control strip (`Open in Source Control`, `Open diff`, `Open compare`) as the docked panel.
 
@@ -4949,8 +4949,7 @@ canonical_text: >-
   Concepts/PMConcept7.html: explorer/changed/open segmented tabs, a measured-height tree
   animator with full keyboard tree model, hover quick actions per row kind,
   multi-select with a selection bar, type-ahead filter, hide-ignored toggle,
-  collapse-all, worktree root menu, and the sprout context menu whose hook id
-  remains fileContextMenu. The context menu's Delete affordance follows the F2-205
+  collapse-all, worktree root menu, and the sprout context menu. The context menu's Delete affordance follows the F2-205
   trash-first decision (OS-trash soft delete with undo toast; permanent delete
   stays behind the fail-closed confirm; explicit disclosure when trash is
   impossible), and Open with / Copy path submenu entries keep their c2 command
@@ -4980,7 +4979,6 @@ source_lineage:
 - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (winning files concept; source-lineage-only)"
 - "Plans/FileSafe.md (F2-205 trash-first delete decision)"
 preserved_exact_tokens:
-- "fileContextMenu"
 - "explorer"
 - "changed"
 - "open"

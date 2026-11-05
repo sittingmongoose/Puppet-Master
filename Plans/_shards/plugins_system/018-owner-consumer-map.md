@@ -4,7 +4,7 @@ Source: `Plans/Plugins_System.md`
 
 Source lines: L644-L648
 
-Source SHA256: `d9a210e3a709ee17b5fd624480bcbe73969fee68d37c1c90113b20217cf23809`
+Source SHA256: `d97e5d98cdecbb61b4f04cff8e324766d07e19dd554894e5316581c065c247fb`
 
 ---
 

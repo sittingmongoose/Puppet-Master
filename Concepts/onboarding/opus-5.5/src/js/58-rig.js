@@ -187,8 +187,12 @@
       this.btext = this.bubble.querySelector('.pst-bt');
       /* new words that change the bubble's size are placed before they are painted, past Retro's stepped draw: a stepped
          stage left a grown bubble over a prop for up to a tenth of a second */
+      /* (placed here, from Pip's last drawn pose, not only on the next drawn frame: a screen change holds the stage while
+         the new screen comes in, and its line was written then, so the bubble grew where the old line had stood and was
+         painted there, over the page leaving with the old screen, until the stage was let go: Basic Dark at 740x768,
+         Begin to Away, FO-34 R1) */
       if (this.bubbleMO) this.bubbleMO.disconnect();
-      this.bubbleMO = new MutationObserver(() => { const b = this.bubble; if (!b || this.dead) return; const w = b.offsetWidth, h = b.offsetHeight; if (w !== this.bubbleW || h !== this.bubbleH) { this.bubbleW = w; this.bubbleH = h; this.frameT = -1e9; this.kick(); } });
+      this.bubbleMO = new MutationObserver(() => { const b = this.bubble; if (!b || this.dead) return; const w = b.offsetWidth, h = b.offsetHeight; if (w !== this.bubbleW || h !== this.bubbleH) { this.bubbleW = w; this.bubbleH = h; this.frameT = -1e9; if (this.H && this.famName !== 'nier') this.placeBubble(this.H, this.ang); this.kick(); } });
       this.bubbleMO.observe(this.bubble, { childList: true, characterData: true, subtree: true, attributes: true, attributeFilter: ['class'] });
       if (this.tube === 'phosphor') div('pst-crt', this.screen, '<i class="pst-roll"></i><i class="pst-scan"></i><i class="pst-mask"></i><i class="pst-noise"></i><i class="pst-vig"></i><i class="pst-glare"></i>');
       if (this.tube === 'teletype') { div('pst-grain', this.screen); this.head = div('pst-printer', this.screen, '<i class="pst-bail"></i><i class="pst-platen"></i><i class="pst-head"><b></b></i>').querySelector('.pst-head'); }
@@ -422,7 +426,49 @@
         this.sfx(spec.preview ? 'ghost' : 'lower', { x: tgt.ax, len: clamp(tgt.len, 0, 400) });
       }
       this.placeProp(pr);
+      if (!instant) this.enterUnder(pr, tgt);
       return pr;
+    }
+    /* NieR's speech box stands still over the stage (at the top of a short window's banner, over the column the props
+       hang in), and a prop lowered from above went down behind its PIP tab and its box: each of Creating's blocks for about
+       half a second at 740, the cloud on Safe's Add one. A prop whose place is under the box comes in from just below
+       its lower edge instead, fading in there as it is lowered the rest of the way. (Elsewhere the bubble moves out of a
+       prop's way, so props come in from above.) */
+    enterUnder(pr, tgt) {
+      const sb = this.famName === 'nier' ? this.keepOff : null;
+      if (!sb) return;
+      const g = 4 / ((this.map && this.map.k) || 1), len0 = pr.len;
+      pr.len = tgt.len; this.placeProp(pr);
+      const b = pr.box;
+      /* (a place under the box: across its span and below its middle; one that rests inside its margin appears in place) */
+      pr.len = b && b[0] < sb[2] + g && b[2] > sb[0] - g && b[1] >= (sb[1] + sb[3]) / 2 ? Math.max(len0, tgt.len - Math.max(0, b[1] - (sb[3] + g))) : len0;
+      this.placeProp(pr);
+    }
+    /* the speech box a moving prop keeps out of, in scene units: NieR's fixed box with its tab, or the bubble where it is
+       now (with its tail) */
+    band() { return this.famName === 'nier' ? this.nierBox || null : this.bubbleBox || null; }
+    /* A leaving prop is lifted away on its strings and fades. Lifted straight up, one under the speech box went up through
+       it (FO-34: the folder through Glass Dark's bubble on AST3; NieR's box and PIP tab at 740 on every Add one and Back).
+       It now lifts only as far as the box's lower edge, and fades there. */
+    holdUnder(pr, tg) {
+      const sb = this.band(), b = pr.box;
+      if (!sb || !b || pr.op <= .05) return;
+      const g = 4 / ((this.map && this.map.k) || 1);
+      if (b[0] >= sb[2] + g || b[2] <= sb[0] - g || b[1] < (sb[1] + sb[3]) / 2) return;
+      /* (the length that puts its top at the edge; one already resting inside the box's margin stays where it is) */
+      const hold = Math.max(pr.holdLen == null ? -Infinity : pr.holdLen, pr.len + Math.min(0, sb[3] + g - b[1]));
+      pr.holdLen = hold;
+      if (hold > tg.len) { tg.len = hold; pr.held = true; }
+    }
+    /* A badge (Basic's check and the ring that spreads from it) rides its prop's corner, and a prop at the pane's edge put
+       the ring past it, cut by the pane (FO-35, AST4's key at the right edge): the badge stays whole inside the visible
+       stage, and the ring spreads only as far as the room it has there */
+    keepIn(p) {
+      const v = this.vis; if (!v) return;
+      const pad = 2, r = p.reach || 0;
+      p.x = v.x1 - v.x0 > 2 * (r + pad) ? clamp(p.x, v.x0 + r + pad, v.x1 - r - pad) : (v.x0 + v.x1) / 2;
+      p.y = v.y1 - v.y0 > 2 * (r + pad) ? clamp(p.y, v.y0 + r + pad, v.y1 - r - pad) : (v.y0 + v.y1) / 2;
+      if (p.ringR) p.room = Math.max(1, (Math.min(p.x - v.x0, v.x1 - p.x, p.y - v.y0, v.y1 - p.y) - pad) / p.ringR);
     }
     /* where a prop hangs this frame, its strings and its opacity (render(); and addProp, so a new prop is never painted
        before it is placed) */
@@ -467,15 +513,9 @@
       if (hx + lo + dx < v.x0 + pad) dx = v.x0 + pad - (hx + lo);
       /* (up and down too, for a prop at rest: one coming in or going out passes the top edge on its strings, and Creating's
          blocks stand on the floor) */
-      const rest = pr.state !== 'out' && pr.spec.stack == null;
-      if (rest) {
-        if (hy + bt > v.y1 - pad) dy = v.y1 - pad - (hy + bt);
-        if (pr.op > .95 && hy + tp + dy < v.y0 + pad) dy = v.y0 + pad - (hy + tp);
-        /* off what it must not touch: a speech box that cannot move (keepOff) and the props already placed this frame
-           (the name's sign and the service's mark at a short window); it moves the least way that clears them all,
-           inside the pane, and is drawn a little smaller only when no way does */
-        const obs = []; if (this.keepOff && pr.op > .05) obs.push(this.keepOff);
-        this.props.forEach((q) => { if (q !== pr && q.box && q.placedN === this.renderN && q.op > .05 && q.state !== 'out') obs.push([q.box[0] - 4, q.box[1] - 4, q.box[2] + 4, q.box[3] + 4]); });
+      const rest = pr.state !== 'out' && pr.spec.stack == null, dxEdge = dx;
+      /* the least move (inside the pane) that clears every box in obs, or drawn a little smaller only when no way does */
+      const clear = (obs) => {
         const L0 = lo, H0 = hi, T0 = tp, B0 = bt, f0 = f; let g = 1;
         for (let it = 0; it < 6 && obs.length; it++) {
           const X0 = hx + lo + dx, X1 = hx + hi + dx, Y0 = hy + tp + dy, Y1 = hy + bt + dy;
@@ -488,6 +528,27 @@
           if (g <= .66) break;
           g *= .9; f = f0 * g; lo = L0 * g; hi = H0 * g; tp = T0 * g; bt = B0 * g;
         }
+        return g;
+      };
+      if (rest) {
+        if (hy + bt > v.y1 - pad) dy = v.y1 - pad - (hy + bt);
+        if (pr.op > .95 && hy + tp + dy < v.y0 + pad) dy = v.y0 + pad - (hy + tp);
+        /* off what it must not touch: a speech box that cannot move (keepOff) and the props already placed this frame
+           (the name's sign and the service's mark at a short window); it moves the least way that clears them all,
+           inside the pane, and is drawn a little smaller only when no way does */
+        const obs = []; if (this.keepOff && pr.op > .05) obs.push(this.keepOff);
+        this.props.forEach((q) => { if (q !== pr && q.box && q.placedN === this.renderN && q.op > .05 && q.state !== 'out') obs.push([q.box[0] - 4, q.box[1] - 4, q.box[2] + 4, q.box[3] + 4]); });
+        const g = clear(obs);
+        pr.restOff = { dx: dx - dxEdge, dy, g };
+      } else if (pr.state === 'out' && pr.restOff) {
+        /* a prop that leaves keeps the way it was moved off the box and its neighbours at rest: dropping it at once made the
+           prop jump up to 8 px in the frame it began to leave, into NieR's box at 740 (FO-34 kind) */
+        const o = pr.restOff; f *= o.g; lo *= o.g; hi *= o.g; tp *= o.g; bt *= o.g; dx += o.dx; dy = o.dy;
+        /* ...and makes way, as a prop at rest does, for a speech box that cannot move: a bubble that found nowhere clear
+           and claimed a place over it (Retro's 740 banner on Name > Safe: between Pip's face and the leaving sign there
+           was no room, so the bubble claimed the sign's place and the sign faded out under it for 8-13 frames), or NieR's
+           box. The move is kept for the rest of its way out, which holdUnder then keeps below the box */
+        if (this.keepOff && pr.op > .05) { const g = clear([this.keepOff]); pr.restOff = { dx: dx - dxEdge, dy, g: o.g * g }; }
       }
       return { dx, dy, f, box: [hx + lo + dx, hy + tp + dy, hx + hi + dx, hy + bt + dy] };
     }
@@ -508,8 +569,12 @@
     boxOf(g) { try { const b = g.getBBox(); return [b.x, b.y, b.width, b.height]; } catch (e) { return null; } }
     boxInScene(el, gap) {
       if (!el || !el.classList.contains('on') || !(el.textContent || '').trim() || !this.map || !this.screen) return null;
-      const r0 = this.screen.getBoundingClientRect(), c = el.getBoundingClientRect(), sx = r0.width / (this.screen.offsetWidth || r0.width || 1), m = this.map;
-      if (!c.width || !c.height) return null;
+      const r0 = this.screen.getBoundingClientRect(), b = el.getBoundingClientRect(), sx = r0.width / (this.screen.offsetWidth || r0.width || 1), m = this.map;
+      if (!b.width || !b.height) return null;
+      /* (and its name tab: NieR's PIP tab stands 19 px above the box, outside the box's own rectangle, and the cloud on
+         Safe at 740 sat behind it, kept off the box only: FO-39) */
+      const tab = el.querySelector(':scope > .pst-bn'), q = tab && tab.getBoundingClientRect();
+      const c = q && q.width && q.height ? { left: Math.min(b.left, q.left), top: Math.min(b.top, q.top), right: Math.max(b.right, q.right), bottom: Math.max(b.bottom, q.bottom) } : b;
       const u = (px, py) => [((px - r0.left) / sx - m.ox) / m.k, ((py - r0.top) / sx - m.oy) / m.k];
       const a = u(c.left, c.top), z = u(c.right, c.bottom), g = (gap || 0) / m.k;
       return [a[0] - g, a[1] - g, z[0] + g, z[1] + g];
@@ -764,6 +829,18 @@
     }
     toScreen(p) { const m = this.map || { k: 1, ox: 0, oy: 0 }; return [m.ox + p[0] * m.k, m.oy + p[1] * m.k]; }
     headCentre() { const ps = this.ps, H = this.H || this.headAt(ps.C.x, ps.C.y, ps.th, ps.dy); return this.headXf([32, 45], H, this.ang || 0, 1, 1); }
+    /* Pip's control bar (the two sticks and the screw eyes under them) as a box in the bubble's pixels, from the kit's own
+       geometry and the pose this frame draws it in (ctlXf: the transform render() writes), widened by gap (FO-59) */
+    barBox(gap) {
+      const ps = this.ps; if (!ps || this.famName === 'nier') return null;
+      const K = KIT().kit, g = K.GEO.full, st = K.sticks(g), r = g.w / 2, ring = (g.ring || 0) + (g.ringW || 0);
+      /* in the kit's units: the sticks' ends with their round caps, and the screw eyes hanging under them */
+      const q = st.s1.concat(st.s2).map(([x, y]) => [x - r, y - r, x + r, y + r]).concat((this.barPts || []).map(([x, y]) => [x - ring, y - ring, x + ring, y + ring]));
+      const x0 = Math.min(...q.map((b) => b[0])), y0 = Math.min(...q.map((b) => b[1])), x1 = Math.max(...q.map((b) => b[2])), y1 = Math.max(...q.map((b) => b[3]));
+      /* its four corners where this frame draws the bar (it rocks while Pip works) */
+      const sc = [[x0, y0], [x1, y0], [x0, y1], [x1, y1]].map((p) => this.toScreen(this.ctlXf(p, ps.C, ps.phi)));
+      return [Math.min(...sc.map((p) => p[0])) - gap, Math.min(...sc.map((p) => p[1])) - gap, Math.max(...sc.map((p) => p[0])) + gap, Math.max(...sc.map((p) => p[1])) + gap];
+    }
     propCentre(pr) { return pr.pos ? [pr.pos[0], pr.pos[1]] : this.slotXY(pr.spec); }
     /* ------------------------------------------------------------- loop */
     loop() {
@@ -846,6 +923,7 @@
       // props: each hangs from its own anchor above the stage
       this.props.forEach((pr, id) => {
         const tg = this.propTarget(pr);
+        if (pr.state === 'out' && !red) this.holdUnder(pr, tg);
         if (red) { pr.ax = tg.ax; pr.len = tg.len; pr.a = 0; pr.av = 0; pr.op = tg.op; pr.scale = (pr.spec.scale || 1); }
         else {
           const axA = F.pk * (tg.ax - pr.ax) - F.pc * pr.axv; pr.axv += axA * dt; pr.ax += pr.axv * dt;
@@ -866,13 +944,13 @@
         }
         if (!pr.settled && pr.state !== 'out' && Math.abs(pr.len - tg.len) < 2.5 && Math.abs(pr.lenv) < 30) this.settle(pr);
         if (pr.spec.ground && !pr.landed && (red || (Math.abs(pr.len - tg.len) < 1.6 && Math.abs(pr.lenv) < 22))) { pr.landed = true; pr.landT = this.t; this.touchdown(pr); if (this.onLanded) this.onLanded(pr); }
-        if (pr.state === 'out' && pr.len < 0 && (red || pr.op < .05)) { pr.el.remove(); pr.strs.forEach((s) => s.remove()); this.props.delete(id); }
+        if (pr.state === 'out' && (pr.len < 0 || pr.held) && (red || pr.op < .05)) { pr.el.remove(); pr.strs.forEach((s) => s.remove()); this.props.delete(id); }
       });
       // particles
       for (let i = this.fx.length - 1; i >= 0; i--) {
         const p = this.fx[i]; p.life += dt;
         if (p.life >= p.max) { p.e.remove(); this.fx.splice(i, 1); continue; }
-        if (p.follow) { if (p.follow.pos) { p.x = p.follow.pos[0] + p.off[0]; p.y = p.follow.pos[1] + p.off[1]; } continue; }
+        if (p.follow) { if (p.follow.pos) { p.x = p.follow.pos[0] + p.off[0]; p.y = p.follow.pos[1] + p.off[1]; } if (p.reach != null) this.keepIn(p); continue; }
         p.vy += p.g * dt; p.x += (p.vx + (p.sway ? Math.sin(this.t * 2 + p.sway) * 20 : 0)) * dt; p.y += p.vy * dt; p.r += p.vr * dt;
         const k = Math.max(0, 1 - dt * (p.drag || 0)); p.vx *= k; if (p.drag > 1) p.vy *= k;
       }
@@ -942,7 +1020,7 @@
         const k = p.life / p.max;
         if (p.kind === 'ripple') { const e = ease(k), m = p.small ? .45 : 1; p.e.setAttribute('rx', R(6 + e * 90 * m)); p.e.setAttribute('ry', R(1.5 + e * 12 * m)); p.e.setAttribute('stroke-opacity', R((1 - k) * .7)); return; }
         const op = p.kind === 'conf' ? (k > .85 ? (1 - k) / .15 : 1) : p.kind === 'check' ? (k < .75 ? 1 : (1 - k) / .25) : p.kind === 'ring' ? (1 - k) * .9 : 1 - k * k;
-        const sc = p.kind === 'ring' ? 1 + ease(k) * 2.2 : p.kind === 'check' ? (k < .1 ? k / .1 * 1.18 : k < .18 ? 1.18 - (k - .1) / .08 * .18 : 1) : 1;
+        const sc = p.kind === 'ring' ? Math.min(1 + ease(k) * 2.2, p.room || Infinity) : p.kind === 'check' ? (k < .1 ? k / .1 * 1.18 : k < .18 ? 1.18 - (k - .1) / .08 * .18 : 1) : 1;
         p.e.setAttribute('transform', `translate(${R(p.x)} ${R(p.y)}) rotate(${R(p.r * 57.3 / 6)}) scale(${R(sc)})`);
         p.e.setAttribute('opacity', R(Math.max(0, op)));
       });
@@ -1010,9 +1088,14 @@
       const face = [Math.min(...fc.map((c) => c[0])) - gap, Math.min(...fc.map((c) => c[1])) - gap, Math.max(...fc.map((c) => c[0])) + gap, Math.max(...fc.map((c) => c[1])) + gap];
       /* (its tail too: about 12 px below the bubble when it points down, left of it when it points left) */
       if (tall) face[1] -= 12; else face[2] += 12;
-      this.props.forEach((pr) => { if (pr.box && pr.op > .05 && pr.state !== 'out') { const a = this.toScreen([pr.box[0], pr.box[1]]), c = this.toScreen([pr.box[2], pr.box[3]]); obs.push([a[0] - gap, a[1] - gap, c[0] + gap, c[1] + gap]); } });
+      /* (a leaving prop too, while it shows: the bubble with the next screen's words moved onto a prop still fading out,
+         FO-34, Basic Light A3) */
+      this.props.forEach((pr) => { if (pr.box && pr.op > .05) { const a = this.toScreen([pr.box[0], pr.box[1]]), c = this.toScreen([pr.box[2], pr.box[3]]); obs.push([a[0] - gap, a[1] - gap, c[0] + gap, c[1] + gap]); } });
       const v = this.vis, vs = v ? [this.toScreen([v.x0, v.y0]), this.toScreen([v.x1, v.y1])] : null;
       const X0 = Math.max(pad, vs ? vs[0][0] + pad : pad), X1 = Math.min(bx - bw - pad, vs ? vs[1][0] - bw - pad : bx), Y0 = Math.max(top, vs ? vs[0][1] + 4 : top), Y1 = Math.min(by - bh - foot, vs ? vs[1][1] - bh - 4 : by);
+      /* (and Pip's control bar: where a prop beside Pip took the usual place, the bubble went up over the sticks Pip hangs
+         from, Retro Dark's Look 'Soft and cosy. I like it.', FO-59) */
+      const bar = this.barBox(gap); if (bar) obs.push(bar);
       const fx = (face[0] + face[2]) / 2, sideOf = (cx) => (cx + bw / 2 < fx ? 'L' : 'R');
       const over = (cx, cy, o) => cx < o[2] && cx + bw > o[0] && cy < o[3] && cy + bh > o[1];
       const fits = (cx, cy) => cx >= X0 - .5 && cx <= X1 + .5 && cy >= Y0 - .5 && cy <= Y1 + .5;
@@ -1035,7 +1118,7 @@
       if (!claimed) this.bubbleKeepOff = null;
       if (!at) {
         /* nowhere clear: off Pip's face at least, nearest its usual place; the props keep off it next frame */
-        const cand = [[x, y], [x, face[1] - bh], [x, face[3]], [face[0] - bw, y], [face[2], y], [X0, Y0], [X1, Y0]].map(([cx, cy]) => [clamp(cx, X0, X1), clamp(cy, Y0, Y1)]).filter(([cx, cy]) => !over(cx, cy, face));
+        const cand = [[x, y], [x, face[1] - bh], [x, face[3]], [face[0] - bw, y], [face[2], y], [X0, Y0], [X1, Y0]].map(([cx, cy]) => [clamp(cx, X0, X1), clamp(cy, Y0, Y1)]).filter(([cx, cy]) => !over(cx, cy, face) && !(bar && over(cx, cy, bar)));
         at = cand.sort((p, q) => Math.hypot(p[0] - x, p[1] - y) - Math.hypot(q[0] - x, q[1] - y))[0] || [x, y];
         this.bubbleClaim = talking ? at.slice() : null;
       }
@@ -1049,7 +1132,11 @@
       if (at[0] !== x || at[1] !== y) { if (!this.bubbleRel || at !== prev) this.bubbleRelT = this.t; this.bubbleRel = [at[0] - hx0, at[1] - hy0]; } else this.bubbleRel = null;
       [x, y] = at;
       this.bubbleSide = talking ? sideOf(x) : null;
-      this.bubble.style.transform = `translate(${R(x)}px, ${R(y)}px)`;
+      /* where it is, with its tail, for the props that leave under it (holdUnder) */
+      if (talking) { const m = this.map || { k: 1, ox: 0, oy: 0 }, u = (px, py) => [(px - m.ox) / m.k, (py - m.oy) / m.k], a0 = u(x - gap - (tall ? 0 : 10), y - gap), a1 = u(x + bw + gap, y + bh + gap + (tall ? 10 : 0)); this.bubbleBox = [a0[0], a0[1], a1[0], a1[1]]; } else this.bubbleBox = null;
+      /* (its place as `translate`: its pop's `scale` (30-art.css pstBubble) then grows it from its tail where it stands; a
+         `transform` here was scaled with it, so the bubble flew in from the stage's corner, over Pip, FO-44) */
+      this.bubble.style.translate = `${R(x)}px ${R(y)}px`;
       this.bubble.dataset.side = tall ? 'down' : 'left';
       this.bubble.style.setProperty('--tx', R(clamp(head[0] - x, 16, bw - 16)) + 'px');
       this.bubble.style.setProperty('--ty', R(clamp(head[1] - y, 12, bh - 12)) + 'px');
@@ -1062,13 +1149,17 @@
       this.root.classList.add('pst-swap');
       this.build();
       this.direct(this.spec);
+      /* the rebuilt rig is drawn in its pose before the browser can paint it, as addProp places a new prop (FA-10): a theme
+         written after this frame's draw (NieR's moment writes it from inside a frame) left the new head and control with
+         no transform for that frame, the kit's 64-unit Pip at the stage's corner (FO-40) */
+      this.render();
       requestAnimationFrame(() => this.root.classList.remove('pst-swap'));
       this.kick();
     }
     setLayout(name) {
       if (name === this.layoutName) return;
       this.layoutName = name; this.ps = null;
-      this.build(); this.direct(this.spec);
+      this.build(); this.direct(this.spec); this.render(); /* (drawn in its pose before it can be painted, as setTheme) */
     }
     setReduced(r) { if (this.reduced === !!r) return; this.reduced = !!r; this.root.dataset.reduced = r ? '1' : '0'; this.dirty = true; this.kick(); }
     // something on the screen is being pointed at: Pip turns to it rather than to the pointer

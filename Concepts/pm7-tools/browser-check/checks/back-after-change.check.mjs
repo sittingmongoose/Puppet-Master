@@ -26,7 +26,10 @@ const LOOK = () => {
 const look = async (A) => { await A.sleep(450); await A.frame().waitForFunction(() => !document.querySelector('.o55-pane > .o55-layer.o55-out, .o55-pane > .o55-layer.o55-hold'), null, { timeout: 4000 }).catch(() => {}); return A.frame().evaluate(LOOK); };
 const judge = (s, stale, where, bad) => {
   if (s.raw.length) bad.push(`${where} ${s.screen} "${s.title}": raw ${JSON.stringify([...new Set(s.raw)])}`);
-  for (const e of stale) if ((!e.on || new RegExp('^(' + e.on + ')$').test(s.screen)) && s.text.includes(e.x)) bad.push(`${where} ${s.screen} "${s.title}": stale "${e.x}"`);
+  for (const e of stale) { if (e.on && !new RegExp('^(' + e.on + ')$').test(s.screen)) continue;
+    /* (a stale entry is a literal, x, or a pattern, re: FO-45's raw locator families) */
+    const hit = e.re ? (s.text.match(new RegExp(e.re)) || [])[0] : s.text.includes(e.x) ? e.x : null;
+    if (hit) bad.push(`${where} ${s.screen} "${s.title}": ${e.re ? 'a raw locator' : 'stale'} "${hit}"`); }
 };
 const pressBack = (A) => A.frame().locator('.o55-pane > .o55-layer:not(.o55-out) [data-o55-do="back"]').filter({ visible: true }).first().click();
 const pressOn = (A) => A.frame().locator('.o55-pane > .o55-layer:not(.o55-out) .o55-foot .o55-primary').first().click();
@@ -87,7 +90,7 @@ async function forward(A, stale, bad, label, choose = {}, until = 'review') {
   bad.push(`${label}: never reached ${until}`); return seq;
 }
 async function row(t, label, { scenario, establish, keep, times = 2, invalidate, stale = [], choose = {}, until = 'review', after, force = [], noReturn }) {
-  const A = onboardingApp(t), bad = []; await A.boot(scenario ? { scenario } : {});
+  SELFTEST = t.args.selftest || ''; const A = onboardingApp(t), bad = []; await A.boot(scenario ? { scenario } : {});
   await establish(A); if (keep) for (let i = 0; i < times; i++) await keep(A, i);
   await invalidate(A);
   const back = noReturn ? await walkBackContinuing(A, stale, bad, label, noReturn) : await walkBack(A, stale, bad, label), fwd = await forward(A, stale, bad, label, choose, until);
@@ -170,7 +173,7 @@ async function resumeAt(A, kind, at) {
     saved.signin = { service: 'gitea', kind: 'forge', state: 'done', account: 'jared', instance_key: 'gitea|' + svc.forge_provider_variant + '|' + svc.forge_instance_url };
     O55.store.set('onboarding', saved); if (O55.boot && O55.boot.chip) O55.boot.chip();
   }, [kind, at]);
-  await A.frame().locator('#o55-resume [data-o55-chip="resume"]').click(); await A.sleep(1400);
+  await A.resume();
 }
 /* a session the page itself wrote: walked by clicks to the screen with an admitted own Gitea server, Close pressed, then
    resumed by the Resume chip's click */
@@ -184,7 +187,7 @@ async function writtenAt(A, at) {
       if (at !== 'online-details') { await A.click('next', undefined, 'safe'); if (at === 'review') await toReview(A); } } }
   }
   await A.screen(at); await A.frame().locator('[data-o55-do="close"]').first().click(); await A.sleep(900);
-  await A.frame().locator('#o55-resume [data-o55-chip="resume"]').click({ timeout: 10000 }); await A.sleep(1400);
+  await A.resume();
 }
 const RETIRED_STALE = [{ on: 'online-signin|online-details|ex-repos|safe|review', x: 'retired.example.test' }, { on: 'online-signin|online-details|ex-repos|safe|review', x: 'Gitea Cloud' }];
 const pickerOn = { 'online-service': async (A, s) => { if (s.acts.includes('notNow')) await A.click('notNow'); else { await A.click('pick', 'github'); await A.click('next'); } },
@@ -288,24 +291,42 @@ const goRestore = async (A, bad, label) => { await editBeginTo(A); await A.click
 const goNas = async (A, bad, label) => { await editBeginTo(A); await A.click('pick', 'existing'); await A.click('sub', 'device'); await A.click('next', undefined, 'nas-find');
   await A.waitFor(() => !!document.querySelector('.o55-card[data-arg="nas-home"]'), null, 8000); await A.sleep(400); if (bad) await emptyPicker(A, bad, label + ' (device)');
   await A.click('device', 'nas-home'); await A.click('next', undefined, 'nas-identity'); await throughNas(A); await onToReview(A, { name: async (A) => { if (!(await A.frame().evaluate(() => O55.S.sess.drafts.main.project_name))) await A.fill('o55f-name', 'Fresh one'); await A.click('next'); } }); };
-async function flow(t, label, fn) { const A = onboardingApp(t), bad = []; await A.boot(); await fn(A, bad); t.log(label + (bad.length ? '\n  ' + bad.join('\n  ') : ': clean')); await t.check(label, !bad.length, bad.join(' | ').slice(0, 1500)); }
+async function flow(t, label, fn) { SELFTEST = t.args.selftest || ''; const A = onboardingApp(t), bad = []; await A.boot(); await fn(A, bad); t.log(label + (bad.length ? '\n  ' + bad.join('\n  ') : ': clean')); await t.check(label, !bad.length, bad.join(' | ').slice(0, 1500)); }
 /* ---------------------------------------------------------------- an unchanged answer clears nothing (row 13)
    Sol's FO22-N1 at 9b9dd16: Edit Begins as, keep Restore and Continue, Back to Review lost the backup. Each Begins-as kind,
    kept unchanged, then Back to Review: the plan, the picker's choice and Review's commit are exactly as before. */
 const nameOn = { name: async (A) => { if (!(await A.frame().evaluate(() => O55.S.sess.drafts.main.project_name))) await A.fill('o55f-name', 'Kept one'); await A.click('next'); } };
-const throughShare = async (A) => {
+/* a shared folder's sign-in typed as a person types it: the account where it is empty and the password, once per visit to
+   the screen, then its check. The page empties the password as the check starts and keeps a pass only for the password
+   it checked (70-screens-nas.js check and bind.pw: a new password is a new pwGen, rule 5), so typing it again after a
+   check takes the pass away: this loop did that on every pass, checked again each time and only left after its 14th
+   (FO-42: about 8 minutes per SMB film). Nothing is typed on a screen whose check has passed (its Continue is Use), and
+   the loop waits for the screen's own Continue whichever control it is (Check access, then Use). */
+const shareFoot = (A) => A.waitFor(() => { const b = document.querySelector('.o55-pane > .o55-layer:not(.o55-out) .o55-foot .o55-primary'); return !!b && !b.disabled && b.getAttribute('aria-disabled') !== 'true'; }, null, 20000).catch(() => {});
+/* (with bad: FO-42's regression, a share is signed in to once: one password typed, one check run. --set selftest=refill
+   types the password again on every pass, as the old filler did, and rows 13b and 14 must fail) */
+let SELFTEST = '';
+const shareChecks = (A) => A.frame().evaluate(() => Object.keys(O55.S.sess.ops || {}).filter((k) => /^smb:/.test(k)));
+const throughShare = async (A, bad) => {
+  let at = null, typed = new Set(); const pw = [], checks0 = await shareChecks(A);
+  const done = async () => { if (!bad) return; const n = (await shareChecks(A)).filter((k) => !checks0.includes(k)).length;
+    if (pw.length > 1 || n > 1) bad.push(`FO-42: the shared folder's password was typed ${pw.length} times and checked ${n} times (${pw.join(', ')})`); };
   for (let i = 0; i < 14; i++) {
-    const s = await A.snap(); if (['name', 'like', 'safe', 'review'].includes(s.screen)) return;
-    for (const f of s.fields) if ((f.type === 'password' || (f.type === 'text' && !f.value)) && !/domain|shareText|addr|port/i.test(f.id)) await A.fill(f.id, f.type === 'password' ? 'correct horse' : 'jared').catch(() => {});
+    const s = await A.snap(); if (['name', 'like', 'safe', 'review'].includes(s.screen)) return done();
+    if (s.screen !== at) { at = s.screen; typed = new Set(); }
+    if (SELFTEST === 'refill' || !(s.primary && s.primary.action === 'use' && !s.primary.disabled))
+      for (const f of s.fields) if ((SELFTEST === 'refill' || !typed.has(f.id)) && (f.type === 'password' || (f.type === 'text' && !f.value)) && !/domain|shareText|addr|port/i.test(f.id)) {
+        typed.add(f.id); if (f.type === 'password') pw.push(s.screen + ' #' + i); await A.fill(f.id, f.type === 'password' ? 'correct horse' : 'jared').catch(() => {}); }
     if (await A.has('use') && (await A.snap()).buttons.some((b) => b.action === 'use' && !b.disabled)) await A.click('use');
-    else { await A.waitEnabled(s.primary && s.primary.action || 'next').catch(() => {}); await pressOn(A); }
+    else { await shareFoot(A); if (await A.has('use') && (await A.snap()).buttons.some((b) => b.action === 'use' && !b.disabled)) await A.click('use'); else await pressOn(A); }
     await A.sleep(1600);
   }
+  return done();
 };
-const toNasBy = async (A, method) => { await fromBegin(A, 'device'); await A.click('next', undefined, 'nas-find'); await A.waitFor(() => !!document.querySelector('.o55-card[data-arg="nas-home"]'), null, 8000);
+const toNasBy = async (A, method, bad) => { await fromBegin(A, 'device'); await A.click('next', undefined, 'nas-find'); await A.waitFor(() => !!document.querySelector('.o55-card[data-arg="nas-home"]'), null, 8000);
   if (method === 'ssh') { await A.click('device', 'nas-home'); await A.click('next', undefined, 'nas-identity'); await throughNas(A); }
   else { await A.click('method', method); await A.sleep(400); const s = await A.snap(), pick = s.buttons.find((b) => b.action === (method === 'mounted' ? 'volume' : 'share'));
-    await A.click(pick.action, pick.arg); await A.sleep(300); await pressOn(A); await A.sleep(900); await throughShare(A); }
+    await A.click(pick.action, pick.arg); await A.sleep(300); await pressOn(A); await A.sleep(900); await throughShare(A, bad); }
   await onToReview(A, nameOn); };
 const toCloudRestore = async (A) => { await A.click('pick', 'this'); await A.click('next', undefined, 'begin'); await A.click('pick', 'restore'); await A.click('next', undefined, 'r-source');
   await A.click('source', 'cloud'); await A.sleep(400); await pressOn(A); await A.screen('online-signin'); await A.click('signIn'); await A.waitFor(() => O55.S.sess.signin.state === 'done', null, 15000); await A.sleep(800);
@@ -325,7 +346,7 @@ const onOldPage = async (A, page, walk) => { await A.boot(); await A.frame().got
   await walk(A); await A.frame().locator('[data-o55-do="close"]').first().click(); await A.sleep(900); return A.frame().evaluate(() => JSON.stringify(O55.store.get('onboarding', null))); };
 const resumeRecord = async (A, saved) => { await A.boot(); await A.frame().locator('[data-o55-do="close"]').first().click(); await A.sleep(800);
   await A.frame().evaluate((s) => { O55.store.set('onboarding', JSON.parse(s)); if (O55.boot && O55.boot.chip) O55.boot.chip(); }, saved);
-  await A.frame().locator('#o55-resume [data-o55-chip="resume"]').click({ timeout: 15000 }); await A.sleep(1500); };
+  await A.resume(); };
 /* ---------------------------------------------------------------- the generated unchanged-answer row (row 20) */
 /* the draft (canonical key order, its revision counter left out), Review's rows and the Back path */
 const SNAP20 = () => { const S = O55.S, canon = (v) => (Array.isArray(v) ? v.map(canon) : v && typeof v === 'object' ? Object.keys(v).sort().reduce((o, k) => { o[k] = canon(v[k]); return o; }, {}) : v);
@@ -381,28 +402,55 @@ const INVAR = () => { const S = O55.S, d = S.sess.drafts.main, n = S.sess.nas ||
   if (!/^existing_/.test(d.project_mode) && d.project_source_ref) out.push('source ' + d.project_source_ref + ' for a ' + d.project_mode + ' Project');
   if (d.project_mode !== 'restore' && d.backup_source_ref) out.push('backup ' + d.backup_source_ref + ' for a ' + d.project_mode + ' Project');
   if (d.online_mode === 'none' && ((d.forge && d.forge !== 'none') || d.repository_ref || d.forge_account_ref)) out.push('online service ' + d.forge + ' / ' + (d.repository_ref || d.forge_account_ref) + ' with no online copy or source');
-  if (!nasSource && !nasFiles && d.project_mode !== 'restore' && nasRefs.length) out.push('NAS access ' + nasRefs.join(', ') + ' with no NAS in the plan');
+  /* (SW-41: a restore keeps NAS access only when it restores from the NAS) */
+  const nasRestore = d.project_mode === 'restore' && (S.sess.restore || {}).source === 'nas';
+  if (!nasSource && !nasFiles && !nasRestore && nasRefs.length) out.push('NAS access ' + nasRefs.join(', ') + ' with no NAS in the plan');
   nasRefs.filter((r) => /^(ssh-key:|preflight:ssh:)/.test(r)).forEach((r) => { if (!n.profile || r.indexOf(n.profile) < 0) out.push('SSH access ' + r + ' not for the current NAS profile ' + (n.profile || '(none)')); });
   return out; };
+/* FO-45, widened: no reference the plan stores shows raw where a person reads a place. A raw reference is one of the
+   families the page stores for a place, a source, an access or a home (an SSH connection ssh: and its profile sshp:, a
+   share smb: or nfs: and their profile shp:, a mounted volume mounted:, a Puppet Master NAS or Server pm:, a Server
+   record server:, an access or a check ssh-key:, pairing: or preflight:, an account account:, a fixture's fixture:; a
+   URL's scheme is not one), or any reference the session holds, whole or with its leading schemes taken off one at a
+   time down to its opaque hash (FO-45 itself was the stored 'ssh:sshp:server-this:<hash>/volume1/projects' shown with one
+   scheme stripped). rawStale is the Back walk's stale list for both; rawIn judges any texts. */
+const RAW_RE = '(?<![\\w/.-])(?:sshp|shp|ssh|smb|nfs|mounted|pm|server|ssh-key|pairing|preflight|account|fixture):(?!//)[^\\s\'"«»,;()]+';
+const STORED_REFS = () => { const S = O55.S, out = new Set();
+  const add = (v) => { if (typeof v !== 'string' || !/^[a-z][a-z0-9-]*:/.test(v) || /^[a-z]+:\/\//.test(v)) return;
+    /* (a suffix still raw starts with a scheme or a profile's slug, or carries its hash; what is left once they are gone
+       is the place as a person reads it: an NFS export 'media.local:/mnt/tank/share', a share's path, a volume) */
+    for (let r = v, i = 0; r && i < 8; i++) { if (r.length >= 8 && (/^[a-z][a-z0-9-]*:/.test(r) || /(^|[^0-9a-f])[0-9a-f]{8}([^0-9a-f]|$)/.test(r))) out.add(r); else break; const m = /^[^:]*:(.+)$/.exec(r); if (!m) break; r = m[1]; } };
+  const walk = (v, depth = 0) => { if (depth > 6) return; if (Array.isArray(v)) v.forEach((x) => walk(x, depth + 1)); else if (v && typeof v === 'object') Object.values(v).forEach((x) => walk(x, depth + 1)); else add(v); };
+  walk(S.sess.drafts.main); walk(S.sess.nas || {}); walk(S.sess.backup || {}); walk(S.sess.restore || {}); walk((S.sess.server || {}).ref || null); walk(S.sess.connect || {});
+  return [...out]; };
+const rawStale = async (A) => [{ re: RAW_RE }, ...(await A.frame().evaluate(STORED_REFS)).map((x) => ({ x }))];
+const rawIn = (texts, refs) => { const hits = []; for (const [where, text] of texts) { const t = String(text || ''); const m = t.match(new RegExp(RAW_RE)); if (m) hits.push(`${where}: "${m[0]}"`); for (const r of refs) if (t.includes(r)) hits.push(`${where}: "${r}"`); } return [...new Set(hits)]; };
 /* the screen's own selection: its chosen cards and switches, and what its fields hold */
 const SEL = () => { const l = document.querySelector('.o55-pane > .o55-layer:not(.o55-out)') || document; const sheet = [...document.querySelectorAll('.o55-sheet[data-open="true"]')].find((x) => !x.closest('.o55-out')) || null;
   const scope = [l, sheet].filter(Boolean), q = (sel) => scope.flatMap((x) => [...x.querySelectorAll(sel)]);
   return { screen: O55.S.sess.screen, on: q('[role="radio"][aria-checked="true"], [role="switch"][aria-checked="true"]').map((b) => b.getAttribute('data-o55-do') + ':' + (b.getAttribute('data-arg') || '')).sort(),
     fields: q('input[type="text"], input:not([type]), textarea').map((i) => i.id + '=' + i.value).sort() }; };
-/* a real click, or its click event when the pane's sub-pixel drift keeps Playwright from calling the control stable (the
-   window drifts by about 0.3 px a frame; a person's click lands, this row judges what the click does) */
+/* a real click, or its click event when Playwright refuses the control as unstable. That was reported as the pane drifting
+   about 0.3 px a frame; it is one card trembling (fo-kit, 2026-11-04): after Review > Edit name > Change the pointer rests
+   where Change was clicked, 0.5 px inside the bottom edge of the files sheet's 'custom' card, and the card's own hover lift
+   (10-window.css .o55-card:hover translateY(-1px), a 0.18 s transition) carries its edge past the pointer and back, 0.3 to
+   0.9 px, for as long as the pointer rests there. A page issue, handed to fo-fields, with row 25 as its regression; a
+   person's click lands, and this row judges what the click does */
 const clickOrSend = async (A, sel) => { const el = A.frame().locator(sel).filter({ visible: true }).first(); await el.click({ timeout: 4000 }).catch(async () => { await el.dispatchEvent('click'); }); await A.sleep(300); };
 /* another value on the screen, not continued: a card or switch not chosen, else a field typed differently */
-const pickOther = async (A) => {
-  const c = await A.frame().evaluate(() => { const l = document.querySelector('.o55-pane > .o55-layer:not(.o55-out)'), sheet = [...document.querySelectorAll('.o55-sheet[data-open="true"]')].find((x) => !x.closest('.o55-out')) || null;
-    const NAV = ['loc:network']; /* (a pick that is itself a step on: the files place on a NAS opens the NAS steps) */
+const pickOther = async (A, which = 'first') => {
+  const c = await A.frame().evaluate((which) => { const l = document.querySelector('.o55-pane > .o55-layer:not(.o55-out)'), sheet = [...document.querySelectorAll('.o55-sheet[data-open="true"]')].find((x) => !x.closest('.o55-out')) || null;
+    const NAV = ['loc:network', 'storage:network_location']; /* (a pick that is itself a step on: the files place on a NAS opens the NAS steps, on This computer's Name and on a Server's) */
     /* (truly on show: not in a closed sheet or an inert part, and with a size and visibility of its own) */
     const shown = (b) => { const r = b.getBoundingClientRect(), cs = getComputedStyle(b); return r.width > 0 && r.height > 0 && cs.visibility !== 'hidden' && Number(cs.opacity) > 0 && !b.closest('.o55-sheet:not([data-open="true"])') && !b.closest('[inert]') && !b.closest('[aria-hidden="true"]'); };
     const all = [...new Set([sheet, l].filter(Boolean).flatMap((x) => [...x.querySelectorAll('[role="radio"]')]))].filter((b) => shown(b) && b.getAttribute('aria-checked') !== 'true' && b.getAttribute('aria-disabled') !== 'true' && !b.disabled && !NAV.includes(b.getAttribute('data-o55-do') + ':' + b.getAttribute('data-arg')));
     document.querySelectorAll('[data-kit-pick]').forEach((x) => x.removeAttribute('data-kit-pick'));
-    const b = all[0]; if (b) { b.setAttribute('data-kit-pick', '1'); return { do: b.getAttribute('data-o55-do'), arg: b.getAttribute('data-arg') }; }
+    /* (which: 'first' or 'last' of the alternatives; 'last' answers only when there is a second one: SW-41) */
+    if (which === 'last' && all.length < 2) return null;
+    const b = which === 'last' ? all[all.length - 1] : all[0]; if (b) { b.setAttribute('data-kit-pick', '1'); return { do: b.getAttribute('data-o55-do'), arg: b.getAttribute('data-arg') }; }
+    if (which === 'last') return null;
     const f = [...(l || document).querySelectorAll('input[type="text"], input:not([type])')].find((i) => shown(i) && !i.disabled && !i.readOnly);
-    return f ? { field: f.id, value: f.value } : null; });
+    return f ? { field: f.id, value: f.value } : null; }, which);
   if (!c) return null;
   if (c.field) { await A.fill(c.field, (c.value || '') + ' changed'); await A.sleep(400); return 'typed ' + c.field; }
   /* (the exact element chosen, wherever it is; when something on the page keeps it from a real click, its click event is
@@ -424,7 +472,7 @@ const ANSWERS = () => { const S = O55.S, canon = (v) => (Array.isArray(v) ? v.ma
     restore: [r.source || null, r.kit || null, r.cloud || null, r.device || null, r.pick || null, r.reachedFor || null], online: [ol.forge || null, ol.variant || null, ol.wanted === undefined ? null : !!ol.wanted],
     backup: [b.dest || null, b.sub || null], ui: [u.where || null, u.whereAt || null, u.begin || null, u.beginSub || null],
     server: (() => { const v = S.sess.server || {}; return [v.kind || null, v.target || null, !!v.manual, v.addr || '', v.platform || null, v.name || '', !!v.selfConfirmed]; })(), signin: (() => { const si = S.sess.signin || {}; return [si.state || null, !!si.tokenTyped, si.method || null, si.account || null]; })(),
-    nasPick: [n.key || null, n.user || '', n.userEdit || false] }; };
+    nasPick: [n.key || null, n.user || '', n.userEdit || false], accounts: JSON.stringify(canon(S.sess.forgeAccounts || {})) }; };
 /* the steps whose own work is a check, a sign-in, a pairing, an install or a Server's setup (60-ui-core's NO_TXN): no pick */
 const NO_PICK = ['welcome', 'look', 'review', 'nas-identity', 'nas-install', 'r-preview', 's-ready', 'c-pair', 'c-ready']; /* (s-wait, s-confirm, c-review, nas-pmpair and r-unlock are picked or typed on too: Astra delta3) */ /* (the key, user, token and Server kind steps are picked on too: lead 1103074359) */
 /* Back from Review to Welcome, and on every step on the way another value picked (or typed) first: Back must take the
@@ -467,6 +515,13 @@ const ABANDON = { 'Home NAS files over SSH': ['files on This computer', filesHer
   'Home NAS source mounted': ['Begins as New', beginNew], 'a completed new Server': ['This computer', computerHere], 'a connected existing Server': ['This computer', computerHere],
   'restore from a Recovery Kit': ['Begins as New', beginNew], 'restore from a cloud drive': ['Begins as New', beginNew], 'online import': ['Begins as New', beginNew],
   'online new copy': ['Not now for the copy', copyNotNow], 'away with Tailscale': ['This computer', computerHere] };
+/* the steps an answer given up must take with it, an oracle of the kit's own beside the page's onBranch (SW-41) */
+const ABANDON_NOT = { 'Home NAS files over SSH': NAS_STEPS, 'Home NAS files mounted': NAS_STEPS, 'Home NAS source over SSH': NAS_STEPS, 'Home NAS source mounted': NAS_STEPS,
+  'a completed new Server': [...SERVER_STEPS, 'away', 'away-setup'], 'a connected existing Server': ['c-route', 'c-review', 'c-pair', 'c-ready'],
+  'restore from a Recovery Kit': ['r-source', 'r-unlock', 'r-pick', 'r-preview'], 'restore from a cloud drive': ['r-source', 'r-unlock', 'r-pick', 'r-preview'],
+  'online import': ['ex-repos'], 'online new copy': ['online-service', 'online-signin', 'online-details'], 'away with Tailscale': [...SERVER_STEPS, 'away', 'away-setup'] };
+/* --set rich=<part of a name>,… runs only those rich configurations in rows 20 and 21 */
+const richOf = (t) => (t.args.rich ? RICH.filter(([k]) => String(t.args.rich).split(',').some((x) => k.includes(x))) : RICH);
 const KEEP = () => { const S = O55.S, d = S.sess.drafts.main, n = S.sess.nas || {}, r = S.sess.restore || {}, c = document.querySelector('.o55-pane > .o55-layer:not(.o55-out) [data-o55-do="commit"]');
   return { mode: d.project_mode, name: d.project_name, src: d.project_source_ref, transport: d.project_transport, loc: d.local_location, online: d.online_mode, forge: d.forge, repo: d.repository_ref,
     backup: d.backup_source_ref, btransport: d.backup_transport, storage: d.storage_mode, preflight: d.preflight_result_refs, auth: d.source_access_authorization_refs,
@@ -474,7 +529,7 @@ const KEEP = () => { const S = O55.S, d = S.sess.drafts.main, n = S.sess.nas || 
     restore: [r.source || null, r.kit || null, r.pick || null], commit: !!c && !c.disabled && c.getAttribute('aria-disabled') !== 'true' }; };
 async function keptUnchanged(t, label, establish, later = false) {
   await flow(t, label, async (A, bad) => {
-    await establish(A); await A.screen('review'); const before = await A.frame().evaluate(KEEP);
+    await establish(A, bad); await A.screen('review'); const before = await A.frame().evaluate(KEEP);
     if (await A.has('edit', 'begin')) await editBeginTo(A); else { for (let i = 0; i < 6 && (await A.snap()).screen !== 'begin'; i++) await pressBack(A); await A.screen('begin'); }
     if (later) await A.click('later'); else { await A.waitEnabled('next'); await A.click('next'); } await A.sleep(1000);
     await goOnToReview(A);
@@ -678,7 +733,7 @@ export const tests = {
           saved.online = { purpose: 'copy', forge: card, variant, wanted: true, addresses: { [card + '|' + variant]: 'https://retired.example.test' } };
           Object.assign(saved.drafts.main, { online_mode: 'none', forge: 'none', forge_provider_variant: null, forge_instance_url: '' });
           O55.store.set('onboarding', saved); if (O55.boot && O55.boot.chip) O55.boot.chip(); }, [card, variant]);
-        await A.frame().locator('#o55-resume [data-o55-chip="resume"]').click(); await A.sleep(1400);
+        await A.resume();
         await emptyPicker(A, bad, `AST-1 ${variant}`);
         if (await A.frame().locator('.o55-pane > .o55-layer:not(.o55-out) #o55f-address').count()) { await A.fill('o55f-address', 'https://new.example.test'); await A.sleep(400); }
         const r = await A.frame().evaluate(() => { const p = document.querySelector('.o55-pane > .o55-layer:not(.o55-out) .o55-foot .o55-primary'); return { on: !!p && !p.disabled && p.getAttribute('aria-disabled') !== 'true', variant: O55.S.sess.drafts.main.forge_provider_variant }; });
@@ -693,7 +748,7 @@ export const tests = {
         if (t.args.predecessorE9) { const saved = await onOldPage(A, t.args.predecessorE9, toFolderProject); await resumeRecord(A, saved); await A.screen('review'); return; }
         await toFolderProject(A); await A.frame().locator('[data-o55-do="close"]').first().click(); await A.sleep(900);
         await A.frame().evaluate(() => { const saved = O55.store.get('onboarding', null); delete saved.branch; O55.store.set('onboarding', saved); if (O55.boot && O55.boot.chip) O55.boot.chip(); });
-        await A.frame().locator('#o55-resume [data-o55-chip="resume"]').click(); await A.sleep(1400); await A.screen('review'); },
+        await A.resume(); await A.screen('review'); },
       invalidate: async (A) => { await editBegin('new')(A); await A.fill('o55f-name', 'Astra new project'); await A.click('next'); await onToReview(A); },
       noReturn: (A) => A.frame().evaluate(() => { const d = O55.S.sess.drafts.main; return d.project_source_ref || /recipe-app/.test(d.local_location) ? `brought the old folder back (${d.project_source_ref}, ${d.local_location})` : null; }),
       after: abandoned(['ex-folder']), force: ['ex-folder'], choose: name });
@@ -737,7 +792,7 @@ export const tests = {
          the record, as resumeAt does) */
       if (A.sandboxed()) { await A.frame().locator('[data-o55-do="close"]').first().click({ timeout: 5000 }).catch(() => {}); await A.sleep(900);
         await A.frame().evaluate((saved) => { O55.store.set('onboarding', JSON.parse(saved)); if (O55.boot && O55.boot.chip) O55.boot.chip(); }, saved); }
-      await A.frame().locator('#o55-resume [data-o55-chip="resume"]').click({ timeout: 15000 }); await A.sleep(1500);
+      await A.resume();
       const got = await facts(A);
       const lost = [...before.hosts.filter((h) => !got.hosts.includes(h)).map((h) => 'host ' + h), ...before.auth.filter((k) => !got.auth.includes(k)).map((k) => 'authorization ' + k), ...before.keys.filter((k) => !got.keys.includes(k)).map((k) => 'key ' + k)];
       if (lost.length) bad.push('AST-D2: the resumed session lost ' + lost.join(', '));
@@ -763,14 +818,16 @@ export const tests = {
     await keptUnchanged(t, '13a Later kept', async (A) => { await A.click('pick', 'this'); await A.click('next', undefined, 'begin'); await A.click('later'); await onToReview(A); }, true);
   },
   async 'row 13b · the NAS Begins-as kind kept unchanged (Edit, Continue, on to Review) loses nothing: over SSH, a shared folder (SMB), NFS, a mounted volume'(t) {
-    for (const m of ['ssh', 'smb', 'nfs', 'mounted']) await keptUnchanged(t, `13b NAS (${m}) kept`, (A) => toNasBy(A, m));
+    SELFTEST = t.args.selftest || '';
+    for (const m of ['ssh', 'smb', 'nfs', 'mounted']) await keptUnchanged(t, `13b NAS (${m}) kept`, (A, bad) => toNasBy(A, m, bad));
   },
   async 'row 14 · the NAS way in changed inside the same beginning (SSH, then a mounted volume, a shared folder, NFS): the plan keeps nothing of the SSH access (Sol FO22-N2)'(t) {
+    SELFTEST = t.args.selftest || '';
     for (const m of ['mounted', 'smb', 'nfs'])
       await flow(t, `14 NAS SSH > ${m}`, async (A, bad) => { await toNasProject(A);
         await editBeginTo(A); await A.click('next', undefined, 'nas-find'); await A.waitFor(() => !!document.querySelector('.o55-card[data-arg="nas-home"]'), null, 8000);
         await A.click('method', m); await A.sleep(400); const s = await A.snap(), pick = s.buttons.find((b) => b.action === (m === 'mounted' ? 'volume' : 'share'));
-        await A.click(pick.action, pick.arg); await A.sleep(300); await pressOn(A); await A.sleep(900); await throughShare(A); await onToReview(A, nameOn);
+        await A.click(pick.action, pick.arg); await A.sleep(300); await pressOn(A); await A.sleep(900); await throughShare(A, bad); await onToReview(A, nameOn);
         const d = await A.frame().evaluate(() => { const d = O55.S.sess.drafts.main; return { src: d.project_source_ref, tr: d.project_transport, auth: d.source_access_authorization_refs, pre: d.preflight_result_refs }; });
         if ((d.auth || []).some((r) => /^ssh-key:/.test(r)) || (d.pre || []).some((r) => /^preflight:ssh:/.test(r))) bad.push(`14 ${m}: the SSH access stays in the plan: ${JSON.stringify(d)}`);
         if (!String(d.src || '').startsWith(m + ':') || d.tr !== 'mounted') bad.push(`14 ${m}: the source is not the ${m} one: ${JSON.stringify({ src: d.src, tr: d.tr })}`); });
@@ -882,12 +939,12 @@ export const tests = {
      rich configurations, and for each every Edit link its Review shows, Edit > Continue with nothing changed > Review: the
      draft deep-equals the draft before (but its revision counter), Review shows the same rows, the Back path is the same */
   async 'row 20 · generated: every Review Edit link of each rich configuration (Home NAS files over SSH and mounted, a Home NAS source over SSH and mounted, a completed new Server, a connected existing Server, restore from a Recovery Kit and a cloud drive, online import and new copy, backup on Home NAS and a cloud drive, away with Tailscale), Edit and Continue unchanged: draft, Review rows and Back path all unchanged'(t) {
-    for (const [kind, est] of RICH)
+    for (const [kind, est] of richOf(t))
       await flow(t, `20 ${kind}`, async (A, bad) => { await est(A); await A.screen('review');
         const links = [...new Set((await A.snap()).buttons.filter((b) => b.action === 'edit').map((b) => b.arg))];
         if (!links.length) bad.push(`20 ${kind}: Review shows no Edit link`);
         for (const tg of links) {
-          const before = await A.frame().evaluate(SNAP20);
+          const before = await A.frame().evaluate(SNAP20), ans0 = await A.frame().evaluate(ANSWERS);
           await A.click('edit', tg); await A.sleep(700); const opened = (await A.snap()).screen;
           const walked = await keepOn(A);
           if (walked[walked.length - 1] !== 'review') { bad.push(`20 ${kind} Edit ${tg} (${opened}): Continue unchanged never came back to Review: ${walked.join(' > ')}`); break; }
@@ -896,21 +953,30 @@ export const tests = {
           const rk = [...new Set([...before.rows, ...after.rows])].filter((r) => !before.rows.includes(r) || !after.rows.includes(r));
           if (rk.length) bad.push(`20 ${kind} Edit ${tg} kept: Review's rows changed: ${rk.join(' | ')}`);
           if (JSON.stringify(before.history) !== JSON.stringify(after.history)) bad.push(`20 ${kind} Edit ${tg} kept: the Back path changed: ${before.history.join(' > ')} became ${after.history.join(' > ')}`);
+          /* (SW-41: and the session's own answers and settled facts, not only the plan: the NAS, restore, online, backup,
+             Computer, sign-in and connect state, the hosts and keys a device knows, nasFacts and forgeAccounts. --set
+             selftest=dropfacts drops nasFacts and forgeAccounts after the kept Edit, and this row must fail) */
+          if (SELFTEST === 'dropfacts') await A.frame().evaluate(() => { const S = O55.S; if (Object.keys(S.sess.nasFacts || {}).length) S.sess.nasFacts = {}; if (Object.keys(S.sess.forgeAccounts || {}).length) S.sess.forgeAccounts = {}; });
+          const ans1 = await A.frame().evaluate(ANSWERS), ak = Object.keys(ans0).filter((k) => k !== 'draft' && JSON.stringify(ans0[k]) !== JSON.stringify(ans1[k]));
+          if (ak.length) bad.push(`20 ${kind} Edit ${tg} kept: the session changed: ${ak.map((k) => k + ' ' + String(JSON.stringify(ans0[k])).slice(0, 70) + ' > ' + String(JSON.stringify(ans1[k])).slice(0, 70)).join('; ')}`);
           t.log(`20 ${kind} Edit ${tg}: ${walked.join(' > ')}`);
         }
         const inv = await A.frame().evaluate(INVAR); if (inv.length) bad.push(`20 ${kind}: the plan holds references no answer gives: ${inv.join('; ')}`);
-        /* (FO-45: Review and Name read a NAS place by its own name and path, never a connection profile's locator) */
-        const rows = (await A.frame().evaluate(SNAP20)).rows.filter((r) => /\b(sshp|shp|ssh):/.test(r)); if (rows.length) bad.push(`20 ${kind}: Review shows a connection profile's locator: ${rows.join(' | ')}`);
-        const seq = await walkBack(A, [{ x: 'sshp:' }, { x: 'shp:server' }, { x: 'ssh:' }], bad, `20 ${kind}`), missed = (BACK_HAS[kind] || []).filter((x) => !seq.includes(x));
+        /* (FO-45, widened: Review, Name and every Back screen read a place by its own name and path, never a raw reference of
+           any family the page stores: RAW_RE, STORED_REFS) */
+        const raw = await rawStale(A), rows = rawIn((await A.frame().evaluate(SNAP20)).rows.map((r) => ['Review row ' + r.split('=')[0], r.slice(r.indexOf('=') + 1)]), raw.filter((e) => e.x).map((e) => e.x));
+        if (rows.length) bad.push(`20 ${kind}: Review shows a raw locator: ${rows.join(' | ')}`);
+        const seq = await walkBack(A, raw, bad, `20 ${kind}`), missed = (BACK_HAS[kind] || []).filter((x) => !seq.includes(x));
         if (missed.length) bad.push(`20 ${kind}: the Back run from Review leaves out still-current steps ${missed.join(', ')} (${seq.join(' > ')})`);
         const foreign = (BACK_NOT[kind] || []).filter((x) => seq.includes(x)); if (foreign.length) bad.push(`20 ${kind}: the Back run shows another way in's steps ${foreign.join(', ')} (${seq.join(' > ')})`);
         if (seq[seq.length - 1] !== 'welcome') bad.push(`20 ${kind}: the Back run from Review stopped on ${seq[seq.length - 1]} (${seq.join(' > ')})`); });
     /* abandoning an answer clears what it gave the plan (Astra AST-D6: files moved to This computer kept the NAS place and
        its key): each configuration's own answer given up, then every reference in the plan still describes an answer */
-    for (const [kind, est] of RICH) { if (!ABANDON[kind]) continue; const [to, move] = ABANDON[kind];
+    for (const [kind, est] of richOf(t)) { if (!ABANDON[kind]) continue; const [to, move] = ABANDON[kind];
       await flow(t, `20 ${kind} given up: ${to}`, async (A, bad) => { await est(A); await A.screen('review'); await move(A); await A.screen('review');
         const inv = await A.frame().evaluate(INVAR); if (inv.length) bad.push(`20 ${kind} > ${to}: the plan still holds ${inv.join('; ')}`);
         const seq = await walkBack(A, [], bad, `20 ${kind} > ${to}`);
+        const kept = (ABANDON_NOT[kind] || []).filter((x) => seq.includes(x)); if (kept.length) bad.push(`20 ${kind} > ${to}: the Back run still shows the given-up answer's steps ${kept.join(', ')} (${seq.join(' > ')})`);
         if (seq[seq.length - 1] !== 'welcome') bad.push(`20 ${kind} > ${to}: the Back run from Review stopped on ${seq[seq.length - 1]} (${seq.join(' > ')})`); }); }
     /* Astra AST-D5: Begins as kept, then another device's address typed at the NAS step: it starts from nothing (no trust,
        install, profile or access of the Home NAS), and a reload invents no settled fact for it */
@@ -928,7 +994,7 @@ export const tests = {
       await A.reopen();
       if (A.sandboxed()) { await A.frame().locator('[data-o55-do="close"]').first().click({ timeout: 5000 }).catch(() => {}); await A.sleep(900);
         await A.frame().evaluate((saved) => { O55.store.set('onboarding', JSON.parse(saved)); if (O55.boot && O55.boot.chip) O55.boot.chip(); }, saved); }
-      await A.frame().locator('#o55-resume [data-o55-chip="resume"]').click({ timeout: 15000 }); await A.sleep(1500);
+      await A.resume();
       const f1 = await A.frame().evaluate(FACTS);
       const made = [...f1.host.filter((h) => !f0.host.includes(h)).map((h) => 'known host ' + h), ...f1.auth.filter((k) => !f0.auth.includes(k)).map((k) => 'authorization ' + k)];
       if (made.length) bad.push('AST-D5: resume invented settled facts for a device never trusted or installed: ' + made.join(', ')); });
@@ -950,9 +1016,11 @@ export const tests = {
       await fromBegin(A, 'device'); await A.click('next', undefined, 'nas-find'); await A.waitFor(() => !!document.querySelector('.o55-card[data-arg="nas-home"]'), null, 8000);
       await A.click('device', 'nas-home'); await A.waitEnabled('next').catch(() => {}); await pressOn(A); await A.sleep(900);
       if ((await A.snap()).screen !== 'nas-pmpair') { bad.push('a Puppet Master NAS did not open pairing: on ' + (await A.snap()).screen); return; }
-      if (await A.has('pair')) await A.click('pair');
+      /* (SW-40: a case that cannot reach its state fails, it never passes by not running; --set selftest=nopair leaves the
+         pairing unstarted and this case must fail) */
+      if (await A.has('pair') && SELFTEST !== 'nopair') await A.click('pair');
       const paired = await A.frame().waitForFunction(() => !!(O55.S.sess.nas || {}).paired, null, { timeout: 20000 }).then(() => true).catch(() => false);
-      if (!paired) { t.log('20 PM NAS: pairing by approval did not complete in this fixture within 20 s; the case could not run'); return; }
+      if (!paired) { bad.push('20 PM NAS: pairing by approval did not complete within 20 s, so nothing of this case was checked'); return; }
       /* (on to the folder step, where a folder is picked, then on to Review) */
       await A.waitEnabled('next').catch(() => {}); await pressOn(A); await A.sleep(900); await throughNas(A); await onToReview(A, nameOn);
       if ((await A.snap()).screen !== 'review') { bad.push('never reached Review: on ' + (await A.snap()).screen); return; }
@@ -985,7 +1053,7 @@ export const tests = {
       await A.reopen();
       if (A.sandboxed()) { await A.frame().locator('[data-o55-do="close"]').first().click({ timeout: 5000 }).catch(() => {}); await A.sleep(900);
         await A.frame().evaluate((s) => { O55.store.set('onboarding', JSON.parse(s)); if (O55.boot && O55.boot.chip) O55.boot.chip(); }, saved); }
-      await A.frame().locator('#o55-resume [data-o55-chip="resume"]').click({ timeout: 15000 }); await A.sleep(1500);
+      await A.resume();
       const hosts = await A.frame().evaluate(HOSTS), want = [host, host + ':2222'].filter((h) => !hosts.includes(h));
       if (want.length) bad.push('after the reload these endpoints are no longer trusted: ' + want.join(', ') + ' (known: ' + hosts.join(', ') + ')'); });
     /* Muse delta minor 4: a drive reached for another service is not this place reached */
@@ -998,13 +1066,17 @@ export const tests = {
      configuration and every Edit link its Review shows, another value picked (or typed), then Back without Continue: the
      draft, Review's rows, the screen's own selection (opened again) and the Back path are all as they were */
   async 'row 21 · generated twin of row 20: every Review Edit link of each rich configuration, another value picked or typed, then Back without Continue: draft, Review rows, the screen\'s own selection and the Back path all unchanged (lead ruling 1103040758)'(t) {
-    for (const [kind, est] of RICH)
+    for (const [kind, est] of richOf(t))
       await flow(t, `21 ${kind}`, async (A, bad) => { await est(A); await A.screen('review');
         const links = [...new Set((await A.snap()).buttons.filter((b) => b.action === 'edit').map((b) => b.arg))];
-        for (const tg of links) {
+        /* (SW-41: each Edit target with its first alternative, then its last where it has a second; a screen with nothing to
+           pick or type fails, except the verification steps the lead's ruling leaves without picks, NO_PICK) */
+        for (const [tg, which] of links.flatMap((x) => [[x, 'first'], [x, 'last']])) {
           const before = await A.frame().evaluate(SNAP20);
           await A.click('edit', tg); await A.sleep(700); const sel0 = await A.frame().evaluate(SEL);
-          const did = await pickOther(A); if (!did) { t.log(`21 ${kind} Edit ${tg}: nothing to pick on ${sel0.screen}`); await pressBack(A); await A.sleep(700); continue; }
+          const did = await pickOther(A, which);
+          if (!did) { if (which === 'first') { if (NO_PICK.includes(sel0.screen)) t.log(`21 ${kind} Edit ${tg}: ${sel0.screen} is a verification step, nothing to pick`); else bad.push(`21 ${kind} Edit ${tg}: nothing to pick or type on ${sel0.screen}, so nothing was checked`); }
+            for (let i = 0; i < 3 && (await A.snap()).screen !== 'review'; i++) { await pressBack(A); await A.sleep(700); } continue; }
           if ((await A.snap()).screen !== sel0.screen) { bad.push(`21 ${kind} Edit ${tg}: ${did} left ${sel0.screen} for ${(await A.snap()).screen} without Continue`); break; }
           for (let i = 0; i < 3 && (await A.snap()).screen !== 'review'; i++) { await pressBack(A); await A.sleep(700); }
           if ((await A.snap()).screen !== 'review') { bad.push(`21 ${kind} Edit ${tg}: Back after ${did} on ${sel0.screen} did not return to Review`); break; }
@@ -1058,7 +1130,10 @@ export const tests = {
         async (A) => { await A.click('edit', 'safe', 'safe'); await A.click('online', undefined, 'online-service'); }, async (A) => { await A.fill('o55f-address', 'https://gitea2.platyr.test'); }],
       ['the repository name', async (A) => { await toDetails(A); await A.click('next', undefined, 'safe'); await toReview(A); }, async (A) => { await A.click('edit', 'online-details', 'online-details'); }, async (A) => { await A.fill('o55f-repo', 'garden-plot'); }],
       ['a custom folder path', async (A) => { await A.toSafe('Notes'); await toReview(A); }, async (A) => { await A.click('edit', 'name', 'name'); },
-        async (A) => { await A.click('change'); await clickOrSend(A, '.o55-layer:not(.o55-out) [data-o55-do="loc"][data-arg="custom"]'); await A.sleep(400); await A.fill('o55f-custom', '~/Projects/elsewhere'); }]
+        async (A) => { await A.click('change'); await clickOrSend(A, '.o55-layer:not(.o55-out) [data-o55-do="loc"][data-arg="custom"]'); await A.sleep(400); await A.fill('o55f-custom', '~/Projects/elsewhere'); }],
+      /* (SW-41: the S3 bucket fields: a restore from a cloud drive, its place switched to an S3 bucket and a bucket typed) */
+      ['an S3 bucket for a restore', toCloudRestore, async (A) => { await editBeginTo(A); await pressOn(A); await A.screen('r-source'); },
+        async (A) => { await A.click('cloud', 's3'); await A.sleep(500); await A.fill('o55f-acc-bucket', 'another-bucket'); }]
     ];
     for (const [what, est, reach, type] of TYPED)
       await flow(t, `21 typed: ${what}, then Back`, async (A, bad) => { await est(A); await A.screen('review'); const start = await A.frame().evaluate(SNAP20);
@@ -1171,8 +1246,10 @@ export const tests = {
        off and Approve off */
     await flow(t, '21 a guest\'s words ticked on s-ready, then Back', async (A, bad) => { await toNewServer(A, 's-ready'); await A.sleep(600);
       if ((await A.snap()).screen !== 's-ready') { bad.push('not on s-ready: ' + (await A.snap()).screen); return; }
+      /* (SW-40: --set selftest=noguest turns the concept's owner host off here, so no guest ever asks: this case must fail) */
+      if (SELFTEST === 'noguest') await A.frame().evaluate(() => { window.__O55_CONCEPT_HOST_OFF__ = true; const sv = O55.S.sess.server; sv.candidates = []; O55.S.save(); O55.ui.refresh(); });
       const has = await A.frame().waitForFunction(() => !!document.querySelector('.o55-pane > .o55-layer:not(.o55-out) [data-o55-do="match"]'), null, { timeout: 12000 }).then(() => true).catch(() => false);
-      if (!has) { t.log('21 s-ready: no waiting guest appeared in this fixture within 12 s; the tick case could not run'); return; }
+      if (!has) { bad.push('21 s-ready: no waiting guest appeared within 12 s, so the tick case checked nothing'); return; }
       const id = await A.frame().evaluate(() => document.querySelector('.o55-pane > .o55-layer:not(.o55-out) [data-o55-do="match"]').getAttribute('data-arg'));
       await A.click('match', id); await A.sleep(400);
       const on = await A.frame().evaluate((id) => !!((O55.S.sess.server.candidates || []).find((c) => c.id === id) || {}).confirmed, id); if (!on) { bad.push('the tick did not take'); return; }
@@ -1198,7 +1275,7 @@ export const tests = {
       const plan0 = await A.frame().evaluate(() => { const d = O55.S.sess.drafts.main; return [d.project_mode, d.online_mode, d.repository_ref]; });
       await A.frame().locator('[data-o55-do="close"]').first().click(); await A.sleep(900);
       await A.frame().evaluate(() => { const saved = O55.store.get('onboarding', null); saved.ui = Object.assign({}, saved.ui, { begin: 'new', beginSub: null, beganAs: 'new' }); O55.store.set('onboarding', saved); if (O55.boot && O55.boot.chip) O55.boot.chip(); });
-      await A.frame().locator('#o55-resume [data-o55-chip="resume"]').click({ timeout: 15000 }); await A.sleep(1500); await A.screen('review');
+      await A.resume(); await A.screen('review');
       await editBeginTo(A); await A.sleep(500); const sel = await A.frame().evaluate(SEL);
       if (!sel.on.includes('pick:existing') || !sel.on.includes('sub:online')) bad.push('disagreeing record: Begins as shows ' + JSON.stringify(sel.on) + ', not the plan\'s existing online Project');
       await keepOn(A); const plan1 = await A.frame().evaluate(() => { const d = O55.S.sess.drafts.main; return [d.project_mode, d.online_mode, d.repository_ref]; });
@@ -1247,7 +1324,7 @@ export const tests = {
         await A.reopen();
         if (A.sandboxed()) { await A.frame().locator('[data-o55-do="close"]').first().click({ timeout: 5000 }).catch(() => {}); await A.sleep(900);
           await A.frame().evaluate((s) => { O55.store.set('onboarding', JSON.parse(s)); if (O55.boot && O55.boot.chip) O55.boot.chip(); }, saved); }
-        await A.frame().locator('#o55-resume [data-o55-chip="resume"]').click({ timeout: 15000 }); await A.sleep(1500);
+        await A.resume();
         const back = (await A.snap()).screen; for (let i = 0; i < 2 && (await A.snap()).screen === back; i++) { await pressBack(A); await A.sleep(800); }
         const after = await read(A); if (after !== committed) bad.push(`${what}: resumed on ${back}, then Back: the answer is ${JSON.stringify(after)}, not the committed ${JSON.stringify(committed)}`);
         const w = await keepOn(A); if (w[w.length - 1] !== 'review') { bad.push(`${what}: never back to Review: ${w.join(' > ')}`); return; }
@@ -1297,5 +1374,148 @@ export const tests = {
       await A.waitFor(() => O55.S.sess.connect.paired, null, 15000); await pressOn(A); await A.screen('c-ready'); await A.click('createNew'); await A.screen('begin');
       await A.click('pick', 'new'); await A.click('next', undefined, 'name'); await A.fill('o55f-name', 'Notes'); await onToReview(A);
       await toThis(A); await run(A, bad, '19 existing Server > This computer', (x) => CONNECT(x) || OLD_SERVER.includes(x)); });
+  },
+  /* the way back in once the Resume chip has tucked into the bell (fields follow-up, final-onb's K16 timing: a loaded
+     machine reached the chip after 19-notify.js had tucked it): Close, the chip shows and then tucks by itself, the bell
+     lists Finish setting up, and A.resume(), which every row uses, goes in by the bell's Continue rather than waiting on a
+     chip that is not shown. The session is resumed where it was closed with its answers and Back path as they were, then
+     Back runs to Welcome and the wizard goes on again to Review. */
+  async 'row 23 · back in by the bell once the Resume chip has tucked: closed on online details and on Review (a Home NAS source over SSH), the chip tucks, Finish setting up resumes where it was closed, then Back to Welcome and on'(t) {
+    for (const [at, walk, on] of [['online-details', (A) => toDetails(A), (A, bad) => forward(A, [], bad, '23 online-details', Object.assign({ name: async (A) => { await A.fill('o55f-name', 'Notes'); await A.click('next'); } }, pickerOn))],
+      ['review', toNasProject, (A) => keepOn(A)]])
+      await flow(t, `23 closed on ${at}, back in by the bell`, async (A, bad) => {
+        await walk(A); await A.screen(at); const before = await A.frame().evaluate(SNAP20);
+        await A.frame().locator('[data-o55-do="close"]').first().click();
+        const chip = await A.frame().waitForFunction(() => { const c = document.getElementById('o55-resume'); return !!c && c.getClientRects().length > 0; }, null, { timeout: 10000 }).then(() => true, () => false);
+        if (!chip) bad.push('no Resume chip after Close');
+        const tucked = await A.frame().waitForFunction(() => { const c = document.getElementById('o55-resume'); return !!c && c.classList.contains('pmn-pin-tucked'); }, null, { timeout: 15000 }).then(() => true, () => false);
+        if (!tucked) { bad.push('the Resume chip never tucked into the bell'); return; }
+        if (await A.frame().locator('#o55-resume [data-o55-chip="resume"]').isVisible()) bad.push('the tucked chip is still shown');
+        const way = await A.resume();
+        if (way !== 'bell') bad.push(`with the chip tucked, the way back in was ${way}, not the bell`);
+        const s = await look(A); if (s.screen !== at) bad.push(`resumed on ${s.screen}, not ${at} where it was closed`);
+        const after = await A.frame().evaluate(SNAP20), dk = Object.keys(Object.assign({}, before.draft, after.draft)).filter((k) => JSON.stringify(before.draft[k]) !== JSON.stringify(after.draft[k]));
+        if (dk.length) bad.push(`resumed by the bell, the draft changed: ${dk.join(', ')}`);
+        if (JSON.stringify(before.history) !== JSON.stringify(after.history)) bad.push(`resumed by the bell, the Back path changed: ${before.history.join(' > ')} became ${after.history.join(' > ')}`);
+        /* (the bell's own list: a closed panel keeps its last rows in the DOM until it next opens) */
+        if (await A.frame().evaluate(() => (O55.notify && O55.notify.list ? O55.notify.list() : []).some((x) => x.id === 'pin-o55-resume'))) bad.push('the bell still lists Finish setting up after the session was resumed');
+        const seq = await walkBack(A, [], bad, `23 ${at}`);
+        if (seq[seq.length - 1] !== 'welcome') bad.push(`the Back run stopped on ${seq[seq.length - 1]} (${seq.join(' > ')})`);
+        const fwd = await on(A, bad); if (fwd[fwd.length - 1] !== 'review') bad.push(`on again never reached Review: ${fwd.join(' > ')}`);
+        t.log(`23 ${at}: in by the ${way}; Back ${seq.join(' > ')}; on ${fwd.join(' > ')}`); });
+  },
+  /* FO-45, widened (fo-kit): the place a NAS holds the files on, or the NAS a Project begins from, by every way in the
+     page stores (SSH, SMB, NFS, a mounted volume, a paired Puppet Master NAS), and a new Server: read on Review, on Name
+     and its files sheet (through Review's Edit), on Creating, in the handoff the app reads (O55.handoff.build's labels,
+     what Settings, the status bar and the title bar repaint from) and on the title bar's Project row and button. None
+     shows a raw reference of any family the page stores, nor any reference this session holds (RAW_RE, STORED_REFS). */
+  async 'row 24 · FO-45 widened: files on a Home NAS and a Home NAS source by SSH, SMB, NFS and a mounted volume, a paired Puppet Master NAS and a new Server, read on Review, Name, Creating, the handoff and the title bar Project row: no raw locator of any family'(t) {
+    const pmNasSource = async (A) => { await A.boot({ scenario: 'fresh+homeNasPm' });
+      await fromBegin(A, 'device'); await A.click('next', undefined, 'nas-find'); await A.waitFor(() => !!document.querySelector('.o55-card[data-arg="nas-home"]'), null, 8000);
+      await A.click('device', 'nas-home'); await A.waitEnabled('next').catch(() => {}); await pressOn(A); await A.sleep(900);
+      if ((await A.snap()).screen !== 'nas-pmpair') throw new Error('a Puppet Master NAS did not open pairing: on ' + (await A.snap()).screen);
+      if (await A.has('pair')) await A.click('pair');
+      await A.frame().waitForFunction(() => !!(O55.S.sess.nas || {}).paired, null, { timeout: 20000 });
+      await A.waitEnabled('next').catch(() => {}); await pressOn(A); await A.sleep(900); await throughNas(A); await onToReview(A, nameOn); };
+    const CONFIGS = [['files over SSH', (A) => toStorageBy(A, 'ssh')], ['files over SMB', (A) => toStorageBy(A, 'smb')], ['files over NFS', (A) => toStorageBy(A, 'nfs')], ['files on a mounted volume', (A) => toStorageBy(A, 'mounted')],
+      ['source over SSH', toNasProject], ['source over SMB', (A) => toNasBy(A, 'smb')], ['source over NFS', (A) => toNasBy(A, 'nfs')], ['source on a mounted volume', (A) => toNasBy(A, 'mounted')],
+      ['source on a paired Puppet Master NAS', pmNasSource], ['a completed new Server', newServerPlan(false)]];
+    const LAYER_TEXT = () => { const l = document.querySelector('.o55-pane > .o55-layer:not(.o55-out)'); const sh = [...document.querySelectorAll('.o55-sheet[data-open="true"]')].find((x) => !x.closest('.o55-out')); return (l ? l.innerText : '') + (sh ? '\n' + sh.innerText : ''); };
+    for (const [kind, est] of CONFIGS)
+      await flow(t, `24 ${kind}`, async (A, bad) => { await est(A); await A.screen('review');
+        const refs = await A.frame().evaluate(STORED_REFS), texts = [['Review', await A.frame().evaluate(LAYER_TEXT)]];
+        const place = await A.frame().evaluate(() => { const d = O55.S.sess.drafts.main; return { storage: d.storage_location || null, source: d.project_source_ref || null, server: d.server_ref || null }; });
+        /* Name and its files sheet, opened by Review's Edit, then Back to Review */
+        if (await A.has('edit', 'name')) { await A.click('edit', 'name', 'name'); await A.sleep(500); texts.push(['Name', await A.frame().evaluate(LAYER_TEXT)]);
+          if (await A.has('change')) { await clickOrSend(A, '.o55-pane > .o55-layer:not(.o55-out) [data-o55-do="change"]'); await A.waitFor(() => !!document.querySelector('.o55-sheet[data-open="true"]'), null, 4000).catch(() => {}); await A.sleep(500);
+            texts.push(['Name files sheet', await A.frame().evaluate(LAYER_TEXT)]); await A.click('sheet-close').catch(() => {}); await A.sleep(400); }
+          await pressBack(A); await A.sleep(700); if ((await A.snap()).screen !== 'review') await onToReview(A); await A.screen('review'); }
+        else bad.push(`24 ${kind}: Review has no Edit for the name`);
+        await A.waitEnabled('commit'); await A.click('commit', undefined, 'creating');
+        const made = await A.frame().waitForFunction(() => O55.S.sess.commit.state === 'done', null, { timeout: 40000 }).then(() => true, () => false);
+        texts.push(['Creating', await A.frame().evaluate(LAYER_TEXT)]);
+        if (!made) { bad.push(`24 ${kind}: the Project was not made (${await A.frame().evaluate(() => O55.S.sess.commit.state + ' ' + (O55.S.sess.commit.code || ''))})`); }
+        else {
+          const out = await A.frame().evaluate(() => { const S = O55.S, cm = S.sess.commit, id = cm.projectId, d = S.sess.drafts.main, labels = [];
+            const rec = O55.handoff.build(S, { project: id, projectName: d.project_name });
+            const walk = (v, k, path) => { if (Array.isArray(v)) v.forEach((x, i) => walk(x, k, path + '[' + i + ']')); else if (v && typeof v === 'object') Object.entries(v).forEach(([kk, x]) => walk(x, kk, path + '.' + kk)); else if (typeof v === 'string' && /label|name|title|path|where|summary|text/i.test(k)) labels.push([path, v]); };
+            walk(rec, '', 'handoff');
+            const row = [...document.querySelectorAll('#projectMenu .pm6-tb-menu-item[data-project]')].find((r) => r.getAttribute('data-project') === id);
+            const btn = document.getElementById('projectMenuBtn'), wrap = document.getElementById('projectMenuWrap');
+            const attrs = (el) => (el ? [...el.attributes].filter((a) => !/^(class|id|style|role|type|tabindex|data-state)$/.test(a.name)).map((a) => a.name + '=' + a.value).join(' ') : '');
+            return { id, labels, rowFound: !!row, row: row ? attrs(row) + ' ' + row.textContent : '', button: attrs(btn) + ' ' + (btn ? btn.textContent : '') + ' ' + attrs(wrap), filesLabel: rec.project && rec.project.files ? rec.project.files.label : null }; });
+          if (!out.rowFound) bad.push(`24 ${kind}: the title bar lists no row for the new Project ${out.id}`);
+          texts.push(...out.labels.map(([p, v]) => [p, v]), ['title bar Project row', out.row], ['title bar Project button', out.button]);
+          t.log(`24 ${kind}: plan ${JSON.stringify(place)}; handoff files label "${out.filesLabel}"; ${refs.length} stored references checked`);
+        }
+        const hits = rawIn(texts, refs); if (hits.length) bad.push(`24 ${kind}: a raw locator is shown: ${hits.join(' | ')}`); });
+  },
+  /* 4b / FO-49 (fo-kit, 2026-11-04; reported as the pane drifting about 0.3 px a frame, fields "harness only"): a card or a
+     tile under a resting pointer stays still. After Review > Edit name > Change the click leaves the pointer on the Change
+     link and the files sheet opens with a card under it; the card's own hover lift (10-window.css .o55-card:hover
+     translateY(-1px), .o55-tile:hover translateY(-2px)) carried its bottom edge past a pointer resting within that lift of
+     it, the hover dropped, the box came back under the pointer, and it trembled for as long as the pointer rested (Basic
+     Light 1920x1080: the click left the pointer 0.51 px inside the 'custom' card's bottom edge; under Reduce Motion the
+     hover flips every frame). With motion on and under Reduce Motion: the files sheet's cards in Basic, Friendly and Glass
+     (the pointer where Change's click left it, then 0.5 px inside each card's bottom edge) and the look screen's tiles in
+     Basic, Friendly, Glass and Retro (0.5 px inside each tile's bottom edge). Each box under the pointer holds one
+     position and its :hover never flips over 90 frames (rAF reads), and it is still on compositor frames (t.still).
+     Fails on main be4766513f. */
+  async 'row 25 · a card or tile under a resting pointer stays still: files-sheet cards after Review > Edit name > Change (where the click left the pointer, and 0.5 px inside each bottom edge) in Basic, Friendly and Glass, look tiles in Basic, Friendly, Glass and Retro, motion on and Reduce Motion (4b, FO-49)'(t) {
+    const SAMPLE = ([n]) => new Promise((res) => { const e = document.querySelector('[data-kit-still="1"]'), seen = []; let flips = 0, was = null;
+      const tick = () => { const r = e.getBoundingClientRect(), h = e.matches(':hover'); seen.push(r.x.toFixed(2) + ',' + r.y.toFixed(2)); if (was !== null && h !== was) flips++; was = h;
+        if (seen.length < n) requestAnimationFrame(tick); else res({ n: seen.length, distinct: [...new Set(seen)], flips, hovered: h, transform: getComputedStyle(e).transform }); }; requestAnimationFrame(tick); });
+    const mark = (A, sel, [x, y]) => A.frame().evaluate(([sel, x, y]) => { document.querySelectorAll('[data-kit-still]').forEach((e) => e.removeAttribute('data-kit-still')); const h = document.elementFromPoint(x, y), c = h && h.closest(sel);
+      if (!c) return null; c.setAttribute('data-kit-still', '1'); return (c.getAttribute('data-o55-do') || '') + ':' + (c.getAttribute('data-arg') || ''); }, [sel, x, y]);
+    const boxes = (A, sel) => A.frame().evaluate((sel) => [...document.querySelectorAll(sel)].filter((c) => c.getClientRects().length && !c.closest('.o55-out')).map((c) => { const r = c.getBoundingClientRect(); return { id: (c.getAttribute('data-o55-do') || '') + ':' + (c.getAttribute('data-arg') || ''), x: r.left + r.width / 2, y: r.bottom - 0.5 }; }), sel);
+    for (const motion of ['no-preference', 'reduce'])
+      for (const look of [['basic', 'light'], ['friendly', 'light'], ['glass', 'light'], ['retro', 'light']]) {
+        SELFTEST = t.args.selftest || ''; const A = onboardingApp(t), bad = [], label = `25 ${look.join(' ')} ${motion === 'reduce' ? 'Reduce Motion' : 'motion on'}`;
+        await A.boot({ look }); await t.emulate({ reducedMotion: motion });
+        /* (the frame's offset in the window: page.mouse speaks window coordinates, the page its own) */
+        const fe = A.frame() === t.page.mainFrame() ? null : await A.frame().frameElement(), off = fe ? await fe.boundingBox() : { x: 0, y: 0 };
+        const judge = async (where) => { await A.sleep(900); const r = await A.frame().evaluate(SAMPLE, [90]);
+          t.log(`${label} ${where}: ${r.distinct.length} position(s), ${r.flips} hover flip(s) in ${r.n} frames, hovered ${r.hovered}${r.distinct.length > 1 ? ' (' + r.distinct.slice(0, 6).join(' | ') + ')' : ''}, transform ${r.transform}`);
+          if (r.distinct.length > 1 || r.flips) bad.push(`${where}: under a resting pointer it moved or its hover flipped: ${r.distinct.length} positions, ${r.flips} flips in ${r.n} frames`);
+          await t.still('[data-kit-still="1"]', `${label} ${where}: still on compositor frames`, { ms: 1200 }); };
+        const atEdges = async (sel, what) => { await t.page.mouse.move(2, 2); await A.sleep(700); const list = await boxes(A, sel);
+          if (!list.length) bad.push(`no ${what} on show`);
+          /* (each box is found at that point while it rests, before the pointer comes: a lift that moves its box would take it away) */
+          for (const c of list) { const got = await mark(A, sel, [c.x, c.y]); if (got !== c.id) { bad.push(`0.5 px inside ${c.id}'s bottom edge, at rest, is ${got || 'nothing'}`); continue; }
+            await t.page.mouse.move(off.x + c.x, off.y + c.y); await judge(`pointer 0.5 px inside ${what} ${c.id}'s bottom edge`); await t.page.mouse.move(2, 2); await A.sleep(400); } };
+        /* the look screen's tiles (Back from Where to the look step) */
+        await pressBack(A); await A.screen('look'); await A.sleep(600);
+        await atEdges('.o55-pane > .o55-layer:not(.o55-out) .o55-tile', 'tile');
+        if (look[0] !== 'retro') {
+          /* the files sheet's cards, after Review > Edit name > Change */
+          await A.click('next', undefined, 'where'); await A.toSafe('Notes'); await toReview(A); await A.click('edit', 'name', 'name');
+          const ch = await A.frame().locator('.o55-pane > .o55-layer:not(.o55-out) [data-o55-do="change"]').first().boundingBox();
+          const at = [ch.x - off.x + ch.width / 2, ch.y - off.y + ch.height / 2];
+          await A.click('change'); await A.waitFor(() => !!document.querySelector('.o55-sheet[data-open="true"]'), null, 4000).catch(() => {}); await A.sleep(1500);
+          const under = await mark(A, '.o55-sheet[data-open="true"] .o55-card', at);
+          if (under) await judge(`pointer where the click on Change left it (${at.map((v) => v.toFixed(2)).join(', ')}), on ${under}`); else t.log(`${label}: no card under the pointer where the click on Change left it`);
+          await atEdges('.o55-sheet[data-open="true"] .o55-card', 'card');
+        }
+        t.log(label + (bad.length ? '\n  ' + bad.join('\n  ') : ': clean')); await t.check(label, !bad.length, bad.join(' | ').slice(0, 1500));
+      }
+    await t.emulate({ reducedMotion: 'no-preference' });
+  },
+  /* SW-48: the raw-text rule (LOOK's raw: a lower-case word_with_underscores reads as an enum key) on nas-key, where the
+     key list shows the SSH key files ~/.ssh/id_ed25519 and ~/.ssh/id_rsa: the files are named on screen, the pattern
+     matches them, and the rule's exemption for SSH key file names (id_rsa, id_ecdsa, id_ed25519, id_dsa) keeps them from
+     failing the screen; any other raw key there still would */
+  async 'row 26 · the raw-text rule on nas-key: the SSH key file name id_rsa shown on the key step is not a raw key (SW-48)'(t) {
+    await flow(t, '26 nas-key shows id_rsa', async (A, bad) => {
+      await fromBegin(A, 'device'); await A.click('next', undefined, 'nas-find'); await A.waitFor(() => !!document.querySelector('.o55-card[data-arg="nas-home"]'), null, 8000);
+      await A.click('device', 'nas-home'); await A.click('next', undefined, 'nas-identity'); await A.click('trust', undefined, 'nas-key');
+      await A.waitFor(() => Object.entries(O55.S.sess.ops || {}).some(([k, v]) => k.startsWith('keys:nas-home') && v.state === 'done'), null, 8000).catch(() => {});
+      await A.waitFor(() => /id_rsa/.test((document.querySelector('.o55-pane > .o55-layer:not(.o55-out)') || {}).innerText || ''), null, 8000).catch(() => {});
+      const s = await look(A);
+      if (s.screen !== 'nas-key') { bad.push('not on nas-key: ' + s.screen); return; }
+      if (!/\bid_rsa\b/.test(s.text)) { bad.push('nas-key does not name id_rsa, so the rule met nothing to judge: ' + s.text.slice(0, 200)); return; }
+      const hits = [...s.text.matchAll(/\b[a-z]+(?:_[a-z]+)+\b/g)].map((m) => m[0]);
+      if (!hits.includes('id_rsa')) bad.push('the raw pattern does not match id_rsa here, so the exemption was not exercised: ' + JSON.stringify(hits));
+      const before = bad.length; judge(s, [], '26', bad);
+      t.log(`26 nas-key: pattern matches ${JSON.stringify([...new Set(hits)])}; raw after the exemption ${JSON.stringify(s.raw)}${bad.length > before ? '' : ': none'}`); });
   }
 };

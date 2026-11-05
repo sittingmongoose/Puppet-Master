@@ -6385,7 +6385,7 @@
       "panel": 40,
       "splash": 128
     },
-    "family_token_owner": "PMLogo.MOTION"
+    "family_token_owner": "Plans/FinalGUISpec.md#F3-662 shared family motion tokens"
   },
   "work_detail_control_census": [
     {
@@ -7801,7 +7801,7 @@
       "checking",
       "retrying"
     ],
-    "shared_clock_owner": "PMLogo.clock / existing document-clock status rhythm",
+    "shared_clock_owner": "Plans/FinalGUISpec.md#F3-662 and Plans/DRY_Rules.md#DR-078 shared document clock/status rhythm",
     "row_consumers": [
       "Work panel",
       "Agents rail",
@@ -9484,6 +9484,19 @@
         "saved_configuration_label": "Saved setups",
         "starter_route_label": "Starters",
         "notifications_copy_label": "Notifications & limits",
+        "settings_copy_kind_labels": {
+          "appearance_workspace": "Look and layout",
+          "assistant_chat": "Assistant and chat",
+          "providers_accounts_models_routing": "AI accounts and models",
+          "planning_goal": "Planning and Goals",
+          "orchestrator_automation": "Automation",
+          "tools_integrations": "Tools and connections",
+          "testing_browser_devices": "Testing, browser and devices",
+          "permissions_security": "Permissions and safety",
+          "memory_retention_history": "Memory and history",
+          "notifications_usage_budgets": "Notifications & limits",
+          "project_only_rows": "About its own files"
+        },
         "one_assistant_node": true,
         "handler_status": "handler_unavailable"
       },
@@ -9506,6 +9519,19 @@
         "saved_configuration_label": "Saved setups",
         "starter_route_label": "Starters",
         "notifications_copy_label": "Notifications & limits",
+        "settings_copy_kind_labels": {
+          "appearance_workspace": "Look and layout",
+          "assistant_chat": "Assistant and chat",
+          "providers_accounts_models_routing": "AI accounts and models",
+          "planning_goal": "Planning and Goals",
+          "orchestrator_automation": "Automation",
+          "tools_integrations": "Tools and connections",
+          "testing_browser_devices": "Testing, browser and devices",
+          "permissions_security": "Permissions and safety",
+          "memory_retention_history": "Memory and history",
+          "notifications_usage_budgets": "Notifications & limits",
+          "project_only_rows": "About its own files"
+        },
         "one_assistant_node": false,
         "handler_status": "handler_unavailable"
       },
@@ -9558,6 +9584,41 @@
         "kind": "project",
         "project_id": null,
         "workspace_tab_id": "tab-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "wonder-rejects-unapproved-copy-kind-label",
+      "schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/ProjectsRefreshPresentationPolicy",
+      "record": {
+        "settings_origin_action": "Details",
+        "changed_word": "Changed",
+        "changed_outline_px": 1,
+        "scope_labels_default": false,
+        "no_project_label": "No project",
+        "always_name_work_computer_on_phone_web": true,
+        "new_project_label": "New Project",
+        "backup_retention_label": "Standard",
+        "saved_configuration_label": "Saved setups",
+        "starter_route_label": "Starters",
+        "notifications_copy_label": "Notifications & limits",
+        "one_assistant_node": true,
+        "handler_status": "handler_unavailable",
+        "settings_copy_kind_labels": {
+          "appearance_workspace": "Appearance & workspace",
+          "assistant_chat": "Assistant and chat",
+          "providers_accounts_models_routing": "AI accounts and models",
+          "planning_goal": "Planning and Goals",
+          "orchestrator_automation": "Automation",
+          "tools_integrations": "Tools and connections",
+          "testing_browser_devices": "Testing, browser and devices",
+          "permissions_security": "Permissions and safety",
+          "memory_retention_history": "Memory and history",
+          "notifications_usage_budgets": "Notifications & limits",
+          "project_only_rows": "About its own files"
+        }
       },
       "expected_schema_valid": false,
       "semantic_checks": [],
