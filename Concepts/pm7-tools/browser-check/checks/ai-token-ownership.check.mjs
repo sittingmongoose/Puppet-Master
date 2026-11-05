@@ -42,7 +42,7 @@ export default async function(t) {
  const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
  for (const [ix,look] of looks.entries()) for (const mode of [0,1]) {
   if(t.args.widths) {const widths=String(t.args.widths).split(',').map(Number);await t.page.setViewportSize({width:widths[(ix*2+mode)%widths.length],height:t.args.short ? 500 : 1080});}
-  if (t.args.only !== 'token') for (const action of (t.args.action ? [t.args.action] : ['remove','key'])) await t.step(`${look} w${mode} AI cheer ${action}`, async()=>{
+  if (t.args.only !== 'token') for (const action of (t.args.action ? [t.args.action] : t.args.multi ? ['remove','key','unrelated'] : ['remove','key'])) await t.step(`${look} w${mode} AI cheer ${action}`, async()=>{
    const f = await t.app.open(); await t.app.look(look);
    await t.emulate({ reducedMotion:t.args.motion === 'reduced' ? 'reduce' : 'no-preference' });
    if(t.args.motion === 'reduced') await t.check('Reduced Motion is applied',await f.evaluate(()=>matchMedia('(prefers-reduced-motion: reduce)').matches));
@@ -52,31 +52,44 @@ export default async function(t) {
    await f.locator(LAYER+' '+row+'[data-o55-do="key"]').waitFor({state:'visible'});
    await t.check('key entry opens after provider detection',await click(t,f,row+'[data-o55-do="key"]'),'',{hard:true});
    async function key(v) { await f.locator('#o55f-key-cursor').fill(v); await click(t,f,row+'[data-o55-do="keyCheck"]'); }
+   if(t.args.multi) {
+    await key('demo-key-previous-123456');
+    await f.waitForFunction(()=>O55.S.sess.ai.list.some(x=>x.provider==='cursor'));
+    await f.locator(LAYER+' '+row+'[data-o55-do="manage"]').first().click();
+    await f.locator(LAYER+' '+row+'[data-o55-do="addAnother"]').first().click();
+   }
    await key('short-key');
    await f.waitForFunction(()=>Object.values(O55.S.sess.ops).some(x=>x.state==='failed'));
    await t.page.waitForTimeout(300);
    await key('demo-key-0000-1111-2222');
    await f.waitForFunction(()=>O55.S.sess.ai.list.some(x=>x.provider==='cursor'));
    await f.waitForFunction(()=>{const b=document.querySelector('#pm-o55-onboarding .pst-bt-on');return b && b.textContent.startsWith('That');});
-   await f.evaluate(()=>{
+   const ids=await f.evaluate(()=>O55.S.sess.ai.list.filter(x=>x.provider==='cursor').map(x=>x.id));
+   const targetId=ids[ids.length-1], otherId=ids.length>1 ? ids[0] : null;
+   await f.evaluate(([targetId,otherId])=>{
     window.__aiFrames=[];window.__aiBefore=null;
     const capture=(e)=>{if(e.target.closest('[data-o55-do="removeGo"]') || (e.type==='input' && e.target.id==='o55f-key-cursor')) window.__aiBefore=document.querySelector('#pm-o55-onboarding .pst-bt-on')?.textContent;};
     document.addEventListener('pointerdown',capture,true);document.addEventListener('input',capture,true);
     window.__aiStop=()=>{document.removeEventListener('pointerdown',capture,true);document.removeEventListener('input',capture,true);};
     const tick=()=>{const b=document.querySelector('#pm-o55-onboarding .pst-bubble'), el=b&&b.querySelector('.pst-bt-on');
      const text=b&&b.classList.contains('on')&&el?el.textContent:'';
-     const alive=O55.S.sess.ai.list.some(x=>x.provider==='cursor') && !O55.S.sess.ai.accounts.cursor.keyTyped;
-     __aiFrames.push({alive,text}); window.__aiRAF=requestAnimationFrame(tick);};tick();
-   });
+     const alive=O55.S.sess.ai.list.some(x=>x.id===targetId) && !O55.S.sess.ai.accounts.cursor.keyTyped;
+     __aiFrames.push({alive,text,otherGone:!!otherId&&!O55.S.sess.ai.list.some(x=>x.id===otherId)}); window.__aiRAF=requestAnimationFrame(tick);};tick();
+   },[targetId,otherId]);
    await f.locator(LAYER+' '+row+'[data-o55-do="manage"]').first().click({force:true});
-   if(action==='remove') await f.locator(LAYER+' '+row+'[data-o55-do="remove"]').first().click({force:true});
+   if(action!=='key') await f.locator(LAYER+' '+row+'[data-o55-do="remove"][data-arg="'+(action==='unrelated'?otherId:targetId)+'"]').click({force:true});
    else await f.locator(LAYER+' '+row+'[data-o55-do="addAnother"]').first().click({force:true});
-   if(action==='remove') await f.locator(LAYER+' '+row+'[data-o55-do="removeGo"]').first().click({force:true});
+   if(action!=='key') await f.locator(LAYER+' '+row+'[data-o55-do="removeGo"]').first().click({force:true});
    else await f.locator('#o55f-key-cursor').fill('replacement-key-1234');
    await t.mark(`${look} w${mode} account ${action}`);
    await t.page.waitForTimeout(1100);
    const r=await f.evaluate(()=>{cancelAnimationFrame(__aiRAF);__aiStop();return {frames:__aiFrames,before:__aiBefore};});
    await t.check('cheer is still typing at the invalidating input',!!r.before&&r.before.startsWith('That'),r.before||'no captured speech');
+   if(action==='unrelated') {
+    const first=r.frames.find(x=>x.otherGone);
+    await t.check('removing a different account keeps this account cheer',!!first&&first.alive&&first.text.startsWith('That'),JSON.stringify(first));
+    return;
+   }
    const gone=r.frames.filter(x=>!x.alive), bad=gone.filter(x=>x.text.startsWith('That'));
    await t.check('account removal/key edit cannot keep its cheer',gone.length>10&&bad.length===0,JSON.stringify({frames:gone.length,bad:bad.length,first:gone.slice(0,4)}));
   });
