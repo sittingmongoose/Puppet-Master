@@ -24936,3 +24936,433 @@ preserved_exact_tokens:
 negative_constraints:
 - No event admission, retention choice, new UI behavior, native execution claim or governance seal.
 ```
+
+
+### CV-596 - Planning Run wizard.blocked Complete Event Contract
+
+```yaml
+plan_unit_id: CV-596
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: 'NEWLY AUTHORED OWNER CONTRACT for wizard.blocked under DL-045 and DL-431; prepared without admission.
+  Exact family membership remains ABSENT in Plans/event_family_registry.json: neither this unit nor its schema permits
+  a current writer until individual registry admission. Semantic owner is current Plans/Planning_Wizard.md#PWIZ-002,
+  extended for this exact event by this unit; payload/persistence binding is this unit plus CV-233. Jared''s only
+  quoted words are "i approve all of it". The deck''s approve-all mapping selects A, as recorded in DL-431 on origin/plans/ea-cards2-answers-20261105.
+  Answer source is /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md;
+  frozen deck E-CARDS-2.as-presented-6db25be3.md SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30.
+  The approved option''s explanatory prose is the card''s text, not a Jared quotation.
+
+
+  Under DL-431 (deck-2 Card 4.a option A), attach Blocked to the whole Planning Run. Save it only when the component
+  responsible for planning records a blockage or repair attempt that prevents every otherwise permitted next step.
+  A stalled topic does not block the run if another can continue. Count completed repair attempts for that blockage;
+  add no three-round trigger. You see the whole run''s blockage and report. This applies to the current Planning
+  Wizard, successor of the retired Chain Wizard, not a restored wizard-status lifecycle. wizard_id is the PlanningRun
+  planning_run_id; thread_id is nullable incidental context and never selects a topic as the blocked subject. Existing
+  route_target owns navigation and blocked/remediation owns the episode identity: blockage_id is that exact owner
+  episode, never a new runtime/node identity. CV-233''s report_ref and optional detail refs remain inspection only;
+  resume_url is serialized route_target transport, not another navigation primitive.
+
+
+  All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json are required-present, root additionalProperties=false,
+  schema_id=pm.event_payload.wizard.blocked.v1 and schema_version=1.0.0. Preserve CV-233 minima wizard_id, nullable
+  thread_id, round_count, report_ref, resume_url and ts. Added project_id, planning_run_id, blockage_id, observation_id,
+  source_ref, permission_snapshot_id, predecessor_event_id and route_target_ref bind the actual original observation;
+  route_target_ref must resolve through the existing route owner to the same Project/PlanningRun and exact resume_url.
+  Reports/routes require independent current access and availability. No report body, prompt, secret, credential,
+  raw local path or topic-status snapshot is copied into the event.
+
+
+  Producer emitter.wizard_blocked@1.0.0 is the responsible Planning Wizard component''s observer of its original
+  planning result. It explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody, SP-336/SP-347
+  durability and Case L-2/SP-026/SP-236 original frame bytes. Before append require exact family/version admission,
+  original observation/permission/current PlanningRun reservation, then commit the original observation and freeze
+  the complete EventRecord. Append via Storage; resolve the independently issued original full event, semantic digest,
+  full-value commitment, first receipt and durable group before publishing recorded success or allowing a dependent
+  observation. A lost acknowledgement resolves the original, never re-executes planning, repair or the clearing
+  action. Missing original/dedupe proof is unavailable; changed semantics is idempotency_conflict; unknown effect
+  fences publication and goes to the existing owner''s recovery. A confirmed older restore does not replay lost
+  post-backup work.
+
+
+  Scope is project-only, using a real Project under PWIZ-002; application/no-project writes refuse. Adopt Plans/event_record.schema.json
+  unchanged. Envelope project_id/thread_id equal payload; runtime run_id/node_id/attempt_id, account refs and producer_sequence_id
+  are null. actor_ref is the authenticated original planning observation actor; occurred_at_utc=ts; correlation_id=blockage_id;
+  causation_event_id=parent_event_id=predecessor_event_id; payload_schema_id identifies the decoded logical body;
+  redaction_profile=secret_refs_only; current replay_policy=dedupe_by_idempotency_key; native migration fields are
+  null. Storage alone assigns sequence/observed/persisted values and original receipt metadata. NEW identity recipe
+  for wizard.blocked: lowercase SHA-256 of the existing UTF-8 compact JSON string-only array ["wizard.blocked",project_id,planning_run_id,blockage_id,observation_id],
+  ensure_ascii=false and comma/colon separators. event_id="evt_wizard_blocked_"+digest; idempotency_key="wizard.blocked:"+digest.
+  observation_id is the responsible component''s immutable observation identity reused on delivery/retry, never
+  a reader-generated request. It is independent of incidental thread focus. source_ref="wizard_blocked_evidence:"+digest.
+  All observed source/actor/causality/time/body/ref fields freeze at preparation.
+
+
+  Retry compares exactly the producer-owned semantic fields enumerated by CV-339: event_type, scope_kind, project_id,
+  thread_id, run_id, node_id, attempt_id, actor_ref, requested_account_ref, effective_account_ref, occurred_at_utc,
+  producer_sequence_id, correlation_id, causation_event_id, parent_event_id, idempotency_key, payload_schema_id,
+  payload, payload_ref, redaction_profile and migration. It excludes Storage-assigned sequence/observed/persisted
+  and receipt metadata. Same identity and semantic digest returns the exact original full value and first receipt,
+  with independent full-original authentication. Both current append and retry refuse projector_replay_only as replay_only_not_appendable.
+  Historical original readers accept either retained dedupe_by_idempotency_key or projector_replay_only originals
+  valid under their original owner recipe. A compatibility view may alter only replay_policy; all other supplied
+  fields must authenticate against the actual retained original before resolving its receipt. No history read reruns
+  planning, modifies run status, repairs a condition, resumes work, grants authority or emits an event.
+
+
+  The planning component''s immutable observation has kind blockage_recorded or repair_attempt_completed and subject_kind=planning_run.
+  Its required_conditions, cleared_conditions and complete next_steps describe the actual run at that observation,
+  not the focused topic. required_conditions is nonempty; cleared conditions and every step''s preventing conditions
+  refer only to that set. There must be an otherwise permitted next step, and every such step must have an unresolved
+  required preventing condition. Empty next-step lists, topic-only stalls, ordinary waits while another topic can
+  continue, a report edit, page open, reprocessing or three completed rounds alone are not the predicate. round_count
+  equals the number of distinct actually completed original repair attempts for this blockage, joined independently
+  by project/run/blockage/status; running or proposed attempts do not count. A repair observation requires an actual
+  newly completed attempt. Zero, one and more than three completed attempts are supported, with no threshold or
+  ceiling. predecessor_event_id is null for the original Blocked observation or the latest receipt-backed Blocked
+  observation of this episode for a later observation. Preserve the authenticated episode chain and completed repair
+  history. The current PlanningRun value_revision, latest predecessor and open-episode reservation are CAS inputs
+  at preparation; a cleared episode cannot append another update under its old reservation. A later new blockage
+  uses the planning owner''s distinct episode identity. Receipt reconciliation is not a repeat planning or repair
+  action.
+
+
+  NEW original custody source wizard_blocked_evidence is materialized in Plans/storage_value_registry.json under
+  typed key tuple [wizard_blocked_evidence.v1,project_id,planning_run_id,blockage_id,observation_id]. Its complete
+  closed logical schema is Plans/dcw/wizard_blocked_evidence.schema.json#/$defs/inline, schema_id=pm.storage_value.wizard_blocked_evidence.v1@1.0.0,
+  containing storage_instance_id, recovery_epoch, value_revision, source_ref, original observation, prepared full
+  event, publication and exact original receipt/commitment/segment. The authenticated planning observation is independently
+  resolved; all Project/run/episode/observation/permission/actor/time joins and every original repair/action/route/ref
+  fact must agree field by field. This is canonical non-rebuildable source custody in the existing runs_and_goals
+  storage group, existing SP-340 budget, never a disposable status projection. Current access, permission snapshot
+  and actual deletion/availability are checked at every read including every predecessor source. Backup captures
+  all reachable original planning observations, attempts/actions, routes/reports, sources, full events/first custody
+  and payload packs/indexes coherently at one Storage instance and admitted recovery boundary. Restore adopts the
+  existing closed restore_admission and exact members plus source/event payload inventories; each member owner_id
+  is this event''s exact emitter, owner_operation_id is source_ref and owner_operation_sha256 hashes the complete
+  physical original source under SP-026. A claimed source/member hash never substitutes for independently admitted
+  original custody; omitted sources, substituted bytes, missing pack/index, unissued receipts, skew or stale boundary
+  fences mutation and successful publication. Original absence is truthful unavailable/data loss, never source reconstruction
+  from the history.
+
+
+  SP-337 applies independently to this event and to every source record. Measure complete SP-026 canonical MessagePack
+  bytes, not JSON characters. The existing 16,384-byte inline limit includes exactly 16,384. A larger logical event
+  uses payload={} and payload_ref as the existing compact sorted-key UTF-8 JSON descriptor string with blake3, byte_size
+  and exact media_type application/vnd.puppetmaster.event.wizard-blocked+msgpack; schema #/$defs/payload_reference
+  closes the descriptor and #/$defs/referenced_stub closes the empty body. Validate original canonical bytes, BLAKE3,
+  complete size/media type and decoded closed payload plus all identity/custody joins. Complete source overflow
+  independently selects its source schema #/$defs/payload_reference physical wrapper under the same typed key/CAS
+  and exact application/vnd.puppetmaster.wizard-blocked-evidence+msgpack media type. Each physical redb value also
+  stays within the same existing inline limit. Both packs and indexes must be durable before reference commit, append
+  or publication. Body/source references are not interchangeable, truncated or inline base64 encodings. Missing/unreadable/undurable/wrong
+  bytes refuse on every applicable path without checkpoint advance. No new number ceiling, serializer or date-time
+  grammar is defined: CV-253 and original Storage byte/number owners apply; CV-1100/SP-1100/SP-1101 and CV-1101
+  adoption remains the shared number/format sweep. Exact typed original comparisons never use language equality
+  across types or normalize physical signed zero.
+
+
+  NEW passive operating consumer reader.wizard_blocked_history@1.0.0 selects only wizard.blocked at this exact supported
+  payload edition and the authorized Project/PlanningRun/blockage. It explicitly adopts SP-278 and DL-076, reusing
+  projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0. Physical checkpoint key
+  is event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,
+  dataset event_record_index.v2 in the current selected generation. Authenticate complete captured source coverage
+  across matching/nonmatching families and Projects, exact Storage identity, source bytes/row joins, generation/anchor/frontier,
+  transaction and current ten-field live token. The generic projector alone publishes rows and checkpoint atomically
+  under predecessor CAS. Max matching sequence is not coverage. No filtered durable checkpoint, durable token or
+  copied status projection is introduced; if a token is persisted it is DL-076''s nine-field projection, never redb_snapshot_id.
+  Retained originals and every original predecessor authenticate before authorized display. Rebuild is passive,
+  requires admitted replacement reader and complete current source coverage, and cannot reconstruct deleted sources
+  or grant access.
+
+
+  Retention is explicit: event retention_policy_ref=PENDING_RETENTION_DECISION. The original wizard_blocked_evidence
+  source is explicitly NEW technical class assignment to existing RP-AUTHORITY-INDEFINITE under Case L-3: it is
+  non-rebuildable original planning operation/audit/source-lineage custody, refs and commitments only. Keep it indefinitely
+  with no count eviction; storage pressure fails closed. This assigns no event-history or report/action-content
+  lifetime. Exact question: For wizard.blocked event history, which Case L-3 class/lifetime applies: planning/chat
+  content or authority/source-lineage audit, and which release anchor governs deletion? Candidate owners are Case
+  L-3 planning/chat content versus immutable receipt/audit/source-lineage classes; that table does not name this
+  exact event-history assignment. No TTL/count/indefinite choice is inferred from this deck. Existing original SP-286
+  receipt authority retains its own RP-AUTHORITY-INDEFINITE rules; existing generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN.
+  Report/action/source content retains its actual owner''s independent lifetime and access/hold/deletion policy;
+  a held receipt never recreates deleted content.
+
+
+  Compatibility/withdrawal for wizard.blocked alone: dispatch only explicitly supported exact family/schema/version;
+  unknown or incomplete legacy originals are unavailable/quarantined without rewrite or checkpoint advance. No retired
+  three-round or wizard-status aliases become writers. Reader eligibility uses the authenticated recipe/edition
+  in force at original write, not current writer CAS/live state; historical dispatch cannot be forged to select
+  a weaker recipe. Withdrawal cuts off this writer''s new admission first, drains or fences pending work under the
+  original-receipt gate, then withdraws this exact reader from dispatch. A replacement must support retained original
+  editions and complete authenticated SP-278 rebuild before publication. Cutoff never deletes originals, resets
+  the generic checkpoint or withdraws a sibling. Read access/deletion and reader withdrawal still apply after live
+  writer state changes.
+
+
+  Positive/negative static oracles for this exact family are Plans/dcw_blockage_event_fixtures.json and scripts/pm_dcw_blockage_fixtures.py,
+  checked by python3 scripts/pm_dcw_blockage_events.py --family wizard.blocked. They cover producer/refusal predicates,
+  counts or full clearance, envelope/source identities, original metadata/receipt, independent predecessors, SP-337
+  source and event sizes, current retry versus retained history, complete mixed-source index/CAS, access, restore
+  and withdrawal. New negatives preserve observational copies and have valid single-fact repair controls. Shared-tool
+  predicate-isolation proof remains B3 sweep; no local proof-script rebuild or complete check-11 claim is made.
+  B2 format and SW-N1 number/historical recipe work remains explicitly pending. Native planning adapters, original
+  authentication, append/lost-ack, CAS concurrency, actual Storage bytes/CRC, crash recovery, backup/restore, retention-boundary
+  and access/deletion campaigns are authored obligations with execution NOT_RUN; static success never supplies native
+  authority or admission.'
+gui_related: false
+gui_classification_reason: Defines event/source contracts for approved Planning Run behavior; no new presentation
+  is designed.
+depends_on:
+- CV-233
+- PWIZ-002
+- CV-339
+- SP-278
+- SP-286
+- SP-337
+unblocks: []
+acceptance_criteria:
+- Exact approved whole-run predicate and independent original custody are enforced.
+- No admission or retention policy is inferred; native execution remains NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_dcw_blockage_events.py --family wizard.blocked
+- python3 scripts/pm-plan-index.py validate
+risk_class: planning_run_event_custody
+reasoning_tier: high
+context_scope: event_authority_dcw_round10
+implementation_surfaces:
+- Plans/Contracts_V0.md
+- Plans/dcw/wizard_blocked_evidence.schema.json
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- origin/plans/ea-cards2-answers-20261105:Plans/Decision_Log.md#DL-431
+- Plans/Contracts_V0.md#CV-233
+- Plans/Planning_Wizard.md#PWIZ-002
+preserved_exact_tokens:
+- wizard.blocked
+- DL-431
+- CV-233
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No registry append, Decision Log entry, native execution, governance seal or retired lifecycle revival.
+```
+
+
+### CV-597 - Planning Run wizard.unblocked Complete Event Contract
+
+```yaml
+plan_unit_id: CV-597
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: 'NEWLY AUTHORED OWNER CONTRACT for wizard.unblocked under DL-045 and DL-432; prepared without admission.
+  Exact family membership remains ABSENT in Plans/event_family_registry.json: neither this unit nor its schema permits
+  a current writer until individual registry admission. Semantic owner is current Plans/Planning_Wizard.md#PWIZ-002,
+  extended for this exact event by this unit; payload/persistence binding is this unit plus CV-234. Jared''s only
+  quoted words are "i approve all of it". The deck''s approve-all mapping selects A, as recorded in DL-432 on origin/plans/ea-cards2-answers-20261105.
+  Answer source is /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md;
+  frozen deck E-CARDS-2.as-presented-6db25be3.md SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30.
+  The approved option''s explanatory prose is the card''s text, not a Jared quotation.
+
+
+  Under DL-432 (deck-2 Card 4.b option A), save Unblocked when the responsible planning component records that all
+  required blocking conditions for that same run have cleared. Link the authorized action that actually cleared
+  it to the original blockage. Clearing another topic, opening a page, reprocessing old history or merely editing
+  a report does not count. You see clearance as soon as that work can resume. DL-431 selects the whole Planning
+  Run for the card''s run/topic choice. This applies to the current Planning Wizard, successor of the retired Chain
+  Wizard. wizard_id is planning_run_id, thread_id is nullable incidental context, and blockage_id is the same original
+  blocked/remediation episode. Neither an intake child nor a runtime node becomes the subject. This is the clearance
+  boundary itself: it does not wait for the next planning step to finish successfully.
+
+
+  All properties of Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json are required-present, root
+  additionalProperties=false, schema_id=pm.event_payload.wizard.unblocked.v1 and schema_version=1.0.0. Preserve
+  CV-234 minima wizard_id, nullable thread_id, resolution_source and ts. Added project_id, planning_run_id, blockage_id,
+  observation_id, source_ref, permission_snapshot_id, predecessor_event_id and blocked_event_id bind the exact original
+  episode and clearing observation. resolution_source names the authorized original clearing action; predecessor_event_id
+  names the latest receipt-backed Blocked observation and blocked_event_id the root of that same authenticated chain.
+  No action body, report text, secret, credentials or local path is embedded.
+
+
+  Producer emitter.wizard_unblocked@1.0.0 is the responsible Planning Wizard component''s observer of its original
+  planning result. It explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody, SP-336/SP-347
+  durability and Case L-2/SP-026/SP-236 original frame bytes. Before append require exact family/version admission,
+  original observation/permission/current PlanningRun reservation, then commit the original observation and freeze
+  the complete EventRecord. Append via Storage; resolve the independently issued original full event, semantic digest,
+  full-value commitment, first receipt and durable group before publishing recorded success or allowing a dependent
+  observation. A lost acknowledgement resolves the original, never re-executes planning, repair or the clearing
+  action. Missing original/dedupe proof is unavailable; changed semantics is idempotency_conflict; unknown effect
+  fences publication and goes to the existing owner''s recovery. A confirmed older restore does not replay lost
+  post-backup work.
+
+
+  Scope is project-only, using a real Project under PWIZ-002; application/no-project writes refuse. Adopt Plans/event_record.schema.json
+  unchanged. Envelope project_id/thread_id equal payload; runtime run_id/node_id/attempt_id, account refs and producer_sequence_id
+  are null. actor_ref is the authenticated original planning observation actor; occurred_at_utc=ts; correlation_id=blockage_id;
+  causation_event_id=parent_event_id=predecessor_event_id; payload_schema_id identifies the decoded logical body;
+  redaction_profile=secret_refs_only; current replay_policy=dedupe_by_idempotency_key; native migration fields are
+  null. Storage alone assigns sequence/observed/persisted values and original receipt metadata. NEW identity recipe
+  for wizard.unblocked: lowercase SHA-256 of the existing UTF-8 compact JSON string-only array ["wizard.unblocked",project_id,planning_run_id,blockage_id,observation_id],
+  ensure_ascii=false and comma/colon separators. event_id="evt_wizard_unblocked_"+digest; idempotency_key="wizard.unblocked:"+digest.
+  observation_id is the responsible component''s immutable observation identity reused on delivery/retry, never
+  a reader-generated request. It is independent of incidental thread focus. source_ref="wizard_unblocked_evidence:"+digest.
+  All observed source/actor/causality/time/body/ref fields freeze at preparation.
+
+
+  Retry compares exactly the producer-owned semantic fields enumerated by CV-339: event_type, scope_kind, project_id,
+  thread_id, run_id, node_id, attempt_id, actor_ref, requested_account_ref, effective_account_ref, occurred_at_utc,
+  producer_sequence_id, correlation_id, causation_event_id, parent_event_id, idempotency_key, payload_schema_id,
+  payload, payload_ref, redaction_profile and migration. It excludes Storage-assigned sequence/observed/persisted
+  and receipt metadata. Same identity and semantic digest returns the exact original full value and first receipt,
+  with independent full-original authentication. Both current append and retry refuse projector_replay_only as replay_only_not_appendable.
+  Historical original readers accept either retained dedupe_by_idempotency_key or projector_replay_only originals
+  valid under their original owner recipe. A compatibility view may alter only replay_policy; all other supplied
+  fields must authenticate against the actual retained original before resolving its receipt. No history read reruns
+  planning, modifies run status, repairs a condition, resumes work, grants authority or emits an event.
+
+
+  The planning component''s immutable conditions_cleared observation identifies the complete required conditions
+  for this same whole-run episode, and every required condition is cleared. Authenticate the receipt-backed latest
+  Blocked predecessor, its full source and entire original blockage chain, even on append, retry, read, rebuild
+  and compatibility paths; blocked_event_id must be the chain''s original Blocked, never another episode or the
+  latest update mislabeled as the original. Preserve completed repair history and all original required-condition
+  evidence; a later owner observation may add required conditions and cannot silently drop unaccounted original
+  conditions. resolution_source is the reference to the independently authenticated authorized action that actually
+  cleared the final required conditions, not an invented resolution enum. The action''s original Project, PlanningRun
+  and blockage match, authorized is exactly true, effect is conditions_cleared, its actual nonempty remaining_before
+  set belongs to the episode, all of that set is cleared by the action and remaining_after is empty. A different
+  topic/run/episode, unauthorized action, page open, history reprocessing, report-only edit, failed repair or partial
+  clearance emits no Unblocked. The original action may have any already authorized owner action kind; this contract
+  creates no new action or permission. A next-step success is unnecessary. Current value_revision/latest predecessor/open-episode
+  CAS serializes clearance; duplicate delivery returns the same original result, and another clearing action after
+  the episode has closed cannot append a second clearance. The observer records the existing result and never performs
+  the clearing action itself.
+
+
+  NEW original custody source wizard_unblocked_evidence is materialized in Plans/storage_value_registry.json under
+  typed key tuple [wizard_unblocked_evidence.v1,project_id,planning_run_id,blockage_id,observation_id]. Its complete
+  closed logical schema is Plans/dcw/wizard_unblocked_evidence.schema.json#/$defs/inline, schema_id=pm.storage_value.wizard_unblocked_evidence.v1@1.0.0,
+  containing storage_instance_id, recovery_epoch, value_revision, source_ref, original observation, prepared full
+  event, publication and exact original receipt/commitment/segment. The authenticated planning observation is independently
+  resolved; all Project/run/episode/observation/permission/actor/time joins and every original repair/action/route/ref
+  fact must agree field by field. This is canonical non-rebuildable source custody in the existing runs_and_goals
+  storage group, existing SP-340 budget, never a disposable status projection. Current access, permission snapshot
+  and actual deletion/availability are checked at every read including every predecessor source. Backup captures
+  all reachable original planning observations, attempts/actions, routes/reports, sources, full events/first custody
+  and payload packs/indexes coherently at one Storage instance and admitted recovery boundary. Restore adopts the
+  existing closed restore_admission and exact members plus source/event payload inventories; each member owner_id
+  is this event''s exact emitter, owner_operation_id is source_ref and owner_operation_sha256 hashes the complete
+  physical original source under SP-026. A claimed source/member hash never substitutes for independently admitted
+  original custody; omitted sources, substituted bytes, missing pack/index, unissued receipts, skew or stale boundary
+  fences mutation and successful publication. Original absence is truthful unavailable/data loss, never source reconstruction
+  from the history.
+
+
+  SP-337 applies independently to this event and to every source record. Measure complete SP-026 canonical MessagePack
+  bytes, not JSON characters. The existing 16,384-byte inline limit includes exactly 16,384. A larger logical event
+  uses payload={} and payload_ref as the existing compact sorted-key UTF-8 JSON descriptor string with blake3, byte_size
+  and exact media_type application/vnd.puppetmaster.event.wizard-unblocked+msgpack; schema #/$defs/payload_reference
+  closes the descriptor and #/$defs/referenced_stub closes the empty body. Validate original canonical bytes, BLAKE3,
+  complete size/media type and decoded closed payload plus all identity/custody joins. Complete source overflow
+  independently selects its source schema #/$defs/payload_reference physical wrapper under the same typed key/CAS
+  and exact application/vnd.puppetmaster.wizard-unblocked-evidence+msgpack media type. Each physical redb value
+  also stays within the same existing inline limit. Both packs and indexes must be durable before reference commit,
+  append or publication. Body/source references are not interchangeable, truncated or inline base64 encodings. Missing/unreadable/undurable/wrong
+  bytes refuse on every applicable path without checkpoint advance. No new number ceiling, serializer or date-time
+  grammar is defined: CV-253 and original Storage byte/number owners apply; CV-1100/SP-1100/SP-1101 and CV-1101
+  adoption remains the shared number/format sweep. Exact typed original comparisons never use language equality
+  across types or normalize physical signed zero.
+
+
+  NEW passive operating consumer reader.wizard_unblocked_history@1.0.0 selects only wizard.unblocked at this exact
+  supported payload edition and the authorized Project/PlanningRun/blockage. It explicitly adopts SP-278 and DL-076,
+  reusing projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0. Physical checkpoint
+  key is event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,
+  dataset event_record_index.v2 in the current selected generation. Authenticate complete captured source coverage
+  across matching/nonmatching families and Projects, exact Storage identity, source bytes/row joins, generation/anchor/frontier,
+  transaction and current ten-field live token. The generic projector alone publishes rows and checkpoint atomically
+  under predecessor CAS. Max matching sequence is not coverage. No filtered durable checkpoint, durable token or
+  copied status projection is introduced; if a token is persisted it is DL-076''s nine-field projection, never redb_snapshot_id.
+  Retained originals and every original predecessor authenticate before authorized display. Rebuild is passive,
+  requires admitted replacement reader and complete current source coverage, and cannot reconstruct deleted sources
+  or grant access.
+
+
+  Retention is explicit: event retention_policy_ref=PENDING_RETENTION_DECISION. The original wizard_unblocked_evidence
+  source is explicitly NEW technical class assignment to existing RP-AUTHORITY-INDEFINITE under Case L-3: it is
+  non-rebuildable original planning operation/audit/source-lineage custody, refs and commitments only. Keep it indefinitely
+  with no count eviction; storage pressure fails closed. This assigns no event-history or report/action-content
+  lifetime. Exact question: For wizard.unblocked event history, which Case L-3 class/lifetime applies: planning/chat
+  content or authority/source-lineage audit, and which release anchor governs deletion? Candidate owners are Case
+  L-3 planning/chat content versus immutable receipt/audit/source-lineage classes; that table does not name this
+  exact event-history assignment. No TTL/count/indefinite choice is inferred from this deck. Existing original SP-286
+  receipt authority retains its own RP-AUTHORITY-INDEFINITE rules; existing generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN.
+  Report/action/source content retains its actual owner''s independent lifetime and access/hold/deletion policy;
+  a held receipt never recreates deleted content.
+
+
+  Compatibility/withdrawal for wizard.unblocked alone: dispatch only explicitly supported exact family/schema/version;
+  unknown or incomplete legacy originals are unavailable/quarantined without rewrite or checkpoint advance. No retired
+  three-round or wizard-status aliases become writers. Reader eligibility uses the authenticated recipe/edition
+  in force at original write, not current writer CAS/live state; historical dispatch cannot be forged to select
+  a weaker recipe. Withdrawal cuts off this writer''s new admission first, drains or fences pending work under the
+  original-receipt gate, then withdraws this exact reader from dispatch. A replacement must support retained original
+  editions and complete authenticated SP-278 rebuild before publication. Cutoff never deletes originals, resets
+  the generic checkpoint or withdraws a sibling. Read access/deletion and reader withdrawal still apply after live
+  writer state changes.
+
+
+  Positive/negative static oracles for this exact family are Plans/dcw_blockage_event_fixtures.json and scripts/pm_dcw_blockage_fixtures.py,
+  checked by python3 scripts/pm_dcw_blockage_events.py --family wizard.unblocked. They cover producer/refusal predicates,
+  counts or full clearance, envelope/source identities, original metadata/receipt, independent predecessors, SP-337
+  source and event sizes, current retry versus retained history, complete mixed-source index/CAS, access, restore
+  and withdrawal. New negatives preserve observational copies and have valid single-fact repair controls. Shared-tool
+  predicate-isolation proof remains B3 sweep; no local proof-script rebuild or complete check-11 claim is made.
+  B2 format and SW-N1 number/historical recipe work remains explicitly pending. Native planning adapters, original
+  authentication, append/lost-ack, CAS concurrency, actual Storage bytes/CRC, crash recovery, backup/restore, retention-boundary
+  and access/deletion campaigns are authored obligations with execution NOT_RUN; static success never supplies native
+  authority or admission.'
+gui_related: false
+gui_classification_reason: Defines event/source contracts for approved Planning Run behavior; no new presentation
+  is designed.
+depends_on:
+- CV-234
+- PWIZ-002
+- CV-339
+- SP-278
+- SP-286
+- SP-337
+unblocks: []
+acceptance_criteria:
+- Exact approved whole-run predicate and independent original custody are enforced.
+- No admission or retention policy is inferred; native execution remains NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_dcw_blockage_events.py --family wizard.unblocked
+- python3 scripts/pm-plan-index.py validate
+risk_class: planning_run_event_custody
+reasoning_tier: high
+context_scope: event_authority_dcw_round10
+implementation_surfaces:
+- Plans/Contracts_V0.md
+- Plans/dcw/wizard_unblocked_evidence.schema.json
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- origin/plans/ea-cards2-answers-20261105:Plans/Decision_Log.md#DL-432
+- Plans/Contracts_V0.md#CV-234
+- Plans/Planning_Wizard.md#PWIZ-002
+preserved_exact_tokens:
+- wizard.unblocked
+- DL-432
+- CV-234
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No registry append, Decision Log entry, native execution, governance seal or retired lifecycle revival.
+```

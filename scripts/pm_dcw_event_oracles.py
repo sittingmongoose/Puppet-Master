@@ -350,7 +350,7 @@ def wizard_source(row, scenario):
     return source
 
 
-def index_read(index, reader, authority=None):
+def index_read(index, reader, authority=None, event_validator=None):
     checkpoint=index['checkpoint'];generation=checkpoint['generations'][checkpoint['current_generation_id']];frontier=generation['frontier']
     check_schema('Plans/event_record_index_checkpoint.schema.json', checkpoint, 'checkpoint')
     check_schema('Plans/event_record_index_checkpoint.schema.json', reader['live_token'], 'read_token')
@@ -367,7 +367,7 @@ def index_read(index, reader, authority=None):
     require(token['generation_anchor_sha256'] == index_binding(generation['anchor']), 'index_currentness')
     require(token['generation_id'] == generation['generation_id'] and token['storage_instance_id'] == checkpoint['storage_instance_id'] and token['source_selection'] == frontier['source_selection'] and token['frontier_revision'] == frontier['publication_revision'] and token['index_dataset_name'] == generation['index_dataset_name'] and token['checkpoint_key'] == index['checkpoint_key'] == 'event_record_index_checkpoint.v1:' + checkpoint['storage_instance_id'] and token['checkpoint_ref'] == index['checkpoint_key'] + '#/generations/' + generation['generation_id'] and token['redb_snapshot_id'] == index['captured_redb_snapshot_id'], 'index_currentness')
     require(any(t['transaction_id']==frontier['redb_transaction_id'] and t['frontier_sha256']==token['frontier_sha256'] for t in index['committed_transactions']), 'index_currentness')
-    index_content(index, reader, authority)
+    index_content(index, reader, authority, event_validator)
 
 def source_storage(row, scenario):
     """Validate the physical redb row and its SP-337 original payload, if selected.
@@ -782,7 +782,7 @@ def index_rows_digest(rows):
         for k, v in sorted(rows.items(), key=lambda pair: (pair[1]['sequence_id'], pair[1]['event_id']))]))
 
 
-def index_content(index, reader, authority=None):
+def index_content(index, reader, authority=None, event_validator=None):
     """SP-278 joins over captured source/rows, never the fixed example token.
 
     Captured controls, frame extents and transaction observations are synthetic
@@ -799,7 +799,9 @@ def index_content(index, reader, authority=None):
     for frame in frames:
         event = frame['event']
         check_schema('Plans/event_record.schema.json', event)
-        if event['event_type'] in prepared:
+        if event_validator is not None:
+            event_validator(event, authority)
+        elif event['event_type'] in prepared:
             envelope(prepared[event['event_type']], event, compatibility=event['replay_policy'] == 'projector_replay_only', authority=authority)
         else:
             owner = registered.get(event['event_type'])
