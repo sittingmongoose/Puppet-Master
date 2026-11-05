@@ -168,11 +168,11 @@
       if (!ok || !el || !document.contains(el)) return;
       /* (its deadline runs on the motion clock, as the timer does: slow-motion filming stretches both alike) */
       const k = el.getAttribute('data-key') || copyKey(text), until = {};
-      COPIED[k] = until; el.textContent = T('chrome.copied'); O55.sound.play('copy');
+      COPIED[k] = until; el.firstElementChild.textContent = T('chrome.copied'); O55.sound.play('copy');
       O55.motion.after(COPIED_MS, () => {
         if (COPIED[k] !== until) return; /* copied again meanwhile: that one's deadline counts */
         delete COPIED[k];
-        document.querySelectorAll('[data-o55-do="copyText"]').forEach((b) => { if (b.getAttribute('data-key') === k) b.textContent = T('chrome.copy'); });
+        document.querySelectorAll('[data-o55-do="copyText"]').forEach((b) => { if (b.getAttribute('data-key') === k) b.firstElementChild.textContent = T('chrome.copy'); });
       });
     });
   };
