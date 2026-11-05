@@ -1,12 +1,12 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-W2-DCW-FIX9-20261105",
-  "assessment_kind": "worker_self_grade_after_blind_review",
+  "assessment_id": "EA-W2-DCW-ROUND10-20261105",
+  "assessment_kind": "worker_self_grade_after_owner_answers",
   "assessed_tree": {
     "branch": "plans/ea-w2-chain-wizard-20261104",
-    "commit": "a6e652c86c3df3f93efa6530cf6a93b48a49028d",
-    "reviewed_head": "92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
-    "read_method": "Exact current owner citations rechecked; six family, standing, focused registered-schema and independent reviewer suites run serially. B2/B3/number findings recorded for shared sweep; no complete guard proof claimed."
+    "base": "21717728039303d923e82b9499c8b700167b3044",
+    "commit": "6cab86dabf1f306dfed8998f8f312d6b283e112f",
+    "read_method": "Eight serial family checks; exact current quotations rechecked; six prior contracts preserved. New complete owner contracts apply DL-431/DL-432. B2/B3/SW-N1 remain shared sweeps; no complete guard proof claimed. The later report-only commit changes no tested canonical or checker content. The later report-only commit changes no tested canonical or checker content."
   },
   "rubric": {
     "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
@@ -351,8 +351,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_requested",
-              "line_start": 872,
-              "line_end": 872,
+              "line_start": 874,
+              "line_end": 874,
               "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
             }
           ],
@@ -482,8 +482,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_requested",
-              "line_start": 872,
-              "line_end": 872,
+              "line_start": 874,
+              "line_end": 874,
               "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
             }
           ],
@@ -877,8 +877,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_started",
-              "line_start": 872,
-              "line_end": 872,
+              "line_start": 874,
+              "line_end": 874,
               "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
             }
           ],
@@ -1008,8 +1008,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_started",
-              "line_start": 872,
-              "line_end": 872,
+              "line_start": 874,
+              "line_end": 874,
               "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
             }
           ],
@@ -1403,8 +1403,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_completed",
-              "line_start": 872,
-              "line_end": 872,
+              "line_start": 874,
+              "line_end": 874,
               "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
             }
           ],
@@ -1534,8 +1534,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_completed",
-              "line_start": 872,
-              "line_end": 872,
+              "line_start": 874,
+              "line_end": 874,
               "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
             }
           ],
@@ -1929,8 +1929,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_interrupted",
-              "line_start": 872,
-              "line_end": 872,
+              "line_start": 874,
+              "line_end": 874,
               "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
             }
           ],
@@ -2060,8 +2060,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_interrupted",
-              "line_start": 872,
-              "line_end": 872,
+              "line_start": 874,
+              "line_end": 874,
               "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
             }
           ],
@@ -2133,334 +2133,307 @@
     },
     {
       "event_type": "wizard.blocked",
-      "outcome": "stopped_for_Jared",
-      "family_revision": null,
+      "outcome": "register_prepared_without_admission",
+      "family_revision": "1.0.0 (candidate, unadmitted)",
       "disposition": "UNDISPOSITIONED",
       "cells": {
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "Exact family is absent from the 46-family registry; this is the instructed no-admission boundary, not a drafting failure.",
+          "finding": "Registry membership remains ABSENT by instruction; closed candidate revision 1.0.0 is prepared only.",
           "evidence": [
             {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-596",
+              "line_start": 24935,
+              "line_end": 24935,
+              "quote": "prepared without admission."
+            },
+            {
               "path": "Plans/event_family_registry.json",
-              "unit": "whole registry; exact-name lookup absent",
+              "unit": "whole registry; exact-name absence",
               "line_start": 8,
               "line_end": 8,
               "quote": "\"families\": ["
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "DCW round9 at 21717728039303d923e82b9499c8b700167b3044",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Round 10 applies deck-2 Card 4.a/4.b option A; inherited shared sweep qualifications remain."
         },
         "owner_doc": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Current Contracts/Planning Wizard routing survives document retirement; a retired CWF reference is not a competing current owner. The exact-family replacement contract remains incomplete.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "CV-596 applies DL-431 to the current PlanningRun owner PWIZ-002 and preserves CV-233; the retired Chain Wizard is not restored.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "CV-233",
-              "line_start": 14904,
-              "line_end": 14904,
-              "quote": "wizard.blocked is not standalone navigation or blocked-state ownership; it"
-            },
-            {
-              "path": "Plans/assistant-chat-design.md",
-              "unit": "current source",
-              "line_start": 3524,
-              "line_end": 3524,
-              "quote": "consume the same stronger blocked taxonomy; any older `pre-runtime-escalation` wizard shape is compatibility evidence, not a separate live state."
+              "unit": "CV-596",
+              "line_start": 24937,
+              "line_end": 24937,
+              "quote": "Semantic owner is current Plans/Planning_Wizard.md#PWIZ-002,"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "DCW round9 at 21717728039303d923e82b9499c8b700167b3044",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change": "upgraded",
+          "change_reason": "Round 10 applies deck-2 Card 4.a/4.b option A; inherited shared sweep qualifications remain."
         },
         "producer": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Current partial behavior/identity is cited, but this stopped family has no prepared complete exact-family contract for this criterion.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "CV-596 names the responsible planning observer and exact SP-286/CV-339 full-value v2 source/append/receipt/publication order.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "CV-233",
-              "line_start": 14904,
-              "line_end": 14904,
-              "quote": "wizard.blocked is not standalone navigation or blocked-state ownership; it"
-            },
-            {
-              "path": "Plans/assistant-chat-design.md",
-              "unit": "current source",
-              "line_start": 3524,
-              "line_end": 3524,
-              "quote": "consume the same stronger blocked taxonomy; any older `pre-runtime-escalation` wizard shape is compatibility evidence, not a separate live state."
+              "unit": "CV-596",
+              "line_start": 24965,
+              "line_end": 24965,
+              "quote": "Producer emitter.wizard_blocked@1.0.0 is the responsible Planning Wizard component''s observer of its original"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "DCW round9 at 21717728039303d923e82b9499c8b700167b3044",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change": "upgraded",
+          "change_reason": "Round 10 applies deck-2 Card 4.a/4.b option A; inherited shared sweep qualifications remain."
         },
         "closed_payload_schema": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Current partial behavior/identity is cited, but this stopped family has no prepared complete exact-family contract for this criterion.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "CV-596 names this family's own required-present closed schema and exact version; originals, physical source wrappers and payload references are separate.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "CV-233",
-              "line_start": 14904,
-              "line_end": 14904,
-              "quote": "wizard.blocked is not standalone navigation or blocked-state ownership; it"
+              "unit": "CV-596",
+              "line_start": 24956,
+              "line_end": 24956,
+              "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json are required-present, root additionalProperties=false,"
             },
             {
-              "path": "Plans/assistant-chat-design.md",
-              "unit": "current source",
-              "line_start": 3524,
-              "line_end": 3524,
-              "quote": "consume the same stronger blocked taxonomy; any older `pre-runtime-escalation` wizard shape is compatibility evidence, not a separate live state."
+              "path": "Plans/event_payloads/planning_wizard/wizard_blocked.schema.json",
+              "unit": "root",
+              "line_start": 5,
+              "line_end": 5,
+              "quote": "\"additionalProperties\": false,"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "DCW round9 at 21717728039303d923e82b9499c8b700167b3044",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change": "upgraded",
+          "change_reason": "Round 10 applies deck-2 Card 4.a/4.b option A; inherited shared sweep qualifications remain."
         },
         "scope_identity": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Current partial behavior/identity is cited, but this stopped family has no prepared complete exact-family contract for this criterion.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "CV-596 binds the real Project, whole PlanningRun/episode/observation and exact string-only identity; nullable thread context does not select the subject.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "CV-233",
-              "line_start": 14904,
-              "line_end": 14904,
-              "quote": "wizard.blocked is not standalone navigation or blocked-state ownership; it"
-            },
-            {
-              "path": "Plans/assistant-chat-design.md",
-              "unit": "current source",
-              "line_start": 3524,
-              "line_end": 3524,
-              "quote": "consume the same stronger blocked taxonomy; any older `pre-runtime-escalation` wizard shape is compatibility evidence, not a separate live state."
+              "unit": "CV-596",
+              "line_start": 24982,
+              "line_end": 24982,
+              "quote": "NEW identity recipe"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "DCW round9 at 21717728039303d923e82b9499c8b700167b3044",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change": "upgraded",
+          "change_reason": "Round 10 applies deck-2 Card 4.a/4.b option A; inherited shared sweep qualifications remain."
         },
         "replay_idempotency": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Current partial behavior/identity is cited, but this stopped family has no prepared complete exact-family contract for this criterion.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "CV-596 freezes producer semantic inputs, excludes assigned Storage metadata, resolves original receipts on retry and refuses replay-only current append/retry.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "CV-233",
-              "line_start": 14904,
-              "line_end": 14904,
-              "quote": "wizard.blocked is not standalone navigation or blocked-state ownership; it"
-            },
-            {
-              "path": "Plans/assistant-chat-design.md",
-              "unit": "current source",
-              "line_start": 3524,
-              "line_end": 3524,
-              "quote": "consume the same stronger blocked taxonomy; any older `pre-runtime-escalation` wizard shape is compatibility evidence, not a separate live state."
+              "unit": "CV-596",
+              "line_start": 24990,
+              "line_end": 24990,
+              "quote": "Retry compares exactly the producer-owned semantic fields enumerated by CV-339: event_type, scope_kind, project_id,"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "DCW round9 at 21717728039303d923e82b9499c8b700167b3044",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change": "upgraded",
+          "change_reason": "Round 10 applies deck-2 Card 4.a/4.b option A; inherited shared sweep qualifications remain."
         },
         "retention": {
           "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Current partial behavior/identity is cited, but this stopped family has no prepared complete exact-family contract for this criterion.",
+          "representation": "exact_normative_owner",
+          "finding": "Event history remains PENDING_RETENTION_DECISION with the exact question. Original source audit custody uses existing RP-AUTHORITY-INDEFINITE; receipt/index/checkpoint policies are explicitly retained.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "CV-233",
-              "line_start": 14904,
-              "line_end": 14904,
-              "quote": "wizard.blocked is not standalone navigation or blocked-state ownership; it"
+              "unit": "CV-596",
+              "line_start": 25072,
+              "line_end": 25072,
+              "quote": "Retention is explicit: event retention_policy_ref=PENDING_RETENTION_DECISION. The original wizard_blocked_evidence"
             },
             {
-              "path": "Plans/assistant-chat-design.md",
-              "unit": "current source",
-              "line_start": 3524,
-              "line_end": 3524,
-              "quote": "consume the same stronger blocked taxonomy; any older `pre-runtime-escalation` wizard shape is compatibility evidence, not a separate live state."
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-596",
+              "line_start": 25076,
+              "line_end": 25076,
+              "quote": "Exact question: For wizard.blocked event history, which Case L-3 class/lifetime applies: planning/chat"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "DCW round9 at 21717728039303d923e82b9499c8b700167b3044",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Round 10 applies deck-2 Card 4.a/4.b option A; inherited shared sweep qualifications remain."
         },
         "redaction_custody": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Current partial behavior/identity is cited, but this stopped family has no prepared complete exact-family contract for this criterion.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "CV-596 closes original observation/attempt/action/route/receipt joins, ref-only disclosure, current access/deletion, coherent backup and admitted restore inventories.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "CV-233",
-              "line_start": 14904,
-              "line_end": 14904,
-              "quote": "wizard.blocked is not standalone navigation or blocked-state ownership; it"
-            },
-            {
-              "path": "Plans/assistant-chat-design.md",
-              "unit": "current source",
-              "line_start": 3524,
-              "line_end": 3524,
-              "quote": "consume the same stronger blocked taxonomy; any older `pre-runtime-escalation` wizard shape is compatibility evidence, not a separate live state."
+              "unit": "CV-596",
+              "line_start": 25023,
+              "line_end": 25023,
+              "quote": "NEW original custody source wizard_blocked_evidence is materialized in Plans/storage_value_registry.json under"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "DCW round9 at 21717728039303d923e82b9499c8b700167b3044",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change": "upgraded",
+          "change_reason": "Round 10 applies deck-2 Card 4.a/4.b option A; inherited shared sweep qualifications remain."
         },
         "transitions": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Current partial behavior/identity is cited, but this stopped family has no prepared complete exact-family contract for this criterion.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "CV-596 enforces the approved whole-run blockage/clearance predicate, authenticated same-episode predecessor chain and current writer CAS without reviving a three-round trigger.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "CV-233",
-              "line_start": 14904,
-              "line_end": 14904,
-              "quote": "wizard.blocked is not standalone navigation or blocked-state ownership; it"
-            },
-            {
-              "path": "Plans/assistant-chat-design.md",
-              "unit": "current source",
-              "line_start": 3524,
-              "line_end": 3524,
-              "quote": "consume the same stronger blocked taxonomy; any older `pre-runtime-escalation` wizard shape is compatibility evidence, not a separate live state."
+              "unit": "CV-596",
+              "line_start": 25006,
+              "line_end": 25006,
+              "quote": "The planning component''s immutable observation has kind blockage_recorded or repair_attempt_completed and subject_kind=planning_run."
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "DCW round9 at 21717728039303d923e82b9499c8b700167b3044",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change": "upgraded",
+          "change_reason": "Round 10 applies deck-2 Card 4.a/4.b option A; inherited shared sweep qualifications remain."
         },
         "consumers_checkpoints": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Current partial behavior/identity is cited, but this stopped family has no prepared complete exact-family contract for this criterion.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "CV-596 names its passive reader and adopts the existing exact SP-278 projector/reader/checkpoint with complete mixed-source coverage, CAS and DL-076 token shape.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "CV-233",
-              "line_start": 14904,
-              "line_end": 14904,
-              "quote": "wizard.blocked is not standalone navigation or blocked-state ownership; it"
-            },
-            {
-              "path": "Plans/assistant-chat-design.md",
-              "unit": "current source",
-              "line_start": 3524,
-              "line_end": 3524,
-              "quote": "consume the same stronger blocked taxonomy; any older `pre-runtime-escalation` wizard shape is compatibility evidence, not a separate live state."
+              "unit": "CV-596",
+              "line_start": 25058,
+              "line_end": 25058,
+              "quote": "NEW passive operating consumer reader.wizard_blocked_history@1.0.0 selects only wizard.blocked at this exact supported"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "DCW round9 at 21717728039303d923e82b9499c8b700167b3044",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change": "upgraded",
+          "change_reason": "Round 10 applies deck-2 Card 4.a/4.b option A; inherited shared sweep qualifications remain."
         },
         "compatibility_withdrawal": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Current partial behavior/identity is cited, but this stopped family has no prepared complete exact-family contract for this criterion.",
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "CV-596 specifies retained-original dispatch, current-state independence, writer cutoff/drain, exact reader withdrawal and complete replacement rebuild; inherited B2 timestamp behavior awaits CV-1101.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "CV-233",
-              "line_start": 14904,
-              "line_end": 14904,
-              "quote": "wizard.blocked is not standalone navigation or blocked-state ownership; it"
-            },
-            {
-              "path": "Plans/assistant-chat-design.md",
-              "unit": "current source",
-              "line_start": 3524,
-              "line_end": 3524,
-              "quote": "consume the same stronger blocked taxonomy; any older `pre-runtime-escalation` wizard shape is compatibility evidence, not a separate live state."
+              "unit": "CV-596",
+              "line_start": 25085,
+              "line_end": 25085,
+              "quote": "Compatibility/withdrawal for wizard.blocked alone: dispatch only explicitly supported exact family/schema/version;"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "DCW round9 at 21717728039303d923e82b9499c8b700167b3044",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change": "upgraded",
+          "change_reason": "Round 10 applies deck-2 Card 4.a/4.b option A; inherited shared sweep qualifications remain."
         },
         "positive_negative_oracles": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Payload/static checks exist, but full normative envelope/admission/custody/withdrawal cases remain incomplete. Authored native NOT_RUN alone is not a failure.",
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Static positives and coherent single-defect negatives/repair controls are authored and executed. B2 date-time, SW-N1 number-domain and B3 shared-tool predicate-isolation evidence remain incomplete; no full prepared PASS is claimed.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "CV-233",
-              "line_start": 14904,
-              "line_end": 14904,
-              "quote": "wizard.blocked is not standalone navigation or blocked-state ownership; it"
+              "unit": "CV-596",
+              "line_start": 25096,
+              "line_end": 25096,
+              "quote": "Positive/negative static oracles for this exact family are Plans/dcw_blockage_event_fixtures.json and scripts/pm_dcw_blockage_fixtures.py,"
             },
             {
-              "path": "Plans/assistant-chat-design.md",
-              "unit": "current source",
-              "line_start": 3524,
-              "line_end": 3524,
-              "quote": "consume the same stronger blocked taxonomy; any older `pre-runtime-escalation` wizard shape is compatibility evidence, not a separate live state."
+              "path": "scripts/pm_dcw_blockage_events.py",
+              "unit": "main",
+              "line_start": 312,
+              "line_end": 312,
+              "quote": "guard_isolation='B3_SWEEP',"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "DCW round9 at 21717728039303d923e82b9499c8b700167b3044",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change": "upgraded",
+          "change_reason": "Round 10 applies deck-2 Card 4.a/4.b option A; inherited shared sweep qualifications remain."
         }
       },
       "prepared_pass": false,
       "remaining_gaps": [
-        "PRODUCT: Q1a current subject/emission predicate (CV-233)",
-        "PENDING_RETENTION_DECISION; technical family preparation follows the subject/trigger answer."
+        "Registry membership remains ABSENT by instruction; closed candidate revision 1.0.0 is prepared only.",
+        "Event history remains PENDING_RETENTION_DECISION with the exact question. Original source audit custody uses existing RP-AUTHORITY-INDEFINITE; receipt/index/checkpoint policies are explicitly retained.",
+        "CV-596 specifies retained-original dispatch, current-state independence, writer cutoff/drain, exact reader withdrawal and complete replacement rebuild; inherited B2 timestamp behavior awaits CV-1101.",
+        "Static positives and coherent single-defect negatives/repair controls are authored and executed. B2 date-time, SW-N1 number-domain and B3 shared-tool predicate-isolation evidence remain incomplete; no full prepared PASS is claimed."
       ],
-      "disposition_evidence": []
+      "disposition_evidence": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-596",
+          "line_start": 24935,
+          "line_end": 24935,
+          "quote": "NEWLY AUTHORED OWNER CONTRACT for wizard.blocked under DL-045 and DL-431; prepared without admission."
+        }
+      ],
+      "prepared_disposition": "CURRENT_WRITER",
+      "current_owner_units": [
+        "CV-596",
+        "CV-233",
+        "PWIZ-002",
+        "SP-278",
+        "SP-286",
+        "CV-339"
+      ],
+      "static_checks_seen": [
+        "scripts/pm_dcw_blockage_events.py --family wizard.blocked"
+      ]
     },
     {
       "event_type": "wizard.deferred_payload.loaded",
@@ -2806,8 +2779,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "wizard.deferred_payload.loaded",
-              "line_start": 872,
-              "line_end": 872,
+              "line_start": 874,
+              "line_end": 874,
               "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
             }
           ],
@@ -2951,8 +2924,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "wizard.deferred_payload.loaded",
-              "line_start": 872,
-              "line_end": 872,
+              "line_start": 874,
+              "line_end": 874,
               "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
             }
           ],
@@ -3353,8 +3326,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "wizard.opened",
-              "line_start": 872,
-              "line_end": 872,
+              "line_start": 874,
+              "line_end": 874,
               "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
             }
           ],
@@ -3484,8 +3457,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "wizard.opened",
-              "line_start": 872,
-              "line_end": 872,
+              "line_start": 874,
+              "line_end": 874,
               "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
             }
           ],
@@ -3557,355 +3530,327 @@
     },
     {
       "event_type": "wizard.unblocked",
-      "outcome": "stopped_for_Jared",
-      "family_revision": null,
+      "outcome": "register_prepared_without_admission",
+      "family_revision": "1.0.0 (candidate, unadmitted)",
       "disposition": "UNDISPOSITIONED",
       "cells": {
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "Exact family is absent from the 46-family registry; this is the instructed no-admission boundary, not a drafting failure.",
+          "finding": "Registry membership remains ABSENT by instruction; closed candidate revision 1.0.0 is prepared only.",
           "evidence": [
             {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-597",
+              "line_start": 25154,
+              "line_end": 25154,
+              "quote": "prepared without admission."
+            },
+            {
               "path": "Plans/event_family_registry.json",
-              "unit": "whole registry; exact-name lookup absent",
+              "unit": "whole registry; exact-name absence",
               "line_start": 8,
               "line_end": 8,
               "quote": "\"families\": ["
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "DCW round9 at 21717728039303d923e82b9499c8b700167b3044",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Round 10 applies deck-2 Card 4.a/4.b option A; inherited shared sweep qualifications remain."
         },
         "owner_doc": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Current Contracts/Planning Wizard routing survives document retirement; a retired CWF reference is not a competing current owner. The exact-family replacement contract remains incomplete.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "CV-597 applies DL-432 to the current PlanningRun owner PWIZ-002 and preserves CV-234; the retired Chain Wizard is not restored.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "CV-234",
-              "line_start": 14952,
-              "line_end": 14952,
-              "quote": "wizard.unblocked minimum payload preserves wizard_id, optional thread_id,"
-            },
-            {
-              "path": "Plans/assistant-chat-design.md",
-              "unit": "current source",
-              "line_start": 3524,
-              "line_end": 3524,
-              "quote": "consume the same stronger blocked taxonomy; any older `pre-runtime-escalation` wizard shape is compatibility evidence, not a separate live state."
+              "unit": "CV-597",
+              "line_start": 25156,
+              "line_end": 25156,
+              "quote": "Semantic owner is current Plans/Planning_Wizard.md#PWIZ-002,"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "DCW round9 at 21717728039303d923e82b9499c8b700167b3044",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change": "upgraded",
+          "change_reason": "Round 10 applies deck-2 Card 4.a/4.b option A; inherited shared sweep qualifications remain."
         },
         "producer": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Current partial behavior/identity is cited, but this stopped family has no prepared complete exact-family contract for this criterion.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "CV-597 names the responsible planning observer and exact SP-286/CV-339 full-value v2 source/append/receipt/publication order.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "CV-234",
-              "line_start": 14952,
-              "line_end": 14952,
-              "quote": "wizard.unblocked minimum payload preserves wizard_id, optional thread_id,"
-            },
-            {
-              "path": "Plans/assistant-chat-design.md",
-              "unit": "current source",
-              "line_start": 3524,
-              "line_end": 3524,
-              "quote": "consume the same stronger blocked taxonomy; any older `pre-runtime-escalation` wizard shape is compatibility evidence, not a separate live state."
+              "unit": "CV-597",
+              "line_start": 25183,
+              "line_end": 25183,
+              "quote": "Producer emitter.wizard_unblocked@1.0.0 is the responsible Planning Wizard component''s observer of its original"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "DCW round9 at 21717728039303d923e82b9499c8b700167b3044",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change": "upgraded",
+          "change_reason": "Round 10 applies deck-2 Card 4.a/4.b option A; inherited shared sweep qualifications remain."
         },
         "closed_payload_schema": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Current partial behavior/identity is cited, but this stopped family has no prepared complete exact-family contract for this criterion.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "CV-597 names this family's own required-present closed schema and exact version; originals, physical source wrappers and payload references are separate.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "CV-234",
-              "line_start": 14952,
-              "line_end": 14952,
-              "quote": "wizard.unblocked minimum payload preserves wizard_id, optional thread_id,"
+              "unit": "CV-597",
+              "line_start": 25174,
+              "line_end": 25174,
+              "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json are required-present, root"
             },
             {
-              "path": "Plans/assistant-chat-design.md",
-              "unit": "current source",
-              "line_start": 3524,
-              "line_end": 3524,
-              "quote": "consume the same stronger blocked taxonomy; any older `pre-runtime-escalation` wizard shape is compatibility evidence, not a separate live state."
+              "path": "Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json",
+              "unit": "root",
+              "line_start": 5,
+              "line_end": 5,
+              "quote": "\"additionalProperties\": false,"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "DCW round9 at 21717728039303d923e82b9499c8b700167b3044",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change": "upgraded",
+          "change_reason": "Round 10 applies deck-2 Card 4.a/4.b option A; inherited shared sweep qualifications remain."
         },
         "scope_identity": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Current partial behavior/identity is cited, but this stopped family has no prepared complete exact-family contract for this criterion.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "CV-597 binds the real Project, whole PlanningRun/episode/observation and exact string-only identity; nullable thread context does not select the subject.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "CV-234",
-              "line_start": 14952,
-              "line_end": 14952,
-              "quote": "wizard.unblocked minimum payload preserves wizard_id, optional thread_id,"
-            },
-            {
-              "path": "Plans/assistant-chat-design.md",
-              "unit": "current source",
-              "line_start": 3524,
-              "line_end": 3524,
-              "quote": "consume the same stronger blocked taxonomy; any older `pre-runtime-escalation` wizard shape is compatibility evidence, not a separate live state."
+              "unit": "CV-597",
+              "line_start": 25200,
+              "line_end": 25200,
+              "quote": "NEW identity recipe"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "DCW round9 at 21717728039303d923e82b9499c8b700167b3044",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change": "upgraded",
+          "change_reason": "Round 10 applies deck-2 Card 4.a/4.b option A; inherited shared sweep qualifications remain."
         },
         "replay_idempotency": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Current partial behavior/identity is cited, but this stopped family has no prepared complete exact-family contract for this criterion.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "CV-597 freezes producer semantic inputs, excludes assigned Storage metadata, resolves original receipts on retry and refuses replay-only current append/retry.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "CV-234",
-              "line_start": 14952,
-              "line_end": 14952,
-              "quote": "wizard.unblocked minimum payload preserves wizard_id, optional thread_id,"
-            },
-            {
-              "path": "Plans/assistant-chat-design.md",
-              "unit": "current source",
-              "line_start": 3524,
-              "line_end": 3524,
-              "quote": "consume the same stronger blocked taxonomy; any older `pre-runtime-escalation` wizard shape is compatibility evidence, not a separate live state."
+              "unit": "CV-597",
+              "line_start": 25208,
+              "line_end": 25208,
+              "quote": "Retry compares exactly the producer-owned semantic fields enumerated by CV-339: event_type, scope_kind, project_id,"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "DCW round9 at 21717728039303d923e82b9499c8b700167b3044",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change": "upgraded",
+          "change_reason": "Round 10 applies deck-2 Card 4.a/4.b option A; inherited shared sweep qualifications remain."
         },
         "retention": {
           "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Current partial behavior/identity is cited, but this stopped family has no prepared complete exact-family contract for this criterion.",
+          "representation": "exact_normative_owner",
+          "finding": "Event history remains PENDING_RETENTION_DECISION with the exact question. Original source audit custody uses existing RP-AUTHORITY-INDEFINITE; receipt/index/checkpoint policies are explicitly retained.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "CV-234",
-              "line_start": 14952,
-              "line_end": 14952,
-              "quote": "wizard.unblocked minimum payload preserves wizard_id, optional thread_id,"
+              "unit": "CV-597",
+              "line_start": 25291,
+              "line_end": 25291,
+              "quote": "Retention is explicit: event retention_policy_ref=PENDING_RETENTION_DECISION. The original wizard_unblocked_evidence"
             },
             {
-              "path": "Plans/assistant-chat-design.md",
-              "unit": "current source",
-              "line_start": 3524,
-              "line_end": 3524,
-              "quote": "consume the same stronger blocked taxonomy; any older `pre-runtime-escalation` wizard shape is compatibility evidence, not a separate live state."
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-597",
+              "line_start": 25295,
+              "line_end": 25295,
+              "quote": "Exact question: For wizard.unblocked event history, which Case L-3 class/lifetime applies: planning/chat"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "DCW round9 at 21717728039303d923e82b9499c8b700167b3044",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Round 10 applies deck-2 Card 4.a/4.b option A; inherited shared sweep qualifications remain."
         },
         "redaction_custody": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Current partial behavior/identity is cited, but this stopped family has no prepared complete exact-family contract for this criterion.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "CV-597 closes original observation/attempt/action/route/receipt joins, ref-only disclosure, current access/deletion, coherent backup and admitted restore inventories.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "CV-234",
-              "line_start": 14952,
-              "line_end": 14952,
-              "quote": "wizard.unblocked minimum payload preserves wizard_id, optional thread_id,"
-            },
-            {
-              "path": "Plans/assistant-chat-design.md",
-              "unit": "current source",
-              "line_start": 3524,
-              "line_end": 3524,
-              "quote": "consume the same stronger blocked taxonomy; any older `pre-runtime-escalation` wizard shape is compatibility evidence, not a separate live state."
+              "unit": "CV-597",
+              "line_start": 25242,
+              "line_end": 25242,
+              "quote": "NEW original custody source wizard_unblocked_evidence is materialized in Plans/storage_value_registry.json under"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "DCW round9 at 21717728039303d923e82b9499c8b700167b3044",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change": "upgraded",
+          "change_reason": "Round 10 applies deck-2 Card 4.a/4.b option A; inherited shared sweep qualifications remain."
         },
         "transitions": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Current partial behavior/identity is cited, but this stopped family has no prepared complete exact-family contract for this criterion.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "CV-597 enforces the approved whole-run blockage/clearance predicate, authenticated same-episode predecessor chain and current writer CAS without reviving a three-round trigger.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "CV-234",
-              "line_start": 14952,
-              "line_end": 14952,
-              "quote": "wizard.unblocked minimum payload preserves wizard_id, optional thread_id,"
-            },
-            {
-              "path": "Plans/assistant-chat-design.md",
-              "unit": "current source",
-              "line_start": 3524,
-              "line_end": 3524,
-              "quote": "consume the same stronger blocked taxonomy; any older `pre-runtime-escalation` wizard shape is compatibility evidence, not a separate live state."
+              "unit": "CV-597",
+              "line_start": 25224,
+              "line_end": 25224,
+              "quote": "The planning component''s immutable conditions_cleared observation identifies the complete required conditions"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "DCW round9 at 21717728039303d923e82b9499c8b700167b3044",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change": "upgraded",
+          "change_reason": "Round 10 applies deck-2 Card 4.a/4.b option A; inherited shared sweep qualifications remain."
         },
         "consumers_checkpoints": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Current partial behavior/identity is cited, but this stopped family has no prepared complete exact-family contract for this criterion.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "CV-597 names its passive reader and adopts the existing exact SP-278 projector/reader/checkpoint with complete mixed-source coverage, CAS and DL-076 token shape.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "CV-234",
-              "line_start": 14952,
-              "line_end": 14952,
-              "quote": "wizard.unblocked minimum payload preserves wizard_id, optional thread_id,"
-            },
-            {
-              "path": "Plans/assistant-chat-design.md",
-              "unit": "current source",
-              "line_start": 3524,
-              "line_end": 3524,
-              "quote": "consume the same stronger blocked taxonomy; any older `pre-runtime-escalation` wizard shape is compatibility evidence, not a separate live state."
+              "unit": "CV-597",
+              "line_start": 25277,
+              "line_end": 25277,
+              "quote": "NEW passive operating consumer reader.wizard_unblocked_history@1.0.0 selects only wizard.unblocked at this exact"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "DCW round9 at 21717728039303d923e82b9499c8b700167b3044",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change": "upgraded",
+          "change_reason": "Round 10 applies deck-2 Card 4.a/4.b option A; inherited shared sweep qualifications remain."
         },
         "compatibility_withdrawal": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Current partial behavior/identity is cited, but this stopped family has no prepared complete exact-family contract for this criterion.",
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "CV-597 specifies retained-original dispatch, current-state independence, writer cutoff/drain, exact reader withdrawal and complete replacement rebuild; inherited B2 timestamp behavior awaits CV-1101.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "CV-234",
-              "line_start": 14952,
-              "line_end": 14952,
-              "quote": "wizard.unblocked minimum payload preserves wizard_id, optional thread_id,"
-            },
-            {
-              "path": "Plans/assistant-chat-design.md",
-              "unit": "current source",
-              "line_start": 3524,
-              "line_end": 3524,
-              "quote": "consume the same stronger blocked taxonomy; any older `pre-runtime-escalation` wizard shape is compatibility evidence, not a separate live state."
+              "unit": "CV-597",
+              "line_start": 25304,
+              "line_end": 25304,
+              "quote": "Compatibility/withdrawal for wizard.unblocked alone: dispatch only explicitly supported exact family/schema/version;"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "DCW round9 at 21717728039303d923e82b9499c8b700167b3044",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change": "upgraded",
+          "change_reason": "Round 10 applies deck-2 Card 4.a/4.b option A; inherited shared sweep qualifications remain."
         },
         "positive_negative_oracles": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Payload/static checks exist, but full normative envelope/admission/custody/withdrawal cases remain incomplete. Authored native NOT_RUN alone is not a failure.",
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Static positives and coherent single-defect negatives/repair controls are authored and executed. B2 date-time, SW-N1 number-domain and B3 shared-tool predicate-isolation evidence remain incomplete; no full prepared PASS is claimed.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "CV-234",
-              "line_start": 14952,
-              "line_end": 14952,
-              "quote": "wizard.unblocked minimum payload preserves wizard_id, optional thread_id,"
+              "unit": "CV-597",
+              "line_start": 25315,
+              "line_end": 25315,
+              "quote": "Positive/negative static oracles for this exact family are Plans/dcw_blockage_event_fixtures.json and scripts/pm_dcw_blockage_fixtures.py,"
             },
             {
-              "path": "Plans/assistant-chat-design.md",
-              "unit": "current source",
-              "line_start": 3524,
-              "line_end": 3524,
-              "quote": "consume the same stronger blocked taxonomy; any older `pre-runtime-escalation` wizard shape is compatibility evidence, not a separate live state."
+              "path": "scripts/pm_dcw_blockage_events.py",
+              "unit": "main",
+              "line_start": 312,
+              "line_end": 312,
+              "quote": "guard_isolation='B3_SWEEP',"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "DCW round9 at 21717728039303d923e82b9499c8b700167b3044",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change": "upgraded",
+          "change_reason": "Round 10 applies deck-2 Card 4.a/4.b option A; inherited shared sweep qualifications remain."
         }
       },
       "prepared_pass": false,
       "remaining_gaps": [
-        "PRODUCT: Q1b matching resolution predicate for the same subject/episode (CV-234)",
-        "PENDING_RETENTION_DECISION; technical family preparation follows the subject/trigger answer."
+        "Registry membership remains ABSENT by instruction; closed candidate revision 1.0.0 is prepared only.",
+        "Event history remains PENDING_RETENTION_DECISION with the exact question. Original source audit custody uses existing RP-AUTHORITY-INDEFINITE; receipt/index/checkpoint policies are explicitly retained.",
+        "CV-597 specifies retained-original dispatch, current-state independence, writer cutoff/drain, exact reader withdrawal and complete replacement rebuild; inherited B2 timestamp behavior awaits CV-1101.",
+        "Static positives and coherent single-defect negatives/repair controls are authored and executed. B2 date-time, SW-N1 number-domain and B3 shared-tool predicate-isolation evidence remain incomplete; no full prepared PASS is claimed."
       ],
-      "disposition_evidence": []
+      "disposition_evidence": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-597",
+          "line_start": 25154,
+          "line_end": 25154,
+          "quote": "NEWLY AUTHORED OWNER CONTRACT for wizard.unblocked under DL-045 and DL-432; prepared without admission."
+        }
+      ],
+      "prepared_disposition": "CURRENT_WRITER",
+      "current_owner_units": [
+        "CV-597",
+        "CV-234",
+        "PWIZ-002",
+        "SP-278",
+        "SP-286",
+        "CV-339"
+      ],
+      "static_checks_seen": [
+        "scripts/pm_dcw_blockage_events.py --family wizard.unblocked"
+      ]
     }
   ],
   "summary": {
-    "prepared_before": 0,
-    "prepared_after": 0,
     "assigned": 8,
-    "b1_fixed_families": 6,
-    "stopped_for_Jared": 2,
+    "contracts_prepared": 8,
+    "all_technical_prepared_pass": 0,
+    "stopped_for_Jared": 0,
+    "pending_retention": 8,
     "admissions": 0,
     "native_execution": "NOT_RUN",
-    "full_contract_cases": 5295,
-    "total_static_cases": 5474,
-    "registered_regression_outcomes": 1278,
-    "independent_outcomes": 2052,
-    "current_evidence_quotes": 304,
+    "current_evidence_quotes": 292,
     "sweep_items": [
       "B2/CV-1101",
       "B3/shared guard isolation",
       "SW-N1/CV-1100/SP-1100/SP-1101"
     ],
-    "complete_check11": "UNPROVED_PENDING_SHARED_TOOL"
+    "complete_check11": "UNPROVED_PENDING_SHARED_TOOL",
+    "total_static_family_cases": 5948,
+    "new_family_contract_cases": 474,
+    "new_family_repair_controls": 431
   },
   "round5_verification": {
     "require_sites": 131,
@@ -4022,6 +3967,26 @@
         1,
         12
       ]
+    },
+    "round9_summary": {
+      "prepared_before": 0,
+      "prepared_after": 0,
+      "assigned": 8,
+      "b1_fixed_families": 6,
+      "stopped_for_Jared": 2,
+      "admissions": 0,
+      "native_execution": "NOT_RUN",
+      "full_contract_cases": 5295,
+      "total_static_cases": 5474,
+      "registered_regression_outcomes": 1278,
+      "independent_outcomes": 2052,
+      "current_evidence_quotes": 304,
+      "sweep_items": [
+        "B2/CV-1101",
+        "B3/shared guard isolation",
+        "SW-N1/CV-1100/SP-1100/SP-1101"
+      ],
+      "complete_check11": "UNPROVED_PENDING_SHARED_TOOL"
     }
   },
   "round8_verification": {
@@ -4214,5 +4179,91 @@
     "execution_order": "one family/checker at a time; resource starts in commands.json",
     "ids_added": 0,
     "prior_guard_proof": "Superseded: distinct predicates were merged; do not carry its PASS/count claims forward."
+  },
+  "round10_verification": {
+    "owner_answers": [
+      "DL-431",
+      "DL-432"
+    ],
+    "preserved_minima": [
+      "CV-233",
+      "CV-234"
+    ],
+    "new_ids": [
+      "CV-596",
+      "CV-597"
+    ],
+    "family_grades": {
+      "wizard.blocked": {
+        "ABSENT": 1,
+        "PASS": 8,
+        "PARTIAL": 3
+      },
+      "wizard.unblocked": {
+        "ABSENT": 1,
+        "PASS": 8,
+        "PARTIAL": 3
+      }
+    },
+    "native": "NOT_RUN",
+    "checks": [
+      {
+        "family": "bundle.revision_requested",
+        "exit_code": 0,
+        "cases": 822,
+        "repair_controls": null
+      },
+      {
+        "family": "bundle.revision_started",
+        "exit_code": 0,
+        "cases": 838,
+        "repair_controls": null
+      },
+      {
+        "family": "bundle.revision_completed",
+        "exit_code": 0,
+        "cases": 838,
+        "repair_controls": null
+      },
+      {
+        "family": "bundle.revision_interrupted",
+        "exit_code": 0,
+        "cases": 836,
+        "repair_controls": null
+      },
+      {
+        "family": "wizard.deferred_payload.loaded",
+        "exit_code": 0,
+        "cases": 1339,
+        "repair_controls": null
+      },
+      {
+        "family": "wizard.opened",
+        "exit_code": 0,
+        "cases": 801,
+        "repair_controls": null
+      },
+      {
+        "family": "wizard.blocked",
+        "exit_code": 0,
+        "cases": 230,
+        "repair_controls": 207
+      },
+      {
+        "family": "wizard.unblocked",
+        "exit_code": 0,
+        "cases": 244,
+        "repair_controls": 224
+      }
+    ],
+    "repository_checks": {
+      "shards-generate": 0,
+      "index-generate": 0,
+      "shard-check": 0,
+      "index-validate": 1,
+      "storage-profile": 1,
+      "storage-recovery": 0
+    },
+    "repository_check_comparison": "r10/repository-check-comparison.json; index 23->22 and storage profile 41->41, no new failures"
   }
 }
