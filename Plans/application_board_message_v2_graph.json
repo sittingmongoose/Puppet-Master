@@ -10,12 +10,12 @@
     {
       "path": "Plans/application_workflow_contracts.schema.json",
       "schema_uri": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json",
-      "sha256": "1b64728552d4b7b4d514ebb3dd870d784dd7b2b69ad6b3cf1fb46d852764bdf0"
+      "sha256": "79275341460c3779f5f82bf3063b1c433d64b7db34a007d09e02377040436ea4"
     },
     {
       "path": "Plans/shared_integration_runtime.schema.json",
       "schema_uri": "pm.shared_integration_runtime.command_contracts.schema.v1",
-      "sha256": "5293dd1e8d403a6e8da103bcd93e2811ddaec67aaa277541c26ede13064d3008"
+      "sha256": "0e41d89065463e0581357a514ad3d2510d6db8a3e9356dcd23f717f5db4118f5"
     },
     {
       "path": "Plans/coordination_projection_contracts.schema.json",
@@ -160,5 +160,5 @@
     "withdrawal": "fence exact v2 writer, settle original full receipts, fence exact v2 reader/publication before successor; retain original V1/V2 bytes and independent generic index"
   },
   "adoption_disposition": "specified_unimplemented",
-  "graph_sha256": "ac6340a74ba70449226f94029b93b8cb42eedfeab84ba6393f7a58ba33bdd831"
+  "graph_sha256": "189b68da1fac653edc7908c7196bee9265995931cd093423440b67e93409cc89"
 }
