@@ -907,7 +907,151 @@ def checkpoint_errors(case, root, formats):
             or coverage['last_frame']['last_event_id'] != event['event_id']
             or coverage['last_frame']['last_sequence_id'] != event['sequence_id']):
         errors.append('index_complete_source_coverage')
+    errors += coverage_copy_errors(event, coverage)
     return errors
+
+
+COVERAGE_COPY_CODES = (
+    'index_coverage_segment_count', 'index_coverage_segment_generation', 'index_coverage_segment_name',
+    'index_coverage_frame_byte_offset', 'index_coverage_frame_end_offset',
+    'index_coverage_scanned_through_offset', 'index_coverage_source_durable_end_offset',
+    'index_coverage_source_durable_bytes_sha256')
+
+
+def coverage_copy_errors(event, coverage):
+    """DO-P1F04: the frontier's copies of the covered event's bytes must be that event's bytes.
+
+    In this lane's one-event model the coverage holds one segment, the one the last frame names, and its one
+    frame is the event's complete canonical MessagePack bytes (`packed`) from the segment's scan start. So the
+    frame end, the segment's scanned-through and durable end offsets and its durable bytes' SHA-256 are each
+    recomputed from the event, never trusted as supplied, and compared by exact type (`typed_tree`), so 1344.0
+    or "1344" is not 1344. The first four predicates locate the segment and frame those copies are read from.
+    """
+    data = packed(event)
+    size, digest = typed_tree(len(data)), typed_tree(hashlib.sha256(data).hexdigest())
+    frame, segments = coverage['last_frame'], coverage['segments']
+    segment = segments[0]
+    errors = []
+    if len(segments) != 1:
+        errors.append('index_coverage_segment_count')
+    if typed_tree(segment['segment_generation']) != typed_tree(frame['segment_generation']):
+        errors.append('index_coverage_segment_generation')
+    if typed_tree(segment['segment_name']) != typed_tree(frame['segment_name']):
+        errors.append('index_coverage_segment_name')
+    if typed_tree(frame['byte_offset']) != typed_tree(segment['scan_start_offset']):
+        errors.append('index_coverage_frame_byte_offset')
+    if typed_tree(frame['frame_end_offset']) != size:
+        errors.append('index_coverage_frame_end_offset')
+    if typed_tree(segment['scanned_through_offset']) != size:
+        errors.append('index_coverage_scanned_through_offset')
+    if typed_tree(segment['source_durable_end_offset']) != size:
+        errors.append('index_coverage_source_durable_end_offset')
+    if typed_tree(segment['source_durable_bytes_sha256']) != digest:
+        errors.append('index_coverage_source_durable_bytes_sha256')
+    return errors
+
+
+def coverage_copy_negatives(case):
+    """One single-defect negative per coverage predicate, built from a valid case.
+
+    Each changes exactly one field of the frontier and re-digests the frontier into the read token, the one
+    dependent copy, so the coverage predicate is the only defect. Yields (name, case, expected code).
+    """
+    read = case['read']
+    frontier = read['checkpoint']['generations'][read['checkpoint']['current_generation_id']]['frontier']
+    coverage = frontier['coverage']
+    data = packed(case['event'])
+    # Another schema-valid name: the segment's first-sequence field moves by one, the suffix stays.
+    renamed = re.sub(r'^(seg-[0-9]{6,}-)([0-9]{20})', lambda match: match.group(1) + f'{int(match.group(2)) + 1:020}',
+                     coverage['segments'][0]['segment_name'])
+    assert renamed != coverage['segments'][0]['segment_name']
+    changes = (
+        ('index_coverage_segment_count', lambda c: c['segments'].append(copy.deepcopy(c['segments'][0]))),
+        ('index_coverage_segment_generation', lambda c: c['segments'][0].update(
+            segment_generation=c['segments'][0]['segment_generation'] + 1)),
+        ('index_coverage_segment_name', lambda c: c['segments'][0].update(segment_name=renamed)),
+        ('index_coverage_frame_byte_offset', lambda c: c['last_frame'].update(byte_offset=c['last_frame']['byte_offset'] + 1)),
+        ('index_coverage_frame_end_offset', lambda c: c['last_frame'].update(frame_end_offset=len(data) + 1)),
+        ('index_coverage_scanned_through_offset', lambda c: c['segments'][0].update(scanned_through_offset=len(data) + 1)),
+        ('index_coverage_source_durable_end_offset', lambda c: c['segments'][0].update(source_durable_end_offset=len(data) + 1)),
+        ('index_coverage_source_durable_bytes_sha256', lambda c: c['segments'][0].update(
+            source_durable_bytes_sha256=hashlib.sha256(b'foreign:' + data).hexdigest())),
+    )
+    assert tuple(code for code, _ in changes) == COVERAGE_COPY_CODES
+    for code, change in changes:
+        bad = copy.deepcopy(case)
+        read = bad['read']
+        bad_frontier = read['checkpoint']['generations'][read['checkpoint']['current_generation_id']]['frontier']
+        change(bad_frontier['coverage'])
+        read['read_token']['frontier_sha256'] = binding_digest(bad_frontier)
+        yield code.removeprefix('index_coverage_'), bad, code
+
+
+def frontier_coverage(case):
+    read = case['read']
+    return read['checkpoint']['generations'][read['checkpoint']['current_generation_id']]['frontier']['coverage']
+
+
+# Wrong representations of each copy the guard reads: (code, container, field, forms).
+COVERAGE_TYPE_FORMS = (
+    ('index_coverage_segment_generation', 'segment', 'segment_generation', ('float', 'string', 'bool')),
+    ('index_coverage_segment_name', 'segment', 'segment_name', ('null', 'trailing_lf')),
+    ('index_coverage_frame_byte_offset', 'frame', 'byte_offset', ('float', 'string', 'bool')),
+    ('index_coverage_frame_end_offset', 'frame', 'frame_end_offset', ('float', 'string')),
+    ('index_coverage_scanned_through_offset', 'segment', 'scanned_through_offset', ('float', 'string')),
+    ('index_coverage_source_durable_end_offset', 'segment', 'source_durable_end_offset', ('float', 'string')),
+    ('index_coverage_source_durable_bytes_sha256', 'segment', 'source_durable_bytes_sha256', ('null', 'upper', 'trailing_lf')),
+)
+
+
+def wrong_form(value, form):
+    return {'float': lambda: float(value), 'string': lambda: str(value), 'bool': lambda: bool(value),
+            'null': lambda: None, 'upper': lambda: value.upper(), 'trailing_lf': lambda: value + '\n'}[form]()
+
+
+def coverage_copy_checks(fixtures, schema, owner_module):
+    """DO-P1F04: every positive's frontier copies agree with its own event; each predicate has its negative."""
+    root, formats = owner_module.ROOT, owner_module.UTC_FORMAT
+    checks = 0
+    for key in ('event_cases', 'retained_event_cases', 'compatibility_event_cases'):
+        for case in fixtures[key]:
+            assert not coverage_copy_errors(case['event'], frontier_coverage(case)), (key, case['case_id'])
+            checks += 1
+            for name, bad, code in coverage_copy_negatives(case):
+                assert checkpoint_errors(bad, root, formats) == [code], (key, case['case_id'], name)
+                assert historical_read_errors(bad, schema, owner_module) == [code], (key, case['case_id'], name)
+                checks += 2
+                if key == 'event_cases':
+                    assert recover_original(bad, schema, owner_module) == {
+                        'status': 'historical_original_unverified', 'appended': False, 'receipt': None}
+                    checks += 1
+    # Exact type: the guard itself refuses every other representation of a copy. Through checkpoint_errors the
+    # strict checkpoint schema (exact type, full-match patterns) refuses each non-float form first.
+    for case in fixtures['event_cases']:
+        for code, container, field, forms in COVERAGE_TYPE_FORMS:
+            for form in forms:
+                bad = copy.deepcopy(case)
+                coverage = frontier_coverage(bad)
+                target = coverage['last_frame'] if container == 'frame' else coverage['segments'][0]
+                target[field] = wrong_form(target[field], form)
+                assert coverage_copy_errors(bad['event'], coverage) == [code], (case['case_id'], field, form)
+                checks += 1
+                try:
+                    frontier = bad['read']['checkpoint']['generations'][bad['read']['checkpoint']['current_generation_id']]['frontier']
+                    bad['read']['read_token']['frontier_sha256'] = binding_digest(frontier)
+                except TypeError:
+                    # The checkpoint schema's integer type admits 1344.0, but SP-278's binding codec takes no
+                    # float, so checkpoint_errors cannot digest the frontier and refuses by raising.
+                    assert form == 'float', (case['case_id'], field, form)
+                    try:
+                        checkpoint_errors(bad, root, formats)
+                    except TypeError:
+                        checks += 1
+                        continue
+                    raise AssertionError(('float_copy_digested', case['case_id'], field))
+                assert checkpoint_errors(bad, root, formats) == ['checkpoint_schema'], (case['case_id'], field, form)
+                checks += 1
+    return checks
 
 
 @lru_cache(maxsize=4)
@@ -1380,4 +1524,5 @@ def check_oracles(fixtures, schema, owner_module):
             actual.append('logical_payload_schema')
         assert (not actual) == test['valid'], (test['name'], actual)
         checks += 1
+    checks += coverage_copy_checks(fixtures, schema, owner_module)
     return checks
