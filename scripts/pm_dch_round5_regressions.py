@@ -17,9 +17,10 @@ from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 
-def run(name):
+def run(name, family=None):
     spec = importlib.util.spec_from_file_location('dch_round5_subject', ROOT/'scripts/pm_dch_events.py')
     m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+    m.SELECTED_FAMILY=family
     overrides = {}
     def replace(function, old, new):
         source = inspect.getsource(getattr(m,function)); assert source.count(old) == 1, (function,old)
@@ -43,7 +44,7 @@ def run(name):
     elif name == 'N1_Astra10_numeric_encoding':
         source=inspect.getsource(m.body_bytes)
         start=source.index('        # SP-236 shortest numeric representation:')
-        end=source.index('        if isinstance(v, dict):', start)
+        end=source.index('        if type(v) is int and abs(v) > SAFE_INTEGER_MAX:', start)
         exec(source[:start]+source[end:],m.__dict__)
     elif name == 'Astra11_exact_types':
         m.input_types_valid=lambda value: True
@@ -67,6 +68,7 @@ def run(name):
         families=sorted({failure.split(':',1)[0] for failure in report['failures']})
         expected=(['chat.thread_worktree_pre_merge_test_failed','chat.thread_worktree_pre_merge_test_passed']
                   if name=='C4-B3_terminal_source_identity' else sorted(r['event_type'] for r in json.loads((ROOT/'Plans/dch_event_contracts.json').read_text())['rows']))
+        if family is not None:expected=[e for e in expected if e==family]
         return {'mutation':name,'pass':code==1 and report['status']=='fail' and families==expected,
                 'exit':code,'families':families,'checks':report['checks'],'failures':report['failures']}
     except Exception as exc:return {'mutation':name,'pass':False,'exception':repr(exc)}

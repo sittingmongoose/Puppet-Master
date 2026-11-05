@@ -200,7 +200,8 @@
         },
         "duration_ms": {
           "type": "integer",
-          "minimum": 0
+          "minimum": 0,
+          "maximum": 9007199254740991
         },
         "strategy": {
           "enum": [
@@ -406,7 +407,8 @@
         },
         "duration_ms": {
           "type": "integer",
-          "minimum": 0
+          "minimum": 0,
+          "maximum": 9007199254740991
         },
         "strategy": {
           "enum": [

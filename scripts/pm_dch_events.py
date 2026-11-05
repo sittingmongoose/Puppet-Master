@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """DCH static contract checks. No admission, frozen validator or runtime simulation."""
 import copy
+import argparse
 import base64
 import binascii
 import hashlib
@@ -22,6 +23,11 @@ from referencing.jsonschema import DRAFT202012
 ROOT = Path(__file__).resolve().parents[1]
 STORAGE_INSTANCE = '00000000-0000-4000-8000-000000000001'
 INLINE_LIMIT = 16 * 1024
+SAFE_INTEGER_MAX = (1 << 53) - 1
+SELECTED_FAMILY = None
+# Reuse Storage's own instance descriptor, including its UUID format.
+STORAGE_INSTANCE_DESCRIPTOR = json.loads((ROOT/'Plans/event_record_index_checkpoint.schema.json').read_text())['$defs']['checkpoint']['properties']['storage_instance_id']
+STORAGE_INSTANCE_VALIDATOR = Draft202012Validator(STORAGE_INSTANCE_DESCRIPTOR, format_checker=FormatChecker())
 # Exact EventRecord owner commitment. event_id has a separate integrity check.
 SEMANTIC_FIELDS = (
     'event_type', 'scope_kind', 'project_id', 'thread_id', 'run_id', 'node_id',
@@ -101,11 +107,15 @@ def historical_read_valid(record, row, witness, envelope, payload_validator):
     """
     if not input_types_valid({'record': record, 'witness': witness}):
         return False
+    try:
+        source_commitment = hashlib.sha256(body_bytes(record)).hexdigest()
+    except (ValueError, OverflowError):
+        return False
     body = resolve_body(record, witness.get('payload_source'), witness['storage_instance_id'])
     if (body is None or not envelope.is_valid(record) or not payload_validator.is_valid(body)
             or not all(witness[k] is True for k in ['retained', 'authorized', 'hold_access_allowed'])
             or witness['deleted'] is not False or witness['event_withdrawn'] is not False
-            or hashlib.sha256(body_bytes(record)).hexdigest() != witness['source_value_sha256']
+            or source_commitment != witness['source_value_sha256']
             or record['replay_policy'] not in ['dedupe_by_idempotency_key', 'projector_replay_only']):
         return False
     # Compatibility-reader policy never calls the current append/retry oracle.
@@ -120,13 +130,20 @@ def body_bytes(value):
         if type(v) is float:
             if not math.isfinite(v):
                 raise ValueError('non-finite number')
-            return int(v) if v.is_integer() else v
+            if not v.is_integer():
+                return v
+            v = int(v)
+        if type(v) is int and abs(v) > SAFE_INTEGER_MAX:
+            raise ValueError('integer outside DCH I-JSON safe domain')
         if isinstance(v, dict):
             return {k: ordered(v[k]) for k in sorted(v, key=lambda k: k.encode('utf-8'))}
         if isinstance(v, list):
             return [ordered(x) for x in v]
         return v
-    return msgpack.packb(ordered(value), use_bin_type=True, strict_types=True)
+    try:
+        return msgpack.packb(ordered(value), use_bin_type=True, strict_types=True)
+    except OverflowError as exc:
+        raise ValueError('integer outside DCH MessagePack domain') from exc
 
 def input_types_valid(value):
     """Exact witness types before truth/equality/arithmetic, including bool/int.
@@ -149,9 +166,12 @@ def input_types_valid(value):
     if type(value) is list:
         return all(input_types_valid(v) for v in value)
     if type(value) is not dict:
-        return type(value) in [str, int, bool, type(None)]
+        return (type(value) in [str, bool, type(None)]
+                or (type(value) is int and abs(value) <= SAFE_INTEGER_MAX))
     for key, v in value.items():
         if type(key) is not str:
+            return False
+        if key == 'storage_instance_id' and not STORAGE_INSTANCE_VALIDATOR.is_valid(v):
             return False
         if key in integers and not (type(v) is int or (key == 'producer_sequence_id' and v is None)):
             return False
@@ -171,7 +191,12 @@ def payload_reference(body):
 
 def resolve_body(record, source=None, storage_instance=STORAGE_INSTANCE):
     """Static SP-337 pack/readback/access fixture; not native durability proof."""
-    if not input_types_valid({'record': record, **({'source': source} if source is not None else {})}):
+    if not input_types_valid({'record': record, 'storage_instance_id': storage_instance,
+                              **({'source': source} if source is not None else {})}):
+        return None
+    try:
+        body_bytes(record['payload'] if record['payload_ref'] is None else source['body'] if source else {})
+    except (ValueError, OverflowError):
         return None
     if record['payload_ref'] is None:
         return record['payload'] if len(body_bytes(record['payload'])) <= INLINE_LIMIT else None
@@ -258,22 +283,29 @@ def retry_outcome(original, retry, available=True):
         return 'conflict'
     def commitment(r):
         return hashlib.sha256(rfc8785.dumps({k: r[k] for k in SEMANTIC_FIELDS})).digest()
-    return 'original_result' if commitment(original) == commitment(retry) else 'conflict'
+    try:
+        return 'original_result' if commitment(original) == commitment(retry) else 'conflict'
+    except (rfc8785.CanonicalizationError, OverflowError):
+        # Defense in depth for the same numeric admission rule. An encoder
+        # refusal is structured; no rounding, string substitution or crash.
+        return 'invalid_input_type'
 
 def test_joins(payload, source, event):
     """Original started operation and actual terminal outcome, W.9.2/W.9.3."""
     if not input_types_valid({'payload': payload, 'source': source}):
         return False
     started, outcome = source['started'], source['outcome']
-    p = started['payload']
     schema = json.loads((ROOT/'Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_started.schema.json').read_text())
     envelope = json.loads((ROOT/'Plans/event_record.schema.json').read_text())
-    if (not Draft202012Validator(schema, format_checker=FormatChecker()).is_valid(p)
-            or not Draft202012Validator(envelope, format_checker=FormatChecker()).is_valid(started)):
+    witness = source['started_access']
+    started_row = {'event_type': 'chat.thread_worktree_pre_merge_test_started'}
+    if not historical_read_valid(started, started_row, witness,
+            Draft202012Validator(envelope, format_checker=FormatChecker()),
+            Draft202012Validator(schema, format_checker=FormatChecker())):
         return False
+    p = resolve_body(started, witness.get('payload_source'), witness['storage_instance_id'])
     common = ['operation_id', 'scope', 'computer_id', 'thread_id', 'worktree_id', 'command', 'strategy']
-    if (not joins(started, 'chat.thread_worktree_pre_merge_test_started')
-            or payload['started_event_id'] != started['event_id']
+    if (p is None or payload['started_event_id'] != started['event_id']
             or outcome['started_event_id'] != started['event_id']
             or any(payload[k] != p[k] or payload[k] != outcome[k] for k in common)
             or payload['duration_ms'] != outcome['duration_ms']):
@@ -349,6 +381,10 @@ def checkpoint_storage_valid(value, source, row, key):
     if not input_types_valid({'value': value, 'source': source}):
         return False
     physical = source.get('checkpoint_storage')
+    try:
+        body_bytes(value)
+    except (ValueError, OverflowError):
+        return False
     if physical is None:
         return len(body_bytes(value)) <= INLINE_LIMIT
     packed = physical['pack']
@@ -416,6 +452,12 @@ def main():
     checkpoints = json.loads((ROOT/'Plans/dch_checkpoint_fixtures.json').read_text())
     stored = json.loads((ROOT/'Plans/storage_value_registry.json').read_text())['families']
     registry = json.loads((ROOT/'Plans/event_family_registry.json').read_text())
+    if SELECTED_FAMILY is not None:
+        contracts = [r for r in contracts if r['event_type'] == SELECTED_FAMILY]
+        fixtures = [f for f in fixtures if f['event_type'] == SELECTED_FAMILY]
+        checkpoints = [c for c in checkpoints if c['event_type'] == SELECTED_FAMILY]
+        if len(contracts) != 1:
+            raise ValueError('Unknown DCH family: '+SELECTED_FAMILY)
     failures = []
     checks = 0
     per_family = {}
@@ -692,7 +734,13 @@ def main():
     subject = SimpleNamespace(**globals())
     for oracle in round5_cases(subject):
         check(evaluate(subject, oracle, envelope) == oracle.expected, oracle.name.split('/')[0]+': '+oracle.name)
+    from pm_dch_round6_oracles import cases as round6_cases, evaluate as evaluate6
+    for oracle in round6_cases(subject):
+        check(evaluate6(subject, oracle, envelope) == oracle.expected, oracle.name.split('/')[0]+': '+oracle.name)
     return finish()
 
 if __name__=='__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--family', help='Run one complete family, both editions and its checkpoint, serially.')
+    SELECTED_FAMILY = parser.parse_args().family
     sys.exit(main())

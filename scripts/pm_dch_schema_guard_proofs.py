@@ -91,6 +91,11 @@ def aliases(proof,doc,path,node):
     # of a value. Both primitive nullability and edition constraints remain.
     logical=re.sub(r'/allOf/\d+(?:/(?:then|else))+/(?=properties/)', '/', path)
     logical=re.sub(r'/allOf/\d+/(?=properties/)', '/', logical)
+    # The failed-test base and its exit-selected branch constrain the exact
+    # same exit_code. Remove their identical bounds as a named duplicate set.
+    if 'chat_thread_worktree_pre_merge_test_failed' in doc and logical.endswith('/properties/exit_code'):
+        for keyword in ['minimum','maximum']:
+            if keyword in node:proof.aliases['schema: '+doc+'#'+path+'/'+keyword]='schema: '+doc+'#'+logical+'/'+keyword
     if '/properties/scope/' in path:
         for keyword in KEYWORDS-{'required'}:
             if keyword in node:proof.aliases['schema: '+doc+'#'+path+'/'+keyword]='schema: '+doc+'#'+logical+'/'+keyword
@@ -243,10 +248,14 @@ def generate(proof,Case):
     proof.schema_rules=rules
     if frozen is not None:
         expected=frozen['schema_rules']
+        if proof.m.SELECTED_FAMILY is not None:
+            docs={key.split('#',1)[0] for key in rules}
+            expected={k:v for k,v in expected.items() if k.split('#',1)[0] in docs}
         delta=contract_drift(expected,rules)
         if delta:raise SchemaContractDrift({'schema_rule_drift':sorted(delta)})
         bases={name:(schema,body) for samples in roots.values() for name,schema,body in samples}
         for oracle in frozen['negative_cases']:
+            if oracle['base_case'] not in bases:continue
             schema,base=bases[oracle['base_case']];change=oracle['change']
             value=set_at(base,tuple(change['path']),change.get('value'),change['delete'])
             extra.append(Case(oracle['name'],'payload',(schema,value),False))

@@ -43,6 +43,10 @@ def corpus(m):
     rows = json.loads((ROOT/'Plans/dch_event_contracts.json').read_text())['rows']
     fs = json.loads((ROOT/'Plans/dch_event_contract_fixtures.json').read_text())
     cs = json.loads((ROOT/'Plans/dch_checkpoint_fixtures.json').read_text())
+    if m.SELECTED_FAMILY is not None:
+        rows = [r for r in rows if r['event_type'] == m.SELECTED_FAMILY]
+        fs = [f for f in fs if f['event_type'] == m.SELECTED_FAMILY]
+        cs = [c for c in cs if c['event_type'] == m.SELECTED_FAMILY]
     cases = []
     def add(name, surface, *args, expected=False):
         cases.append(Case(name, surface, args, expected))
@@ -191,13 +195,28 @@ def corpus(m):
                     add(prefix+base+'_lf/'+path,'payload',schema,invalid)
     from pm_dch_round5_oracles import cases as round5_cases
     cases.extend(round5_cases(m, Case))
+    from pm_dch_round6_oracles import cases as round6_cases
+    cases.extend(round6_cases(m, Case))
+    if m.SELECTED_FAMILY in ['chat.thread_worktree_pre_merge_test_failed','chat.thread_worktree_pre_merge_test_passed']:
+        # The retained-start reader validates this dependency schema. Include
+        # its independent raw witnesses even in a selected terminal-family run.
+        event='chat.thread_worktree_pre_merge_test_started'
+        dependency=next(r for r in json.loads((ROOT/'Plans/dch_event_contracts.json').read_text())['rows'] if r['event_type']==event)
+        schema=json.loads((ROOT/dependency['payload_schema_ref']).read_text())
+        original_family=m.SELECTED_FAMILY
+        try:
+            m.SELECTED_FAMILY=event
+            dependency_cases=corpus(m)
+        finally:m.SELECTED_FAMILY=original_family
+        cases.extend(c for c in dependency_cases if c.surface=='payload' and c.args[0].get('$id')==schema['$id'])
     return cases
 
 
 class Proof:
-    def __init__(self):
+    def __init__(self, family=None):
         spec=importlib.util.spec_from_file_location('dch_proof_subject',ROOT/'scripts/pm_dch_events.py')
         self.m=importlib.util.module_from_spec(spec);spec.loader.exec_module(self.m)
+        self.m.SELECTED_FAMILY=family
         self.removed=set();self.seen={};self.aliases={};self.schema_paths={};self.validation_cache={}
         self.schemas={};self.adapters={};self.failures=set();self.current_case=None
         self.m._guard=self.guard
@@ -275,7 +294,7 @@ class Proof:
 
     def instrument(self):
         tree=ast.parse((ROOT/'scripts/pm_dch_events.py').read_text())
-        target={'historical_read_valid','resolve_body','joins','test_joins','checkpoint_joins','checkpoint_storage_valid','archive_joins'}
+        target={'historical_read_valid','resolve_body','joins','test_joins','checkpoint_joins','checkpoint_storage_valid','archive_joins','body_bytes'}
         proof=self
         class Wrap(ast.NodeTransformer):
             def __init__(self,name):self.name=name
@@ -290,6 +309,8 @@ class Proof:
                 key=self.name+': '+text
                 return ast.copy_location(ast.Call(ast.Name('_guard',ast.Load()),[ast.Constant(key),n,ast.Constant(accept)],[]),n)
             def visit_If(self,n):
+                if self.name=='body_bytes' and ast.unparse(n.test)=='type(v) is int and abs(v) > SAFE_INTEGER_MAX':
+                    n.test=self.atom(n.test,False)
                 if self.name=='checkpoint_joins' and ast.unparse(n.test)=='not node':
                     replacement=ast.parse("if not node:\n    if _guard('checkpoint: source generation exists', False, True):\n        node = _generation_witness(source)\n    else:\n        return False").body[0]
                     return ast.copy_location(replacement,n)
@@ -419,6 +440,9 @@ class Proof:
         if s in ['numeric_bytes','equal_bytes','invalid_lexeme_refused','null_payload_unavailable']:
             from pm_dch_round5_oracles import evaluate
             return evaluate(m,c,self.envelope)
+        if s in ['acceptance_result','retry_result','encoder_refusal','encoding']:
+            from pm_dch_round6_oracles import evaluate
+            return evaluate(m,c,self.envelope)
         if s=='partition':
             key='scope: exact canonical CV-365 partition'
             self.seen.setdefault(key,{'kind':'function'})
@@ -514,7 +538,7 @@ class Proof:
                 except Exception as exc:containment.append({'case':control.name,'rejected':False,'exception':repr(exc)})
         self.removed=set()
         report={'method':'Direct acceptance corpus; real function AST accepting-value substitutions and exact schema-keyword variants. Equivalent copies of one rule are grouped; unrelated rules remain enforced. Unreached guards reuse the deterministic baseline; every reached failing guard is reevaluated. All guards are restored per row. Missing-generation removal supplies only its explicit independent lookup witness, continues all remaining joins, and runs 51 downstream-defect containment controls.',
-                'status':'pass' if all(coverage.values()) and all(r['negatives_that_flip'] for r in rows) and not any(r['exceptions'] for r in rows) and len(containment)==51 and all(c['rejected'] for c in containment) else 'fail',
+                'status':'pass' if all(coverage.values()) and all(r['negatives_that_flip'] for r in rows) and not any(r['exceptions'] for r in rows) and len(containment)==(3 if self.m.SELECTED_FAMILY else 51) and all(c['rejected'] for c in containment) else 'fail',
                 'cases':len(retained),'negative_cases':len(coverage),'guards':len(rows),'schema_inventory':self.exploration,
                 'discarded_exploration_candidates':len(self.exploration_names-selected),
                 'unproved_negatives':[n for n,gs in coverage.items() if not gs],
@@ -527,12 +551,13 @@ class Proof:
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--out',type=Path,required=True)
+    p.add_argument('--family', help='Prove one complete family at a time, with every guard restored per row.')
     p.add_argument('--write-schema-fixtures',action='store_true',help='Explicitly rebuild reviewed schema oracle data; never use to excuse a regression.')
     args=p.parse_args()
     import pm_dch_schema_guard_proofs as schemas
     schemas.REBUILD=args.write_schema_fixtures
     try:
-        proof=Proof();code=proof.run(args.out)
+        proof=Proof(args.family);code=proof.run(args.out)
         if args.write_schema_fixtures and not code:schemas.write_fixtures(proof,json.loads(args.out.read_text()))
         return code
     except SchemaContractDrift as exc:

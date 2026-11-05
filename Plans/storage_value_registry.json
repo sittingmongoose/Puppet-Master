@@ -18190,7 +18190,7 @@
               },
               "proxy_tls": {
                 "type": "null",
-                "description": "DL-259 CERT-1 / srv C1: certificates remain on the person’s own systems; onboarding collects no TLS/certificate choice."
+                "description": "DL-259 CERT-1 / srv C1: certificates remain on the person\u2019s own systems; onboarding collects no TLS/certificate choice."
               },
               "source_more": {
                 "type": "boolean"
@@ -81808,7 +81808,7 @@
             ]
           },
           "existing_index_root": {
-            "title": "Generic EventRecord index checkpoint custody — external proposal",
+            "title": "Generic EventRecord index checkpoint custody \u2014 external proposal",
             "description": "NEW derived checkpoint; typed source-selection binding is a verified reader projection of existing CURRENT/manifest owners, not a replacement on-disk control format. Native parsing/auth/durability remain separate proof obligations."
           },
           "existing_index_root__source_selection": {
@@ -123772,8 +123772,10 @@
           },
           "storage_instance_id": {
             "type": "string",
-            "minLength": 1,
-            "maxLength": 512
+            "format": "uuid",
+            "minLength": 36,
+            "maxLength": 36,
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
           },
           "scope_partition": {
             "type": "string",
@@ -123796,7 +123798,8 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "last_event_id": {
             "type": "string",
@@ -123805,7 +123808,8 @@
           },
           "last_sequence_id": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "source_token": {
             "type": "object",
@@ -123824,7 +123828,10 @@
             "properties": {
               "storage_instance_id": {
                 "type": "string",
-                "format": "uuid"
+                "format": "uuid",
+                "minLength": 36,
+                "maxLength": 36,
+                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
               },
               "checkpoint_key": {
                 "type": "string",
@@ -123845,7 +123852,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 18446744073709551615
+                "maximum": 9007199254740991
               },
               "frontier_sha256": {
                 "type": "string",
@@ -123876,7 +123883,10 @@
                 "properties": {
                   "storage_instance_id": {
                     "type": "string",
-                    "format": "uuid"
+                    "format": "uuid",
+                    "minLength": 36,
+                    "maxLength": 36,
+                    "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                   },
                   "current_ref": {
                     "const": "storage/seglog/CURRENT"
@@ -123888,7 +123898,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -123900,12 +123910,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -123979,8 +123989,10 @@
                 },
                 "storage_instance_id": {
                   "type": "string",
-                  "minLength": 1,
-                  "maxLength": 512
+                  "format": "uuid",
+                  "minLength": 36,
+                  "maxLength": 36,
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                 },
                 "scope_partition": {
                   "type": "string",
@@ -124003,7 +124015,8 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "last_event_id": {
                   "type": "string",
@@ -124012,7 +124025,8 @@
                 },
                 "last_sequence_id": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "source_token": {
                   "type": "object",
@@ -124031,7 +124045,10 @@
                   "properties": {
                     "storage_instance_id": {
                       "type": "string",
-                      "format": "uuid"
+                      "format": "uuid",
+                      "minLength": 36,
+                      "maxLength": 36,
+                      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                     },
                     "checkpoint_key": {
                       "type": "string",
@@ -124052,7 +124069,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 18446744073709551615
+                      "maximum": 9007199254740991
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -124083,7 +124100,10 @@
                       "properties": {
                         "storage_instance_id": {
                           "type": "string",
-                          "format": "uuid"
+                          "format": "uuid",
+                          "minLength": 36,
+                          "maxLength": 36,
+                          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                         },
                         "current_ref": {
                           "const": "storage/seglog/CURRENT"
@@ -124095,7 +124115,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -124107,12 +124127,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
@@ -124270,8 +124290,10 @@
           },
           "storage_instance_id": {
             "type": "string",
-            "minLength": 1,
-            "maxLength": 512
+            "format": "uuid",
+            "minLength": 36,
+            "maxLength": 36,
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
           },
           "scope_partition": {
             "type": "string",
@@ -124294,7 +124316,8 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "last_event_id": {
             "type": "string",
@@ -124303,7 +124326,8 @@
           },
           "last_sequence_id": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "source_token": {
             "type": "object",
@@ -124322,7 +124346,10 @@
             "properties": {
               "storage_instance_id": {
                 "type": "string",
-                "format": "uuid"
+                "format": "uuid",
+                "minLength": 36,
+                "maxLength": 36,
+                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
               },
               "checkpoint_key": {
                 "type": "string",
@@ -124343,7 +124370,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 18446744073709551615
+                "maximum": 9007199254740991
               },
               "frontier_sha256": {
                 "type": "string",
@@ -124374,7 +124401,10 @@
                 "properties": {
                   "storage_instance_id": {
                     "type": "string",
-                    "format": "uuid"
+                    "format": "uuid",
+                    "minLength": 36,
+                    "maxLength": 36,
+                    "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                   },
                   "current_ref": {
                     "const": "storage/seglog/CURRENT"
@@ -124386,7 +124416,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -124398,12 +124428,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -124477,8 +124507,10 @@
                 },
                 "storage_instance_id": {
                   "type": "string",
-                  "minLength": 1,
-                  "maxLength": 512
+                  "format": "uuid",
+                  "minLength": 36,
+                  "maxLength": 36,
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                 },
                 "scope_partition": {
                   "type": "string",
@@ -124501,7 +124533,8 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "last_event_id": {
                   "type": "string",
@@ -124510,7 +124543,8 @@
                 },
                 "last_sequence_id": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "source_token": {
                   "type": "object",
@@ -124529,7 +124563,10 @@
                   "properties": {
                     "storage_instance_id": {
                       "type": "string",
-                      "format": "uuid"
+                      "format": "uuid",
+                      "minLength": 36,
+                      "maxLength": 36,
+                      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                     },
                     "checkpoint_key": {
                       "type": "string",
@@ -124550,7 +124587,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 18446744073709551615
+                      "maximum": 9007199254740991
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -124581,7 +124618,10 @@
                       "properties": {
                         "storage_instance_id": {
                           "type": "string",
-                          "format": "uuid"
+                          "format": "uuid",
+                          "minLength": 36,
+                          "maxLength": 36,
+                          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                         },
                         "current_ref": {
                           "const": "storage/seglog/CURRENT"
@@ -124593,7 +124633,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -124605,12 +124645,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
@@ -124768,8 +124808,10 @@
           },
           "storage_instance_id": {
             "type": "string",
-            "minLength": 1,
-            "maxLength": 512
+            "format": "uuid",
+            "minLength": 36,
+            "maxLength": 36,
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
           },
           "scope_partition": {
             "type": "string",
@@ -124792,7 +124834,8 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "last_event_id": {
             "type": "string",
@@ -124801,7 +124844,8 @@
           },
           "last_sequence_id": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "source_token": {
             "type": "object",
@@ -124820,7 +124864,10 @@
             "properties": {
               "storage_instance_id": {
                 "type": "string",
-                "format": "uuid"
+                "format": "uuid",
+                "minLength": 36,
+                "maxLength": 36,
+                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
               },
               "checkpoint_key": {
                 "type": "string",
@@ -124841,7 +124888,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 18446744073709551615
+                "maximum": 9007199254740991
               },
               "frontier_sha256": {
                 "type": "string",
@@ -124872,7 +124919,10 @@
                 "properties": {
                   "storage_instance_id": {
                     "type": "string",
-                    "format": "uuid"
+                    "format": "uuid",
+                    "minLength": 36,
+                    "maxLength": 36,
+                    "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                   },
                   "current_ref": {
                     "const": "storage/seglog/CURRENT"
@@ -124884,7 +124934,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -124896,12 +124946,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -124975,8 +125025,10 @@
                 },
                 "storage_instance_id": {
                   "type": "string",
-                  "minLength": 1,
-                  "maxLength": 512
+                  "format": "uuid",
+                  "minLength": 36,
+                  "maxLength": 36,
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                 },
                 "scope_partition": {
                   "type": "string",
@@ -124999,7 +125051,8 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "last_event_id": {
                   "type": "string",
@@ -125008,7 +125061,8 @@
                 },
                 "last_sequence_id": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "source_token": {
                   "type": "object",
@@ -125027,7 +125081,10 @@
                   "properties": {
                     "storage_instance_id": {
                       "type": "string",
-                      "format": "uuid"
+                      "format": "uuid",
+                      "minLength": 36,
+                      "maxLength": 36,
+                      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                     },
                     "checkpoint_key": {
                       "type": "string",
@@ -125048,7 +125105,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 18446744073709551615
+                      "maximum": 9007199254740991
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -125079,7 +125136,10 @@
                       "properties": {
                         "storage_instance_id": {
                           "type": "string",
-                          "format": "uuid"
+                          "format": "uuid",
+                          "minLength": 36,
+                          "maxLength": 36,
+                          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                         },
                         "current_ref": {
                           "const": "storage/seglog/CURRENT"
@@ -125091,7 +125151,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -125103,12 +125163,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
@@ -125266,8 +125326,10 @@
           },
           "storage_instance_id": {
             "type": "string",
-            "minLength": 1,
-            "maxLength": 512
+            "format": "uuid",
+            "minLength": 36,
+            "maxLength": 36,
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
           },
           "scope_partition": {
             "type": "string",
@@ -125290,7 +125352,8 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "last_event_id": {
             "type": "string",
@@ -125299,7 +125362,8 @@
           },
           "last_sequence_id": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "source_token": {
             "type": "object",
@@ -125318,7 +125382,10 @@
             "properties": {
               "storage_instance_id": {
                 "type": "string",
-                "format": "uuid"
+                "format": "uuid",
+                "minLength": 36,
+                "maxLength": 36,
+                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
               },
               "checkpoint_key": {
                 "type": "string",
@@ -125339,7 +125406,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 18446744073709551615
+                "maximum": 9007199254740991
               },
               "frontier_sha256": {
                 "type": "string",
@@ -125370,7 +125437,10 @@
                 "properties": {
                   "storage_instance_id": {
                     "type": "string",
-                    "format": "uuid"
+                    "format": "uuid",
+                    "minLength": 36,
+                    "maxLength": 36,
+                    "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                   },
                   "current_ref": {
                     "const": "storage/seglog/CURRENT"
@@ -125382,7 +125452,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -125394,12 +125464,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -125473,8 +125543,10 @@
                 },
                 "storage_instance_id": {
                   "type": "string",
-                  "minLength": 1,
-                  "maxLength": 512
+                  "format": "uuid",
+                  "minLength": 36,
+                  "maxLength": 36,
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                 },
                 "scope_partition": {
                   "type": "string",
@@ -125497,7 +125569,8 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "last_event_id": {
                   "type": "string",
@@ -125506,7 +125579,8 @@
                 },
                 "last_sequence_id": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "source_token": {
                   "type": "object",
@@ -125525,7 +125599,10 @@
                   "properties": {
                     "storage_instance_id": {
                       "type": "string",
-                      "format": "uuid"
+                      "format": "uuid",
+                      "minLength": 36,
+                      "maxLength": 36,
+                      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                     },
                     "checkpoint_key": {
                       "type": "string",
@@ -125546,7 +125623,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 18446744073709551615
+                      "maximum": 9007199254740991
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -125577,7 +125654,10 @@
                       "properties": {
                         "storage_instance_id": {
                           "type": "string",
-                          "format": "uuid"
+                          "format": "uuid",
+                          "minLength": 36,
+                          "maxLength": 36,
+                          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                         },
                         "current_ref": {
                           "const": "storage/seglog/CURRENT"
@@ -125589,7 +125669,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -125601,12 +125681,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
@@ -125764,8 +125844,10 @@
           },
           "storage_instance_id": {
             "type": "string",
-            "minLength": 1,
-            "maxLength": 512
+            "format": "uuid",
+            "minLength": 36,
+            "maxLength": 36,
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
           },
           "scope_partition": {
             "type": "string",
@@ -125788,7 +125870,8 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "last_event_id": {
             "type": "string",
@@ -125797,7 +125880,8 @@
           },
           "last_sequence_id": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "source_token": {
             "type": "object",
@@ -125816,7 +125900,10 @@
             "properties": {
               "storage_instance_id": {
                 "type": "string",
-                "format": "uuid"
+                "format": "uuid",
+                "minLength": 36,
+                "maxLength": 36,
+                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
               },
               "checkpoint_key": {
                 "type": "string",
@@ -125837,7 +125924,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 18446744073709551615
+                "maximum": 9007199254740991
               },
               "frontier_sha256": {
                 "type": "string",
@@ -125868,7 +125955,10 @@
                 "properties": {
                   "storage_instance_id": {
                     "type": "string",
-                    "format": "uuid"
+                    "format": "uuid",
+                    "minLength": 36,
+                    "maxLength": 36,
+                    "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                   },
                   "current_ref": {
                     "const": "storage/seglog/CURRENT"
@@ -125880,7 +125970,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -125892,12 +125982,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -125971,8 +126061,10 @@
                 },
                 "storage_instance_id": {
                   "type": "string",
-                  "minLength": 1,
-                  "maxLength": 512
+                  "format": "uuid",
+                  "minLength": 36,
+                  "maxLength": 36,
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                 },
                 "scope_partition": {
                   "type": "string",
@@ -125995,7 +126087,8 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "last_event_id": {
                   "type": "string",
@@ -126004,7 +126097,8 @@
                 },
                 "last_sequence_id": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "source_token": {
                   "type": "object",
@@ -126023,7 +126117,10 @@
                   "properties": {
                     "storage_instance_id": {
                       "type": "string",
-                      "format": "uuid"
+                      "format": "uuid",
+                      "minLength": 36,
+                      "maxLength": 36,
+                      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                     },
                     "checkpoint_key": {
                       "type": "string",
@@ -126044,7 +126141,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 18446744073709551615
+                      "maximum": 9007199254740991
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -126075,7 +126172,10 @@
                       "properties": {
                         "storage_instance_id": {
                           "type": "string",
-                          "format": "uuid"
+                          "format": "uuid",
+                          "minLength": 36,
+                          "maxLength": 36,
+                          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                         },
                         "current_ref": {
                           "const": "storage/seglog/CURRENT"
@@ -126087,7 +126187,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -126099,12 +126199,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
@@ -126262,8 +126362,10 @@
           },
           "storage_instance_id": {
             "type": "string",
-            "minLength": 1,
-            "maxLength": 512
+            "format": "uuid",
+            "minLength": 36,
+            "maxLength": 36,
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
           },
           "scope_partition": {
             "type": "string",
@@ -126286,7 +126388,8 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "last_event_id": {
             "type": "string",
@@ -126295,7 +126398,8 @@
           },
           "last_sequence_id": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "source_token": {
             "type": "object",
@@ -126314,7 +126418,10 @@
             "properties": {
               "storage_instance_id": {
                 "type": "string",
-                "format": "uuid"
+                "format": "uuid",
+                "minLength": 36,
+                "maxLength": 36,
+                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
               },
               "checkpoint_key": {
                 "type": "string",
@@ -126335,7 +126442,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 18446744073709551615
+                "maximum": 9007199254740991
               },
               "frontier_sha256": {
                 "type": "string",
@@ -126366,7 +126473,10 @@
                 "properties": {
                   "storage_instance_id": {
                     "type": "string",
-                    "format": "uuid"
+                    "format": "uuid",
+                    "minLength": 36,
+                    "maxLength": 36,
+                    "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                   },
                   "current_ref": {
                     "const": "storage/seglog/CURRENT"
@@ -126378,7 +126488,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -126390,12 +126500,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -126469,8 +126579,10 @@
                 },
                 "storage_instance_id": {
                   "type": "string",
-                  "minLength": 1,
-                  "maxLength": 512
+                  "format": "uuid",
+                  "minLength": 36,
+                  "maxLength": 36,
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                 },
                 "scope_partition": {
                   "type": "string",
@@ -126493,7 +126605,8 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "last_event_id": {
                   "type": "string",
@@ -126502,7 +126615,8 @@
                 },
                 "last_sequence_id": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "source_token": {
                   "type": "object",
@@ -126521,7 +126635,10 @@
                   "properties": {
                     "storage_instance_id": {
                       "type": "string",
-                      "format": "uuid"
+                      "format": "uuid",
+                      "minLength": 36,
+                      "maxLength": 36,
+                      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                     },
                     "checkpoint_key": {
                       "type": "string",
@@ -126542,7 +126659,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 18446744073709551615
+                      "maximum": 9007199254740991
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -126573,7 +126690,10 @@
                       "properties": {
                         "storage_instance_id": {
                           "type": "string",
-                          "format": "uuid"
+                          "format": "uuid",
+                          "minLength": 36,
+                          "maxLength": 36,
+                          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                         },
                         "current_ref": {
                           "const": "storage/seglog/CURRENT"
@@ -126585,7 +126705,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -126597,12 +126717,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
@@ -126760,8 +126880,10 @@
           },
           "storage_instance_id": {
             "type": "string",
-            "minLength": 1,
-            "maxLength": 512
+            "format": "uuid",
+            "minLength": 36,
+            "maxLength": 36,
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
           },
           "scope_partition": {
             "type": "string",
@@ -126784,7 +126906,8 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "last_event_id": {
             "type": "string",
@@ -126793,7 +126916,8 @@
           },
           "last_sequence_id": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "source_token": {
             "type": "object",
@@ -126812,7 +126936,10 @@
             "properties": {
               "storage_instance_id": {
                 "type": "string",
-                "format": "uuid"
+                "format": "uuid",
+                "minLength": 36,
+                "maxLength": 36,
+                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
               },
               "checkpoint_key": {
                 "type": "string",
@@ -126833,7 +126960,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 18446744073709551615
+                "maximum": 9007199254740991
               },
               "frontier_sha256": {
                 "type": "string",
@@ -126864,7 +126991,10 @@
                 "properties": {
                   "storage_instance_id": {
                     "type": "string",
-                    "format": "uuid"
+                    "format": "uuid",
+                    "minLength": 36,
+                    "maxLength": 36,
+                    "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                   },
                   "current_ref": {
                     "const": "storage/seglog/CURRENT"
@@ -126876,7 +127006,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -126888,12 +127018,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -126967,8 +127097,10 @@
                 },
                 "storage_instance_id": {
                   "type": "string",
-                  "minLength": 1,
-                  "maxLength": 512
+                  "format": "uuid",
+                  "minLength": 36,
+                  "maxLength": 36,
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                 },
                 "scope_partition": {
                   "type": "string",
@@ -126991,7 +127123,8 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "last_event_id": {
                   "type": "string",
@@ -127000,7 +127133,8 @@
                 },
                 "last_sequence_id": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "source_token": {
                   "type": "object",
@@ -127019,7 +127153,10 @@
                   "properties": {
                     "storage_instance_id": {
                       "type": "string",
-                      "format": "uuid"
+                      "format": "uuid",
+                      "minLength": 36,
+                      "maxLength": 36,
+                      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                     },
                     "checkpoint_key": {
                       "type": "string",
@@ -127040,7 +127177,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 18446744073709551615
+                      "maximum": 9007199254740991
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -127071,7 +127208,10 @@
                       "properties": {
                         "storage_instance_id": {
                           "type": "string",
-                          "format": "uuid"
+                          "format": "uuid",
+                          "minLength": 36,
+                          "maxLength": 36,
+                          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                         },
                         "current_ref": {
                           "const": "storage/seglog/CURRENT"
@@ -127083,7 +127223,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -127095,12 +127235,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
@@ -127258,8 +127398,10 @@
           },
           "storage_instance_id": {
             "type": "string",
-            "minLength": 1,
-            "maxLength": 512
+            "format": "uuid",
+            "minLength": 36,
+            "maxLength": 36,
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
           },
           "scope_partition": {
             "type": "string",
@@ -127282,7 +127424,8 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "last_event_id": {
             "type": "string",
@@ -127291,7 +127434,8 @@
           },
           "last_sequence_id": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "source_token": {
             "type": "object",
@@ -127310,7 +127454,10 @@
             "properties": {
               "storage_instance_id": {
                 "type": "string",
-                "format": "uuid"
+                "format": "uuid",
+                "minLength": 36,
+                "maxLength": 36,
+                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
               },
               "checkpoint_key": {
                 "type": "string",
@@ -127331,7 +127478,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 18446744073709551615
+                "maximum": 9007199254740991
               },
               "frontier_sha256": {
                 "type": "string",
@@ -127362,7 +127509,10 @@
                 "properties": {
                   "storage_instance_id": {
                     "type": "string",
-                    "format": "uuid"
+                    "format": "uuid",
+                    "minLength": 36,
+                    "maxLength": 36,
+                    "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                   },
                   "current_ref": {
                     "const": "storage/seglog/CURRENT"
@@ -127374,7 +127524,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -127386,12 +127536,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -127465,8 +127615,10 @@
                 },
                 "storage_instance_id": {
                   "type": "string",
-                  "minLength": 1,
-                  "maxLength": 512
+                  "format": "uuid",
+                  "minLength": 36,
+                  "maxLength": 36,
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                 },
                 "scope_partition": {
                   "type": "string",
@@ -127489,7 +127641,8 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "last_event_id": {
                   "type": "string",
@@ -127498,7 +127651,8 @@
                 },
                 "last_sequence_id": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "source_token": {
                   "type": "object",
@@ -127517,7 +127671,10 @@
                   "properties": {
                     "storage_instance_id": {
                       "type": "string",
-                      "format": "uuid"
+                      "format": "uuid",
+                      "minLength": 36,
+                      "maxLength": 36,
+                      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                     },
                     "checkpoint_key": {
                       "type": "string",
@@ -127538,7 +127695,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 18446744073709551615
+                      "maximum": 9007199254740991
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -127569,7 +127726,10 @@
                       "properties": {
                         "storage_instance_id": {
                           "type": "string",
-                          "format": "uuid"
+                          "format": "uuid",
+                          "minLength": 36,
+                          "maxLength": 36,
+                          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                         },
                         "current_ref": {
                           "const": "storage/seglog/CURRENT"
@@ -127581,7 +127741,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -127593,12 +127753,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
@@ -127756,8 +127916,10 @@
           },
           "storage_instance_id": {
             "type": "string",
-            "minLength": 1,
-            "maxLength": 512
+            "format": "uuid",
+            "minLength": 36,
+            "maxLength": 36,
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
           },
           "scope_partition": {
             "type": "string",
@@ -127780,7 +127942,8 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "last_event_id": {
             "type": "string",
@@ -127789,7 +127952,8 @@
           },
           "last_sequence_id": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "source_token": {
             "type": "object",
@@ -127808,7 +127972,10 @@
             "properties": {
               "storage_instance_id": {
                 "type": "string",
-                "format": "uuid"
+                "format": "uuid",
+                "minLength": 36,
+                "maxLength": 36,
+                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
               },
               "checkpoint_key": {
                 "type": "string",
@@ -127829,7 +127996,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 18446744073709551615
+                "maximum": 9007199254740991
               },
               "frontier_sha256": {
                 "type": "string",
@@ -127860,7 +128027,10 @@
                 "properties": {
                   "storage_instance_id": {
                     "type": "string",
-                    "format": "uuid"
+                    "format": "uuid",
+                    "minLength": 36,
+                    "maxLength": 36,
+                    "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                   },
                   "current_ref": {
                     "const": "storage/seglog/CURRENT"
@@ -127872,7 +128042,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -127884,12 +128054,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -127963,8 +128133,10 @@
                 },
                 "storage_instance_id": {
                   "type": "string",
-                  "minLength": 1,
-                  "maxLength": 512
+                  "format": "uuid",
+                  "minLength": 36,
+                  "maxLength": 36,
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                 },
                 "scope_partition": {
                   "type": "string",
@@ -127987,7 +128159,8 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "last_event_id": {
                   "type": "string",
@@ -127996,7 +128169,8 @@
                 },
                 "last_sequence_id": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "source_token": {
                   "type": "object",
@@ -128015,7 +128189,10 @@
                   "properties": {
                     "storage_instance_id": {
                       "type": "string",
-                      "format": "uuid"
+                      "format": "uuid",
+                      "minLength": 36,
+                      "maxLength": 36,
+                      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                     },
                     "checkpoint_key": {
                       "type": "string",
@@ -128036,7 +128213,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 18446744073709551615
+                      "maximum": 9007199254740991
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -128067,7 +128244,10 @@
                       "properties": {
                         "storage_instance_id": {
                           "type": "string",
-                          "format": "uuid"
+                          "format": "uuid",
+                          "minLength": 36,
+                          "maxLength": 36,
+                          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                         },
                         "current_ref": {
                           "const": "storage/seglog/CURRENT"
@@ -128079,7 +128259,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -128091,12 +128271,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
@@ -128254,8 +128434,10 @@
           },
           "storage_instance_id": {
             "type": "string",
-            "minLength": 1,
-            "maxLength": 512
+            "format": "uuid",
+            "minLength": 36,
+            "maxLength": 36,
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
           },
           "scope_partition": {
             "type": "string",
@@ -128278,7 +128460,8 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "last_event_id": {
             "type": "string",
@@ -128287,7 +128470,8 @@
           },
           "last_sequence_id": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "source_token": {
             "type": "object",
@@ -128306,7 +128490,10 @@
             "properties": {
               "storage_instance_id": {
                 "type": "string",
-                "format": "uuid"
+                "format": "uuid",
+                "minLength": 36,
+                "maxLength": 36,
+                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
               },
               "checkpoint_key": {
                 "type": "string",
@@ -128327,7 +128514,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 18446744073709551615
+                "maximum": 9007199254740991
               },
               "frontier_sha256": {
                 "type": "string",
@@ -128358,7 +128545,10 @@
                 "properties": {
                   "storage_instance_id": {
                     "type": "string",
-                    "format": "uuid"
+                    "format": "uuid",
+                    "minLength": 36,
+                    "maxLength": 36,
+                    "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                   },
                   "current_ref": {
                     "const": "storage/seglog/CURRENT"
@@ -128370,7 +128560,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -128382,12 +128572,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -128461,8 +128651,10 @@
                 },
                 "storage_instance_id": {
                   "type": "string",
-                  "minLength": 1,
-                  "maxLength": 512
+                  "format": "uuid",
+                  "minLength": 36,
+                  "maxLength": 36,
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                 },
                 "scope_partition": {
                   "type": "string",
@@ -128485,7 +128677,8 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "last_event_id": {
                   "type": "string",
@@ -128494,7 +128687,8 @@
                 },
                 "last_sequence_id": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "source_token": {
                   "type": "object",
@@ -128513,7 +128707,10 @@
                   "properties": {
                     "storage_instance_id": {
                       "type": "string",
-                      "format": "uuid"
+                      "format": "uuid",
+                      "minLength": 36,
+                      "maxLength": 36,
+                      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                     },
                     "checkpoint_key": {
                       "type": "string",
@@ -128534,7 +128731,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 18446744073709551615
+                      "maximum": 9007199254740991
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -128565,7 +128762,10 @@
                       "properties": {
                         "storage_instance_id": {
                           "type": "string",
-                          "format": "uuid"
+                          "format": "uuid",
+                          "minLength": 36,
+                          "maxLength": 36,
+                          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                         },
                         "current_ref": {
                           "const": "storage/seglog/CURRENT"
@@ -128577,7 +128777,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -128589,12 +128789,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
@@ -128752,8 +128952,10 @@
           },
           "storage_instance_id": {
             "type": "string",
-            "minLength": 1,
-            "maxLength": 512
+            "format": "uuid",
+            "minLength": 36,
+            "maxLength": 36,
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
           },
           "scope_partition": {
             "type": "string",
@@ -128776,7 +128978,8 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "last_event_id": {
             "type": "string",
@@ -128785,7 +128988,8 @@
           },
           "last_sequence_id": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "source_token": {
             "type": "object",
@@ -128804,7 +129008,10 @@
             "properties": {
               "storage_instance_id": {
                 "type": "string",
-                "format": "uuid"
+                "format": "uuid",
+                "minLength": 36,
+                "maxLength": 36,
+                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
               },
               "checkpoint_key": {
                 "type": "string",
@@ -128825,7 +129032,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 18446744073709551615
+                "maximum": 9007199254740991
               },
               "frontier_sha256": {
                 "type": "string",
@@ -128856,7 +129063,10 @@
                 "properties": {
                   "storage_instance_id": {
                     "type": "string",
-                    "format": "uuid"
+                    "format": "uuid",
+                    "minLength": 36,
+                    "maxLength": 36,
+                    "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                   },
                   "current_ref": {
                     "const": "storage/seglog/CURRENT"
@@ -128868,7 +129078,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -128880,12 +129090,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -128959,8 +129169,10 @@
                 },
                 "storage_instance_id": {
                   "type": "string",
-                  "minLength": 1,
-                  "maxLength": 512
+                  "format": "uuid",
+                  "minLength": 36,
+                  "maxLength": 36,
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                 },
                 "scope_partition": {
                   "type": "string",
@@ -128983,7 +129195,8 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "last_event_id": {
                   "type": "string",
@@ -128992,7 +129205,8 @@
                 },
                 "last_sequence_id": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "source_token": {
                   "type": "object",
@@ -129011,7 +129225,10 @@
                   "properties": {
                     "storage_instance_id": {
                       "type": "string",
-                      "format": "uuid"
+                      "format": "uuid",
+                      "minLength": 36,
+                      "maxLength": 36,
+                      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                     },
                     "checkpoint_key": {
                       "type": "string",
@@ -129032,7 +129249,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 18446744073709551615
+                      "maximum": 9007199254740991
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -129063,7 +129280,10 @@
                       "properties": {
                         "storage_instance_id": {
                           "type": "string",
-                          "format": "uuid"
+                          "format": "uuid",
+                          "minLength": 36,
+                          "maxLength": 36,
+                          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                         },
                         "current_ref": {
                           "const": "storage/seglog/CURRENT"
@@ -129075,7 +129295,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -129087,12 +129307,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
@@ -129250,8 +129470,10 @@
           },
           "storage_instance_id": {
             "type": "string",
-            "minLength": 1,
-            "maxLength": 512
+            "format": "uuid",
+            "minLength": 36,
+            "maxLength": 36,
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
           },
           "scope_partition": {
             "type": "string",
@@ -129274,7 +129496,8 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "last_event_id": {
             "type": "string",
@@ -129283,7 +129506,8 @@
           },
           "last_sequence_id": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "source_token": {
             "type": "object",
@@ -129302,7 +129526,10 @@
             "properties": {
               "storage_instance_id": {
                 "type": "string",
-                "format": "uuid"
+                "format": "uuid",
+                "minLength": 36,
+                "maxLength": 36,
+                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
               },
               "checkpoint_key": {
                 "type": "string",
@@ -129323,7 +129550,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 18446744073709551615
+                "maximum": 9007199254740991
               },
               "frontier_sha256": {
                 "type": "string",
@@ -129354,7 +129581,10 @@
                 "properties": {
                   "storage_instance_id": {
                     "type": "string",
-                    "format": "uuid"
+                    "format": "uuid",
+                    "minLength": 36,
+                    "maxLength": 36,
+                    "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                   },
                   "current_ref": {
                     "const": "storage/seglog/CURRENT"
@@ -129366,7 +129596,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -129378,12 +129608,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -129457,8 +129687,10 @@
                 },
                 "storage_instance_id": {
                   "type": "string",
-                  "minLength": 1,
-                  "maxLength": 512
+                  "format": "uuid",
+                  "minLength": 36,
+                  "maxLength": 36,
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                 },
                 "scope_partition": {
                   "type": "string",
@@ -129481,7 +129713,8 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "last_event_id": {
                   "type": "string",
@@ -129490,7 +129723,8 @@
                 },
                 "last_sequence_id": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "source_token": {
                   "type": "object",
@@ -129509,7 +129743,10 @@
                   "properties": {
                     "storage_instance_id": {
                       "type": "string",
-                      "format": "uuid"
+                      "format": "uuid",
+                      "minLength": 36,
+                      "maxLength": 36,
+                      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                     },
                     "checkpoint_key": {
                       "type": "string",
@@ -129530,7 +129767,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 18446744073709551615
+                      "maximum": 9007199254740991
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -129561,7 +129798,10 @@
                       "properties": {
                         "storage_instance_id": {
                           "type": "string",
-                          "format": "uuid"
+                          "format": "uuid",
+                          "minLength": 36,
+                          "maxLength": 36,
+                          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                         },
                         "current_ref": {
                           "const": "storage/seglog/CURRENT"
@@ -129573,7 +129813,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -129585,12 +129825,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
@@ -129748,8 +129988,10 @@
           },
           "storage_instance_id": {
             "type": "string",
-            "minLength": 1,
-            "maxLength": 512
+            "format": "uuid",
+            "minLength": 36,
+            "maxLength": 36,
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
           },
           "scope_partition": {
             "type": "string",
@@ -129772,7 +130014,8 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "last_event_id": {
             "type": "string",
@@ -129781,7 +130024,8 @@
           },
           "last_sequence_id": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "source_token": {
             "type": "object",
@@ -129800,7 +130044,10 @@
             "properties": {
               "storage_instance_id": {
                 "type": "string",
-                "format": "uuid"
+                "format": "uuid",
+                "minLength": 36,
+                "maxLength": 36,
+                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
               },
               "checkpoint_key": {
                 "type": "string",
@@ -129821,7 +130068,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 18446744073709551615
+                "maximum": 9007199254740991
               },
               "frontier_sha256": {
                 "type": "string",
@@ -129852,7 +130099,10 @@
                 "properties": {
                   "storage_instance_id": {
                     "type": "string",
-                    "format": "uuid"
+                    "format": "uuid",
+                    "minLength": 36,
+                    "maxLength": 36,
+                    "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                   },
                   "current_ref": {
                     "const": "storage/seglog/CURRENT"
@@ -129864,7 +130114,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -129876,12 +130126,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -129955,8 +130205,10 @@
                 },
                 "storage_instance_id": {
                   "type": "string",
-                  "minLength": 1,
-                  "maxLength": 512
+                  "format": "uuid",
+                  "minLength": 36,
+                  "maxLength": 36,
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                 },
                 "scope_partition": {
                   "type": "string",
@@ -129979,7 +130231,8 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "last_event_id": {
                   "type": "string",
@@ -129988,7 +130241,8 @@
                 },
                 "last_sequence_id": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "source_token": {
                   "type": "object",
@@ -130007,7 +130261,10 @@
                   "properties": {
                     "storage_instance_id": {
                       "type": "string",
-                      "format": "uuid"
+                      "format": "uuid",
+                      "minLength": 36,
+                      "maxLength": 36,
+                      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                     },
                     "checkpoint_key": {
                       "type": "string",
@@ -130028,7 +130285,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 18446744073709551615
+                      "maximum": 9007199254740991
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -130059,7 +130316,10 @@
                       "properties": {
                         "storage_instance_id": {
                           "type": "string",
-                          "format": "uuid"
+                          "format": "uuid",
+                          "minLength": 36,
+                          "maxLength": 36,
+                          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                         },
                         "current_ref": {
                           "const": "storage/seglog/CURRENT"
@@ -130071,7 +130331,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -130083,12 +130343,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
@@ -130246,8 +130506,10 @@
           },
           "storage_instance_id": {
             "type": "string",
-            "minLength": 1,
-            "maxLength": 512
+            "format": "uuid",
+            "minLength": 36,
+            "maxLength": 36,
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
           },
           "scope_partition": {
             "type": "string",
@@ -130270,7 +130532,8 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "last_event_id": {
             "type": "string",
@@ -130279,7 +130542,8 @@
           },
           "last_sequence_id": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "source_token": {
             "type": "object",
@@ -130298,7 +130562,10 @@
             "properties": {
               "storage_instance_id": {
                 "type": "string",
-                "format": "uuid"
+                "format": "uuid",
+                "minLength": 36,
+                "maxLength": 36,
+                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
               },
               "checkpoint_key": {
                 "type": "string",
@@ -130319,7 +130586,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 18446744073709551615
+                "maximum": 9007199254740991
               },
               "frontier_sha256": {
                 "type": "string",
@@ -130350,7 +130617,10 @@
                 "properties": {
                   "storage_instance_id": {
                     "type": "string",
-                    "format": "uuid"
+                    "format": "uuid",
+                    "minLength": 36,
+                    "maxLength": 36,
+                    "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                   },
                   "current_ref": {
                     "const": "storage/seglog/CURRENT"
@@ -130362,7 +130632,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -130374,12 +130644,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -130453,8 +130723,10 @@
                 },
                 "storage_instance_id": {
                   "type": "string",
-                  "minLength": 1,
-                  "maxLength": 512
+                  "format": "uuid",
+                  "minLength": 36,
+                  "maxLength": 36,
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                 },
                 "scope_partition": {
                   "type": "string",
@@ -130477,7 +130749,8 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "last_event_id": {
                   "type": "string",
@@ -130486,7 +130759,8 @@
                 },
                 "last_sequence_id": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "source_token": {
                   "type": "object",
@@ -130505,7 +130779,10 @@
                   "properties": {
                     "storage_instance_id": {
                       "type": "string",
-                      "format": "uuid"
+                      "format": "uuid",
+                      "minLength": 36,
+                      "maxLength": 36,
+                      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                     },
                     "checkpoint_key": {
                       "type": "string",
@@ -130526,7 +130803,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 18446744073709551615
+                      "maximum": 9007199254740991
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -130557,7 +130834,10 @@
                       "properties": {
                         "storage_instance_id": {
                           "type": "string",
-                          "format": "uuid"
+                          "format": "uuid",
+                          "minLength": 36,
+                          "maxLength": 36,
+                          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                         },
                         "current_ref": {
                           "const": "storage/seglog/CURRENT"
@@ -130569,7 +130849,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -130581,12 +130861,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
@@ -130744,8 +131024,10 @@
           },
           "storage_instance_id": {
             "type": "string",
-            "minLength": 1,
-            "maxLength": 512
+            "format": "uuid",
+            "minLength": 36,
+            "maxLength": 36,
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
           },
           "scope_partition": {
             "type": "string",
@@ -130768,7 +131050,8 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "last_event_id": {
             "type": "string",
@@ -130777,7 +131060,8 @@
           },
           "last_sequence_id": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "source_token": {
             "type": "object",
@@ -130796,7 +131080,10 @@
             "properties": {
               "storage_instance_id": {
                 "type": "string",
-                "format": "uuid"
+                "format": "uuid",
+                "minLength": 36,
+                "maxLength": 36,
+                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
               },
               "checkpoint_key": {
                 "type": "string",
@@ -130817,7 +131104,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 18446744073709551615
+                "maximum": 9007199254740991
               },
               "frontier_sha256": {
                 "type": "string",
@@ -130848,7 +131135,10 @@
                 "properties": {
                   "storage_instance_id": {
                     "type": "string",
-                    "format": "uuid"
+                    "format": "uuid",
+                    "minLength": 36,
+                    "maxLength": 36,
+                    "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                   },
                   "current_ref": {
                     "const": "storage/seglog/CURRENT"
@@ -130860,7 +131150,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -130872,12 +131162,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -130951,8 +131241,10 @@
                 },
                 "storage_instance_id": {
                   "type": "string",
-                  "minLength": 1,
-                  "maxLength": 512
+                  "format": "uuid",
+                  "minLength": 36,
+                  "maxLength": 36,
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                 },
                 "scope_partition": {
                   "type": "string",
@@ -130975,7 +131267,8 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "last_event_id": {
                   "type": "string",
@@ -130984,7 +131277,8 @@
                 },
                 "last_sequence_id": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "source_token": {
                   "type": "object",
@@ -131003,7 +131297,10 @@
                   "properties": {
                     "storage_instance_id": {
                       "type": "string",
-                      "format": "uuid"
+                      "format": "uuid",
+                      "minLength": 36,
+                      "maxLength": 36,
+                      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                     },
                     "checkpoint_key": {
                       "type": "string",
@@ -131024,7 +131321,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 18446744073709551615
+                      "maximum": 9007199254740991
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -131055,7 +131352,10 @@
                       "properties": {
                         "storage_instance_id": {
                           "type": "string",
-                          "format": "uuid"
+                          "format": "uuid",
+                          "minLength": 36,
+                          "maxLength": 36,
+                          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                         },
                         "current_ref": {
                           "const": "storage/seglog/CURRENT"
@@ -131067,7 +131367,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -131079,12 +131379,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
@@ -131242,8 +131542,10 @@
           },
           "storage_instance_id": {
             "type": "string",
-            "minLength": 1,
-            "maxLength": 512
+            "format": "uuid",
+            "minLength": 36,
+            "maxLength": 36,
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
           },
           "scope_partition": {
             "type": "string",
@@ -131266,7 +131568,8 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "last_event_id": {
             "type": "string",
@@ -131275,7 +131578,8 @@
           },
           "last_sequence_id": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "source_token": {
             "type": "object",
@@ -131294,7 +131598,10 @@
             "properties": {
               "storage_instance_id": {
                 "type": "string",
-                "format": "uuid"
+                "format": "uuid",
+                "minLength": 36,
+                "maxLength": 36,
+                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
               },
               "checkpoint_key": {
                 "type": "string",
@@ -131315,7 +131622,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 18446744073709551615
+                "maximum": 9007199254740991
               },
               "frontier_sha256": {
                 "type": "string",
@@ -131346,7 +131653,10 @@
                 "properties": {
                   "storage_instance_id": {
                     "type": "string",
-                    "format": "uuid"
+                    "format": "uuid",
+                    "minLength": 36,
+                    "maxLength": 36,
+                    "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                   },
                   "current_ref": {
                     "const": "storage/seglog/CURRENT"
@@ -131358,7 +131668,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -131370,12 +131680,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -131449,8 +131759,10 @@
                 },
                 "storage_instance_id": {
                   "type": "string",
-                  "minLength": 1,
-                  "maxLength": 512
+                  "format": "uuid",
+                  "minLength": 36,
+                  "maxLength": 36,
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                 },
                 "scope_partition": {
                   "type": "string",
@@ -131473,7 +131785,8 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "last_event_id": {
                   "type": "string",
@@ -131482,7 +131795,8 @@
                 },
                 "last_sequence_id": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "source_token": {
                   "type": "object",
@@ -131501,7 +131815,10 @@
                   "properties": {
                     "storage_instance_id": {
                       "type": "string",
-                      "format": "uuid"
+                      "format": "uuid",
+                      "minLength": 36,
+                      "maxLength": 36,
+                      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                     },
                     "checkpoint_key": {
                       "type": "string",
@@ -131522,7 +131839,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 18446744073709551615
+                      "maximum": 9007199254740991
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -131553,7 +131870,10 @@
                       "properties": {
                         "storage_instance_id": {
                           "type": "string",
-                          "format": "uuid"
+                          "format": "uuid",
+                          "minLength": 36,
+                          "maxLength": 36,
+                          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                         },
                         "current_ref": {
                           "const": "storage/seglog/CURRENT"
@@ -131565,7 +131885,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -131577,12 +131897,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
@@ -131740,8 +132060,10 @@
           },
           "storage_instance_id": {
             "type": "string",
-            "minLength": 1,
-            "maxLength": 512
+            "format": "uuid",
+            "minLength": 36,
+            "maxLength": 36,
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
           },
           "scope_partition": {
             "type": "string",
@@ -131764,7 +132086,8 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "last_event_id": {
             "type": "string",
@@ -131773,7 +132096,8 @@
           },
           "last_sequence_id": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "source_token": {
             "type": "object",
@@ -131792,7 +132116,10 @@
             "properties": {
               "storage_instance_id": {
                 "type": "string",
-                "format": "uuid"
+                "format": "uuid",
+                "minLength": 36,
+                "maxLength": 36,
+                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
               },
               "checkpoint_key": {
                 "type": "string",
@@ -131813,7 +132140,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 18446744073709551615
+                "maximum": 9007199254740991
               },
               "frontier_sha256": {
                 "type": "string",
@@ -131844,7 +132171,10 @@
                 "properties": {
                   "storage_instance_id": {
                     "type": "string",
-                    "format": "uuid"
+                    "format": "uuid",
+                    "minLength": 36,
+                    "maxLength": 36,
+                    "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                   },
                   "current_ref": {
                     "const": "storage/seglog/CURRENT"
@@ -131856,7 +132186,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -131868,12 +132198,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 9007199254740991
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -131947,8 +132277,10 @@
                 },
                 "storage_instance_id": {
                   "type": "string",
-                  "minLength": 1,
-                  "maxLength": 512
+                  "format": "uuid",
+                  "minLength": 36,
+                  "maxLength": 36,
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                 },
                 "scope_partition": {
                   "type": "string",
@@ -131971,7 +132303,8 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "last_event_id": {
                   "type": "string",
@@ -131980,7 +132313,8 @@
                 },
                 "last_sequence_id": {
                   "type": "integer",
-                  "minimum": 0
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "source_token": {
                   "type": "object",
@@ -131999,7 +132333,10 @@
                   "properties": {
                     "storage_instance_id": {
                       "type": "string",
-                      "format": "uuid"
+                      "format": "uuid",
+                      "minLength": 36,
+                      "maxLength": 36,
+                      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                     },
                     "checkpoint_key": {
                       "type": "string",
@@ -132020,7 +132357,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 18446744073709551615
+                      "maximum": 9007199254740991
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -132051,7 +132388,10 @@
                       "properties": {
                         "storage_instance_id": {
                           "type": "string",
-                          "format": "uuid"
+                          "format": "uuid",
+                          "minLength": 36,
+                          "maxLength": 36,
+                          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
                         },
                         "current_ref": {
                           "const": "storage/seglog/CURRENT"
@@ -132063,7 +132403,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -132075,12 +132415,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 18446744073709551615
+                          "maximum": 9007199254740991
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",

@@ -209,11 +209,14 @@
           ],
           "not": {
             "const": 0
-          }
+          },
+          "maximum": 9007199254740991,
+          "minimum": -9007199254740991
         },
         "duration_ms": {
           "type": "integer",
-          "minimum": 0
+          "minimum": 0,
+          "maximum": 9007199254740991
         },
         "strategy": {
           "enum": [
@@ -269,7 +272,9 @@
                 "type": "integer",
                 "not": {
                   "const": 0
-                }
+                },
+                "maximum": 9007199254740991,
+                "minimum": -9007199254740991
               },
               "error_ref": {
                 "const": null
@@ -503,11 +508,14 @@
           ],
           "not": {
             "const": 0
-          }
+          },
+          "maximum": 9007199254740991,
+          "minimum": -9007199254740991
         },
         "duration_ms": {
           "type": "integer",
-          "minimum": 0
+          "minimum": 0,
+          "maximum": 9007199254740991
         },
         "strategy": {
           "enum": [
@@ -563,7 +571,9 @@
                 "type": "integer",
                 "not": {
                   "const": 0
-                }
+                },
+                "maximum": 9007199254740991,
+                "minimum": -9007199254740991
               },
               "error_ref": {
                 "const": null

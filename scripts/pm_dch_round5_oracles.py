@@ -89,6 +89,8 @@ def cases(m, Case=Case):
     fs = json.loads((ROOT/'Plans/dch_event_contract_fixtures.json').read_text())
     cs = json.loads((ROOT/'Plans/dch_checkpoint_fixtures.json').read_text())
     rows = json.loads((ROOT/'Plans/dch_event_contracts.json').read_text())['rows']
+    if getattr(m, 'SELECTED_FAMILY', None):
+        rows = [r for r in rows if r['event_type'] == m.SELECTED_FAMILY]
     result = []
     def add(name, surface, *args, expected=False):
         result.append(Case(name, surface, tuple(copy.deepcopy(args)), expected))

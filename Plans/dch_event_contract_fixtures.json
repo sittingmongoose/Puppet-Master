@@ -47993,6 +47993,20 @@
         "kind": "exit",
         "exit_code": 1,
         "error_ref": null
+      },
+      "started_access": {
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "source_value_sha256": "2fbdf029eb9cec30fd34cea4d4802ccdb4645a0dea70ff1dda25d2786eebdec4",
+        "retained": true,
+        "authorized": true,
+        "hold_access_allowed": true,
+        "deleted": false,
+        "event_withdrawn": false,
+        "live_state": {
+          "thread_state": "active",
+          "revision": 1,
+          "worktree_binding": "original"
+        }
       }
     },
     "test_oracles": [
@@ -48003,7 +48017,8 @@
           "source.started.event_id": "evt_dch_228dff1d79831c8213adf550fde6c1eaf84bcd9b27823f4fbaa5bfc1c67d6c5f",
           "source.started.idempotency_key": "dch:228dff1d79831c8213adf550fde6c1eaf84bcd9b27823f4fbaa5bfc1c67d6c5f",
           "payload.started_event_id": "evt_dch_228dff1d79831c8213adf550fde6c1eaf84bcd9b27823f4fbaa5bfc1c67d6c5f",
-          "source.outcome.started_event_id": "evt_dch_228dff1d79831c8213adf550fde6c1eaf84bcd9b27823f4fbaa5bfc1c67d6c5f"
+          "source.outcome.started_event_id": "evt_dch_228dff1d79831c8213adf550fde6c1eaf84bcd9b27823f4fbaa5bfc1c67d6c5f",
+          "source.started_access.source_value_sha256": "c1495ea108025e6396633c7c584a37e61f12024081f6655ceed423689b09b25c"
         },
         "expected_valid": false
       },
@@ -48014,7 +48029,8 @@
           "source.started.event_id": "evt_dch_82a237ca1887f9fe83487b75a1cd67a4997170ba15f6af3be3da77f313cc02ce",
           "source.started.idempotency_key": "dch:82a237ca1887f9fe83487b75a1cd67a4997170ba15f6af3be3da77f313cc02ce",
           "payload.started_event_id": "evt_dch_82a237ca1887f9fe83487b75a1cd67a4997170ba15f6af3be3da77f313cc02ce",
-          "source.outcome.started_event_id": "evt_dch_82a237ca1887f9fe83487b75a1cd67a4997170ba15f6af3be3da77f313cc02ce"
+          "source.outcome.started_event_id": "evt_dch_82a237ca1887f9fe83487b75a1cd67a4997170ba15f6af3be3da77f313cc02ce",
+          "source.started_access.source_value_sha256": "2fb714de4b47783040733b54ccef22bfcbad26fafa7658d688aaa9fe6c5af886"
         },
         "expected_valid": false
       },
@@ -48026,28 +48042,32 @@
           "source.started.event_id": "evt_dch_775e54f686eeef72be58e5976db46c4152a4948962ae44a84a6a906ae63681ab",
           "source.started.idempotency_key": "dch:775e54f686eeef72be58e5976db46c4152a4948962ae44a84a6a906ae63681ab",
           "payload.started_event_id": "evt_dch_775e54f686eeef72be58e5976db46c4152a4948962ae44a84a6a906ae63681ab",
-          "source.outcome.started_event_id": "evt_dch_775e54f686eeef72be58e5976db46c4152a4948962ae44a84a6a906ae63681ab"
+          "source.outcome.started_event_id": "evt_dch_775e54f686eeef72be58e5976db46c4152a4948962ae44a84a6a906ae63681ab",
+          "source.started_access.source_value_sha256": "9c4c8c62764528742ab3538f6345b1edc53498270e322492e715d00654a774db"
         },
         "expected_valid": false
       },
       {
         "name": "mismatched_started_worktree_id",
         "changes": {
-          "source.started.payload.worktree_id": "other"
+          "source.started.payload.worktree_id": "other",
+          "source.started_access.source_value_sha256": "f5a795dabf0fba636a6c98f1d579a0266946951a1ca7735227df62dc2ab2e8d4"
         },
         "expected_valid": false
       },
       {
         "name": "mismatched_started_command",
         "changes": {
-          "source.started.payload.command": "other"
+          "source.started.payload.command": "other",
+          "source.started_access.source_value_sha256": "2f0d8934088a01a49498a65f9baebc1c36df2f3e9b57e8e76c4dea2e9b3d076d"
         },
         "expected_valid": false
       },
       {
         "name": "mismatched_started_strategy",
         "changes": {
-          "source.started.payload.strategy": "merge"
+          "source.started.payload.strategy": "merge",
+          "source.started_access.source_value_sha256": "094bc18fe95b7ca2e9932e65532d96e47cd8fcd179759025264ba4d4f6a3571f"
         },
         "expected_valid": false
       },
@@ -48121,7 +48141,8 @@
           "source.started.event_id": "evt_dch_8a05d36efbf5cadd75492f14834ad4586e03ad18051541b76b2ac6a706563cbf",
           "source.started.idempotency_key": "dch:8a05d36efbf5cadd75492f14834ad4586e03ad18051541b76b2ac6a706563cbf",
           "payload.started_event_id": "evt_dch_8a05d36efbf5cadd75492f14834ad4586e03ad18051541b76b2ac6a706563cbf",
-          "source.outcome.started_event_id": "evt_dch_8a05d36efbf5cadd75492f14834ad4586e03ad18051541b76b2ac6a706563cbf"
+          "source.outcome.started_event_id": "evt_dch_8a05d36efbf5cadd75492f14834ad4586e03ad18051541b76b2ac6a706563cbf",
+          "source.started_access.source_value_sha256": "23bfdfd178b303d1c0d3838b055ba4309f7cee979be423976a5737ba38e63fe4"
         },
         "expected_valid": false
       },
@@ -48225,14 +48246,16 @@
       {
         "name": "started_envelope_edition_mismatch",
         "changes": {
-          "source.started.schema_version": "1.0.0"
+          "source.started.schema_version": "1.0.0",
+          "source.started_access.source_value_sha256": "201501b0fd3e61045ba4d034ebb0ed963190a65fa801addca0e07e8c1ae63730"
         },
         "expected_valid": false
       },
       {
         "name": "started_payload_extra_field",
         "changes": {
-          "source.started.payload.unexpected": true
+          "source.started.payload.unexpected": true,
+          "source.started_access.source_value_sha256": "3074959f499cfacb7214a5be0ccfd696b69df8532e64a75a2e88efb96cfe966a"
         },
         "expected_valid": false
       },
@@ -48241,7 +48264,8 @@
         "changes": {
           "source.started.event_id": "evt_dch_eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "payload.started_event_id": "evt_dch_eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "source.outcome.started_event_id": "evt_dch_eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+          "source.outcome.started_event_id": "evt_dch_eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "source.started_access.source_value_sha256": "d118b1a074d05cea0e3764e889fd63b6beec2d163887801ef67627a30b8d9a2c"
         },
         "expected_valid": false
       },
@@ -50305,6 +50329,20 @@
         "kind": "exit",
         "exit_code": 1,
         "error_ref": null
+      },
+      "started_access": {
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "source_value_sha256": "5123fd3ec128cd3a7589f9791400ac7a5f36586975ec986b09b42ef9ffbce4df",
+        "retained": true,
+        "authorized": true,
+        "hold_access_allowed": true,
+        "deleted": false,
+        "event_withdrawn": false,
+        "live_state": {
+          "thread_state": "active",
+          "revision": 1,
+          "worktree_binding": "original"
+        }
       }
     },
     "test_oracles": [
@@ -50315,7 +50353,8 @@
           "source.started.event_id": "evt_dch_ce02c9d67592c7fc053f531717f07aefc9c42e693f6f616feb03c72500fb650e",
           "source.started.idempotency_key": "application@1:73657276657231:6f74686572",
           "payload.started_event_id": "evt_dch_ce02c9d67592c7fc053f531717f07aefc9c42e693f6f616feb03c72500fb650e",
-          "source.outcome.started_event_id": "evt_dch_ce02c9d67592c7fc053f531717f07aefc9c42e693f6f616feb03c72500fb650e"
+          "source.outcome.started_event_id": "evt_dch_ce02c9d67592c7fc053f531717f07aefc9c42e693f6f616feb03c72500fb650e",
+          "source.started_access.source_value_sha256": "dd863fb0f2bc9728c5bcdc2f6174bfb1a42f43ad6dec6a580af2574b971c9041"
         },
         "expected_valid": false
       },
@@ -50325,7 +50364,8 @@
           "source.started.payload.computer_id": "other",
           "source.started.event_id": "evt_dch_3d7ba71b3aa9f141c2055d8191a3734862e1b6b25562542996d3b2bce16ba029",
           "payload.started_event_id": "evt_dch_3d7ba71b3aa9f141c2055d8191a3734862e1b6b25562542996d3b2bce16ba029",
-          "source.outcome.started_event_id": "evt_dch_3d7ba71b3aa9f141c2055d8191a3734862e1b6b25562542996d3b2bce16ba029"
+          "source.outcome.started_event_id": "evt_dch_3d7ba71b3aa9f141c2055d8191a3734862e1b6b25562542996d3b2bce16ba029",
+          "source.started_access.source_value_sha256": "34b4f15a7a236c866ced887c31f7983038fa0dc0290cd048a05e5d9e8db888a8"
         },
         "expected_valid": false
       },
@@ -50336,28 +50376,32 @@
           "source.started.thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAX",
           "source.started.event_id": "evt_dch_978d5f10f581039ff9d7ba63aa8317f27df505c0e83946b8def38183921884d4",
           "payload.started_event_id": "evt_dch_978d5f10f581039ff9d7ba63aa8317f27df505c0e83946b8def38183921884d4",
-          "source.outcome.started_event_id": "evt_dch_978d5f10f581039ff9d7ba63aa8317f27df505c0e83946b8def38183921884d4"
+          "source.outcome.started_event_id": "evt_dch_978d5f10f581039ff9d7ba63aa8317f27df505c0e83946b8def38183921884d4",
+          "source.started_access.source_value_sha256": "c6f125f519cec07b47fbdc78fa1844d959a97494f510e1b7bacbb0ee4673d30f"
         },
         "expected_valid": false
       },
       {
         "name": "mismatched_started_worktree_id",
         "changes": {
-          "source.started.payload.worktree_id": "other"
+          "source.started.payload.worktree_id": "other",
+          "source.started_access.source_value_sha256": "887a5dd2a1a10ce061fdb75c845a8fcc5177f9919eb183a5fddeb7e4f7a7abdc"
         },
         "expected_valid": false
       },
       {
         "name": "mismatched_started_command",
         "changes": {
-          "source.started.payload.command": "other"
+          "source.started.payload.command": "other",
+          "source.started_access.source_value_sha256": "56293bd3305b9bc4df3bf2839b596f716e2702dde10ae37c3470c6eaf96c63b3"
         },
         "expected_valid": false
       },
       {
         "name": "mismatched_started_strategy",
         "changes": {
-          "source.started.payload.strategy": "merge"
+          "source.started.payload.strategy": "merge",
+          "source.started_access.source_value_sha256": "c82ef209f5a656d12511186237d0ee86370ee470db93a736d4595e98cbbd8e90"
         },
         "expected_valid": false
       },
@@ -50431,7 +50475,8 @@
           "source.started.event_id": "evt_dch_7a8b822f035e0a754d469e117a528c25ec1ea146df3845eb79c3586a1e57347f",
           "source.started.idempotency_key": "application@1:6f74686572:666978747572655f6f7065726174696f6e5f6964",
           "payload.started_event_id": "evt_dch_7a8b822f035e0a754d469e117a528c25ec1ea146df3845eb79c3586a1e57347f",
-          "source.outcome.started_event_id": "evt_dch_7a8b822f035e0a754d469e117a528c25ec1ea146df3845eb79c3586a1e57347f"
+          "source.outcome.started_event_id": "evt_dch_7a8b822f035e0a754d469e117a528c25ec1ea146df3845eb79c3586a1e57347f",
+          "source.started_access.source_value_sha256": "5402651a7a199a5d40d1990abb282068b80b0b75fe094e9b4cfe277b5afabfb1"
         },
         "expected_valid": false
       },
@@ -50535,14 +50580,16 @@
       {
         "name": "started_envelope_edition_mismatch",
         "changes": {
-          "source.started.schema_version": "1.0.0"
+          "source.started.schema_version": "1.0.0",
+          "source.started_access.source_value_sha256": "eea12fa87fe37087b60acc79ce038cf3a4ab238665941781bf1961c5b43c7251"
         },
         "expected_valid": false
       },
       {
         "name": "started_payload_extra_field",
         "changes": {
-          "source.started.payload.unexpected": true
+          "source.started.payload.unexpected": true,
+          "source.started_access.source_value_sha256": "7da121666bef875500a30fa0d87b70e3a26d389d92ba4e08de265ccc3491d0db"
         },
         "expected_valid": false
       },
@@ -50551,7 +50598,8 @@
         "changes": {
           "source.started.event_id": "evt_dch_eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "payload.started_event_id": "evt_dch_eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "source.outcome.started_event_id": "evt_dch_eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+          "source.outcome.started_event_id": "evt_dch_eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "source.started_access.source_value_sha256": "a7bed41e9091d39894d1a9580dcc1d85b140ed635602457b13e03327aa2e3079"
         },
         "expected_valid": false
       },
@@ -52694,6 +52742,20 @@
         "kind": "exit",
         "exit_code": 0,
         "error_ref": null
+      },
+      "started_access": {
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "source_value_sha256": "2fbdf029eb9cec30fd34cea4d4802ccdb4645a0dea70ff1dda25d2786eebdec4",
+        "retained": true,
+        "authorized": true,
+        "hold_access_allowed": true,
+        "deleted": false,
+        "event_withdrawn": false,
+        "live_state": {
+          "thread_state": "active",
+          "revision": 1,
+          "worktree_binding": "original"
+        }
       }
     },
     "test_oracles": [
@@ -52704,7 +52766,8 @@
           "source.started.event_id": "evt_dch_228dff1d79831c8213adf550fde6c1eaf84bcd9b27823f4fbaa5bfc1c67d6c5f",
           "source.started.idempotency_key": "dch:228dff1d79831c8213adf550fde6c1eaf84bcd9b27823f4fbaa5bfc1c67d6c5f",
           "payload.started_event_id": "evt_dch_228dff1d79831c8213adf550fde6c1eaf84bcd9b27823f4fbaa5bfc1c67d6c5f",
-          "source.outcome.started_event_id": "evt_dch_228dff1d79831c8213adf550fde6c1eaf84bcd9b27823f4fbaa5bfc1c67d6c5f"
+          "source.outcome.started_event_id": "evt_dch_228dff1d79831c8213adf550fde6c1eaf84bcd9b27823f4fbaa5bfc1c67d6c5f",
+          "source.started_access.source_value_sha256": "c1495ea108025e6396633c7c584a37e61f12024081f6655ceed423689b09b25c"
         },
         "expected_valid": false
       },
@@ -52715,7 +52778,8 @@
           "source.started.event_id": "evt_dch_82a237ca1887f9fe83487b75a1cd67a4997170ba15f6af3be3da77f313cc02ce",
           "source.started.idempotency_key": "dch:82a237ca1887f9fe83487b75a1cd67a4997170ba15f6af3be3da77f313cc02ce",
           "payload.started_event_id": "evt_dch_82a237ca1887f9fe83487b75a1cd67a4997170ba15f6af3be3da77f313cc02ce",
-          "source.outcome.started_event_id": "evt_dch_82a237ca1887f9fe83487b75a1cd67a4997170ba15f6af3be3da77f313cc02ce"
+          "source.outcome.started_event_id": "evt_dch_82a237ca1887f9fe83487b75a1cd67a4997170ba15f6af3be3da77f313cc02ce",
+          "source.started_access.source_value_sha256": "2fb714de4b47783040733b54ccef22bfcbad26fafa7658d688aaa9fe6c5af886"
         },
         "expected_valid": false
       },
@@ -52727,28 +52791,32 @@
           "source.started.event_id": "evt_dch_775e54f686eeef72be58e5976db46c4152a4948962ae44a84a6a906ae63681ab",
           "source.started.idempotency_key": "dch:775e54f686eeef72be58e5976db46c4152a4948962ae44a84a6a906ae63681ab",
           "payload.started_event_id": "evt_dch_775e54f686eeef72be58e5976db46c4152a4948962ae44a84a6a906ae63681ab",
-          "source.outcome.started_event_id": "evt_dch_775e54f686eeef72be58e5976db46c4152a4948962ae44a84a6a906ae63681ab"
+          "source.outcome.started_event_id": "evt_dch_775e54f686eeef72be58e5976db46c4152a4948962ae44a84a6a906ae63681ab",
+          "source.started_access.source_value_sha256": "9c4c8c62764528742ab3538f6345b1edc53498270e322492e715d00654a774db"
         },
         "expected_valid": false
       },
       {
         "name": "mismatched_started_worktree_id",
         "changes": {
-          "source.started.payload.worktree_id": "other"
+          "source.started.payload.worktree_id": "other",
+          "source.started_access.source_value_sha256": "f5a795dabf0fba636a6c98f1d579a0266946951a1ca7735227df62dc2ab2e8d4"
         },
         "expected_valid": false
       },
       {
         "name": "mismatched_started_command",
         "changes": {
-          "source.started.payload.command": "other"
+          "source.started.payload.command": "other",
+          "source.started_access.source_value_sha256": "2f0d8934088a01a49498a65f9baebc1c36df2f3e9b57e8e76c4dea2e9b3d076d"
         },
         "expected_valid": false
       },
       {
         "name": "mismatched_started_strategy",
         "changes": {
-          "source.started.payload.strategy": "merge"
+          "source.started.payload.strategy": "merge",
+          "source.started_access.source_value_sha256": "094bc18fe95b7ca2e9932e65532d96e47cd8fcd179759025264ba4d4f6a3571f"
         },
         "expected_valid": false
       },
@@ -52822,7 +52890,8 @@
           "source.started.event_id": "evt_dch_8a05d36efbf5cadd75492f14834ad4586e03ad18051541b76b2ac6a706563cbf",
           "source.started.idempotency_key": "dch:8a05d36efbf5cadd75492f14834ad4586e03ad18051541b76b2ac6a706563cbf",
           "payload.started_event_id": "evt_dch_8a05d36efbf5cadd75492f14834ad4586e03ad18051541b76b2ac6a706563cbf",
-          "source.outcome.started_event_id": "evt_dch_8a05d36efbf5cadd75492f14834ad4586e03ad18051541b76b2ac6a706563cbf"
+          "source.outcome.started_event_id": "evt_dch_8a05d36efbf5cadd75492f14834ad4586e03ad18051541b76b2ac6a706563cbf",
+          "source.started_access.source_value_sha256": "23bfdfd178b303d1c0d3838b055ba4309f7cee979be423976a5737ba38e63fe4"
         },
         "expected_valid": false
       },
@@ -52848,14 +52917,16 @@
       {
         "name": "started_envelope_edition_mismatch",
         "changes": {
-          "source.started.schema_version": "1.0.0"
+          "source.started.schema_version": "1.0.0",
+          "source.started_access.source_value_sha256": "201501b0fd3e61045ba4d034ebb0ed963190a65fa801addca0e07e8c1ae63730"
         },
         "expected_valid": false
       },
       {
         "name": "started_payload_extra_field",
         "changes": {
-          "source.started.payload.unexpected": true
+          "source.started.payload.unexpected": true,
+          "source.started_access.source_value_sha256": "3074959f499cfacb7214a5be0ccfd696b69df8532e64a75a2e88efb96cfe966a"
         },
         "expected_valid": false
       },
@@ -52864,7 +52935,8 @@
         "changes": {
           "source.started.event_id": "evt_dch_eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "payload.started_event_id": "evt_dch_eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "source.outcome.started_event_id": "evt_dch_eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+          "source.outcome.started_event_id": "evt_dch_eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "source.started_access.source_value_sha256": "d118b1a074d05cea0e3764e889fd63b6beec2d163887801ef67627a30b8d9a2c"
         },
         "expected_valid": false
       },
@@ -54768,6 +54840,20 @@
         "kind": "exit",
         "exit_code": 0,
         "error_ref": null
+      },
+      "started_access": {
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "source_value_sha256": "5123fd3ec128cd3a7589f9791400ac7a5f36586975ec986b09b42ef9ffbce4df",
+        "retained": true,
+        "authorized": true,
+        "hold_access_allowed": true,
+        "deleted": false,
+        "event_withdrawn": false,
+        "live_state": {
+          "thread_state": "active",
+          "revision": 1,
+          "worktree_binding": "original"
+        }
       }
     },
     "test_oracles": [
@@ -54778,7 +54864,8 @@
           "source.started.event_id": "evt_dch_ce02c9d67592c7fc053f531717f07aefc9c42e693f6f616feb03c72500fb650e",
           "source.started.idempotency_key": "application@1:73657276657231:6f74686572",
           "payload.started_event_id": "evt_dch_ce02c9d67592c7fc053f531717f07aefc9c42e693f6f616feb03c72500fb650e",
-          "source.outcome.started_event_id": "evt_dch_ce02c9d67592c7fc053f531717f07aefc9c42e693f6f616feb03c72500fb650e"
+          "source.outcome.started_event_id": "evt_dch_ce02c9d67592c7fc053f531717f07aefc9c42e693f6f616feb03c72500fb650e",
+          "source.started_access.source_value_sha256": "dd863fb0f2bc9728c5bcdc2f6174bfb1a42f43ad6dec6a580af2574b971c9041"
         },
         "expected_valid": false
       },
@@ -54788,7 +54875,8 @@
           "source.started.payload.computer_id": "other",
           "source.started.event_id": "evt_dch_3d7ba71b3aa9f141c2055d8191a3734862e1b6b25562542996d3b2bce16ba029",
           "payload.started_event_id": "evt_dch_3d7ba71b3aa9f141c2055d8191a3734862e1b6b25562542996d3b2bce16ba029",
-          "source.outcome.started_event_id": "evt_dch_3d7ba71b3aa9f141c2055d8191a3734862e1b6b25562542996d3b2bce16ba029"
+          "source.outcome.started_event_id": "evt_dch_3d7ba71b3aa9f141c2055d8191a3734862e1b6b25562542996d3b2bce16ba029",
+          "source.started_access.source_value_sha256": "34b4f15a7a236c866ced887c31f7983038fa0dc0290cd048a05e5d9e8db888a8"
         },
         "expected_valid": false
       },
@@ -54799,28 +54887,32 @@
           "source.started.thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAX",
           "source.started.event_id": "evt_dch_978d5f10f581039ff9d7ba63aa8317f27df505c0e83946b8def38183921884d4",
           "payload.started_event_id": "evt_dch_978d5f10f581039ff9d7ba63aa8317f27df505c0e83946b8def38183921884d4",
-          "source.outcome.started_event_id": "evt_dch_978d5f10f581039ff9d7ba63aa8317f27df505c0e83946b8def38183921884d4"
+          "source.outcome.started_event_id": "evt_dch_978d5f10f581039ff9d7ba63aa8317f27df505c0e83946b8def38183921884d4",
+          "source.started_access.source_value_sha256": "c6f125f519cec07b47fbdc78fa1844d959a97494f510e1b7bacbb0ee4673d30f"
         },
         "expected_valid": false
       },
       {
         "name": "mismatched_started_worktree_id",
         "changes": {
-          "source.started.payload.worktree_id": "other"
+          "source.started.payload.worktree_id": "other",
+          "source.started_access.source_value_sha256": "887a5dd2a1a10ce061fdb75c845a8fcc5177f9919eb183a5fddeb7e4f7a7abdc"
         },
         "expected_valid": false
       },
       {
         "name": "mismatched_started_command",
         "changes": {
-          "source.started.payload.command": "other"
+          "source.started.payload.command": "other",
+          "source.started_access.source_value_sha256": "56293bd3305b9bc4df3bf2839b596f716e2702dde10ae37c3470c6eaf96c63b3"
         },
         "expected_valid": false
       },
       {
         "name": "mismatched_started_strategy",
         "changes": {
-          "source.started.payload.strategy": "merge"
+          "source.started.payload.strategy": "merge",
+          "source.started_access.source_value_sha256": "c82ef209f5a656d12511186237d0ee86370ee470db93a736d4595e98cbbd8e90"
         },
         "expected_valid": false
       },
@@ -54894,7 +54986,8 @@
           "source.started.event_id": "evt_dch_7a8b822f035e0a754d469e117a528c25ec1ea146df3845eb79c3586a1e57347f",
           "source.started.idempotency_key": "application@1:6f74686572:666978747572655f6f7065726174696f6e5f6964",
           "payload.started_event_id": "evt_dch_7a8b822f035e0a754d469e117a528c25ec1ea146df3845eb79c3586a1e57347f",
-          "source.outcome.started_event_id": "evt_dch_7a8b822f035e0a754d469e117a528c25ec1ea146df3845eb79c3586a1e57347f"
+          "source.outcome.started_event_id": "evt_dch_7a8b822f035e0a754d469e117a528c25ec1ea146df3845eb79c3586a1e57347f",
+          "source.started_access.source_value_sha256": "5402651a7a199a5d40d1990abb282068b80b0b75fe094e9b4cfe277b5afabfb1"
         },
         "expected_valid": false
       },
@@ -54920,14 +55013,16 @@
       {
         "name": "started_envelope_edition_mismatch",
         "changes": {
-          "source.started.schema_version": "1.0.0"
+          "source.started.schema_version": "1.0.0",
+          "source.started_access.source_value_sha256": "eea12fa87fe37087b60acc79ce038cf3a4ab238665941781bf1961c5b43c7251"
         },
         "expected_valid": false
       },
       {
         "name": "started_payload_extra_field",
         "changes": {
-          "source.started.payload.unexpected": true
+          "source.started.payload.unexpected": true,
+          "source.started_access.source_value_sha256": "7da121666bef875500a30fa0d87b70e3a26d389d92ba4e08de265ccc3491d0db"
         },
         "expected_valid": false
       },
@@ -54936,7 +55031,8 @@
         "changes": {
           "source.started.event_id": "evt_dch_eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "payload.started_event_id": "evt_dch_eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "source.outcome.started_event_id": "evt_dch_eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+          "source.outcome.started_event_id": "evt_dch_eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "source.started_access.source_value_sha256": "a7bed41e9091d39894d1a9580dcc1d85b140ed635602457b13e03327aa2e3079"
         },
         "expected_valid": false
       },

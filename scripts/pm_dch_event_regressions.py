@@ -20,11 +20,12 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def run(job):
+def run(job, family_only=False):
     family, name, expected = job
     spec = importlib.util.spec_from_file_location('dch_regression_subject', ROOT/'scripts/pm_dch_events.py')
     m = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(m)
+    if family_only:m.SELECTED_FAMILY=family
     contracts = json.loads((ROOT/'Plans/dch_event_contracts.json').read_text())
     fixtures = json.loads((ROOT/'Plans/dch_event_contract_fixtures.json').read_text())
     checkpoints = json.loads((ROOT/'Plans/dch_checkpoint_fixtures.json').read_text())
