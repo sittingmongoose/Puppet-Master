@@ -19,18 +19,19 @@ export default async function(t) {
     const tag=`${producer}-${look}-${motion}-${state}`,b=await c.boundingBox(),rect={x:Math.floor(off.x+b.x-5),y:Math.floor(off.y+b.y-5),width:Math.ceil(b.width+10),height:Math.ceil(b.height+10)};
     if(t.args.visuals)await t.crop(`${tag}-rest`,rect,'Consent paint before press; compare checked and empty native rings at original resolution.');
     const data=[];
-    const pts=t.args.film?[[b.width/2,b.height/2]]:[[1,b.height/2],[b.width-1,b.height/2],[b.width/2,1],[b.width/2,b.height-1],[2,b.height/2],[b.width-2,b.height/2],[b.width/2,2],[b.width/2,b.height-2],[3,3],[b.width-3,3],[3,b.height-3],[b.width-3,b.height-3]];
+    const pts=(t.args.film||t.args.centerOnly)?[[b.width/2,b.height/2]]:[[1,b.height/2],[b.width-1,b.height/2],[b.width/2,1],[b.width/2,b.height-1],[2,b.height/2],[b.width-2,b.height/2],[b.width/2,2],[b.width/2,b.height-2],[3,3],[b.width-3,3],[3,b.height-3],[b.width-3,b.height-3]];
     for(const [x,y] of pts) {
      await t.page.mouse.move(off.x+b.x+x,off.y+b.y+y);
      const base=await c.evaluate(e=>{const r=e.getBoundingClientRect();window.__consent.hold=true;window.__consent.clicks=[];return {x:r.x,y:r.y,w:r.width,h:r.height};});
      if(t.args.film)await t.mark(`down ${tag} ${JSON.stringify(base)}`);await t.page.mouse.down();
-     const h=await c.evaluate((e,b)=>new Promise(resolve=>{let worst=0,frames=0;const start=performance.now(),tick=()=>{const r=e.getBoundingClientRect();frames++;worst=Math.max(worst,Math.abs(r.x-b.x),Math.abs(r.y-b.y),Math.abs(r.width-b.w),Math.abs(r.height-b.h));if(performance.now()-start<350)requestAnimationFrame(tick);else{const face=e.querySelector('.o55-checkface'),p=face||e,s=getComputedStyle(p),q=p.getBoundingClientRect();resolve({worst,frames,face:!!face,paintWidth:q.width,paintBorder:parseFloat(s.borderTopWidth),scale:s.scale,transform:s.transform,rootBorder:parseFloat(getComputedStyle(e).borderTopWidth)});}};requestAnimationFrame(tick);}),base);
+     const h=await c.evaluate((e,b)=>new Promise(resolve=>{let worst=0,frames=0;const start=performance.now(),tick=()=>{const r=e.getBoundingClientRect();frames++;worst=Math.max(worst,Math.abs(r.x-b.x),Math.abs(r.y-b.y),Math.abs(r.width-b.w),Math.abs(r.height-b.h));if(performance.now()-start<350)requestAnimationFrame(tick);else{const face=e.querySelector('.o55-checkface'),p=face||e,s=getComputedStyle(p),q=p.getBoundingClientRect();resolve({worst,frames,face:!!face,paintWidth:q.width,paintBorder:parseFloat(s.borderTopWidth),paintBackground:s.backgroundColor,tick:!!e.querySelector('svg'),checked:e.getAttribute('aria-checked'),scale:s.scale,transform:s.transform,rootBorder:parseFloat(getComputedStyle(e).borderTopWidth)});}};requestAnimationFrame(tick);}),base);
      if(t.args.film){await t.crop(`${tag}-held`,rect,'Held ring: inner paint squeezes in Friendly; native target stays fixed.');await t.mark(`up ${tag}`);}
      await t.page.mouse.up();await f.waitForFunction(()=>window.__consent.clicks.length,null,{timeout:1000}).catch(()=>{});
      const clicks=await f.evaluate(()=>{window.__consent.hold=false;return window.__consent.clicks;});data.push({x,y,base,h,clicks});await f.waitForTimeout(220);
     }
     await t.check(`FO-73 consent native held edges and corners ${tag}`,data.every(v=>v.h.worst<=.01&&v.h.frames>=2&&v.clicks.length===1&&v.clicks[0].trusted&&v.clicks[0].own),JSON.stringify(data));
     await t.check(`FO-73 consent painted ring keeps look cue ${tag}`,data.every(v=>v.h.paintBorder>0&&(motion==='no-preference'&&look.startsWith('friendly')?v.h.paintWidth<v.base.w-.1:Math.abs(v.h.paintWidth-v.base.w)<.02)),JSON.stringify(data));
+    await t.check(`FO-73 checkbox state is painted ${tag}`,data.every(v=>v.h.checked===state&&(state==='false'||(v.h.tick&&!['transparent','rgba(0, 0, 0, 0)'].includes(v.h.paintBackground)))),JSON.stringify(data));
     if(t.args.dataOut)await appendFile(String(t.args.dataOut),JSON.stringify({tag,data})+'\n');
    }
   }

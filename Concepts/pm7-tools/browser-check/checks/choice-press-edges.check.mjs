@@ -46,7 +46,7 @@ async function run(t) {
      const k=Math.ceil(rest.rad*0.293)+2,cx=rest.x+rest.w/2,cy=rest.y+rest.h/2,R=rest.x+rest.w,B=rest.y+rest.h;
      const pts=[['corner top-left',rest.x+k,rest.y+k],['corner top-right',R-k,rest.y+k],['corner bottom-left',rest.x+k,B-k],['corner bottom-right',R-k,B-k]];
      for(const d of [1,2])pts.push([`top-${d}`,cx,rest.y+d],[`bottom-${d}`,cx,B-d],[`left-${d}`,rest.x+d,cy],[`right-${d}`,R-d,cy]);
-     for(const [name,x,y] of pts) {
+     for(const [name,x,y] of pts.filter(p=>!t.args.onePx||!p[0].endsWith('-2'))) {
       const trial=`${tag} ${i} ${name}`;
       await t.page.mouse.move(2,2);
       await f.evaluate(async({sel,i,trial})=>{const e=document.querySelectorAll(sel)[i];getComputedStyle(e).transform;

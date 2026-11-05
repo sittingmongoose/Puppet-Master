@@ -98,3 +98,5 @@ browser-check diff $OUT/base $OUT/tip            # opens nothing; lists CHANGED 
 ```
 
 The concept demo is live: clocks, usage numbers and toasts move between runs. A changed frame whose box sits only on a live widget is expected. Look at the diff image before reporting it.
+
+FO-73 producer inventory (C5): the only authored onboarding `a.o55-btn` is `71a-screens-away.js`, generated Caddyfile Download on away-setup. Checkbox button producers are away consent (`71a-screens-away.js`) and Server selfMatch/match (`68-screens-server.js`); choice indicators are spans. The NieR editor text-only `.btn` producers are Use NieR and mounted Done (`settings/kit.d/22-nier-chips.js`). `button-checkbox-producers` enumerates all three checkbox producers separately in both states. `choice-press-edges --set onePx=1` samples four sides at1px plus four rounded corners; its default retains the2px sides too. `--set centerOnly=1` in the checkbox check keeps all looks/motion paths/producers/states with one center hold; default uses twelve points.
