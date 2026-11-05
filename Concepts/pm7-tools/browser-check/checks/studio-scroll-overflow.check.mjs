@@ -5,14 +5,14 @@ export default async function (t) {
   // The retained historical looks summary identifies Home's whole-page audit as partial.
   // browser-check caps the unscoped probe at eight scrollers and twelve stops; scope each
   // visible scroller at every viewport so that cap cannot silently skip its middle.
-  const count = await f.evaluate(() => {
+  const paths = await f.evaluate(() => {
     const nodes = [document.scrollingElement, ...document.querySelectorAll('body *')].filter((e,i,a) => a.indexOf(e) === i && e.clientHeight > 40 && e.scrollHeight > e.clientHeight + 1 && /auto|scroll/.test(getComputedStyle(e).overflowY) && e.checkVisibility({visibilityProperty:true}));
-    nodes.forEach((e,i)=>e.setAttribute('data-full-scroll',String(i))); return nodes.length;
+    return nodes.map(e=>{const path=[];for(let n=e;n&&n.nodeType===1;n=n.parentElement){const tag=n.tagName.toLowerCase();const siblings=n.parentElement?[...n.parentElement.children].filter(x=>x.tagName===n.tagName):[n];path.unshift(tag+':nth-of-type('+(siblings.indexOf(n)+1)+')');}return path.join(' > ');});
   });
-  t.log('Home visible scrollers: '+count);
+  t.log('Home visible scrollers: '+paths.length);
   try {
-    for (let i=0;i<count;i++) {
-      const selector=`[data-full-scroll="${i}"]`, e=f.locator(selector); await e.scrollIntoViewIfNeeded();
+    for (let i=0;i<paths.length;i++) {
+      const selector=paths[i], e=f.locator(selector); await e.scrollIntoViewIfNeeded();
       const r=await e.boundingBox(); if(!r)throw Error('Scroller vanished');
       await t.page.mouse.move(r.x+r.width/2,r.y+Math.min(r.height/2,200)); await t.page.mouse.wheel(0,-100000); await f.waitForTimeout(100);
       let done=false;
@@ -24,7 +24,7 @@ export default async function (t) {
       }
       await t.check('Home scroller '+i+' reached bottom',done,'',{hard:true});
     }
-  } finally {await f.evaluate(()=>document.querySelectorAll('[data-full-scroll]').forEach(e=>e.removeAttribute('data-full-scroll')));}
+  } finally { /* Scoped probes restore their scroll positions themselves. */ }
   await t.viewport(1390,900);
   await f.locator('.pmds-entry').click();
   await f.locator('[data-pmds-tab="onboarding"]').click();
