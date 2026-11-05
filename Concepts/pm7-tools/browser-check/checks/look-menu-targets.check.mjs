@@ -41,7 +41,8 @@ export default async function(t) {
  const proof=[];
  for(const screen of ['where','look','nas-find']) {
   await f.evaluate(s=>{O55.S.lookOpen=false;O55.ui.go(s,{noHistory:true});},screen);
-  const row=await f.evaluate(screen=>{const layer=document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)'),choice=layer?.querySelector('.o55-card,.o55-tile');return {screen,selector:'#pm-o55-onboarding .o55-lookmenu .o55-tipq::before',matchingOriginElements:document.querySelectorAll('#pm-o55-onboarding .o55-lookmenu .o55-tipq').length,fixtureDOM:choice?.outerHTML||null};},screen);
+  await f.waitForFunction(s=>!!document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) '+(s==='look'?'.o55-tile':'.o55-card')),screen);
+  const row=await f.evaluate(screen=>{const layer=document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)'),choice=layer?.querySelector('.o55-card,.o55-tile');return {screen,selector:'#pm-o55-onboarding .o55-lookmenu .o55-tipq::before',matchingOriginElements:document.querySelectorAll('#pm-o55-onboarding .o55-lookmenu .o55-tipq').length,fixtureDOM:choice?.cloneNode(false).outerHTML||null,ancestors:choice?Array.from((function*(n){for(;n;n=n.parentElement)yield n;})(choice.parentElement)).map(n=>({tag:n.tagName,classes:n.className})):[]};},screen);
   proof.push(row);await t.check(`FO-75 scoped menu rule cannot match choice fixture ${screen}`,row.matchingOriginElements===0&&!!row.fixtureDOM,JSON.stringify(row));
  }
  if(t.args.scopeOut)await writeFile(String(t.args.scopeOut),JSON.stringify(proof,null,2));
