@@ -6,7 +6,7 @@ from SP-1101 authenticated frozen resources, never from a request parameter.
 from __future__ import annotations
 
 import calendar
-from copy import deepcopy
+from functools import lru_cache
 import re
 
 from pm_event_numbers import Refusal, _refuse
@@ -108,25 +108,61 @@ def format_checker(*, profile=EVENT_RECORD):
     return checker
 
 
-def _eventrecord_storage_profiles(schema):
-    """Compose CV-253 on the pinned envelope without rewriting its resource.
+def _eventrecord_storage_properties(validator, properties, instance, schema):
+    """Add only CV-253's zone predicate when an envelope is evaluated.
 
-    The original resource's complete hash is used by existing registry joins.
-    Keep its predicates and add only the two Storage field zone constraints.
-    Other schema resources and standalone source/family fields stay unchanged.
+    This runs during ordinary descent, including $ref and nested resources.
+    The frozen 1.0.0 compatibility definition has no $id of its own; its
+    envelope discriminator selects the same Storage field ownership.
+    Resource authentication remains the installing owner's responsibility.
     """
-    if type(schema) is not dict or schema.get("$id") != "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json":
-        return schema
-    bound = deepcopy(schema)
-    for field in ("observed_at_utc", "persisted_at_utc"):
-        bound["properties"][field] = {"allOf": [
-            bound["properties"][field], {"pattern": r"Z(?![\s\S])"},
-        ]}
+    identity, version = properties.get("schema_id"), properties.get("schema_version")
+    envelope = (schema.get("$id") ==
+                "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json" or
+                (type(identity) is dict and identity.get("const") == "pm.event.v0" and
+                 type(version) is dict and version.get("const") == "1.0.0"))
+    if envelope and validator.is_type(instance, "object"):
+        for field in ("observed_at_utc", "persisted_at_utc"):
+            if field in properties and field in instance:
+                yield from validator.descend(instance[field], {"pattern": r"Z(?![\s\S])"},
+                                             path=field, schema_path=field)
+
+
+@lru_cache(maxsize=None)
+def _bound_validator(base):
+    """Keep the field boundary installed when jsonschema evolves at $schema.
+
+    Extending properties alone is insufficient: jsonschema normally switches
+    back to its stock class on entering a resource with an explicit dialect.
+    These classes are private to this helper; no global dialect is replaced.
+    """
+    from attrs import fields
+    from jsonschema import validators
+
+    def properties(validator, value, instance, schema):
+        yield from base.VALIDATORS["properties"](validator, value, instance, schema)
+        yield from _eventrecord_storage_properties(validator, value, instance, schema)
+
+    bound = validators.extend(base, {"properties": properties})
+
+    def evolve(self, **changes):
+        schema = changes.setdefault("schema", self.schema)
+        selected = validators.validator_for(schema, default=base)
+        for field in fields(type(self)):
+            if field.init and field.alias not in changes:
+                changes[field.alias] = getattr(self, field.name)
+        return _bound_validator(selected)(**changes)
+
+    bound.evolve = evolve
     return bound
 
 
 def datetime_validator(schema, *, profile=EVENT_RECORD, **kwargs):
-    """Pass the installed predicate and compose the envelope's CV-253 fields."""
+    """Enforce date-time and CV-253 on direct, referenced and nested envelopes.
+
+    Pass authentic frozen resources in registry for retained validation. Both
+    the supplied resources and their pinned hashes remain unchanged.
+    """
     from jsonschema import Draft202012Validator
-    return Draft202012Validator(_eventrecord_storage_profiles(schema),
-                               format_checker=format_checker(profile=profile), **kwargs)
+    return _bound_validator(Draft202012Validator)(
+        schema, format_checker=format_checker(profile=profile), **kwargs)

@@ -133,12 +133,18 @@ def _retained(m, case, corpus):
         if authentic and case.get("date_time_profile"):
             from pm_event_datetime import date_time
             # The frozen original resource map selects this; no request switch.
-            selected = case.get("sealed_date_time_profile", "event_record")
+            envelope_resources = corpus.get("historical_envelope_resources", {}).get(case.get("original"))
+            selected = (envelope_resources["profile"] if envelope_resources else
+                        case.get("sealed_date_time_profile", "event_record"))
             observed_profile = case["date_time_profile"]
             if observed_profile != selected:
                 return False
-            field = case.get("sealed_date_time_field", "occurred_at_utc")
-            date_time(json.loads(record.record_bytes)[field], profile=selected)
+            if envelope_resources:
+                _validate_envelope_datetime(json.loads(record.record_bytes),
+                                            envelope_resources["route"], profile=selected)
+            else:
+                field = case.get("sealed_date_time_field", "occurred_at_utc")
+                date_time(json.loads(record.record_bytes)[field], profile=selected)
         return authentic
 
     dispatcher = m.RetainedDispatcher(FixtureOwner(), {
@@ -148,6 +154,46 @@ def _retained(m, case, corpus):
     out = dispatcher.resolve("sealed-ref", expected, disclose=lambda b: allow,
                              recipe_override=override)
     return RetainedObservation(out, observed, calls)
+
+
+def _validate_envelope_datetime(event, route, *, profile="event_record"):
+    """Exercise unchanged owner resources through their actual reference paths."""
+    from jsonschema import ValidationError
+    from referencing import Registry, Resource
+    from pm_event_datetime import datetime_validator
+    import pm_event_numbers as m
+
+    root = Path(__file__).resolve().parents[1]
+    envelope, receipt, coordinator = (json.loads((root / path).read_text()) for path in (
+        "Plans/event_record.schema.json", "Plans/event_append_receipt_contracts.schema.json",
+        "Plans/goal_certified_event_coordinator_contracts/schemas/append-phase.v1.schema.json"))
+    registry = Registry().with_resources(
+        (s["$id"], Resource.from_contents(s)) for s in (envelope, receipt, coordinator))
+    ref = {"$ref": envelope["$id"]}
+    request = {"$ref": receipt["$id"] + "#/$defs/full_value_request"}
+    compatibility = {"$ref": envelope["$id"] + "#/$defs/event_record_1_0_0_compatibility_reader"}
+    schemas = {
+        "direct": (envelope, event),
+        "root_ref": (ref, event),
+        "allOf": ({"allOf": [envelope]}, event),
+        "nested_inline": ({"properties": {"event": envelope}}, {"event": event}),
+        "nested_ref": ({"properties": {"batch": {"type": "array", "items": {
+            "properties": {"event": ref}}}}}, {"batch": [{"event": event}]}),
+        "full_value_request": (request, {"event": event}),
+        "nested_full_value_request": ({"properties": {"request": request}}, {"request": {"event": event}}),
+        "coordinator_event": ({"$ref": coordinator["$id"] + "#/$defs/WholeGroupMember/properties/event"}, event),
+        "compatibility_ref": (compatibility, event),
+        "compatibility_nested": ({"properties": {"events": {"items": compatibility}}}, {"events": [event]}),
+    }
+    schema, instance = schemas[route]
+    try:
+        datetime_validator(schema, profile=profile, registry=registry).validate(instance)
+    except ValidationError as error:
+        if isinstance(error.cause, m.Refusal):
+            raise error.cause
+        if error.validator == "pattern" and error.path[-1] in ("observed_at_utc", "persisted_at_utc"):
+            raise m.Refusal("date_time_utc_z") from error
+        raise
 
 
 def execute(m, case, corpus):
@@ -207,20 +253,14 @@ def execute(m, case, corpus):
         from pm_event_datetime import date_time
         return date_time(case["value"], profile=case.get("profile", "event_record"))
     if op == "envelope_datetime":
-        from pm_event_datetime import datetime_validator
-        from jsonschema import ValidationError
         root = Path(__file__).resolve().parents[1]
         event = json.loads((root / "Plans/seglog_frame_v2_wire_fixtures.json").read_text())["base_event"]
-        schema = json.loads((root / "Plans/event_record.schema.json").read_text())
+        route = case.get("route", "direct")
+        if route.startswith("compatibility_"):
+            event.pop("scope_kind")
+            event.update(schema_version="1.0.0", project_id="project-A", replay_policy="projector_replay_only")
         event[case["field"]] = case["value"]
-        try:
-            datetime_validator(schema).validate(event)
-        except ValidationError as error:
-            if isinstance(error.cause, m.Refusal):
-                raise error.cause
-            if error.validator == "pattern" and case["field"] in ("observed_at_utc", "persisted_at_utc"):
-                raise m.Refusal("date_time_utc_z") from error
-            raise
+        _validate_envelope_datetime(event, route)
         return case["value"]
     if op == "family_datetime":
         from pm_event_datetime import datetime_validator
