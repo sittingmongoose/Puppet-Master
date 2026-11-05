@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8557-L8754
+Source lines: L8581-L8780
 
-Source SHA256: `ce3245e312fdf84d34ac33c22d578df4c581f9a8e205144f10e2fb76fc221683`
+Source SHA256: `1af8b4a077d054ec48a2a1094284049241a9b2f0c0fa46d6e0f819bd1c35deca`
 
 ---
 
@@ -53,6 +53,8 @@ Every command in this addendum consumes the closed v2 `UICommandResponse` in `Pl
 | `cmd.orchestrator.resume` | `run_id`, `resume_scope`, `expected_goal_revision`, `wake_reason`, `idempotency_key` | `run_id`, `scheduler_pass_ref?`, `resumed` | `blocked_state_required`, `stale_projection`, `permission_denied` | `scheduler.pass` |
 | `cmd.dashboard.add_widget` | `project_id`, `dashboard_id`, `widget_id`, `layout_slot`, `expected_layout_revision`, `idempotency_key` | `widget_instance_id`, `layout_revision` | `invalid_args`, `stale_projection` | `dashboard.widget_added` |
 | `cmd.dashboard.catalog` | `project_id?`, `surface`, `filter?`, `cache_policy` | `catalog_revision`, `widget_ids[]` | `handler_unavailable`, `invalid_args` | explicit dispatch receipt |
+
+Lineage pointer (DL-333): for each command here that UCC-230 routes, the Payload fields column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
 
 Amended 2026-10-09 (DL-180): `cmd.dashboard.add_widget` is an alias of `cmd.widget.add` (its `dashboard_id` read as `board_id`) and its `dashboard.widget_added` effect is withdrawn (UCC-202). From the home layout `cmd.panel.undock` and `cmd.panel.redock` take only `chat`, into a window (UCC-203).
 

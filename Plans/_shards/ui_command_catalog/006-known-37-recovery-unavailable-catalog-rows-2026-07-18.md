@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L133-L1162
+Source lines: L133-L1182
 
-Source SHA256: `ce3245e312fdf84d34ac33c22d578df4c581f9a8e205144f10e2fb76fc221683`
+Source SHA256: `1af8b4a077d054ec48a2a1094284049241a9b2f0c0fa46d6e0f819bd1c35deca`
 
 ---
 
@@ -672,6 +672,8 @@ ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/GitHub_Integrat
 | `cmd.chat.open_working_notebook` | `{ thread_id }` | No persisted EventRecord family is currently registered; candidate disposition `candidate_not_registered` per Plans/Working_Notebook.md §3 (fail-closed `command_not_registered` until production wiring exists) | Chat notebook entry (thread header/context controls), command palette |
 | `cmd.chat.request_fresh_context` | `{ thread_id }` | No persisted EventRecord family is currently registered; the request records a Prompt_Pipeline transition lifecycle state; candidate disposition `candidate_not_registered`; result vocabulary `requested | deferred | denied` | Context controls, separately labeled from Compact Now |
 
+Lineage pointer (DL-333): for each command here that UCC-230 routes, the Payload column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
+
 Rules:
 - hover-summary disclosure is passive UI and does not require its own stable command ID
 - choosing `More Details` dispatches `cmd.chat.open_thread_context_details`
@@ -721,6 +723,8 @@ Rules:
 | `cmd.browser.retry` | `{ browser_session_id }` | `browser.session.state_changed` | recovery banner, attention center |
 | `cmd.browser.keep_closed` | `{ browser_session_id }` | `browser.session.closed` | recovery banner, attention center |
 
+Lineage pointer (DL-333): for each command here that UCC-230 routes, the Payload column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
+
 Amended 2026-10-09 (DL-180): `cmd.browser.open_workspace_preview`'s `target_editor_panel_id?` and `target_editor_group_id?` no longer select a home panel; it places its browser tab through CV-360's placement fields and the one opening module, and emits `workspace.layout_changed` only when a tab is added. `cmd.browser.focus_browser_tab` reveals the tab that hosts the session. `cmd.browser.open_devtools` is the canonical DevTools command and `cmd.browser.devtools.open` its alias (UCC-202). `cmd.browser.detach_browser_tab` has no producer on a panel tab, because no tab pops out (UCC-203).
 
 Capture event rules:
@@ -760,6 +764,8 @@ Amended 2026-10-09 (DL-181): a terminal is one session per tab in the universal 
 | `cmd.terminal.move_pane` (retired 2026-10-09, UCC-201) | moved-pane identity, source and target `/tab/pane/session`, `/pane/session`, section/window target | terminal layout changed | terminal surfaces |
 | `cmd.terminal.close_pane` (retired 2026-10-09, UCC-201) | `terminal_pane_id`, `terminal_session_id?`, `termination_policy?` | terminal layout changed or session stopping | terminal surfaces |
 | `cmd.terminal.restart_replace` | `terminal_session_id`, `/restart/replace` policy, command replay or shell profile hints | terminal session replaced | command cards, terminal surfaces |
+
+Lineage pointer (DL-333): for each command here that UCC-230 routes, the Payload column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
 
 Fields:
 - stable command IDs
@@ -806,6 +812,8 @@ Rules:
 | `cmd.dev.show_problems` | `{ dev_session_id }` | layout/UI state only | Toolbar, Chat, Problems |
 | `cmd.dev.show_ports` | `{ dev_session_id }` | layout/UI state only | Toolbar, Chat, Ports |
 
+Lineage pointer (DL-333): for each command here that UCC-230 routes, the Payload column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
+
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
 
 #### Catalog lifecycle commands
@@ -819,6 +827,8 @@ Rules:
 | `cmd.catalog.install_item` | `{ item_type, item_id, version? }` | `catalog.install.started`, `catalog.install.completed` | Catalog |
 | `cmd.catalog.update_item` | `{ item_type, item_id, target_version? }` | `catalog.update.started`, `catalog.update.completed` | Catalog |
 | `cmd.catalog.remove_item` | `{ item_type, item_id }` | `catalog.remove.started`, `catalog.remove.completed` | Catalog |
+
+Lineage pointer (DL-333): for each command here that UCC-230 routes, the Payload column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
 
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
 
@@ -842,6 +852,8 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Sec
 | `cmd.chat.rewind` | `{ thread_id, target_message_id }` | Rewind conversation history only (`conversation-only`); does not restore files. |
 | `cmd.chat.revert` | `{ project_id, thread_id, target_message_id?, repo_id, worktree_id, expected_turn_manifest_sha256, idempotency_key }` | Restore the complete immutable whole-turn mutation manifest through the FileSafe exact-replace journal; omitted `target_message_id` resolves to the latest eligible mutating assistant turn. The command never rewinds conversation state or branches from a conversation restore point. |
 | `cmd.chat.add_file_reference` | `{ project_id, thread_id?, path, line_range? }` | Insert a visible file reference chip into the composer. File-only compatibility alias to `cmd.chat.attachment.add`; a folder reference uses that shared command with `semantic_kind: folder` (FOLDER-001..003). |
+
+Lineage pointer (DL-333): for each command here that UCC-230 routes, the Parameters column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
 
 Canonical signature lock: `cmd.chat.add_file_reference { project_id, thread_id?, path, line_range? }`.
 
@@ -987,6 +999,8 @@ ContractRef: ContractName:Plans/Commands_System.md#7. Reserved built-in slash co
 | `cmd.chat.goal.start` | `{ thread_id, goal_prompt?, source: slash|button|chip|icon|natural_language }` | Goal Runtime event envelope; concrete Goal event names and payload schemas remain owned by Goal_Runtime_System, Contracts_V0, and storage-plan registration. | Assistant Chat composer, Goal chip, command palette |
 | `cmd.chat.goal.update` | `GoalUpdateRequestV2` under CV-342; exact complete replacement and genuine original accepted-change authority | `GoalUpdateResultV2` plus original `goal.updated` v3 custody under GRS-068/SP-299/SIR-049; existing source routes cannot bypass approved-change authority | Assistant Chat composer, Goal status/menu |
 
+Lineage pointer (DL-333): for each command here that UCC-230 routes, the Payload column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
+
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/Commands_System.md, ContractName:Plans/Wiring_Matrix.md
 
 ### 2.8 Assistant memory (Gist Review) commands
@@ -1007,6 +1021,8 @@ These IDs are required by `Plans/assistant-memory-subsystem.md` sections 5 and 7
 | `cmd.chat.memory.summarize_monthly` | `{ project_id, month? }` | `memory.monthly_summary.started`, `memory.monthly_summary.completed` | Assistant chat Gist Review panel |
 | `cmd.chat.memory.prune_archive` | `{ project_id, policy? }` | `memory.prune_archive.started`, `memory.prune_archive.completed` | Assistant chat Gist Review panel |
 
+Lineage pointer (DL-333): for each command here that UCC-230 routes, the Args schema column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
+
 ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, ContractName:Plans/assistant-memory-subsystem.md#7-gui-and-maintenance, ContractName:Plans/Contracts_V0.md#7-uicommand
 
 ---
@@ -1016,6 +1032,8 @@ ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and
 |---|---|---|
 | `cmd.artifacts.show_in_usage` | `{ project_id, route_target, open_subject, artifact_id?, usage_event_ref?, usage_record_id?, provider_attempt_ref?, attempt_id?, node_id?, tool_call_id?, trace_ref?, receipt_refs[]?, raw_payload_ref?, run_id?, thread_id? }` | Opens or focuses Usage on the referenced artifact/Usage subject through the pre-existing artifact route/open bridge; `route_target.object_kind = usage_event` is required when `usage_event_ref` is available, while `OpenSubject` retains artifact source-realization identity. This row is not the PMConcept7 Ledger attempt branch. |
 | `cmd.artifacts.show_in_ledger` | `{ project_id, route_target, open_subject, artifact_id?, usage_event_ref?, usage_record_id?, ledger_ref?, provider_attempt_ref?, attempt_id?, node_id?, tool_call_id?, trace_ref?, receipt_refs[]?, raw_payload_ref?, run_id?, thread_id? }` | Opens or focuses Ledger on the referenced artifact, receipt, Usage event, or run context through the existing artifact route/open bridge. It remains event-primary when `usage_event_ref` is present and is not widened into the PMConcept7 attempt-primary branch. |
+
+Lineage pointer (DL-333): for each command here that UCC-230 routes, the Payload column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
 
 
 ### Search Command Catalog
@@ -1032,6 +1050,8 @@ ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and
 | `cmd.search.replace_all` | `{ project_id, query_session_id, replacement }` | Apply the replacement across the entire preserved query session after the Search owner validates the current result snapshot and mutation path. |
 | `cmd.search.rebuild_index` | `{ project_id }` | Triggers Search-owned index rebuild while preserving `/replacement` routing for replace-in-files state. |
 | `cmd.search.evict_remote_cache` | `{ project_id, remote_cache_id? }` | Opens confirmed remote cache eviction for `/eviction/search` without bypassing FinalGUISpec indexing settings copy. |
+
+Lineage pointer (DL-333): for each command here that UCC-230 routes, the Parameters column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
 
 Rules:
 - Search command routing resolves through `route_target`.
