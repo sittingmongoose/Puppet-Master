@@ -45,8 +45,9 @@ def audit(family):
     for case in cases(row):
         record(case['case_id'], case['operation'], outcome(case['_value'], case['operation']), case['expected'])
 
-    # Controls cut only the predicate under test. Every other new negative is
-    # rerun, and remains rejected unless it violates that very same predicate.
+    # Diagnostic cuts rerun the new event-negative complement. In particular,
+    # the dispatch selector uses a shared refusal code; these observations are
+    # not a predicate-isolation proof. B3/shared-tool adoption owns that proof.
     for cut in ('dispatch', 'version', 'additionalProperties', 'current_additionalProperties'):
         require = m.require
         if cut == 'dispatch':
