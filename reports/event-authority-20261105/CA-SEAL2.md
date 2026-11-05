@@ -1,6 +1,6 @@
 # CA-SEAL2 — fourth recorded seal-check input change
 
-**ROUND 3 (ASTRA) FIXES IMPLEMENTED; RE-REVIEW PENDING.** Worker CA-SEAL2-FIX3 (Codex), stream E, VM, 2026-11-05. Branch `plans/ea-seal-check-recount-20261105`, round-3 fixes from Astra-reviewed head `e9d34a4dcc2bdc3d5369952dee2e7fd9b4d85112`, on CA-SEAL FIX8 `17c842445a2623bb0334ba8d6932e7a6bf088967`. Earlier fixes remain `616c1a7a275153f1850010976a1b3f1c884ecafa` (round 2) and `60913cb906590662c97696146edcb10960c2ed09` (round 1). This file is both the change record and branch report. The round-3 section records findings, commits and fresh evidence; `fix3/DELIVERY.json` records the final documentation head, push and cleanup. Coordinated landing and independent review remain required.
+**ROUND 4 FIXES IMPLEMENTED; RE-REVIEW PENDING.** Worker CA-SEAL2-FIX4 (Codex), stream E, VM, 2026-11-05, from Astra-2-reviewed head `8e9194ee64caeee10b2f610a2e0a5a0e832528ef`. The eleven B01/B02/B03 negatives are in `6273e45359b1714e46a0d6edf5f0312c3e932a12`; coherent main-seam issue observations are in `a86735007b823cc3f8fb32a7c27b85790b2b5383`. The validator remains frozen. This file remains both the change record and branch report; earlier sections preserve rounds 1–3. The final documentation head, push and literal-path cleanup are recorded in external `fix4/DELIVERY.json`. Coordinated landing and independent re-review remain required.
 
 ## Design in five lines
 
@@ -133,7 +133,7 @@ Exact **new fourth-receipt** entry template:
 
 The existing DL-412 entry/template remains separately required exactly as CA-SEAL specifies; there is no new DL-077 entry. Later changes to the new receipt require its authorized byte anchor to follow the final bytes.
 
-**Seal-applier exclusion:** the author, actual lander, stream lead `claude-opus-5.5:pm-ea-lead` (session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`), CA-SEAL, CA-SEAL-FIX1 through FIX8, CA-SEAL2 (Codex), CA-SEAL2-FIX1 (Codex), CA-SEAL2-FIX2 (Codex), CA-SEAL2-FIX3 (Codex), and every other fix worker are barred. The checked new receipt list contains author and actual lander; broader exclusions stay procedural.
+**Seal-applier exclusion:** the author, actual lander, stream lead `claude-opus-5.5:pm-ea-lead` (session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`), CA-SEAL, CA-SEAL-FIX1 through FIX8, CA-SEAL2 (Codex), CA-SEAL2-FIX1 (Codex), CA-SEAL2-FIX2 (Codex), CA-SEAL2-FIX3 (Codex), CA-SEAL2-FIX4 (Codex), and every other fix worker are barred. The checked new receipt list contains author and actual lander; broader exclusions stay procedural.
 
 **CA2-A02 — lead adjudication (07:35Z):** separation follows CA-SEAL's approved B′ model (pm7-build 01:27Z). The receipt records the author and actual lander. Both, the stream lead and every fix worker are barred from **applying the seal**. The lander is not required to differ from the author. The lead explicitly adjudicated Astra's stronger lander-separation criterion as beyond the approved model; this is the lead's adjudication, not a new Jared answer. In practice the actual lander is the stream lead's landing step, and a separate assignee applies the seal. No frozen-code or receipt change is made for A02.
 
@@ -393,3 +393,77 @@ All paths below are under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-202
 | `index-validate.json` | `f4a64f681f28f53968029ae38d7f33d93fe2291231a01183f935bfa6967e4d81` |
 | `commands.json` | `eb99de1c748bc9a0759fe12cb7a6bd8ad236df3a7aeac97522160caed7dd9c17` |
 | `CA-SEAL2-fix3-results.json` | `e53d9f9375a18c4908acb448478089e309b0e5c3c75fe8f0ce5f4d1db4160b8c` |
+
+
+## Review round 4: findings and responses
+
+Review read in full: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/REVIEW-astra-2.md`, including the full 182-variant table, both result summaries, eleven independent witnesses and their replay scripts. All 225 retained Astra 2 evidence files match the published SHA-256 manifest. The final corpus is 134/134, including 107 recorded negative refusals. All 110 original result records/refusal strings remain identical. All 597 original source hashes and byte counts verify. No frozen validator byte, receipt, owner document or governance record changes in this round.
+
+`H` is `reports/event-authority-20261105/CA-SEAL2-checks.py`; `V` retains the validator path defined above. `E` is `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix4/`. Each finding is fixed in `6273e45359b1714e46a0d6edf5f0312c3e932a12`; none is disputed or stopped. Each of its eleven narrow cuts accepts exactly its own new negative, while all 133 peer records, including 106 other negative refusal strings, remain identical. `E/survivor-summary.json` asserts those exact comparisons.
+
+| Finding | Location / cause | Fix and verification |
+|---|---|---|
+| **CA2-A2-B01 — four final-result clauses** | `V:2321,2323,2325`; `H:425`. The prior builder controls omitted false overall, false depth and present-but-false snapshot flags. | Four separate negatives each establish the passing builder parent, then change exactly one flag. Run the corpus and narrow variants `I100`, `I102`, `I105`, `I107` in `E/removal.py`; `mandatory_isolation` verifies one changed record per variant. These defensive builder controls do not claim an earned approval or a real main run. |
+| **CA2-A2-B02 — four exclusion/citation predicates** | `V:1016,1029,1037`; `H:352`. The prior cases omitted wrong decision-prefix grammar, lexical Plans prefix with resolved containment preserved, boolean line_end and line_start=0. | Each starts from the same complete, passing 249-name parent with only the other names' existing admissions injected. Decision/evidence bytes, hashes, span peers and admission set remain coherent. The alias symlink resolves to the identical file inside Plans. Replay `I080`, `I087`, `I090` and the narrow `span_lower_bound` cut in `E/supplemental.py`; every peer predicate stays enabled. |
+| **CA2-A2-B03 — three source-map predicates** | `V:917,967`; `H:85`. The prior map cases omitted exact root keys, schema identity and absolute mapped locations. | Add an extra root key, wrong schema_id, or one relative spelling resolving to the identical saved source. Each parent verifies all 597 original sources; no receipt, list, fingerprint or trust pin changes. Replay `I053`, `I054`, `I030` and inspect their sole changed records. |
+
+### Whole survivor inventory and replay
+
+`reports/event-authority-20261105/CA-SEAL2-survivors.md` gives exactly one outcome for **all 84 review rows**: 82 passing variants plus the two structural crashes. Its per-row input, named guard, proof label and result leave no omitted survivor.
+
+| Outcome | Rows |
+|---|---:|
+| **Negative added** | 23 |
+| **Same-predicate duplicate** | 5 |
+| **Implied** | 21 |
+| **Frozen-input only** | 22 |
+| **Structural** | 13 |
+
+The three duplicate witness groups prove each site alone still refuses the same defect, then all sites removed accept: before-pin equality, after-pin equality, and the identical fourth-anchor call. Twelve separate type/value implications keep fields separate. Other implication witnesses explicitly name strict parsing and the equality, empty-segment, exact-token or unresolved-card guard that dominates acceptance; the table states when that guard occurs textually later. They are implications, never claimed as duplicates. Structural witnesses supply a concrete wrong-type/cardinality input, record intact refusal and the cut's exception, and award no acceptance proof. Frozen-only rows name the immutable receipt/list/revision pin. No unrelated predicates are merged into a duplicate removal set.
+
+Additional negatives cover DEL paths, map membership/collection type, the third executable bridge and its enforcement, returned denominator/depth observations, aggregate completion, and the four main integration clauses. The main controls execute the actual production bytecode at the recount seam with a passing August result injected. An incomplete recount carries its matching issue record; that observation is synchronized in `a86735007b`. The earlier August computation and later receipt I/O are outside this diagnostic helper control, so it is not reported as a live CLI run.
+
+The original Astra removal script is reused from a scratch copy, with the authorized expanded corpus and immutable Git blob bytes cached across calls. Every file-backed byte, source fingerprint and byte count is still recomputed. The original 38 published cuts, 24 field cuts and 112 inventory cuts are unchanged; eight supplementary cuts complete the 182 variants. Original historical expected-set annotations remain descriptive because new controls can add failures. Only narrow cuts establish the eleven fixes. This finite inventory closes this round's named survivors; full shared-tool adoption remains the separate S1 sweep.
+
+**Final removal result:** 182 variants; **121 fail tests**; **61 are outcome-classified**; **0 unclassified**. The two crashes are outcome-classified, never counted as accepting or successfully refusing variants. Fresh restoration reproduces the full 134-record baseline. `E/survivor-proofs.json` contains 36 successful diagnostic witness records.
+
+### Round-4 checks, resources and limits
+
+| Check | Result |
+|---|---|
+| **Corpus / source custody** | Exit 0; 134/134; 107 refusals; 597/597 real source fingerprints and lengths. Original 110 full result records unchanged. |
+| **Removal / restoration** | All 182 variants accounted for; eleven mandatory one-negative flips with exact peer equality; restored 134/134. |
+| **Survivor diagnostic witnesses** | Exit 0; 36 records, including site-by-site duplicates, field-separated implications and concrete structural exceptions. |
+| **Shard check** | Exit 0; top-level pass. No indexed owner or generated artifact changed; regeneration was unnecessary. |
+| **Index validation** | Exit 1; top-level fail; exactly the same 24 full failure records as round 3. Zero introduced. `E/index-comparison.json` compares complete arrays. |
+| **Protected paths / validator** | No `Plans/`, scripts, test-path, receipt, `.gitignore`, registry, Decision Log, Spec Lock, `.evidence` or auto-decision edit. Validator SHA-256 remains `3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72`; its existing receipt after-pin still matches. |
+| **Currentness input** | Fifteen ignored files copied without metadata operations and hash-compared; no currentness edition regenerated or re-stamped. |
+| **Whitespace / delivery** | Whitespace checked before each commit. Only the named branch is pushed. `E/DELIVERY.json` records final head, push and literal-path forced worktree removal. |
+| **Actual CLI / governance / approval** | No new live CLI, admission, seal, governance run or main landing. Earlier actual CLI failures remain unfinished prerequisites; no passing production approval is claimed. |
+
+Initial disk/RAM checks were 108 GB free / 19 GB available. The replay checks resources per variant and stops below the brief's thresholds. No mailbox, subagent, browser, server, main push, owner choice or new canonical ID occurred. Source trees and fixture directories self-delete; external replay scratch and the requested worktree are removed after export/push. No raw runtime tree is committed.
+
+The recurring classes applicable here are covered by recomputed custody, separate historical pins, exact identifier/decision/citation interpretation, coherent issue/receipt observations, strict parsing and exact boolean/integer types. No Storage-assigned runtime metadata, payload externalization, schema-reference/format contract or number cap is introduced. Number-domain work and generic shared-tool adoption remain sweep scope.
+
+**Family grades before → after: N/A → N/A.** No family is authored, admitted or graded. The eleven missing coverage cells and the whole survivor inventory are self-assessed repaired, pending independent review. **IDs used: none**; existing DL-451 is referenced and DL-998 remains disposable fixture-only. CA-SEAL2-FIX4 joins the procedural seal-applier exclusion. Coordinated assembly, actual landers/final anchors, real outcomes/depth, unchanged August prerequisites, before/after independent review and S1 remain integration work.
+
+**Stopped row: none.** No intact validator acceptance of a demonstrated bad input was found. No receipt/validator re-stamp, permission expansion or final approval is awarded.
+
+### Retained evidence — round 4
+
+All filenames below resolve under the full `E` prefix above. The compact committed bundle is `reports/event-authority-20261105/CA-SEAL2-fix4-results.json`; the report and complete survivor table are also exported to the drafts root. Replay commands and setup are in `E/README.md`; `E/SHA256SUMS` inventories the final package.
+
+| Evidence filename | SHA-256 |
+|---|---|
+| `baseline.json` | `bc98218d803094a8fa1e95de43436fc41ad27ef1366ad8e5c2bbe04c265b5a1a` |
+| `restored.json` | `bc98218d803094a8fa1e95de43436fc41ad27ef1366ad8e5c2bbe04c265b5a1a` |
+| `removal-summary.json` | `e4e6ce14d9987737dbd105dcb7c98b368b33c19783bdb751e7cd8d4a2ab041ed` |
+| `supplemental-summary.json` | `e02f7909f14287872a32295c8a3b3f3f622c53daa3cfd8b0d52f37c94de1e59e` |
+| `survivor-proofs.json` | `e08049c7cb1451a1916008010e11dffd20f04275831f96973faec2a023cdeb1b` |
+| `survivor-summary.json` | `21b2c0a1e7ed5c63d8f1517a3a49b89e1e8e97f66a1eb2bd2e420c80b0dceb3b` |
+| `shard-check.json` | `d88b6d64d2c3bbfb29393c893950a0750de443783549fb7cbb624230301e2be3` |
+| `index-validate.json` | `023e454e42bf0523160a0ecbe462f8110225717a8839f5b6a9dd602af7919820` |
+| `index-comparison.json` | `bca4e1c4f3769b5c247d278e8943b586fa3794c6cdc8759a2947f754ce02d215` |
+| `scope.json` | `24dd0bb1b80f637877f2f9731558544723c6af64d23d5f3f36bceca77c03cf9e` |
+| `frozen-pins.json` | `b8f45e9fa4c6aa315db9b9f12ba141bf6968af64d722756e4f1beaacb5f8c131` |
+| `review-evidence-audit.json` | `542485bdaa06ca7f33eb03b493cb84f5683c1465a6eb2052e5c992f2fb9f5e61` |

@@ -1,0 +1,769 @@
+{
+  "baseline_checks": 134,
+  "baseline_negative_refusals": 107,
+  "original_110_records_identical": true,
+  "validator_sha256": "3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72",
+  "variants": 182,
+  "failed_variants": 121,
+  "outcome_classified": 61,
+  "unclassified": [],
+  "table_rows": 84,
+  "table_totals": {
+    "same-predicate duplicate": 5,
+    "implied": 21,
+    "structural": 13,
+    "negative added": 23,
+    "frozen-input only": 22
+  },
+  "mandatory_isolation": [
+    {
+      "variant": "I100_L2321_build_receipt",
+      "negative": "negative_builder_explicit_overall_false",
+      "accepts_only_own_negative": true,
+      "unchanged_peers": 133
+    },
+    {
+      "variant": "I102_L2321_build_receipt",
+      "negative": "negative_builder_depth_false",
+      "accepts_only_own_negative": true,
+      "unchanged_peers": 133
+    },
+    {
+      "variant": "I105_L2323_build_receipt",
+      "negative": "negative_builder_recount_false",
+      "accepts_only_own_negative": true,
+      "unchanged_peers": 133
+    },
+    {
+      "variant": "I107_L2325_build_receipt",
+      "negative": "negative_builder_August_false",
+      "accepts_only_own_negative": true,
+      "unchanged_peers": 133
+    },
+    {
+      "variant": "I080_L1016_recount_outcomes",
+      "negative": "negative_exclusion_decision_ref_grammar",
+      "accepts_only_own_negative": true,
+      "unchanged_peers": 133
+    },
+    {
+      "variant": "I087_L1029_recount_outcomes",
+      "negative": "negative_exclusion_lexical_Plans_prefix",
+      "accepts_only_own_negative": true,
+      "unchanged_peers": 133
+    },
+    {
+      "variant": "I090_L1037_recount_outcomes",
+      "negative": "negative_exclusion_line_end_boolean",
+      "accepts_only_own_negative": true,
+      "unchanged_peers": 133
+    },
+    {
+      "variant": "span_lower_bound",
+      "negative": "negative_exclusion_line_start_zero",
+      "accepts_only_own_negative": true,
+      "unchanged_peers": 133
+    },
+    {
+      "variant": "I053_L967_recount_frozen_inputs",
+      "negative": "negative_source_map_extra_root_key",
+      "accepts_only_own_negative": true,
+      "unchanged_peers": 133
+    },
+    {
+      "variant": "I054_L967_recount_frozen_inputs",
+      "negative": "negative_source_map_wrong_schema",
+      "accepts_only_own_negative": true,
+      "unchanged_peers": 133
+    },
+    {
+      "variant": "I030_L917_recount_source_bytes",
+      "negative": "negative_source_map_relative_location",
+      "accepts_only_own_negative": true,
+      "unchanged_peers": 133
+    }
+  ],
+  "stopped_rows": [],
+  "test_head": "a86735007b823cc3f8fb32a7c27b85790b2b5383",
+  "rows": [
+    {
+      "variant": "R04_validator_before_sha256_direct_only",
+      "outcome": "same-predicate duplicate",
+      "proof": "validator_before_sha256_duplicate",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "R04_validator_after_sha256_direct_only",
+      "outcome": "same-predicate duplicate",
+      "proof": "validator_after_sha256_duplicate",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "field_schema_id_type",
+      "outcome": "implied",
+      "proof": "field_schema_id_type",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "field_authority_ref_type",
+      "outcome": "implied",
+      "proof": "field_authority_ref_type",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "field_authority_section_sha256_type",
+      "outcome": "implied",
+      "proof": "field_authority_section_sha256_type",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "field_validator_path_type",
+      "outcome": "implied",
+      "proof": "field_validator_path_type",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "field_validator_id_type",
+      "outcome": "implied",
+      "proof": "field_validator_id_type",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "field_validator_before_sha256_value",
+      "outcome": "same-predicate duplicate",
+      "proof": "validator_before_sha256_duplicate",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "field_validator_before_sha256_type",
+      "outcome": "implied",
+      "proof": "field_validator_before_sha256_type",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "field_validator_after_sha256_value",
+      "outcome": "same-predicate duplicate",
+      "proof": "validator_after_sha256_duplicate",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "field_validator_after_sha256_type",
+      "outcome": "implied",
+      "proof": "field_validator_after_sha256_type",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "field_prior_receipt_type",
+      "outcome": "implied",
+      "proof": "field_prior_receipt_type",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "field_recount_receipt_type",
+      "outcome": "implied",
+      "proof": "field_recount_receipt_type",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "field_recount_list_type",
+      "outcome": "implied",
+      "proof": "field_recount_list_type",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "field_certification_scope_type",
+      "outcome": "implied",
+      "proof": "field_certification_scope_type",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "field_author_task_type",
+      "outcome": "implied",
+      "proof": "field_author_task_type",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I003_L848_recount_anchor",
+      "outcome": "structural",
+      "proof": "I003",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I004_L851_recount_anchor",
+      "outcome": "structural",
+      "proof": "I004",
+      "negative": null,
+      "rerun_exit": null,
+      "rerun_crash": "IndexError"
+    },
+    {
+      "variant": "I005_L851_recount_anchor",
+      "outcome": "structural",
+      "proof": "I005",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I006_L852_recount_anchor",
+      "outcome": "implied",
+      "proof": "I006",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I011_L865_third_change_validator_pin",
+      "outcome": "negative added",
+      "proof": null,
+      "negative": "negative_third_bridge_executable_pin",
+      "rerun_exit": 1,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I012_L894_recount_change_state",
+      "outcome": "implied",
+      "proof": null,
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I014_L895_recount_change_state",
+      "outcome": "structural",
+      "proof": "I014",
+      "negative": null,
+      "rerun_exit": null,
+      "rerun_crash": "AttributeError"
+    },
+    {
+      "variant": "I018_L900_recount_change_state",
+      "outcome": "same-predicate duplicate",
+      "proof": "fourth_anchor_call_sites",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I019_L901_recount_change_state",
+      "outcome": "negative added",
+      "proof": null,
+      "negative": "negative_change_requires_valid_third_bridge",
+      "rerun_exit": 1,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I020_L907_recount_relative",
+      "outcome": "structural",
+      "proof": "I020",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I021_L907_recount_relative",
+      "outcome": "implied",
+      "proof": "I021",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I025_L908_recount_relative",
+      "outcome": "negative added",
+      "proof": null,
+      "negative": "negative_unsafe_source_path_DEL",
+      "rerun_exit": 1,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I026_L908_recount_relative",
+      "outcome": "implied",
+      "proof": "I026",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I028_L924_recount_source_bytes",
+      "outcome": "frozen-input only",
+      "proof": null,
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I029_L917_recount_source_bytes",
+      "outcome": "structural",
+      "proof": "I029",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I030_L917_recount_source_bytes",
+      "outcome": "negative added",
+      "proof": null,
+      "negative": "negative_source_map_relative_location",
+      "rerun_exit": 1,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I033_L940_recount_frozen_inputs",
+      "outcome": "frozen-input only",
+      "proof": null,
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I035_L942_recount_frozen_inputs",
+      "outcome": "frozen-input only",
+      "proof": null,
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I036_L943_recount_frozen_inputs",
+      "outcome": "frozen-input only",
+      "proof": null,
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I037_L944_recount_frozen_inputs",
+      "outcome": "frozen-input only",
+      "proof": null,
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I038_L945_recount_frozen_inputs",
+      "outcome": "frozen-input only",
+      "proof": null,
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I039_L946_recount_frozen_inputs",
+      "outcome": "frozen-input only",
+      "proof": null,
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I040_L947_recount_frozen_inputs",
+      "outcome": "frozen-input only",
+      "proof": null,
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I041_L949_recount_frozen_inputs",
+      "outcome": "frozen-input only",
+      "proof": null,
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I042_L949_recount_frozen_inputs",
+      "outcome": "frozen-input only",
+      "proof": null,
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I043_L952_recount_frozen_inputs",
+      "outcome": "frozen-input only",
+      "proof": null,
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I044_L952_recount_frozen_inputs",
+      "outcome": "frozen-input only",
+      "proof": null,
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I045_L953_recount_frozen_inputs",
+      "outcome": "frozen-input only",
+      "proof": null,
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I046_L954_recount_frozen_inputs",
+      "outcome": "frozen-input only",
+      "proof": null,
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I047_L954_recount_frozen_inputs",
+      "outcome": "frozen-input only",
+      "proof": null,
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I048_L955_recount_frozen_inputs",
+      "outcome": "frozen-input only",
+      "proof": null,
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I049_L956_recount_frozen_inputs",
+      "outcome": "frozen-input only",
+      "proof": null,
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I050_L959_recount_frozen_inputs",
+      "outcome": "frozen-input only",
+      "proof": null,
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I053_L967_recount_frozen_inputs",
+      "outcome": "negative added",
+      "proof": null,
+      "negative": "negative_source_map_extra_root_key",
+      "rerun_exit": 1,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I054_L967_recount_frozen_inputs",
+      "outcome": "negative added",
+      "proof": null,
+      "negative": "negative_source_map_wrong_schema",
+      "rerun_exit": 1,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I055_L968_recount_frozen_inputs",
+      "outcome": "negative added",
+      "proof": null,
+      "negative": "negative_source_map_locations_array",
+      "rerun_exit": 1,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I056_L968_recount_frozen_inputs",
+      "outcome": "negative added",
+      "proof": null,
+      "negative": "negative_source_map_unknown_member",
+      "rerun_exit": 1,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I057_L976_recount_frozen_inputs",
+      "outcome": "frozen-input only",
+      "proof": null,
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I058_L976_recount_frozen_inputs",
+      "outcome": "frozen-input only",
+      "proof": null,
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I059_L977_recount_frozen_inputs",
+      "outcome": "frozen-input only",
+      "proof": null,
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I062_L978_recount_frozen_inputs",
+      "outcome": "frozen-input only",
+      "proof": null,
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I068_L997_recount_outcomes",
+      "outcome": "structural",
+      "proof": "I068",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I069_L1000_recount_outcomes",
+      "outcome": "structural",
+      "proof": "I069",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I077_L1013_recount_outcomes",
+      "outcome": "structural",
+      "proof": "I077",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I079_L1016_recount_outcomes",
+      "outcome": "structural",
+      "proof": "I079",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I080_L1016_recount_outcomes",
+      "outcome": "negative added",
+      "proof": null,
+      "negative": "negative_exclusion_decision_ref_grammar",
+      "rerun_exit": 1,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I083_L1023_recount_outcomes",
+      "outcome": "structural",
+      "proof": "I083",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I085_L1026_recount_outcomes",
+      "outcome": "structural",
+      "proof": "I085",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I087_L1029_recount_outcomes",
+      "outcome": "negative added",
+      "proof": null,
+      "negative": "negative_exclusion_lexical_Plans_prefix",
+      "rerun_exit": 1,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I090_L1037_recount_outcomes",
+      "outcome": "negative added",
+      "proof": null,
+      "negative": "negative_exclusion_line_end_boolean",
+      "rerun_exit": 1,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I094_L1043_recount_outcomes",
+      "outcome": "implied",
+      "proof": "I094",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I095_L1043_recount_outcomes",
+      "outcome": "structural",
+      "proof": "I095",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I096_L1047_recount_outcomes",
+      "outcome": "implied",
+      "proof": "I096",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I097_L1047_recount_outcomes",
+      "outcome": "implied",
+      "proof": "I097",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I099_L1050_recount_outcomes",
+      "outcome": "implied",
+      "proof": "I099",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I100_L2321_build_receipt",
+      "outcome": "negative added",
+      "proof": null,
+      "negative": "negative_builder_explicit_overall_false",
+      "rerun_exit": 1,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I102_L2321_build_receipt",
+      "outcome": "negative added",
+      "proof": null,
+      "negative": "negative_builder_depth_false",
+      "rerun_exit": 1,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I105_L2323_build_receipt",
+      "outcome": "negative added",
+      "proof": null,
+      "negative": "negative_builder_recount_false",
+      "rerun_exit": 1,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I107_L2325_build_receipt",
+      "outcome": "negative added",
+      "proof": null,
+      "negative": "negative_builder_August_false",
+      "rerun_exit": 1,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I108_L2336_build_receipt",
+      "outcome": "negative added",
+      "proof": null,
+      "negative": "negative_builder_denominator_observation_false",
+      "rerun_exit": 1,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I109_L2337_build_receipt",
+      "outcome": "negative added",
+      "proof": null,
+      "negative": "negative_builder_depth_observation_false",
+      "rerun_exit": 1,
+      "rerun_crash": null
+    },
+    {
+      "variant": "I111_L1074_recount_validation",
+      "outcome": "negative added",
+      "proof": null,
+      "negative": "negative_aggregate_receipt_issue",
+      "rerun_exit": 1,
+      "rerun_crash": null
+    },
+    {
+      "variant": "span_lower_bound",
+      "outcome": "negative added",
+      "proof": null,
+      "negative": "negative_exclusion_line_start_zero",
+      "rerun_exit": 1,
+      "rerun_crash": null
+    },
+    {
+      "variant": "span_order",
+      "outcome": "implied",
+      "proof": "span_order",
+      "negative": null,
+      "rerun_exit": 0,
+      "rerun_crash": null
+    },
+    {
+      "variant": "main_complete_denominator_known",
+      "outcome": "negative added",
+      "proof": null,
+      "negative": "negative_main_incomplete_complete_denominator_known",
+      "rerun_exit": 1,
+      "rerun_crash": null
+    },
+    {
+      "variant": "main_contract_depth_complete",
+      "outcome": "negative added",
+      "proof": null,
+      "negative": "negative_main_incomplete_contract_depth_complete",
+      "rerun_exit": 1,
+      "rerun_crash": null
+    },
+    {
+      "variant": "main_overall_pass",
+      "outcome": "negative added",
+      "proof": null,
+      "negative": "negative_main_incomplete_overall_pass",
+      "rerun_exit": 1,
+      "rerun_crash": null
+    },
+    {
+      "variant": "main_seal_prerequisites_met",
+      "outcome": "negative added",
+      "proof": null,
+      "negative": "negative_main_incomplete_seal_prerequisites_met",
+      "rerun_exit": 1,
+      "rerun_crash": null
+    }
+  ],
+  "checks": {
+    "shards": "pass",
+    "index": "fail: same 24 pre-existing failures as round 3",
+    "index_failure_arrays_identical": true,
+    "Plans_paths_changed": false,
+    "validator_changed": false
+  }
+}
