@@ -2353,7 +2353,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     measuringCompact=false;
     return w;
   }
-  let composerMeasureCache=null, activityMeasureCache=null;
+  let composerMeasureCache=null;
   function syncComposerCompact(){
     if(measuringCompact) return;
     const box=document.querySelector('.composer-box');
@@ -2423,6 +2423,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     abMeasuring=false;
     return w;
   }
+  let activityFitNodes=null, activityFitRO=null, activityFitMO=null;
   function syncActivityCompact(){
     if(abMeasuring) return;
     const wrap=document.querySelector('.activity-wrap');
@@ -2431,30 +2432,27 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       abCompactTier=0;
       return;
     }
-    // A hidden hosted Chat can still render a new thread/variant. Its children
-    // have zero layout widths then; caching those widths would keep labelled
-    // controls after reveal even though the real row no longer fits.
-    if(wrap.clientWidth===0){
-      activityMeasureCache=null;
-      return;
+    if(activityFitNodes!==bar){
+      activityFitRO?.disconnect();
+      activityFitMO?.disconnect();
+      activityFitNodes=bar;
+      // Run at layout delivery, including reveal, without a delayed resize pass.
+      activityFitRO=new ResizeObserver(()=>syncActivityCompact());
+      activityFitRO.observe(wrap);
+      activityFitRO.observe(bar);
+      activityFitMO=new MutationObserver(()=>syncActivityCompact());
+      activityFitMO.observe(bar,{subtree:true,childList:true,characterData:true,attributes:true});
     }
+    // Hidden rows have no measurable geometry. The observer measures on reveal.
+    if(wrap.clientWidth===0) return;
     const cs=getComputedStyle(wrap);
     const avail=wrap.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight);
     const slack=8;
-    // Hosted container rules tighten padding and type after layout (including
-    // reveal). Cache by the resolved sizing inputs, rather than the theme name
-    // alone: the first visible pass can precede that container style update.
-    // Width itself stays out of the key, so resizing within one style regime
-    // still reuses the intrinsic measurements and the existing hysteresis.
-    const sizing=[bar,...bar.querySelectorAll('.activity-item,.label,.count')].map(el=>{
-      const s=getComputedStyle(el);
-      return [s.font,s.letterSpacing,s.columnGap,s.paddingLeft,s.paddingRight,
-        s.borderLeftWidth,s.borderRightWidth].join(',');
-    }).join(';');
-    const signature=[bar.textContent,bar.dataset.variant,state.theme,document.fonts?.status,sizing].join('|');
-    if(!activityMeasureCache||activityMeasureCache.node!==bar||activityMeasureCache.key!==signature)
-      activityMeasureCache={node:bar,key:signature,labeled:measureActivityTier(wrap,bar,0),compact:measureActivityTier(wrap,bar,1)};
-    const {labeled,compact}=activityMeasureCache;
+    // Probe the actual row in its current ancestry and container width every
+    // time. Generated text, fonts and hosted sizing rules are layout inputs,
+    // not a reusable intrinsic-width signature. Both probes finish before paint.
+    const labeled=measureActivityTier(wrap,bar,0);
+    const compact=measureActivityTier(wrap,bar,1);
     let tier=abCompactTier;
     if(tier===0){
       if(avail+0.5<labeled) tier=avail+0.5<compact?2:1;
@@ -2467,6 +2465,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     wrap.classList.toggle('is-ab-compact', tier>=1);
     wrap.classList.toggle('is-ab-icon-only', tier>=2);
   }
+  document.fonts?.addEventListener('loadingdone',syncActivityCompact);
   function syncChatChrome(){
     syncComposerCompact();
     syncChatDock();

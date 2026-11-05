@@ -1,11 +1,12 @@
 // FO-76: a fit measured while Chat is hidden must not survive its reveal.
 import pod from './pod-clearance.check.mjs';
+import { LOOKS } from '../browser-check.config.mjs';
 export default async function(t) {
   t.args.width=1512; t.args.only='query';
   await pod(t);
   const f=t.root;
   await t.viewport(1920,1100);
-  for(const width of [720,560,680,800,600,720]) {
+  for(const width of [720,560,400,560,660,665,680,800,600,720]) {
     await f.evaluate(w=>PMW.chatCol.setWidth(w),width);
     await t.settle();
     await f.waitForTimeout(500);
@@ -19,10 +20,41 @@ export default async function(t) {
       }
       const fit=await readFit(f);
       t.log(JSON.stringify({columnWidth:width,phase,...fit}));
-      await t.check(`activity labels follow fit ${width} ${phase}`,fit.selected==='query'&&fit.pinned&&Math.abs(fit.history-320)<=1&&Math.abs(fit.chat-width-320)<=1&&fit.scroll<=fit.width+1&&
+      await t.check(`activity labels follow fit ${width} ${phase}`,fit.selected==='query'&&fit.pinned&&(width===400 ? fit.history>0&&fit.history<=320 : Math.abs(fit.history-320)<=1)&&Math.abs(fit.chat-width-fit.history)<=1&&fit.scroll<=fit.width+1&&
         (fit.available>=fit.need+8 ? !fit.compact&&fit.labels : fit.available+0.5<fit.need ? fit.compact&&!fit.labels : true),JSON.stringify(fit));
     }
   }
+
+  // Cross the pseudo-content boundary in every look, from both directions.
+  for(const look of LOOKS) {
+    await t.app.look(look);
+    for(const width of [800,400,560,660,720,800]) {
+      await f.evaluate(w=>PMW.chatCol.setWidth(w),width);
+      await t.settle();
+      const fit=await readFit(f);
+      await t.check(`live activity fit ${look} ${width}`,fit.scroll<=fit.width+1&&
+        (fit.available>=fit.need+8 ? !fit.compact&&fit.labels : fit.available+0.5<fit.need ? fit.compact&&!fit.labels : true),JSON.stringify(fit));
+    }
+    // Probe near the measured threshold from each direction. Observe tier
+    // mutations for 60 frames after settling; a self-induced resize loop fails.
+    const fit=await readFit(f);
+    const edge=Math.ceil(800+fit.need-fit.available);
+    for(const width of [edge+12,edge+2,edge-2,edge+2,edge+12]) {
+      await f.evaluate(w=>PMW.chatCol.setWidth(w),width);
+      await t.settle();
+      const hold=await f.evaluate(async()=>{
+        const wrap=document.querySelector('#pmRoot .activity-wrap, #pmRoot .pm56-activity-wrap');
+        const tier=()=>wrap.classList.contains('is-ab-icon-only')?2:wrap.classList.contains('is-ab-compact')?1:0;
+        const initial=tier(); let changes=0,previous=initial;
+        const mo=new MutationObserver(()=>{const next=tier();if(next!==previous)changes++;previous=next;});
+        mo.observe(wrap,{attributes:true,attributeFilter:['class']});
+        for(let i=0;i<60;i++) await new Promise(requestAnimationFrame);
+        mo.disconnect(); return {initial,final:tier(),changes};
+      });
+      await t.check(`activity threshold holds ${look} ${width}`,hold.changes===0,JSON.stringify(hold));
+    }
+  }
+  await t.app.look('nier-dark');
 
   await t.viewport(1512,982);
   await f.evaluate(()=>PMW.chatCol.setWidth(560));
