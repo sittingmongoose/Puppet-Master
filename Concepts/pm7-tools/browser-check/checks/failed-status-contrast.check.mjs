@@ -31,7 +31,7 @@ async function fail(t,f,code){
   await f.waitForFunction(id=>O55.S.sess.ai.accounts[id]?.state==='signinFailed',id);await t.settle();return;
  }
  if(code==='connection'){
-  if(await f.locator('[data-o55-do="server"][data-arg="opencode-runtime"]').count()===0)await f.locator('[data-o55-do="all"]').click();
+  if(await f.evaluate(()=>O55.S.sess.screen==='ai'))await f.locator('[data-o55-do="all"]').click();
   await f.locator('[data-o55-do="server"][data-arg="opencode-runtime"]').click();
   await f.locator('[data-o55-do="ocMode"][data-arg="attached"]').click();
   await f.locator('#o55f-ocaddr').fill('http://192.168.1.99:4096');
