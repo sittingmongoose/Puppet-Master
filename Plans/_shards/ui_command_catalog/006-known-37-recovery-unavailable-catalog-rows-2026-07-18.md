@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L133-L1157
+Source lines: L133-L1162
 
-Source SHA256: `3a8a28f9c33b0923707842f58734c35a70fc12f1af19c595e04b08942d3b6b5c`
+Source SHA256: `ce3245e312fdf84d34ac33c22d578df4c581f9a8e205144f10e2fb76fc221683`
 
 ---
 
@@ -503,6 +503,9 @@ ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalG
 | `cmd.docker.build` | Build Image | Compatibility alias for the selected `cmd.docker.build.*` path | `docker_available && build_target_selected` |
 | `cmd.docker.build.select_target` | Select Build Target | Selects Dockerfile, context, target stage, platform, and build mode before build or bake | `docker_available && build_candidate_present` |
 | `cmd.docker.build.run` | Run Build | Runs the selected Docker build path and records last successful build target plus validation snapshot | `docker_available && build_target_selected` |
+| `cmd.docker.build.image` | Build Image (Image Mode) | Build mode `image`: builds the selected Dockerfile target (context, target stage, platforms) as an image, resolving to the persisted selected target rather than a guessed default | `docker_available && build_target_selected` |
+| `cmd.docker.build.compose` | Build Compose Services | Build mode `compose`: builds the services of the selected compose file target, resolving to the persisted selected target rather than a guessed default | `docker_available && build_target_selected` |
+| `cmd.docker.build.bake` | Build With Bake | Build mode `bake`: builds the selected Bake target and platforms, resolving to the persisted selected target rather than a guessed default | `docker_available && bake_target_selected` |
 | `cmd.docker.bake.preview` | Preview Bake | Previews resolved Bake targets and platforms without publishing | `docker_available && bake_file_resolved` |
 | `cmd.docker.bake.run` | Run Bake | Runs the selected `cmd.docker.bake.*` target | `docker_available && bake_target_selected` |
 | `cmd.docker.run` | Run Container | Starts a container from selected image | `docker_available && image_selected` |
@@ -534,6 +537,8 @@ ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalG
 | `cmd.docker.drift.compare` | Compare Docker Drift | Compares local Dockerfile, `/compose/bake`, and manifests with last build, publish, or deploy metadata | `docker_project_detected` |
 | `cmd.docker.cleanup.scan` | Scan Cleanup | Dry-runs prune/remove recommendations with protected asset and receipt checks | `docker_available` |
 | `cmd.docker.cleanup.prune` | Prune Selected Assets | Executes approved cleanup targets after dry-run review | `cleanup_targets_selected && permission_allowed` |
+
+Amended 2026-11-05 (DL-333): `cmd.docker.build.select_target`, `cmd.docker.build.run`, `cmd.docker.bake.preview` and `cmd.docker.bake.run` are the current build flow that `Plans/Containers_Registry_and_Unraid.md` section 2A requires (infer the target, prompt when ambiguous, preview, persist the selected target, and resolve a run to it); `cmd.docker.build.image`, `cmd.docker.build.compose` and `cmd.docker.build.bake` are its three build modes. UCC-049 registers all seven, and each has a production wiring row.
 
 The grouped command token `cmd.docker.compose.scenario.save/run/edit/delete` denotes the scenario command family; payloads use the concrete ids above. Legacy Docker rows normalize into canonical `cmd.docker.container.*`, `cmd.docker.compose.*`, `cmd.docker.bake.*`, or registry command families and MUST NOT introduce new payload shapes.
 `cmd.docker.show` and `cmd.docker.switch_subview` are shell/view-state compatibility wrappers for opening Docker Manager and selecting a Docker Manager subview. They do not replace concrete Docker Manager domain-action rows such as build, compose, registry, cleanup, or Kubernetes commands.

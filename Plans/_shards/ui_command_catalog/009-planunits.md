@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L1269-L7085
+Source lines: L1274-L7094
 
-Source SHA256: `3a8a28f9c33b0923707842f58734c35a70fc12f1af19c595e04b08942d3b6b5c`
+Source SHA256: `ce3245e312fdf84d34ac33c22d578df4c581f9a8e205144f10e2fb76fc221683`
 
 ---
 
@@ -2773,7 +2773,7 @@ plan_unit_id: UCC-049
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Docker Manager command rows define build, bake, container inspect/logs/shell/restart/stop/delete, image inspect/delete/tag/open Dockerfile, context select, and compatibility aliases for build/logs/exec/inspect.
+canonical_text: Docker Manager command rows define build, bake, container inspect/logs/shell/restart/stop/delete, image inspect/delete/tag/open Dockerfile, context select, and compatibility aliases for build/logs/exec/inspect. Amended 2026-11-05 (DL-333), the build flow commands cmd.docker.build.select_target, cmd.docker.build.run, cmd.docker.bake.preview and cmd.docker.bake.run are current and registered here, and cmd.docker.build.image, cmd.docker.build.compose and cmd.docker.build.bake are its three build modes, as Plans/Containers_Registry_and_Unraid.md section 2A requires.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -2819,6 +2819,10 @@ preserved_exact_tokens:
 - cmd.docker.logs
 - cmd.docker.exec
 - cmd.docker.inspect
+- cmd.docker.build.select_target
+- cmd.docker.build.run
+- cmd.docker.bake.preview
+- cmd.docker.bake.run
 negative_constraints: []
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md'

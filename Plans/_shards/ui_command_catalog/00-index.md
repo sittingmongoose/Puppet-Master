@@ -1,68 +1,68 @@
 # Shard Index: Plans/UI_Command_Catalog.md
 
-Generated: 2026-11-05T04:25:58Z
+Generated: 2026-11-05T04:29:23Z
 
-Source SHA256: `3a8a28f9c33b0923707842f58734c35a70fc12f1af19c595e04b08942d3b6b5c`
+Source SHA256: `ce3245e312fdf84d34ac33c22d578df4c581f9a8e205144f10e2fb76fc221683`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `69a7c00be4db0c73a184eeb224eeb03a16bc2ec8a83cf8cbc10097ae130468c7`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L21 `3161a35f2166964dea1a1c4c44bb468763654c0df52b934efd7d52132b4df562`
-- [003 - 0. Scope](003-0.-scope.md) L23-L30 `d03f9794c1e54a95a4727ebd482f8a5493b95cff9c888df740d4e1c8c2d0783a`
-- [004 - 1. Naming rules](004-1.-naming-rules.md) L32-L40 `5dfeb13b24b0cb42ae8e4e2920867dfbb60f05f28776f8a8235b24ae5264c53f`
-- [005 - 2. Canonical command IDs](005-2.-canonical-command-ids.md) L42-L131 `253e8488af2a5ff99bf2d1c8c20e1384436143600c53cc96cb0c26f18bc3c636`
-- [006 - Known-37 recovery-unavailable catalog rows - 2026-07-18](006-known-37-recovery-unavailable-catalog-rows-2026-07-18.md) L133-L1157 `bceaaa92e70b8919f43ba95dbe019ac71051f7e75988bfacbe9bd6a95d159950`
-- [007 - References](007-references.md) L1158-L1261 `f534366c2409ba2083b19a8b4ce19901bf1c0d7153d79cbcd9db639c48fd3eb7`
-- [008 - Owner / Consumer Map](008-owner-consumer-map.md) L1263-L1267 `63c6c3d90fdd07b16cf48a55e9aefff70c99e1da50c9b6e522ef44f8f700f8d6`
-- [009 - PlanUnits](009-planunits.md) L1269-L7085 `7de8ab03e1b0d47a6c3b510375d83b7b596410aa689e319aa49a4727ea82f6c5`
-- [010 - Migration Coverage](010-migration-coverage.md) L7087-L7097 `04eb8e0fdeb093309be0d1ffceb41819a1416bea63b5eaa02819a25715590b47`
-- [011 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](011-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L7100-L7243 `6ee99370dd1e186726fa7780ae7ac7882f6de866d1025b9639bec1a5b72fe5fb`
-- [012 - Ledger Compile Addendum - pldg-20260622-001-fff](012-ledger-compile-addendum-pldg-20260622-001-fff.md) L7245-L7288 `5245d61e780e6e5bc4af8b16fdd0dcc7ed6fb7055f1a5df266db15e2f9b2e441`
-- [013 - Ledger Compile Addendum - pldg-20260626-001-feature-name](013-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L7291-L7730 `5517a658c46d507c5c3e492263e42a17bba065ccd0672b3fa0d943b57cc00bbe`
-- [014 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](014-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L7732-L7917 `cef44ae89779dd1fdb5b6b8f695007ff47ac2fe2ab22338c8ef739d0811de49e`
-- [015 - Ledger Compile Addendum - pldg-20260701-001-feature-intake](015-ledger-compile-addendum-pldg-20260701-001-feature-intake.md) L7919-L8330 `6c3c1af8f74d29fb79c2f56d29d5f038bb41cb65eb27a6541dcf3b77a9648bf7`
-- [016 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](016-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L8331-L8481 `1a4885304308d9b6fb03df713a127bf1339920513093ba37fb46f5b9a63abd09`
-- [017 - GUI / PMConcept implementation-readiness repair addendum (2026-07-02)](017-gui-pmconcept-implementation-readiness-repair-addendum-2026-07-0.md) L8483-L8546 `03420f0f95cb0c8f218c913af6349864b919d40f4a10e11226c958d2bfede887`
-- [018 - FABLE GUI command contract closure addendum (2026-07-07)](018-fable-gui-command-contract-closure-addendum-2026-07-07.md) L8548-L8745 `c883c249e56966efe700b7b8b4a92682517caabc29c3676175563b03eaed8c8a`
-- [019 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](019-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L8747-L10147 `c01f21e4d76920b772bf4c259fbaa5a6120c0dc51587e78f4402ee1563329d22`
-- [020 - Usage GUI Propagation Addendum - 2026-07-09](020-usage-gui-propagation-addendum-2026-07-09.md) L10149-L10219 `926e67e8ed2ef81c15f2c7c472ffe4efcca81d65d9e2bbeb60b85a15612ba40c`
-- [021 - PMConcept6 Control Census Command Addendum - 2026-07-16](021-pmconcept6-control-census-command-addendum-2026-07-16.md) L10221-L10411 `ab250ee66f2522a7d1b295ed68a3730ca581236a62016472f0fb231735ff7b10`
-- [022 - Case L command registration and storage-gate propagation - 2026-07-17](022-case-l-command-registration-and-storage-gate-propagation-2026-07.md) L10413-L11747 `6946e8689deff34198d0f14875fcff8afae2b7282b4eca928ab61912441ecd99`
-- [023 - Cozy Shelves Panel Reconciliation Addendum - 2026-07-27](023-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md) L11749-L12698 `c573aab21a9d415a15ea9cacc4de7a7284bf40bbb51bc4f4c32eab67badcd785`
-- [024 - Run & Debug Revival Addendum - 2026-07-27](024-run-debug-revival-addendum-2026-07-27.md) L12700-L12910 `fa78415c11c5ea17e96c40062b5f780f16a6eba6e47c465d61dc43e4377fa610`
-- [025 - Guided Tour local focus-route catalog disposition - 2026-09-01](025-guided-tour-local-focus-route-catalog-disposition-2026-09-01.md) L12912-L12967 `af9f7e528c7daf2c5595ccb36ec8c45c6e42c3404cf1c46457e731eb6abd47f6`
-- [026 - Agent plugin lifecycle UI catalog addendum - 2026-09-01](026-agent-plugin-lifecycle-ui-catalog-addendum-2026-09-01.md) L12969-L13040 `77797f9ffc335202ecceb7c1dc504aeb0c61deb01f54ec0f084dcadd5e3ade78`
-- [027 - Cross-owner Product Onboarding and Settings consumer catalog addendum - 2026-09-01](027-cross-owner-product-onboarding-and-settings-consumer-catalog-add.md) L13042-L13306 `9eed51fb6315059fbe2f61dfe3859c15ec766bfacf80867908e19cf3fdc846ea`
-- [028 - PMConcept7 Cozy Shelves Integration Addendum - 2026-07-28](028-pmconcept7-cozy-shelves-integration-addendum-2026-07-28.md) L13308-L13371 `c893b3c9b92acc9d6a210de21852b54aaef6151b3171ce87a99aaa17ed643ed4`
-- [029 - PMConcept7 Deferred Token Hygiene Addendum - 2026-07-29](029-pmconcept7-deferred-token-hygiene-addendum-2026-07-29.md) L13373-L13397 `f9544c4b35c4060286de6deeeaa239b96ffaa01ca44509c89938da88e5a84a04`
-- [030 - PMConcept7 Home Workspace command reconciliation — 2026-08-04](030-pmconcept7-home-workspace-command-reconciliation-2026-08-04.md) L13399-L13526 `12b608cccfc63a94ab58c0d25e5b742fcee5ef4ad3126935d6f7714921d7baed`
-- [031 - Shared Runtime Command Catalog Addendum - 2026-08-13](031-shared-runtime-command-catalog-addendum-2026-08-13.md) L13528-L13663 `64a60ac9567d82a7267bc63282a5780c8208c4c86a5e5ed7005bba4e5b7858dc`
-- [032 - u11 Prism II Usage Command Registration Addendum - 2026-08-18](032-u11-prism-ii-usage-command-registration-addendum-2026-08-18.md) L13665-L13776 `3a0e3314560f3994298f3b97a4e901cc1bc2fc1724ff4e9ad0d37b8d4961f4d9`
-- [033 - PMConcept7 command reuse and view-local disposition addendum - 2026-08-27](033-pmconcept7-command-reuse-and-view-local-disposition-addendum-202.md) L13778-L13930 `fa30cef0995efe747ee7770bec8b7034bbb5ef7c116fe32a25e472decc213eef`
-- [034 - Server/Egolite Exact Command And Reverse-Consumer Catalog Addendum - 2026-09-01](034-server-egolite-exact-command-and-reverse-consumer-catalog-addend.md) L13931-L14238 `e87ede28e53840931c801485919d5da9f564ed831dfe41c39ef4c4f05d8dc59a`
-- [035 - Central Touch Reverse-GUI Catalog Addendum - 2026-09-01](035-central-touch-reverse-gui-catalog-addendum-2026-09-01.md) L14240-L14557 `6f4cbfec2d66d536b67c746c827c8ba13c1742a35a6b35eefcef168342f4b350`
-- [036 - ConnectionDraft Catalog And Reverse-Consumer Addendum - 2026-09-02](036-connectiondraft-catalog-and-reverse-consumer-addendum-2026-09-02.md) L14559-L14612 `461c86efe7b6ac97fccaa13475719850dbbe2135388336a748c5a7aab139dda4`
-- [037 - Post-Integration Auth Alias Catalog Closure - 2026-09-02](037-post-integration-auth-alias-catalog-closure-2026-09-02.md) L14614-L14658 `a4ae6655ad713e735762f8dea255d09cb7ce2c992fac4bbee1c053a018140de4`
-- [038 - Neutral Source-Control Concrete Catalog Completion - 2026-09-02](038-neutral-source-control-concrete-catalog-completion-2026-09-02.md) L14660-L14753 `b73646175c87a68a04908ec63adc0114a5aedbb5554f0e17fc9ff2be7316a4e0`
-- [039 - Puppet Master Assistant Redesign Command Registration - 2026-09-03](039-puppet-master-assistant-redesign-command-registration-2026-09-03.md) L14755-L15082 `3c67de16df6208b923e3f3afd63260e5f9de1e2faa4fe216125f042a4fd25ead`
-- [040 - Additive Correction v4 — Revised Command Rows (2026-09-03)](040-additive-correction-v4-revised-command-rows-2026-09-03.md) L15084-L15112 `c352ca422788faea753aee21953f3d7dfad3de6851f457ce2c3912c5d038a4d3`
-- [041 - Working Notebook Command Rows Addendum (2026-09-05)](041-working-notebook-command-rows-addendum-2026-09-05.md) L15114-L15191 `32e06fe5b6ae66db4d87eb996c2b504dc4f5d2c537d456a12ad46a5acec716da`
-- [042 - Cumulative v3 UI Command Catalog Dispositions and Re-use (2026-09-07)](042-cumulative-v3-ui-command-catalog-dispositions-and-re-use-2026-09.md) L15193-L15269 `6c98ace9b33e1cec7daacd7d555dbfa819e5ebda9279728ab30d258433828c21`
-- [043 - Accepted Terminal Research Action Candidates — DL-035 (2026-09-09)](043-accepted-terminal-research-action-candidates-dl-035-2026-09-09.md) L15271-L15368 `3cde4e646268e192f213333b1f5f4a0d9843edc0e5e689ed55e1c09f77d0d891`
-- [044 - Research and Audit Decision Review Command Profile — DL-036 (2026-09-09)](044-research-and-audit-decision-review-command-profile-dl-036-2026-0.md) L15370-L15532 `ed6bf4595b09828ed0fda4eeafd82900c517a3766bd450a4af49287b739b5580`
-- [045 - DL-043 — Accepted Jujutsu Surface And Contract Planning (2026-09-11)](045-dl-043-accepted-jujutsu-surface-and-contract-planning-2026-09-11.md) L15534-L15672 `625d920167e5c3ccca188076a2c9c761668ca7258fbea13de2d1d92ea814725d`
-- [046 - Project Recovery And Forge Delete/CI Central Admission — 2026-09-26](046-project-recovery-and-forge-delete-ci-central-admission-2026-09-2.md) L15674-L15841 `27334238328df2fe88d2d801a4646d54768cabb1690478c248ff2752a84c3072`
-- [047 - Commands Shortcuts Central Consumers — 2026-09-26](047-commands-shortcuts-central-consumers-2026-09-26.md) L15843-L15883 `897ca65848d0ff403d3030ca40ae488b9bef96e749fca32b5ed35ccdddba0acb`
-- [048 - Git adapter command mapping closure — 2026-09-27](048-git-adapter-command-mapping-closure-2026-09-27.md) L15885-L16036 `4d04cd147874c615c52dce44fcf9d2e25469aa69ed10dc662639dd07279dc26c`
-- [049 - Wand Modules Redesign Addendum (2026-09-27)](049-wand-modules-redesign-addendum-2026-09-27.md) L16038-L17297 `0ed7252be0bf21e7a0cb15492420115e0f257b5cc867592c7e20249376769967`
-- [050 - 5.6 Pro Chat Round Command Census (2026-10-09)](050-5.6-pro-chat-round-command-census-2026-10-09.md) L17299-L17416 `a9efad9eced56c1b6d50c5f421aad578c6fd7e10b27bd8a133c4bdedd5a58da4`
-- [051 - Open Exact Plan Version Command (2026-10-09)](051-open-exact-plan-version-command-2026-10-09.md) L17418-L17528 `175d171a6dd294f6d76b04a6376044a50f426c1477200a650c36f3328a19aa5a`
-- [052 - DL-180 to DL-183 — Panel Tabs, Layout, Opening, Terminal Tabs And Duplicate Ids (2026-10-09)](052-dl-180-to-dl-183-panel-tabs-layout-opening-terminal-tabs-and-dup.md) L17531-L18614 `ea889d9b27b8e2d54fab8a5f340f58e8f2ce4fd5546999f91268970ed0940a8d`
-- [053 - Wonderer Check It and grilling command census — DL-218](053-wonderer-check-it-and-grilling-command-census-dl-218.md) L18616-L18787 `ee26ec4517def687346141e5b4a62c2621137fbccc8835b56dc4062a87bb52cd`
-- [054 - DL-231 Chat Room round controls](054-dl-231-chat-room-round-controls.md) L18789-L19207 `38f1258aa191d7383a5e1c7e4187578a8910317247b6bc7a8e45276c9a020fff`
-- [055 - PM7 project and work command entries (2026-10-29; B1/B6, D2/D6/D8–D13, G4–G7)](055-pm7-project-and-work-command-entries-2026-10-29-b1-b6-d2-d6-d8-d.md) L19212-L19318 `0770a279e4e94fd3f1e28b2af7a518ed358ad56c81a31863eaabd2963768ab25`
-- [056 - DL-270 command entries (2026-10-31)](056-dl-270-command-entries-2026-10-31.md) L19320-L19432 `2d90ad2481c0e8d0b8520cd40d206e20858877d1a8e8c54be4b32b48361820a5`
-- [057 - Projects refresh exact primary registration roster](057-projects-refresh-exact-primary-registration-roster.md) L19434-L20933 `65d0fbfbd8dc68c5aea681978ddb0892a4fab36548c345e982b7a93c954a5ea2`
-- [058 - Stable local-action and tool census for this pass](058-stable-local-action-and-tool-census-for-this-pass.md) L20935-L21011 `05a7573841655cf1fce7536bf2b57f1b2aa50fa1d71621d19bfbc988a9bc5e00`
+- [001 - Preamble](001-preamble.md) L1-L1 `f5935bbdfd30ced5c6e835666c9b7014f1b2a162763e95edd237773e2f0251b1`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L21 `ca944464dc3d85eafc280d20d8cea62d94e581b91f04cc26e5b50b610d791042`
+- [003 - 0. Scope](003-0.-scope.md) L23-L30 `b24ede6afb3c8ca131d695e5102cf7325e79f4edbd3d5ef0d04b2eef9f37ac74`
+- [004 - 1. Naming rules](004-1.-naming-rules.md) L32-L40 `84ce4601c1fa383775c2127700a09d19ad770ff7aaed0b67746df2ca66894eb9`
+- [005 - 2. Canonical command IDs](005-2.-canonical-command-ids.md) L42-L131 `2e731298fbbb82a468b5e9068df9da61b872af0891c61abee5c4f411fe4a26d6`
+- [006 - Known-37 recovery-unavailable catalog rows - 2026-07-18](006-known-37-recovery-unavailable-catalog-rows-2026-07-18.md) L133-L1162 `e7429d9d7f2f3abc54e4d41a3931d9716d7eceb9d4c143f5620a6096b4295651`
+- [007 - References](007-references.md) L1163-L1266 `12480edaffa1446185186ffd55b20a3c5f404a72e1dc084fbed79953a216b957`
+- [008 - Owner / Consumer Map](008-owner-consumer-map.md) L1268-L1272 `69090d4370623a2ac4f893539c9e2c5c34ce18109b9a48a9a7b6805d938da3f2`
+- [009 - PlanUnits](009-planunits.md) L1274-L7094 `82969d092bbc8540c3d98660c986fdad0a35cbb4a75fea5de494bc01681ac6fb`
+- [010 - Migration Coverage](010-migration-coverage.md) L7096-L7106 `7b76c29edf64294b397c68c179bcd02284afa12980fdd324d804d144c1a3efbf`
+- [011 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](011-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L7109-L7252 `3031e68299ab0589343a5e75fff45679e011b1b7d22f5997616dcb517b9febaa`
+- [012 - Ledger Compile Addendum - pldg-20260622-001-fff](012-ledger-compile-addendum-pldg-20260622-001-fff.md) L7254-L7297 `374ab54fac94fac8306fb51345902f00e01a9aaf9ff6569eaf52fc5bac2bd329`
+- [013 - Ledger Compile Addendum - pldg-20260626-001-feature-name](013-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L7300-L7739 `4e708a3ee18f8dc25a236c4fb22bea6cf31393b489415ca567a1655d0b16cf83`
+- [014 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](014-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L7741-L7926 `a52a49cb814fbc4f3ecd72e6315ac6b705895f2656b8fed950cdb35fcb325228`
+- [015 - Ledger Compile Addendum - pldg-20260701-001-feature-intake](015-ledger-compile-addendum-pldg-20260701-001-feature-intake.md) L7928-L8339 `fd28bc081147ad653a893827e2168326b2e6a31c2a1fed7bd2f68c5453579c08`
+- [016 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](016-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L8340-L8490 `76da64204a971792a4453fb5328317b0ec6af9908bd04d81dd9bce28e59f49d5`
+- [017 - GUI / PMConcept implementation-readiness repair addendum (2026-07-02)](017-gui-pmconcept-implementation-readiness-repair-addendum-2026-07-0.md) L8492-L8555 `3491986c0a8256ca3949491257a790e7e2b5b3b2b64833cc3f731e4cc25a85ad`
+- [018 - FABLE GUI command contract closure addendum (2026-07-07)](018-fable-gui-command-contract-closure-addendum-2026-07-07.md) L8557-L8754 `dae57c7fcaf3abfd3a5e97edd47bed7a99f1310b01236f371d070e0eb1658ade`
+- [019 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](019-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L8756-L10156 `4f9e9fa756bb2674a7909943820c29ac3d376b4fac1948f216c5933be50b3773`
+- [020 - Usage GUI Propagation Addendum - 2026-07-09](020-usage-gui-propagation-addendum-2026-07-09.md) L10158-L10228 `1dcfaf7cfd9a9017ad7c4c351e47908ea82774db57bbc122a4827c5e92767262`
+- [021 - PMConcept6 Control Census Command Addendum - 2026-07-16](021-pmconcept6-control-census-command-addendum-2026-07-16.md) L10230-L10420 `b2ddb088c7f0a0a5356644fbf09fdf4644cfc9235b76496b532762d179e35f33`
+- [022 - Case L command registration and storage-gate propagation - 2026-07-17](022-case-l-command-registration-and-storage-gate-propagation-2026-07.md) L10422-L11756 `85a06967b6e399ca92fb9e6b1873459ced539fd1e19dfd9fea5f5ad65ef1b4ba`
+- [023 - Cozy Shelves Panel Reconciliation Addendum - 2026-07-27](023-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md) L11758-L12707 `315049f83f3c73a60761019bd0c464eb56810119e4a9f3496b4e34a241dec6aa`
+- [024 - Run & Debug Revival Addendum - 2026-07-27](024-run-debug-revival-addendum-2026-07-27.md) L12709-L12919 `98290214f033eaf4038a0b60309a037d8f90b349145dba8787889096293cd1b0`
+- [025 - Guided Tour local focus-route catalog disposition - 2026-09-01](025-guided-tour-local-focus-route-catalog-disposition-2026-09-01.md) L12921-L12976 `de59b8e292fc4c76fc1faa7596f1e4a133ad5329c05e21b05d6f214717cc15eb`
+- [026 - Agent plugin lifecycle UI catalog addendum - 2026-09-01](026-agent-plugin-lifecycle-ui-catalog-addendum-2026-09-01.md) L12978-L13049 `7ba39b97b1d852720195b9730a034ef6bc0468b1567b4d61df293b4a15ef5056`
+- [027 - Cross-owner Product Onboarding and Settings consumer catalog addendum - 2026-09-01](027-cross-owner-product-onboarding-and-settings-consumer-catalog-add.md) L13051-L13315 `9043264845048a403f3865b71bc10a008b6407690e3e5faeffe112ebb70d9a9d`
+- [028 - PMConcept7 Cozy Shelves Integration Addendum - 2026-07-28](028-pmconcept7-cozy-shelves-integration-addendum-2026-07-28.md) L13317-L13380 `3e2afd6afd8afef108cbfefdc7e6a5bafc6bf5130e6b52720bd266a09d41a7e1`
+- [029 - PMConcept7 Deferred Token Hygiene Addendum - 2026-07-29](029-pmconcept7-deferred-token-hygiene-addendum-2026-07-29.md) L13382-L13406 `627f4ea7ed38d1d608bc1b7ec7c2bc55da8ccf6a78dff6e5e455e04e4e0a3270`
+- [030 - PMConcept7 Home Workspace command reconciliation — 2026-08-04](030-pmconcept7-home-workspace-command-reconciliation-2026-08-04.md) L13408-L13535 `aa0545514c09a72d86d7ed6353f7bc982b36fd09fb8b96ba39966d080b7c7584`
+- [031 - Shared Runtime Command Catalog Addendum - 2026-08-13](031-shared-runtime-command-catalog-addendum-2026-08-13.md) L13537-L13672 `e486a889a3cc923e7d401cf0f546667c076a2f8084997aafbc93e4bb38b699e4`
+- [032 - u11 Prism II Usage Command Registration Addendum - 2026-08-18](032-u11-prism-ii-usage-command-registration-addendum-2026-08-18.md) L13674-L13785 `f982e36a854677a92fff6bb6e86f51114a506eb20449e0f5873b053d366a1c32`
+- [033 - PMConcept7 command reuse and view-local disposition addendum - 2026-08-27](033-pmconcept7-command-reuse-and-view-local-disposition-addendum-202.md) L13787-L13939 `038853c1add9a2243c6f3b0114ad32213c8c4a30e555acb16edb5b9dc27f5977`
+- [034 - Server/Egolite Exact Command And Reverse-Consumer Catalog Addendum - 2026-09-01](034-server-egolite-exact-command-and-reverse-consumer-catalog-addend.md) L13940-L14247 `0ce701d86d6ec0889b4128ea527fc30f3aa060e31b741ff1878f6bc62b932b9a`
+- [035 - Central Touch Reverse-GUI Catalog Addendum - 2026-09-01](035-central-touch-reverse-gui-catalog-addendum-2026-09-01.md) L14249-L14566 `090b3aa7f22abef5b2b3f54568b954c34cbd8390909702c135c9de339c6b349b`
+- [036 - ConnectionDraft Catalog And Reverse-Consumer Addendum - 2026-09-02](036-connectiondraft-catalog-and-reverse-consumer-addendum-2026-09-02.md) L14568-L14621 `423c7b5311af269f31e495e3d24536e340bc7d739d865b7ec2de08b9b0adf4ba`
+- [037 - Post-Integration Auth Alias Catalog Closure - 2026-09-02](037-post-integration-auth-alias-catalog-closure-2026-09-02.md) L14623-L14667 `9aaa769f9e072843d15dd2367f94bff6c42e5e4b645df05a35d823a944abd628`
+- [038 - Neutral Source-Control Concrete Catalog Completion - 2026-09-02](038-neutral-source-control-concrete-catalog-completion-2026-09-02.md) L14669-L14762 `d6f4d621995322b5c4de8b22e8fc9df22b5d7fa2e252bc38cd6da45f90df191e`
+- [039 - Puppet Master Assistant Redesign Command Registration - 2026-09-03](039-puppet-master-assistant-redesign-command-registration-2026-09-03.md) L14764-L15091 `1314bb3b482d9701a21964ec52bb500ab945c5d8e0350eca3499c580d2df035a`
+- [040 - Additive Correction v4 — Revised Command Rows (2026-09-03)](040-additive-correction-v4-revised-command-rows-2026-09-03.md) L15093-L15121 `2e23065a4a9c70d7391c6b389002ed45d03089a0d99373feada0762eea1c04a7`
+- [041 - Working Notebook Command Rows Addendum (2026-09-05)](041-working-notebook-command-rows-addendum-2026-09-05.md) L15123-L15200 `7b99d05a8d9ece4795f5a2f7c6b8fdd692c65aed9c1524e6aaa541a18bf82f7a`
+- [042 - Cumulative v3 UI Command Catalog Dispositions and Re-use (2026-09-07)](042-cumulative-v3-ui-command-catalog-dispositions-and-re-use-2026-09.md) L15202-L15278 `bc0c75d0e2e60172f2dba833671bcc79c4a882feec00a2149a82978ec86d6716`
+- [043 - Accepted Terminal Research Action Candidates — DL-035 (2026-09-09)](043-accepted-terminal-research-action-candidates-dl-035-2026-09-09.md) L15280-L15377 `b6aab08b3e0f62b20e53306043604d17b1c0dae3004699dbe8a153036c6eb024`
+- [044 - Research and Audit Decision Review Command Profile — DL-036 (2026-09-09)](044-research-and-audit-decision-review-command-profile-dl-036-2026-0.md) L15379-L15541 `f12cb295f26e812c98a1ad954477605438f4921e4e285cc2b384b0218f68befb`
+- [045 - DL-043 — Accepted Jujutsu Surface And Contract Planning (2026-09-11)](045-dl-043-accepted-jujutsu-surface-and-contract-planning-2026-09-11.md) L15543-L15681 `10628a473a3827f09b85e1a306a08b5274475c1327d6308f96e69d1a2f12bfeb`
+- [046 - Project Recovery And Forge Delete/CI Central Admission — 2026-09-26](046-project-recovery-and-forge-delete-ci-central-admission-2026-09-2.md) L15683-L15850 `d5865c5677559f9a82e7769361548af2042eded06d0bdee15a5c0487e6d95091`
+- [047 - Commands Shortcuts Central Consumers — 2026-09-26](047-commands-shortcuts-central-consumers-2026-09-26.md) L15852-L15892 `2a74b612fa4330e6dae387bb40df92a3bac38aa6fa3303d549bf1a93ae4fb7c6`
+- [048 - Git adapter command mapping closure — 2026-09-27](048-git-adapter-command-mapping-closure-2026-09-27.md) L15894-L16045 `13d7ab7cc278487d2e89387ae28984c33fea273e8b2fae92832f6ffcb2b267bc`
+- [049 - Wand Modules Redesign Addendum (2026-09-27)](049-wand-modules-redesign-addendum-2026-09-27.md) L16047-L17306 `f819c1d184776d9a3835dd1490523a00401663ac83dc508b05a96cb5a0b285f1`
+- [050 - 5.6 Pro Chat Round Command Census (2026-10-09)](050-5.6-pro-chat-round-command-census-2026-10-09.md) L17308-L17425 `43d4d5730eb8c962f35e5a4a8021f644b01462a0d281fdaba18149d17c89b448`
+- [051 - Open Exact Plan Version Command (2026-10-09)](051-open-exact-plan-version-command-2026-10-09.md) L17427-L17537 `0c080ac03a748c9116f98c4b838b86d3bfb32736f36ad3d49c224b65449d7c97`
+- [052 - DL-180 to DL-183 — Panel Tabs, Layout, Opening, Terminal Tabs And Duplicate Ids (2026-10-09)](052-dl-180-to-dl-183-panel-tabs-layout-opening-terminal-tabs-and-dup.md) L17540-L18623 `84074bc57fe63d829e17b4e4758b614579721f11a66b1c3bf5213a7de45203ef`
+- [053 - Wonderer Check It and grilling command census — DL-218](053-wonderer-check-it-and-grilling-command-census-dl-218.md) L18625-L18796 `ebb2eb7fd7374a53946027114161d17f556b8888c864364135979e8d9eb61a31`
+- [054 - DL-231 Chat Room round controls](054-dl-231-chat-room-round-controls.md) L18798-L19216 `d4165319cc5f14b37893d00d0b5aa9efdbc4e682e43693c62acc4e65d207d9ca`
+- [055 - PM7 project and work command entries (2026-10-29; B1/B6, D2/D6/D8–D13, G4–G7)](055-pm7-project-and-work-command-entries-2026-10-29-b1-b6-d2-d6-d8-d.md) L19221-L19327 `136eadc1699521b720ba8d4aedb9e8782cd8bf5a71b66d1d714146339139ae47`
+- [056 - DL-270 command entries (2026-10-31)](056-dl-270-command-entries-2026-10-31.md) L19329-L19441 `b5d6530418a341926cb3b00f510752e6ba6577b9e035b613ffc03ac34e4acf95`
+- [057 - Projects refresh exact primary registration roster](057-projects-refresh-exact-primary-registration-roster.md) L19443-L20942 `a39377547454200a3371b5ae8f7fea3876deb9e5dfb5430cc427621bfa0f844f`
+- [058 - Stable local-action and tool census for this pass](058-stable-local-action-and-tool-census-for-this-pass.md) L20944-L21020 `dcf3b366c5ab66d207bbcf3236f575413baf5c9175e1e2c4929edb1e05f44484`
