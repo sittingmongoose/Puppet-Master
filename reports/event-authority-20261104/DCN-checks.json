@@ -1,89 +1,719 @@
 {
   "schema_id": "pm.event_authority.dcn.check_summary.v1",
-  "source_commit": "ace2fabbb63f55d833db1383cf3e49b025396fd2",
+  "source_commit": "de58b6e10c11ab249ec05f13a2bbbdd6f2f92f4b",
+  "round": 4,
+  "status": "PARTIAL_PENDING_SHARED_SWEEP",
   "native_execution": "NOT_RUN",
-  "round": 2,
-  "status": "PASS",
+  "admission": "ABSENT",
   "oracle": {
     "status": "PASS",
-    "native_execution": "NOT_RUN",
-    "admission": "ABSENT",
-    "positives": 269,
-    "negatives": 4970
+    "positives": 343,
+    "negatives": 16343
   },
   "json_parse_refusals": 36,
-  "guard_count": 127,
-  "removal_rows": 152,
-  "unique_removal_sets": 136,
-  "independent_probes": 1498,
-  "probe_failures": 0,
-  "type_sweep_probes": 2040,
-  "preserved_review_cases": {
-    "status": "PASS",
-    "reviewed_head": "83b4c94950504b7085aa7c65b2a0712b1c51dcf5",
-    "rows": [
-      {
-        "kind": "positives",
-        "reviewed_cases_unchanged": 186,
-        "added": 80
-      },
-      {
-        "kind": "no_event_cases",
-        "reviewed_cases_unchanged": 3,
-        "added": 0
-      },
-      {
-        "kind": "negative_cases",
-        "reviewed_cases_unchanged": 1616,
-        "added": 3354
-      }
+  "guard_count": 154,
+  "removal_rows": 162,
+  "executed_family_removal_rows": 814,
+  "unique_removal_sets": 158,
+  "predicate_duplicate_rows": 57,
+  "guard_proof": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix4/guard-proof.json.gz",
+    "sha256": "ef14fae0806d1c6f79295b210eb8dc2a66134ae0b262a75728e56874e1d32ec3"
+  },
+  "predicate_duplicate_proof": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix4/predicate-duplicate-proof.json",
+    "sha256": "fb0b48dd373b20abebd92eff4bb85208f40c3891a1f114abe983969515f90e45"
+  },
+  "tested_inputs": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix4/tested-inputs.json",
+    "sha256": "542768e181d52244e9e6a7e895b32b32a854860c31800fcb4934f5a593753c4c"
+  },
+  "findings_fixed": [
+    "B3",
+    "S1"
+  ],
+  "sweep_items": [
+    "B1: accepted integers beyond RFC 8785 safe-integer domain",
+    "B2: Storage sequence_id u64 domain and 1.0/1e0/-0.0 spellings",
+    "Browser numeric ranges: u32 dimensions and f64 zoom",
+    "SW1: retained lowercase RFC 3339 authenticated write-time recipe selection"
+  ],
+  "shared_rule": {
+    "branch": "plans/ea-numrule-20261105",
+    "units": [
+      "CV-1100",
+      "SP-1100",
+      "SP-1101"
     ]
   },
-  "guard_proof": {
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round2/oracles.json",
-    "sha256": "098c3e101979fc7f5b9106a138ee7cd7fadbe522cf8d715e17a985c9fbf52253"
+  "all_eleven_standing_checks": "Checks 6 and 10 PARTIAL pending numeric/historical-recipe sweep; other checks PASS at static prepared depth",
+  "all_Astra_classes": "Current evidence and disclosed gaps: DCN.md round 4",
+  "families": [
+    {
+      "event_type": "browser.session.created",
+      "status": "PASS",
+      "exit": 0,
+      "positives": 44,
+      "negatives": 1826,
+      "proof": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix4/oracles-browser.session.created.json.gz",
+        "sha256": "922d08963cb413044cd55d3af69ca958bf9f51ce3e657d820c28fc16d6f6b41c"
+      }
+    },
+    {
+      "event_type": "browser.session.state_changed",
+      "status": "PASS",
+      "exit": 0,
+      "positives": 44,
+      "negatives": 2898,
+      "proof": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix4/oracles-browser.session.state_changed.json.gz",
+        "sha256": "0233ae26015e64c533c98d6cff02c7d2c7ca4b198e14e0a87d23735aee2a9c64"
+      }
+    },
+    {
+      "event_type": "browser.session.closed",
+      "status": "PASS",
+      "exit": 0,
+      "positives": 44,
+      "negatives": 2900,
+      "proof": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix4/oracles-browser.session.closed.json.gz",
+        "sha256": "b85d0b466d8c582bd4075efa05729633e2ba68cf127170fd428c8d8dc3b72e28"
+      }
+    },
+    {
+      "event_type": "browser.session.promoted",
+      "status": "PASS",
+      "exit": 0,
+      "positives": 44,
+      "negatives": 2900,
+      "proof": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix4/oracles-browser.session.promoted.json.gz",
+        "sha256": "f1dd62c71239599d503a67b1fc0bd915574f6444a2cdcea66b3319e734d46313"
+      }
+    },
+    {
+      "event_type": "browser.session.takeover_state_changed",
+      "status": "PASS",
+      "exit": 0,
+      "positives": 44,
+      "negatives": 2900,
+      "proof": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix4/oracles-browser.session.takeover_state_changed.json.gz",
+        "sha256": "373ba71d0a09458690127d37761c56027aeb1b9f485f226d19985376c5c4bb6b"
+      }
+    },
+    {
+      "event_type": "memory.gist_state_changed",
+      "status": "PASS",
+      "exit": 0,
+      "positives": 123,
+      "negatives": 2919,
+      "proof": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix4/oracles-memory.gist_state_changed.json.gz",
+        "sha256": "67fc6b635e9a7d673363f1282a598997ce8e5d4e31de4f171563638d0a9dd5c7"
+      }
+    }
+  ],
+  "index_validation": {
+    "origin_main_before": "73f2231a9ec1c93190adafcdde51030f028c8c2d",
+    "origin_main_after": "73f2231a9ec1c93190adafcdde51030f028c8c2d",
+    "name": "index-validate",
+    "command": [
+      "python3",
+      "scripts/pm-plan-index.py",
+      "validate"
+    ],
+    "exit": 1,
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix4/index-validate.log",
+    "sha256": "88f8ad2801c154e63e6ee3e2a408e09c8489a1b8f732a75f325351a5b984ce3a",
+    "top_level_status": "fail",
+    "result": {
+      "failures": [
+        {
+          "detail": "decision records require nonempty record_id strings",
+          "error": "plan_unit_removal_ledger_invalid",
+          "path": "Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system/records/decisions.jsonl"
+        },
+        {
+          "detail": "decision records require nonempty record_id strings",
+          "error": "plan_unit_removal_ledger_invalid",
+          "path": "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl"
+        },
+        {
+          "detail": "decision records require nonempty record_id strings",
+          "error": "plan_unit_removal_ledger_invalid",
+          "path": "Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit/records/decisions.jsonl"
+        },
+        {
+          "detail": "decision records require nonempty record_id strings",
+          "error": "plan_unit_removal_ledger_invalid",
+          "path": "Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup/records/decisions.jsonl"
+        },
+        {
+          "detail": "decision records require nonempty record_id strings",
+          "error": "plan_unit_removal_ledger_invalid",
+          "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/records/decisions.jsonl"
+        },
+        {
+          "detail": "decision records require nonempty record_id strings",
+          "error": "plan_unit_removal_ledger_invalid",
+          "path": "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/records/decisions.jsonl"
+        },
+        {
+          "detail": "decision records require nonempty record_id strings",
+          "error": "plan_unit_removal_ledger_invalid",
+          "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/decisions.jsonl"
+        },
+        {
+          "detail": "decision records require nonempty record_id strings",
+          "error": "plan_unit_removal_ledger_invalid",
+          "path": "Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff/records/decisions.jsonl"
+        },
+        {
+          "detail": "decision records require nonempty record_id strings",
+          "error": "plan_unit_removal_ledger_invalid",
+          "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/records/decisions.jsonl"
+        },
+        {
+          "detail": "decision records require nonempty record_id strings",
+          "error": "plan_unit_removal_ledger_invalid",
+          "path": "Plans/ledgers/v2/pldg-20260622-001-fff/records/decisions.jsonl"
+        },
+        {
+          "detail": "decision records require nonempty record_id strings",
+          "error": "plan_unit_removal_ledger_invalid",
+          "path": "Plans/ledgers/v2/pldg-20260624-001-provider-updates/records/decisions.jsonl"
+        },
+        {
+          "detail": "decision records require nonempty record_id strings",
+          "error": "plan_unit_removal_ledger_invalid",
+          "path": "Plans/ledgers/v2/pldg-20260626-001-feature-name/records/decisions.jsonl"
+        },
+        {
+          "detail": "decision records require nonempty record_id strings",
+          "error": "plan_unit_removal_ledger_invalid",
+          "path": "Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/decisions.jsonl"
+        },
+        {
+          "detail": "decision records require nonempty record_id strings",
+          "error": "plan_unit_removal_ledger_invalid",
+          "path": "Plans/ledgers/v2/pldg-20260629-001-feature-name/records/decisions.jsonl"
+        },
+        {
+          "detail": "decision records require nonempty record_id strings",
+          "error": "plan_unit_removal_ledger_invalid",
+          "path": "Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/decisions.jsonl"
+        },
+        {
+          "detail": "decision records require nonempty record_id strings",
+          "error": "plan_unit_removal_ledger_invalid",
+          "path": "Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl"
+        },
+        {
+          "detail": "decision records require nonempty record_id strings",
+          "error": "plan_unit_removal_ledger_invalid",
+          "path": "Plans/ledgers/v2/pldg-20260801-001-feature-intake/records/decisions.jsonl"
+        },
+        {
+          "detail": "decision records require nonempty record_id strings",
+          "error": "plan_unit_removal_ledger_invalid",
+          "path": "Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/decisions.jsonl"
+        },
+        {
+          "detail": "decision records require nonempty record_id strings",
+          "error": "plan_unit_removal_ledger_invalid",
+          "path": "Plans/ledgers/v2/pldg-20260908-002-terminal-workflow-findings/records/decisions.jsonl"
+        },
+        {
+          "detail": "decision records require nonempty record_id strings",
+          "error": "plan_unit_removal_ledger_invalid",
+          "path": "Plans/ledgers/v2/pldg-20260909-001-research-decision-review/records/decisions.jsonl"
+        },
+        {
+          "detail": "dec-031: superseded_by must be a string array",
+          "error": "plan_unit_removal_ledger_invalid",
+          "path": "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/decisions.jsonl"
+        },
+        {
+          "baseline_ref": "origin/main",
+          "error": "plan_unit_removed_without_ledger_decision",
+          "owner_doc": "Plans/Decision_Log.md",
+          "path": "Plans/Decision_Log.md",
+          "plan_unit_id": "DL-302"
+        },
+        {
+          "actual_stable_sha256": "5d9e058d41a427ee5652754a2dd6666556a4323cdce1281d3c89b9e45d0a133e",
+          "error": "stale_generated_index_artifact",
+          "expected_stable_sha256": "e9d0684cebfe5c350f595fa2133e140f8424d4f959ee467f7deb1c2b705a4c49",
+          "path": "Plans/.plan_index/node_readiness_report.json"
+        }
+      ],
+      "generated_at_utc": "2026-11-05T05:57:08Z",
+      "schema_id": "pm.plan_index.validation_report.v1",
+      "status": "fail",
+      "summary": {
+        "acceptance_unit_count": 29988,
+        "coverage_status": "pass",
+        "node_readiness_status": "blocked_runtime_certification_incomplete",
+        "plan_unit_count": 7440
+      }
+    }
   },
-  "all_eleven_standing_checks": "PASS at static prepared depth",
-  "all_eleven_Astra_classes": "probed; see DCN.md round 2",
-  "confirmed_review_findings_preserved": [
-    "B1",
-    "B2",
-    "B3",
-    "B4",
-    "B5",
-    "S1",
-    "N1"
-  ],
-  "findings_fixed": [
-    "B6",
-    "B7",
-    "item 11 type sweep"
-  ],
   "targeted_checks": [
     {
-      "command": "Browser Program semantics unittest",
+      "origin_main_before": "73f2231a9ec1c93190adafcdde51030f028c8c2d",
+      "origin_main_after": "73f2231a9ec1c93190adafcdde51030f028c8c2d",
+      "name": "shards-check",
+      "command": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--check",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
       "exit": 0,
-      "result": "10 pass"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix4/shards-check.log",
+      "sha256": "3df84afb0ff89f7052554bb9700a1bc3294714b9109ec8257ee2b7ab46a86b21",
+      "top_level_status": "pass",
+      "result": {
+        "docs_checked": 99,
+        "failures": [],
+        "shards_checked": 3092,
+        "source_count": 99,
+        "status": "pass"
+      }
     },
     {
-      "command": "Browser event admission checker",
-      "exit": 0,
-      "result": "pass"
-    },
-    {
-      "command": "Browser event admission unittest",
+      "origin_main_before": "73f2231a9ec1c93190adafcdde51030f028c8c2d",
+      "origin_main_after": "73f2231a9ec1c93190adafcdde51030f028c8c2d",
+      "name": "index-validate",
+      "command": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
       "exit": 1,
-      "result": "30 unchanged upstream40 failures / 38 tests"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix4/index-validate.log",
+      "sha256": "88f8ad2801c154e63e6ee3e2a408e09c8489a1b8f732a75f325351a5b984ce3a",
+      "top_level_status": "fail",
+      "result": {
+        "failures": [
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260622-001-fff/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260624-001-provider-updates/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260626-001-feature-name/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260629-001-feature-name/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260801-001-feature-intake/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260908-002-terminal-workflow-findings/records/decisions.jsonl"
+          },
+          {
+            "detail": "decision records require nonempty record_id strings",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260909-001-research-decision-review/records/decisions.jsonl"
+          },
+          {
+            "detail": "dec-031: superseded_by must be a string array",
+            "error": "plan_unit_removal_ledger_invalid",
+            "path": "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/decisions.jsonl"
+          },
+          {
+            "baseline_ref": "origin/main",
+            "error": "plan_unit_removed_without_ledger_decision",
+            "owner_doc": "Plans/Decision_Log.md",
+            "path": "Plans/Decision_Log.md",
+            "plan_unit_id": "DL-302"
+          },
+          {
+            "actual_stable_sha256": "5d9e058d41a427ee5652754a2dd6666556a4323cdce1281d3c89b9e45d0a133e",
+            "error": "stale_generated_index_artifact",
+            "expected_stable_sha256": "e9d0684cebfe5c350f595fa2133e140f8424d4f959ee467f7deb1c2b705a4c49",
+            "path": "Plans/.plan_index/node_readiness_report.json"
+          }
+        ],
+        "generated_at_utc": "2026-11-05T05:57:08Z",
+        "schema_id": "pm.plan_index.validation_report.v1",
+        "status": "fail",
+        "summary": {
+          "acceptance_unit_count": 29988,
+          "coverage_status": "pass",
+          "node_readiness_status": "blocked_runtime_certification_incomplete",
+          "plan_unit_count": 7440
+        }
+      }
     },
     {
-      "command": "Coordination checker",
-      "exit": 1,
-      "result": "two unchanged census/value_schema failures"
-    },
-    {
-      "command": "shard generate/check and index generate/validate",
+      "origin_main_before": "73f2231a9ec1c93190adafcdde51030f028c8c2d",
+      "origin_main_after": "73f2231a9ec1c93190adafcdde51030f028c8c2d",
+      "name": "browser-semantics",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_pm_browser_program_semantics.py"
+      ],
       "exit": 0,
-      "result": "top-level pass"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix4/browser-semantics.log",
+      "sha256": "76fc846347509fee8548972371000dd95c69c71b967dafce4cdeee8c6f72b9d4",
+      "tail": "..........\n----------------------------------------------------------------------\nRan 10 tests in 1.182s\n\nOK\n"
+    },
+    {
+      "origin_main_before": "73f2231a9ec1c93190adafcdde51030f028c8c2d",
+      "origin_main_after": "73f2231a9ec1c93190adafcdde51030f028c8c2d",
+      "name": "browser-admission",
+      "command": [
+        "python3",
+        "scripts/pm-browser-event-admission.py"
+      ],
+      "exit": 0,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix4/browser-admission.log",
+      "sha256": "c8c8a795d92bc4f9cfc05125a85b541b54b21af920bb359a4a6d172aaab7cf65",
+      "top_level_status": "pass",
+      "result": {
+        "admission_complete": false,
+        "admitted_scoped_event_families": 2,
+        "claim_boundary": "Pass means prepared-contract and exact admitted-subset consistency, not completion of pending family admission, root review, native execution, currentness or seal.",
+        "command_event_bindings_checked": 15,
+        "current_preexisting_rows_match_reviewed_successors": true,
+        "failures": [],
+        "global_event_denominator": "UNKNOWN_OPEN",
+        "governance_sealed": false,
+        "historical_baseline_verified": true,
+        "historical_original39_verified": true,
+        "historical_original40_verified": true,
+        "negative_cases": 576,
+        "positive_cases": 53,
+        "preexisting_family_rows_unchanged": false,
+        "prepared_scoped_event_families": 51,
+        "registry_family_count": 46,
+        "required_event_families": 53,
+        "reviewed_preexisting_successor_family_ids": [
+          "event-family-goal-run-cancelled",
+          "event-family-goal-run-certified",
+          "event-family-goal-run-started",
+          "event-family-goal-cancelled",
+          "event-family-goal-created",
+          "event-family-goal-updated"
+        ],
+        "runtime_producer_proven": false,
+        "schema_id": "pm.browser_event_admission_report.v1",
+        "single_family_authority_reports": [
+          {
+            "checkpoint_negative_cases": 18,
+            "checkpoint_positive_cases": 2,
+            "claim_boundary": "Synthetic schema, resolved-value join and checkpoint-model checks only; no authenticated producer, resolved Storage bytes, native durability, admission, runtime, currentness or seal proof.",
+            "creation_negative_cases": 34,
+            "creation_positive_cases": 1,
+            "failures": [],
+            "native_proof": false,
+            "schema_id": "pm.browser_workspace_created_static_report.v1",
+            "status": "pass"
+          },
+          {
+            "admission_claimed": false,
+            "checkpoint_positive_cases": 2,
+            "claim_boundary": "Synthetic owner-view and generic-token joins only; separate mixed-scope generic fixture is not an indexed-reset end-to-end execution.",
+            "failures": [],
+            "generation_transaction_positive_cases": 1,
+            "native_proof": false,
+            "reset_negative_cases": 28,
+            "reset_positive_cases": 1,
+            "schema_id": "pm.browser_workspace_reset_static_report.v1",
+            "status": "pass"
+          }
+        ],
+        "status": "pass"
+      }
+    },
+    {
+      "origin_main_before": "73f2231a9ec1c93190adafcdde51030f028c8c2d",
+      "origin_main_after": "73f2231a9ec1c93190adafcdde51030f028c8c2d",
+      "name": "browser-admission-tests",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_pm_browser_event_admission.py"
+      ],
+      "exit": 1,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix4/browser-admission-tests.log",
+      "sha256": "5c05ff3595f80e8d293825c4a93f4656dabbb1289f52914e3703326a5db7d4aa",
+      "tail": "onTests.test_validate_cannot_hide_manifest_registry_mismatch_in_payloads_only_mode) (mutation='admitted_absent', payloads_only=True)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/sittingmongoose/pm-worktrees/DCN-fix4/tests/test_pm_browser_event_admission.py\", line 335, in test_validate_cannot_hide_manifest_registry_mismatch_in_payloads_only_mode\n    context, registry = all_prepared_snapshot()\n                        ~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sittingmongoose/pm-worktrees/DCN-fix4/tests/test_pm_browser_event_admission.py\", line 68, in all_prepared_snapshot\n    raise AssertionError(\"Synthetic admission fixture requires the unchanged live upstream40\")\nAssertionError: Synthetic admission fixture requires the unchanged live upstream40\n\n======================================================================\nFAIL: test_validate_cannot_hide_manifest_registry_mismatch_in_payloads_only_mode (test_pm_browser_event_admission.BrowserPreparedAdmissionTests.test_validate_cannot_hide_manifest_registry_mismatch_in_payloads_only_mode) (mutation='duplicate_central_family', payloads_only=False)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/sittingmongoose/pm-worktrees/DCN-fix4/tests/test_pm_browser_event_admission.py\", line 335, in test_validate_cannot_hide_manifest_registry_mismatch_in_payloads_only_mode\n    context, registry = all_prepared_snapshot()\n                        ~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sittingmongoose/pm-worktrees/DCN-fix4/tests/test_pm_browser_event_admission.py\", line 68, in all_prepared_snapshot\n    raise AssertionError(\"Synthetic admission fixture requires the unchanged live upstream40\")\nAssertionError: Synthetic admission fixture requires the unchanged live upstream40\n\n======================================================================\nFAIL: test_validate_cannot_hide_manifest_registry_mismatch_in_payloads_only_mode (test_pm_browser_event_admission.BrowserPreparedAdmissionTests.test_validate_cannot_hide_manifest_registry_mismatch_in_payloads_only_mode) (mutation='duplicate_central_family', payloads_only=True)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/sittingmongoose/pm-worktrees/DCN-fix4/tests/test_pm_browser_event_admission.py\", line 335, in test_validate_cannot_hide_manifest_registry_mismatch_in_payloads_only_mode\n    context, registry = all_prepared_snapshot()\n                        ~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sittingmongoose/pm-worktrees/DCN-fix4/tests/test_pm_browser_event_admission.py\", line 68, in all_prepared_snapshot\n    raise AssertionError(\"Synthetic admission fixture requires the unchanged live upstream40\")\nAssertionError: Synthetic admission fixture requires the unchanged live upstream40\n\n======================================================================\nFAIL: test_validator_accepts_isolated_one_admitted_fifty_two_prepared_subset (test_pm_browser_event_admission.BrowserPreparedAdmissionTests.test_validator_accepts_isolated_one_admitted_fifty_two_prepared_subset)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/sittingmongoose/pm-worktrees/DCN-fix4/tests/test_pm_browser_event_admission.py\", line 351, in test_validator_accepts_isolated_one_admitted_fifty_two_prepared_subset\n    context, registry = all_prepared_snapshot()\n                        ~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sittingmongoose/pm-worktrees/DCN-fix4/tests/test_pm_browser_event_admission.py\", line 68, in all_prepared_snapshot\n    raise AssertionError(\"Synthetic admission fixture requires the unchanged live upstream40\")\nAssertionError: Synthetic admission fixture requires the unchanged live upstream40\n\n----------------------------------------------------------------------\nRan 38 tests in 56.885s\n\nFAILED (failures=30)\n"
+    },
+    {
+      "origin_main_before": "73f2231a9ec1c93190adafcdde51030f028c8c2d",
+      "origin_main_after": "73f2231a9ec1c93190adafcdde51030f028c8c2d",
+      "name": "coordination",
+      "command": [
+        "python3",
+        "scripts/pm_coordination_events.py"
+      ],
+      "exit": 1,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix4/coordination.log",
+      "sha256": "a7a906d97e05afa3eec03aded40a2428d67c353bc3292400bddad104e8584b8d",
+      "top_level_status": "fail",
+      "result": {
+        "admission_claimed": false,
+        "admitted_rows": [
+          "coordination.agent_registered"
+        ],
+        "batch_event_types": 7,
+        "claim_boundary": "Static schema, ledger, registry-row, Storage-row and synthetic fixture checks only. No family is admitted, no checkpoint or pin moves, and no native producer, crash detector, append path, projector, reader, durability, security, readiness, currentness or seal is proved.",
+        "failures": [
+          {
+            "check": "payload_schema",
+            "detail": [
+              "agent_aborted",
+              "agent_abortedApplicationV1",
+              "agent_crashed",
+              "agent_crashedApplicationV1",
+              "agent_file_ownership_updated",
+              "agent_file_ownership_updatedApplicationV1",
+              "agent_operation_updated",
+              "agent_operation_updatedApplicationV1",
+              "agent_registered",
+              "agent_registeredApplicationV1",
+              "agent_status_updated",
+              "agent_status_updatedApplicationV1",
+              "agent_unregistered",
+              "agent_unregisteredApplicationV1",
+              "debug_mirror_exported",
+              "lineage_envelope",
+              "non_secret_ref"
+            ],
+            "error": "payload_schema_definition_census"
+          },
+          {
+            "check": "storage_value_registry",
+            "error": "coordination_storage_family_mismatch",
+            "family_id": "coordination_read_model_projections",
+            "fields": [
+              "value_schema"
+            ]
+          }
+        ],
+        "global_event_denominator": "UNKNOWN_OPEN",
+        "identity_vectors": 7,
+        "native_oracles_not_run": 13,
+        "native_proof": false,
+        "negative_event_cases": 32,
+        "negative_payload_cases": 69,
+        "negative_projection_cases": 20,
+        "path_vectors": 9,
+        "per_family": {
+          "coordination.agent_aborted": {
+            "negative_events": 3,
+            "negative_payloads": 8,
+            "positive_payloads": 5,
+            "transition_sequences": 7,
+            "valid_events": 1
+          },
+          "coordination.agent_crashed": {
+            "negative_events": 3,
+            "negative_payloads": 6,
+            "positive_payloads": 5,
+            "transition_sequences": 8,
+            "valid_events": 1
+          },
+          "coordination.agent_file_ownership_updated": {
+            "negative_events": 3,
+            "negative_payloads": 12,
+            "positive_payloads": 6,
+            "transition_sequences": 5,
+            "valid_events": 1
+          },
+          "coordination.agent_operation_updated": {
+            "negative_events": 3,
+            "negative_payloads": 13,
+            "positive_payloads": 4,
+            "transition_sequences": 6,
+            "valid_events": 1
+          },
+          "coordination.agent_registered": {
+            "negative_events": 4,
+            "negative_payloads": 12,
+            "positive_payloads": 10,
+            "transition_sequences": 23,
+            "valid_events": 1
+          },
+          "coordination.agent_status_updated": {
+            "negative_events": 13,
+            "negative_payloads": 9,
+            "positive_payloads": 9,
+            "transition_sequences": 15,
+            "valid_events": 1
+          },
+          "coordination.agent_unregistered": {
+            "negative_events": 3,
+            "negative_payloads": 6,
+            "positive_payloads": 5,
+            "transition_sequences": 6,
+            "valid_events": 1
+          },
+          "coordination.debug_mirror_exported": {
+            "negative_events": 0,
+            "negative_payloads": 3,
+            "positive_payloads": 1,
+            "transition_sequences": 1,
+            "valid_events": 0
+          }
+        },
+        "positive_payload_cases": 45,
+        "positive_projection_cases": 11,
+        "prepared_registry_rows": 7,
+        "prepared_rows": [
+          "coordination.agent_aborted",
+          "coordination.agent_crashed",
+          "coordination.agent_file_ownership_updated",
+          "coordination.agent_operation_updated",
+          "coordination.agent_status_updated",
+          "coordination.agent_unregistered",
+          "coordination.debug_mirror_exported"
+        ],
+        "schema_id": "pm.coordination_event_static_report.v1",
+        "status": "fail",
+        "transition_sequences": 24,
+        "transition_steps": 91,
+        "valid_event_cases": 7
+      }
+    },
+    {
+      "origin_main_before": "73f2231a9ec1c93190adafcdde51030f028c8c2d",
+      "origin_main_after": "73f2231a9ec1c93190adafcdde51030f028c8c2d",
+      "name": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit": 0,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix4/diff-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tail": ""
+    }
+  ],
+  "fresh_regression_rows": 558,
+  "original_inputs_refused": 6785,
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix4/review-regressions.json",
+      "sha256": "945630c84d498ceff2e2d9b593731ec343bcbdda283cda2417112800f28fbdb0"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix4/sweep-witness.json",
+      "sha256": "c0eaa23b5ee42630a8c1592d7f406be375480e15a12998a88b2e21b20fe7fb38"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix4/failure-cli-and-refs.json",
+      "sha256": "069b2d26781e022cf647f344315895dec276ff27cd3fbf3983df185506d9495c"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix4/infrastructure-checks.json",
+      "sha256": "68b48c0346b6f1954c8935e4ddbe8ce17bad2a3810ea40fce79b625429e3f9eb"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix4/rebuilt-negatives.json",
+      "sha256": "27ac905d98d737deeb1575ff2aeda00c34944fe9b9d66fe6c399307a465d26ec"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix4/narrowed-descriptor-cases.json",
+      "sha256": "ef22888e471fb35c24e0f1dec5edf46a07a59912ff7a6d023aa570965cb19b3e"
     }
   ]
 }
