@@ -39,6 +39,7 @@ export default async function(t){
   }
   if(!R)await t.page.waitForTimeout(100);
  }
+ t.log('native sound rehearsal probe: '+JSON.stringify(R));
  await t.check('native rehearsal setup completed',!!R,JSON.stringify(R));
  if(R){
   await t.check('setup stayed free of trusted input and activation',R.events===0&&!R.beforeActive&&!R.afterActive,JSON.stringify(R));
