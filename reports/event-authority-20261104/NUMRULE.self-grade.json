@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-NUMRULE-SHARED-FIX1-20261105",
+  "assessment_id": "EA-NUMRULE-SHARED-FIX2-20261105",
   "assessment_kind": "author_shared_prerequisite_scope_assessment",
   "assessed_tree": {
     "branch": "plans/ea-numrule-20261105",
@@ -49,17 +49,19 @@
     }
   ],
   "corpus": {
-    "cases": 370,
-    "positives": 193,
-    "negatives": 177,
-    "labelled_negatives": 177,
-    "passed": 370,
+    "cases": 451,
+    "positives": 239,
+    "negatives": 212,
+    "labelled_negatives": 212,
+    "passed": 451,
     "owner_integration_checks": 69,
     "finite_case_oracles": "PASS",
-    "targeted_review_regressions": 65,
     "guard_isolation": "SWEEP_PENDING",
     "result": "PARTIAL",
-    "withdrawn_group_proof_claim": "The original 25 diagnostic-group removals are not per-predicate isolation proof."
+    "withdrawn_group_proof_claim": "The original 25 diagnostic-group removals are not per-predicate isolation proof.",
+    "labelled_cases": 451,
+    "targeted_review_predicate_removals": 7,
+    "reviewed_fixture_replay": 370
   },
   "failed_premise_checks": [],
   "owner_questions": [],
@@ -75,16 +77,18 @@
     "Complete actual schema/successor route qualification and family-specific adoption across 19 lanes",
     "Integration/governance work belongs to the lead, outside this drafting task"
   ],
-  "reviewed_head": "e20fa723c14a3e514005381c9c18cff7470c0bad",
-  "review_round": 1,
+  "reviewed_head": "883af36ba4a68230e14497df86a5e4edcd38f697",
+  "review_round": 2,
   "family_grades_before_after": "N/A: no event-family rows before or after. Native execution remains NOT_RUN.",
   "grade_changes": {
     "CV-1100.bounded_adapter_oracles": "author PASS -> review PARTIAL -> finite cases PASS, overall PARTIAL pending isolation",
     "SP-1100.frozen_byte_vector_oracles": "PASS -> PASS",
     "SP-1101.bounded_selector_oracles": "author PASS -> review PARTIAL -> finite cases PASS, overall PARTIAL pending isolation",
-    "corpus": "author PASS -> review PARTIAL -> finite cases PASS, guard proof SWEEP_PENDING"
+    "corpus": "author PASS -> review PARTIAL -> finite cases PASS, guard proof SWEEP_PENDING",
+    "CV-1101.owner_specification": "cycle-2 review PARTIAL -> finite reference owner binding PASS; native/lane integration NOT_RUN",
+    "CV-1101.enforced_format_oracles": "cycle-2 review PARTIAL -> source/family and CV-253 Storage profile finite oracles PASS"
   },
-  "implementation_commit": "64778f641bcc32f9532ae03bbea80d4e2b772b38",
+  "implementation_commit": "088e8d63f7798c1efa7eaeb7c002f21f220fbb56",
   "round1_validation": {
     "index_status": "pass",
     "plan_units": 7426,
@@ -93,5 +97,23 @@
     "guard_isolation": "SWEEP_PENDING",
     "existing_unit_tests": 30,
     "failure_exit": 1
+  },
+  "ids_minted_round2": [],
+  "round2_validation": {
+    "index_generation_status": "pass",
+    "plan_units": 7426,
+    "acceptance_units": 29961,
+    "case_oracles": "PASS",
+    "guard_isolation": "SWEEP_PENDING",
+    "reviewed_fixture_replay": 370,
+    "focused_predicate_removals": 7,
+    "local_profile_controls": 8,
+    "wrong_container_refusals": 5,
+    "failure_exit": 1,
+    "exception_outcome": "exception",
+    "existing_unit_tests": 30,
+    "preserved_pinned_envelope_schema": true,
+    "index_status": "pass",
+    "shards_status": "pass"
   }
 }
