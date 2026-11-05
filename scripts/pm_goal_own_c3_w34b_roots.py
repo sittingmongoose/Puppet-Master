@@ -177,4 +177,3 @@ class W4Roots:
 
     def resolve(self, realm, reference):
         return self.lookup(realm, self.registries[realm].resolver(), reference)
-
