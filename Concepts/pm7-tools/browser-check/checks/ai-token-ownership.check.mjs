@@ -52,22 +52,26 @@ export default async function(t) {
    await key('demo-key-0000-1111-2222');
    await f.waitForFunction(()=>O55.S.sess.ai.list.some(x=>x.provider==='cursor'));
    await f.waitForFunction(()=>{const b=document.querySelector('#pm-o55-onboarding .pst-bt-on');return b && b.textContent.startsWith('That');});
-   await f.locator(LAYER+' '+row+'[data-o55-do="manage"]').first().click();
-   if(action==='remove') await f.locator(LAYER+' '+row+'[data-o55-do="remove"]').first().click();
-   else await f.locator(LAYER+' '+row+'[data-o55-do="addAnother"]').first().click();
    await f.evaluate(()=>{
-    window.__aiFrames=[];
+    window.__aiFrames=[];window.__aiBefore=null;
+    const capture=(e)=>{if(e.target.closest('[data-o55-do="removeGo"]') || (e.type==='input' && e.target.id==='o55f-key-cursor')) window.__aiBefore=document.querySelector('#pm-o55-onboarding .pst-bt-on')?.textContent;};
+    document.addEventListener('pointerdown',capture,true);document.addEventListener('input',capture,true);
+    window.__aiStop=()=>{document.removeEventListener('pointerdown',capture,true);document.removeEventListener('input',capture,true);};
     const tick=()=>{const b=document.querySelector('#pm-o55-onboarding .pst-bubble'), el=b&&b.querySelector('.pst-bt-on');
      const text=b&&b.classList.contains('on')&&el?el.textContent:'';
      const alive=O55.S.sess.ai.list.some(x=>x.provider==='cursor') && !O55.S.sess.ai.accounts.cursor.keyTyped;
      __aiFrames.push({alive,text}); window.__aiRAF=requestAnimationFrame(tick);};tick();
    });
-   if(action==='remove') await f.locator(LAYER+' '+row+'[data-o55-do="removeGo"]').first().click();
+   await f.locator(LAYER+' '+row+'[data-o55-do="manage"]').first().click({force:true});
+   if(action==='remove') await f.locator(LAYER+' '+row+'[data-o55-do="remove"]').first().click({force:true});
+   else await f.locator(LAYER+' '+row+'[data-o55-do="addAnother"]').first().click({force:true});
+   if(action==='remove') await f.locator(LAYER+' '+row+'[data-o55-do="removeGo"]').first().click({force:true});
    else await f.locator('#o55f-key-cursor').fill('replacement-key-1234');
    await t.mark(`${look} w${mode} account ${action}`);
    await t.page.waitForTimeout(1100);
-   const r=await f.evaluate(()=>{cancelAnimationFrame(__aiRAF);return __aiFrames;});
-   const gone=r.filter(x=>!x.alive), bad=gone.filter(x=>x.text.startsWith('That'));
+   const r=await f.evaluate(()=>{cancelAnimationFrame(__aiRAF);__aiStop();return {frames:__aiFrames,before:__aiBefore};});
+   await t.check('cheer is still typing at the invalidating input',!!r.before&&r.before.startsWith('That'),r.before||'no captured speech');
+   const gone=r.frames.filter(x=>!x.alive), bad=gone.filter(x=>x.text.startsWith('That'));
    await t.check('account removal/key edit cannot keep its cheer',gone.length>10&&bad.length===0,JSON.stringify({frames:gone.length,bad:bad.length,first:gone.slice(0,4)}));
   });
   if(t.args.only !== 'ai') await t.step(`${look} w${mode} token abandoned`,async()=>{
@@ -76,9 +80,9 @@ export default async function(t) {
    await click(t,f,'[data-o55-do="others"]');await click(t,f,'[data-o55-do="pick"][data-arg="github_enterprise"]');await works(t,f);await click(t,f,'.o55-primary');await f.waitForFunction(()=>O55.S.sess.screen==='online-signin');await settled(f,'online-signin');
    await click(t,f,'[data-o55-do="tokenOn"]');
    await f.locator('#o55f-token').fill('pm-demo-token-7f3a9c41');
-   await click(t,f,'[data-o55-do="tokenCheck"]');
+   await f.locator(LAYER+' [data-o55-do="tokenCheck"]').click();
    const running=await f.evaluate(()=>O55.S.sess.ops['token:'+O55.S.sess.signin.service]?.state==='running');
-   await click(t,f,'[data-o55-do="tokenOff"]');await t.mark('abandoned running token');
+   await f.locator(LAYER+' [data-o55-do="tokenOff"]').click();await t.mark('abandoned running token');
    await t.page.waitForTimeout(1200);
    const r=await f.evaluate(()=>({state:O55.S.sess.signin.state,signin:O55.S.sess.signin}));
    await t.check('running token abandoned by browser choice cannot sign in',running&&r.state==='idle',JSON.stringify(r));
