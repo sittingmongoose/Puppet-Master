@@ -403,16 +403,25 @@ class MigrationBoundary:
         together. Callers have already held/rechecked the complete boundary.
         """
         updates = {}
+        expected_keys = {s['physical_key'] for s in self.results[self.migration_id]['published_members']
+                         if s['schema_ref'].endswith(('/StorageStopControl', '/StorageBodyControlV2'))}
         for key, raw in self.cells.items():
             value = self.codec.storage_unpack(raw)
             schema = value.get('schema_id')
+            record = value.get('record', {})
+            if schema not in ('pm.storage_value.goal_host_stop_control.v1', 'pm.storage_value.goal_body_control.v2'):
+                continue
+            if not all(equal(record.get(k), v) for k, v in self.scope.items()):
+                continue
             if schema == 'pm.storage_value.goal_host_stop_control.v1':
+                require('M12/live_stop_preimage', equal(record, self.stop))
                 value['record'] = copy.deepcopy(stop)
                 updates[key] = self.codec.storage_pack(value)
             elif schema == 'pm.storage_value.goal_body_control.v2':
+                require('M12/live_body_control_preimage', equal(record, self.current_body_control))
                 value['record'] = copy.deepcopy(control)
                 updates[key] = self.codec.storage_pack(value)
-        require('M12/live_stop_control_routes', len(updates) == 2)
+        require('M12/live_stop_control_routes', len(expected_keys) == 2 and set(updates) == expected_keys)
         self.stop, self.current_body_control, self.cells = copy.deepcopy(stop), copy.deepcopy(control), {**self.cells, **updates}
 
     def advance_original_stop(self):

@@ -379,6 +379,35 @@ def execute(roots, inputs, codec, suite, artifacts):
         value.migration.cells[key] = codec.storage_pack(current)
         value.settle()
     suite.case('C12/current_binding_control', changed_current_binding_control, 'C12/binding_source_current')
+    def unrelated_stop():
+        value = graph('receipt_committed')
+        other = copy.deepcopy(value.stop)
+        other.update(goal_id='goal:unrelated', user_stop_epoch=0, continuation_epoch=0, latched=False,
+            last_original_stop_receipt_ref=None, last_original_stop_receipt_sha256=None,
+            original_birth_or_adoption_ref='TEST_ONLY:unrelated-host-birth')
+        wrapper = value.make('StorageStopControl', {'record': other})
+        key = 'TEST_ONLY:unrelated-original-stop-key'
+        raw = codec.storage_pack(wrapper)
+        value.migration.cells[key] = raw
+        value.settle()
+        require('oracle/unrelated_stop_preserved', value.migration.cells[key] == raw)
+    suite.case('C12/unrelated_native_stop_preserved', unrelated_stop)
+    for schema, field, guard in [('pm.storage_value.goal_host_stop_control.v1', 'user_stop_epoch', 'M12/live_stop_preimage'),
+                                 ('pm.storage_value.goal_body_control.v2', 'control_epoch', 'M12/live_body_control_preimage')]:
+        def torn_native_preimage(s=schema, f=field):
+            value = graph('receipt_committed')
+            for key, raw in value.migration.cells.items():
+                row = codec.storage_unpack(raw)
+                if row.get('schema_id') == s:
+                    row['record'][f] += 1
+                    value.migration.cells[key] = codec.storage_pack(row)
+                    break
+            before = copy.deepcopy(value.effects)
+            try:
+                value.settle()
+            finally:
+                require('oracle/torn_native_preimage_no_own_effect', equal(value.effects, before))
+        suite.case('C12/torn_native_preimage/' + field, torn_native_preimage, guard)
     for wrong in (True, '1', None, [], {}):
         def changed_epoch_type(w=wrong):
             value = graph('receipt_committed')
