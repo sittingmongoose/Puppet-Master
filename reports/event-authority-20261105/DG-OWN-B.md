@@ -57,7 +57,7 @@ All generators/checkers ran one at a time with `PM_GOAL_AUDIT_WORKERS=1`. Memory
 
 | Check | Exit | Top-level result | Cases / negatives | Existing removal rows |
 |---|---:|---|---:|---:|
-| New whole-protocol suite | 0 | pass | 569 / 503 | not claimed |
+| New whole-protocol suite | 0 | pass | 571 / 503 | not claimed |
 | Existing lifecycle + C3-F2/F1 | 0 | pass | 539 / 510 | 110 |
 | DG current writer | 0 | pass | 931 / 861 | 143 |
 | DG run Stop/block | 0 | pass | 478 / 427 | 90 |
@@ -67,9 +67,11 @@ All generators/checkers ran one at a time with `PM_GOAL_AUDIT_WORKERS=1`. Memory
 | `shards-check` | 0 | **pass** | — | — |
 | `index-validate` | 1 | **fail** | — | — |
 
-The new suite adds **569 cases: 66 positives / 503 negatives**, across blocked, ordinary completed and approved exception routes. Its 131 named refusal classes map to exact negative vector IDs in `Plans/goal_lifecycle_host_contracts/oracle_vectors.json`. The catalog distinguishes positive assertions and derived/redundant sites; it does not treat refusal classes or a compound `need` call as isolated predicates. Individual schema facets, compound peers and genuine same-invariant duplicates still require the shared tool's independent inventory/cuts. No C3-F1/F3, S1 or S2 clearance is claimed. The prior DG tables are preserved as qualified reproduction evidence only.
+The new suite adds **571 cases: 68 positives / 503 negatives**, across blocked, ordinary completed and approved exception routes. Its 131 named refusal classes map to exact negative vector IDs in `Plans/goal_lifecycle_host_contracts/oracle_vectors.json`. The catalog distinguishes positive assertions and derived/redundant sites; it does not treat refusal classes or a compound `need` call as isolated predicates. Individual schema facets, compound peers and genuine same-invariant duplicates still require the shared tool's independent inventory/cuts. No C3-F1/F3, S1 or S2 clearance is claimed. The prior DG tables are preserved as qualified reproduction evidence only.
 
 The existing lifecycle fixture adds **25 cases**: 2 blocked and 23 completed. Its accepted-skip field now requires null or a nonempty string and resolves genuine dispositions in the new suite. The fixture's obsolete `done` spelling was corrected to the actual TDR-004/005 `completed` status; all five owner statuses and wrong forms are covered. The negative epoch and 257-character payload body-receipt reference are coherent C3-F1 witnesses. A long opaque accepted-skip reference remains a positive.
+
+The two completion suites also accept the lawful inline boundary where selected MessagePack bytes fit at 16 KiB while JSON export bytes exceed it; over-limit actual MessagePack still refuses.
 
 The new suite eagerly resolves **15 complete resources / 1,504 refs**. Physical resource-hash tampering, method-bank tampering, an unused dangling ref and an unsupported anchor each force the complete checker to exit 1; exact original bytes were restored. Native transactions, authentication, crash/durability, source/Storage migration installation and actual selector admission remain **NOT_RUN**.
 
@@ -141,9 +143,9 @@ All paths below are relative to `/mnt/Cursor/PuppetMaster-Evidence/event-authori
 | `premise-comparison.json` | `98c48aff25f87114a9af3c3b0a3dd60be818a3f2764f7d2f30509d07a63d8c3c` |
 | `storage-codec-premises.json` | `5b5a2764c2ea30c103fb62d24abbb0a30419b8ece905c6aa0e9214423664e9bd` |
 | `currentness-inputs.json` | `7a2b96b2f32113bff004a1cf50cb905ccaf35a6f3d12a9064e67eb76be7abcfc` |
-| `verification.json` | `b6fcc81529ea73b89930a9cc4b16248c91cf27bbe85c5e934362b564c33cc99b` |
-| `protocol-check.json` | `466eefe481e5b2b6e4e406e059b1b1b45f02e9b710c06e7997ed2928b4fb8054` |
-| `protocol-check.txt` | `81af99010326a093e751e95cfc59b0246cded49bd67c923d442c983149107efa` |
+| `verification.json` | `2849e29953a6fefe06a92df418ceea6d11477139f2c390908d9c588569d2bb9a` |
+| `protocol-check.json` | `a665eecc6e0f9f3f60d7cbe2a79bbd8781486fbd3ecbe7bb7c7526bca2e3d47c` |
+| `protocol-check.txt` | `7633ac8a27056196f2570f7127690acfccba6b454935ff193f0dce02da5bd9e5` |
 | `lifecycle-check.txt` | `cf17b993739e03cd6940a95a4d9724a8726e963dbd7f24acbd11fed1a1941945` |
 | `current-check.txt` | `b98b0d24fbfe8f258120a9a80277ea30119e75be815b0d1061d681a99c94f5e9` |
 | `stop-block-check.txt` | `93b034b2b4b12e7fb158553f72898e1d4eef2e24523451d078d2f0c9f5fff49e` |

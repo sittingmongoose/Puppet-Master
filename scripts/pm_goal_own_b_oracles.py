@@ -444,7 +444,7 @@ class Realm:
         need('event/receipt_digest',payload['body_receipt_sha256']==digest(self.resolve_body(source)))
         expected=self.make_event(source)
         need('event/semantic',semantic_digest({**self.event,'payload':payload,'payload_ref':None})==semantic_digest(expected))
-        need('event/size',len(canonical(self.event['payload']))<=16384)
+        need('event/size',len(physical_bytes(self.event['payload']))<=16384)
 
     def append(self, source):
         need('event/pending',self.phase=='event_pending')
@@ -834,6 +834,17 @@ def vectors(schemas):
                 source=json.loads(r.sources[r.source_ref]);refs=(['exception-receipt:1'] if r.route=='exception' else [])+['evidence:'+str(i)+':'+('x'*180) for i in range(100)]
                 source['evidence_refs']=refs;r.caller['evidence_refs']=refs;r.evidence={x:dict(owner='caller:1',revision=1,target=copy.deepcopy(r.target)) for x in refs};r.install(source);r.run(stop='freeze_event');r.call('append')
             case('whole_inline_event_limit',route,oversize_event,'event/size')
+            def exact_inline_boundary(r):
+                sample=Realm(schemas,r.route);sample.run(stop='freeze_event');payload=copy.deepcopy(sample.event['payload']);chosen=None
+                for n in range(100,181):
+                    refs=(['exception-receipt:1'] if r.route=='exception' else [])+['evidence:'+str(i)+':'+('x'*n) for i in range(100)]
+                    payload['completion_evidence_refs']=refs
+                    if len(physical_bytes(payload))<=16384<len(canonical(payload)):
+                        chosen=refs;break
+                need('test/inline_boundary_exists',chosen is not None)
+                source=json.loads(r.sources[r.source_ref]);source['evidence_refs']=chosen;r.caller['evidence_refs']=chosen;r.evidence={x:dict(owner='caller:1',revision=1,target=copy.deepcopy(r.target)) for x in chosen};r.install(source);r.run()
+                need('test/inline_selected_codec',r.event['payload_ref'] is None and len(physical_bytes(r.event['payload']))<=16384<len(canonical(r.event['payload'])))
+            case('inline_messagepack_boundary',route,exact_inline_boundary)
 
         def wrong_ref_scheme(r):
             r.run(stop='freeze_event');ref=r.pack(r.event['payload']);r.event.update(payload={},payload_ref=ref.replace('blake3:','sha256:'));r.frozen=copy.deepcopy(r.event);r.call('append')

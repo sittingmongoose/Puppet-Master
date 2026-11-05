@@ -41,6 +41,7 @@
     "completed/large_payload",
     "completed/complete_large_reference_path",
     "completed/max_multibyte_objective_all_stored_parts",
+    "completed/inline_messagepack_boundary",
     "completed/pending_without_repeating_body",
     "completed/accepted_skip_original",
     "completed/authentic_absent_plan",
@@ -62,6 +63,7 @@
     "exception/large_payload",
     "exception/complete_large_reference_path",
     "exception/max_multibyte_objective_all_stored_parts",
+    "exception/inline_messagepack_boundary",
     "exception/pending_without_repeating_body",
     "exception/accepted_skip_original",
     "exception/authentic_absent_plan",
@@ -1379,7 +1381,9 @@
     "test/shared_reference_roundtrip": "positive outcome assertion, not an input refusal",
     "test/shared_transport_size": "positive outcome assertion, not an input refusal",
     "test/stored_parts_size": "positive outcome assertion, not an input refusal",
-    "test/workflow_receipt_size": "positive outcome assertion, not an input refusal"
+    "test/workflow_receipt_size": "positive outcome assertion, not an input refusal",
+    "test/inline_boundary_exists": "positive outcome assertion, not an input refusal",
+    "test/inline_selected_codec": "positive outcome assertion, not an input refusal"
   },
   "schema_resources": "resources.json pins whole resources; all $refs resolve eagerly; original schemas are not extracted substitutes",
   "external_controls": [
