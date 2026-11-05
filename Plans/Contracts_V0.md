@@ -26610,3 +26610,95 @@ negative_constraints:
 owner_hints:
 - Plans/Contracts_V0.md
 ```
+
+
+### CV-647 — chat.response_stop_requested — closed payload and replay
+
+Newly authored payload contract for chat.response_stop_requested 1.0.0 under DL-045/DL-406/DL-427. Plans/dch_stop_request.schema.json selects closed Project pm.dch_stop.request.project.v1 and application pm.dch_stop.request.application.v1 editions, version 1.0.0. Required fields are exactly schema_id, schema_version, thread_id, operation_id, actor_ref, ts, computer_id, scope, assistant_turn_id, stop_reason_code and target_work. WorkflowScopeV2 and existing Chat thread/non-secret-reference and Storage-instance descriptors are reused; target_work item fields are exactly kind, work_ref and lease_ref. The original accepted cmd.chat.stop source fixes the actual reply and complete target list. References contain no credentials, instructions, transcript bodies, raw output or newly copied evidence. The Stop reason is a code, never arbitrary diagnostic text. Unknown fields/editions, forged targets and cross-scope sources refuse. run_id, node_id and attempt_id in this request's EventRecord are null: an optional command run selector resolves to the actual assistant turn and does not invent a Goal join. EventRecord event_type equals this exact family, payload_schema_id selects the exact edition, scope_kind/project_id/thread_id/actor_ref/occurred_at_utc join the original body (ts is request occurrence time), and global event_id and scoped key recompute by ACD-627 against the independently read actual Storage instance.
+
+Current writes and incoming retries select dedupe_by_idempotency_key; projector_replay_only refuses as replay_only_not_appendable before dedupe, including when both retry inputs claim it. Retained compatibility-reader records may use that historical policy and never authorize current append. The producer-semantic commitment adopts the EventRecord owner's exact 21 caller-supplied fields and RFC 8785/SHA-256 recipe, excluding only Storage-assigned sequence_id, observed_at_utc and persisted_at_utc; those are verified from independently read original Storage bytes on reads, never trusted from payload. Metadata-only incoming retry variation returns original evidence; every included semantic field and independent global-ID check remains mandatory. No serializer, number cap or timestamp grammar is added here. Adopt SP-236's owner domains and physical recipe; unsupported producer RFC 8785 inputs are unavailable without rounding, retyping or narrowing Storage uint64. Mandatory format validation reuses the existing pm_dch_formats.FormatChecker for the declared date-time/UUID descriptors; malformed and trailing-LF inputs refuse. The shared number-domain/provenance sweep remains explicit, without a new DCH recipe.
+
+Adopt SP-337 explicitly for this exact body: at most 16384 encoded SP-236 bytes inline with payload_ref null; above that, or separately governed content, payload is {} and payload_ref is payload:v1:{lowercase_blake3_64}:{canonical_unsigned_decimal_byte_size}:application/msgpack. Resolve the existing payload:v1:{lowercase_blake3_64} index in the actual same Storage instance. Recompute BLAKE3, exact byte count and media type from complete original bytes, verify scope/Computer/thread and current authorization/deletion/hold access, durable pack/index and exact readback before acknowledgement or publication. Measure every stored part including the pointer; no truncation, base64 substitute or unverified inline exception. Logical target-work counts remain those of the actual reply, with no new lane cap. Replay reads original evidence only, never resends cancellation or reruns work. Original versions remain byte-exact; a later schema/physical recipe is separately versioned and authenticated by original write provenance, never selected by a caller's downgrade flag. Unsupported or missing original provenance is unavailable. Writer withdrawal cuts this exact family off before new operations, fences its readers/affected index publication, keeps supported historical lookup under current custody, and requires a separately versioned fresh SP-278 rebuild before successor publication; no reminting, in-place rewriting or source-log deletion.
+
+```yaml
+plan_unit_id: CV-647
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: '### CV-647 — chat.response_stop_requested — closed payload and replay
+
+
+  Newly authored payload contract for chat.response_stop_requested 1.0.0 under DL-045/DL-406/DL-427. Plans/dch_stop_request.schema.json
+  selects closed Project pm.dch_stop.request.project.v1 and application pm.dch_stop.request.application.v1 editions,
+  version 1.0.0. Required fields are exactly schema_id, schema_version, thread_id, operation_id, actor_ref, ts,
+  computer_id, scope, assistant_turn_id, stop_reason_code and target_work. WorkflowScopeV2 and existing Chat thread/non-secret-reference
+  and Storage-instance descriptors are reused; target_work item fields are exactly kind, work_ref and lease_ref.
+  The original accepted cmd.chat.stop source fixes the actual reply and complete target list. References contain
+  no credentials, instructions, transcript bodies, raw output or newly copied evidence. The Stop reason is a code,
+  never arbitrary diagnostic text. Unknown fields/editions, forged targets and cross-scope sources refuse. run_id,
+  node_id and attempt_id in this request''s EventRecord are null: an optional command run selector resolves to the
+  actual assistant turn and does not invent a Goal join. EventRecord event_type equals this exact family, payload_schema_id
+  selects the exact edition, scope_kind/project_id/thread_id/actor_ref/occurred_at_utc join the original body (ts
+  is request occurrence time), and global event_id and scoped key recompute by ACD-627 against the independently
+  read actual Storage instance.
+
+
+  Current writes and incoming retries select dedupe_by_idempotency_key; projector_replay_only refuses as replay_only_not_appendable
+  before dedupe, including when both retry inputs claim it. Retained compatibility-reader records may use that historical
+  policy and never authorize current append. The producer-semantic commitment adopts the EventRecord owner''s exact
+  21 caller-supplied fields and RFC 8785/SHA-256 recipe, excluding only Storage-assigned sequence_id, observed_at_utc
+  and persisted_at_utc; those are verified from independently read original Storage bytes on reads, never trusted
+  from payload. Metadata-only incoming retry variation returns original evidence; every included semantic field
+  and independent global-ID check remains mandatory. No serializer, number cap or timestamp grammar is added here.
+  Adopt SP-236''s owner domains and physical recipe; unsupported producer RFC 8785 inputs are unavailable without
+  rounding, retyping or narrowing Storage uint64. Mandatory format validation reuses the existing pm_dch_formats.FormatChecker
+  for the declared date-time/UUID descriptors; malformed and trailing-LF inputs refuse. The shared number-domain/provenance
+  sweep remains explicit, without a new DCH recipe.
+
+
+  Adopt SP-337 explicitly for this exact body: at most 16384 encoded SP-236 bytes inline with payload_ref null;
+  above that, or separately governed content, payload is {} and payload_ref is payload:v1:{lowercase_blake3_64}:{canonical_unsigned_decimal_byte_size}:application/msgpack.
+  Resolve the existing payload:v1:{lowercase_blake3_64} index in the actual same Storage instance. Recompute BLAKE3,
+  exact byte count and media type from complete original bytes, verify scope/Computer/thread and current authorization/deletion/hold
+  access, durable pack/index and exact readback before acknowledgement or publication. Measure every stored part
+  including the pointer; no truncation, base64 substitute or unverified inline exception. Logical target-work counts
+  remain those of the actual reply, with no new lane cap. Replay reads original evidence only, never resends cancellation
+  or reruns work. Original versions remain byte-exact; a later schema/physical recipe is separately versioned and
+  authenticated by original write provenance, never selected by a caller''s downgrade flag. Unsupported or missing
+  original provenance is unavailable. Writer withdrawal cuts this exact family off before new operations, fences
+  its readers/affected index publication, keeps supported historical lookup under current custody, and requires
+  a separately versioned fresh SP-278 rebuild before successor publication; no reminting, in-place rewriting or
+  source-log deletion.'
+gui_related: false
+gui_classification_reason: Persistence, contract or verification of the existing Stop behavior.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- The exact Stop request, saved outcome, custody, queue barriers and conditional retirements follow DL-406/DL-427;
+  unresolved retention and native verification remain explicit.
+validation_surfaces:
+- python3 scripts/pm_dch_stop.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch_stop
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-406 on origin/plans/ea-cards1-answers-20261104
+- DL-427 on origin/plans/ea-cards2-answers-20261105; E-CARDS-2 item 3.a option A
+preserved_exact_tokens:
+- chat.response_stop_requested
+- DL-406
+- DL-427
+negative_constraints:
+- No event admission, Decision Log entry or native durability claim.
+- No new retention policy or automatic queue release.
+owner_hints:
+- Plans/Contracts_V0.md
+```

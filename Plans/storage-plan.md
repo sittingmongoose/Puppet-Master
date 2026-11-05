@@ -33357,3 +33357,185 @@ negative_constraints:
 owner_hints:
 - Plans/storage-plan.md
 ```
+
+
+### SP-627 — Stop request and canonical assistant-turn result custody
+
+Newly authored persistence contract under DL-045, DL-406 and DL-427 for chat.response_stop_requested and its assistant turn's own saved outcome (ACD-627/628, CV-647). Event history uses the existing canonical EventRecord/seglog path, SP-236 physical encoding, SP-286/CV-339 full-value first-AppendReceipt custody and SP-337 verified complete-body references. The actual accepted Stop intent freezes the request, original assistant turn/work leases, cancellation start/deadline and first receipt before effects. Its actual owning Server/Storage instance holds this original graph; Client focus, a default instance, run:<run_id> compatibility alias, projection or delivery outbox supplies no substitute authority. Compare Storage-assigned event sequence/timestamps against independently read exact original Storage record commitments. Validate actual Storage contexts with the existing event_record_index_checkpoint.schema.json UUID descriptor before hashing or resolving. Backup/restore must recover canonical request bytes, original pending intent/deadline, first receipt, original turn/work refs, any payload packs/index, saved outcome and deletion/hold records coherently before visible reads. Unresolved canonical custody is unavailable and blocks queue advancement, never reconstructed from an event/display or a fresh work run.
+
+The new canonical_non_rebuildable redb family assistant_turn_stop_outcome uses key assistant_turn_stop_outcome.v1:{storage_instance_id}:{stop_request_event_id}, using the existing exact UUID and globally unique request EventRecord identity. The key is fixed in size; Server, scope, Computer, thread, assistant turn and exact work remain mandatory value-to-original-request/source joins, without encoding those potentially larger values into the physical key or inventing an ID-length cap. Every component joins the actual record and original request/source; the Storage instance is independently read. The two closed value editions in Plans/dch_stop_outcome.schema.json contain only the ACD-628 fields. The logical schema is not a new physical serializer: adopt existing SP-236/CV-366 encoding, SP-340's 16 KiB whole-value limit and SP-337 verified reference route for a larger complete value; measure the physical pointer too and enforce same exact-key/instance/scope/family pack custody, access, durable index/bytes and readback. No second outcome-history event is written. Original request/body/first receipt commit precedes cancellation; absent-to-present result CAS and durable readback precede any queue release. A same-value retry returns the original result; a different value conflicts. An interrupted result save reconciles original durable value/intent, never treats absence or a delivery receipt as success. Restart retains the original grace deadline; a committed result survives restart/restore exactly. A prepared/uncommitted value cannot release the queue. The source storage family is specified but not materialized into storage_value_registry while its retention decision is open; actual writes remain fenced until its complete storage binding and event admission exist.
+
+The exact passive operating consumer is reader.chat.response_stop_requested@1.0.0 for chat Stop history and original-request lookup. It explicitly adopts projector.storage.event_record_index@1.0.0, checkpoint event_record_index_checkpoint.v1:{storage_instance_id}, Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint 1.0.0, SP-278 and DL-076's nine-field durable read token with no persisted redb_snapshot_id. It is an on-demand exact-family filter of the complete generic index, with no separate filtered cursor or stored projection. SP-278 owns source-order advance, complete captured coverage and frontier/predecessor CAS with index rows atomically; the exact actual source/token/selection/generation/frontier/dataset must agree before a read. Changed current source fences publication. The generic checkpoint remains RP-PROJECTION-3GEN@1.0.0 with current/staged/held/live-ref protections; it never extends source lifetime. Queue/result readers fetch the canonical saved outcome through exact-key current custody, never derive it from this index. Rebuild regenerates only the generic index from retained authentic sources, with a fresh complete token, and never cancellation, outcomes or queue actions. Withdrawal fences reader/index publication, retains original-schema historical lookup and current access checks, and requires separately versioned successor rebuild; unknown, withdrawn, forged or foreign inputs cannot publish.
+
+Request retention is already decided by DL-401 G15: retention_policy_ref = RP-CHAT-THREAD-LIFETIME, version 1.0.0, as materialized on origin/plans/ea-retention-cards2-20261105 in Storage Case L-3 and storage_value_registry. It lasts with the thread named in the request, in Project and application chats alike, sharing 250000 records per thread and linked-successor rollover without silent eviction. Chat deletion hides it immediately and purges unheld active bytes within 24 hours and backup bytes within 30 days; holds delay purge but never restore visibility. Referenced work and independent receipts keep their own policies and grant no access. This draft neither imports changes to the seventeen prepared families nor widens the named group. The newly authorized saved result is not named by G15 and no existing group decides its separate record lifetime: retention_policy_ref = PENDING_RETENTION_DECISION. Exact question: Should the saved assistant-turn Stop outcome be kept and deleted with its chat under RP-CHAT-THREAD-LIFETIME@1.0.0, or have a separate lifetime? If separate, what window, count bucket, deletion behavior and hold rules apply in Project and application chats? No expiry, count eviction, lifetime transfer, new hold or purge exemption is authorized for that record. Until its exact assignment/materialization is complete, its writes and retirement cutover remain unavailable.
+
+```yaml
+plan_unit_id: SP-627
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: '### SP-627 — Stop request and canonical assistant-turn result custody
+
+
+  Newly authored persistence contract under DL-045, DL-406 and DL-427 for chat.response_stop_requested and its assistant
+  turn''s own saved outcome (ACD-627/628, CV-647). Event history uses the existing canonical EventRecord/seglog
+  path, SP-236 physical encoding, SP-286/CV-339 full-value first-AppendReceipt custody and SP-337 verified complete-body
+  references. The actual accepted Stop intent freezes the request, original assistant turn/work leases, cancellation
+  start/deadline and first receipt before effects. Its actual owning Server/Storage instance holds this original
+  graph; Client focus, a default instance, run:<run_id> compatibility alias, projection or delivery outbox supplies
+  no substitute authority. Compare Storage-assigned event sequence/timestamps against independently read exact original
+  Storage record commitments. Validate actual Storage contexts with the existing event_record_index_checkpoint.schema.json
+  UUID descriptor before hashing or resolving. Backup/restore must recover canonical request bytes, original pending
+  intent/deadline, first receipt, original turn/work refs, any payload packs/index, saved outcome and deletion/hold
+  records coherently before visible reads. Unresolved canonical custody is unavailable and blocks queue advancement,
+  never reconstructed from an event/display or a fresh work run.
+
+
+  The new canonical_non_rebuildable redb family assistant_turn_stop_outcome uses key assistant_turn_stop_outcome.v1:{storage_instance_id}:{stop_request_event_id},
+  using the existing exact UUID and globally unique request EventRecord identity. The key is fixed in size; Server,
+  scope, Computer, thread, assistant turn and exact work remain mandatory value-to-original-request/source joins,
+  without encoding those potentially larger values into the physical key or inventing an ID-length cap. Every component
+  joins the actual record and original request/source; the Storage instance is independently read. The two closed
+  value editions in Plans/dch_stop_outcome.schema.json contain only the ACD-628 fields. The logical schema is not
+  a new physical serializer: adopt existing SP-236/CV-366 encoding, SP-340''s 16 KiB whole-value limit and SP-337
+  verified reference route for a larger complete value; measure the physical pointer too and enforce same exact-key/instance/scope/family
+  pack custody, access, durable index/bytes and readback. No second outcome-history event is written. Original request/body/first
+  receipt commit precedes cancellation; absent-to-present result CAS and durable readback precede any queue release.
+  A same-value retry returns the original result; a different value conflicts. An interrupted result save reconciles
+  original durable value/intent, never treats absence or a delivery receipt as success. Restart retains the original
+  grace deadline; a committed result survives restart/restore exactly. A prepared/uncommitted value cannot release
+  the queue. The source storage family is specified but not materialized into storage_value_registry while its retention
+  decision is open; actual writes remain fenced until its complete storage binding and event admission exist.
+
+
+  The exact passive operating consumer is reader.chat.response_stop_requested@1.0.0 for chat Stop history and original-request
+  lookup. It explicitly adopts projector.storage.event_record_index@1.0.0, checkpoint event_record_index_checkpoint.v1:{storage_instance_id},
+  Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint 1.0.0, SP-278 and DL-076''s nine-field durable
+  read token with no persisted redb_snapshot_id. It is an on-demand exact-family filter of the complete generic
+  index, with no separate filtered cursor or stored projection. SP-278 owns source-order advance, complete captured
+  coverage and frontier/predecessor CAS with index rows atomically; the exact actual source/token/selection/generation/frontier/dataset
+  must agree before a read. Changed current source fences publication. The generic checkpoint remains RP-PROJECTION-3GEN@1.0.0
+  with current/staged/held/live-ref protections; it never extends source lifetime. Queue/result readers fetch the
+  canonical saved outcome through exact-key current custody, never derive it from this index. Rebuild regenerates
+  only the generic index from retained authentic sources, with a fresh complete token, and never cancellation, outcomes
+  or queue actions. Withdrawal fences reader/index publication, retains original-schema historical lookup and current
+  access checks, and requires separately versioned successor rebuild; unknown, withdrawn, forged or foreign inputs
+  cannot publish.
+
+
+  Request retention is already decided by DL-401 G15: retention_policy_ref = RP-CHAT-THREAD-LIFETIME, version 1.0.0,
+  as materialized on origin/plans/ea-retention-cards2-20261105 in Storage Case L-3 and storage_value_registry. It
+  lasts with the thread named in the request, in Project and application chats alike, sharing 250000 records per
+  thread and linked-successor rollover without silent eviction. Chat deletion hides it immediately and purges unheld
+  active bytes within 24 hours and backup bytes within 30 days; holds delay purge but never restore visibility.
+  Referenced work and independent receipts keep their own policies and grant no access. This draft neither imports
+  changes to the seventeen prepared families nor widens the named group. The newly authorized saved result is not
+  named by G15 and no existing group decides its separate record lifetime: retention_policy_ref = PENDING_RETENTION_DECISION.
+  Exact question: Should the saved assistant-turn Stop outcome be kept and deleted with its chat under RP-CHAT-THREAD-LIFETIME@1.0.0,
+  or have a separate lifetime? If separate, what window, count bucket, deletion behavior and hold rules apply in
+  Project and application chats? No expiry, count eviction, lifetime transfer, new hold or purge exemption is authorized
+  for that record. Until its exact assignment/materialization is complete, its writes and retirement cutover remain
+  unavailable.'
+gui_related: false
+gui_classification_reason: Persistence, contract or verification of the existing Stop behavior.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- The exact Stop request, saved outcome, custody, queue barriers and conditional retirements follow DL-406/DL-427;
+  unresolved retention and native verification remain explicit.
+validation_surfaces:
+- python3 scripts/pm_dch_stop.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch_stop
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-406 on origin/plans/ea-cards1-answers-20261104
+- DL-427 on origin/plans/ea-cards2-answers-20261105; E-CARDS-2 item 3.a option A
+preserved_exact_tokens:
+- chat.response_stop_requested
+- DL-406
+- DL-427
+negative_constraints:
+- No event admission, Decision Log entry or native durability claim.
+- No new retention policy or automatic queue release.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-628 — DL-406/DL-427 conditional retirement of three chat_run names
+
+Apply DL-406 and DL-427 individually: chat_run.cancel_requested is the retired request spelling replaced by the one catalog-named chat.response_stop_requested; chat_run.cancelled is the old cancellation-outcome event requirement replaced by ACD-628's saved outcome=cancelled; chat_run.cancel_timeout is the old timeout-outcome event requirement replaced by ACD-628's saved outcome=timeout. These are three separate exclusion/retirement records, not aliases or admissions. The implementation cutover is conditional: the replacement record must be completely specified/materialized and verified to survive restart AND recovery, with the one request path, original three-second grace, saved-outcome barrier and separate ACD-471 user action intact. A prepared schema or static model alone does not satisfy native durability. reports/event-authority-20261104/DCH-stop-retirement-application.json records all three applications as retirement_specified_cutover_pending; native restart/recovery verification is NOT_RUN, so no applied runtime cutoff is claimed. The open saved-record retention/materialization also fences that cutover. No outcome history may be dropped while those conditions are unresolved, and none of these unregistered names acquires permission to append from this draft.
+
+At verified cutover, forbid new writes of each exact old name and retain original already-written bytes/identity/schema/meaning under their write-time recipe and original retention/deletion/access rules. Historical compatibility lookup remains read-only and must refuse forged/withdrawn/foreign evidence; later live state cannot invalidate an otherwise retained authentic old record. Never rewrite or remint old bytes as the new request or result, infer that old cancelled means timeout, or manufacture a saved outcome from missing history. This specifies exclusion from future producer requirements and keeps old bytes readable; denominator/registry bookkeeping and any actual native cutover receipt belong to integration, without a Decision Log entry or event-family registry append here.
+
+```yaml
+plan_unit_id: SP-628
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: '### SP-628 — DL-406/DL-427 conditional retirement of three chat_run names
+
+
+  Apply DL-406 and DL-427 individually: chat_run.cancel_requested is the retired request spelling replaced by the
+  one catalog-named chat.response_stop_requested; chat_run.cancelled is the old cancellation-outcome event requirement
+  replaced by ACD-628''s saved outcome=cancelled; chat_run.cancel_timeout is the old timeout-outcome event requirement
+  replaced by ACD-628''s saved outcome=timeout. These are three separate exclusion/retirement records, not aliases
+  or admissions. The implementation cutover is conditional: the replacement record must be completely specified/materialized
+  and verified to survive restart AND recovery, with the one request path, original three-second grace, saved-outcome
+  barrier and separate ACD-471 user action intact. A prepared schema or static model alone does not satisfy native
+  durability. reports/event-authority-20261104/DCH-stop-retirement-application.json records all three applications
+  as retirement_specified_cutover_pending; native restart/recovery verification is NOT_RUN, so no applied runtime
+  cutoff is claimed. The open saved-record retention/materialization also fences that cutover. No outcome history
+  may be dropped while those conditions are unresolved, and none of these unregistered names acquires permission
+  to append from this draft.
+
+
+  At verified cutover, forbid new writes of each exact old name and retain original already-written bytes/identity/schema/meaning
+  under their write-time recipe and original retention/deletion/access rules. Historical compatibility lookup remains
+  read-only and must refuse forged/withdrawn/foreign evidence; later live state cannot invalidate an otherwise retained
+  authentic old record. Never rewrite or remint old bytes as the new request or result, infer that old cancelled
+  means timeout, or manufacture a saved outcome from missing history. This specifies exclusion from future producer
+  requirements and keeps old bytes readable; denominator/registry bookkeeping and any actual native cutover receipt
+  belong to integration, without a Decision Log entry or event-family registry append here.'
+gui_related: false
+gui_classification_reason: Persistence, contract or verification of the existing Stop behavior.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- The exact Stop request, saved outcome, custody, queue barriers and conditional retirements follow DL-406/DL-427;
+  unresolved retention and native verification remain explicit.
+validation_surfaces:
+- python3 scripts/pm_dch_stop.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch_stop
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-406 on origin/plans/ea-cards1-answers-20261104
+- DL-427 on origin/plans/ea-cards2-answers-20261105; E-CARDS-2 item 3.a option A
+preserved_exact_tokens:
+- chat.response_stop_requested
+- DL-406
+- DL-427
+negative_constraints:
+- No event admission, Decision Log entry or native durability claim.
+- No new retention policy or automatic queue release.
+owner_hints:
+- Plans/storage-plan.md
+```

@@ -272,7 +272,7 @@ Rules:
 - Stop becomes disabled when a run completes and no next message is queued
 - Edit restores content into composer and discards later history/work
 - Resend retries the most recent message and discards later history/work
-- Stop first records `chat_run.cancel_requested`, sends cancel to the active model/tool/subagent leases, waits up to `cancel_grace_ms = 3000`, and then records `chat_run.cancelled` or `chat_run.cancel_timeout` before queued messages may advance.
+- Stop uses the DL-406/DL-427 replacement contract in ACD-627/628 and SP-627/628: one `chat.response_stop_requested` request entry, the actual assistant turn/work saved cancellation or timeout, `cancel_grace_ms = 3000`, saved-outcome readback before queued messages may proceed, and the separate user action required by ACD-471. The three old `chat_run.*` names have conditional retirement records in SP-628; cutover waits for the replacement storage binding and restart/recovery verification, with old bytes remaining readable.
 - Edit and Resend perform a soft history mutation: later generated messages, tool cards, and draft operation cards are marked `superseded_by_message_id` and hidden from the active transcript, while audit/export views retain tombstones and source refs.
 - Queue entries use `{queue_entry_id, thread_id, draft_message_id, enqueued_at, position, state, text_ref, attachment_refs[], source_composer_id}`; when the max-2 queue is full, the new draft remains in the composer and the send action is disabled with `queue_full` until the user removes or sends an existing entry.
 
@@ -30257,6 +30257,177 @@ preserved_exact_tokens:
 - No chat auto-archives
 negative_constraints:
 - No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/assistant-chat-design.md
+```
+
+
+### ACD-627 — chat.response_stop_requested — request authority
+
+Newly authored owner contract for `chat.response_stop_requested` 1.0.0 under DL-045, DL-406 and DL-427, prepared without admission. DL-406 is read on origin/plans/ea-cards1-answers-20261104; DL-427 is read on origin/plans/ea-cards2-answers-20261105. Jared's deck-2 answer is exactly "i approve all of it"; option A of item 3.a supplies this authority. This applies the answer; it is not a review repair. The existing cmd.chat.stop handler is the sole producer. Resolve its original thread and optional run/assistant-turn selector to the actual active assistant_turn_id and that reply's exact model/tool/subagent work and leases under the authenticated original Server, Computer and WorkflowScopeV2. Freeze those original targets and operation_id in the durable accepted intent, not focus or a later work-list display. ACD-470's displayed stopped state, outbox delivery acknowledgements and ObservableWork projections do not prove cancellation. ACD-471 remains: composer Stop holds this reply's queue and does not stop independent background processes.
+
+Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name. Validate current permission, actual target ownership, writer admission, complete schema/source custody and authoritative dedupe before beginning. Persist the original intent and exact request body (SP-337 if needed), append this one request-history entry and recover/read back its first receipt before delivering cancellation to those frozen leases. Freeze the original cancellation start/deadline in the existing pending-operation custody before delivery; retries and restart never start a new three-second grace period. Wait up to cancel_grace_ms = 3000 for those exact targets. Verified stopping of all targets within that grace produces cancelled; unresolved work at its deadline produces timeout, never an inferred successful cancellation. Save and read back the immutable ACD-628 outcome on the actual assistant turn before queued messages may proceed. A separate user Send, Send now, Edit or Remove under ACD-471 must still release the queue; saving an outcome never advances it automatically. Missing original request, target evidence, receipt, deadline or saved-result custody holds the queue and reconciles original evidence; it never recaptures a different turn or reruns model/tool/subagent work.
+
+For this family only, freeze operation_id from the original accepted Stop command, unchanged on retry. The identity tuple is ["chat.response_stop_requested", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]. RFC 8785 UTF-8 canonical JSON and SHA-256 produce event_id = "evt_dch_" plus the lowercase digest. Project keys are "dch:" plus that digest. Application keys adopt CV-366 exactly: "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)); no optional effect component. CV-365 requires project~ plus unpadded base64url of exact UTF-8 project_id, checked by reversible exact decoding and encoding; application uses app and null Project fields. Storage's lifetime tuple is (scope_partition,event_type,idempotency_key). Same key and producer-semantic body returns the original result/first receipt with no second request, new cancellation operation or changed targets; a semantic or event-ID conflict refuses, and missing authoritative dedupe is dedupe_unavailable with zero new effect. Payload/reader/persistence bindings are CV-647 and SP-627. The seventeen ACD-610–626 contracts are unchanged. No current write is admitted by this unit.
+
+```yaml
+plan_unit_id: ACD-627
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: '### ACD-627 — chat.response_stop_requested — request authority
+
+
+  Newly authored owner contract for `chat.response_stop_requested` 1.0.0 under DL-045, DL-406 and DL-427, prepared
+  without admission. DL-406 is read on origin/plans/ea-cards1-answers-20261104; DL-427 is read on origin/plans/ea-cards2-answers-20261105.
+  Jared''s deck-2 answer is exactly "i approve all of it"; option A of item 3.a supplies this authority. This applies
+  the answer; it is not a review repair. The existing cmd.chat.stop handler is the sole producer. Resolve its original
+  thread and optional run/assistant-turn selector to the actual active assistant_turn_id and that reply''s exact
+  model/tool/subagent work and leases under the authenticated original Server, Computer and WorkflowScopeV2. Freeze
+  those original targets and operation_id in the durable accepted intent, not focus or a later work-list display.
+  ACD-470''s displayed stopped state, outbox delivery acknowledgements and ObservableWork projections do not prove
+  cancellation. ACD-471 remains: composer Stop holds this reply''s queue and does not stop independent background
+  processes.
+
+
+  Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name. Validate current permission, actual target
+  ownership, writer admission, complete schema/source custody and authoritative dedupe before beginning. Persist
+  the original intent and exact request body (SP-337 if needed), append this one request-history entry and recover/read
+  back its first receipt before delivering cancellation to those frozen leases. Freeze the original cancellation
+  start/deadline in the existing pending-operation custody before delivery; retries and restart never start a new
+  three-second grace period. Wait up to cancel_grace_ms = 3000 for those exact targets. Verified stopping of all
+  targets within that grace produces cancelled; unresolved work at its deadline produces timeout, never an inferred
+  successful cancellation. Save and read back the immutable ACD-628 outcome on the actual assistant turn before
+  queued messages may proceed. A separate user Send, Send now, Edit or Remove under ACD-471 must still release the
+  queue; saving an outcome never advances it automatically. Missing original request, target evidence, receipt,
+  deadline or saved-result custody holds the queue and reconciles original evidence; it never recaptures a different
+  turn or reruns model/tool/subagent work.
+
+
+  For this family only, freeze operation_id from the original accepted Stop command, unchanged on retry. The identity
+  tuple is ["chat.response_stop_requested", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id].
+  RFC 8785 UTF-8 canonical JSON and SHA-256 produce event_id = "evt_dch_" plus the lowercase digest. Project keys
+  are "dch:" plus that digest. Application keys adopt CV-366 exactly: "application@1:" + lowercase hex(UTF-8(scope.server_id))
+  + ":" + lowercase hex(UTF-8(operation_id)); no optional effect component. CV-365 requires project~ plus unpadded
+  base64url of exact UTF-8 project_id, checked by reversible exact decoding and encoding; application uses app and
+  null Project fields. Storage''s lifetime tuple is (scope_partition,event_type,idempotency_key). Same key and producer-semantic
+  body returns the original result/first receipt with no second request, new cancellation operation or changed targets;
+  a semantic or event-ID conflict refuses, and missing authoritative dedupe is dedupe_unavailable with zero new
+  effect. Payload/reader/persistence bindings are CV-647 and SP-627. The seventeen ACD-610–626 contracts are unchanged.
+  No current write is admitted by this unit.'
+gui_related: true
+gui_classification_reason: Governs visible reply Stop and queue behavior.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- The exact Stop request, saved outcome, custody, queue barriers and conditional retirements follow DL-406/DL-427;
+  unresolved retention and native verification remain explicit.
+validation_surfaces:
+- python3 scripts/pm_dch_stop.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch_stop
+implementation_surfaces:
+- Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-406 on origin/plans/ea-cards1-answers-20261104
+- DL-427 on origin/plans/ea-cards2-answers-20261105; E-CARDS-2 item 3.a option A
+preserved_exact_tokens:
+- chat.response_stop_requested
+- DL-406
+- DL-427
+negative_constraints:
+- No event admission, Decision Log entry or native durability claim.
+- No new retention policy or automatic queue release.
+owner_hints:
+- Plans/assistant-chat-design.md
+```
+
+
+### ACD-628 — saved assistant-turn Stop outcome
+
+DL-406 and DL-427 authorize this newly authored saved result on the actual assistant reply and its work. The record is assistant_turn_stop_outcome, schema Plans/dch_stop_outcome.schema.json, with separate closed Project/application IDs pm.dch_stop.outcome.project.v1 and pm.dch_stop.outcome.application.v1, version 1.0.0. It is the assistant turn's own canonical Stop result, not a derived work-list entry, delivery receipt, display marker, legacy run alias or second outcome EventRecord. The record has exactly schema_id, schema_version, storage_instance_id, scope, computer_id, thread_id, assistant_turn_id, stop_request_event_id, target_work, outcome and outcome_at_utc. Each target_work item has exactly kind (model, tool or subagent), work_ref and lease_ref from the actual accepted reply/work snapshot; list order and exact identities are preserved. stop_request_event_id links the original verified chat.response_stop_requested; scope/Computer/thread/assistant turn and exact targets equal that request and its original accepted source. outcome is cancelled or timeout and outcome_at_utc is the actual owner-observed decision time, not acknowledgement, display or Storage persistence time. No per-target result, new run state, automatic queue-release field or new user action is introduced.
+
+The record is immutable per (actual Storage instance, Server, scope partition, Computer, thread, assistant turn, Stop request). SP-627 defines its exact key and physical custody. Commit absent-to-present by whole-value CAS and verified durable readback; an identical repeat returns the saved result, differing result bytes conflict and never overwrite it. cancelled requires verified all-target stopping within the original three-second grace; timeout requires the original grace to have expired with targeted work unresolved. Stop delivery alone proves neither. The canonical outcome and pending-operation first-receipt/source custody survive restart and coherent backup recovery; never reconstruct an outcome from the request event, partial reply, live state or missing row. A missing or unresolved outcome holds the queue. Historical reads validate the written schema/recipe and exact original request/source/Storage custody with current authorization, deletion and hold checks, irrespective of later turn state. They cannot cancel anything, release the queue or make a partial reply complete.
+
+DL-427 requires the replacement to be fully specified and verified to survive restart and recovery before old outcome names retire. ATS-306 specifies these verification obligations; static models are contract evidence only and native execution remains NOT_RUN. SP-628 records the three separate conditional retirement applications and preserves original readable bytes. The saved record's retention_policy_ref is PENDING_RETENTION_DECISION; the exact question is recorded in SP-627 and Plans/dch_stop_contracts.json. This unit chooses no lifetime or deletion exception.
+
+```yaml
+plan_unit_id: ACD-628
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: '### ACD-628 — saved assistant-turn Stop outcome
+
+
+  DL-406 and DL-427 authorize this newly authored saved result on the actual assistant reply and its work. The record
+  is assistant_turn_stop_outcome, schema Plans/dch_stop_outcome.schema.json, with separate closed Project/application
+  IDs pm.dch_stop.outcome.project.v1 and pm.dch_stop.outcome.application.v1, version 1.0.0. It is the assistant
+  turn''s own canonical Stop result, not a derived work-list entry, delivery receipt, display marker, legacy run
+  alias or second outcome EventRecord. The record has exactly schema_id, schema_version, storage_instance_id, scope,
+  computer_id, thread_id, assistant_turn_id, stop_request_event_id, target_work, outcome and outcome_at_utc. Each
+  target_work item has exactly kind (model, tool or subagent), work_ref and lease_ref from the actual accepted reply/work
+  snapshot; list order and exact identities are preserved. stop_request_event_id links the original verified chat.response_stop_requested;
+  scope/Computer/thread/assistant turn and exact targets equal that request and its original accepted source. outcome
+  is cancelled or timeout and outcome_at_utc is the actual owner-observed decision time, not acknowledgement, display
+  or Storage persistence time. No per-target result, new run state, automatic queue-release field or new user action
+  is introduced.
+
+
+  The record is immutable per (actual Storage instance, Server, scope partition, Computer, thread, assistant turn,
+  Stop request). SP-627 defines its exact key and physical custody. Commit absent-to-present by whole-value CAS
+  and verified durable readback; an identical repeat returns the saved result, differing result bytes conflict and
+  never overwrite it. cancelled requires verified all-target stopping within the original three-second grace; timeout
+  requires the original grace to have expired with targeted work unresolved. Stop delivery alone proves neither.
+  The canonical outcome and pending-operation first-receipt/source custody survive restart and coherent backup recovery;
+  never reconstruct an outcome from the request event, partial reply, live state or missing row. A missing or unresolved
+  outcome holds the queue. Historical reads validate the written schema/recipe and exact original request/source/Storage
+  custody with current authorization, deletion and hold checks, irrespective of later turn state. They cannot cancel
+  anything, release the queue or make a partial reply complete.
+
+
+  DL-427 requires the replacement to be fully specified and verified to survive restart and recovery before old
+  outcome names retire. ATS-306 specifies these verification obligations; static models are contract evidence only
+  and native execution remains NOT_RUN. SP-628 records the three separate conditional retirement applications and
+  preserves original readable bytes. The saved record''s retention_policy_ref is PENDING_RETENTION_DECISION; the
+  exact question is recorded in SP-627 and Plans/dch_stop_contracts.json. This unit chooses no lifetime or deletion
+  exception.'
+gui_related: true
+gui_classification_reason: Governs visible reply Stop and queue behavior.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- The exact Stop request, saved outcome, custody, queue barriers and conditional retirements follow DL-406/DL-427;
+  unresolved retention and native verification remain explicit.
+validation_surfaces:
+- python3 scripts/pm_dch_stop.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch_stop
+implementation_surfaces:
+- Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-406 on origin/plans/ea-cards1-answers-20261104
+- DL-427 on origin/plans/ea-cards2-answers-20261105; E-CARDS-2 item 3.a option A
+preserved_exact_tokens:
+- chat.response_stop_requested
+- DL-406
+- DL-427
+negative_constraints:
+- No event admission, Decision Log entry or native durability claim.
+- No new retention policy or automatic queue release.
 owner_hints:
 - Plans/assistant-chat-design.md
 ```

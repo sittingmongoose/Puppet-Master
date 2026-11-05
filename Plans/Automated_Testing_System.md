@@ -7424,3 +7424,77 @@ negative_constraints:
 owner_hints:
 - Plans/Automated_Testing_System.md
 ```
+
+
+### ATS-306 — Stop request, saved outcome and retirement contract oracles
+
+DL-406 and DL-427 govern the exact family chat.response_stop_requested, checked separately by python3 scripts/pm_dch_stop.py. Plans/dch_stop_contract_fixtures.json supplies independent Project/application request, original accepted assistant-turn/work, actual-Store record commitment and cancellation/timeout observations. Plans/dch_stop_request.schema.json and Plans/dch_stop_outcome.schema.json are closed, all references are resolved eagerly, and existing mandatory format validation is enforced. Cases cover schema presence/closure, exact types and LF/format refusals; actual original target/identity/actor/time joins; current replay-only refusal and retained compatibility/history; exact CV-366 application keys and encoded Project partitions; caller-semantic retries excluding Storage metadata; verified full-body/pointer limits and SP-337 custody; actual original Storage metadata; three-second cancellation versus timeout and exact saved outcome time; result CAS/repeat/conflict and restart/recovery model readback; and saved-outcome plus separate-user-action queue barriers. Acknowledgement/display-only success is refused. Every negative starts from a valid case and changes one invariant on the surface being tested; dependent keys, references, copies and commitments remain coherent. Exceptions and successful exits never count as refusal. New real guards need negatives. Shared guard-isolation adoption/proof completeness and shared number-domain/provenance defects stay explicitly PARTIAL sweep items; do not rebuild pm_dch_guard_proofs.py or introduce another lane serializer/format grammar.
+
+Native acceptance remains NOT_RUN and is mandatory before the SP-628 retirement cutoff: stop the real process after original-request receipt, cancellation delivery, result staging, result CAS and acknowledgement loss; restart and recover from a coherent backup; verify exact request/assistant turn/work/result bytes and first receipt, preserve the original deadline, never rerun work, keep unresolved or unsaved outcomes behind the queue barrier, require separate user release and rerun current permission/hold gates. Prove both cancelled and timeout outcomes survive restart and recovery and that a lost result cannot be mistaken for success. The static model does not certify physical sync, redb CAS, authenticated source provenance or these native crash tests. Run each of the seventeen unchanged families separately through pm_dch_events.py --family, then this separate Stop checker; record every exit code. No admission or twelve-PASS claim is implied.
+
+```yaml
+plan_unit_id: ATS-306
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: '### ATS-306 — Stop request, saved outcome and retirement contract oracles
+
+
+  DL-406 and DL-427 govern the exact family chat.response_stop_requested, checked separately by python3 scripts/pm_dch_stop.py. Plans/dch_stop_contract_fixtures.json
+  supplies independent Project/application request, original accepted assistant-turn/work, actual-Store record commitment
+  and cancellation/timeout observations. Plans/dch_stop_request.schema.json and Plans/dch_stop_outcome.schema.json
+  are closed, all references are resolved eagerly, and existing mandatory format validation is enforced. Cases cover
+  schema presence/closure, exact types and LF/format refusals; actual original target/identity/actor/time joins;
+  current replay-only refusal and retained compatibility/history; exact CV-366 application keys and encoded Project
+  partitions; caller-semantic retries excluding Storage metadata; verified full-body/pointer limits and SP-337 custody;
+  actual original Storage metadata; three-second cancellation versus timeout and exact saved outcome time; result
+  CAS/repeat/conflict and restart/recovery model readback; and saved-outcome plus separate-user-action queue barriers.
+  Acknowledgement/display-only success is refused. Every negative starts from a valid case and changes one invariant
+  on the surface being tested; dependent keys, references, copies and commitments remain coherent. Exceptions and
+  successful exits never count as refusal. New real guards need negatives. Shared guard-isolation adoption/proof
+  completeness and shared number-domain/provenance defects stay explicitly PARTIAL sweep items; do not rebuild pm_dch_guard_proofs.py
+  or introduce another lane serializer/format grammar.
+
+
+  Native acceptance remains NOT_RUN and is mandatory before the SP-628 retirement cutoff: stop the real process
+  after original-request receipt, cancellation delivery, result staging, result CAS and acknowledgement loss; restart
+  and recover from a coherent backup; verify exact request/assistant turn/work/result bytes and first receipt, preserve
+  the original deadline, never rerun work, keep unresolved or unsaved outcomes behind the queue barrier, require
+  separate user release and rerun current permission/hold gates. Prove both cancelled and timeout outcomes survive
+  restart and recovery and that a lost result cannot be mistaken for success. The static model does not certify
+  physical sync, redb CAS, authenticated source provenance or these native crash tests. Run each of the seventeen
+  unchanged families separately through pm_dch_events.py --family, then this separate Stop checker; record every
+  exit code. No admission or twelve-PASS claim is implied.'
+gui_related: false
+gui_classification_reason: Persistence, contract or verification of the existing Stop behavior.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- The exact Stop request, saved outcome, custody, queue barriers and conditional retirements follow DL-406/DL-427;
+  unresolved retention and native verification remain explicit.
+validation_surfaces:
+- python3 scripts/pm_dch_stop.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch_stop
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-406 on origin/plans/ea-cards1-answers-20261104
+- DL-427 on origin/plans/ea-cards2-answers-20261105; E-CARDS-2 item 3.a option A
+preserved_exact_tokens:
+- chat.response_stop_requested
+- DL-406
+- DL-427
+negative_constraints:
+- No event admission, Decision Log entry or native durability claim.
+- No new retention policy or automatic queue release.
+owner_hints:
+- Plans/Automated_Testing_System.md
+```
