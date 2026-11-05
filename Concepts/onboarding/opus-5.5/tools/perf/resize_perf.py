@@ -44,7 +44,7 @@ SAMPLER = r"""
   }
   const loop = (t) => { if (!R.on) return; const r = (R.el && R.el.isConnected) ? R.el.getBoundingClientRect() : null; R.frames.push([t, R.axis === 'y' ? R.lastY : R.lastX, r ? edge(r) : null, r ? r.width : null]); R.raf = requestAnimationFrame(loop); };
   R.start = (el, kind, axis) => { R.el = el; R.kind = kind; R.axis = axis || 'x'; R.frames = []; R.marks = []; R.moves = []; R.on = true; R.raf = requestAnimationFrame(loop); return true; };
-  R.stop = () => { R.on = false; cancelAnimationFrame(R.raf); return { frames: R.frames, marks: R.marks, moves: R.moves }; };
+  R.stop = () => { R.on = false; cancelAnimationFrame(R.raf); return { frames: R.frames, marks: R.marks, moves: R.moves, injectedDelayMoves: window.__moveDelayCount || 0 }; };
   return true;
 })()
 """
@@ -318,7 +318,7 @@ def main():
                         failures.append(f"{theme} {surf}: pointer-to-edge lag p95 {lag95:.1f}px > 2px (1:1 canon)")
                 if gap95 > 200.0:
                     failures.append(f'{theme} {surf}: drag frame gap p95 {gap95:.1f}ms > absolute 200ms ceiling')
-                metrics[theme+' '+surf] = {'floor':floor,'gap95':gap95,'lag95':lag95,'range':rng,'movesPerFrame':mpf}
+                metrics[theme+' '+surf] = {'floor':floor,'gap95':gap95,'lag95':lag95,'range':rng,'movesPerFrame':mpf,'injectedDelayMoves':raw.get('injectedDelayMoves',0)}
         wide_both_check(b, url, fam0, mode0, failures)
     finally:
         b.close()
