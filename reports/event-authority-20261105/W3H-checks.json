@@ -1,0 +1,166 @@
+[
+  {
+    "check": "phase1-static",
+    "name": "phase1-static",
+    "command": [
+      "python3",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3H/check-phase1.py"
+    ],
+    "exit": 0,
+    "start_available_gib": 15,
+    "lowest_available_gib": 15,
+    "seconds": 6.01,
+    "pauses": [],
+    "log_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3H/phase1-static.log",
+    "log_sha256": "a04d9cbb035e4ec1d1a4e9f43a6046d1f40ac0fb9e02f30466215a9d70b28d78"
+  },
+  {
+    "check": "phase1-static-final",
+    "name": "phase1-static-final",
+    "command": [
+      "python3",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3H/check-phase1.py"
+    ],
+    "exit": 0,
+    "start_available_gib": 9,
+    "lowest_available_gib": 8,
+    "seconds": 8.04,
+    "pauses": [],
+    "log_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3H/phase1-static-final.log",
+    "log_sha256": "ba12fd463b4ee48511f7f5a3ee22436d28ecf5b913cba24ac4d5900ac481a380"
+  },
+  {
+    "check": "shards-generate-final",
+    "name": "shards-generate-final",
+    "command": [
+      "python3",
+      "scripts/pm-shard-plans.py",
+      "--generate",
+      "--config",
+      "Plans/sharding_config.json"
+    ],
+    "exit": 0,
+    "start_available_gib": 15,
+    "lowest_available_gib": 15,
+    "seconds": 4.01,
+    "pauses": [],
+    "log_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3H/shards-generate-final.log",
+    "log_sha256": "73acd25fdd04213a62a615d2ed99af965dd8d9cb2cbdf4f570a3b3afb1f39662"
+  },
+  {
+    "check": "index-generate-final",
+    "name": "index-generate-final",
+    "command": [
+      "python3",
+      "scripts/pm-plan-index.py",
+      "generate"
+    ],
+    "exit": 0,
+    "start_available_gib": 14,
+    "lowest_available_gib": 14,
+    "seconds": 46.09,
+    "pauses": [],
+    "log_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3H/index-generate-final.log",
+    "log_sha256": "e4926576ba412ad6fa0f876b618467296a77d39c2bc9f4e5df08c5542cdc4100"
+  },
+  {
+    "check": "shards-check-final",
+    "name": "shards-check-final",
+    "command": [
+      "python3",
+      "scripts/pm-shard-plans.py",
+      "--check",
+      "--config",
+      "Plans/sharding_config.json"
+    ],
+    "exit": 0,
+    "start_available_gib": 15,
+    "lowest_available_gib": 12,
+    "seconds": 24.04,
+    "pauses": [],
+    "log_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3H/shards-check-final.log",
+    "log_sha256": "0e2cfc4fb3d6714670dd8930380d472f05dd4eb320eba2363ef0cb252da9b10f"
+  },
+  {
+    "check": "index-validate-final",
+    "name": "index-validate-final",
+    "command": [
+      "python3",
+      "scripts/pm-plan-index.py",
+      "validate"
+    ],
+    "exit": 0,
+    "start_available_gib": 12,
+    "lowest_available_gib": 12,
+    "seconds": 56.1,
+    "pauses": [],
+    "log_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3H/index-validate-final.log",
+    "log_sha256": "550ff18fbc1099df6e2c3bcef62b71ec7a32ea9c58fe9e0727a3f28f6bd0773e"
+  },
+  {
+    "check": "storage-profile-final",
+    "name": "storage-profile-final",
+    "command": [
+      "python3",
+      "scripts/pm-storage-profile-check.py"
+    ],
+    "exit": 1,
+    "start_available_gib": 12,
+    "lowest_available_gib": 12,
+    "seconds": 2.01,
+    "pauses": [],
+    "log_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3H/storage-profile-final.log",
+    "log_sha256": "e1936671085f1620cbda633914998682c00a6e4d6bf75069fa92a98c91fabffe"
+  },
+  {
+    "check": "named-plan-semantics",
+    "name": "named-plan-semantics",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_named_plan_semantics.py"
+    ],
+    "exit": 0,
+    "start_available_gib": 16,
+    "lowest_available_gib": 16,
+    "seconds": 2.01,
+    "pauses": [],
+    "log_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3H/named-plan-semantics.log",
+    "log_sha256": "9176be8aabb6ee8e0d15324193f63b660ac967e102f3ae99b42203726f0ee794"
+  },
+  {
+    "check": "assistant-contract-final",
+    "name": "assistant-contract-final",
+    "command": [
+      "python3",
+      "scripts/pm-assistant-contract-check.py"
+    ],
+    "exit": 1,
+    "start_available_gib": 12,
+    "lowest_available_gib": 10,
+    "seconds": 36.07,
+    "pauses": [],
+    "log_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3H/assistant-contract-final.log",
+    "log_sha256": "7dd861dcd98f93800d52b236d8426642f8828c91f80e991a99f764430ed22d5e"
+  },
+  {
+    "check": "id-all-origin-docs",
+    "name": "id-all-origin-docs",
+    "command": [
+      "python3",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3H/check-ids-wide.py"
+    ],
+    "exit": 0,
+    "start_available_gib": 13,
+    "lowest_available_gib": 7,
+    "seconds": 98.32,
+    "pauses": [],
+    "log_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3H/id-all-origin-docs.log",
+    "log_sha256": "e40f01b1512ff8f4246ffd4718c6c24a90ce250dca713a24895d1367e16a23c3"
+  }
+]

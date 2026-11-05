@@ -29474,3 +29474,2179 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-365
+
+## SP-1550 — `assistant_plan.schedule_invalidated` publication, retention and reader (newly authored, no admission)
+
+```yaml
+plan_unit_id: SP-1550
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Exactly assistant_plan.schedule_invalidated@1.0.0 adopts SP-286/CV-339 full-value first-receipt
+  custody, SP-278 complete generic-index reads and the adjacent per-family publication journal. Canonical state
+  remains with APR-1550; the journal cannot reconstruct it. Retention is RP-AUTHORITY-INDEFINITE@1.0.0 under Card
+  1 G18; no registry admission or family checkpoint is granted.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- SP-278
+- SP-286
+- APR-1550
+- CV-1550
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- assistant_plan.schedule_invalidated
+- ea_w3h_assistant_plan_schedule_invalidated_publication
+- RP-AUTHORITY-INDEFINITE
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+| Stored value for `assistant_plan.schedule_invalidated` | Key | Schema | Producer | Consumers | Retention |
+|---|---|---|---|---|---|
+| `ea_w3h_assistant_plan_schedule_invalidated_publication` | `ea_w3h_assistant_plan_schedule_invalidated.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}` | `Plans/event_payloads/w3h/assistant_plan_schedule_invalidated.schema.json#/$defs/publication` | `storage.w3h.assistant_plan_schedule_invalidated.append.v1@1.0.0` via original `AssistantPlanRuntime::commit_document_revision` transaction | `storage.w3h.assistant_plan_schedule_invalidated.recovery_read.v1@1.0.0` and original Storage backup/restore owner | `RP-EVENT-INDEX-SOURCE@1.0.0`, coupled only to this event’s `RP-AUTHORITY-INDEFINITE@1.0.0` and actual holds |
+
+This is a new canonical non-rebuildable publication journal, not another domain record or event registry row. The body transaction’s sole adapter prepares its complete original semantic event with source custody once; the owner source effect plus journal commit atomically or neither does. Admission/current writer/source/permission/Stop and expected-domain-currentness precede effects. The prepared entry has null receipt/commitment. SP-286’s actual durable append returns the exact first receipt and v2 original-value commitment; the journal CAS advances prepared→appended→settled without changing the prepared event. `appended` means original append is resolved, `settled` means the already accepted domain result plus event receipt are ready for its original acknowledgement. A lost response, stale journal CAS or restart only resolves the same complete original, never repeats its source effect. Dedupe absence, contradictory receipt/value, missing pack bytes or unresolved restore fences instead of accepting a new event. Only the actual original native owner may issue or enroll this journal; reference strings and fixture copies are insufficient. No existing owner effect is replayed from it.
+
+The exact reader `storage.w3h.assistant_plan_schedule_invalidated.recovery_read.v1@1.0.0` adopts SP-278’s complete CURRENT-selected source token and range under `APR-1550`. It is read-only original-result/restart inspection; **no family projector, projection, checkpoint key or durable advance exists**. Generic index CAS/rebuild stays SP-278-owned. A stored token cannot include redb_snapshot_id. Live transaction identity joins the nine durable fields after all helpers at release; healthy same-generation-but-changed-frontier, wrong instance/partition, stale coverage and degraded source cannot claim current results. A valid retained fact uses authentic original recipe/admission/value proof and survives live-state changes; current writer rules never run against historical originals.
+
+Bind this exact event to `RP-AUTHORITY-INDEFINITE@1.0.0`, approved deck-1 Card 1 `G18` (DL-401). No TTL or count cap. For Project entries only explicit Delete Puppet Master project data removes this audit history under existing holds; Remove project from list, deleting a described object or deleting its chat does not. Application records retain the existing app-root custody/deletion rules, never a fabricated Project. Disk pressure refuses new records. Referenced bodies retain their own policies and access; this content-free event grants no longer retention or access to them. The publication value below adopts RP-EVENT-INDEX-SOURCE, coupled to this event and its protections, with no independent lifetime. SP-286 receipt custody keeps its own policy. The publication’s source-coupled retention does not shorten mandatory original first-receipt custody, permit unresolved journal loss, or preserve linked content after its owner deletes it. Required pending/result/backup/hold dependencies fence journal cleanup. Missing-original reads disclose unavailable without reconstructing a current body.
+
+Every stored part, including the complete journal wrapper, is measured in its declared physical encoding. Use existing SP-236 canonical MessagePack and SP-337 durable payload references for bodies above 16 KiB; externalize the event body before journal commit, retaining the complete exact EventRecord with payload_ref and null inline payload. If any required remaining wrapper still exceeds its own inline value limit, return the existing Storage unavailable/value-too-large route **before** the owner effect; never truncate, silently cap admitted semantic numbers or leave a mandatory oversized journal. Pack bytes and addressing metadata settle before referencing acknowledgement. This family authors no timestamp, numeric, physical codec or alternate source hash.
+
+Backup settles owner source effect/result, the journal, actual seglog/packs, full-value receipt and generic-index recovery state coherently. Restore preserves original operation IDs, admitted editions, Stop/tombstones, pending originals and full-value identity; missing post-backup originals cannot be replaced by a new operation. Writer and reader withdrawal use the exact protocol of APR-1550, preserving canonical custody and truthful unavailable results; no replay dispatch or new family checkpoint is introduced. Tests and criteria remain phase-1 planning only.
+
+ContractRef: ContractName:Plans/Assistant_Plan_Runtime.md#APR-1550, ContractName:Plans/Contracts_V0.md#CV-1550, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337
+
+## SP-1551 — `docker.compose.scenario.deleted` publication, retention and reader (newly authored, no admission)
+
+```yaml
+plan_unit_id: SP-1551
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Exactly docker.compose.scenario.deleted@1.0.0 adopts SP-286/CV-339 full-value first-receipt custody,
+  SP-278 complete generic-index reads and the adjacent per-family publication journal. Canonical state remains with
+  CRAU-1551; the journal cannot reconstruct it. Retention is RP-AUTHORITY-INDEFINITE@1.0.0 under Card 1 G21; no
+  registry admission or family checkpoint is granted.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- SP-278
+- SP-286
+- CRAU-1551
+- CV-1551
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- docker.compose.scenario.deleted
+- ea_w3h_docker_compose_scenario_deleted_publication
+- RP-AUTHORITY-INDEFINITE
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+| Stored value for `docker.compose.scenario.deleted` | Key | Schema | Producer | Consumers | Retention |
+|---|---|---|---|---|---|
+| `ea_w3h_docker_compose_scenario_deleted_publication` | `ea_w3h_docker_compose_scenario_deleted.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}` | `Plans/event_payloads/w3h/docker_compose_scenario_deleted.schema.json#/$defs/publication` | `storage.w3h.docker_compose_scenario_deleted.append.v1@1.0.0` via original `ComposeScenarioController::deleted` transaction | `storage.w3h.docker_compose_scenario_deleted.recovery_read.v1@1.0.0` and original Storage backup/restore owner | `RP-EVENT-INDEX-SOURCE@1.0.0`, coupled only to this event’s `RP-AUTHORITY-INDEFINITE@1.0.0` and actual holds |
+
+This is a new canonical non-rebuildable publication journal, not another domain record or event registry row. The body transaction’s sole adapter prepares its complete original semantic event with source custody once; the owner source effect plus journal commit atomically or neither does. Admission/current writer/source/permission/Stop and expected-domain-currentness precede effects. The prepared entry has null receipt/commitment. SP-286’s actual durable append returns the exact first receipt and v2 original-value commitment; the journal CAS advances prepared→appended→settled without changing the prepared event. `appended` means original append is resolved, `settled` means the already accepted domain result plus event receipt are ready for its original acknowledgement. A lost response, stale journal CAS or restart only resolves the same complete original, never repeats its source effect. Dedupe absence, contradictory receipt/value, missing pack bytes or unresolved restore fences instead of accepting a new event. Only the actual original native owner may issue or enroll this journal; reference strings and fixture copies are insufficient. No existing owner effect is replayed from it.
+
+The exact reader `storage.w3h.docker_compose_scenario_deleted.recovery_read.v1@1.0.0` adopts SP-278’s complete CURRENT-selected source token and range under `CRAU-1551`. It is read-only original-result/restart inspection; **no family projector, projection, checkpoint key or durable advance exists**. Generic index CAS/rebuild stays SP-278-owned. A stored token cannot include redb_snapshot_id. Live transaction identity joins the nine durable fields after all helpers at release; healthy same-generation-but-changed-frontier, wrong instance/partition, stale coverage and degraded source cannot claim current results. A valid retained fact uses authentic original recipe/admission/value proof and survives live-state changes; current writer rules never run against historical originals.
+
+Bind this exact event to `RP-AUTHORITY-INDEFINITE@1.0.0`, approved deck-1 Card 1 `G21` (DL-401). No TTL or count cap. For Project entries only explicit Delete Puppet Master project data removes this audit history under existing holds; Remove project from list, deleting a described object or deleting its chat does not. Application records retain the existing app-root custody/deletion rules, never a fabricated Project. Disk pressure refuses new records. Referenced bodies retain their own policies and access; this content-free event grants no longer retention or access to them. The publication value below adopts RP-EVENT-INDEX-SOURCE, coupled to this event and its protections, with no independent lifetime. SP-286 receipt custody keeps its own policy. The publication’s source-coupled retention does not shorten mandatory original first-receipt custody, permit unresolved journal loss, or preserve linked content after its owner deletes it. Required pending/result/backup/hold dependencies fence journal cleanup. Missing-original reads disclose unavailable without reconstructing a current body.
+
+Every stored part, including the complete journal wrapper, is measured in its declared physical encoding. Use existing SP-236 canonical MessagePack and SP-337 durable payload references for bodies above 16 KiB; externalize the event body before journal commit, retaining the complete exact EventRecord with payload_ref and null inline payload. If any required remaining wrapper still exceeds its own inline value limit, return the existing Storage unavailable/value-too-large route **before** the owner effect; never truncate, silently cap admitted semantic numbers or leave a mandatory oversized journal. Pack bytes and addressing metadata settle before referencing acknowledgement. This family authors no timestamp, numeric, physical codec or alternate source hash.
+
+Backup settles owner source effect/result, the journal, actual seglog/packs, full-value receipt and generic-index recovery state coherently. Restore preserves original operation IDs, admitted editions, Stop/tombstones, pending originals and full-value identity; missing post-backup originals cannot be replaced by a new operation. Writer and reader withdrawal use the exact protocol of CRAU-1551, preserving canonical custody and truthful unavailable results; no replay dispatch or new family checkpoint is introduced. Tests and criteria remain phase-1 planning only.
+
+ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md#CRAU-1551, ContractName:Plans/Contracts_V0.md#CV-1551, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337
+
+## SP-1552 — `docker.compose.scenario.edited` publication, retention and reader (newly authored, no admission)
+
+```yaml
+plan_unit_id: SP-1552
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Exactly docker.compose.scenario.edited@1.0.0 adopts SP-286/CV-339 full-value first-receipt custody,
+  SP-278 complete generic-index reads and the adjacent per-family publication journal. Canonical state remains with
+  CRAU-1552; the journal cannot reconstruct it. Retention is RP-AUTHORITY-INDEFINITE@1.0.0 under Card 1 G21; no
+  registry admission or family checkpoint is granted.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- SP-278
+- SP-286
+- CRAU-1552
+- CV-1552
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- docker.compose.scenario.edited
+- ea_w3h_docker_compose_scenario_edited_publication
+- RP-AUTHORITY-INDEFINITE
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+| Stored value for `docker.compose.scenario.edited` | Key | Schema | Producer | Consumers | Retention |
+|---|---|---|---|---|---|
+| `ea_w3h_docker_compose_scenario_edited_publication` | `ea_w3h_docker_compose_scenario_edited.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}` | `Plans/event_payloads/w3h/docker_compose_scenario_edited.schema.json#/$defs/publication` | `storage.w3h.docker_compose_scenario_edited.append.v1@1.0.0` via original `ComposeScenarioController::edited` transaction | `storage.w3h.docker_compose_scenario_edited.recovery_read.v1@1.0.0` and original Storage backup/restore owner | `RP-EVENT-INDEX-SOURCE@1.0.0`, coupled only to this event’s `RP-AUTHORITY-INDEFINITE@1.0.0` and actual holds |
+
+This is a new canonical non-rebuildable publication journal, not another domain record or event registry row. The body transaction’s sole adapter prepares its complete original semantic event with source custody once; the owner source effect plus journal commit atomically or neither does. Admission/current writer/source/permission/Stop and expected-domain-currentness precede effects. The prepared entry has null receipt/commitment. SP-286’s actual durable append returns the exact first receipt and v2 original-value commitment; the journal CAS advances prepared→appended→settled without changing the prepared event. `appended` means original append is resolved, `settled` means the already accepted domain result plus event receipt are ready for its original acknowledgement. A lost response, stale journal CAS or restart only resolves the same complete original, never repeats its source effect. Dedupe absence, contradictory receipt/value, missing pack bytes or unresolved restore fences instead of accepting a new event. Only the actual original native owner may issue or enroll this journal; reference strings and fixture copies are insufficient. No existing owner effect is replayed from it.
+
+The exact reader `storage.w3h.docker_compose_scenario_edited.recovery_read.v1@1.0.0` adopts SP-278’s complete CURRENT-selected source token and range under `CRAU-1552`. It is read-only original-result/restart inspection; **no family projector, projection, checkpoint key or durable advance exists**. Generic index CAS/rebuild stays SP-278-owned. A stored token cannot include redb_snapshot_id. Live transaction identity joins the nine durable fields after all helpers at release; healthy same-generation-but-changed-frontier, wrong instance/partition, stale coverage and degraded source cannot claim current results. A valid retained fact uses authentic original recipe/admission/value proof and survives live-state changes; current writer rules never run against historical originals.
+
+Bind this exact event to `RP-AUTHORITY-INDEFINITE@1.0.0`, approved deck-1 Card 1 `G21` (DL-401). No TTL or count cap. For Project entries only explicit Delete Puppet Master project data removes this audit history under existing holds; Remove project from list, deleting a described object or deleting its chat does not. Application records retain the existing app-root custody/deletion rules, never a fabricated Project. Disk pressure refuses new records. Referenced bodies retain their own policies and access; this content-free event grants no longer retention or access to them. The publication value below adopts RP-EVENT-INDEX-SOURCE, coupled to this event and its protections, with no independent lifetime. SP-286 receipt custody keeps its own policy. The publication’s source-coupled retention does not shorten mandatory original first-receipt custody, permit unresolved journal loss, or preserve linked content after its owner deletes it. Required pending/result/backup/hold dependencies fence journal cleanup. Missing-original reads disclose unavailable without reconstructing a current body.
+
+Every stored part, including the complete journal wrapper, is measured in its declared physical encoding. Use existing SP-236 canonical MessagePack and SP-337 durable payload references for bodies above 16 KiB; externalize the event body before journal commit, retaining the complete exact EventRecord with payload_ref and null inline payload. If any required remaining wrapper still exceeds its own inline value limit, return the existing Storage unavailable/value-too-large route **before** the owner effect; never truncate, silently cap admitted semantic numbers or leave a mandatory oversized journal. Pack bytes and addressing metadata settle before referencing acknowledgement. This family authors no timestamp, numeric, physical codec or alternate source hash.
+
+Backup settles owner source effect/result, the journal, actual seglog/packs, full-value receipt and generic-index recovery state coherently. Restore preserves original operation IDs, admitted editions, Stop/tombstones, pending originals and full-value identity; missing post-backup originals cannot be replaced by a new operation. Writer and reader withdrawal use the exact protocol of CRAU-1552, preserving canonical custody and truthful unavailable results; no replay dispatch or new family checkpoint is introduced. Tests and criteria remain phase-1 planning only.
+
+ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md#CRAU-1552, ContractName:Plans/Contracts_V0.md#CV-1552, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337
+
+## SP-1553 — `docker.compose.scenario.run` publication, retention and reader (newly authored, no admission)
+
+```yaml
+plan_unit_id: SP-1553
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Exactly docker.compose.scenario.run@1.0.0 adopts SP-286/CV-339 full-value first-receipt custody,
+  SP-278 complete generic-index reads and the adjacent per-family publication journal. Canonical state remains with
+  CRAU-1553; the journal cannot reconstruct it. Retention is RP-AUTHORITY-INDEFINITE@1.0.0 under Card 1 G21; no
+  registry admission or family checkpoint is granted.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- SP-278
+- SP-286
+- CRAU-1553
+- CV-1553
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- docker.compose.scenario.run
+- ea_w3h_docker_compose_scenario_run_publication
+- RP-AUTHORITY-INDEFINITE
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+| Stored value for `docker.compose.scenario.run` | Key | Schema | Producer | Consumers | Retention |
+|---|---|---|---|---|---|
+| `ea_w3h_docker_compose_scenario_run_publication` | `ea_w3h_docker_compose_scenario_run.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}` | `Plans/event_payloads/w3h/docker_compose_scenario_run.schema.json#/$defs/publication` | `storage.w3h.docker_compose_scenario_run.append.v1@1.0.0` via original `ComposeScenarioController::run` transaction | `storage.w3h.docker_compose_scenario_run.recovery_read.v1@1.0.0` and original Storage backup/restore owner | `RP-EVENT-INDEX-SOURCE@1.0.0`, coupled only to this event’s `RP-AUTHORITY-INDEFINITE@1.0.0` and actual holds |
+
+This is a new canonical non-rebuildable publication journal, not another domain record or event registry row. The body transaction’s sole adapter prepares its complete original semantic event with source custody once; the owner source effect plus journal commit atomically or neither does. Admission/current writer/source/permission/Stop and expected-domain-currentness precede effects. The prepared entry has null receipt/commitment. SP-286’s actual durable append returns the exact first receipt and v2 original-value commitment; the journal CAS advances prepared→appended→settled without changing the prepared event. `appended` means original append is resolved, `settled` means the already accepted domain result plus event receipt are ready for its original acknowledgement. A lost response, stale journal CAS or restart only resolves the same complete original, never repeats its source effect. Dedupe absence, contradictory receipt/value, missing pack bytes or unresolved restore fences instead of accepting a new event. Only the actual original native owner may issue or enroll this journal; reference strings and fixture copies are insufficient. No existing owner effect is replayed from it. For docker.compose.scenario.run, this atomic body boundary is the canonical recording of the already owner-confirmed original run result; it cannot atomically execute an external Compose process. The existing run owner retains intent/effect/recovery custody, and this publication never launches or retries Compose.
+
+The exact reader `storage.w3h.docker_compose_scenario_run.recovery_read.v1@1.0.0` adopts SP-278’s complete CURRENT-selected source token and range under `CRAU-1553`. It is read-only original-result/restart inspection; **no family projector, projection, checkpoint key or durable advance exists**. Generic index CAS/rebuild stays SP-278-owned. A stored token cannot include redb_snapshot_id. Live transaction identity joins the nine durable fields after all helpers at release; healthy same-generation-but-changed-frontier, wrong instance/partition, stale coverage and degraded source cannot claim current results. A valid retained fact uses authentic original recipe/admission/value proof and survives live-state changes; current writer rules never run against historical originals.
+
+Bind this exact event to `RP-AUTHORITY-INDEFINITE@1.0.0`, approved deck-1 Card 1 `G21` (DL-401). No TTL or count cap. For Project entries only explicit Delete Puppet Master project data removes this audit history under existing holds; Remove project from list, deleting a described object or deleting its chat does not. Application records retain the existing app-root custody/deletion rules, never a fabricated Project. Disk pressure refuses new records. Referenced bodies retain their own policies and access; this content-free event grants no longer retention or access to them. The publication value below adopts RP-EVENT-INDEX-SOURCE, coupled to this event and its protections, with no independent lifetime. SP-286 receipt custody keeps its own policy. The publication’s source-coupled retention does not shorten mandatory original first-receipt custody, permit unresolved journal loss, or preserve linked content after its owner deletes it. Required pending/result/backup/hold dependencies fence journal cleanup. Missing-original reads disclose unavailable without reconstructing a current body.
+
+Every stored part, including the complete journal wrapper, is measured in its declared physical encoding. Use existing SP-236 canonical MessagePack and SP-337 durable payload references for bodies above 16 KiB; externalize the event body before journal commit, retaining the complete exact EventRecord with payload_ref and null inline payload. If any required remaining wrapper still exceeds its own inline value limit, return the existing Storage unavailable/value-too-large route **before** the owner effect; never truncate, silently cap admitted semantic numbers or leave a mandatory oversized journal. Pack bytes and addressing metadata settle before referencing acknowledgement. This family authors no timestamp, numeric, physical codec or alternate source hash.
+
+Backup settles owner source effect/result, the journal, actual seglog/packs, full-value receipt and generic-index recovery state coherently. Restore preserves original operation IDs, admitted editions, Stop/tombstones, pending originals and full-value identity; missing post-backup originals cannot be replaced by a new operation. Writer and reader withdrawal use the exact protocol of CRAU-1553, preserving canonical custody and truthful unavailable results; no replay dispatch or new family checkpoint is introduced. Tests and criteria remain phase-1 planning only.
+
+ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md#CRAU-1553, ContractName:Plans/Contracts_V0.md#CV-1553, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337
+
+## SP-1554 — `docker.compose.scenario.saved` publication, retention and reader (newly authored, no admission)
+
+```yaml
+plan_unit_id: SP-1554
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Exactly docker.compose.scenario.saved@1.0.0 adopts SP-286/CV-339 full-value first-receipt custody,
+  SP-278 complete generic-index reads and the adjacent per-family publication journal. Canonical state remains with
+  CRAU-1554; the journal cannot reconstruct it. Retention is RP-AUTHORITY-INDEFINITE@1.0.0 under Card 1 G21; no
+  registry admission or family checkpoint is granted.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- SP-278
+- SP-286
+- CRAU-1554
+- CV-1554
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- docker.compose.scenario.saved
+- ea_w3h_docker_compose_scenario_saved_publication
+- RP-AUTHORITY-INDEFINITE
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+| Stored value for `docker.compose.scenario.saved` | Key | Schema | Producer | Consumers | Retention |
+|---|---|---|---|---|---|
+| `ea_w3h_docker_compose_scenario_saved_publication` | `ea_w3h_docker_compose_scenario_saved.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}` | `Plans/event_payloads/w3h/docker_compose_scenario_saved.schema.json#/$defs/publication` | `storage.w3h.docker_compose_scenario_saved.append.v1@1.0.0` via original `ComposeScenarioController::saved` transaction | `storage.w3h.docker_compose_scenario_saved.recovery_read.v1@1.0.0` and original Storage backup/restore owner | `RP-EVENT-INDEX-SOURCE@1.0.0`, coupled only to this event’s `RP-AUTHORITY-INDEFINITE@1.0.0` and actual holds |
+
+This is a new canonical non-rebuildable publication journal, not another domain record or event registry row. The body transaction’s sole adapter prepares its complete original semantic event with source custody once; the owner source effect plus journal commit atomically or neither does. Admission/current writer/source/permission/Stop and expected-domain-currentness precede effects. The prepared entry has null receipt/commitment. SP-286’s actual durable append returns the exact first receipt and v2 original-value commitment; the journal CAS advances prepared→appended→settled without changing the prepared event. `appended` means original append is resolved, `settled` means the already accepted domain result plus event receipt are ready for its original acknowledgement. A lost response, stale journal CAS or restart only resolves the same complete original, never repeats its source effect. Dedupe absence, contradictory receipt/value, missing pack bytes or unresolved restore fences instead of accepting a new event. Only the actual original native owner may issue or enroll this journal; reference strings and fixture copies are insufficient. No existing owner effect is replayed from it.
+
+The exact reader `storage.w3h.docker_compose_scenario_saved.recovery_read.v1@1.0.0` adopts SP-278’s complete CURRENT-selected source token and range under `CRAU-1554`. It is read-only original-result/restart inspection; **no family projector, projection, checkpoint key or durable advance exists**. Generic index CAS/rebuild stays SP-278-owned. A stored token cannot include redb_snapshot_id. Live transaction identity joins the nine durable fields after all helpers at release; healthy same-generation-but-changed-frontier, wrong instance/partition, stale coverage and degraded source cannot claim current results. A valid retained fact uses authentic original recipe/admission/value proof and survives live-state changes; current writer rules never run against historical originals.
+
+Bind this exact event to `RP-AUTHORITY-INDEFINITE@1.0.0`, approved deck-1 Card 1 `G21` (DL-401). No TTL or count cap. For Project entries only explicit Delete Puppet Master project data removes this audit history under existing holds; Remove project from list, deleting a described object or deleting its chat does not. Application records retain the existing app-root custody/deletion rules, never a fabricated Project. Disk pressure refuses new records. Referenced bodies retain their own policies and access; this content-free event grants no longer retention or access to them. The publication value below adopts RP-EVENT-INDEX-SOURCE, coupled to this event and its protections, with no independent lifetime. SP-286 receipt custody keeps its own policy. The publication’s source-coupled retention does not shorten mandatory original first-receipt custody, permit unresolved journal loss, or preserve linked content after its owner deletes it. Required pending/result/backup/hold dependencies fence journal cleanup. Missing-original reads disclose unavailable without reconstructing a current body.
+
+Every stored part, including the complete journal wrapper, is measured in its declared physical encoding. Use existing SP-236 canonical MessagePack and SP-337 durable payload references for bodies above 16 KiB; externalize the event body before journal commit, retaining the complete exact EventRecord with payload_ref and null inline payload. If any required remaining wrapper still exceeds its own inline value limit, return the existing Storage unavailable/value-too-large route **before** the owner effect; never truncate, silently cap admitted semantic numbers or leave a mandatory oversized journal. Pack bytes and addressing metadata settle before referencing acknowledgement. This family authors no timestamp, numeric, physical codec or alternate source hash.
+
+Backup settles owner source effect/result, the journal, actual seglog/packs, full-value receipt and generic-index recovery state coherently. Restore preserves original operation IDs, admitted editions, Stop/tombstones, pending originals and full-value identity; missing post-backup originals cannot be replaced by a new operation. Writer and reader withdrawal use the exact protocol of CRAU-1554, preserving canonical custody and truthful unavailable results; no replay dispatch or new family checkpoint is introduced. Tests and criteria remain phase-1 planning only.
+
+ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md#CRAU-1554, ContractName:Plans/Contracts_V0.md#CV-1554, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337
+
+## SP-1555 — `execution_window.created` publication, retention and reader (newly authored, no admission)
+
+```yaml
+plan_unit_id: SP-1555
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Exactly execution_window.created@1.0.0 adopts SP-286/CV-339 full-value first-receipt custody, SP-278
+  complete generic-index reads and the adjacent per-family publication journal. Canonical state remains with SQR-1555;
+  the journal cannot reconstruct it. Retention is RP-AUTHORITY-INDEFINITE@1.0.0 under Card 1 G18; no registry admission
+  or family checkpoint is granted.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- SP-278
+- SP-286
+- SQR-1555
+- CV-1555
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- execution_window.created
+- ea_w3h_execution_window_created_publication
+- RP-AUTHORITY-INDEFINITE
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+| Stored value for `execution_window.created` | Key | Schema | Producer | Consumers | Retention |
+|---|---|---|---|---|---|
+| `ea_w3h_execution_window_created_publication` | `ea_w3h_execution_window_created.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}` | `Plans/event_payloads/w3h/execution_window_created.schema.json#/$defs/publication` | `storage.w3h.execution_window_created.append.v1@1.0.0` via original `SchedulingService::execution_window_created` transaction | `storage.w3h.execution_window_created.recovery_read.v1@1.0.0` and original Storage backup/restore owner | `RP-EVENT-INDEX-SOURCE@1.0.0`, coupled only to this event’s `RP-AUTHORITY-INDEFINITE@1.0.0` and actual holds |
+
+This is a new canonical non-rebuildable publication journal, not another domain record or event registry row. The body transaction’s sole adapter prepares its complete original semantic event with source custody once; the owner source effect plus journal commit atomically or neither does. Admission/current writer/source/permission/Stop and expected-domain-currentness precede effects. The prepared entry has null receipt/commitment. SP-286’s actual durable append returns the exact first receipt and v2 original-value commitment; the journal CAS advances prepared→appended→settled without changing the prepared event. `appended` means original append is resolved, `settled` means the already accepted domain result plus event receipt are ready for its original acknowledgement. A lost response, stale journal CAS or restart only resolves the same complete original, never repeats its source effect. Dedupe absence, contradictory receipt/value, missing pack bytes or unresolved restore fences instead of accepting a new event. Only the actual original native owner may issue or enroll this journal; reference strings and fixture copies are insufficient. No existing owner effect is replayed from it.
+
+The exact reader `storage.w3h.execution_window_created.recovery_read.v1@1.0.0` adopts SP-278’s complete CURRENT-selected source token and range under `SQR-1555`. It is read-only original-result/restart inspection; **no family projector, projection, checkpoint key or durable advance exists**. Generic index CAS/rebuild stays SP-278-owned. A stored token cannot include redb_snapshot_id. Live transaction identity joins the nine durable fields after all helpers at release; healthy same-generation-but-changed-frontier, wrong instance/partition, stale coverage and degraded source cannot claim current results. A valid retained fact uses authentic original recipe/admission/value proof and survives live-state changes; current writer rules never run against historical originals.
+
+Bind this exact event to `RP-AUTHORITY-INDEFINITE@1.0.0`, approved deck-1 Card 1 `G18` (DL-401). No TTL or count cap. For Project entries only explicit Delete Puppet Master project data removes this audit history under existing holds; Remove project from list, deleting a described object or deleting its chat does not. Application records retain the existing app-root custody/deletion rules, never a fabricated Project. Disk pressure refuses new records. Referenced bodies retain their own policies and access; this content-free event grants no longer retention or access to them. The publication value below adopts RP-EVENT-INDEX-SOURCE, coupled to this event and its protections, with no independent lifetime. SP-286 receipt custody keeps its own policy. The publication’s source-coupled retention does not shorten mandatory original first-receipt custody, permit unresolved journal loss, or preserve linked content after its owner deletes it. Required pending/result/backup/hold dependencies fence journal cleanup. Missing-original reads disclose unavailable without reconstructing a current body.
+
+Every stored part, including the complete journal wrapper, is measured in its declared physical encoding. Use existing SP-236 canonical MessagePack and SP-337 durable payload references for bodies above 16 KiB; externalize the event body before journal commit, retaining the complete exact EventRecord with payload_ref and null inline payload. If any required remaining wrapper still exceeds its own inline value limit, return the existing Storage unavailable/value-too-large route **before** the owner effect; never truncate, silently cap admitted semantic numbers or leave a mandatory oversized journal. Pack bytes and addressing metadata settle before referencing acknowledgement. This family authors no timestamp, numeric, physical codec or alternate source hash.
+
+Backup settles owner source effect/result, the journal, actual seglog/packs, full-value receipt and generic-index recovery state coherently. Restore preserves original operation IDs, admitted editions, Stop/tombstones, pending originals and full-value identity; missing post-backup originals cannot be replaced by a new operation. Writer and reader withdrawal use the exact protocol of SQR-1555, preserving canonical custody and truthful unavailable results; no replay dispatch or new family checkpoint is introduced. Tests and criteria remain phase-1 planning only.
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-1555, ContractName:Plans/Contracts_V0.md#CV-1555, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337
+
+## SP-1556 — `execution_window.invalidated` publication, retention and reader (newly authored, no admission)
+
+```yaml
+plan_unit_id: SP-1556
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Exactly execution_window.invalidated@1.0.0 adopts SP-286/CV-339 full-value first-receipt custody,
+  SP-278 complete generic-index reads and the adjacent per-family publication journal. Canonical state remains with
+  SQR-1556; the journal cannot reconstruct it. Retention is RP-AUTHORITY-INDEFINITE@1.0.0 under Card 1 G18; no registry
+  admission or family checkpoint is granted.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- SP-278
+- SP-286
+- SQR-1556
+- CV-1556
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- execution_window.invalidated
+- ea_w3h_execution_window_invalidated_publication
+- RP-AUTHORITY-INDEFINITE
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+| Stored value for `execution_window.invalidated` | Key | Schema | Producer | Consumers | Retention |
+|---|---|---|---|---|---|
+| `ea_w3h_execution_window_invalidated_publication` | `ea_w3h_execution_window_invalidated.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}` | `Plans/event_payloads/w3h/execution_window_invalidated.schema.json#/$defs/publication` | `storage.w3h.execution_window_invalidated.append.v1@1.0.0` via original `SchedulingService::execution_window_invalidated` transaction | `storage.w3h.execution_window_invalidated.recovery_read.v1@1.0.0` and original Storage backup/restore owner | `RP-EVENT-INDEX-SOURCE@1.0.0`, coupled only to this event’s `RP-AUTHORITY-INDEFINITE@1.0.0` and actual holds |
+
+This is a new canonical non-rebuildable publication journal, not another domain record or event registry row. The body transaction’s sole adapter prepares its complete original semantic event with source custody once; the owner source effect plus journal commit atomically or neither does. Admission/current writer/source/permission/Stop and expected-domain-currentness precede effects. The prepared entry has null receipt/commitment. SP-286’s actual durable append returns the exact first receipt and v2 original-value commitment; the journal CAS advances prepared→appended→settled without changing the prepared event. `appended` means original append is resolved, `settled` means the already accepted domain result plus event receipt are ready for its original acknowledgement. A lost response, stale journal CAS or restart only resolves the same complete original, never repeats its source effect. Dedupe absence, contradictory receipt/value, missing pack bytes or unresolved restore fences instead of accepting a new event. Only the actual original native owner may issue or enroll this journal; reference strings and fixture copies are insufficient. No existing owner effect is replayed from it.
+
+The exact reader `storage.w3h.execution_window_invalidated.recovery_read.v1@1.0.0` adopts SP-278’s complete CURRENT-selected source token and range under `SQR-1556`. It is read-only original-result/restart inspection; **no family projector, projection, checkpoint key or durable advance exists**. Generic index CAS/rebuild stays SP-278-owned. A stored token cannot include redb_snapshot_id. Live transaction identity joins the nine durable fields after all helpers at release; healthy same-generation-but-changed-frontier, wrong instance/partition, stale coverage and degraded source cannot claim current results. A valid retained fact uses authentic original recipe/admission/value proof and survives live-state changes; current writer rules never run against historical originals.
+
+Bind this exact event to `RP-AUTHORITY-INDEFINITE@1.0.0`, approved deck-1 Card 1 `G18` (DL-401). No TTL or count cap. For Project entries only explicit Delete Puppet Master project data removes this audit history under existing holds; Remove project from list, deleting a described object or deleting its chat does not. Application records retain the existing app-root custody/deletion rules, never a fabricated Project. Disk pressure refuses new records. Referenced bodies retain their own policies and access; this content-free event grants no longer retention or access to them. The publication value below adopts RP-EVENT-INDEX-SOURCE, coupled to this event and its protections, with no independent lifetime. SP-286 receipt custody keeps its own policy. The publication’s source-coupled retention does not shorten mandatory original first-receipt custody, permit unresolved journal loss, or preserve linked content after its owner deletes it. Required pending/result/backup/hold dependencies fence journal cleanup. Missing-original reads disclose unavailable without reconstructing a current body.
+
+Every stored part, including the complete journal wrapper, is measured in its declared physical encoding. Use existing SP-236 canonical MessagePack and SP-337 durable payload references for bodies above 16 KiB; externalize the event body before journal commit, retaining the complete exact EventRecord with payload_ref and null inline payload. If any required remaining wrapper still exceeds its own inline value limit, return the existing Storage unavailable/value-too-large route **before** the owner effect; never truncate, silently cap admitted semantic numbers or leave a mandatory oversized journal. Pack bytes and addressing metadata settle before referencing acknowledgement. This family authors no timestamp, numeric, physical codec or alternate source hash.
+
+Backup settles owner source effect/result, the journal, actual seglog/packs, full-value receipt and generic-index recovery state coherently. Restore preserves original operation IDs, admitted editions, Stop/tombstones, pending originals and full-value identity; missing post-backup originals cannot be replaced by a new operation. Writer and reader withdrawal use the exact protocol of SQR-1556, preserving canonical custody and truthful unavailable results; no replay dispatch or new family checkpoint is introduced. Tests and criteria remain phase-1 planning only.
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-1556, ContractName:Plans/Contracts_V0.md#CV-1556, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337
+
+## SP-1557 — `execution_window.updated` publication, retention and reader (newly authored, no admission)
+
+```yaml
+plan_unit_id: SP-1557
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Exactly execution_window.updated@1.0.0 adopts SP-286/CV-339 full-value first-receipt custody, SP-278
+  complete generic-index reads and the adjacent per-family publication journal. Canonical state remains with SQR-1557;
+  the journal cannot reconstruct it. Retention is RP-AUTHORITY-INDEFINITE@1.0.0 under Card 1 G18; no registry admission
+  or family checkpoint is granted.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- SP-278
+- SP-286
+- SQR-1557
+- CV-1557
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- execution_window.updated
+- ea_w3h_execution_window_updated_publication
+- RP-AUTHORITY-INDEFINITE
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+| Stored value for `execution_window.updated` | Key | Schema | Producer | Consumers | Retention |
+|---|---|---|---|---|---|
+| `ea_w3h_execution_window_updated_publication` | `ea_w3h_execution_window_updated.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}` | `Plans/event_payloads/w3h/execution_window_updated.schema.json#/$defs/publication` | `storage.w3h.execution_window_updated.append.v1@1.0.0` via original `SchedulingService::execution_window_updated` transaction | `storage.w3h.execution_window_updated.recovery_read.v1@1.0.0` and original Storage backup/restore owner | `RP-EVENT-INDEX-SOURCE@1.0.0`, coupled only to this event’s `RP-AUTHORITY-INDEFINITE@1.0.0` and actual holds |
+
+This is a new canonical non-rebuildable publication journal, not another domain record or event registry row. The body transaction’s sole adapter prepares its complete original semantic event with source custody once; the owner source effect plus journal commit atomically or neither does. Admission/current writer/source/permission/Stop and expected-domain-currentness precede effects. The prepared entry has null receipt/commitment. SP-286’s actual durable append returns the exact first receipt and v2 original-value commitment; the journal CAS advances prepared→appended→settled without changing the prepared event. `appended` means original append is resolved, `settled` means the already accepted domain result plus event receipt are ready for its original acknowledgement. A lost response, stale journal CAS or restart only resolves the same complete original, never repeats its source effect. Dedupe absence, contradictory receipt/value, missing pack bytes or unresolved restore fences instead of accepting a new event. Only the actual original native owner may issue or enroll this journal; reference strings and fixture copies are insufficient. No existing owner effect is replayed from it.
+
+The exact reader `storage.w3h.execution_window_updated.recovery_read.v1@1.0.0` adopts SP-278’s complete CURRENT-selected source token and range under `SQR-1557`. It is read-only original-result/restart inspection; **no family projector, projection, checkpoint key or durable advance exists**. Generic index CAS/rebuild stays SP-278-owned. A stored token cannot include redb_snapshot_id. Live transaction identity joins the nine durable fields after all helpers at release; healthy same-generation-but-changed-frontier, wrong instance/partition, stale coverage and degraded source cannot claim current results. A valid retained fact uses authentic original recipe/admission/value proof and survives live-state changes; current writer rules never run against historical originals.
+
+Bind this exact event to `RP-AUTHORITY-INDEFINITE@1.0.0`, approved deck-1 Card 1 `G18` (DL-401). No TTL or count cap. For Project entries only explicit Delete Puppet Master project data removes this audit history under existing holds; Remove project from list, deleting a described object or deleting its chat does not. Application records retain the existing app-root custody/deletion rules, never a fabricated Project. Disk pressure refuses new records. Referenced bodies retain their own policies and access; this content-free event grants no longer retention or access to them. The publication value below adopts RP-EVENT-INDEX-SOURCE, coupled to this event and its protections, with no independent lifetime. SP-286 receipt custody keeps its own policy. The publication’s source-coupled retention does not shorten mandatory original first-receipt custody, permit unresolved journal loss, or preserve linked content after its owner deletes it. Required pending/result/backup/hold dependencies fence journal cleanup. Missing-original reads disclose unavailable without reconstructing a current body.
+
+Every stored part, including the complete journal wrapper, is measured in its declared physical encoding. Use existing SP-236 canonical MessagePack and SP-337 durable payload references for bodies above 16 KiB; externalize the event body before journal commit, retaining the complete exact EventRecord with payload_ref and null inline payload. If any required remaining wrapper still exceeds its own inline value limit, return the existing Storage unavailable/value-too-large route **before** the owner effect; never truncate, silently cap admitted semantic numbers or leave a mandatory oversized journal. Pack bytes and addressing metadata settle before referencing acknowledgement. This family authors no timestamp, numeric, physical codec or alternate source hash.
+
+Backup settles owner source effect/result, the journal, actual seglog/packs, full-value receipt and generic-index recovery state coherently. Restore preserves original operation IDs, admitted editions, Stop/tombstones, pending originals and full-value identity; missing post-backup originals cannot be replaced by a new operation. Writer and reader withdrawal use the exact protocol of SQR-1557, preserving canonical custody and truthful unavailable results; no replay dispatch or new family checkpoint is introduced. Tests and criteria remain phase-1 planning only.
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-1557, ContractName:Plans/Contracts_V0.md#CV-1557, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337
+
+## SP-1558 — `goal.continuation_evaluated` publication, retention and reader (newly authored, no admission)
+
+```yaml
+plan_unit_id: SP-1558
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Exactly goal.continuation_evaluated@1.0.0 adopts SP-286/CV-339 full-value first-receipt custody,
+  SP-278 complete generic-index reads and the adjacent per-family publication journal. Canonical state remains with
+  GRS-1558; the journal cannot reconstruct it. Retention is RP-GOAL-THREAD-LIFETIME@1.0.0 under Card 1 G29; no registry
+  admission or family checkpoint is granted.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- SP-278
+- SP-286
+- GRS-1558
+- CV-1558
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- goal.continuation_evaluated
+- ea_w3h_goal_continuation_evaluated_publication
+- RP-GOAL-THREAD-LIFETIME
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+| Stored value for `goal.continuation_evaluated` | Key | Schema | Producer | Consumers | Retention |
+|---|---|---|---|---|---|
+| `ea_w3h_goal_continuation_evaluated_publication` | `ea_w3h_goal_continuation_evaluated.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}` | `Plans/event_payloads/w3h/goal_continuation_evaluated.schema.json#/$defs/publication` | `storage.w3h.goal_continuation_evaluated.append.v1@1.0.0` via original `GoalHost::evaluate_continuation` transaction | `storage.w3h.goal_continuation_evaluated.recovery_read.v1@1.0.0` and original Storage backup/restore owner | `RP-EVENT-INDEX-SOURCE@1.0.0`, coupled only to this event’s `RP-GOAL-THREAD-LIFETIME@1.0.0` and actual holds |
+
+This is a new canonical non-rebuildable publication journal, not another domain record or event registry row. The body transaction’s sole adapter prepares its complete original semantic event with source custody once; the owner source effect plus journal commit atomically or neither does. Admission/current writer/source/permission/Stop and expected-domain-currentness precede effects. The prepared entry has null receipt/commitment. SP-286’s actual durable append returns the exact first receipt and v2 original-value commitment; the journal CAS advances prepared→appended→settled without changing the prepared event. `appended` means original append is resolved, `settled` means the already accepted domain result plus event receipt are ready for its original acknowledgement. A lost response, stale journal CAS or restart only resolves the same complete original, never repeats its source effect. Dedupe absence, contradictory receipt/value, missing pack bytes or unresolved restore fences instead of accepting a new event. Only the actual original native owner may issue or enroll this journal; reference strings and fixture copies are insufficient. No existing owner effect is replayed from it.
+
+The exact reader `storage.w3h.goal_continuation_evaluated.recovery_read.v1@1.0.0` adopts SP-278’s complete CURRENT-selected source token and range under `GRS-1558`. It is read-only original-result/restart inspection; **no family projector, projection, checkpoint key or durable advance exists**. Generic index CAS/rebuild stays SP-278-owned. A stored token cannot include redb_snapshot_id. Live transaction identity joins the nine durable fields after all helpers at release; healthy same-generation-but-changed-frontier, wrong instance/partition, stale coverage and degraded source cannot claim current results. A valid retained fact uses authentic original recipe/admission/value proof and survives live-state changes; current writer rules never run against historical originals.
+
+Bind this exact event to `RP-GOAL-THREAD-LIFETIME@1.0.0`, approved deck-1 Card 1 `G29` (DL-401). Reuse Storage’s existing Goal-thread policy without a count cap. Actual owning chat deletion/tombstone and backup/hold rules still apply. Referenced bodies retain their own policies and access; this content-free event grants no longer retention or access to them. The publication value below adopts RP-EVENT-INDEX-SOURCE, coupled to this event and its protections, with no independent lifetime. SP-286 receipt custody keeps its own policy. The publication’s source-coupled retention does not shorten mandatory original first-receipt custody, permit unresolved journal loss, or preserve linked content after its owner deletes it. Required pending/result/backup/hold dependencies fence journal cleanup. Missing-original reads disclose unavailable without reconstructing a current body.
+
+Every stored part, including the complete journal wrapper, is measured in its declared physical encoding. Use existing SP-236 canonical MessagePack and SP-337 durable payload references for bodies above 16 KiB; externalize the event body before journal commit, retaining the complete exact EventRecord with payload_ref and null inline payload. If any required remaining wrapper still exceeds its own inline value limit, return the existing Storage unavailable/value-too-large route **before** the owner effect; never truncate, silently cap admitted semantic numbers or leave a mandatory oversized journal. Pack bytes and addressing metadata settle before referencing acknowledgement. This family authors no timestamp, numeric, physical codec or alternate source hash.
+
+Backup settles owner source effect/result, the journal, actual seglog/packs, full-value receipt and generic-index recovery state coherently. Restore preserves original operation IDs, admitted editions, Stop/tombstones, pending originals and full-value identity; missing post-backup originals cannot be replaced by a new operation. Writer and reader withdrawal use the exact protocol of GRS-1558, preserving canonical custody and truthful unavailable results; no replay dispatch or new family checkpoint is introduced. Tests and criteria remain phase-1 planning only.
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-1558, ContractName:Plans/Contracts_V0.md#CV-1558, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337
+
+## SP-1559 — `named_plan.archived` publication, retention and reader (newly authored, no admission)
+
+```yaml
+plan_unit_id: SP-1559
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Exactly named_plan.archived@1.0.0 adopts SP-286/CV-339 full-value first-receipt custody, SP-278
+  complete generic-index reads and the adjacent per-family publication journal. Canonical state remains with NPLAN-1559;
+  the journal cannot reconstruct it. Retention is RP-AUTHORITY-INDEFINITE@1.0.0 under Card 1 G19; no registry admission
+  or family checkpoint is granted.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- SP-278
+- SP-286
+- NPLAN-1559
+- CV-1559
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- named_plan.archived
+- ea_w3h_named_plan_archived_publication
+- RP-AUTHORITY-INDEFINITE
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+| Stored value for `named_plan.archived` | Key | Schema | Producer | Consumers | Retention |
+|---|---|---|---|---|---|
+| `ea_w3h_named_plan_archived_publication` | `ea_w3h_named_plan_archived.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}` | `Plans/event_payloads/w3h/named_plan_archived.schema.json#/$defs/publication` | `storage.w3h.named_plan_archived.append.v1@1.0.0` via original `NamedPlanOwner::archived` transaction | `storage.w3h.named_plan_archived.recovery_read.v1@1.0.0` and original Storage backup/restore owner | `RP-EVENT-INDEX-SOURCE@1.0.0`, coupled only to this event’s `RP-AUTHORITY-INDEFINITE@1.0.0` and actual holds |
+
+This is a new canonical non-rebuildable publication journal, not another domain record or event registry row. The body transaction’s sole adapter prepares its complete original semantic event with source custody once; the owner source effect plus journal commit atomically or neither does. Admission/current writer/source/permission/Stop and expected-domain-currentness precede effects. The prepared entry has null receipt/commitment. SP-286’s actual durable append returns the exact first receipt and v2 original-value commitment; the journal CAS advances prepared→appended→settled without changing the prepared event. `appended` means original append is resolved, `settled` means the already accepted domain result plus event receipt are ready for its original acknowledgement. A lost response, stale journal CAS or restart only resolves the same complete original, never repeats its source effect. Dedupe absence, contradictory receipt/value, missing pack bytes or unresolved restore fences instead of accepting a new event. Only the actual original native owner may issue or enroll this journal; reference strings and fixture copies are insufficient. No existing owner effect is replayed from it.
+
+The exact reader `storage.w3h.named_plan_archived.recovery_read.v1@1.0.0` adopts SP-278’s complete CURRENT-selected source token and range under `NPLAN-1559`. It is read-only original-result/restart inspection; **no family projector, projection, checkpoint key or durable advance exists**. Generic index CAS/rebuild stays SP-278-owned. A stored token cannot include redb_snapshot_id. Live transaction identity joins the nine durable fields after all helpers at release; healthy same-generation-but-changed-frontier, wrong instance/partition, stale coverage and degraded source cannot claim current results. A valid retained fact uses authentic original recipe/admission/value proof and survives live-state changes; current writer rules never run against historical originals.
+
+Bind this exact event to `RP-AUTHORITY-INDEFINITE@1.0.0`, approved deck-1 Card 1 `G19` (DL-401). No TTL or count cap. For Project entries only explicit Delete Puppet Master project data removes this audit history under existing holds; Remove project from list, deleting a described object or deleting its chat does not. Application records retain the existing app-root custody/deletion rules, never a fabricated Project. Disk pressure refuses new records. Referenced bodies retain their own policies and access; this content-free event grants no longer retention or access to them. The publication value below adopts RP-EVENT-INDEX-SOURCE, coupled to this event and its protections, with no independent lifetime. SP-286 receipt custody keeps its own policy. The publication’s source-coupled retention does not shorten mandatory original first-receipt custody, permit unresolved journal loss, or preserve linked content after its owner deletes it. Required pending/result/backup/hold dependencies fence journal cleanup. Missing-original reads disclose unavailable without reconstructing a current body.
+
+Every stored part, including the complete journal wrapper, is measured in its declared physical encoding. Use existing SP-236 canonical MessagePack and SP-337 durable payload references for bodies above 16 KiB; externalize the event body before journal commit, retaining the complete exact EventRecord with payload_ref and null inline payload. If any required remaining wrapper still exceeds its own inline value limit, return the existing Storage unavailable/value-too-large route **before** the owner effect; never truncate, silently cap admitted semantic numbers or leave a mandatory oversized journal. Pack bytes and addressing metadata settle before referencing acknowledgement. This family authors no timestamp, numeric, physical codec or alternate source hash.
+
+Backup settles owner source effect/result, the journal, actual seglog/packs, full-value receipt and generic-index recovery state coherently. Restore preserves original operation IDs, admitted editions, Stop/tombstones, pending originals and full-value identity; missing post-backup originals cannot be replaced by a new operation. Writer and reader withdrawal use the exact protocol of NPLAN-1559, preserving canonical custody and truthful unavailable results; no replay dispatch or new family checkpoint is introduced. Tests and criteria remain phase-1 planning only.
+
+ContractRef: ContractName:Plans/Named_Plan_System.md#NPLAN-1559, ContractName:Plans/Contracts_V0.md#CV-1559, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337
+
+## SP-1560 — `named_plan.child_refs_changed` publication, retention and reader (newly authored, no admission)
+
+```yaml
+plan_unit_id: SP-1560
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Exactly named_plan.child_refs_changed@1.0.0 adopts SP-286/CV-339 full-value first-receipt custody,
+  SP-278 complete generic-index reads and the adjacent per-family publication journal. Canonical state remains with
+  NPLAN-1560; the journal cannot reconstruct it. Retention is RP-AUTHORITY-INDEFINITE@1.0.0 under Card 1 G19; no
+  registry admission or family checkpoint is granted.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- SP-278
+- SP-286
+- NPLAN-1560
+- CV-1560
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- named_plan.child_refs_changed
+- ea_w3h_named_plan_child_refs_changed_publication
+- RP-AUTHORITY-INDEFINITE
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+| Stored value for `named_plan.child_refs_changed` | Key | Schema | Producer | Consumers | Retention |
+|---|---|---|---|---|---|
+| `ea_w3h_named_plan_child_refs_changed_publication` | `ea_w3h_named_plan_child_refs_changed.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}` | `Plans/event_payloads/w3h/named_plan_child_refs_changed.schema.json#/$defs/publication` | `storage.w3h.named_plan_child_refs_changed.append.v1@1.0.0` via original `NamedPlanOwner::child_refs_changed` transaction | `storage.w3h.named_plan_child_refs_changed.recovery_read.v1@1.0.0` and original Storage backup/restore owner | `RP-EVENT-INDEX-SOURCE@1.0.0`, coupled only to this event’s `RP-AUTHORITY-INDEFINITE@1.0.0` and actual holds |
+
+This is a new canonical non-rebuildable publication journal, not another domain record or event registry row. The body transaction’s sole adapter prepares its complete original semantic event with source custody once; the owner source effect plus journal commit atomically or neither does. Admission/current writer/source/permission/Stop and expected-domain-currentness precede effects. The prepared entry has null receipt/commitment. SP-286’s actual durable append returns the exact first receipt and v2 original-value commitment; the journal CAS advances prepared→appended→settled without changing the prepared event. `appended` means original append is resolved, `settled` means the already accepted domain result plus event receipt are ready for its original acknowledgement. A lost response, stale journal CAS or restart only resolves the same complete original, never repeats its source effect. Dedupe absence, contradictory receipt/value, missing pack bytes or unresolved restore fences instead of accepting a new event. Only the actual original native owner may issue or enroll this journal; reference strings and fixture copies are insufficient. No existing owner effect is replayed from it.
+
+The exact reader `storage.w3h.named_plan_child_refs_changed.recovery_read.v1@1.0.0` adopts SP-278’s complete CURRENT-selected source token and range under `NPLAN-1560`. It is read-only original-result/restart inspection; **no family projector, projection, checkpoint key or durable advance exists**. Generic index CAS/rebuild stays SP-278-owned. A stored token cannot include redb_snapshot_id. Live transaction identity joins the nine durable fields after all helpers at release; healthy same-generation-but-changed-frontier, wrong instance/partition, stale coverage and degraded source cannot claim current results. A valid retained fact uses authentic original recipe/admission/value proof and survives live-state changes; current writer rules never run against historical originals.
+
+Bind this exact event to `RP-AUTHORITY-INDEFINITE@1.0.0`, approved deck-1 Card 1 `G19` (DL-401). No TTL or count cap. For Project entries only explicit Delete Puppet Master project data removes this audit history under existing holds; Remove project from list, deleting a described object or deleting its chat does not. Application records retain the existing app-root custody/deletion rules, never a fabricated Project. Disk pressure refuses new records. Referenced bodies retain their own policies and access; this content-free event grants no longer retention or access to them. The publication value below adopts RP-EVENT-INDEX-SOURCE, coupled to this event and its protections, with no independent lifetime. SP-286 receipt custody keeps its own policy. The publication’s source-coupled retention does not shorten mandatory original first-receipt custody, permit unresolved journal loss, or preserve linked content after its owner deletes it. Required pending/result/backup/hold dependencies fence journal cleanup. Missing-original reads disclose unavailable without reconstructing a current body.
+
+Every stored part, including the complete journal wrapper, is measured in its declared physical encoding. Use existing SP-236 canonical MessagePack and SP-337 durable payload references for bodies above 16 KiB; externalize the event body before journal commit, retaining the complete exact EventRecord with payload_ref and null inline payload. If any required remaining wrapper still exceeds its own inline value limit, return the existing Storage unavailable/value-too-large route **before** the owner effect; never truncate, silently cap admitted semantic numbers or leave a mandatory oversized journal. Pack bytes and addressing metadata settle before referencing acknowledgement. This family authors no timestamp, numeric, physical codec or alternate source hash.
+
+Backup settles owner source effect/result, the journal, actual seglog/packs, full-value receipt and generic-index recovery state coherently. Restore preserves original operation IDs, admitted editions, Stop/tombstones, pending originals and full-value identity; missing post-backup originals cannot be replaced by a new operation. Writer and reader withdrawal use the exact protocol of NPLAN-1560, preserving canonical custody and truthful unavailable results; no replay dispatch or new family checkpoint is introduced. Tests and criteria remain phase-1 planning only.
+
+ContractRef: ContractName:Plans/Named_Plan_System.md#NPLAN-1560, ContractName:Plans/Contracts_V0.md#CV-1560, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337
+
+## SP-1561 — `named_plan.created` publication, retention and reader (newly authored, no admission)
+
+```yaml
+plan_unit_id: SP-1561
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Exactly named_plan.created@1.0.0 adopts SP-286/CV-339 full-value first-receipt custody, SP-278 complete
+  generic-index reads and the adjacent per-family publication journal. Canonical state remains with NPLAN-1561;
+  the journal cannot reconstruct it. Retention is RP-AUTHORITY-INDEFINITE@1.0.0 under Card 1 G19; no registry admission
+  or family checkpoint is granted.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- SP-278
+- SP-286
+- NPLAN-1561
+- CV-1561
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- named_plan.created
+- ea_w3h_named_plan_created_publication
+- RP-AUTHORITY-INDEFINITE
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+| Stored value for `named_plan.created` | Key | Schema | Producer | Consumers | Retention |
+|---|---|---|---|---|---|
+| `ea_w3h_named_plan_created_publication` | `ea_w3h_named_plan_created.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}` | `Plans/event_payloads/w3h/named_plan_created.schema.json#/$defs/publication` | `storage.w3h.named_plan_created.append.v1@1.0.0` via original `NamedPlanOwner::created` transaction | `storage.w3h.named_plan_created.recovery_read.v1@1.0.0` and original Storage backup/restore owner | `RP-EVENT-INDEX-SOURCE@1.0.0`, coupled only to this event’s `RP-AUTHORITY-INDEFINITE@1.0.0` and actual holds |
+
+This is a new canonical non-rebuildable publication journal, not another domain record or event registry row. The body transaction’s sole adapter prepares its complete original semantic event with source custody once; the owner source effect plus journal commit atomically or neither does. Admission/current writer/source/permission/Stop and expected-domain-currentness precede effects. The prepared entry has null receipt/commitment. SP-286’s actual durable append returns the exact first receipt and v2 original-value commitment; the journal CAS advances prepared→appended→settled without changing the prepared event. `appended` means original append is resolved, `settled` means the already accepted domain result plus event receipt are ready for its original acknowledgement. A lost response, stale journal CAS or restart only resolves the same complete original, never repeats its source effect. Dedupe absence, contradictory receipt/value, missing pack bytes or unresolved restore fences instead of accepting a new event. Only the actual original native owner may issue or enroll this journal; reference strings and fixture copies are insufficient. No existing owner effect is replayed from it.
+
+The exact reader `storage.w3h.named_plan_created.recovery_read.v1@1.0.0` adopts SP-278’s complete CURRENT-selected source token and range under `NPLAN-1561`. It is read-only original-result/restart inspection; **no family projector, projection, checkpoint key or durable advance exists**. Generic index CAS/rebuild stays SP-278-owned. A stored token cannot include redb_snapshot_id. Live transaction identity joins the nine durable fields after all helpers at release; healthy same-generation-but-changed-frontier, wrong instance/partition, stale coverage and degraded source cannot claim current results. A valid retained fact uses authentic original recipe/admission/value proof and survives live-state changes; current writer rules never run against historical originals.
+
+Bind this exact event to `RP-AUTHORITY-INDEFINITE@1.0.0`, approved deck-1 Card 1 `G19` (DL-401). No TTL or count cap. For Project entries only explicit Delete Puppet Master project data removes this audit history under existing holds; Remove project from list, deleting a described object or deleting its chat does not. Application records retain the existing app-root custody/deletion rules, never a fabricated Project. Disk pressure refuses new records. Referenced bodies retain their own policies and access; this content-free event grants no longer retention or access to them. The publication value below adopts RP-EVENT-INDEX-SOURCE, coupled to this event and its protections, with no independent lifetime. SP-286 receipt custody keeps its own policy. The publication’s source-coupled retention does not shorten mandatory original first-receipt custody, permit unresolved journal loss, or preserve linked content after its owner deletes it. Required pending/result/backup/hold dependencies fence journal cleanup. Missing-original reads disclose unavailable without reconstructing a current body.
+
+Every stored part, including the complete journal wrapper, is measured in its declared physical encoding. Use existing SP-236 canonical MessagePack and SP-337 durable payload references for bodies above 16 KiB; externalize the event body before journal commit, retaining the complete exact EventRecord with payload_ref and null inline payload. If any required remaining wrapper still exceeds its own inline value limit, return the existing Storage unavailable/value-too-large route **before** the owner effect; never truncate, silently cap admitted semantic numbers or leave a mandatory oversized journal. Pack bytes and addressing metadata settle before referencing acknowledgement. This family authors no timestamp, numeric, physical codec or alternate source hash.
+
+Backup settles owner source effect/result, the journal, actual seglog/packs, full-value receipt and generic-index recovery state coherently. Restore preserves original operation IDs, admitted editions, Stop/tombstones, pending originals and full-value identity; missing post-backup originals cannot be replaced by a new operation. Writer and reader withdrawal use the exact protocol of NPLAN-1561, preserving canonical custody and truthful unavailable results; no replay dispatch or new family checkpoint is introduced. Tests and criteria remain phase-1 planning only.
+
+ContractRef: ContractName:Plans/Named_Plan_System.md#NPLAN-1561, ContractName:Plans/Contracts_V0.md#CV-1561, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337
+
+## SP-1562 — `named_plan.priority_changed` publication, retention and reader (newly authored, no admission)
+
+```yaml
+plan_unit_id: SP-1562
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Exactly named_plan.priority_changed@1.0.0 adopts SP-286/CV-339 full-value first-receipt custody,
+  SP-278 complete generic-index reads and the adjacent per-family publication journal. Canonical state remains with
+  NPLAN-1562; the journal cannot reconstruct it. Retention is RP-AUTHORITY-INDEFINITE@1.0.0 under Card 1 G19; no
+  registry admission or family checkpoint is granted.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- SP-278
+- SP-286
+- NPLAN-1562
+- CV-1562
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- named_plan.priority_changed
+- ea_w3h_named_plan_priority_changed_publication
+- RP-AUTHORITY-INDEFINITE
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+| Stored value for `named_plan.priority_changed` | Key | Schema | Producer | Consumers | Retention |
+|---|---|---|---|---|---|
+| `ea_w3h_named_plan_priority_changed_publication` | `ea_w3h_named_plan_priority_changed.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}` | `Plans/event_payloads/w3h/named_plan_priority_changed.schema.json#/$defs/publication` | `storage.w3h.named_plan_priority_changed.append.v1@1.0.0` via original `NamedPlanOwner::priority_changed` transaction | `storage.w3h.named_plan_priority_changed.recovery_read.v1@1.0.0` and original Storage backup/restore owner | `RP-EVENT-INDEX-SOURCE@1.0.0`, coupled only to this event’s `RP-AUTHORITY-INDEFINITE@1.0.0` and actual holds |
+
+This is a new canonical non-rebuildable publication journal, not another domain record or event registry row. The body transaction’s sole adapter prepares its complete original semantic event with source custody once; the owner source effect plus journal commit atomically or neither does. Admission/current writer/source/permission/Stop and expected-domain-currentness precede effects. The prepared entry has null receipt/commitment. SP-286’s actual durable append returns the exact first receipt and v2 original-value commitment; the journal CAS advances prepared→appended→settled without changing the prepared event. `appended` means original append is resolved, `settled` means the already accepted domain result plus event receipt are ready for its original acknowledgement. A lost response, stale journal CAS or restart only resolves the same complete original, never repeats its source effect. Dedupe absence, contradictory receipt/value, missing pack bytes or unresolved restore fences instead of accepting a new event. Only the actual original native owner may issue or enroll this journal; reference strings and fixture copies are insufficient. No existing owner effect is replayed from it.
+
+The exact reader `storage.w3h.named_plan_priority_changed.recovery_read.v1@1.0.0` adopts SP-278’s complete CURRENT-selected source token and range under `NPLAN-1562`. It is read-only original-result/restart inspection; **no family projector, projection, checkpoint key or durable advance exists**. Generic index CAS/rebuild stays SP-278-owned. A stored token cannot include redb_snapshot_id. Live transaction identity joins the nine durable fields after all helpers at release; healthy same-generation-but-changed-frontier, wrong instance/partition, stale coverage and degraded source cannot claim current results. A valid retained fact uses authentic original recipe/admission/value proof and survives live-state changes; current writer rules never run against historical originals.
+
+Bind this exact event to `RP-AUTHORITY-INDEFINITE@1.0.0`, approved deck-1 Card 1 `G19` (DL-401). No TTL or count cap. For Project entries only explicit Delete Puppet Master project data removes this audit history under existing holds; Remove project from list, deleting a described object or deleting its chat does not. Application records retain the existing app-root custody/deletion rules, never a fabricated Project. Disk pressure refuses new records. Referenced bodies retain their own policies and access; this content-free event grants no longer retention or access to them. The publication value below adopts RP-EVENT-INDEX-SOURCE, coupled to this event and its protections, with no independent lifetime. SP-286 receipt custody keeps its own policy. The publication’s source-coupled retention does not shorten mandatory original first-receipt custody, permit unresolved journal loss, or preserve linked content after its owner deletes it. Required pending/result/backup/hold dependencies fence journal cleanup. Missing-original reads disclose unavailable without reconstructing a current body.
+
+Every stored part, including the complete journal wrapper, is measured in its declared physical encoding. Use existing SP-236 canonical MessagePack and SP-337 durable payload references for bodies above 16 KiB; externalize the event body before journal commit, retaining the complete exact EventRecord with payload_ref and null inline payload. If any required remaining wrapper still exceeds its own inline value limit, return the existing Storage unavailable/value-too-large route **before** the owner effect; never truncate, silently cap admitted semantic numbers or leave a mandatory oversized journal. Pack bytes and addressing metadata settle before referencing acknowledgement. This family authors no timestamp, numeric, physical codec or alternate source hash.
+
+Backup settles owner source effect/result, the journal, actual seglog/packs, full-value receipt and generic-index recovery state coherently. Restore preserves original operation IDs, admitted editions, Stop/tombstones, pending originals and full-value identity; missing post-backup originals cannot be replaced by a new operation. Writer and reader withdrawal use the exact protocol of NPLAN-1562, preserving canonical custody and truthful unavailable results; no replay dispatch or new family checkpoint is introduced. Tests and criteria remain phase-1 planning only.
+
+ContractRef: ContractName:Plans/Named_Plan_System.md#NPLAN-1562, ContractName:Plans/Contracts_V0.md#CV-1562, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337
+
+## SP-1563 — `named_plan.renamed` publication, retention and reader (newly authored, no admission)
+
+```yaml
+plan_unit_id: SP-1563
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Exactly named_plan.renamed@1.0.0 adopts SP-286/CV-339 full-value first-receipt custody, SP-278 complete
+  generic-index reads and the adjacent per-family publication journal. Canonical state remains with NPLAN-1563;
+  the journal cannot reconstruct it. Retention is RP-AUTHORITY-INDEFINITE@1.0.0 under Card 1 G19; no registry admission
+  or family checkpoint is granted.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- SP-278
+- SP-286
+- NPLAN-1563
+- CV-1563
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- named_plan.renamed
+- ea_w3h_named_plan_renamed_publication
+- RP-AUTHORITY-INDEFINITE
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+| Stored value for `named_plan.renamed` | Key | Schema | Producer | Consumers | Retention |
+|---|---|---|---|---|---|
+| `ea_w3h_named_plan_renamed_publication` | `ea_w3h_named_plan_renamed.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}` | `Plans/event_payloads/w3h/named_plan_renamed.schema.json#/$defs/publication` | `storage.w3h.named_plan_renamed.append.v1@1.0.0` via original `NamedPlanOwner::renamed` transaction | `storage.w3h.named_plan_renamed.recovery_read.v1@1.0.0` and original Storage backup/restore owner | `RP-EVENT-INDEX-SOURCE@1.0.0`, coupled only to this event’s `RP-AUTHORITY-INDEFINITE@1.0.0` and actual holds |
+
+This is a new canonical non-rebuildable publication journal, not another domain record or event registry row. The body transaction’s sole adapter prepares its complete original semantic event with source custody once; the owner source effect plus journal commit atomically or neither does. Admission/current writer/source/permission/Stop and expected-domain-currentness precede effects. The prepared entry has null receipt/commitment. SP-286’s actual durable append returns the exact first receipt and v2 original-value commitment; the journal CAS advances prepared→appended→settled without changing the prepared event. `appended` means original append is resolved, `settled` means the already accepted domain result plus event receipt are ready for its original acknowledgement. A lost response, stale journal CAS or restart only resolves the same complete original, never repeats its source effect. Dedupe absence, contradictory receipt/value, missing pack bytes or unresolved restore fences instead of accepting a new event. Only the actual original native owner may issue or enroll this journal; reference strings and fixture copies are insufficient. No existing owner effect is replayed from it.
+
+The exact reader `storage.w3h.named_plan_renamed.recovery_read.v1@1.0.0` adopts SP-278’s complete CURRENT-selected source token and range under `NPLAN-1563`. It is read-only original-result/restart inspection; **no family projector, projection, checkpoint key or durable advance exists**. Generic index CAS/rebuild stays SP-278-owned. A stored token cannot include redb_snapshot_id. Live transaction identity joins the nine durable fields after all helpers at release; healthy same-generation-but-changed-frontier, wrong instance/partition, stale coverage and degraded source cannot claim current results. A valid retained fact uses authentic original recipe/admission/value proof and survives live-state changes; current writer rules never run against historical originals.
+
+Bind this exact event to `RP-AUTHORITY-INDEFINITE@1.0.0`, approved deck-1 Card 1 `G19` (DL-401). No TTL or count cap. For Project entries only explicit Delete Puppet Master project data removes this audit history under existing holds; Remove project from list, deleting a described object or deleting its chat does not. Application records retain the existing app-root custody/deletion rules, never a fabricated Project. Disk pressure refuses new records. Referenced bodies retain their own policies and access; this content-free event grants no longer retention or access to them. The publication value below adopts RP-EVENT-INDEX-SOURCE, coupled to this event and its protections, with no independent lifetime. SP-286 receipt custody keeps its own policy. The publication’s source-coupled retention does not shorten mandatory original first-receipt custody, permit unresolved journal loss, or preserve linked content after its owner deletes it. Required pending/result/backup/hold dependencies fence journal cleanup. Missing-original reads disclose unavailable without reconstructing a current body.
+
+Every stored part, including the complete journal wrapper, is measured in its declared physical encoding. Use existing SP-236 canonical MessagePack and SP-337 durable payload references for bodies above 16 KiB; externalize the event body before journal commit, retaining the complete exact EventRecord with payload_ref and null inline payload. If any required remaining wrapper still exceeds its own inline value limit, return the existing Storage unavailable/value-too-large route **before** the owner effect; never truncate, silently cap admitted semantic numbers or leave a mandatory oversized journal. Pack bytes and addressing metadata settle before referencing acknowledgement. This family authors no timestamp, numeric, physical codec or alternate source hash.
+
+Backup settles owner source effect/result, the journal, actual seglog/packs, full-value receipt and generic-index recovery state coherently. Restore preserves original operation IDs, admitted editions, Stop/tombstones, pending originals and full-value identity; missing post-backup originals cannot be replaced by a new operation. Writer and reader withdrawal use the exact protocol of NPLAN-1563, preserving canonical custody and truthful unavailable results; no replay dispatch or new family checkpoint is introduced. Tests and criteria remain phase-1 planning only.
+
+ContractRef: ContractName:Plans/Named_Plan_System.md#NPLAN-1563, ContractName:Plans/Contracts_V0.md#CV-1563, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337
+
+## SP-1564 — `named_plan.restored` publication, retention and reader (newly authored, no admission)
+
+```yaml
+plan_unit_id: SP-1564
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Exactly named_plan.restored@1.0.0 adopts SP-286/CV-339 full-value first-receipt custody, SP-278
+  complete generic-index reads and the adjacent per-family publication journal. Canonical state remains with NPLAN-1564;
+  the journal cannot reconstruct it. Retention is RP-AUTHORITY-INDEFINITE@1.0.0 under Card 1 G19; no registry admission
+  or family checkpoint is granted.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- SP-278
+- SP-286
+- NPLAN-1564
+- CV-1564
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- named_plan.restored
+- ea_w3h_named_plan_restored_publication
+- RP-AUTHORITY-INDEFINITE
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+| Stored value for `named_plan.restored` | Key | Schema | Producer | Consumers | Retention |
+|---|---|---|---|---|---|
+| `ea_w3h_named_plan_restored_publication` | `ea_w3h_named_plan_restored.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}` | `Plans/event_payloads/w3h/named_plan_restored.schema.json#/$defs/publication` | `storage.w3h.named_plan_restored.append.v1@1.0.0` via original `NamedPlanOwner::restored` transaction | `storage.w3h.named_plan_restored.recovery_read.v1@1.0.0` and original Storage backup/restore owner | `RP-EVENT-INDEX-SOURCE@1.0.0`, coupled only to this event’s `RP-AUTHORITY-INDEFINITE@1.0.0` and actual holds |
+
+This is a new canonical non-rebuildable publication journal, not another domain record or event registry row. The body transaction’s sole adapter prepares its complete original semantic event with source custody once; the owner source effect plus journal commit atomically or neither does. Admission/current writer/source/permission/Stop and expected-domain-currentness precede effects. The prepared entry has null receipt/commitment. SP-286’s actual durable append returns the exact first receipt and v2 original-value commitment; the journal CAS advances prepared→appended→settled without changing the prepared event. `appended` means original append is resolved, `settled` means the already accepted domain result plus event receipt are ready for its original acknowledgement. A lost response, stale journal CAS or restart only resolves the same complete original, never repeats its source effect. Dedupe absence, contradictory receipt/value, missing pack bytes or unresolved restore fences instead of accepting a new event. Only the actual original native owner may issue or enroll this journal; reference strings and fixture copies are insufficient. No existing owner effect is replayed from it.
+
+The exact reader `storage.w3h.named_plan_restored.recovery_read.v1@1.0.0` adopts SP-278’s complete CURRENT-selected source token and range under `NPLAN-1564`. It is read-only original-result/restart inspection; **no family projector, projection, checkpoint key or durable advance exists**. Generic index CAS/rebuild stays SP-278-owned. A stored token cannot include redb_snapshot_id. Live transaction identity joins the nine durable fields after all helpers at release; healthy same-generation-but-changed-frontier, wrong instance/partition, stale coverage and degraded source cannot claim current results. A valid retained fact uses authentic original recipe/admission/value proof and survives live-state changes; current writer rules never run against historical originals.
+
+Bind this exact event to `RP-AUTHORITY-INDEFINITE@1.0.0`, approved deck-1 Card 1 `G19` (DL-401). No TTL or count cap. For Project entries only explicit Delete Puppet Master project data removes this audit history under existing holds; Remove project from list, deleting a described object or deleting its chat does not. Application records retain the existing app-root custody/deletion rules, never a fabricated Project. Disk pressure refuses new records. Referenced bodies retain their own policies and access; this content-free event grants no longer retention or access to them. The publication value below adopts RP-EVENT-INDEX-SOURCE, coupled to this event and its protections, with no independent lifetime. SP-286 receipt custody keeps its own policy. The publication’s source-coupled retention does not shorten mandatory original first-receipt custody, permit unresolved journal loss, or preserve linked content after its owner deletes it. Required pending/result/backup/hold dependencies fence journal cleanup. Missing-original reads disclose unavailable without reconstructing a current body.
+
+Every stored part, including the complete journal wrapper, is measured in its declared physical encoding. Use existing SP-236 canonical MessagePack and SP-337 durable payload references for bodies above 16 KiB; externalize the event body before journal commit, retaining the complete exact EventRecord with payload_ref and null inline payload. If any required remaining wrapper still exceeds its own inline value limit, return the existing Storage unavailable/value-too-large route **before** the owner effect; never truncate, silently cap admitted semantic numbers or leave a mandatory oversized journal. Pack bytes and addressing metadata settle before referencing acknowledgement. This family authors no timestamp, numeric, physical codec or alternate source hash.
+
+Backup settles owner source effect/result, the journal, actual seglog/packs, full-value receipt and generic-index recovery state coherently. Restore preserves original operation IDs, admitted editions, Stop/tombstones, pending originals and full-value identity; missing post-backup originals cannot be replaced by a new operation. Writer and reader withdrawal use the exact protocol of NPLAN-1564, preserving canonical custody and truthful unavailable results; no replay dispatch or new family checkpoint is introduced. Tests and criteria remain phase-1 planning only.
+
+ContractRef: ContractName:Plans/Named_Plan_System.md#NPLAN-1564, ContractName:Plans/Contracts_V0.md#CV-1564, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337
+
+## SP-1565 — `runtime.automation_pause_changed` publication, retention and reader (newly authored, no admission)
+
+```yaml
+plan_unit_id: SP-1565
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Exactly runtime.automation_pause_changed@1.0.0 adopts SP-286/CV-339 full-value first-receipt custody,
+  SP-278 complete generic-index reads and the adjacent per-family publication journal. Canonical state remains with
+  SQR-1565; the journal cannot reconstruct it. Retention is RP-AUTHORITY-INDEFINITE@1.0.0 under Card 1 G18; no registry
+  admission or family checkpoint is granted.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- SP-278
+- SP-286
+- SQR-1565
+- CV-1565
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- runtime.automation_pause_changed
+- ea_w3h_runtime_automation_pause_changed_publication
+- RP-AUTHORITY-INDEFINITE
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+| Stored value for `runtime.automation_pause_changed` | Key | Schema | Producer | Consumers | Retention |
+|---|---|---|---|---|---|
+| `ea_w3h_runtime_automation_pause_changed_publication` | `ea_w3h_runtime_automation_pause_changed.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}` | `Plans/event_payloads/w3h/runtime_automation_pause_changed.schema.json#/$defs/publication` | `storage.w3h.runtime_automation_pause_changed.append.v1@1.0.0` via original `handlers::scheduling::automation_pause_set` transaction | `storage.w3h.runtime_automation_pause_changed.recovery_read.v1@1.0.0` and original Storage backup/restore owner | `RP-EVENT-INDEX-SOURCE@1.0.0`, coupled only to this event’s `RP-AUTHORITY-INDEFINITE@1.0.0` and actual holds |
+
+This is a new canonical non-rebuildable publication journal, not another domain record or event registry row. The body transaction’s sole adapter prepares its complete original semantic event with source custody once; the owner source effect plus journal commit atomically or neither does. Admission/current writer/source/permission/Stop and expected-domain-currentness precede effects. The prepared entry has null receipt/commitment. SP-286’s actual durable append returns the exact first receipt and v2 original-value commitment; the journal CAS advances prepared→appended→settled without changing the prepared event. `appended` means original append is resolved, `settled` means the already accepted domain result plus event receipt are ready for its original acknowledgement. A lost response, stale journal CAS or restart only resolves the same complete original, never repeats its source effect. Dedupe absence, contradictory receipt/value, missing pack bytes or unresolved restore fences instead of accepting a new event. Only the actual original native owner may issue or enroll this journal; reference strings and fixture copies are insufficient. No existing owner effect is replayed from it.
+
+The exact reader `storage.w3h.runtime_automation_pause_changed.recovery_read.v1@1.0.0` adopts SP-278’s complete CURRENT-selected source token and range under `SQR-1565`. It is read-only original-result/restart inspection; **no family projector, projection, checkpoint key or durable advance exists**. Generic index CAS/rebuild stays SP-278-owned. A stored token cannot include redb_snapshot_id. Live transaction identity joins the nine durable fields after all helpers at release; healthy same-generation-but-changed-frontier, wrong instance/partition, stale coverage and degraded source cannot claim current results. A valid retained fact uses authentic original recipe/admission/value proof and survives live-state changes; current writer rules never run against historical originals.
+
+Bind this exact event to `RP-AUTHORITY-INDEFINITE@1.0.0`, approved deck-1 Card 1 `G18` (DL-401). No TTL or count cap. For Project entries only explicit Delete Puppet Master project data removes this audit history under existing holds; Remove project from list, deleting a described object or deleting its chat does not. Application records retain the existing app-root custody/deletion rules, never a fabricated Project. Disk pressure refuses new records. Referenced bodies retain their own policies and access; this content-free event grants no longer retention or access to them. The publication value below adopts RP-EVENT-INDEX-SOURCE, coupled to this event and its protections, with no independent lifetime. SP-286 receipt custody keeps its own policy. The publication’s source-coupled retention does not shorten mandatory original first-receipt custody, permit unresolved journal loss, or preserve linked content after its owner deletes it. Required pending/result/backup/hold dependencies fence journal cleanup. Missing-original reads disclose unavailable without reconstructing a current body.
+
+Every stored part, including the complete journal wrapper, is measured in its declared physical encoding. Use existing SP-236 canonical MessagePack and SP-337 durable payload references for bodies above 16 KiB; externalize the event body before journal commit, retaining the complete exact EventRecord with payload_ref and null inline payload. If any required remaining wrapper still exceeds its own inline value limit, return the existing Storage unavailable/value-too-large route **before** the owner effect; never truncate, silently cap admitted semantic numbers or leave a mandatory oversized journal. Pack bytes and addressing metadata settle before referencing acknowledgement. This family authors no timestamp, numeric, physical codec or alternate source hash.
+
+Backup settles owner source effect/result, the journal, actual seglog/packs, full-value receipt and generic-index recovery state coherently. Restore preserves original operation IDs, admitted editions, Stop/tombstones, pending originals and full-value identity; missing post-backup originals cannot be replaced by a new operation. Writer and reader withdrawal use the exact protocol of SQR-1565, preserving canonical custody and truthful unavailable results; no replay dispatch or new family checkpoint is introduced. Tests and criteria remain phase-1 planning only.
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-1565, ContractName:Plans/Contracts_V0.md#CV-1565, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337
+
+## SP-1566 — `runtime.quota_resume_attempted` publication, retention and reader (newly authored, no admission)
+
+```yaml
+plan_unit_id: SP-1566
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Exactly runtime.quota_resume_attempted@1.0.0 adopts SP-286/CV-339 full-value first-receipt custody,
+  SP-278 complete generic-index reads and the adjacent per-family publication journal. Canonical state remains with
+  SQR-1566; the journal cannot reconstruct it. Retention is RP-AUTHORITY-INDEFINITE@1.0.0 under Card 1 G18; no registry
+  admission or family checkpoint is granted.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- SP-278
+- SP-286
+- SQR-1566
+- CV-1566
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- runtime.quota_resume_attempted
+- ea_w3h_runtime_quota_resume_attempted_publication
+- RP-AUTHORITY-INDEFINITE
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+| Stored value for `runtime.quota_resume_attempted` | Key | Schema | Producer | Consumers | Retention |
+|---|---|---|---|---|---|
+| `ea_w3h_runtime_quota_resume_attempted_publication` | `ea_w3h_runtime_quota_resume_attempted.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}` | `Plans/event_payloads/w3h/runtime_quota_resume_attempted.schema.json#/$defs/publication` | `storage.w3h.runtime_quota_resume_attempted.append.v1@1.0.0` via original `SchedulingService::quota_resume_attempted` transaction | `storage.w3h.runtime_quota_resume_attempted.recovery_read.v1@1.0.0` and original Storage backup/restore owner | `RP-EVENT-INDEX-SOURCE@1.0.0`, coupled only to this event’s `RP-AUTHORITY-INDEFINITE@1.0.0` and actual holds |
+
+This is a new canonical non-rebuildable publication journal, not another domain record or event registry row. The body transaction’s sole adapter prepares its complete original semantic event with source custody once; the owner source effect plus journal commit atomically or neither does. Admission/current writer/source/permission/Stop and expected-domain-currentness precede effects. The prepared entry has null receipt/commitment. SP-286’s actual durable append returns the exact first receipt and v2 original-value commitment; the journal CAS advances prepared→appended→settled without changing the prepared event. `appended` means original append is resolved, `settled` means the already accepted domain result plus event receipt are ready for its original acknowledgement. A lost response, stale journal CAS or restart only resolves the same complete original, never repeats its source effect. Dedupe absence, contradictory receipt/value, missing pack bytes or unresolved restore fences instead of accepting a new event. Only the actual original native owner may issue or enroll this journal; reference strings and fixture copies are insufficient. No existing owner effect is replayed from it.
+
+The exact reader `storage.w3h.runtime_quota_resume_attempted.recovery_read.v1@1.0.0` adopts SP-278’s complete CURRENT-selected source token and range under `SQR-1566`. It is read-only original-result/restart inspection; **no family projector, projection, checkpoint key or durable advance exists**. Generic index CAS/rebuild stays SP-278-owned. A stored token cannot include redb_snapshot_id. Live transaction identity joins the nine durable fields after all helpers at release; healthy same-generation-but-changed-frontier, wrong instance/partition, stale coverage and degraded source cannot claim current results. A valid retained fact uses authentic original recipe/admission/value proof and survives live-state changes; current writer rules never run against historical originals.
+
+Bind this exact event to `RP-AUTHORITY-INDEFINITE@1.0.0`, approved deck-1 Card 1 `G18` (DL-401). No TTL or count cap. For Project entries only explicit Delete Puppet Master project data removes this audit history under existing holds; Remove project from list, deleting a described object or deleting its chat does not. Application records retain the existing app-root custody/deletion rules, never a fabricated Project. Disk pressure refuses new records. Referenced bodies retain their own policies and access; this content-free event grants no longer retention or access to them. The publication value below adopts RP-EVENT-INDEX-SOURCE, coupled to this event and its protections, with no independent lifetime. SP-286 receipt custody keeps its own policy. The publication’s source-coupled retention does not shorten mandatory original first-receipt custody, permit unresolved journal loss, or preserve linked content after its owner deletes it. Required pending/result/backup/hold dependencies fence journal cleanup. Missing-original reads disclose unavailable without reconstructing a current body.
+
+Every stored part, including the complete journal wrapper, is measured in its declared physical encoding. Use existing SP-236 canonical MessagePack and SP-337 durable payload references for bodies above 16 KiB; externalize the event body before journal commit, retaining the complete exact EventRecord with payload_ref and null inline payload. If any required remaining wrapper still exceeds its own inline value limit, return the existing Storage unavailable/value-too-large route **before** the owner effect; never truncate, silently cap admitted semantic numbers or leave a mandatory oversized journal. Pack bytes and addressing metadata settle before referencing acknowledgement. This family authors no timestamp, numeric, physical codec or alternate source hash.
+
+Backup settles owner source effect/result, the journal, actual seglog/packs, full-value receipt and generic-index recovery state coherently. Restore preserves original operation IDs, admitted editions, Stop/tombstones, pending originals and full-value identity; missing post-backup originals cannot be replaced by a new operation. Writer and reader withdrawal use the exact protocol of SQR-1566, preserving canonical custody and truthful unavailable results; no replay dispatch or new family checkpoint is introduced. Tests and criteria remain phase-1 planning only.
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-1566, ContractName:Plans/Contracts_V0.md#CV-1566, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337
+
+## SP-1567 — `runtime.quota_resume_consent_changed` publication, retention and reader (newly authored, no admission)
+
+```yaml
+plan_unit_id: SP-1567
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Exactly runtime.quota_resume_consent_changed@1.0.0 adopts SP-286/CV-339 full-value first-receipt
+  custody, SP-278 complete generic-index reads and the adjacent per-family publication journal. Canonical state
+  remains with SQR-1567; the journal cannot reconstruct it. Retention is RP-AUTHORITY-INDEFINITE@1.0.0 under Card
+  1 G18; no registry admission or family checkpoint is granted.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- SP-278
+- SP-286
+- SQR-1567
+- CV-1567
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- runtime.quota_resume_consent_changed
+- ea_w3h_runtime_quota_resume_consent_changed_publication
+- RP-AUTHORITY-INDEFINITE
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+| Stored value for `runtime.quota_resume_consent_changed` | Key | Schema | Producer | Consumers | Retention |
+|---|---|---|---|---|---|
+| `ea_w3h_runtime_quota_resume_consent_changed_publication` | `ea_w3h_runtime_quota_resume_consent_changed.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}` | `Plans/event_payloads/w3h/runtime_quota_resume_consent_changed.schema.json#/$defs/publication` | `storage.w3h.runtime_quota_resume_consent_changed.append.v1@1.0.0` via original `SchedulingService::quota_resume_consent_changed` transaction | `storage.w3h.runtime_quota_resume_consent_changed.recovery_read.v1@1.0.0` and original Storage backup/restore owner | `RP-EVENT-INDEX-SOURCE@1.0.0`, coupled only to this event’s `RP-AUTHORITY-INDEFINITE@1.0.0` and actual holds |
+
+This is a new canonical non-rebuildable publication journal, not another domain record or event registry row. The body transaction’s sole adapter prepares its complete original semantic event with source custody once; the owner source effect plus journal commit atomically or neither does. Admission/current writer/source/permission/Stop and expected-domain-currentness precede effects. The prepared entry has null receipt/commitment. SP-286’s actual durable append returns the exact first receipt and v2 original-value commitment; the journal CAS advances prepared→appended→settled without changing the prepared event. `appended` means original append is resolved, `settled` means the already accepted domain result plus event receipt are ready for its original acknowledgement. A lost response, stale journal CAS or restart only resolves the same complete original, never repeats its source effect. Dedupe absence, contradictory receipt/value, missing pack bytes or unresolved restore fences instead of accepting a new event. Only the actual original native owner may issue or enroll this journal; reference strings and fixture copies are insufficient. No existing owner effect is replayed from it.
+
+The exact reader `storage.w3h.runtime_quota_resume_consent_changed.recovery_read.v1@1.0.0` adopts SP-278’s complete CURRENT-selected source token and range under `SQR-1567`. It is read-only original-result/restart inspection; **no family projector, projection, checkpoint key or durable advance exists**. Generic index CAS/rebuild stays SP-278-owned. A stored token cannot include redb_snapshot_id. Live transaction identity joins the nine durable fields after all helpers at release; healthy same-generation-but-changed-frontier, wrong instance/partition, stale coverage and degraded source cannot claim current results. A valid retained fact uses authentic original recipe/admission/value proof and survives live-state changes; current writer rules never run against historical originals.
+
+Bind this exact event to `RP-AUTHORITY-INDEFINITE@1.0.0`, approved deck-1 Card 1 `G18` (DL-401). No TTL or count cap. For Project entries only explicit Delete Puppet Master project data removes this audit history under existing holds; Remove project from list, deleting a described object or deleting its chat does not. Application records retain the existing app-root custody/deletion rules, never a fabricated Project. Disk pressure refuses new records. Referenced bodies retain their own policies and access; this content-free event grants no longer retention or access to them. The publication value below adopts RP-EVENT-INDEX-SOURCE, coupled to this event and its protections, with no independent lifetime. SP-286 receipt custody keeps its own policy. The publication’s source-coupled retention does not shorten mandatory original first-receipt custody, permit unresolved journal loss, or preserve linked content after its owner deletes it. Required pending/result/backup/hold dependencies fence journal cleanup. Missing-original reads disclose unavailable without reconstructing a current body.
+
+Every stored part, including the complete journal wrapper, is measured in its declared physical encoding. Use existing SP-236 canonical MessagePack and SP-337 durable payload references for bodies above 16 KiB; externalize the event body before journal commit, retaining the complete exact EventRecord with payload_ref and null inline payload. If any required remaining wrapper still exceeds its own inline value limit, return the existing Storage unavailable/value-too-large route **before** the owner effect; never truncate, silently cap admitted semantic numbers or leave a mandatory oversized journal. Pack bytes and addressing metadata settle before referencing acknowledgement. This family authors no timestamp, numeric, physical codec or alternate source hash.
+
+Backup settles owner source effect/result, the journal, actual seglog/packs, full-value receipt and generic-index recovery state coherently. Restore preserves original operation IDs, admitted editions, Stop/tombstones, pending originals and full-value identity; missing post-backup originals cannot be replaced by a new operation. Writer and reader withdrawal use the exact protocol of SQR-1567, preserving canonical custody and truthful unavailable results; no replay dispatch or new family checkpoint is introduced. Tests and criteria remain phase-1 planning only.
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-1567, ContractName:Plans/Contracts_V0.md#CV-1567, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337
+
+## SP-1568 — `runtime.quota_wait_started` publication, retention and reader (newly authored, no admission)
+
+```yaml
+plan_unit_id: SP-1568
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Exactly runtime.quota_wait_started@1.0.0 adopts SP-286/CV-339 full-value first-receipt custody,
+  SP-278 complete generic-index reads and the adjacent per-family publication journal. Canonical state remains with
+  SQR-1568; the journal cannot reconstruct it. Retention is RP-AUTHORITY-INDEFINITE@1.0.0 under Card 1 G18; no registry
+  admission or family checkpoint is granted.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- SP-278
+- SP-286
+- SQR-1568
+- CV-1568
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- runtime.quota_wait_started
+- ea_w3h_runtime_quota_wait_started_publication
+- RP-AUTHORITY-INDEFINITE
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+| Stored value for `runtime.quota_wait_started` | Key | Schema | Producer | Consumers | Retention |
+|---|---|---|---|---|---|
+| `ea_w3h_runtime_quota_wait_started_publication` | `ea_w3h_runtime_quota_wait_started.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}` | `Plans/event_payloads/w3h/runtime_quota_wait_started.schema.json#/$defs/publication` | `storage.w3h.runtime_quota_wait_started.append.v1@1.0.0` via original `SchedulingService::quota_wait_started` transaction | `storage.w3h.runtime_quota_wait_started.recovery_read.v1@1.0.0` and original Storage backup/restore owner | `RP-EVENT-INDEX-SOURCE@1.0.0`, coupled only to this event’s `RP-AUTHORITY-INDEFINITE@1.0.0` and actual holds |
+
+This is a new canonical non-rebuildable publication journal, not another domain record or event registry row. The body transaction’s sole adapter prepares its complete original semantic event with source custody once; the owner source effect plus journal commit atomically or neither does. Admission/current writer/source/permission/Stop and expected-domain-currentness precede effects. The prepared entry has null receipt/commitment. SP-286’s actual durable append returns the exact first receipt and v2 original-value commitment; the journal CAS advances prepared→appended→settled without changing the prepared event. `appended` means original append is resolved, `settled` means the already accepted domain result plus event receipt are ready for its original acknowledgement. A lost response, stale journal CAS or restart only resolves the same complete original, never repeats its source effect. Dedupe absence, contradictory receipt/value, missing pack bytes or unresolved restore fences instead of accepting a new event. Only the actual original native owner may issue or enroll this journal; reference strings and fixture copies are insufficient. No existing owner effect is replayed from it.
+
+The exact reader `storage.w3h.runtime_quota_wait_started.recovery_read.v1@1.0.0` adopts SP-278’s complete CURRENT-selected source token and range under `SQR-1568`. It is read-only original-result/restart inspection; **no family projector, projection, checkpoint key or durable advance exists**. Generic index CAS/rebuild stays SP-278-owned. A stored token cannot include redb_snapshot_id. Live transaction identity joins the nine durable fields after all helpers at release; healthy same-generation-but-changed-frontier, wrong instance/partition, stale coverage and degraded source cannot claim current results. A valid retained fact uses authentic original recipe/admission/value proof and survives live-state changes; current writer rules never run against historical originals.
+
+Bind this exact event to `RP-AUTHORITY-INDEFINITE@1.0.0`, approved deck-1 Card 1 `G18` (DL-401). No TTL or count cap. For Project entries only explicit Delete Puppet Master project data removes this audit history under existing holds; Remove project from list, deleting a described object or deleting its chat does not. Application records retain the existing app-root custody/deletion rules, never a fabricated Project. Disk pressure refuses new records. Referenced bodies retain their own policies and access; this content-free event grants no longer retention or access to them. The publication value below adopts RP-EVENT-INDEX-SOURCE, coupled to this event and its protections, with no independent lifetime. SP-286 receipt custody keeps its own policy. The publication’s source-coupled retention does not shorten mandatory original first-receipt custody, permit unresolved journal loss, or preserve linked content after its owner deletes it. Required pending/result/backup/hold dependencies fence journal cleanup. Missing-original reads disclose unavailable without reconstructing a current body.
+
+Every stored part, including the complete journal wrapper, is measured in its declared physical encoding. Use existing SP-236 canonical MessagePack and SP-337 durable payload references for bodies above 16 KiB; externalize the event body before journal commit, retaining the complete exact EventRecord with payload_ref and null inline payload. If any required remaining wrapper still exceeds its own inline value limit, return the existing Storage unavailable/value-too-large route **before** the owner effect; never truncate, silently cap admitted semantic numbers or leave a mandatory oversized journal. Pack bytes and addressing metadata settle before referencing acknowledgement. This family authors no timestamp, numeric, physical codec or alternate source hash.
+
+Backup settles owner source effect/result, the journal, actual seglog/packs, full-value receipt and generic-index recovery state coherently. Restore preserves original operation IDs, admitted editions, Stop/tombstones, pending originals and full-value identity; missing post-backup originals cannot be replaced by a new operation. Writer and reader withdrawal use the exact protocol of SQR-1568, preserving canonical custody and truthful unavailable results; no replay dispatch or new family checkpoint is introduced. Tests and criteria remain phase-1 planning only.
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-1568, ContractName:Plans/Contracts_V0.md#CV-1568, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337
+
+## SP-1569 — `scheduled_dispatch.cancelled` publication, retention and reader (newly authored, no admission)
+
+```yaml
+plan_unit_id: SP-1569
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Exactly scheduled_dispatch.cancelled@1.0.0 adopts SP-286/CV-339 full-value first-receipt custody,
+  SP-278 complete generic-index reads and the adjacent per-family publication journal. Canonical state remains with
+  SQR-1569; the journal cannot reconstruct it. Retention is RP-AUTHORITY-INDEFINITE@1.0.0 under Card 1 G18; no registry
+  admission or family checkpoint is granted.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- SP-278
+- SP-286
+- SQR-1569
+- CV-1569
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- scheduled_dispatch.cancelled
+- ea_w3h_scheduled_dispatch_cancelled_publication
+- RP-AUTHORITY-INDEFINITE
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+| Stored value for `scheduled_dispatch.cancelled` | Key | Schema | Producer | Consumers | Retention |
+|---|---|---|---|---|---|
+| `ea_w3h_scheduled_dispatch_cancelled_publication` | `ea_w3h_scheduled_dispatch_cancelled.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}` | `Plans/event_payloads/w3h/scheduled_dispatch_cancelled.schema.json#/$defs/publication` | `storage.w3h.scheduled_dispatch_cancelled.append.v1@1.0.0` via original `SchedulingService::scheduled_dispatch_cancelled` transaction | `storage.w3h.scheduled_dispatch_cancelled.recovery_read.v1@1.0.0` and original Storage backup/restore owner | `RP-EVENT-INDEX-SOURCE@1.0.0`, coupled only to this event’s `RP-AUTHORITY-INDEFINITE@1.0.0` and actual holds |
+
+This is a new canonical non-rebuildable publication journal, not another domain record or event registry row. The body transaction’s sole adapter prepares its complete original semantic event with source custody once; the owner source effect plus journal commit atomically or neither does. Admission/current writer/source/permission/Stop and expected-domain-currentness precede effects. The prepared entry has null receipt/commitment. SP-286’s actual durable append returns the exact first receipt and v2 original-value commitment; the journal CAS advances prepared→appended→settled without changing the prepared event. `appended` means original append is resolved, `settled` means the already accepted domain result plus event receipt are ready for its original acknowledgement. A lost response, stale journal CAS or restart only resolves the same complete original, never repeats its source effect. Dedupe absence, contradictory receipt/value, missing pack bytes or unresolved restore fences instead of accepting a new event. Only the actual original native owner may issue or enroll this journal; reference strings and fixture copies are insufficient. No existing owner effect is replayed from it.
+
+The exact reader `storage.w3h.scheduled_dispatch_cancelled.recovery_read.v1@1.0.0` adopts SP-278’s complete CURRENT-selected source token and range under `SQR-1569`. It is read-only original-result/restart inspection; **no family projector, projection, checkpoint key or durable advance exists**. Generic index CAS/rebuild stays SP-278-owned. A stored token cannot include redb_snapshot_id. Live transaction identity joins the nine durable fields after all helpers at release; healthy same-generation-but-changed-frontier, wrong instance/partition, stale coverage and degraded source cannot claim current results. A valid retained fact uses authentic original recipe/admission/value proof and survives live-state changes; current writer rules never run against historical originals.
+
+Bind this exact event to `RP-AUTHORITY-INDEFINITE@1.0.0`, approved deck-1 Card 1 `G18` (DL-401). No TTL or count cap. For Project entries only explicit Delete Puppet Master project data removes this audit history under existing holds; Remove project from list, deleting a described object or deleting its chat does not. Application records retain the existing app-root custody/deletion rules, never a fabricated Project. Disk pressure refuses new records. Referenced bodies retain their own policies and access; this content-free event grants no longer retention or access to them. The publication value below adopts RP-EVENT-INDEX-SOURCE, coupled to this event and its protections, with no independent lifetime. SP-286 receipt custody keeps its own policy. The publication’s source-coupled retention does not shorten mandatory original first-receipt custody, permit unresolved journal loss, or preserve linked content after its owner deletes it. Required pending/result/backup/hold dependencies fence journal cleanup. Missing-original reads disclose unavailable without reconstructing a current body.
+
+Every stored part, including the complete journal wrapper, is measured in its declared physical encoding. Use existing SP-236 canonical MessagePack and SP-337 durable payload references for bodies above 16 KiB; externalize the event body before journal commit, retaining the complete exact EventRecord with payload_ref and null inline payload. If any required remaining wrapper still exceeds its own inline value limit, return the existing Storage unavailable/value-too-large route **before** the owner effect; never truncate, silently cap admitted semantic numbers or leave a mandatory oversized journal. Pack bytes and addressing metadata settle before referencing acknowledgement. This family authors no timestamp, numeric, physical codec or alternate source hash.
+
+Backup settles owner source effect/result, the journal, actual seglog/packs, full-value receipt and generic-index recovery state coherently. Restore preserves original operation IDs, admitted editions, Stop/tombstones, pending originals and full-value identity; missing post-backup originals cannot be replaced by a new operation. Writer and reader withdrawal use the exact protocol of SQR-1569, preserving canonical custody and truthful unavailable results; no replay dispatch or new family checkpoint is introduced. Tests and criteria remain phase-1 planning only.
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-1569, ContractName:Plans/Contracts_V0.md#CV-1569, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337
+
+## SP-1570 — `scheduled_dispatch.created` publication, retention and reader (newly authored, no admission)
+
+```yaml
+plan_unit_id: SP-1570
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Exactly scheduled_dispatch.created@1.0.0 adopts SP-286/CV-339 full-value first-receipt custody,
+  SP-278 complete generic-index reads and the adjacent per-family publication journal. Canonical state remains with
+  SQR-1570; the journal cannot reconstruct it. Retention is RP-AUTHORITY-INDEFINITE@1.0.0 under Card 1 G18; no registry
+  admission or family checkpoint is granted.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- SP-278
+- SP-286
+- SQR-1570
+- CV-1570
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- scheduled_dispatch.created
+- ea_w3h_scheduled_dispatch_created_publication
+- RP-AUTHORITY-INDEFINITE
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+| Stored value for `scheduled_dispatch.created` | Key | Schema | Producer | Consumers | Retention |
+|---|---|---|---|---|---|
+| `ea_w3h_scheduled_dispatch_created_publication` | `ea_w3h_scheduled_dispatch_created.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}` | `Plans/event_payloads/w3h/scheduled_dispatch_created.schema.json#/$defs/publication` | `storage.w3h.scheduled_dispatch_created.append.v1@1.0.0` via original `SchedulingService::scheduled_dispatch_created` transaction | `storage.w3h.scheduled_dispatch_created.recovery_read.v1@1.0.0` and original Storage backup/restore owner | `RP-EVENT-INDEX-SOURCE@1.0.0`, coupled only to this event’s `RP-AUTHORITY-INDEFINITE@1.0.0` and actual holds |
+
+This is a new canonical non-rebuildable publication journal, not another domain record or event registry row. The body transaction’s sole adapter prepares its complete original semantic event with source custody once; the owner source effect plus journal commit atomically or neither does. Admission/current writer/source/permission/Stop and expected-domain-currentness precede effects. The prepared entry has null receipt/commitment. SP-286’s actual durable append returns the exact first receipt and v2 original-value commitment; the journal CAS advances prepared→appended→settled without changing the prepared event. `appended` means original append is resolved, `settled` means the already accepted domain result plus event receipt are ready for its original acknowledgement. A lost response, stale journal CAS or restart only resolves the same complete original, never repeats its source effect. Dedupe absence, contradictory receipt/value, missing pack bytes or unresolved restore fences instead of accepting a new event. Only the actual original native owner may issue or enroll this journal; reference strings and fixture copies are insufficient. No existing owner effect is replayed from it.
+
+The exact reader `storage.w3h.scheduled_dispatch_created.recovery_read.v1@1.0.0` adopts SP-278’s complete CURRENT-selected source token and range under `SQR-1570`. It is read-only original-result/restart inspection; **no family projector, projection, checkpoint key or durable advance exists**. Generic index CAS/rebuild stays SP-278-owned. A stored token cannot include redb_snapshot_id. Live transaction identity joins the nine durable fields after all helpers at release; healthy same-generation-but-changed-frontier, wrong instance/partition, stale coverage and degraded source cannot claim current results. A valid retained fact uses authentic original recipe/admission/value proof and survives live-state changes; current writer rules never run against historical originals.
+
+Bind this exact event to `RP-AUTHORITY-INDEFINITE@1.0.0`, approved deck-1 Card 1 `G18` (DL-401). No TTL or count cap. For Project entries only explicit Delete Puppet Master project data removes this audit history under existing holds; Remove project from list, deleting a described object or deleting its chat does not. Application records retain the existing app-root custody/deletion rules, never a fabricated Project. Disk pressure refuses new records. Referenced bodies retain their own policies and access; this content-free event grants no longer retention or access to them. The publication value below adopts RP-EVENT-INDEX-SOURCE, coupled to this event and its protections, with no independent lifetime. SP-286 receipt custody keeps its own policy. The publication’s source-coupled retention does not shorten mandatory original first-receipt custody, permit unresolved journal loss, or preserve linked content after its owner deletes it. Required pending/result/backup/hold dependencies fence journal cleanup. Missing-original reads disclose unavailable without reconstructing a current body.
+
+Every stored part, including the complete journal wrapper, is measured in its declared physical encoding. Use existing SP-236 canonical MessagePack and SP-337 durable payload references for bodies above 16 KiB; externalize the event body before journal commit, retaining the complete exact EventRecord with payload_ref and null inline payload. If any required remaining wrapper still exceeds its own inline value limit, return the existing Storage unavailable/value-too-large route **before** the owner effect; never truncate, silently cap admitted semantic numbers or leave a mandatory oversized journal. Pack bytes and addressing metadata settle before referencing acknowledgement. This family authors no timestamp, numeric, physical codec or alternate source hash.
+
+Backup settles owner source effect/result, the journal, actual seglog/packs, full-value receipt and generic-index recovery state coherently. Restore preserves original operation IDs, admitted editions, Stop/tombstones, pending originals and full-value identity; missing post-backup originals cannot be replaced by a new operation. Writer and reader withdrawal use the exact protocol of SQR-1570, preserving canonical custody and truthful unavailable results; no replay dispatch or new family checkpoint is introduced. Tests and criteria remain phase-1 planning only.
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-1570, ContractName:Plans/Contracts_V0.md#CV-1570, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337
+
+## SP-1571 — `scheduled_dispatch.dispatched` publication, retention and reader (newly authored, no admission)
+
+```yaml
+plan_unit_id: SP-1571
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Exactly scheduled_dispatch.dispatched@1.0.0 adopts SP-286/CV-339 full-value first-receipt custody,
+  SP-278 complete generic-index reads and the adjacent per-family publication journal. Canonical state remains with
+  SQR-1571; the journal cannot reconstruct it. Retention is RP-AUTHORITY-INDEFINITE@1.0.0 under Card 1 G18; no registry
+  admission or family checkpoint is granted.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- SP-278
+- SP-286
+- SQR-1571
+- CV-1571
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- scheduled_dispatch.dispatched
+- ea_w3h_scheduled_dispatch_dispatched_publication
+- RP-AUTHORITY-INDEFINITE
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+| Stored value for `scheduled_dispatch.dispatched` | Key | Schema | Producer | Consumers | Retention |
+|---|---|---|---|---|---|
+| `ea_w3h_scheduled_dispatch_dispatched_publication` | `ea_w3h_scheduled_dispatch_dispatched.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}` | `Plans/event_payloads/w3h/scheduled_dispatch_dispatched.schema.json#/$defs/publication` | `storage.w3h.scheduled_dispatch_dispatched.append.v1@1.0.0` via original `SchedulingService::scheduled_dispatch_dispatched` transaction | `storage.w3h.scheduled_dispatch_dispatched.recovery_read.v1@1.0.0` and original Storage backup/restore owner | `RP-EVENT-INDEX-SOURCE@1.0.0`, coupled only to this event’s `RP-AUTHORITY-INDEFINITE@1.0.0` and actual holds |
+
+This is a new canonical non-rebuildable publication journal, not another domain record or event registry row. The body transaction’s sole adapter prepares its complete original semantic event with source custody once; the owner source effect plus journal commit atomically or neither does. Admission/current writer/source/permission/Stop and expected-domain-currentness precede effects. The prepared entry has null receipt/commitment. SP-286’s actual durable append returns the exact first receipt and v2 original-value commitment; the journal CAS advances prepared→appended→settled without changing the prepared event. `appended` means original append is resolved, `settled` means the already accepted domain result plus event receipt are ready for its original acknowledgement. A lost response, stale journal CAS or restart only resolves the same complete original, never repeats its source effect. Dedupe absence, contradictory receipt/value, missing pack bytes or unresolved restore fences instead of accepting a new event. Only the actual original native owner may issue or enroll this journal; reference strings and fixture copies are insufficient. No existing owner effect is replayed from it.
+
+The exact reader `storage.w3h.scheduled_dispatch_dispatched.recovery_read.v1@1.0.0` adopts SP-278’s complete CURRENT-selected source token and range under `SQR-1571`. It is read-only original-result/restart inspection; **no family projector, projection, checkpoint key or durable advance exists**. Generic index CAS/rebuild stays SP-278-owned. A stored token cannot include redb_snapshot_id. Live transaction identity joins the nine durable fields after all helpers at release; healthy same-generation-but-changed-frontier, wrong instance/partition, stale coverage and degraded source cannot claim current results. A valid retained fact uses authentic original recipe/admission/value proof and survives live-state changes; current writer rules never run against historical originals.
+
+Bind this exact event to `RP-AUTHORITY-INDEFINITE@1.0.0`, approved deck-1 Card 1 `G18` (DL-401). No TTL or count cap. For Project entries only explicit Delete Puppet Master project data removes this audit history under existing holds; Remove project from list, deleting a described object or deleting its chat does not. Application records retain the existing app-root custody/deletion rules, never a fabricated Project. Disk pressure refuses new records. Referenced bodies retain their own policies and access; this content-free event grants no longer retention or access to them. The publication value below adopts RP-EVENT-INDEX-SOURCE, coupled to this event and its protections, with no independent lifetime. SP-286 receipt custody keeps its own policy. The publication’s source-coupled retention does not shorten mandatory original first-receipt custody, permit unresolved journal loss, or preserve linked content after its owner deletes it. Required pending/result/backup/hold dependencies fence journal cleanup. Missing-original reads disclose unavailable without reconstructing a current body.
+
+Every stored part, including the complete journal wrapper, is measured in its declared physical encoding. Use existing SP-236 canonical MessagePack and SP-337 durable payload references for bodies above 16 KiB; externalize the event body before journal commit, retaining the complete exact EventRecord with payload_ref and null inline payload. If any required remaining wrapper still exceeds its own inline value limit, return the existing Storage unavailable/value-too-large route **before** the owner effect; never truncate, silently cap admitted semantic numbers or leave a mandatory oversized journal. Pack bytes and addressing metadata settle before referencing acknowledgement. This family authors no timestamp, numeric, physical codec or alternate source hash.
+
+Backup settles owner source effect/result, the journal, actual seglog/packs, full-value receipt and generic-index recovery state coherently. Restore preserves original operation IDs, admitted editions, Stop/tombstones, pending originals and full-value identity; missing post-backup originals cannot be replaced by a new operation. Writer and reader withdrawal use the exact protocol of SQR-1571, preserving canonical custody and truthful unavailable results; no replay dispatch or new family checkpoint is introduced. Tests and criteria remain phase-1 planning only.
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-1571, ContractName:Plans/Contracts_V0.md#CV-1571, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337
+
+## SP-1572 — `scheduled_dispatch.failed` publication, retention and reader (newly authored, no admission)
+
+```yaml
+plan_unit_id: SP-1572
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Exactly scheduled_dispatch.failed@1.0.0 adopts SP-286/CV-339 full-value first-receipt custody, SP-278
+  complete generic-index reads and the adjacent per-family publication journal. Canonical state remains with SQR-1572;
+  the journal cannot reconstruct it. Retention is RP-AUTHORITY-INDEFINITE@1.0.0 under Card 1 G18; no registry admission
+  or family checkpoint is granted.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- SP-278
+- SP-286
+- SQR-1572
+- CV-1572
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- scheduled_dispatch.failed
+- ea_w3h_scheduled_dispatch_failed_publication
+- RP-AUTHORITY-INDEFINITE
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+| Stored value for `scheduled_dispatch.failed` | Key | Schema | Producer | Consumers | Retention |
+|---|---|---|---|---|---|
+| `ea_w3h_scheduled_dispatch_failed_publication` | `ea_w3h_scheduled_dispatch_failed.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}` | `Plans/event_payloads/w3h/scheduled_dispatch_failed.schema.json#/$defs/publication` | `storage.w3h.scheduled_dispatch_failed.append.v1@1.0.0` via original `SchedulingService::scheduled_dispatch_failed` transaction | `storage.w3h.scheduled_dispatch_failed.recovery_read.v1@1.0.0` and original Storage backup/restore owner | `RP-EVENT-INDEX-SOURCE@1.0.0`, coupled only to this event’s `RP-AUTHORITY-INDEFINITE@1.0.0` and actual holds |
+
+This is a new canonical non-rebuildable publication journal, not another domain record or event registry row. The body transaction’s sole adapter prepares its complete original semantic event with source custody once; the owner source effect plus journal commit atomically or neither does. Admission/current writer/source/permission/Stop and expected-domain-currentness precede effects. The prepared entry has null receipt/commitment. SP-286’s actual durable append returns the exact first receipt and v2 original-value commitment; the journal CAS advances prepared→appended→settled without changing the prepared event. `appended` means original append is resolved, `settled` means the already accepted domain result plus event receipt are ready for its original acknowledgement. A lost response, stale journal CAS or restart only resolves the same complete original, never repeats its source effect. Dedupe absence, contradictory receipt/value, missing pack bytes or unresolved restore fences instead of accepting a new event. Only the actual original native owner may issue or enroll this journal; reference strings and fixture copies are insufficient. No existing owner effect is replayed from it.
+
+The exact reader `storage.w3h.scheduled_dispatch_failed.recovery_read.v1@1.0.0` adopts SP-278’s complete CURRENT-selected source token and range under `SQR-1572`. It is read-only original-result/restart inspection; **no family projector, projection, checkpoint key or durable advance exists**. Generic index CAS/rebuild stays SP-278-owned. A stored token cannot include redb_snapshot_id. Live transaction identity joins the nine durable fields after all helpers at release; healthy same-generation-but-changed-frontier, wrong instance/partition, stale coverage and degraded source cannot claim current results. A valid retained fact uses authentic original recipe/admission/value proof and survives live-state changes; current writer rules never run against historical originals.
+
+Bind this exact event to `RP-AUTHORITY-INDEFINITE@1.0.0`, approved deck-1 Card 1 `G18` (DL-401). No TTL or count cap. For Project entries only explicit Delete Puppet Master project data removes this audit history under existing holds; Remove project from list, deleting a described object or deleting its chat does not. Application records retain the existing app-root custody/deletion rules, never a fabricated Project. Disk pressure refuses new records. Referenced bodies retain their own policies and access; this content-free event grants no longer retention or access to them. The publication value below adopts RP-EVENT-INDEX-SOURCE, coupled to this event and its protections, with no independent lifetime. SP-286 receipt custody keeps its own policy. The publication’s source-coupled retention does not shorten mandatory original first-receipt custody, permit unresolved journal loss, or preserve linked content after its owner deletes it. Required pending/result/backup/hold dependencies fence journal cleanup. Missing-original reads disclose unavailable without reconstructing a current body.
+
+Every stored part, including the complete journal wrapper, is measured in its declared physical encoding. Use existing SP-236 canonical MessagePack and SP-337 durable payload references for bodies above 16 KiB; externalize the event body before journal commit, retaining the complete exact EventRecord with payload_ref and null inline payload. If any required remaining wrapper still exceeds its own inline value limit, return the existing Storage unavailable/value-too-large route **before** the owner effect; never truncate, silently cap admitted semantic numbers or leave a mandatory oversized journal. Pack bytes and addressing metadata settle before referencing acknowledgement. This family authors no timestamp, numeric, physical codec or alternate source hash.
+
+Backup settles owner source effect/result, the journal, actual seglog/packs, full-value receipt and generic-index recovery state coherently. Restore preserves original operation IDs, admitted editions, Stop/tombstones, pending originals and full-value identity; missing post-backup originals cannot be replaced by a new operation. Writer and reader withdrawal use the exact protocol of SQR-1572, preserving canonical custody and truthful unavailable results; no replay dispatch or new family checkpoint is introduced. Tests and criteria remain phase-1 planning only.
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-1572, ContractName:Plans/Contracts_V0.md#CV-1572, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337
+
+## SP-1573 — `scheduled_dispatch.held` publication, retention and reader (newly authored, no admission)
+
+```yaml
+plan_unit_id: SP-1573
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Exactly scheduled_dispatch.held@1.0.0 adopts SP-286/CV-339 full-value first-receipt custody, SP-278
+  complete generic-index reads and the adjacent per-family publication journal. Canonical state remains with SQR-1573;
+  the journal cannot reconstruct it. Retention is RP-AUTHORITY-INDEFINITE@1.0.0 under Card 1 G18; no registry admission
+  or family checkpoint is granted.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- SP-278
+- SP-286
+- SQR-1573
+- CV-1573
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- scheduled_dispatch.held
+- ea_w3h_scheduled_dispatch_held_publication
+- RP-AUTHORITY-INDEFINITE
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+| Stored value for `scheduled_dispatch.held` | Key | Schema | Producer | Consumers | Retention |
+|---|---|---|---|---|---|
+| `ea_w3h_scheduled_dispatch_held_publication` | `ea_w3h_scheduled_dispatch_held.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}` | `Plans/event_payloads/w3h/scheduled_dispatch_held.schema.json#/$defs/publication` | `storage.w3h.scheduled_dispatch_held.append.v1@1.0.0` via original `SchedulingService::scheduled_dispatch_held` transaction | `storage.w3h.scheduled_dispatch_held.recovery_read.v1@1.0.0` and original Storage backup/restore owner | `RP-EVENT-INDEX-SOURCE@1.0.0`, coupled only to this event’s `RP-AUTHORITY-INDEFINITE@1.0.0` and actual holds |
+
+This is a new canonical non-rebuildable publication journal, not another domain record or event registry row. The body transaction’s sole adapter prepares its complete original semantic event with source custody once; the owner source effect plus journal commit atomically or neither does. Admission/current writer/source/permission/Stop and expected-domain-currentness precede effects. The prepared entry has null receipt/commitment. SP-286’s actual durable append returns the exact first receipt and v2 original-value commitment; the journal CAS advances prepared→appended→settled without changing the prepared event. `appended` means original append is resolved, `settled` means the already accepted domain result plus event receipt are ready for its original acknowledgement. A lost response, stale journal CAS or restart only resolves the same complete original, never repeats its source effect. Dedupe absence, contradictory receipt/value, missing pack bytes or unresolved restore fences instead of accepting a new event. Only the actual original native owner may issue or enroll this journal; reference strings and fixture copies are insufficient. No existing owner effect is replayed from it.
+
+The exact reader `storage.w3h.scheduled_dispatch_held.recovery_read.v1@1.0.0` adopts SP-278’s complete CURRENT-selected source token and range under `SQR-1573`. It is read-only original-result/restart inspection; **no family projector, projection, checkpoint key or durable advance exists**. Generic index CAS/rebuild stays SP-278-owned. A stored token cannot include redb_snapshot_id. Live transaction identity joins the nine durable fields after all helpers at release; healthy same-generation-but-changed-frontier, wrong instance/partition, stale coverage and degraded source cannot claim current results. A valid retained fact uses authentic original recipe/admission/value proof and survives live-state changes; current writer rules never run against historical originals.
+
+Bind this exact event to `RP-AUTHORITY-INDEFINITE@1.0.0`, approved deck-1 Card 1 `G18` (DL-401). No TTL or count cap. For Project entries only explicit Delete Puppet Master project data removes this audit history under existing holds; Remove project from list, deleting a described object or deleting its chat does not. Application records retain the existing app-root custody/deletion rules, never a fabricated Project. Disk pressure refuses new records. Referenced bodies retain their own policies and access; this content-free event grants no longer retention or access to them. The publication value below adopts RP-EVENT-INDEX-SOURCE, coupled to this event and its protections, with no independent lifetime. SP-286 receipt custody keeps its own policy. The publication’s source-coupled retention does not shorten mandatory original first-receipt custody, permit unresolved journal loss, or preserve linked content after its owner deletes it. Required pending/result/backup/hold dependencies fence journal cleanup. Missing-original reads disclose unavailable without reconstructing a current body.
+
+Every stored part, including the complete journal wrapper, is measured in its declared physical encoding. Use existing SP-236 canonical MessagePack and SP-337 durable payload references for bodies above 16 KiB; externalize the event body before journal commit, retaining the complete exact EventRecord with payload_ref and null inline payload. If any required remaining wrapper still exceeds its own inline value limit, return the existing Storage unavailable/value-too-large route **before** the owner effect; never truncate, silently cap admitted semantic numbers or leave a mandatory oversized journal. Pack bytes and addressing metadata settle before referencing acknowledgement. This family authors no timestamp, numeric, physical codec or alternate source hash.
+
+Backup settles owner source effect/result, the journal, actual seglog/packs, full-value receipt and generic-index recovery state coherently. Restore preserves original operation IDs, admitted editions, Stop/tombstones, pending originals and full-value identity; missing post-backup originals cannot be replaced by a new operation. Writer and reader withdrawal use the exact protocol of SQR-1573, preserving canonical custody and truthful unavailable results; no replay dispatch or new family checkpoint is introduced. Tests and criteria remain phase-1 planning only.
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-1573, ContractName:Plans/Contracts_V0.md#CV-1573, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337
+
+## SP-1574 — `scheduled_dispatch.updated` publication, retention and reader (newly authored, no admission)
+
+```yaml
+plan_unit_id: SP-1574
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Exactly scheduled_dispatch.updated@1.0.0 adopts SP-286/CV-339 full-value first-receipt custody,
+  SP-278 complete generic-index reads and the adjacent per-family publication journal. Canonical state remains with
+  SQR-1574; the journal cannot reconstruct it. Retention is RP-AUTHORITY-INDEFINITE@1.0.0 under Card 1 G18; no registry
+  admission or family checkpoint is granted.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- SP-278
+- SP-286
+- SQR-1574
+- CV-1574
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- scheduled_dispatch.updated
+- ea_w3h_scheduled_dispatch_updated_publication
+- RP-AUTHORITY-INDEFINITE
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+| Stored value for `scheduled_dispatch.updated` | Key | Schema | Producer | Consumers | Retention |
+|---|---|---|---|---|---|
+| `ea_w3h_scheduled_dispatch_updated_publication` | `ea_w3h_scheduled_dispatch_updated.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}` | `Plans/event_payloads/w3h/scheduled_dispatch_updated.schema.json#/$defs/publication` | `storage.w3h.scheduled_dispatch_updated.append.v1@1.0.0` via original `SchedulingService::scheduled_dispatch_updated` transaction | `storage.w3h.scheduled_dispatch_updated.recovery_read.v1@1.0.0` and original Storage backup/restore owner | `RP-EVENT-INDEX-SOURCE@1.0.0`, coupled only to this event’s `RP-AUTHORITY-INDEFINITE@1.0.0` and actual holds |
+
+This is a new canonical non-rebuildable publication journal, not another domain record or event registry row. The body transaction’s sole adapter prepares its complete original semantic event with source custody once; the owner source effect plus journal commit atomically or neither does. Admission/current writer/source/permission/Stop and expected-domain-currentness precede effects. The prepared entry has null receipt/commitment. SP-286’s actual durable append returns the exact first receipt and v2 original-value commitment; the journal CAS advances prepared→appended→settled without changing the prepared event. `appended` means original append is resolved, `settled` means the already accepted domain result plus event receipt are ready for its original acknowledgement. A lost response, stale journal CAS or restart only resolves the same complete original, never repeats its source effect. Dedupe absence, contradictory receipt/value, missing pack bytes or unresolved restore fences instead of accepting a new event. Only the actual original native owner may issue or enroll this journal; reference strings and fixture copies are insufficient. No existing owner effect is replayed from it.
+
+The exact reader `storage.w3h.scheduled_dispatch_updated.recovery_read.v1@1.0.0` adopts SP-278’s complete CURRENT-selected source token and range under `SQR-1574`. It is read-only original-result/restart inspection; **no family projector, projection, checkpoint key or durable advance exists**. Generic index CAS/rebuild stays SP-278-owned. A stored token cannot include redb_snapshot_id. Live transaction identity joins the nine durable fields after all helpers at release; healthy same-generation-but-changed-frontier, wrong instance/partition, stale coverage and degraded source cannot claim current results. A valid retained fact uses authentic original recipe/admission/value proof and survives live-state changes; current writer rules never run against historical originals.
+
+Bind this exact event to `RP-AUTHORITY-INDEFINITE@1.0.0`, approved deck-1 Card 1 `G18` (DL-401). No TTL or count cap. For Project entries only explicit Delete Puppet Master project data removes this audit history under existing holds; Remove project from list, deleting a described object or deleting its chat does not. Application records retain the existing app-root custody/deletion rules, never a fabricated Project. Disk pressure refuses new records. Referenced bodies retain their own policies and access; this content-free event grants no longer retention or access to them. The publication value below adopts RP-EVENT-INDEX-SOURCE, coupled to this event and its protections, with no independent lifetime. SP-286 receipt custody keeps its own policy. The publication’s source-coupled retention does not shorten mandatory original first-receipt custody, permit unresolved journal loss, or preserve linked content after its owner deletes it. Required pending/result/backup/hold dependencies fence journal cleanup. Missing-original reads disclose unavailable without reconstructing a current body.
+
+Every stored part, including the complete journal wrapper, is measured in its declared physical encoding. Use existing SP-236 canonical MessagePack and SP-337 durable payload references for bodies above 16 KiB; externalize the event body before journal commit, retaining the complete exact EventRecord with payload_ref and null inline payload. If any required remaining wrapper still exceeds its own inline value limit, return the existing Storage unavailable/value-too-large route **before** the owner effect; never truncate, silently cap admitted semantic numbers or leave a mandatory oversized journal. Pack bytes and addressing metadata settle before referencing acknowledgement. This family authors no timestamp, numeric, physical codec or alternate source hash.
+
+Backup settles owner source effect/result, the journal, actual seglog/packs, full-value receipt and generic-index recovery state coherently. Restore preserves original operation IDs, admitted editions, Stop/tombstones, pending originals and full-value identity; missing post-backup originals cannot be replaced by a new operation. Writer and reader withdrawal use the exact protocol of SQR-1574, preserving canonical custody and truthful unavailable results; no replay dispatch or new family checkpoint is introduced. Tests and criteria remain phase-1 planning only.
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-1574, ContractName:Plans/Contracts_V0.md#CV-1574, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337
+
+## SP-1575 — `todo.created` publication, retention and reader (newly authored, no admission)
+
+```yaml
+plan_unit_id: SP-1575
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Exactly todo.created@1.0.0 adopts SP-286/CV-339 full-value first-receipt custody, SP-278 complete
+  generic-index reads and the adjacent per-family publication journal. Canonical state remains with TDR-1575; the
+  journal cannot reconstruct it. Retention is RP-CHAT-THREAD-LIFETIME@1.0.0 under Card 1 G20; no registry admission
+  or family checkpoint is granted.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- SP-278
+- SP-286
+- TDR-1575
+- CV-1575
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- todo.created
+- ea_w3h_todo_created_publication
+- RP-CHAT-THREAD-LIFETIME
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+| Stored value for `todo.created` | Key | Schema | Producer | Consumers | Retention |
+|---|---|---|---|---|---|
+| `ea_w3h_todo_created_publication` | `ea_w3h_todo_created.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}` | `Plans/event_payloads/w3h/todo_created.schema.json#/$defs/publication` | `storage.w3h.todo_created.append.v1@1.0.0` via original `ToDoController::created` transaction | `storage.w3h.todo_created.recovery_read.v1@1.0.0` and original Storage backup/restore owner | `RP-EVENT-INDEX-SOURCE@1.0.0`, coupled only to this event’s `RP-CHAT-THREAD-LIFETIME@1.0.0` and actual holds |
+
+This is a new canonical non-rebuildable publication journal, not another domain record or event registry row. The body transaction’s sole adapter prepares its complete original semantic event with source custody once; the owner source effect plus journal commit atomically or neither does. Admission/current writer/source/permission/Stop and expected-domain-currentness precede effects. The prepared entry has null receipt/commitment. SP-286’s actual durable append returns the exact first receipt and v2 original-value commitment; the journal CAS advances prepared→appended→settled without changing the prepared event. `appended` means original append is resolved, `settled` means the already accepted domain result plus event receipt are ready for its original acknowledgement. A lost response, stale journal CAS or restart only resolves the same complete original, never repeats its source effect. Dedupe absence, contradictory receipt/value, missing pack bytes or unresolved restore fences instead of accepting a new event. Only the actual original native owner may issue or enroll this journal; reference strings and fixture copies are insufficient. No existing owner effect is replayed from it. For this exact ToDo family in a compound mutation, compute the required event components from the actual validated controller before/after graph, bindings and transitions, never from a caller-supplied slot list. Preflight admission of every affected exact family before the domain mutation. The owner commits all resulting per-family journals with its one original body transaction; append the complete correlated cohort in one SP-347 durable group. A dependent acknowledgement or read claiming complete mutation history waits for the whole authenticated group and all original member receipts, never an admitted subset or partial prefix. An unavailable member fences publication and dependent consumption without repeating the accepted owner body.
+
+The exact reader `storage.w3h.todo_created.recovery_read.v1@1.0.0` adopts SP-278’s complete CURRENT-selected source token and range under `TDR-1575`. It is read-only original-result/restart inspection; **no family projector, projection, checkpoint key or durable advance exists**. Generic index CAS/rebuild stays SP-278-owned. A stored token cannot include redb_snapshot_id. Live transaction identity joins the nine durable fields after all helpers at release; healthy same-generation-but-changed-frontier, wrong instance/partition, stale coverage and degraded source cannot claim current results. A valid retained fact uses authentic original recipe/admission/value proof and survives live-state changes; current writer rules never run against historical originals.
+
+Bind this exact event to `RP-CHAT-THREAD-LIFETIME@1.0.0`, approved deck-1 Card 1 `G20` (DL-401). The exact RP-CHAT-THREAD-LIFETIME object and thread deletion contract are on origin/plans/ea-retention-cards1-20261104 (2663667e14), stacked on the reviewed Storage retention branch. Integration must carry that object before admission; do not substitute Goal lifetime or indefinite audit. 250,000/thread rolls to a linked continuation, never drops old history. Chat deletion hides immediately, purges within 24 hours and backups within 30 days; holds delay physical purge without restoring visibility. Referenced bodies retain their own policies and access; this content-free event grants no longer retention or access to them. The publication value below adopts RP-EVENT-INDEX-SOURCE, coupled to this event and its protections, with no independent lifetime. SP-286 receipt custody keeps its own policy. The publication’s source-coupled retention does not shorten mandatory original first-receipt custody, permit unresolved journal loss, or preserve linked content after its owner deletes it. Required pending/result/backup/hold dependencies fence journal cleanup. Missing-original reads disclose unavailable without reconstructing a current body.
+
+Every stored part, including the complete journal wrapper, is measured in its declared physical encoding. Use existing SP-236 canonical MessagePack and SP-337 durable payload references for bodies above 16 KiB; externalize the event body before journal commit, retaining the complete exact EventRecord with payload_ref and null inline payload. If any required remaining wrapper still exceeds its own inline value limit, return the existing Storage unavailable/value-too-large route **before** the owner effect; never truncate, silently cap admitted semantic numbers or leave a mandatory oversized journal. Pack bytes and addressing metadata settle before referencing acknowledgement. This family authors no timestamp, numeric, physical codec or alternate source hash.
+
+Backup settles owner source effect/result, the journal, actual seglog/packs, full-value receipt and generic-index recovery state coherently. Restore preserves original operation IDs, admitted editions, Stop/tombstones, pending originals and full-value identity; missing post-backup originals cannot be replaced by a new operation. Writer and reader withdrawal use the exact protocol of TDR-1575, preserving canonical custody and truthful unavailable results; no replay dispatch or new family checkpoint is introduced. Tests and criteria remain phase-1 planning only.
+
+ContractRef: ContractName:Plans/ToDo_Runtime.md#TDR-1575, ContractName:Plans/Contracts_V0.md#CV-1575, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337
+
+## SP-1576 — `todo.dependency_changed` publication, retention and reader (newly authored, no admission)
+
+```yaml
+plan_unit_id: SP-1576
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Exactly todo.dependency_changed@1.0.0 adopts SP-286/CV-339 full-value first-receipt custody, SP-278
+  complete generic-index reads and the adjacent per-family publication journal. Canonical state remains with TDR-1576;
+  the journal cannot reconstruct it. Retention is RP-CHAT-THREAD-LIFETIME@1.0.0 under Card 1 G20; no registry admission
+  or family checkpoint is granted.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- SP-278
+- SP-286
+- TDR-1576
+- CV-1576
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- todo.dependency_changed
+- ea_w3h_todo_dependency_changed_publication
+- RP-CHAT-THREAD-LIFETIME
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+| Stored value for `todo.dependency_changed` | Key | Schema | Producer | Consumers | Retention |
+|---|---|---|---|---|---|
+| `ea_w3h_todo_dependency_changed_publication` | `ea_w3h_todo_dependency_changed.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}` | `Plans/event_payloads/w3h/todo_dependency_changed.schema.json#/$defs/publication` | `storage.w3h.todo_dependency_changed.append.v1@1.0.0` via original `ToDoController::dependency_changed` transaction | `storage.w3h.todo_dependency_changed.recovery_read.v1@1.0.0` and original Storage backup/restore owner | `RP-EVENT-INDEX-SOURCE@1.0.0`, coupled only to this event’s `RP-CHAT-THREAD-LIFETIME@1.0.0` and actual holds |
+
+This is a new canonical non-rebuildable publication journal, not another domain record or event registry row. The body transaction’s sole adapter prepares its complete original semantic event with source custody once; the owner source effect plus journal commit atomically or neither does. Admission/current writer/source/permission/Stop and expected-domain-currentness precede effects. The prepared entry has null receipt/commitment. SP-286’s actual durable append returns the exact first receipt and v2 original-value commitment; the journal CAS advances prepared→appended→settled without changing the prepared event. `appended` means original append is resolved, `settled` means the already accepted domain result plus event receipt are ready for its original acknowledgement. A lost response, stale journal CAS or restart only resolves the same complete original, never repeats its source effect. Dedupe absence, contradictory receipt/value, missing pack bytes or unresolved restore fences instead of accepting a new event. Only the actual original native owner may issue or enroll this journal; reference strings and fixture copies are insufficient. No existing owner effect is replayed from it. For this exact ToDo family in a compound mutation, compute the required event components from the actual validated controller before/after graph, bindings and transitions, never from a caller-supplied slot list. Preflight admission of every affected exact family before the domain mutation. The owner commits all resulting per-family journals with its one original body transaction; append the complete correlated cohort in one SP-347 durable group. A dependent acknowledgement or read claiming complete mutation history waits for the whole authenticated group and all original member receipts, never an admitted subset or partial prefix. An unavailable member fences publication and dependent consumption without repeating the accepted owner body.
+
+The exact reader `storage.w3h.todo_dependency_changed.recovery_read.v1@1.0.0` adopts SP-278’s complete CURRENT-selected source token and range under `TDR-1576`. It is read-only original-result/restart inspection; **no family projector, projection, checkpoint key or durable advance exists**. Generic index CAS/rebuild stays SP-278-owned. A stored token cannot include redb_snapshot_id. Live transaction identity joins the nine durable fields after all helpers at release; healthy same-generation-but-changed-frontier, wrong instance/partition, stale coverage and degraded source cannot claim current results. A valid retained fact uses authentic original recipe/admission/value proof and survives live-state changes; current writer rules never run against historical originals.
+
+Bind this exact event to `RP-CHAT-THREAD-LIFETIME@1.0.0`, approved deck-1 Card 1 `G20` (DL-401). The exact RP-CHAT-THREAD-LIFETIME object and thread deletion contract are on origin/plans/ea-retention-cards1-20261104 (2663667e14), stacked on the reviewed Storage retention branch. Integration must carry that object before admission; do not substitute Goal lifetime or indefinite audit. 250,000/thread rolls to a linked continuation, never drops old history. Chat deletion hides immediately, purges within 24 hours and backups within 30 days; holds delay physical purge without restoring visibility. Referenced bodies retain their own policies and access; this content-free event grants no longer retention or access to them. The publication value below adopts RP-EVENT-INDEX-SOURCE, coupled to this event and its protections, with no independent lifetime. SP-286 receipt custody keeps its own policy. The publication’s source-coupled retention does not shorten mandatory original first-receipt custody, permit unresolved journal loss, or preserve linked content after its owner deletes it. Required pending/result/backup/hold dependencies fence journal cleanup. Missing-original reads disclose unavailable without reconstructing a current body.
+
+Every stored part, including the complete journal wrapper, is measured in its declared physical encoding. Use existing SP-236 canonical MessagePack and SP-337 durable payload references for bodies above 16 KiB; externalize the event body before journal commit, retaining the complete exact EventRecord with payload_ref and null inline payload. If any required remaining wrapper still exceeds its own inline value limit, return the existing Storage unavailable/value-too-large route **before** the owner effect; never truncate, silently cap admitted semantic numbers or leave a mandatory oversized journal. Pack bytes and addressing metadata settle before referencing acknowledgement. This family authors no timestamp, numeric, physical codec or alternate source hash.
+
+Backup settles owner source effect/result, the journal, actual seglog/packs, full-value receipt and generic-index recovery state coherently. Restore preserves original operation IDs, admitted editions, Stop/tombstones, pending originals and full-value identity; missing post-backup originals cannot be replaced by a new operation. Writer and reader withdrawal use the exact protocol of TDR-1576, preserving canonical custody and truthful unavailable results; no replay dispatch or new family checkpoint is introduced. Tests and criteria remain phase-1 planning only.
+
+ContractRef: ContractName:Plans/ToDo_Runtime.md#TDR-1576, ContractName:Plans/Contracts_V0.md#CV-1576, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337
+
+## SP-1577 — `todo.removed_from_current_list` publication, retention and reader (newly authored, no admission)
+
+```yaml
+plan_unit_id: SP-1577
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Exactly todo.removed_from_current_list@1.0.0 adopts SP-286/CV-339 full-value first-receipt custody,
+  SP-278 complete generic-index reads and the adjacent per-family publication journal. Canonical state remains with
+  TDR-1577; the journal cannot reconstruct it. Retention is RP-CHAT-THREAD-LIFETIME@1.0.0 under Card 1 G20; no registry
+  admission or family checkpoint is granted.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- SP-278
+- SP-286
+- TDR-1577
+- CV-1577
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- todo.removed_from_current_list
+- ea_w3h_todo_removed_from_current_list_publication
+- RP-CHAT-THREAD-LIFETIME
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+| Stored value for `todo.removed_from_current_list` | Key | Schema | Producer | Consumers | Retention |
+|---|---|---|---|---|---|
+| `ea_w3h_todo_removed_from_current_list_publication` | `ea_w3h_todo_removed_from_current_list.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}` | `Plans/event_payloads/w3h/todo_removed_from_current_list.schema.json#/$defs/publication` | `storage.w3h.todo_removed_from_current_list.append.v1@1.0.0` via original `ToDoController::removed_from_current_list` transaction | `storage.w3h.todo_removed_from_current_list.recovery_read.v1@1.0.0` and original Storage backup/restore owner | `RP-EVENT-INDEX-SOURCE@1.0.0`, coupled only to this event’s `RP-CHAT-THREAD-LIFETIME@1.0.0` and actual holds |
+
+This is a new canonical non-rebuildable publication journal, not another domain record or event registry row. The body transaction’s sole adapter prepares its complete original semantic event with source custody once; the owner source effect plus journal commit atomically or neither does. Admission/current writer/source/permission/Stop and expected-domain-currentness precede effects. The prepared entry has null receipt/commitment. SP-286’s actual durable append returns the exact first receipt and v2 original-value commitment; the journal CAS advances prepared→appended→settled without changing the prepared event. `appended` means original append is resolved, `settled` means the already accepted domain result plus event receipt are ready for its original acknowledgement. A lost response, stale journal CAS or restart only resolves the same complete original, never repeats its source effect. Dedupe absence, contradictory receipt/value, missing pack bytes or unresolved restore fences instead of accepting a new event. Only the actual original native owner may issue or enroll this journal; reference strings and fixture copies are insufficient. No existing owner effect is replayed from it. For this exact ToDo family in a compound mutation, compute the required event components from the actual validated controller before/after graph, bindings and transitions, never from a caller-supplied slot list. Preflight admission of every affected exact family before the domain mutation. The owner commits all resulting per-family journals with its one original body transaction; append the complete correlated cohort in one SP-347 durable group. A dependent acknowledgement or read claiming complete mutation history waits for the whole authenticated group and all original member receipts, never an admitted subset or partial prefix. An unavailable member fences publication and dependent consumption without repeating the accepted owner body.
+
+The exact reader `storage.w3h.todo_removed_from_current_list.recovery_read.v1@1.0.0` adopts SP-278’s complete CURRENT-selected source token and range under `TDR-1577`. It is read-only original-result/restart inspection; **no family projector, projection, checkpoint key or durable advance exists**. Generic index CAS/rebuild stays SP-278-owned. A stored token cannot include redb_snapshot_id. Live transaction identity joins the nine durable fields after all helpers at release; healthy same-generation-but-changed-frontier, wrong instance/partition, stale coverage and degraded source cannot claim current results. A valid retained fact uses authentic original recipe/admission/value proof and survives live-state changes; current writer rules never run against historical originals.
+
+Bind this exact event to `RP-CHAT-THREAD-LIFETIME@1.0.0`, approved deck-1 Card 1 `G20` (DL-401). The exact RP-CHAT-THREAD-LIFETIME object and thread deletion contract are on origin/plans/ea-retention-cards1-20261104 (2663667e14), stacked on the reviewed Storage retention branch. Integration must carry that object before admission; do not substitute Goal lifetime or indefinite audit. 250,000/thread rolls to a linked continuation, never drops old history. Chat deletion hides immediately, purges within 24 hours and backups within 30 days; holds delay physical purge without restoring visibility. Referenced bodies retain their own policies and access; this content-free event grants no longer retention or access to them. The publication value below adopts RP-EVENT-INDEX-SOURCE, coupled to this event and its protections, with no independent lifetime. SP-286 receipt custody keeps its own policy. The publication’s source-coupled retention does not shorten mandatory original first-receipt custody, permit unresolved journal loss, or preserve linked content after its owner deletes it. Required pending/result/backup/hold dependencies fence journal cleanup. Missing-original reads disclose unavailable without reconstructing a current body.
+
+Every stored part, including the complete journal wrapper, is measured in its declared physical encoding. Use existing SP-236 canonical MessagePack and SP-337 durable payload references for bodies above 16 KiB; externalize the event body before journal commit, retaining the complete exact EventRecord with payload_ref and null inline payload. If any required remaining wrapper still exceeds its own inline value limit, return the existing Storage unavailable/value-too-large route **before** the owner effect; never truncate, silently cap admitted semantic numbers or leave a mandatory oversized journal. Pack bytes and addressing metadata settle before referencing acknowledgement. This family authors no timestamp, numeric, physical codec or alternate source hash.
+
+Backup settles owner source effect/result, the journal, actual seglog/packs, full-value receipt and generic-index recovery state coherently. Restore preserves original operation IDs, admitted editions, Stop/tombstones, pending originals and full-value identity; missing post-backup originals cannot be replaced by a new operation. Writer and reader withdrawal use the exact protocol of TDR-1577, preserving canonical custody and truthful unavailable results; no replay dispatch or new family checkpoint is introduced. Tests and criteria remain phase-1 planning only.
+
+ContractRef: ContractName:Plans/ToDo_Runtime.md#TDR-1577, ContractName:Plans/Contracts_V0.md#CV-1577, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337
+
+## SP-1578 — `todo.reordered` publication, retention and reader (newly authored, no admission)
+
+```yaml
+plan_unit_id: SP-1578
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Exactly todo.reordered@1.0.0 adopts SP-286/CV-339 full-value first-receipt custody, SP-278 complete
+  generic-index reads and the adjacent per-family publication journal. Canonical state remains with TDR-1578; the
+  journal cannot reconstruct it. Retention is RP-CHAT-THREAD-LIFETIME@1.0.0 under Card 1 G20; no registry admission
+  or family checkpoint is granted.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- SP-278
+- SP-286
+- TDR-1578
+- CV-1578
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- todo.reordered
+- ea_w3h_todo_reordered_publication
+- RP-CHAT-THREAD-LIFETIME
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+| Stored value for `todo.reordered` | Key | Schema | Producer | Consumers | Retention |
+|---|---|---|---|---|---|
+| `ea_w3h_todo_reordered_publication` | `ea_w3h_todo_reordered.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}` | `Plans/event_payloads/w3h/todo_reordered.schema.json#/$defs/publication` | `storage.w3h.todo_reordered.append.v1@1.0.0` via original `ToDoController::reordered` transaction | `storage.w3h.todo_reordered.recovery_read.v1@1.0.0` and original Storage backup/restore owner | `RP-EVENT-INDEX-SOURCE@1.0.0`, coupled only to this event’s `RP-CHAT-THREAD-LIFETIME@1.0.0` and actual holds |
+
+This is a new canonical non-rebuildable publication journal, not another domain record or event registry row. The body transaction’s sole adapter prepares its complete original semantic event with source custody once; the owner source effect plus journal commit atomically or neither does. Admission/current writer/source/permission/Stop and expected-domain-currentness precede effects. The prepared entry has null receipt/commitment. SP-286’s actual durable append returns the exact first receipt and v2 original-value commitment; the journal CAS advances prepared→appended→settled without changing the prepared event. `appended` means original append is resolved, `settled` means the already accepted domain result plus event receipt are ready for its original acknowledgement. A lost response, stale journal CAS or restart only resolves the same complete original, never repeats its source effect. Dedupe absence, contradictory receipt/value, missing pack bytes or unresolved restore fences instead of accepting a new event. Only the actual original native owner may issue or enroll this journal; reference strings and fixture copies are insufficient. No existing owner effect is replayed from it. For this exact ToDo family in a compound mutation, compute the required event components from the actual validated controller before/after graph, bindings and transitions, never from a caller-supplied slot list. Preflight admission of every affected exact family before the domain mutation. The owner commits all resulting per-family journals with its one original body transaction; append the complete correlated cohort in one SP-347 durable group. A dependent acknowledgement or read claiming complete mutation history waits for the whole authenticated group and all original member receipts, never an admitted subset or partial prefix. An unavailable member fences publication and dependent consumption without repeating the accepted owner body.
+
+The exact reader `storage.w3h.todo_reordered.recovery_read.v1@1.0.0` adopts SP-278’s complete CURRENT-selected source token and range under `TDR-1578`. It is read-only original-result/restart inspection; **no family projector, projection, checkpoint key or durable advance exists**. Generic index CAS/rebuild stays SP-278-owned. A stored token cannot include redb_snapshot_id. Live transaction identity joins the nine durable fields after all helpers at release; healthy same-generation-but-changed-frontier, wrong instance/partition, stale coverage and degraded source cannot claim current results. A valid retained fact uses authentic original recipe/admission/value proof and survives live-state changes; current writer rules never run against historical originals.
+
+Bind this exact event to `RP-CHAT-THREAD-LIFETIME@1.0.0`, approved deck-1 Card 1 `G20` (DL-401). The exact RP-CHAT-THREAD-LIFETIME object and thread deletion contract are on origin/plans/ea-retention-cards1-20261104 (2663667e14), stacked on the reviewed Storage retention branch. Integration must carry that object before admission; do not substitute Goal lifetime or indefinite audit. 250,000/thread rolls to a linked continuation, never drops old history. Chat deletion hides immediately, purges within 24 hours and backups within 30 days; holds delay physical purge without restoring visibility. Referenced bodies retain their own policies and access; this content-free event grants no longer retention or access to them. The publication value below adopts RP-EVENT-INDEX-SOURCE, coupled to this event and its protections, with no independent lifetime. SP-286 receipt custody keeps its own policy. The publication’s source-coupled retention does not shorten mandatory original first-receipt custody, permit unresolved journal loss, or preserve linked content after its owner deletes it. Required pending/result/backup/hold dependencies fence journal cleanup. Missing-original reads disclose unavailable without reconstructing a current body.
+
+Every stored part, including the complete journal wrapper, is measured in its declared physical encoding. Use existing SP-236 canonical MessagePack and SP-337 durable payload references for bodies above 16 KiB; externalize the event body before journal commit, retaining the complete exact EventRecord with payload_ref and null inline payload. If any required remaining wrapper still exceeds its own inline value limit, return the existing Storage unavailable/value-too-large route **before** the owner effect; never truncate, silently cap admitted semantic numbers or leave a mandatory oversized journal. Pack bytes and addressing metadata settle before referencing acknowledgement. This family authors no timestamp, numeric, physical codec or alternate source hash.
+
+Backup settles owner source effect/result, the journal, actual seglog/packs, full-value receipt and generic-index recovery state coherently. Restore preserves original operation IDs, admitted editions, Stop/tombstones, pending originals and full-value identity; missing post-backup originals cannot be replaced by a new operation. Writer and reader withdrawal use the exact protocol of TDR-1578, preserving canonical custody and truthful unavailable results; no replay dispatch or new family checkpoint is introduced. Tests and criteria remain phase-1 planning only.
+
+ContractRef: ContractName:Plans/ToDo_Runtime.md#TDR-1578, ContractName:Plans/Contracts_V0.md#CV-1578, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337
+
+## SP-1579 — `todo.status_changed` publication, retention and reader (newly authored, no admission)
+
+```yaml
+plan_unit_id: SP-1579
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Exactly todo.status_changed@1.0.0 adopts SP-286/CV-339 full-value first-receipt custody, SP-278
+  complete generic-index reads and the adjacent per-family publication journal. Canonical state remains with TDR-1579;
+  the journal cannot reconstruct it. Retention is RP-CHAT-THREAD-LIFETIME@1.0.0 under Card 1 G20; no registry admission
+  or family checkpoint is granted.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- SP-278
+- SP-286
+- TDR-1579
+- CV-1579
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- todo.status_changed
+- ea_w3h_todo_status_changed_publication
+- RP-CHAT-THREAD-LIFETIME
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+| Stored value for `todo.status_changed` | Key | Schema | Producer | Consumers | Retention |
+|---|---|---|---|---|---|
+| `ea_w3h_todo_status_changed_publication` | `ea_w3h_todo_status_changed.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}` | `Plans/event_payloads/w3h/todo_status_changed.schema.json#/$defs/publication` | `storage.w3h.todo_status_changed.append.v1@1.0.0` via original `ToDoController::status_changed` transaction | `storage.w3h.todo_status_changed.recovery_read.v1@1.0.0` and original Storage backup/restore owner | `RP-EVENT-INDEX-SOURCE@1.0.0`, coupled only to this event’s `RP-CHAT-THREAD-LIFETIME@1.0.0` and actual holds |
+
+This is a new canonical non-rebuildable publication journal, not another domain record or event registry row. The body transaction’s sole adapter prepares its complete original semantic event with source custody once; the owner source effect plus journal commit atomically or neither does. Admission/current writer/source/permission/Stop and expected-domain-currentness precede effects. The prepared entry has null receipt/commitment. SP-286’s actual durable append returns the exact first receipt and v2 original-value commitment; the journal CAS advances prepared→appended→settled without changing the prepared event. `appended` means original append is resolved, `settled` means the already accepted domain result plus event receipt are ready for its original acknowledgement. A lost response, stale journal CAS or restart only resolves the same complete original, never repeats its source effect. Dedupe absence, contradictory receipt/value, missing pack bytes or unresolved restore fences instead of accepting a new event. Only the actual original native owner may issue or enroll this journal; reference strings and fixture copies are insufficient. No existing owner effect is replayed from it. For this exact ToDo family in a compound mutation, compute the required event components from the actual validated controller before/after graph, bindings and transitions, never from a caller-supplied slot list. Preflight admission of every affected exact family before the domain mutation. The owner commits all resulting per-family journals with its one original body transaction; append the complete correlated cohort in one SP-347 durable group. A dependent acknowledgement or read claiming complete mutation history waits for the whole authenticated group and all original member receipts, never an admitted subset or partial prefix. An unavailable member fences publication and dependent consumption without repeating the accepted owner body.
+
+The exact reader `storage.w3h.todo_status_changed.recovery_read.v1@1.0.0` adopts SP-278’s complete CURRENT-selected source token and range under `TDR-1579`. It is read-only original-result/restart inspection; **no family projector, projection, checkpoint key or durable advance exists**. Generic index CAS/rebuild stays SP-278-owned. A stored token cannot include redb_snapshot_id. Live transaction identity joins the nine durable fields after all helpers at release; healthy same-generation-but-changed-frontier, wrong instance/partition, stale coverage and degraded source cannot claim current results. A valid retained fact uses authentic original recipe/admission/value proof and survives live-state changes; current writer rules never run against historical originals.
+
+Bind this exact event to `RP-CHAT-THREAD-LIFETIME@1.0.0`, approved deck-1 Card 1 `G20` (DL-401). The exact RP-CHAT-THREAD-LIFETIME object and thread deletion contract are on origin/plans/ea-retention-cards1-20261104 (2663667e14), stacked on the reviewed Storage retention branch. Integration must carry that object before admission; do not substitute Goal lifetime or indefinite audit. 250,000/thread rolls to a linked continuation, never drops old history. Chat deletion hides immediately, purges within 24 hours and backups within 30 days; holds delay physical purge without restoring visibility. Referenced bodies retain their own policies and access; this content-free event grants no longer retention or access to them. The publication value below adopts RP-EVENT-INDEX-SOURCE, coupled to this event and its protections, with no independent lifetime. SP-286 receipt custody keeps its own policy. The publication’s source-coupled retention does not shorten mandatory original first-receipt custody, permit unresolved journal loss, or preserve linked content after its owner deletes it. Required pending/result/backup/hold dependencies fence journal cleanup. Missing-original reads disclose unavailable without reconstructing a current body.
+
+Every stored part, including the complete journal wrapper, is measured in its declared physical encoding. Use existing SP-236 canonical MessagePack and SP-337 durable payload references for bodies above 16 KiB; externalize the event body before journal commit, retaining the complete exact EventRecord with payload_ref and null inline payload. If any required remaining wrapper still exceeds its own inline value limit, return the existing Storage unavailable/value-too-large route **before** the owner effect; never truncate, silently cap admitted semantic numbers or leave a mandatory oversized journal. Pack bytes and addressing metadata settle before referencing acknowledgement. This family authors no timestamp, numeric, physical codec or alternate source hash.
+
+Backup settles owner source effect/result, the journal, actual seglog/packs, full-value receipt and generic-index recovery state coherently. Restore preserves original operation IDs, admitted editions, Stop/tombstones, pending originals and full-value identity; missing post-backup originals cannot be replaced by a new operation. Writer and reader withdrawal use the exact protocol of TDR-1579, preserving canonical custody and truthful unavailable results; no replay dispatch or new family checkpoint is introduced. Tests and criteria remain phase-1 planning only.
+
+ContractRef: ContractName:Plans/ToDo_Runtime.md#TDR-1579, ContractName:Plans/Contracts_V0.md#CV-1579, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337
+
+## SP-1580 — `todo.updated` publication, retention and reader (newly authored, no admission)
+
+```yaml
+plan_unit_id: SP-1580
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Exactly todo.updated@1.0.0 adopts SP-286/CV-339 full-value first-receipt custody, SP-278 complete
+  generic-index reads and the adjacent per-family publication journal. Canonical state remains with TDR-1580; the
+  journal cannot reconstruct it. Retention is RP-CHAT-THREAD-LIFETIME@1.0.0 under Card 1 G20; no registry admission
+  or family checkpoint is granted.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- SP-278
+- SP-286
+- TDR-1580
+- CV-1580
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- todo.updated
+- ea_w3h_todo_updated_publication
+- RP-CHAT-THREAD-LIFETIME
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+| Stored value for `todo.updated` | Key | Schema | Producer | Consumers | Retention |
+|---|---|---|---|---|---|
+| `ea_w3h_todo_updated_publication` | `ea_w3h_todo_updated.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}` | `Plans/event_payloads/w3h/todo_updated.schema.json#/$defs/publication` | `storage.w3h.todo_updated.append.v1@1.0.0` via original `ToDoController::updated` transaction | `storage.w3h.todo_updated.recovery_read.v1@1.0.0` and original Storage backup/restore owner | `RP-EVENT-INDEX-SOURCE@1.0.0`, coupled only to this event’s `RP-CHAT-THREAD-LIFETIME@1.0.0` and actual holds |
+
+This is a new canonical non-rebuildable publication journal, not another domain record or event registry row. The body transaction’s sole adapter prepares its complete original semantic event with source custody once; the owner source effect plus journal commit atomically or neither does. Admission/current writer/source/permission/Stop and expected-domain-currentness precede effects. The prepared entry has null receipt/commitment. SP-286’s actual durable append returns the exact first receipt and v2 original-value commitment; the journal CAS advances prepared→appended→settled without changing the prepared event. `appended` means original append is resolved, `settled` means the already accepted domain result plus event receipt are ready for its original acknowledgement. A lost response, stale journal CAS or restart only resolves the same complete original, never repeats its source effect. Dedupe absence, contradictory receipt/value, missing pack bytes or unresolved restore fences instead of accepting a new event. Only the actual original native owner may issue or enroll this journal; reference strings and fixture copies are insufficient. No existing owner effect is replayed from it. For this exact ToDo family in a compound mutation, compute the required event components from the actual validated controller before/after graph, bindings and transitions, never from a caller-supplied slot list. Preflight admission of every affected exact family before the domain mutation. The owner commits all resulting per-family journals with its one original body transaction; append the complete correlated cohort in one SP-347 durable group. A dependent acknowledgement or read claiming complete mutation history waits for the whole authenticated group and all original member receipts, never an admitted subset or partial prefix. An unavailable member fences publication and dependent consumption without repeating the accepted owner body.
+
+The exact reader `storage.w3h.todo_updated.recovery_read.v1@1.0.0` adopts SP-278’s complete CURRENT-selected source token and range under `TDR-1580`. It is read-only original-result/restart inspection; **no family projector, projection, checkpoint key or durable advance exists**. Generic index CAS/rebuild stays SP-278-owned. A stored token cannot include redb_snapshot_id. Live transaction identity joins the nine durable fields after all helpers at release; healthy same-generation-but-changed-frontier, wrong instance/partition, stale coverage and degraded source cannot claim current results. A valid retained fact uses authentic original recipe/admission/value proof and survives live-state changes; current writer rules never run against historical originals.
+
+Bind this exact event to `RP-CHAT-THREAD-LIFETIME@1.0.0`, approved deck-1 Card 1 `G20` (DL-401). The exact RP-CHAT-THREAD-LIFETIME object and thread deletion contract are on origin/plans/ea-retention-cards1-20261104 (2663667e14), stacked on the reviewed Storage retention branch. Integration must carry that object before admission; do not substitute Goal lifetime or indefinite audit. 250,000/thread rolls to a linked continuation, never drops old history. Chat deletion hides immediately, purges within 24 hours and backups within 30 days; holds delay physical purge without restoring visibility. Referenced bodies retain their own policies and access; this content-free event grants no longer retention or access to them. The publication value below adopts RP-EVENT-INDEX-SOURCE, coupled to this event and its protections, with no independent lifetime. SP-286 receipt custody keeps its own policy. The publication’s source-coupled retention does not shorten mandatory original first-receipt custody, permit unresolved journal loss, or preserve linked content after its owner deletes it. Required pending/result/backup/hold dependencies fence journal cleanup. Missing-original reads disclose unavailable without reconstructing a current body.
+
+Every stored part, including the complete journal wrapper, is measured in its declared physical encoding. Use existing SP-236 canonical MessagePack and SP-337 durable payload references for bodies above 16 KiB; externalize the event body before journal commit, retaining the complete exact EventRecord with payload_ref and null inline payload. If any required remaining wrapper still exceeds its own inline value limit, return the existing Storage unavailable/value-too-large route **before** the owner effect; never truncate, silently cap admitted semantic numbers or leave a mandatory oversized journal. Pack bytes and addressing metadata settle before referencing acknowledgement. This family authors no timestamp, numeric, physical codec or alternate source hash.
+
+Backup settles owner source effect/result, the journal, actual seglog/packs, full-value receipt and generic-index recovery state coherently. Restore preserves original operation IDs, admitted editions, Stop/tombstones, pending originals and full-value identity; missing post-backup originals cannot be replaced by a new operation. Writer and reader withdrawal use the exact protocol of TDR-1580, preserving canonical custody and truthful unavailable results; no replay dispatch or new family checkpoint is introduced. Tests and criteria remain phase-1 planning only.
+
+ContractRef: ContractName:Plans/ToDo_Runtime.md#TDR-1580, ContractName:Plans/Contracts_V0.md#CV-1580, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337
+
+## SP-1581 — `todo.work_bound` publication, retention and reader (newly authored, no admission)
+
+```yaml
+plan_unit_id: SP-1581
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Exactly todo.work_bound@1.0.0 adopts SP-286/CV-339 full-value first-receipt custody, SP-278 complete
+  generic-index reads and the adjacent per-family publication journal. Canonical state remains with TDR-1581; the
+  journal cannot reconstruct it. Retention is RP-CHAT-THREAD-LIFETIME@1.0.0 under Card 1 G20; no registry admission
+  or family checkpoint is granted.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- SP-278
+- SP-286
+- TDR-1581
+- CV-1581
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- todo.work_bound
+- ea_w3h_todo_work_bound_publication
+- RP-CHAT-THREAD-LIFETIME
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+| Stored value for `todo.work_bound` | Key | Schema | Producer | Consumers | Retention |
+|---|---|---|---|---|---|
+| `ea_w3h_todo_work_bound_publication` | `ea_w3h_todo_work_bound.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}` | `Plans/event_payloads/w3h/todo_work_bound.schema.json#/$defs/publication` | `storage.w3h.todo_work_bound.append.v1@1.0.0` via original `ToDoController::work_bound` transaction | `storage.w3h.todo_work_bound.recovery_read.v1@1.0.0` and original Storage backup/restore owner | `RP-EVENT-INDEX-SOURCE@1.0.0`, coupled only to this event’s `RP-CHAT-THREAD-LIFETIME@1.0.0` and actual holds |
+
+This is a new canonical non-rebuildable publication journal, not another domain record or event registry row. The body transaction’s sole adapter prepares its complete original semantic event with source custody once; the owner source effect plus journal commit atomically or neither does. Admission/current writer/source/permission/Stop and expected-domain-currentness precede effects. The prepared entry has null receipt/commitment. SP-286’s actual durable append returns the exact first receipt and v2 original-value commitment; the journal CAS advances prepared→appended→settled without changing the prepared event. `appended` means original append is resolved, `settled` means the already accepted domain result plus event receipt are ready for its original acknowledgement. A lost response, stale journal CAS or restart only resolves the same complete original, never repeats its source effect. Dedupe absence, contradictory receipt/value, missing pack bytes or unresolved restore fences instead of accepting a new event. Only the actual original native owner may issue or enroll this journal; reference strings and fixture copies are insufficient. No existing owner effect is replayed from it. For this exact ToDo family in a compound mutation, compute the required event components from the actual validated controller before/after graph, bindings and transitions, never from a caller-supplied slot list. Preflight admission of every affected exact family before the domain mutation. The owner commits all resulting per-family journals with its one original body transaction; append the complete correlated cohort in one SP-347 durable group. A dependent acknowledgement or read claiming complete mutation history waits for the whole authenticated group and all original member receipts, never an admitted subset or partial prefix. An unavailable member fences publication and dependent consumption without repeating the accepted owner body.
+
+The exact reader `storage.w3h.todo_work_bound.recovery_read.v1@1.0.0` adopts SP-278’s complete CURRENT-selected source token and range under `TDR-1581`. It is read-only original-result/restart inspection; **no family projector, projection, checkpoint key or durable advance exists**. Generic index CAS/rebuild stays SP-278-owned. A stored token cannot include redb_snapshot_id. Live transaction identity joins the nine durable fields after all helpers at release; healthy same-generation-but-changed-frontier, wrong instance/partition, stale coverage and degraded source cannot claim current results. A valid retained fact uses authentic original recipe/admission/value proof and survives live-state changes; current writer rules never run against historical originals.
+
+Bind this exact event to `RP-CHAT-THREAD-LIFETIME@1.0.0`, approved deck-1 Card 1 `G20` (DL-401). The exact RP-CHAT-THREAD-LIFETIME object and thread deletion contract are on origin/plans/ea-retention-cards1-20261104 (2663667e14), stacked on the reviewed Storage retention branch. Integration must carry that object before admission; do not substitute Goal lifetime or indefinite audit. 250,000/thread rolls to a linked continuation, never drops old history. Chat deletion hides immediately, purges within 24 hours and backups within 30 days; holds delay physical purge without restoring visibility. Referenced bodies retain their own policies and access; this content-free event grants no longer retention or access to them. The publication value below adopts RP-EVENT-INDEX-SOURCE, coupled to this event and its protections, with no independent lifetime. SP-286 receipt custody keeps its own policy. The publication’s source-coupled retention does not shorten mandatory original first-receipt custody, permit unresolved journal loss, or preserve linked content after its owner deletes it. Required pending/result/backup/hold dependencies fence journal cleanup. Missing-original reads disclose unavailable without reconstructing a current body.
+
+Every stored part, including the complete journal wrapper, is measured in its declared physical encoding. Use existing SP-236 canonical MessagePack and SP-337 durable payload references for bodies above 16 KiB; externalize the event body before journal commit, retaining the complete exact EventRecord with payload_ref and null inline payload. If any required remaining wrapper still exceeds its own inline value limit, return the existing Storage unavailable/value-too-large route **before** the owner effect; never truncate, silently cap admitted semantic numbers or leave a mandatory oversized journal. Pack bytes and addressing metadata settle before referencing acknowledgement. This family authors no timestamp, numeric, physical codec or alternate source hash.
+
+Backup settles owner source effect/result, the journal, actual seglog/packs, full-value receipt and generic-index recovery state coherently. Restore preserves original operation IDs, admitted editions, Stop/tombstones, pending originals and full-value identity; missing post-backup originals cannot be replaced by a new operation. Writer and reader withdrawal use the exact protocol of TDR-1581, preserving canonical custody and truthful unavailable results; no replay dispatch or new family checkpoint is introduced. Tests and criteria remain phase-1 planning only.
+
+ContractRef: ContractName:Plans/ToDo_Runtime.md#TDR-1581, ContractName:Plans/Contracts_V0.md#CV-1581, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337

@@ -1,0 +1,431 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/event_payloads/w3h/scheduled_dispatch_created/1.0.0/schema.json",
+  "title": "scheduled_dispatch.created \u2014 prepared W3H payload and publication custody, 1.0.0",
+  "description": "Newly authored under deck-1 4b A (DL-411). No admission; runtime unavailable. Full source/envelope/ref predicates are normative owner obligations, beyond shape validation.",
+  "$defs": {
+    "payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "server_id",
+        "thread_id",
+        "owner_operation_id",
+        "source_record_ref",
+        "source_receipt_ref",
+        "scheduled_dispatch_id",
+        "snapshot_ref",
+        "dispatch_revision"
+      ],
+      "properties": {
+        "schema_id": {
+          "enum": [
+            "pm.event_payload.scheduled_dispatch_created.v1",
+            "pm.event_payload.scheduled_dispatch_created.application.v1"
+          ]
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "enum": [
+            "project",
+            "application"
+          ]
+        },
+        "project_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f]"
+          }
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f]"
+          }
+        },
+        "owner_operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f]"
+          }
+        },
+        "source_record_ref": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f]"
+          }
+        },
+        "source_receipt_ref": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f]"
+          }
+        },
+        "scheduled_dispatch_id": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f]"
+          }
+        },
+        "snapshot_ref": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f]"
+          }
+        },
+        "dispatch_revision": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "application"
+              }
+            },
+            "required": [
+              "scope_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "schema_id": {
+                "const": "pm.event_payload.scheduled_dispatch_created.application.v1"
+              },
+              "project_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "schema_id": {
+                "const": "pm.event_payload.scheduled_dispatch_created.v1"
+              },
+              "project_id": {
+                "type": "string",
+                "minLength": 1,
+                "not": {
+                  "pattern": "[\\u0000-\\u001f\\u007f]"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "prepared_event": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+        },
+        {
+          "properties": {
+            "event_type": {
+              "const": "scheduled_dispatch.created"
+            },
+            "payload_schema_id": {
+              "enum": [
+                "pm.event_payload.scheduled_dispatch_created.v1",
+                "pm.event_payload.scheduled_dispatch_created.application.v1"
+              ]
+            },
+            "payload": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/payload"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "publication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "scope_partition",
+        "physical_key",
+        "owner_operation_id",
+        "source_record_ref",
+        "source_receipt_ref",
+        "state",
+        "prepared_event",
+        "first_append_receipt",
+        "full_value_commitment"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.w3h.scheduled_dispatch_created.publication.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f]"
+          }
+        },
+        "scope_partition": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f]"
+          }
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f]"
+          }
+        },
+        "owner_operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f]"
+          }
+        },
+        "source_record_ref": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f]"
+          }
+        },
+        "source_receipt_ref": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f]"
+          }
+        },
+        "state": {
+          "enum": [
+            "prepared",
+            "appended",
+            "settled"
+          ]
+        },
+        "prepared_event": {
+          "$ref": "#/$defs/prepared_event"
+        },
+        "first_append_receipt": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "full_value_commitment": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "prepared"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt": {
+                "type": "null"
+              },
+              "full_value_commitment": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "first_append_receipt": {
+                "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+              },
+              "full_value_commitment": {
+                "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "scope_kind",
+    "project_id",
+    "server_id",
+    "thread_id",
+    "owner_operation_id",
+    "source_record_ref",
+    "source_receipt_ref",
+    "scheduled_dispatch_id",
+    "snapshot_ref",
+    "dispatch_revision"
+  ],
+  "properties": {
+    "schema_id": {
+      "enum": [
+        "pm.event_payload.scheduled_dispatch_created.v1",
+        "pm.event_payload.scheduled_dispatch_created.application.v1"
+      ]
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "scope_kind": {
+      "enum": [
+        "project",
+        "application"
+      ]
+    },
+    "project_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "server_id": {
+      "type": "string",
+      "minLength": 1,
+      "not": {
+        "pattern": "[\\u0000-\\u001f\\u007f]"
+      }
+    },
+    "thread_id": {
+      "type": "string",
+      "minLength": 1,
+      "not": {
+        "pattern": "[\\u0000-\\u001f\\u007f]"
+      }
+    },
+    "owner_operation_id": {
+      "type": "string",
+      "minLength": 1,
+      "not": {
+        "pattern": "[\\u0000-\\u001f\\u007f]"
+      }
+    },
+    "source_record_ref": {
+      "type": "string",
+      "minLength": 1,
+      "not": {
+        "pattern": "[\\u0000-\\u001f\\u007f]"
+      }
+    },
+    "source_receipt_ref": {
+      "type": "string",
+      "minLength": 1,
+      "not": {
+        "pattern": "[\\u0000-\\u001f\\u007f]"
+      }
+    },
+    "scheduled_dispatch_id": {
+      "type": "string",
+      "minLength": 1,
+      "not": {
+        "pattern": "[\\u0000-\\u001f\\u007f]"
+      }
+    },
+    "snapshot_ref": {
+      "type": "string",
+      "minLength": 1,
+      "not": {
+        "pattern": "[\\u0000-\\u001f\\u007f]"
+      }
+    },
+    "dispatch_revision": {
+      "type": "integer",
+      "minimum": 1
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "scope_kind": {
+            "const": "application"
+          }
+        },
+        "required": [
+          "scope_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "schema_id": {
+            "const": "pm.event_payload.scheduled_dispatch_created.application.v1"
+          },
+          "project_id": {
+            "type": "null"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "schema_id": {
+            "const": "pm.event_payload.scheduled_dispatch_created.v1"
+          },
+          "project_id": {
+            "type": "string",
+            "minLength": 1,
+            "not": {
+              "pattern": "[\\u0000-\\u001f\\u007f]"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

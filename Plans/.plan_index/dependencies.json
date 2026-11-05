@@ -4401,6 +4401,13 @@
     "T-037",
     "T-038",
     "T-039",
+    "TDR-1575",
+    "TDR-1576",
+    "TDR-1577",
+    "TDR-1578",
+    "TDR-1579",
+    "TDR-1580",
+    "TDR-1581",
     "ACD-174",
     "ACD-175",
     "ATS-063",
@@ -4972,6 +4979,10 @@
     "C-027",
     "RTIM-004",
     "CRAU-020",
+    "CRAU-1551",
+    "CRAU-1552",
+    "CRAU-1553",
+    "CRAU-1554",
     "CRAU-041",
     "CS-048",
     "CS-023",
@@ -5335,6 +5346,12 @@
     "DL-065",
     "ADO-007",
     "DL-064",
+    "NPLAN-1559",
+    "NPLAN-1560",
+    "NPLAN-1561",
+    "NPLAN-1562",
+    "NPLAN-1563",
+    "NPLAN-1564",
     "OP-037",
     "PNC-026",
     "PRDB-013",
@@ -6135,6 +6152,7 @@
     "SP-336",
     "GRS-061",
     "GRS-065",
+    "ATS-1270",
     "SP-265",
     "SP-271",
     "SP-285",
@@ -6167,6 +6185,23 @@
     "ATS-028",
     "OP-028",
     "OSI-431",
+    "CV-1551",
+    "CV-1552",
+    "CV-1553",
+    "CV-1554",
+    "CV-1559",
+    "CV-1560",
+    "CV-1561",
+    "CV-1562",
+    "CV-1563",
+    "CV-1564",
+    "CV-1575",
+    "CV-1576",
+    "CV-1577",
+    "CV-1578",
+    "CV-1579",
+    "CV-1580",
+    "CV-1581",
     "CV-341",
     "SIR-046",
     "SP-270",
@@ -6308,6 +6343,23 @@
     "CRAU-069",
     "CRAU-072",
     "RGV-015",
+    "SP-1551",
+    "SP-1552",
+    "SP-1553",
+    "SP-1554",
+    "SP-1559",
+    "SP-1560",
+    "SP-1561",
+    "SP-1562",
+    "SP-1563",
+    "SP-1564",
+    "SP-1575",
+    "SP-1576",
+    "SP-1577",
+    "SP-1578",
+    "SP-1579",
+    "SP-1580",
+    "SP-1581",
     "CV-342",
     "SP-294",
     "SP-293",
@@ -6834,12 +6886,26 @@
     "UCC-151",
     "WM-048",
     "C-048",
+    "APR-1550",
     "OSI-440",
     "GRS-087",
+    "GRS-1558",
     "ACD-509",
     "EP-132",
     "OP-038",
     "SQR-020",
+    "SQR-1555",
+    "SQR-1556",
+    "SQR-1557",
+    "SQR-1566",
+    "SQR-1567",
+    "SQR-1568",
+    "SQR-1569",
+    "SQR-1570",
+    "SQR-1571",
+    "SQR-1572",
+    "SQR-1573",
+    "SQR-1574",
     "RAP-012",
     "RTIM-019",
     "RTIM-024",
@@ -6852,9 +6918,23 @@
     "UCC-155",
     "WM-050",
     "N2-154",
+    "CV-1550",
     "APR-074",
     "CS-113",
     "F3-672",
+    "CV-1558",
+    "CV-1555",
+    "CV-1556",
+    "CV-1557",
+    "CV-1566",
+    "CV-1567",
+    "CV-1568",
+    "CV-1569",
+    "CV-1570",
+    "CV-1571",
+    "CV-1572",
+    "CV-1573",
+    "CV-1574",
     "F3-512",
     "SMPFS-150",
     "SMPFS-154",
@@ -6862,15 +6942,30 @@
     "UCC-162",
     "UIW-016",
     "SSYS-024",
+    "SP-1550",
     "CS-114",
     "F3-674",
     "UCC-218",
+    "SP-1558",
+    "SP-1555",
+    "SP-1556",
+    "SP-1557",
+    "SP-1566",
+    "SP-1567",
+    "SP-1568",
+    "SP-1569",
+    "SP-1570",
+    "SP-1571",
+    "SP-1572",
+    "SP-1573",
+    "SP-1574",
     "RAP-021",
     "SMPFS-151",
     "SIR-023",
     "CS-078",
     "UCC-157",
     "SSYS-017",
+    "SQR-1565",
     "UCC-219",
     "WM-104",
     "RAP-001",
@@ -6878,6 +6973,8 @@
     "CS-079",
     "UCC-158",
     "SSYS-026",
+    "CS-1565",
+    "CV-1565",
     "WM-105",
     "RTIM-017",
     "RTIM-020",
@@ -6893,6 +6990,7 @@
     "UCC-164",
     "F3-528",
     "SSYS-027",
+    "SP-1565",
     "SMPFS-169",
     "SMPFS-156",
     "SSYS-038",
@@ -13450,6 +13548,26 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "APR-1550",
+      "to": "APR-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "APR-1550",
+      "to": "APR-017"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "APR-1550",
+      "to": "APR-073"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "APR-1550",
+      "to": "SQR-003"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "ARC-001",
       "to": "ARC-002"
     },
@@ -15527,6 +15645,21 @@
       "edge_type": "depends_on",
       "from": "ATS-085",
       "to": "UIW-052"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1270",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1270",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1270",
+      "to": "SP-286"
     },
     {
       "edge_type": "depends_on",
@@ -19325,6 +19458,66 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CRAU-1551",
+      "to": "CRAU-042"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CRAU-1551",
+      "to": "CRAU-093"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CRAU-1551",
+      "to": "CRAU-096"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CRAU-1552",
+      "to": "CRAU-042"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CRAU-1552",
+      "to": "CRAU-093"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CRAU-1552",
+      "to": "CRAU-096"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CRAU-1553",
+      "to": "CRAU-042"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CRAU-1553",
+      "to": "CRAU-093"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CRAU-1553",
+      "to": "CRAU-096"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CRAU-1554",
+      "to": "CRAU-042"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CRAU-1554",
+      "to": "CRAU-093"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CRAU-1554",
+      "to": "CRAU-096"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CS-003",
       "to": "CS-002"
     },
@@ -21107,6 +21300,16 @@
       "edge_type": "depends_on",
       "from": "CS-114",
       "to": "SQR-020"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CS-1565",
+      "to": "CS-114"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CS-1565",
+      "to": "SQR-1565"
     },
     {
       "edge_type": "depends_on",
@@ -23800,6 +24003,156 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CV-1550",
+      "to": "APR-1550"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1550",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1550",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1551",
+      "to": "CRAU-1551"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1551",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1551",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1552",
+      "to": "CRAU-1552"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1552",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1552",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1553",
+      "to": "CRAU-1553"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1553",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1553",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1554",
+      "to": "CRAU-1554"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1554",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1554",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1555",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1555",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1555",
+      "to": "SQR-1555"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1556",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1556",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1556",
+      "to": "SQR-1556"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1557",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1557",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1557",
+      "to": "SQR-1557"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1558",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1558",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1558",
+      "to": "GRS-1558"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1559",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1559",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1559",
+      "to": "NPLAN-1559"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CV-156",
       "to": "CV-030"
     },
@@ -23810,8 +24163,308 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CV-1560",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1560",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1560",
+      "to": "NPLAN-1560"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1561",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1561",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1561",
+      "to": "NPLAN-1561"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1562",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1562",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1562",
+      "to": "NPLAN-1562"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1563",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1563",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1563",
+      "to": "NPLAN-1563"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1564",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1564",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1564",
+      "to": "NPLAN-1564"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1565",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1565",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1565",
+      "to": "SQR-1565"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1566",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1566",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1566",
+      "to": "SQR-1566"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1567",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1567",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1567",
+      "to": "SQR-1567"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1568",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1568",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1568",
+      "to": "SQR-1568"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1569",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1569",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1569",
+      "to": "SQR-1569"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CV-157",
       "to": "CV-155"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1570",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1570",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1570",
+      "to": "SQR-1570"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1571",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1571",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1571",
+      "to": "SQR-1571"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1572",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1572",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1572",
+      "to": "SQR-1572"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1573",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1573",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1573",
+      "to": "SQR-1573"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1574",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1574",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1574",
+      "to": "SQR-1574"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1575",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1575",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1575",
+      "to": "TDR-1575"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1576",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1576",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1576",
+      "to": "TDR-1576"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1577",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1577",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1577",
+      "to": "TDR-1577"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1578",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1578",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1578",
+      "to": "TDR-1578"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1579",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1579",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1579",
+      "to": "TDR-1579"
     },
     {
       "edge_type": "depends_on",
@@ -23822,6 +24475,36 @@
       "edge_type": "depends_on",
       "from": "CV-158",
       "to": "CV-157"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1580",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1580",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1580",
+      "to": "TDR-1580"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1581",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1581",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1581",
+      "to": "TDR-1581"
     },
     {
       "edge_type": "depends_on",
@@ -40200,6 +40883,21 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "GRS-1558",
+      "to": "GRS-086"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-1558",
+      "to": "SQR-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-1558",
+      "to": "SQR-006"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "HITL-005",
       "to": "HITL-038"
     },
@@ -46002,6 +46700,96 @@
       "edge_type": "depends_on",
       "from": "NPLAN-006",
       "to": "NPLAN-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "NPLAN-1559",
+      "to": "NPLAN-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "NPLAN-1559",
+      "to": "NPLAN-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "NPLAN-1559",
+      "to": "NPLAN-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "NPLAN-1560",
+      "to": "NPLAN-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "NPLAN-1560",
+      "to": "NPLAN-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "NPLAN-1560",
+      "to": "NPLAN-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "NPLAN-1561",
+      "to": "NPLAN-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "NPLAN-1561",
+      "to": "NPLAN-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "NPLAN-1561",
+      "to": "NPLAN-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "NPLAN-1562",
+      "to": "NPLAN-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "NPLAN-1562",
+      "to": "NPLAN-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "NPLAN-1562",
+      "to": "NPLAN-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "NPLAN-1563",
+      "to": "NPLAN-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "NPLAN-1563",
+      "to": "NPLAN-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "NPLAN-1563",
+      "to": "NPLAN-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "NPLAN-1564",
+      "to": "NPLAN-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "NPLAN-1564",
+      "to": "NPLAN-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "NPLAN-1564",
+      "to": "NPLAN-006"
     },
     {
       "edge_type": "depends_on",
@@ -78155,6 +78943,206 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-1550",
+      "to": "APR-1550"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1550",
+      "to": "CV-1550"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1550",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1550",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1551",
+      "to": "CRAU-1551"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1551",
+      "to": "CV-1551"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1551",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1551",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1552",
+      "to": "CRAU-1552"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1552",
+      "to": "CV-1552"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1552",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1552",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1553",
+      "to": "CRAU-1553"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1553",
+      "to": "CV-1553"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1553",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1553",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1554",
+      "to": "CRAU-1554"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1554",
+      "to": "CV-1554"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1554",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1554",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1555",
+      "to": "CV-1555"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1555",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1555",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1555",
+      "to": "SQR-1555"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1556",
+      "to": "CV-1556"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1556",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1556",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1556",
+      "to": "SQR-1556"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1557",
+      "to": "CV-1557"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1557",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1557",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1557",
+      "to": "SQR-1557"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1558",
+      "to": "CV-1558"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1558",
+      "to": "GRS-1558"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1558",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1558",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1559",
+      "to": "CV-1559"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1559",
+      "to": "NPLAN-1559"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1559",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1559",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SP-156",
       "to": "PDS-003"
     },
@@ -78175,6 +79163,206 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-1560",
+      "to": "CV-1560"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1560",
+      "to": "NPLAN-1560"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1560",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1560",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1561",
+      "to": "CV-1561"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1561",
+      "to": "NPLAN-1561"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1561",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1561",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1562",
+      "to": "CV-1562"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1562",
+      "to": "NPLAN-1562"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1562",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1562",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1563",
+      "to": "CV-1563"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1563",
+      "to": "NPLAN-1563"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1563",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1563",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1564",
+      "to": "CV-1564"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1564",
+      "to": "NPLAN-1564"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1564",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1564",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1565",
+      "to": "CV-1565"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1565",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1565",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1565",
+      "to": "SQR-1565"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1566",
+      "to": "CV-1566"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1566",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1566",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1566",
+      "to": "SQR-1566"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1567",
+      "to": "CV-1567"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1567",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1567",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1567",
+      "to": "SQR-1567"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1568",
+      "to": "CV-1568"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1568",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1568",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1568",
+      "to": "SQR-1568"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1569",
+      "to": "CV-1569"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1569",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1569",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1569",
+      "to": "SQR-1569"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SP-157",
       "to": "PDS-003"
     },
@@ -78195,6 +79383,206 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-1570",
+      "to": "CV-1570"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1570",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1570",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1570",
+      "to": "SQR-1570"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1571",
+      "to": "CV-1571"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1571",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1571",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1571",
+      "to": "SQR-1571"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1572",
+      "to": "CV-1572"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1572",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1572",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1572",
+      "to": "SQR-1572"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1573",
+      "to": "CV-1573"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1573",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1573",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1573",
+      "to": "SQR-1573"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1574",
+      "to": "CV-1574"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1574",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1574",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1574",
+      "to": "SQR-1574"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1575",
+      "to": "CV-1575"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1575",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1575",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1575",
+      "to": "TDR-1575"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1576",
+      "to": "CV-1576"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1576",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1576",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1576",
+      "to": "TDR-1576"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1577",
+      "to": "CV-1577"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1577",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1577",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1577",
+      "to": "TDR-1577"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1578",
+      "to": "CV-1578"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1578",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1578",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1578",
+      "to": "TDR-1578"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1579",
+      "to": "CV-1579"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1579",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1579",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1579",
+      "to": "TDR-1579"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SP-158",
       "to": "PDS-003"
     },
@@ -78212,6 +79600,46 @@
       "edge_type": "depends_on",
       "from": "SP-158",
       "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1580",
+      "to": "CV-1580"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1580",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1580",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1580",
+      "to": "TDR-1580"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1581",
+      "to": "CV-1581"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1581",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1581",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1581",
+      "to": "TDR-1581"
     },
     {
       "edge_type": "depends_on",
@@ -82216,6 +83644,261 @@
     {
       "edge_type": "depends_on",
       "from": "SQR-020",
+      "to": "SQR-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1555",
+      "to": "SQR-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1555",
+      "to": "SQR-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1555",
+      "to": "SQR-007"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1555",
+      "to": "SQR-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1556",
+      "to": "SQR-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1556",
+      "to": "SQR-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1556",
+      "to": "SQR-007"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1556",
+      "to": "SQR-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1557",
+      "to": "SQR-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1557",
+      "to": "SQR-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1557",
+      "to": "SQR-007"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1557",
+      "to": "SQR-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1565",
+      "to": "CS-114"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1565",
+      "to": "CV-368"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1565",
+      "to": "SP-323"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1565",
+      "to": "SP-352"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1565",
+      "to": "SQR-018"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1565",
+      "to": "SQR-020"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1566",
+      "to": "SQR-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1566",
+      "to": "SQR-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1566",
+      "to": "SQR-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1567",
+      "to": "SQR-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1567",
+      "to": "SQR-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1567",
+      "to": "SQR-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1568",
+      "to": "SQR-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1568",
+      "to": "SQR-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1568",
+      "to": "SQR-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1569",
+      "to": "SQR-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1569",
+      "to": "SQR-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1569",
+      "to": "SQR-007"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1569",
+      "to": "SQR-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1570",
+      "to": "SQR-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1570",
+      "to": "SQR-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1570",
+      "to": "SQR-007"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1570",
+      "to": "SQR-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1571",
+      "to": "SQR-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1571",
+      "to": "SQR-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1571",
+      "to": "SQR-007"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1571",
+      "to": "SQR-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1572",
+      "to": "SQR-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1572",
+      "to": "SQR-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1572",
+      "to": "SQR-007"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1572",
+      "to": "SQR-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1573",
+      "to": "SQR-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1573",
+      "to": "SQR-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1573",
+      "to": "SQR-007"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1573",
+      "to": "SQR-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1574",
+      "to": "SQR-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1574",
+      "to": "SQR-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1574",
+      "to": "SQR-007"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-1574",
       "to": "SQR-019"
     },
     {
@@ -87207,6 +88890,216 @@
       "edge_type": "depends_on",
       "from": "TDR-012",
       "to": "TDR-009"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1575",
+      "to": "TDR-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1575",
+      "to": "TDR-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1575",
+      "to": "TDR-007"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1575",
+      "to": "TDR-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1575",
+      "to": "TDR-009"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1575",
+      "to": "TDR-012"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1576",
+      "to": "TDR-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1576",
+      "to": "TDR-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1576",
+      "to": "TDR-007"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1576",
+      "to": "TDR-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1576",
+      "to": "TDR-009"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1576",
+      "to": "TDR-012"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1577",
+      "to": "TDR-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1577",
+      "to": "TDR-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1577",
+      "to": "TDR-007"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1577",
+      "to": "TDR-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1577",
+      "to": "TDR-009"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1577",
+      "to": "TDR-012"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1578",
+      "to": "TDR-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1578",
+      "to": "TDR-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1578",
+      "to": "TDR-007"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1578",
+      "to": "TDR-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1578",
+      "to": "TDR-009"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1578",
+      "to": "TDR-012"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1579",
+      "to": "TDR-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1579",
+      "to": "TDR-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1579",
+      "to": "TDR-007"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1579",
+      "to": "TDR-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1579",
+      "to": "TDR-009"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1579",
+      "to": "TDR-012"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1580",
+      "to": "TDR-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1580",
+      "to": "TDR-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1580",
+      "to": "TDR-007"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1580",
+      "to": "TDR-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1580",
+      "to": "TDR-009"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1580",
+      "to": "TDR-012"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1581",
+      "to": "TDR-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1581",
+      "to": "TDR-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1581",
+      "to": "TDR-007"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1581",
+      "to": "TDR-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1581",
+      "to": "TDR-009"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "TDR-1581",
+      "to": "TDR-012"
     },
     {
       "edge_type": "depends_on",
@@ -117219,7 +119112,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-04T23:02:55Z",
+  "generated_at_utc": "2026-11-05T05:24:31Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -129394,6 +131287,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Assistant_Plan_Runtime.md",
+      "plan_unit_id": "APR-1550",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "APR-1550 — `assistant_plan.schedule_invalidated`: newly authored owner contract, prepared without admission",
+        "heading_level": 2,
+        "heading_line": 2231,
+        "line": 2233,
+        "path": "Plans/Assistant_Plan_Runtime.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
       "context_scope": "residual_plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/agent-rules-context.md",
@@ -131330,6 +133240,23 @@
       },
       "status": "accepted",
       "unit_type": "acceptance_gate"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-1270",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "ATS-1270 — W3H per-family phase-1 oracle plans (newly authored, no execution)",
+        "heading_level": 2,
+        "heading_line": 7238,
+        "line": 7240,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
     },
     {
       "context_scope": "bitbucket_provider_identity",
@@ -136483,6 +138410,74 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Containers_Registry_and_Unraid.md",
+      "plan_unit_id": "CRAU-1551",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CRAU-1551 — `docker.compose.scenario.deleted`: newly authored owner contract, prepared without admission",
+        "heading_level": 2,
+        "heading_line": 6978,
+        "line": 6980,
+        "path": "Plans/Containers_Registry_and_Unraid.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Containers_Registry_and_Unraid.md",
+      "plan_unit_id": "CRAU-1552",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CRAU-1552 — `docker.compose.scenario.edited`: newly authored owner contract, prepared without admission",
+        "heading_level": 2,
+        "heading_line": 7045,
+        "line": 7047,
+        "path": "Plans/Containers_Registry_and_Unraid.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Containers_Registry_and_Unraid.md",
+      "plan_unit_id": "CRAU-1553",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CRAU-1553 — `docker.compose.scenario.run`: newly authored owner contract, prepared without admission",
+        "heading_level": 2,
+        "heading_line": 7112,
+        "line": 7114,
+        "path": "Plans/Containers_Registry_and_Unraid.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Containers_Registry_and_Unraid.md",
+      "plan_unit_id": "CRAU-1554",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CRAU-1554 — `docker.compose.scenario.saved`: newly authored owner contract, prepared without admission",
+        "heading_level": 2,
+        "heading_line": 7179,
+        "line": 7181,
+        "path": "Plans/Containers_Registry_and_Unraid.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
       "context_scope": "plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/Commands_System.md",
@@ -138232,6 +140227,23 @@
       },
       "status": "accepted",
       "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Commands_System.md",
+      "plan_unit_id": "CS-1565",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CS-1565 — Automation pause event route (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 10722,
+        "line": 10724,
+        "path": "Plans/Commands_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
     },
     {
       "context_scope": "contracts_v0_residual_source",
@@ -140869,6 +142881,176 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1550",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1550 — `assistant_plan.schedule_invalidated` closed payload and identity (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 24470,
+        "line": 24472,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1551",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1551 — `docker.compose.scenario.deleted` closed payload and identity (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 24528,
+        "line": 24530,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1552",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1552 — `docker.compose.scenario.edited` closed payload and identity (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 24586,
+        "line": 24588,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1553",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1553 — `docker.compose.scenario.run` closed payload and identity (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 24644,
+        "line": 24646,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1554",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1554 — `docker.compose.scenario.saved` closed payload and identity (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 24702,
+        "line": 24704,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1555",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1555 — `execution_window.created` closed payload and identity (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 24760,
+        "line": 24762,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1556",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1556 — `execution_window.invalidated` closed payload and identity (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 24818,
+        "line": 24820,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1557",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1557 — `execution_window.updated` closed payload and identity (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 24876,
+        "line": 24878,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1558",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1558 — `goal.continuation_evaluated` closed payload and identity (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 24934,
+        "line": 24936,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1559",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1559 — `named_plan.archived` closed payload and identity (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 24992,
+        "line": 24994,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
       "context_scope": "hitl_labels_approval_ui_actions",
       "gui_related": true,
       "owner_doc": "Plans/Contracts_V0.md",
@@ -140884,6 +143066,176 @@
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1560",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1560 — `named_plan.child_refs_changed` closed payload and identity (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 25050,
+        "line": 25052,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1561",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1561 — `named_plan.created` closed payload and identity (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 25108,
+        "line": 25110,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1562",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1562 — `named_plan.priority_changed` closed payload and identity (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 25166,
+        "line": 25168,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1563",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1563 — `named_plan.renamed` closed payload and identity (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 25224,
+        "line": 25226,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1564",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1564 — `named_plan.restored` closed payload and identity (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 25282,
+        "line": 25284,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1565",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1565 — `runtime.automation_pause_changed` closed payload and identity (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 25340,
+        "line": 25342,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1566",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1566 — `runtime.quota_resume_attempted` closed payload and identity (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 25398,
+        "line": 25400,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1567",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1567 — `runtime.quota_resume_consent_changed` closed payload and identity (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 25456,
+        "line": 25458,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1568",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1568 — `runtime.quota_wait_started` closed payload and identity (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 25514,
+        "line": 25516,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1569",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1569 — `scheduled_dispatch.cancelled` closed payload and identity (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 25572,
+        "line": 25574,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
     },
     {
       "context_scope": "hitl_scope_persistence_history",
@@ -140903,6 +143255,176 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1570",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1570 — `scheduled_dispatch.created` closed payload and identity (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 25630,
+        "line": 25632,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1571",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1571 — `scheduled_dispatch.dispatched` closed payload and identity (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 25688,
+        "line": 25690,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1572",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1572 — `scheduled_dispatch.failed` closed payload and identity (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 25746,
+        "line": 25748,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1573",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1573 — `scheduled_dispatch.held` closed payload and identity (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 25804,
+        "line": 25806,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1574",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1574 — `scheduled_dispatch.updated` closed payload and identity (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 25862,
+        "line": 25864,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1575",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1575 — `todo.created` closed payload and identity (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 25920,
+        "line": 25922,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1576",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1576 — `todo.dependency_changed` closed payload and identity (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 25978,
+        "line": 25980,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1577",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1577 — `todo.removed_from_current_list` closed payload and identity (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 26036,
+        "line": 26038,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1578",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1578 — `todo.reordered` closed payload and identity (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 26094,
+        "line": 26096,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1579",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1579 — `todo.status_changed` closed payload and identity (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 26152,
+        "line": 26154,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
       "context_scope": "hitl_request_id_compatibility",
       "gui_related": false,
       "owner_doc": "Plans/Contracts_V0.md",
@@ -140918,6 +143440,40 @@
       },
       "status": "accepted",
       "unit_type": "compatibility_disposition"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1580",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1580 — `todo.updated` closed payload and identity (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 26210,
+        "line": 26212,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1581",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-1581 — `todo.work_bound` closed payload and identity (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 26268,
+        "line": 26270,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
     },
     {
       "context_scope": "assistant_worktree_uicommand_registrations",
@@ -178813,6 +181369,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-1558",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "GRS-1558 — `goal.continuation_evaluated`: newly authored owner contract, prepared without admission",
+        "heading_level": 2,
+        "heading_line": 8357,
+        "line": 8359,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
       "context_scope": "residual_plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/human-in-the-loop.md",
@@ -192802,6 +195375,108 @@
       },
       "status": "accepted",
       "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Named_Plan_System.md",
+      "plan_unit_id": "NPLAN-1559",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "NPLAN-1559 — `named_plan.archived`: newly authored owner contract, prepared without admission",
+        "heading_level": 2,
+        "heading_line": 476,
+        "line": 478,
+        "path": "Plans/Named_Plan_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Named_Plan_System.md",
+      "plan_unit_id": "NPLAN-1560",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "NPLAN-1560 — `named_plan.child_refs_changed`: newly authored owner contract, prepared without admission",
+        "heading_level": 2,
+        "heading_line": 542,
+        "line": 544,
+        "path": "Plans/Named_Plan_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Named_Plan_System.md",
+      "plan_unit_id": "NPLAN-1561",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "NPLAN-1561 — `named_plan.created`: newly authored owner contract, prepared without admission",
+        "heading_level": 2,
+        "heading_line": 610,
+        "line": 612,
+        "path": "Plans/Named_Plan_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Named_Plan_System.md",
+      "plan_unit_id": "NPLAN-1562",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "NPLAN-1562 — `named_plan.priority_changed`: newly authored owner contract, prepared without admission",
+        "heading_level": 2,
+        "heading_line": 676,
+        "line": 678,
+        "path": "Plans/Named_Plan_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Named_Plan_System.md",
+      "plan_unit_id": "NPLAN-1563",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "NPLAN-1563 — `named_plan.renamed`: newly authored owner contract, prepared without admission",
+        "heading_level": 2,
+        "heading_line": 742,
+        "line": 744,
+        "path": "Plans/Named_Plan_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Named_Plan_System.md",
+      "plan_unit_id": "NPLAN-1564",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "NPLAN-1564 — `named_plan.restored`: newly authored owner contract, prepared without admission",
+        "heading_level": 2,
+        "heading_line": 808,
+        "line": 810,
+        "path": "Plans/Named_Plan_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
     },
     {
       "context_scope": "residual_plan_standardization",
@@ -224934,6 +227609,176 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1550",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1550 — `assistant_plan.schedule_invalidated` publication, retention and reader (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 29478,
+        "line": 29480,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1551",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1551 — `docker.compose.scenario.deleted` publication, retention and reader (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 29546,
+        "line": 29548,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1552",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1552 — `docker.compose.scenario.edited` publication, retention and reader (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 29614,
+        "line": 29616,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1553",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1553 — `docker.compose.scenario.run` publication, retention and reader (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 29682,
+        "line": 29684,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1554",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1554 — `docker.compose.scenario.saved` publication, retention and reader (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 29750,
+        "line": 29752,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1555",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1555 — `execution_window.created` publication, retention and reader (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 29818,
+        "line": 29820,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1556",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1556 — `execution_window.invalidated` publication, retention and reader (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 29886,
+        "line": 29888,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1557",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1557 — `execution_window.updated` publication, retention and reader (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 29954,
+        "line": 29956,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1558",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1558 — `goal.continuation_evaluated` publication, retention and reader (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 30022,
+        "line": 30024,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1559",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1559 — `named_plan.archived` publication, retention and reader (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 30090,
+        "line": 30092,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
       "context_scope": "storage_batch_178_chat_runtime_state",
       "gui_related": false,
       "owner_doc": "Plans/storage-plan.md",
@@ -224949,6 +227794,176 @@
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1560",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1560 — `named_plan.child_refs_changed` publication, retention and reader (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 30158,
+        "line": 30160,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1561",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1561 — `named_plan.created` publication, retention and reader (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 30226,
+        "line": 30228,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1562",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1562 — `named_plan.priority_changed` publication, retention and reader (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 30294,
+        "line": 30296,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1563",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1563 — `named_plan.renamed` publication, retention and reader (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 30362,
+        "line": 30364,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1564",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1564 — `named_plan.restored` publication, retention and reader (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 30430,
+        "line": 30432,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1565",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1565 — `runtime.automation_pause_changed` publication, retention and reader (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 30498,
+        "line": 30500,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1566",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1566 — `runtime.quota_resume_attempted` publication, retention and reader (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 30566,
+        "line": 30568,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1567",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1567 — `runtime.quota_resume_consent_changed` publication, retention and reader (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 30634,
+        "line": 30636,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1568",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1568 — `runtime.quota_wait_started` publication, retention and reader (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 30702,
+        "line": 30704,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1569",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1569 — `scheduled_dispatch.cancelled` publication, retention and reader (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 30770,
+        "line": 30772,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
     },
     {
       "context_scope": "storage_batch_178_chat_runtime_state",
@@ -224968,6 +227983,176 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1570",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1570 — `scheduled_dispatch.created` publication, retention and reader (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 30838,
+        "line": 30840,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1571",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1571 — `scheduled_dispatch.dispatched` publication, retention and reader (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 30906,
+        "line": 30908,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1572",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1572 — `scheduled_dispatch.failed` publication, retention and reader (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 30974,
+        "line": 30976,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1573",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1573 — `scheduled_dispatch.held` publication, retention and reader (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 31042,
+        "line": 31044,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1574",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1574 — `scheduled_dispatch.updated` publication, retention and reader (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 31110,
+        "line": 31112,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1575",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1575 — `todo.created` publication, retention and reader (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 31178,
+        "line": 31180,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1576",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1576 — `todo.dependency_changed` publication, retention and reader (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 31246,
+        "line": 31248,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1577",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1577 — `todo.removed_from_current_list` publication, retention and reader (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 31314,
+        "line": 31316,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1578",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1578 — `todo.reordered` publication, retention and reader (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 31382,
+        "line": 31384,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1579",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1579 — `todo.status_changed` publication, retention and reader (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 31450,
+        "line": 31452,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
       "context_scope": "storage_batch_178_chat_runtime_state",
       "gui_related": true,
       "owner_doc": "Plans/storage-plan.md",
@@ -224983,6 +228168,40 @@
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1580",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1580 — `todo.updated` publication, retention and reader (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 31518,
+        "line": 31520,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1581",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-1581 — `todo.work_bound` publication, retention and reader (newly authored, no admission)",
+        "heading_level": 2,
+        "heading_line": 31586,
+        "line": 31588,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
     },
     {
       "context_scope": "storage_batch_178_chat_runtime_state",
@@ -228434,6 +231653,227 @@
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
+      "plan_unit_id": "SQR-1555",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SQR-1555 — `execution_window.created`: newly authored owner contract, prepared without admission",
+        "heading_level": 2,
+        "heading_line": 2100,
+        "line": 2102,
+        "path": "Plans/Scheduling_and_Quota_Resume.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
+      "plan_unit_id": "SQR-1556",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SQR-1556 — `execution_window.invalidated`: newly authored owner contract, prepared without admission",
+        "heading_level": 2,
+        "heading_line": 2167,
+        "line": 2169,
+        "path": "Plans/Scheduling_and_Quota_Resume.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
+      "plan_unit_id": "SQR-1557",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SQR-1557 — `execution_window.updated`: newly authored owner contract, prepared without admission",
+        "heading_level": 2,
+        "heading_line": 2236,
+        "line": 2238,
+        "path": "Plans/Scheduling_and_Quota_Resume.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
+      "plan_unit_id": "SQR-1565",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SQR-1565 — `runtime.automation_pause_changed`: newly authored owner contract, prepared without admission",
+        "heading_level": 2,
+        "heading_line": 2912,
+        "line": 2914,
+        "path": "Plans/Scheduling_and_Quota_Resume.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
+      "plan_unit_id": "SQR-1566",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SQR-1566 — `runtime.quota_resume_attempted`: newly authored owner contract, prepared without admission",
+        "heading_level": 2,
+        "heading_line": 2303,
+        "line": 2305,
+        "path": "Plans/Scheduling_and_Quota_Resume.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
+      "plan_unit_id": "SQR-1567",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SQR-1567 — `runtime.quota_resume_consent_changed`: newly authored owner contract, prepared without admission",
+        "heading_level": 2,
+        "heading_line": 2371,
+        "line": 2373,
+        "path": "Plans/Scheduling_and_Quota_Resume.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
+      "plan_unit_id": "SQR-1568",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SQR-1568 — `runtime.quota_wait_started`: newly authored owner contract, prepared without admission",
+        "heading_level": 2,
+        "heading_line": 2438,
+        "line": 2440,
+        "path": "Plans/Scheduling_and_Quota_Resume.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
+      "plan_unit_id": "SQR-1569",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SQR-1569 — `scheduled_dispatch.cancelled`: newly authored owner contract, prepared without admission",
+        "heading_level": 2,
+        "heading_line": 2505,
+        "line": 2507,
+        "path": "Plans/Scheduling_and_Quota_Resume.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
+      "plan_unit_id": "SQR-1570",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SQR-1570 — `scheduled_dispatch.created`: newly authored owner contract, prepared without admission",
+        "heading_level": 2,
+        "heading_line": 2572,
+        "line": 2574,
+        "path": "Plans/Scheduling_and_Quota_Resume.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
+      "plan_unit_id": "SQR-1571",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SQR-1571 — `scheduled_dispatch.dispatched`: newly authored owner contract, prepared without admission",
+        "heading_level": 2,
+        "heading_line": 2640,
+        "line": 2642,
+        "path": "Plans/Scheduling_and_Quota_Resume.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
+      "plan_unit_id": "SQR-1572",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SQR-1572 — `scheduled_dispatch.failed`: newly authored owner contract, prepared without admission",
+        "heading_level": 2,
+        "heading_line": 2708,
+        "line": 2710,
+        "path": "Plans/Scheduling_and_Quota_Resume.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
+      "plan_unit_id": "SQR-1573",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SQR-1573 — `scheduled_dispatch.held`: newly authored owner contract, prepared without admission",
+        "heading_level": 2,
+        "heading_line": 2776,
+        "line": 2778,
+        "path": "Plans/Scheduling_and_Quota_Resume.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
+      "plan_unit_id": "SQR-1574",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SQR-1574 — `scheduled_dispatch.updated`: newly authored owner contract, prepared without admission",
+        "heading_level": 2,
+        "heading_line": 2844,
+        "line": 2846,
+        "path": "Plans/Scheduling_and_Quota_Resume.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
     },
     {
       "context_scope": "server_owner_routing",
@@ -233942,6 +237382,125 @@
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/ToDo_Runtime.md",
+      "plan_unit_id": "TDR-1575",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "TDR-1575 — `todo.created`: newly authored owner contract, prepared without admission",
+        "heading_level": 2,
+        "heading_line": 1022,
+        "line": 1024,
+        "path": "Plans/ToDo_Runtime.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/ToDo_Runtime.md",
+      "plan_unit_id": "TDR-1576",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "TDR-1576 — `todo.dependency_changed`: newly authored owner contract, prepared without admission",
+        "heading_level": 2,
+        "heading_line": 1091,
+        "line": 1093,
+        "path": "Plans/ToDo_Runtime.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/ToDo_Runtime.md",
+      "plan_unit_id": "TDR-1577",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "TDR-1577 — `todo.removed_from_current_list`: newly authored owner contract, prepared without admission",
+        "heading_level": 2,
+        "heading_line": 1161,
+        "line": 1163,
+        "path": "Plans/ToDo_Runtime.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/ToDo_Runtime.md",
+      "plan_unit_id": "TDR-1578",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "TDR-1578 — `todo.reordered`: newly authored owner contract, prepared without admission",
+        "heading_level": 2,
+        "heading_line": 1231,
+        "line": 1233,
+        "path": "Plans/ToDo_Runtime.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/ToDo_Runtime.md",
+      "plan_unit_id": "TDR-1579",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "TDR-1579 — `todo.status_changed`: newly authored owner contract, prepared without admission",
+        "heading_level": 2,
+        "heading_line": 1300,
+        "line": 1302,
+        "path": "Plans/ToDo_Runtime.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/ToDo_Runtime.md",
+      "plan_unit_id": "TDR-1580",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "TDR-1580 — `todo.updated`: newly authored owner contract, prepared without admission",
+        "heading_level": 2,
+        "heading_line": 1372,
+        "line": 1374,
+        "path": "Plans/ToDo_Runtime.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_w3h_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/ToDo_Runtime.md",
+      "plan_unit_id": "TDR-1581",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "TDR-1581 — `todo.work_bound`: newly authored owner contract, prepared without admission",
+        "heading_level": 2,
+        "heading_line": 1442,
+        "line": 1444,
+        "path": "Plans/ToDo_Runtime.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
     },
     {
       "context_scope": "ui_command_catalog_generated_tail_after_batch_191",
@@ -243402,10 +246961,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18750,
+    "depends_on_edge_count": 19109,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21958,
-    "node_count": 7422,
+    "edge_count": 22317,
+    "node_count": 7520,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0

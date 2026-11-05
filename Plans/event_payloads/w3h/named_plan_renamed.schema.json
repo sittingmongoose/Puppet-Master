@@ -1,0 +1,392 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/event_payloads/w3h/named_plan_renamed/1.0.0/schema.json",
+  "title": "named_plan.renamed \u2014 prepared W3H payload and publication custody, 1.0.0",
+  "description": "Newly authored under deck-1 4b A (DL-411). No admission; runtime unavailable. Full source/envelope/ref predicates are normative owner obligations, beyond shape validation.",
+  "$defs": {
+    "payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "server_id",
+        "thread_id",
+        "owner_operation_id",
+        "source_record_ref",
+        "source_receipt_ref",
+        "named_plan_id",
+        "aggregate_revision",
+        "currentness_hash",
+        "child_work_mutated",
+        "name_ref",
+        "previous_name_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.named_plan_renamed.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "project"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f]"
+          }
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f]"
+          }
+        },
+        "thread_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "not": {
+                "pattern": "[\\u0000-\\u001f\\u007f]"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owner_operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f]"
+          }
+        },
+        "source_record_ref": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f]"
+          }
+        },
+        "source_receipt_ref": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f]"
+          }
+        },
+        "named_plan_id": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f]"
+          }
+        },
+        "aggregate_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "child_work_mutated": {
+          "const": false
+        },
+        "name_ref": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f]"
+          }
+        },
+        "previous_name_ref": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f]"
+          }
+        }
+      }
+    },
+    "prepared_event": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+        },
+        {
+          "properties": {
+            "event_type": {
+              "const": "named_plan.renamed"
+            },
+            "payload_schema_id": {
+              "const": "pm.event_payload.named_plan_renamed.v1"
+            },
+            "payload": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/payload"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "publication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "scope_partition",
+        "physical_key",
+        "owner_operation_id",
+        "source_record_ref",
+        "source_receipt_ref",
+        "state",
+        "prepared_event",
+        "first_append_receipt",
+        "full_value_commitment"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.w3h.named_plan_renamed.publication.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f]"
+          }
+        },
+        "scope_partition": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f]"
+          }
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f]"
+          }
+        },
+        "owner_operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f]"
+          }
+        },
+        "source_record_ref": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f]"
+          }
+        },
+        "source_receipt_ref": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f]"
+          }
+        },
+        "state": {
+          "enum": [
+            "prepared",
+            "appended",
+            "settled"
+          ]
+        },
+        "prepared_event": {
+          "$ref": "#/$defs/prepared_event"
+        },
+        "first_append_receipt": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "full_value_commitment": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "prepared"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt": {
+                "type": "null"
+              },
+              "full_value_commitment": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "first_append_receipt": {
+                "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+              },
+              "full_value_commitment": {
+                "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "scope_kind",
+    "project_id",
+    "server_id",
+    "thread_id",
+    "owner_operation_id",
+    "source_record_ref",
+    "source_receipt_ref",
+    "named_plan_id",
+    "aggregate_revision",
+    "currentness_hash",
+    "child_work_mutated",
+    "name_ref",
+    "previous_name_ref"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.event_payload.named_plan_renamed.v1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "scope_kind": {
+      "const": "project"
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1,
+      "not": {
+        "pattern": "[\\u0000-\\u001f\\u007f]"
+      }
+    },
+    "server_id": {
+      "type": "string",
+      "minLength": 1,
+      "not": {
+        "pattern": "[\\u0000-\\u001f\\u007f]"
+      }
+    },
+    "thread_id": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f]"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "owner_operation_id": {
+      "type": "string",
+      "minLength": 1,
+      "not": {
+        "pattern": "[\\u0000-\\u001f\\u007f]"
+      }
+    },
+    "source_record_ref": {
+      "type": "string",
+      "minLength": 1,
+      "not": {
+        "pattern": "[\\u0000-\\u001f\\u007f]"
+      }
+    },
+    "source_receipt_ref": {
+      "type": "string",
+      "minLength": 1,
+      "not": {
+        "pattern": "[\\u0000-\\u001f\\u007f]"
+      }
+    },
+    "named_plan_id": {
+      "type": "string",
+      "minLength": 1,
+      "not": {
+        "pattern": "[\\u0000-\\u001f\\u007f]"
+      }
+    },
+    "aggregate_revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "currentness_hash": {
+      "type": "string",
+      "minLength": 64,
+      "maxLength": 64,
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "child_work_mutated": {
+      "const": false
+    },
+    "name_ref": {
+      "type": "string",
+      "minLength": 1,
+      "not": {
+        "pattern": "[\\u0000-\\u001f\\u007f]"
+      }
+    },
+    "previous_name_ref": {
+      "type": "string",
+      "minLength": 1,
+      "not": {
+        "pattern": "[\\u0000-\\u001f\\u007f]"
+      }
+    }
+  }
+}
