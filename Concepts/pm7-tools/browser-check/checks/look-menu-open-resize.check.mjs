@@ -37,8 +37,14 @@ export default async function(t) {
           if (O55.S.root.getAttribute('data-o55-layout') !== layout) return false;
           const body=document.querySelector(layout === 'wide' ? '.o55-stage .pst-tip-t' : '.o55-lookslot .o55-explainer-w');
           const r=body?.getBoundingClientRect();
-          return body?.textContent === expected && r.width > 0 && r.height > 0 && getComputedStyle(body).visibility === 'visible' && !body.closest('.typing, .o55-writing');
+          return body?.textContent === expected && r.width > 0 && r.height > 0 && getComputedStyle(body).visibility === 'visible';
         },{expected,layout},{timeout:5000}).then(() => true, () => false);
+        // A normal-motion note can still be writing. Its presence and complete
+        // painted text have separate deadlines; neither wait changes the app.
+        const written = ready && await f.waitForFunction(({expected,layout}) => {
+          const body=document.querySelector(layout === 'wide' ? '.o55-stage .pst-tip-t' : '.o55-lookslot .o55-explainer-w');
+          return body?.textContent === expected && !body.closest('.typing, .o55-writing');
+        },{expected,layout},{timeout:15000}).then(() => true, () => false);
         const state = await f.evaluate(id => {
           const q=document.querySelector(`.o55-lookslot .o55-tipq[data-arg="${id}"]`);
           const head=document.querySelector('.o55-stage svg g.pst-pip g.pst-head');
@@ -46,12 +52,12 @@ export default async function(t) {
           return {retained:O55.S.tip?.id === id,expanded:q?.getAttribute('aria-expanded'),menu:!!document.querySelector('.o55-lookmenu'),
             pip:!!r && r.width>1 && r.height>1 && Number.isFinite(r.x) && Number.isFinite(r.y)};
         },id);
-        const reach = ready ? await reachableMenuLines(t,f,id) : {ok:false};
-        t.log(JSON.stringify({look,wording,motion,width,height,ready,state,reach}));
-        await t.check(`FO-56 retained note ${label} -> ${width}x${height}`,ready && state.retained && state.expanded === 'true' && state.menu && state.pip && reach.ok);
+        const reach = written ? await reachableMenuLines(t,f,id) : {ok:false};
+        t.log(JSON.stringify({look,wording,motion,width,height,ready,written,state,reach}));
+        await t.check(`FO-56 retained note ${label} -> ${width}x${height}`,ready && written && state.retained && state.expanded === 'true' && state.menu && state.pip && reach.ok);
         if (ready && state.pip) await t.painted('.o55-stage svg g.pst-pip g.pst-head');
         if (width === 1280 && look === 'basic-dark' && wording === 'ELI5') await t.shot(`resize-after-${motion}`, 'Wide-to-short result: retained note and painted Pip required');
-        if (!ready) { survived = false; break; } // the negative control must not conceal the initial failure by reopening
+        if (!written) { survived = false; break; } // the negative control must not conceal the initial failure by reopening
       }
       // Fresh navigation recovers a crashing control; no product state is repaired.
       if (!survived) break;
