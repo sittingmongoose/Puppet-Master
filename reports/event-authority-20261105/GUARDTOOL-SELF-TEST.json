@@ -1,12 +1,17 @@
 {
   "status": "PASS",
-  "caught": 268,
-  "trap_count": 268,
-  "old": 210,
-  "new": 58,
-  "implementation_commit": "55506a823b423672978136732e82e6010af2608d",
-  "core_fix_commit": "da85f7f5a1ea355dfde9486293624a1f75467c4f",
-  "meaning": "Verified full-state clones and byte-local input-atom cuts; unsupported observations and state changes fail closed.",
+  "caught": 305,
+  "trap_count": 305,
+  "old": 268,
+  "new": 37,
+  "updated_old_records": [
+    "C6-unknown-paths",
+    "C9-sibling-original-alias-control-single",
+    "C9-full-state-locality",
+    "C9-original-baseline-gate"
+  ],
+  "implementation_commit": "ec934ef00152fc0542d17c839845e533e364dc25",
+  "meaning": "Finite checker interface; one-memo state graph with original identity ports; all-fixture original/uncut equality; zero broad credit in 86 reviewer cases.",
   "python_census": {
     "cells": 410,
     "errors": [],
@@ -55,17 +60,2998 @@
         "refusal_value"
       ]
     },
+    "rows": [
+      {
+        "base": "boolop",
+        "node": "And",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "Split and/or/not recursively, retaining polarity, peers and short-circuit order.",
+            "cut": "replace-one-Boolean-leaf",
+            "disposition": "supported",
+            "rule": "boolean"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "Direct Boolean expression or literal falsy return under one supported if; returned locals refuse.",
+            "cut": "replace-one-Boolean-leaf",
+            "disposition": "supported",
+            "rule": "return"
+          }
+        }
+      },
+      {
+        "base": "stmt",
+        "node": "AnnAssign",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "Only fresh empty-list initialization to local names; contributes no refusal predicate.",
+            "cut": "preserve-empty-list-initialization",
+            "disposition": "supported",
+            "rule": "initialize"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "stmt",
+        "node": "Assert",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "Fixed scalar payload has zero atoms; compose lexical tests and preceding exits or refuse registration.",
+            "cut": "cut-one-input-atom-of-complete-path",
+            "disposition": "supported",
+            "rule": "refusal"
+          }
+        }
+      },
+      {
+        "base": "stmt",
+        "node": "Assign",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "Only fresh empty-list initialization to local names; contributes no refusal predicate.",
+            "cut": "preserve-empty-list-initialization",
+            "disposition": "supported",
+            "rule": "initialize"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "stmt",
+        "node": "AsyncFor",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "stmt",
+        "node": "AsyncFunctionDef",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "stmt",
+        "node": "AsyncWith",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "expr",
+        "node": "Attribute",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "Scalar literal/access or allow-listed scalar view; never a display, comprehension, chain or opaque expression.",
+            "cut": "preserve-operand-cut-enclosing-comparison-only",
+            "disposition": "supported",
+            "rule": "operand"
+          },
+          "condition": {
+            "constraint": "Transparent scalar read or one scalar comparison; runtime grammar and subject binding required.",
+            "cut": "replace-one-Boolean-leaf",
+            "disposition": "supported",
+            "rule": "atom"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "stmt",
+        "node": "AugAssign",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "expr",
+        "node": "Await",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "expr",
+        "node": "BinOp",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "expr",
+        "node": "BoolOp",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "Split and/or/not recursively, retaining polarity, peers and short-circuit order.",
+            "cut": "replace-one-Boolean-leaf",
+            "disposition": "supported",
+            "rule": "boolean"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "Direct Boolean expression or literal falsy return under one supported if; returned locals refuse.",
+            "cut": "replace-one-Boolean-leaf",
+            "disposition": "supported",
+            "rule": "return"
+          }
+        }
+      },
+      {
+        "base": "stmt",
+        "node": "Break",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "expr",
+        "node": "Call",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "Fixed scalar append has zero atoms; only a verified complete-path input atom can be cut.",
+            "cut": "cut-one-input-atom-of-complete-path",
+            "disposition": "supported",
+            "rule": "append"
+          },
+          "comparison_operand": {
+            "constraint": "Scalar literal/access or allow-listed scalar view; never a display, comprehension, chain or opaque expression.",
+            "cut": "preserve-operand-cut-enclosing-comparison-only",
+            "disposition": "supported",
+            "rule": "operand"
+          },
+          "condition": {
+            "constraint": "Transparent scalar read or one scalar comparison; runtime grammar and subject binding required.",
+            "cut": "replace-one-Boolean-leaf",
+            "disposition": "supported",
+            "rule": "atom"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "Fixed scalar payload has zero atoms; compose lexical tests and preceding exits or refuse registration.",
+            "cut": "cut-one-input-atom-of-complete-path",
+            "disposition": "supported",
+            "rule": "refusal"
+          }
+        }
+      },
+      {
+        "base": "stmt",
+        "node": "ClassDef",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "expr",
+        "node": "Compare",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "Transparent scalar read or one scalar comparison; runtime grammar and subject binding required.",
+            "cut": "replace-one-Boolean-leaf",
+            "disposition": "supported",
+            "rule": "atom"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "Direct Boolean expression or literal falsy return under one supported if; returned locals refuse.",
+            "cut": "replace-one-Boolean-leaf",
+            "disposition": "supported",
+            "rule": "return"
+          }
+        }
+      },
+      {
+        "base": "expr",
+        "node": "Constant",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "Scalar literal/access or allow-listed scalar view; never a display, comprehension, chain or opaque expression.",
+            "cut": "preserve-operand-cut-enclosing-comparison-only",
+            "disposition": "supported",
+            "rule": "operand"
+          },
+          "condition": {
+            "constraint": "Transparent scalar read or one scalar comparison; runtime grammar and subject binding required.",
+            "cut": "replace-one-Boolean-leaf",
+            "disposition": "supported",
+            "rule": "atom"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "Fixed scalar payload has zero atoms; compose lexical tests and preceding exits or refuse registration.",
+            "cut": "cut-one-input-atom-of-complete-path",
+            "disposition": "supported",
+            "rule": "refusal"
+          }
+        }
+      },
+      {
+        "base": "stmt",
+        "node": "Continue",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "stmt",
+        "node": "Delete",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "expr",
+        "node": "Dict",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "expr",
+        "node": "DictComp",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "cmpop",
+        "node": "Eq",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "Transparent scalar read or one scalar comparison; runtime grammar and subject binding required.",
+            "cut": "replace-one-Boolean-leaf",
+            "disposition": "supported",
+            "rule": "atom"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "excepthandler",
+        "node": "ExceptHandler",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "stmt",
+        "node": "Expr",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "Fixed scalar append has zero atoms; only a verified complete-path input atom can be cut.",
+            "cut": "cut-one-input-atom-of-complete-path",
+            "disposition": "supported",
+            "rule": "append"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "Standalone expression wrapper only; its calls/writes are independently inventoried.",
+            "cut": "delegate-to-refusal-leaves",
+            "disposition": "supported",
+            "rule": "statement"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "stmt",
+        "node": "For",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "expr",
+        "node": "FormattedValue",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "stmt",
+        "node": "FunctionDef",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "Plain top-level function only; nested, decorated and async contexts refuse.",
+            "cut": "delegate-to-refusal-leaves",
+            "disposition": "supported",
+            "rule": "function"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "expr",
+        "node": "GeneratorExp",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "stmt",
+        "node": "Global",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "cmpop",
+        "node": "Gt",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "Transparent scalar read or one scalar comparison; runtime grammar and subject binding required.",
+            "cut": "replace-one-Boolean-leaf",
+            "disposition": "supported",
+            "rule": "atom"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "cmpop",
+        "node": "GtE",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "Transparent scalar read or one scalar comparison; runtime grammar and subject binding required.",
+            "cut": "replace-one-Boolean-leaf",
+            "disposition": "supported",
+            "rule": "atom"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "stmt",
+        "node": "If",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "One direct single-refusal if-body; compose every controller with own test; else/nested paths refuse.",
+            "cut": "replace-one-controlling-Boolean-leaf",
+            "disposition": "supported",
+            "rule": "if"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "expr",
+        "node": "IfExp",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "stmt",
+        "node": "Import",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "stmt",
+        "node": "ImportFrom",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "cmpop",
+        "node": "In",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "Transparent scalar read or one scalar comparison; runtime grammar and subject binding required.",
+            "cut": "replace-one-Boolean-leaf",
+            "disposition": "supported",
+            "rule": "atom"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "expr",
+        "node": "Interpolation",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "unaryop",
+        "node": "Invert",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "cmpop",
+        "node": "Is",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "Transparent scalar read or one scalar comparison; runtime grammar and subject binding required.",
+            "cut": "replace-one-Boolean-leaf",
+            "disposition": "supported",
+            "rule": "atom"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "cmpop",
+        "node": "IsNot",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "Transparent scalar read or one scalar comparison; runtime grammar and subject binding required.",
+            "cut": "replace-one-Boolean-leaf",
+            "disposition": "supported",
+            "rule": "atom"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "expr",
+        "node": "JoinedStr",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "expr",
+        "node": "Lambda",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "expr",
+        "node": "List",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "expr",
+        "node": "ListComp",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "cmpop",
+        "node": "Lt",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "Transparent scalar read or one scalar comparison; runtime grammar and subject binding required.",
+            "cut": "replace-one-Boolean-leaf",
+            "disposition": "supported",
+            "rule": "atom"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "cmpop",
+        "node": "LtE",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "Transparent scalar read or one scalar comparison; runtime grammar and subject binding required.",
+            "cut": "replace-one-Boolean-leaf",
+            "disposition": "supported",
+            "rule": "atom"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "stmt",
+        "node": "Match",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "pattern",
+        "node": "MatchAs",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "pattern",
+        "node": "MatchClass",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "pattern",
+        "node": "MatchMapping",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "pattern",
+        "node": "MatchOr",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "pattern",
+        "node": "MatchSequence",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "pattern",
+        "node": "MatchSingleton",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "pattern",
+        "node": "MatchStar",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "pattern",
+        "node": "MatchValue",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "expr",
+        "node": "Name",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "Scalar literal/access or allow-listed scalar view; never a display, comprehension, chain or opaque expression.",
+            "cut": "preserve-operand-cut-enclosing-comparison-only",
+            "disposition": "supported",
+            "rule": "operand"
+          },
+          "condition": {
+            "constraint": "Transparent scalar read or one scalar comparison; runtime grammar and subject binding required.",
+            "cut": "replace-one-Boolean-leaf",
+            "disposition": "supported",
+            "rule": "atom"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "expr",
+        "node": "NamedExpr",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "stmt",
+        "node": "Nonlocal",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "unaryop",
+        "node": "Not",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "Split and/or/not recursively, retaining polarity, peers and short-circuit order.",
+            "cut": "replace-one-Boolean-leaf",
+            "disposition": "supported",
+            "rule": "boolean"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "Direct Boolean expression or literal falsy return under one supported if; returned locals refuse.",
+            "cut": "replace-one-Boolean-leaf",
+            "disposition": "supported",
+            "rule": "return"
+          }
+        }
+      },
+      {
+        "base": "cmpop",
+        "node": "NotEq",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "Transparent scalar read or one scalar comparison; runtime grammar and subject binding required.",
+            "cut": "replace-one-Boolean-leaf",
+            "disposition": "supported",
+            "rule": "atom"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "cmpop",
+        "node": "NotIn",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "Transparent scalar read or one scalar comparison; runtime grammar and subject binding required.",
+            "cut": "replace-one-Boolean-leaf",
+            "disposition": "supported",
+            "rule": "atom"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "boolop",
+        "node": "Or",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "Split and/or/not recursively, retaining polarity, peers and short-circuit order.",
+            "cut": "replace-one-Boolean-leaf",
+            "disposition": "supported",
+            "rule": "boolean"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "Direct Boolean expression or literal falsy return under one supported if; returned locals refuse.",
+            "cut": "replace-one-Boolean-leaf",
+            "disposition": "supported",
+            "rule": "return"
+          }
+        }
+      },
+      {
+        "base": "stmt",
+        "node": "Pass",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "stmt",
+        "node": "Raise",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "Fixed scalar payload has zero atoms; compose lexical tests and preceding exits or refuse registration.",
+            "cut": "cut-one-input-atom-of-complete-path",
+            "disposition": "supported",
+            "rule": "refusal"
+          }
+        }
+      },
+      {
+        "base": "stmt",
+        "node": "Return",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "Direct Boolean expression or literal falsy return under one supported if; returned locals refuse.",
+            "cut": "replace-one-Boolean-leaf",
+            "disposition": "supported",
+            "rule": "return"
+          }
+        }
+      },
+      {
+        "base": "expr",
+        "node": "Set",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "expr",
+        "node": "SetComp",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "expr",
+        "node": "Slice",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "expr",
+        "node": "Starred",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "expr",
+        "node": "Subscript",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "Scalar literal/access or allow-listed scalar view; never a display, comprehension, chain or opaque expression.",
+            "cut": "preserve-operand-cut-enclosing-comparison-only",
+            "disposition": "supported",
+            "rule": "operand"
+          },
+          "condition": {
+            "constraint": "Transparent scalar read or one scalar comparison; runtime grammar and subject binding required.",
+            "cut": "replace-one-Boolean-leaf",
+            "disposition": "supported",
+            "rule": "atom"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "expr",
+        "node": "TemplateStr",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "stmt",
+        "node": "Try",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "stmt",
+        "node": "TryStar",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "expr",
+        "node": "Tuple",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "stmt",
+        "node": "TypeAlias",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "unaryop",
+        "node": "UAdd",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "Scalar literal/access or allow-listed scalar view; never a display, comprehension, chain or opaque expression.",
+            "cut": "preserve-operand-cut-enclosing-comparison-only",
+            "disposition": "supported",
+            "rule": "operand"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "unaryop",
+        "node": "USub",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "Scalar literal/access or allow-listed scalar view; never a display, comprehension, chain or opaque expression.",
+            "cut": "preserve-operand-cut-enclosing-comparison-only",
+            "disposition": "supported",
+            "rule": "operand"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "expr",
+        "node": "UnaryOp",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "Scalar literal/access or allow-listed scalar view; never a display, comprehension, chain or opaque expression.",
+            "cut": "preserve-operand-cut-enclosing-comparison-only",
+            "disposition": "supported",
+            "rule": "operand"
+          },
+          "condition": {
+            "constraint": "Split and/or/not recursively, retaining polarity, peers and short-circuit order.",
+            "cut": "replace-one-Boolean-leaf",
+            "disposition": "supported",
+            "rule": "boolean"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "Direct Boolean expression or literal falsy return under one supported if; returned locals refuse.",
+            "cut": "replace-one-Boolean-leaf",
+            "disposition": "supported",
+            "rule": "return"
+          }
+        }
+      },
+      {
+        "base": "stmt",
+        "node": "While",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "stmt",
+        "node": "With",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "expr",
+        "node": "Yield",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      },
+      {
+        "base": "expr",
+        "node": "YieldFrom",
+        "positions": {
+          "accumulator_write": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "comparison_operand": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "condition": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "controlling_context": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          },
+          "refusal_value": {
+            "constraint": "No verified per-predicate cut in this position; explicit atomic adapter required.",
+            "cut": "",
+            "disposition": "fail_closed",
+            "rule": "closed"
+          }
+        }
+      }
+    ],
     "status": "PASS",
     "totals": {
       "fail_closed": 363,
       "supported": 47
     }
   },
+  "python_composition": {
+    "context_nodes": [
+      "Expr",
+      "FunctionDef",
+      "If"
+    ],
+    "errors": [],
+    "forms": 15,
+    "preceding_exit_contexts": [
+      "early-success-return",
+      "early-raise",
+      "elif-chain",
+      "early-continue",
+      "early-break",
+      "except-return",
+      "two-preceding-exits"
+    ],
+    "refusal_kinds": [
+      "accumulator_write",
+      "assert",
+      "predicate_helper",
+      "raise",
+      "refusal_helper",
+      "return"
+    ],
+    "status": "PASS"
+  },
   "composition_cross_product": {
     "control_contexts": 21,
     "controlling_forms": 3,
-    "credited_cuts": 144,
-    "credited_with_per_atom_cuts": 72,
+    "credited_cuts": 120,
+    "credited_with_per_atom_cuts": 60,
     "generated": 945,
     "lexical_contexts": 14,
     "preceding_exit_contexts": [
@@ -80,7 +3066,7 @@
     "refusal_forms": 15,
     "refusal_kinds": 6,
     "status": "PASS",
-    "unclassified": 873
+    "unclassified": 885
   },
   "traps": [
     {
@@ -1075,7 +4061,7 @@
     },
     {
       "id": "C6-unknown-paths",
-      "expected": "unknown preceding exits make every later refusal unclassified",
+      "expected": "every unknown path refuses through composition or the positive interface before registration",
       "caught": true
     },
     {
@@ -1300,7 +4286,7 @@
     },
     {
       "id": "C9-sibling-original-alias-control-single",
-      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut",
+      "expected": "coherent function aliases receive the same narrow cut and credit (formerly safely masked)",
       "caught": true
     },
     {
@@ -1405,7 +4391,7 @@
     },
     {
       "id": "C9-full-state-locality",
-      "expected": "cut and uncut functions preserve runtime state, original constants, peer instructions and line tables",
+      "expected": "both clone modes retain original defaults, closure and attribute-value identities with complete code locality",
       "caught": true
     },
     {
@@ -1415,32 +4401,198 @@
     },
     {
       "id": "C9-original-baseline-gate",
-      "expected": "an injected state-losing uncut clone is rejected before any credit",
+      "expected": "permitted default defect in an uncut clone is caught on the last negative before any proof row",
       "caught": true
     },
     {
       "id": "C9-physical-complex",
       "expected": "recursive float and complex fingerprints preserve sign and NaN payloads and reject unknown constants",
       "caught": true
+    },
+    {
+      "id": "C10-attrgetter-code",
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "caught": true
+    },
+    {
+      "id": "C10-importlib-getattr-code",
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "caught": true
+    },
+    {
+      "id": "C10-operator-is-function",
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "caught": true
+    },
+    {
+      "id": "C10-property-frame-observer",
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "caught": true
+    },
+    {
+      "id": "C10-descriptor-stateful-sibling",
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "caught": true
+    },
+    {
+      "id": "C10-global-alias-state",
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "caught": true
+    },
+    {
+      "id": "C10-global-alias-identity",
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "caught": true
+    },
+    {
+      "id": "C10-default-global-shared-state",
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "caught": true
+    },
+    {
+      "id": "C10-importlib-frame-observer",
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "caught": true
+    },
+    {
+      "id": "C10-full-function-state",
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "caught": true
+    },
+    {
+      "id": "C10-future-simple-annotations",
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "caught": true
+    },
+    {
+      "id": "C10-future-annotations",
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "caught": true
+    },
+    {
+      "id": "C10-generator",
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "caught": true
+    },
+    {
+      "id": "C10-async",
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "caught": true
+    },
+    {
+      "id": "C10-async-generator",
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "caught": true
+    },
+    {
+      "id": "C10-mutable-closure-dependency",
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "caught": true
+    },
+    {
+      "id": "C10-mutable-closure-cell-after-construction",
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "caught": true
+    },
+    {
+      "id": "C10-partial-sibling",
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "caught": true
+    },
+    {
+      "id": "C10-wraps-sibling",
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "caught": true
+    },
+    {
+      "id": "C10-ordinary-sibling",
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "caught": true
+    },
+    {
+      "id": "C10-class-property-state",
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "caught": true
+    },
+    {
+      "id": "C10-custom-descriptor-state",
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "caught": true
+    },
+    {
+      "id": "C10-module-dict-state",
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "caught": true
+    },
+    {
+      "id": "C10-local-import",
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "caught": true
+    },
+    {
+      "id": "C10-local-from-import",
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "caught": true
+    },
+    {
+      "id": "C10-recursion-self-module",
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "caught": true
+    },
+    {
+      "id": "C10-recursion-importlib-module-name",
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "caught": true
+    },
+    {
+      "id": "C10-direct-getattr",
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "caught": true
+    },
+    {
+      "id": "C10-type-function-dict",
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "caught": true
+    },
+    {
+      "id": "C10-direct-attrgetter",
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "caught": true
+    },
+    {
+      "id": "C10-sys-modules-name",
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "caught": true
+    },
+    {
+      "id": "C10-local-reflective-import",
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "caught": true
+    },
+    {
+      "id": "C10-module-object-is",
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "caught": true
+    },
+    {
+      "id": "C10-allow-list-closure",
+      "expected": "every unsupported direct/indirect call and attribute blocks all transitive callers; named positive controls stay narrow",
+      "caught": true
+    },
+    {
+      "id": "C10-coherent-state-graph",
+      "expected": "one memo preserves all global/default/keyword/cell/attribute aliases, cycles and function aliases",
+      "caught": true
+    },
+    {
+      "id": "C10-uncopyable-state",
+      "expected": "opaque and hostile deepcopy state refuses before registration without invoking hooks",
+      "caught": true
+    },
+    {
+      "id": "C10-all-fixtures-equality",
+      "expected": "all controls and negatives compared, including late differences; no proof row on any difference",
+      "caught": true
     }
-  ],
-  "C9": {
-    "findings_fixed": [
-      "C9-B1",
-      "C9-B2",
-      "C9-B3",
-      "C9-B4",
-      "C9-B5",
-      "C9-B6"
-    ],
-    "exact_review_probes": 53,
-    "refused": 42,
-    "peer_preserving_cuts": 10,
-    "masked_alias_controls": 1,
-    "credited_broad_cuts": 0,
-    "state_mutation_classes": 18,
-    "cycle8_replay_refusals": 22,
-    "result_audit_assertions": 619
-  },
-  "evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix9"
+  ]
 }

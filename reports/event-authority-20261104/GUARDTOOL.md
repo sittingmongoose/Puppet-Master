@@ -531,3 +531,73 @@ Evidence lives at `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/dr
 Preflight had **108 GB free disk / 21 GiB available RAM**. Heavy checks ran one at a time. Final full self-test peak checker RSS was **76,896 KiB**, under the 1,536 MiB gate. The final checked command boundaries stayed above **21 GiB available RAM**. Synthetic low-memory regression messages are expected. A fresh subprocess launcher avoids inheriting the harness's unrelated RSS high-water mark. Runtime scratch is hash-verified and deleted; the worktree is removed after the final branch push. Only cited/reproducible evidence remains.
 
 **Round-9 evidence manifest:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix9/verification-manifest.json`, SHA-256 `c6d23c71ef7bdf8c25c98a5eec1a3fe60981920ea105365cd344ac2de3a6d95f`.
+
+## Review round 10: findings and responses
+
+**C10-B1 and C10-B2 — fixed in `ec934ef00152fc0542d17c839845e533e364dc25`.** Base: `aafbe6427682eee632c1bc530d5221609ea85bb0`. This round replaces the reflection blacklist with a finite checker interface, preserves the reachable state graph with one memo, and requires original/uncut equality on every declared fixture. It changes only the tool, traps, adoption guide and reports. No owner Markdown, registry, Decision Log, Spec Lock, generated governance artifact or main push is included.
+
+| Finding | Location, cause and fix | Verification |
+|---|---|---|
+| **C10-B1 — fixed** | `scripts/pm_guard_isolation.py:1113, :1292`. A blacklist missed indirectly obtained reflection and property implementations. `_source_subset` now accepts only named builtin/data methods, literal regex calls, engine Outcome constructors, canonical builtin raises, and direct verified lane helpers. Any other call, attribute, local import or function-object value makes the function and all direct/aliased callers unclassified before registration. The replaced forbidden-name and reflective-name lists are removed. `call_predicates` does not waive source verification. | All four reflective broad witnesses refuse, as do the custom callable/descriptor and `operator.is_` cases. Transitive two-hop caller tests, function escapes, dynamic calls/imports and external-helper declarations refuse. Named positive controls and builtin metadata fallback reads stay narrow. |
+| **C10-B2 — fixed** | `scripts/pm_guard_isolation.py:1086, :1232, :1791`. Independent global copies broke aliases; copied globals also lost relationships with original defaults. Each clone now makes one `copy.deepcopy(graph, memo)` call across reachable globals, defaults, keyword defaults, closure contents, attributes and annotation/type-parameter state. Function shells enter the memo first. FIX9's required original default, keyword-default, closure and attribute-value identities are seeded recursively into that same memo for both clone modes. Global aliases reach those retained objects; other global data is copied once. The function attribute dictionary is installed from the graph. Exact builtin state is checked before deepcopy; unsupported objects/hooks refuse. Reachable global snapshots also prevent original execution from changing later clone contexts. | `global-alias-state` and `default-global-shared-state` retain original/uncut `[T,F,F]` and cut `[T,T,F]`, with all alias facts true. The operator-based identity witness refuses under the interface. Structural tests cover defaults/keyword defaults/closures/attributes, aliases of the attribute dictionary, cycles, function aliases, independent unanchored globals, two graph passes for two clones, unchanged original identity ports, live-global mutation and hostile deepcopy hooks. |
+| **Every fixture — enforced** | `scripts/pm_guard_isolation.py:2277`. Original and uncut complete outcomes are compared on every control and every negative before cut rows. All comparisons are retained even after a mismatch; expected/checked counts and equality are explicit. A difference aborts before any proof row. | An injected uncut default defect agrees on ten fixtures but differs on the last negative. All eleven comparisons are recorded and no proof row runs. Each executing reviewer case has matching expected/checked counts and identical original/uncut outcomes. |
+
+### Published allow-list
+
+The exact, current table is in `reports/event-authority-20261105/GUARDTOOL-ADOPTION.md`, **Supported Python checker interface and clone fidelity (review round 10)**, and copied verbatim to external `fix10/allow-list.md`. Extensions require a reviewed adapter seam and implementation change.
+
+- **Calls:** `isinstance`, restricted `type(value) is/is not listed_type`, `len`, `int`, `str`, `bool`, `bytes`, `set`, `frozenset`, `tuple`, `list`, `dict`, and `all`/`any` over supported comprehensions. Bindings must be canonical builtins.
+- **Types:** `NoneType`, `bool`, `int`, `float`, `complex`, `str`, `bytes`, `list`, `tuple`, `dict`, `set`, `frozenset`. Existing comparison/Boolean/data-expression and atomic-cut restrictions remain. Non-type identity tests use only literal `None`, `True`, `False`.
+- **Attributes:** only immediately invoked, explicitly listed methods of builtin `str`, `bytes`, `dict`, `list`, `set`, `tuple`. The guide names every method; arbitrary attribute values, modules, properties, descriptors and function attributes are outside the interface.
+- **Regex:** canonical `re.fullmatch`, `re.match`, `re.compile(literal_pattern).fullmatch`, with literal str/bytes patterns and no keyword/dynamic argument expansion. This does not grant atomic credit to a multi-clause regex.
+- **Helpers:** direct calls to same-module source functions, including aliases; every helper must pass the same checks. Unknown/external helpers, including declared predicate/refusal helpers, need a reviewed source/adapter seam.
+- **Named necessities:** engine `Outcome.accept/refuse`; canonical builtin `ValueError`, `AssertionError`, `TypeError`, `RuntimeError`, `KeyError`, `Exception` constructors directly in `raise`. The builtin `object` value is retained for annotations; calling it is unsupported.
+
+The graph memo preserves required original identities rather than retaining defaults while independently copying their global aliases. Retained mutable identity ports remain shared with the original in both modes. A mutation of verified function or reachable global state prevents later cloning. Opaque classes, subclasses and copying hooks cannot silently define clone behavior. This remains a bounded planning checker, not a general Python equivalence proof, complete lane adoption or family grade.
+
+### Regressions and updated expectations
+
+**305/305 traps caught: 268 existing + 37 new.** The 37 comprise all **33** new cycle-10 cases (nine attacks and 24 fidelity controls), plus four structural regressions. The existing 53 exact cycle-9 cases remain in the corpus. No old trap ID is removed.
+
+Four old corpus records have updated descriptions:
+
+| Existing record | Response |
+|---|---|
+| **C6-unknown-paths** | Unknown paths may now refuse through the finite interface before the older preceding-exit rule; registration must still refuse. |
+| **C9-sibling-original-alias-control-single** | A memoized function alias now receives the same narrow cut as its canonical name. Formerly safe masking becomes a valid x-only flip; y still rejects. |
+| **C9-full-state-locality** | The description explicitly retains the required original identity ports in both modes; its original identity/locality assertions still pass. |
+| **C9-original-baseline-gate** | Its old `peer.enforce_y` observer is now outside the interface. A permitted runtime default is deliberately corrupted in the uncut clone instead; the last negative exposes the mismatch before any proof row. |
+
+Five synthetic `Refusal` fixture bindings now use canonical builtin `ValueError` rather than an external exception subclass. Guard predicates, refusal strings and the duplicate/masking assertions remain intact. The mixed-negation and Python construct-audit helper-credit fixtures now include the helper's source; a new regression verifies that merely declaring an external helper cannot earn credit. These are explicit finite-interface fixture adaptations, not a claim that arbitrary exception classes or external helpers are supported.
+
+The generated interpreter census remains **82 classes × 5 positions: 47 bounded supported / 363 fail closed**, with coverage PASS. The generated composition matrix passes at **945 cells / 60 credited cells / 120 verified per-atom cuts / 885 unclassified cells**. The twelve cells formerly credited through external helpers without included source now correctly remain unclassified; their 24 automatic cuts are removed.
+
+### Sol cycle-10 replay and independent audit
+
+All scripts ran serially against the final implementation. The copied scripts retain every original source, input, preparation and proof mode. `cycle10-adaptation.diff` records path/revision changes and the alias control's corrected narrow-cut expectation. No held-out peer was dropped.
+
+| Check | Exit / result |
+|---|---|
+| **Full CLI self-test** | **0; PASS, 305/305** |
+| **Nine cycle-10 attacks** | **0; seven refusals, two narrow cuts; zero broad credits and zero changed uncut baselines** |
+| **24 cycle-10 fidelity controls** | **0; 19 refusals, five narrow executions; all 24 safe** |
+| **34 replayed design probes** | **0; 23 refusals, eleven narrow executions, including the now-coherent alias** |
+| **19 replayed constant/closure probes** | **0; all refuse** |
+| **Independent observation/source/byte-span audit** | **0; 1,297 assertions PASS** |
+| **Python syntax and whitespace** | **PASS** |
+
+Across all **86** reviewer cases: **68 refusals, 18 narrow executions, zero broad credits, zero changed uncut baselines, zero reviewer errors**. The independent audit compares exact sources/inputs/modes against Sol's originals, matches new corpus entries, checks original default/keyword-default/closure identities in both clone modes, verifies alias facts and all-fixture counts, and independently disassembles the reference source to confine changed code bytes to x's expression span. No earlier independent campaign or repository-wide governance check is claimed.
+
+### Evidence and resources
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix10/`. `input-manifest.json` pins the three executable inputs to implementation commit `ec934ef00152fc0542d17c839845e533e364dc25` with sizes and SHA-256 values. The copied reviewer scripts, adaptation diff, command/resource receipts, full self-test, compact summary, guide and allow-list are retained there. Restore the pinned inputs and set the copied `common.py` SCRATCH path to reproduce after worktree removal.
+
+| Evidence | SHA-256 |
+|---|---|
+| **`fix10/self-test.json`** | `c754c7e27c1d81c82381c886bd751e64dcecddff3bebe416ef155aef5c6816f2` |
+| **`fix10/result-audit.json`** | `0a9afa768492b4577ef9e937818ab87008faaf4fed1d6ce5c7ea76680b9e570a` |
+| **`fix10/allow-list.md`** | `6c7b537fcaec3fd3e060b2de18d2b83aec82232bea13bfb37776af8f7f1f44ee` |
+
+Preflight: **125 GB disk available / 14 GiB RAM available**. Heavy checks ran one at a time with a **1 GiB address-space limit**, **1,536 MiB RSS gate** and fresh **6 GiB available-memory checks**. The final self-test's peak checker RSS was **77,132 KiB**; its real command-boundary available memory was **16,167,723,008 / 17,228,996,608 bytes**. Low-memory messages belong to synthetic memory-gate tests. A fresh subprocess avoids the harness's inherited RSS high-water mark. No subagents, pm-mail, browser or server was used. Scratch runs and uncited logs are deleted; the worktree is removed after the final branch push, with the cleanup receipt retained externally.
+
+**Round-10 verification manifest:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix10/verification-manifest.json`, SHA-256 `ed2c664eff37256ffeb51b2b2618b913e7626d4c93c7628977ff6a8dc77c0388`. The manifest excludes this report and the later cleanup receipt to avoid circular hashes and permit the final post-push cleanup record.
