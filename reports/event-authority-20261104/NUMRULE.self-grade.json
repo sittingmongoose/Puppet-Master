@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-NUMRULE-SHARED-FIX9-20261105",
+  "assessment_id": "EA-NUMRULE-SHARED-FIX10-20261105",
   "assessment_kind": "author_shared_prerequisite_scope_assessment",
   "assessed_tree": {
     "branch": "plans/ea-numrule-20261105",
@@ -54,17 +54,18 @@
       "embedded_v2_envelope_oracles": "PASS",
       "reviewed_embedded_schema_nodes": 13,
       "pinned_schema_bytes": "PRESERVED",
-      "classified_timestamp_inventory": "STRUCTURAL_CENSUS_PASS_PROFILE_AUTHORITY_BLOCKED",
+      "classified_timestamp_inventory": "PASS_FINITE_SOURCE_BOUND_EVIDENCE",
       "inventory_nodes": 233,
       "storage_classified_nodes": 133,
-      "other_owner_nodes": 100,
+      "other_owner_nodes": 79,
       "unclassified_nodes": 0,
       "storage_resource_path_oracles": "PASS",
-      "completeness_gate": "STATIC_DISCOVERY_PASS_INTEGRITY_BLOCKED",
+      "completeness_gate": "PASS_FINITE_STATED_UNIVERSE_AND_MUTATION_CONTROLS",
       "native_schema_custody": "NOT_RUN",
       "runtime_resource_admission": "PASS_FINITE_CLOSED_PRELOADED_GRAPH",
-      "inventory_assertion_integrity": "BLOCKED_MISSING_FIELD_BOUND_OWNER_EVIDENCE",
-      "new_name_map_nodes": 21
+      "inventory_assertion_integrity": "PASS_FINITE_SOURCE_SCHEMA_FIELD_BINDING",
+      "new_name_map_nodes": 21,
+      "wildcard_non_timestamp_nodes": 21
     }
   ],
   "corpus": {
@@ -73,7 +74,7 @@
     "negatives": 6536,
     "labelled_negatives": 6536,
     "passed": 13372,
-    "owner_integration_checks": 162,
+    "owner_integration_checks": 165,
     "finite_case_oracles": "PASS",
     "guard_isolation": "SWEEP_PENDING",
     "result": "PARTIAL",
@@ -89,9 +90,7 @@
     "round5_bounded_cut_rows": 12
   },
   "failed_premise_checks": [],
-  "owner_questions": [
-    "Which existing owner unit and exact quote bind the 21 generic name-map rows' observed_at_utc/persisted_at_utc spellings to owner_profile date-time? If none exists, should these rows retain their exact local non-timestamp schema without claiming a timestamp profile? See the round-9 report for the exact paths and full question."
-  ],
+  "owner_questions": [],
   "ids_used": [
     "CV-1100",
     "SP-1100",
@@ -103,11 +102,10 @@
     "Native original-owner custody/recipe installation and resource authentication",
     "Complete actual schema/successor route qualification and family-specific adoption across 19 lanes",
     "Integration/governance work belongs to the lead, outside this drafting task",
-    "Live index validation still fails: 21 inherited ledger-shape failures plus DL-301/330/331/332, DP-064/066, PLS-025 and PWIZ-038 comparisons to newer main; named owner inputs unchanged in round 8.",
-    "Round 9 B3: field-bound owner-profile evidence missing; coherent wrong-field inventory mutation still passes gate, runtime installation and self-test. Overall NOT_READY."
+    "Live index validation still fails: 21 inherited ledger-shape failures plus DL-301/330/331/332, DP-064/066, PLS-025 and PWIZ-038 comparisons to newer main; named owner inputs unchanged in round 8."
   ],
-  "reviewed_head": "5e5c4cfe2ba2e90001c9f9e962ae1d6a1f68b4a3",
-  "review_round": 9,
+  "reviewed_head": "3bb73141e989043175ffd80774946d317667fd78",
+  "review_round": 10,
   "family_grades_before_after": "N/A: no event-family rows before or after. Native execution remains NOT_RUN.",
   "grade_changes": {
     "CV-1100.bounded_adapter_oracles": "author PASS -> review PARTIAL -> finite cases PASS, overall PARTIAL pending isolation",
@@ -119,7 +117,8 @@
     "CV-1101.embedded_v2_envelope_oracles": "cycle-4 B1 BLOCKED -> finite cases/probes PASS; native/lane integration NOT_RUN",
     "CV-1101.complete_storage_schema_boundary": "cycle-5 B1 BLOCKED -> complete classified inventory and finite current/frozen schema-path oracles PASS; native/lane installation NOT_RUN",
     "CV-1101.round8": "Astra B1/B2/B3 BLOCKED -> stated-universe discovery, inventory integrity, and finite eager/lazy current/frozen routes PASS; complete lane/native integration NOT_RUN.",
-    "CV-1101.round9": "B1a/B1b/B2 finite controls PASS; B3 stopped under the no-owner-prose/missing-quote instruction. Overall NOT_READY; no family grades or new IDs."
+    "CV-1101.round9": "B1a/B1b/B2 finite controls PASS; B3 stopped under the no-owner-prose/missing-quote instruction. Overall NOT_READY; no family grades or new IDs.",
+    "CV-1101.round10": "Round-9 B3 blocked -> source-bound field/value evidence and coherent mutation controls PASS in the stated finite scope; native/lane integration NOT_RUN."
   },
   "implementation_commit": "a06d87b6b616605c6e67ca01af40d6047e9fadd5",
   "round1_validation": {
@@ -162,7 +161,8 @@
     "dependency_round8": "31716092a3d7ea54f90ee984fcbcc29b8a9bc0a2",
     "B1a_round9": "f8b2d901beb804356ad3824e256af74aa9e29ad1",
     "B1b_round9": "f8b2d901beb804356ad3824e256af74aa9e29ad1",
-    "B2_round9": "f8b2d901beb804356ad3824e256af74aa9e29ad1"
+    "B2_round9": "f8b2d901beb804356ad3824e256af74aa9e29ad1",
+    "B3_round10": "82e29fe59bebe69fbb8104fa551c183e750356a9"
   },
   "ids_minted_round3": [],
   "round3_validation": {
@@ -425,5 +425,371 @@
       "injected_failures": 4,
       "unrelated_failures": 0
     }
-  }
+  },
+  "round10_validation": {
+    "round": 10,
+    "implementation_commit": "82e29fe59bebe69fbb8104fa551c183e750356a9",
+    "source_base": "3bb73141e989043175ffd80774946d317667fd78",
+    "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10",
+    "scope": "Finite shared-helper/source-evidence controls; native authority NOT_RUN; full guard isolation SWEEP_PENDING. Heavy checks ran serially with >=6 GiB available at each preflight.",
+    "commands": [
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/b3_controls.py"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 74.52905590899172,
+        "available_bytes": 14483267584,
+        "scratch_bytes": 40216535,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "bcb3beb28bcb1b46863f7c84c1ef191733065454eca3942d201c66207f10fce6",
+        "stdout_bytes": 445,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "name": "b3-controls"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/coherent_full.py"
+        ],
+        "exit": 1,
+        "elapsed_seconds": 1.0837491969869006,
+        "available_bytes": 14333321216,
+        "scratch_bytes": 40216535,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "f0d46e64e6c51030c2b02891aa1abc7809e75a0037494c17236f82dd97a88bf5",
+        "stdout_bytes": 1031,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "name": "coherent-full-selftest"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/coherent_integrity.py"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 1.725772778998362,
+        "available_bytes": 14610063360,
+        "scratch_bytes": 40216535,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "070379bd8cd2aa1299e6531566c8180d2015b1033a425160ade0b53eb2fd9b3b",
+        "stdout_bytes": 3859,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "name": "coherent-integrity"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/exclusion_probes.py"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 33.396777917980216,
+        "available_bytes": 14242713600,
+        "scratch_bytes": 40216535,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "55417aac9ad6add290914b4fde07735b88228245556cee986a2163877b035420",
+        "stdout_bytes": 919,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "name": "exclusion-probes"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/extended_gate_integrity.py"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 164.77542123000603,
+        "available_bytes": 14269186048,
+        "scratch_bytes": 40178936,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "798def756fed719974708245d7ba6fc3e56b82bc401cfae3a495ddcf3512c451",
+        "stdout_bytes": 529,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "name": "extended-gate-integrity"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/home/sittingmongoose/pm-worktrees/numrule-fix10/scripts/pm_event_numbers.py",
+          "--self-test"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 359.76613992097555,
+        "available_bytes": 21632253952,
+        "scratch_bytes": 39966770,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "a23fa8b7cdebead5abf33839a3cc8f56a175a8a4b296e6f8a1bb9f3cf1b751d5",
+        "stdout_bytes": 2089664,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "name": "final-selftest"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/full_wildcard_gate.py"
+        ],
+        "exit": 1,
+        "elapsed_seconds": 238.07637687999522,
+        "available_bytes": 15203131392,
+        "scratch_bytes": 40216535,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "ae8809bcbe24d642d1d1ee289fa36b81c4a93fdcce0b56c9522ae7fca60b6ee5",
+        "stdout_bytes": 1351,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "name": "full-wildcard-gate"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/probes.py"
+        ],
+        "exit": 1,
+        "elapsed_seconds": 4.868602211994585,
+        "available_bytes": 13745594368,
+        "scratch_bytes": 40085904,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 0,
+        "stderr_sha256": "776d6c637d5885dced2686a1df6187b224ae4d8cf7af414fe0294490b7d02b6d",
+        "stderr_bytes": 45922,
+        "name": "gate-probes-initial"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/probes.py"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 206.52200171697768,
+        "available_bytes": 13723770880,
+        "scratch_bytes": 40178936,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "1dcd8148b8d9d2c1acf6f089556078d45631373b2c9c75063510b65f8cd67ab9",
+        "stdout_bytes": 3371,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "name": "gate-probes"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/name_maps_audit.py"
+        ],
+        "exit": 1,
+        "elapsed_seconds": 2.6151610800006893,
+        "available_bytes": 14469578752,
+        "scratch_bytes": 40216535,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 0,
+        "stderr_sha256": "f8428fea725cd34a7df518926033dc343269e06a80c8eef5adebb1f9ed316e05",
+        "stderr_bytes": 1140,
+        "name": "name-maps-initial"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/name_maps_audit.py"
+        ],
+        "exit": 1,
+        "elapsed_seconds": 3.080066303984495,
+        "available_bytes": 15385858048,
+        "scratch_bytes": 40216535,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 0,
+        "stderr_sha256": "9f01fb8d1a09a53aef4da8f0502d5c2eec544bca63b7189f624ffcff9fe07efb",
+        "stderr_bytes": 1465,
+        "name": "name-maps-initial2"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/name_maps_audit.py"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 4.46980855599395,
+        "available_bytes": 15145041920,
+        "scratch_bytes": 40216535,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "f91254291617e14b495420a207347e15acfb033e74f74921f11b21d24e924217",
+        "stdout_bytes": 83,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "name": "name-maps"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/runtime_adversarial.py"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 2.6799134939792566,
+        "available_bytes": 13534892032,
+        "scratch_bytes": 40085904,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "339c7ea0f2e7488743448e935750309a6d68782015302f9fa90fc75125adb9b3",
+        "stdout_bytes": 8982,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "name": "runtime-adversarial"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/runtime_probes.py"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 21.961612649000017,
+        "available_bytes": 15652274176,
+        "scratch_bytes": 39966770,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "bb992d1902313d3802d7d089bac745948fda7e3e4dd595bde15c4be548d45ee9",
+        "stdout_bytes": 139,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "name": "runtime-probes"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/injected_selftests.py",
+          "empty-citations"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.9654782710131258,
+        "available_bytes": 15228293120,
+        "scratch_bytes": 40216535,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "4524644239f218906f1fd4d09832fb1292569e992dbe1b1544d5fb5013de2458",
+        "stdout_bytes": 72443,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "name": "selftest-empty-citations"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/injected_selftests.py",
+          "pattern"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 9.250350334012182,
+        "available_bytes": 15114022912,
+        "scratch_bytes": 40216535,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "b7049894454e8b4086fd1a06224f3324346e28888c8af4df56938d3ae0aa6b30",
+        "stdout_bytes": 1201,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "name": "selftest-pattern"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/home/sittingmongoose/pm-worktrees/numrule-fix10/scripts/pm-shard-plans.py",
+          "--check",
+          "--config",
+          "Plans/sharding_config.json"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 25.352457223983947,
+        "available_bytes": 14266040320,
+        "scratch_bytes": 40216535,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "d697ac77c260ee1fbe5007467d179c832c4c197ffc685d08b78f338e04ff7fdc",
+        "stdout_bytes": 111,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "name": "shards"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/supplemental_runtime.py"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 2.388513272977434,
+        "available_bytes": 13909495808,
+        "scratch_bytes": 40085904,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "6dab62e4c41eb8992d9f330519fd52bf30c2561c7c0c4b45e73ef3b212b483ba",
+        "stdout_bytes": 2177,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "name": "supplemental-runtime"
+      }
+    ],
+    "selftest": {
+      "exit": 0,
+      "cases": 13372,
+      "passed": 13372,
+      "positives": 6836,
+      "negatives": 6536,
+      "integration_checks": 165
+    },
+    "inventory": {
+      "failures": [],
+      "nodes": 233,
+      "other_owner_nodes": 79,
+      "status": "pass",
+      "storage_nodes": 133,
+      "unclassified_nodes": 0,
+      "wildcard_non_timestamp_nodes": 21
+    },
+    "runtime": {
+      "eager_valid_baselines": 133,
+      "escaping_nodes": 0,
+      "on_demand_constructor_refusals": 133,
+      "callback_calls": 0
+    },
+    "gate_injections": {
+      "original": 20,
+      "original_refused": 20,
+      "positive_detection_controls": 5,
+      "extended": 16,
+      "extended_refused": 16,
+      "original_inventory_mutation_pairs_refused": 7
+    },
+    "coherent_wrong_field_mutation": {
+      "gate_exit": 1,
+      "runtime_installation": "REFUSED",
+      "selftest_exit": 1,
+      "whole_tree_selftest_exit": 1,
+      "case_execution": "NOT_RUN_ADMISSION_REFUSED"
+    },
+    "stronger_B3_controls": {
+      "total": 6,
+      "gate_and_selftest_refused": 6,
+      "independent_source_pin_refused": 6
+    },
+    "name_maps": {
+      "nodes": 21,
+      "source_citations": 21,
+      "value_controls": 252,
+      "matching_value_controls": 252,
+      "unsupported_constructor_refusals": 21
+    },
+    "whole_tree_wildcard": {
+      "plan_blobs": 8968,
+      "classified_nodes": 233,
+      "injected_failures": 4,
+      "unrelated_failures": 0
+    },
+    "shards_exit": 0,
+    "index_and_governance": "NOT_RERUN; owner/index inputs unchanged; no new index/governance PASS claimed.",
+    "harness_initial_results": [
+      "gate-probes-initial: missing unchanged cited report; added input 99 and reran.",
+      "name-maps-initial and name-maps-initial2: old global bank mixed unrelated current/frozen complete or embedded URI editions; selected exact bounded value graph and reran. No predicates or source bytes changed."
+    ]
+  },
+  "round10_authority_question_resolution": "The lead technical answer in NUMRULE-FIX10 permits the field own canonical schema as exact evidence; wildcard maps keep their local non-timestamp value schemas. No owner prose or Jared product decision authored."
 }

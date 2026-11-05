@@ -578,3 +578,56 @@ Retained evidence paths below are under `/mnt/Cursor/PuppetMaster-Evidence/event
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix9/coherent-integrity.json` | `46b69a7e26c80d20d8f4df45501946a3435252a74f6822c51f31db7c1993e916` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix9/index-validation.json` | `84f44442327bbf478d4e18642f75aa8eec8dbc1c7a8d61bc314a842b8893b08c` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix9/preservation.json` | `625fe7e08d64e7d2bc44141cfb1358f80b5c6cc73462a077cc1d66daec4d87de` |
+
+## Review round 10: findings and responses
+
+**B3 fixed in `82e29fe59bebe69fbb8104fa551c183e750356a9`.** The round-10 lead answer resolves the round-9 evidence question: wildcard names do not assign timestamp types, and a field's own canonical schema is evidence for its exact constraint. No owner prose or product decision was authored.
+
+| Finding | Where | Why | Fix |
+|---|---|---|---|
+| **Other-owner field evidence** | `scripts/pm_event_datetime_inventory.py:528`, `:599`; `Plans/event_datetime_inventory.json` | A generic quote about the envelope could justify a different field's profile label. | Remove the free-text `owner_profile` labels and generic CV-1101 citations. Derive the exact field pointer and full constraint from the row's own source, including offline reference/combinator targets. The gate requires that exact evidence; quotes for another field and sibling pointers fail. |
+| **Wildcard non-timestamp evidence** | `scripts/pm_event_datetime_inventory.py:528`; inventory/schema | The 21 maps admitted the spellings as keys while storing hashes, permissions, tabs, settings, references or other local values. | Classify all 21 as `wildcard_non_timestamp`, cite the key/value schema, and assert no timestamp profile. Check value constraints through references/combinators; a timestamp format or pattern requires timestamp classification. Nested record members are checked separately from the map value's type. |
+| **Derived pin** | `scripts/pm_event_datetime_inventory.py:338`, `:572`, `:595` | Refreshing a checksum could hide incorrect evidence. | Recompute the inventory projection's evidence, classification and structural assertions from source before hashing the inventory exclusion. A refreshed checksum over false assertions fails independently. |
+| **Mutation controls** | `scripts/pm_event_datetime_admission_checks.py:142` | The prior self-test omitted coherent wrong-field evidence. | Add the coherent wrong-field quote, sibling-field pointer and map value becoming `format: date-time`, with refreshed hashes. Each fails; correcting the timestamp map's classification restores its inventory validity. |
+
+**Classification:** 233 nodes = **133 Storage + 79 other-owner named-field observations + 21 wildcard non-timestamp**; **0 unclassified**. The 79 include the existing source-lineage patch, which is never installed at runtime. Named fields retain their exact local schemas; an unformatted string/null field does not acquire a timestamp predicate. `profile: owner_schema` remains the unchanged pass-through validation action; it is not a timestamp-profile assertion. All 133 Storage rows retain their original CV-253/CV-1101 evidence byte-for-byte.
+
+**Preservation:** the 233 node keys, source/resource pointers and fingerprints, field sets, owners and role evidence are unchanged. Only evidence and classification fields change on 100 non-Storage rows. Owner prose, all pinned schemas and raw pins, production number/date-time recipes, all 13,372 corpus records, registries, Decision Log, Spec Lock, generated shards/indexes, governance evidence and `.gitignore` remain unchanged. No shards/indexes or governance artifacts are regenerated.
+
+**Actual worktree self-test:** exit **0**, **13,372/13,372 cases** (6,836 positives, 6,536 negatives), **165/165 integration checks**, including the three added B3 controls. The same run executes the complete real-worktree census and reports no failures.
+
+| Probe rerun | Result |
+|---|---|
+| **Original runtime** | 133/133 valid preloaded baselines; zero escaping nodes. All 133 on-demand constructors refuse before callback invocation. |
+| **Adversarial / supplemental runtime** | 27 + 8 probes complete without unexpected exceptions; changed retrieval refuses, direct/referenced recursive/dynamic routes agree, shared-class bypass refuses. Stock-validator positives remain explicitly outside the shared boundary. |
+| **Original gate injections** | 20/20 product gates exit 1; all five positive detection controls still detect; the restored 233-node scoped baseline exits 0. |
+| **Extended gate / inventory mutations** | 16/16 container/declaration injections exit 1, including all four wildcard forms. All 7/7 inventory mutation gate/self-test pairs exit 1. |
+| **Review's coherent wrong-field mutation** | Direct validation fails; runtime inventory installation refuses; gate and scoped self-test exit 1 despite the refreshed pin. Whole-tree Git-backed self-test also exits 1, with cases `NOT_RUN_ADMISSION_REFUSED`. |
+| **Stronger B3 controls** | Six coherent controls fail both gate/self-test and runtime admission: wrong-field evidence with no obsolete label, sibling pointer, and direct/ref/composed/pattern timestamp map values. Each independently fails the source-derived pin check; exact source hashes/evidence are refreshed before the value-classification control. |
+| **Exclusions** | Authentic schema copy, unclassified schema and canonical existing source cannot be excluded. The authentic copy retains its valid baseline and rejects the Storage offset. |
+| **Name maps** | All 21 exact local-schema citations match; 252/252 value controls agree with the original schemas in coherent preloaded value graphs. All 21 unsupported on-demand constructors refuse separately. |
+| **Actual injected self-test CLIs** | Pattern schema and empty citations both exit 1 before cases execute. |
+| **Whole-tree wildcard confirmation** | All 8,968 committed Plans blobs plus four injections exposed; 233 classified nodes and exactly four unreadable-container failures, no unrelated failures. |
+| **Shard body/path check** | Exit 0; no generated artifact changes. |
+
+The finite gate replay initially omitted the unchanged report cited by the inventory exclusion; adding that report restored its baseline. The old name-map bank also mixed unrelated current/frozen resources and embedded URI editions, which the round-9 closed-graph rule correctly refuses. Its corrected bounded value graphs include each tested row's exact resource and the external resource reached by these probes. Both source/helper validators use the same graph. Initial attempts are retained; no product predicate or source schema was relaxed. The full owner dependency/adoption audit remains outside this bounded check.
+
+No plan-index/governance check or number-isolation sweep was rerun: their owner/index/recipe inputs remain unchanged, and no new index/governance/native PASS is claimed.
+
+**Scope:** this closes the reported B3 finite integrity controls and retains the B1a/B1b/B2 repairs. Native original custody and complete adopting-lane graph installation remain **NOT_RUN**; aggregate integration remains **PARTIAL** and full guard isolation **SWEEP_PENDING**. Family grading is **N/A**, membership **ABSENT**, no IDs minted. No main push, landing, pm-mail or subagent.
+
+Evidence is retained in `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/`. `tested-implementation.json` binds the replay inputs to the implementation commit. Run records retain the requested source-base SHA for runs prepared before the commit; content hashes identify the executed implementation. The scoped replay uses 99 exact input files (including the existing report cited by the inventory exclusion), plus disposable dependencies and a filtered exclusion list. The actual worktree self-test supplies the full census independently. No finite extraction is presented as the whole Plans universe.
+
+
+| Retained evidence path | SHA-256 |
+|---|---|
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/final-selftest.stdout` | `a23fa8b7cdebead5abf33839a3cc8f56a175a8a4b296e6f8a1bb9f3cf1b751d5` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/runtime-probes.json` | `a1f5eb0e8b16a7f85db64f18ca7116cbd342c4a8001181d2cd47e64d456ed69a` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/extended-gate-integrity.json` | `79bfb4321944e9c156bf18d1a6eb569632347c3383a3b23f75e226f3ffaef8a0` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/coherent-integrity.json` | `070379bd8cd2aa1299e6531566c8180d2015b1033a425160ade0b53eb2fd9b3b` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/b3-controls.json` | `d541d28e2ecb3e06871fab8a677a49d32bfce59a20c124bc3e455d3da30fa281` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/name-maps-audit.json` | `4f2f81c2650ac5b8d0e62f0ef5d6126fe7353f4d8cd3a21a65bf94bd8746b4eb` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/full-wildcard-gate.json` | `ae8809bcbe24d642d1d1ee289fa36b81c4a93fdcce0b56c9522ae7fca60b6ee5` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/coherent-full-selftest.json` | `ef0de8c26f7b888da006c04cc88b6da8744659b38a2ef0652c35072d5bdbb19d` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/preservation.json` | `b7d87d93063bb161bc76ae555b93b4a68dd47ab0990318e8d0b49cf7a5b40102` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/tested-implementation.json` | `58fdac2e65e7987b23a8dd6d46f590578be629018ce90f8879c780f056b900b3` |
