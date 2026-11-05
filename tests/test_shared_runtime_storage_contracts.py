@@ -6,6 +6,7 @@ import sys
 import unittest
 from collections import Counter
 from pathlib import Path
+from unittest import mock
 
 from jsonschema import Draft202012Validator
 
@@ -398,6 +399,23 @@ class SharedRuntimeStorageContractsTest(unittest.TestCase):
         )
         self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
         self.assertIn("shared_runtime_storage_materialization_current", proc.stdout)
+
+    def test_registry_bytes_match_materializer_render_behind_pending_retention(self) -> None:
+        # `check` refuses PENDING_RETENTION_DECISION before it compares bytes, so pending rows hide a stale
+        # registry: DS15's first commit escaped two non-ASCII strings and no check could see it. Compare the
+        # bytes without that one refusal; the retention rows stay refused by test_materializer_check_is_current.
+        spec = importlib.util.spec_from_file_location(
+            "storage_materializer_render", ROOT / "scripts/pm-shared-runtime-storage-materialize.py"
+        )
+        materializer = importlib.util.module_from_spec(spec)
+        sys.modules[spec.name] = materializer
+        self.addCleanup(sys.modules.pop, spec.name, None)
+        spec.loader.exec_module(materializer)
+        current = (ROOT / "Plans/storage_value_registry.json").read_text(encoding="utf-8")
+        with mock.patch.object(materializer, "validate_registry_semantics", lambda registry: None):
+            expected = materializer.expected_registry(json.loads(current))
+        rendered = json.dumps(expected, indent=2, ensure_ascii=False) + "\n"
+        self.assertTrue(rendered == current, "registry bytes differ from the materializer's rendering")
 
     def test_shared_runtime_semantic_validator_self_test_passes(self) -> None:
         proc = subprocess.run(
