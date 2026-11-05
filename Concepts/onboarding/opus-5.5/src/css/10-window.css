@@ -214,7 +214,7 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
    (measured 2026-10-13: a tag on a chosen card, a status on its row, the route on its line). Elsewhere a tag is the
    accent taken a little toward the text and a status is its tone. NieR's words keep NieR's inks (11-window-nier.css). */
 #pm-o55-onboarding { --o55-ink-tag: color-mix(in srgb, var(--o55-accent) 88%, var(--text-primary)); --o55-ink-wait: var(--o55-accent); --o55-ink-ready: var(--accent-lime);
-  --o55-ink-needs: var(--accent-orange);
+  --o55-ink-needs: var(--accent-orange); --o55-ink-fail: var(--accent-error, #ef5350);
   /* the accent as words (an eyebrow, a link, a card's arrow) and as the main action's fill under its words: the accent
      itself unless the look's accent is too light for that */
   --o55-ink-accent: var(--o55-accent); --o55-action: var(--o55-accent); }
@@ -226,7 +226,11 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
   --o55-ink-accent: var(--o55-ink-tag); --o55-action: color-mix(in srgb, var(--o55-accent) 70%, #000); }
 /* SW-18: reserve normal-text contrast over the brightest selected Glass backing,
    including the material exposed by scrolling a narrow pane. Keep a blue tint in the ink. */
-#pm-o55-onboarding[data-family="glass"][data-mode="dark"] { --o55-ink-tag: color-mix(in srgb, var(--o55-accent) 25%, var(--text-primary)); }
+#pm-o55-onboarding[data-family="glass"][data-mode="dark"] { --o55-ink-tag: color-mix(in srgb, var(--o55-accent) 25%, var(--text-primary));
+  /* FO-68: Glass Dark's error red read 3.1:1 as a status word over the brightest tinted row backing (luminance 0.096,
+     teal and magenta material behind the AI rows): failure words take the red toward the text, red in hue, 4.5:1 or
+     more up to a backing of luminance 0.11 */
+  --o55-ink-fail: color-mix(in srgb, var(--accent-error) 40%, var(--text-primary)); }
 #pm-o55-onboarding[data-family="glass"][data-mode="light"] { --o55-ink-tag: color-mix(in srgb, var(--o55-accent) 70%, #000); --o55-ink-wait: var(--o55-ink-tag);
   --o55-ink-ready: color-mix(in srgb, var(--accent-lime) 94%, #000); --o55-ink-needs: color-mix(in srgb, var(--accent-orange) 88%, #000); }
 #pm-o55-onboarding[data-family="retro"][data-mode="light"] { --o55-ink-ready: color-mix(in srgb, var(--accent-lime) 93%, #000); --o55-ink-needs: color-mix(in srgb, var(--accent-orange) 61%, #000); }
@@ -303,7 +307,7 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
 .o55-pill-ready { color: var(--o55-ink-ready, var(--accent-lime)); }
 .o55-pill-wait { color: var(--o55-ink-wait, var(--o55-accent)); }
 .o55-pill-needs { color: var(--o55-ink-needs, var(--accent-orange)); }
-.o55-pill-fail { color: var(--accent-error, #ef5350); }
+.o55-pill-fail { color: var(--o55-ink-fail, var(--accent-error, #ef5350)); }
 /* the marks keep their tone, exactly as before, when the word goes deeper (under NieR they follow NieR's status inks) */
 html:not([data-o55-nier="on"]) #pm-o55-onboarding .o55-pill-ready > .o55-sg { color: var(--accent-lime); }
 html:not([data-o55-nier="on"]) #pm-o55-onboarding .o55-pill-wait > .o55-spin { color: var(--o55-accent); }
