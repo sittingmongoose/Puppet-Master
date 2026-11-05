@@ -127,8 +127,9 @@ async function judge(t, f, tag, { sign = true, props = false } = {}) {
 	await t.check(`${at}: Pip seen at rest (head-overlap frames)`, r.restFrames >= 8, `${r.restFrames}/${r.n} frames in its resting pose`);
 	await t.check(`${at}: no prop over Pip's head`, r.propOnHead <= 1, `${r.who.propOnHead || ''} ${r.propOnHead} px; ${why}${r.who.pipState ? '; pip ' + JSON.stringify(r.who.pipState) : ''}`);
 	await t.check(`${at}: Pip clear of the stage's words (title line, readouts)`, r.words <= 1, `${r.who.words || ''} ${r.words} px; ${why}`);
-	// FO-55: drawn smaller only where the span cannot hold it (.77, Retro Light at 740, the lead's call): never under 75%
-	await t.check(`${at}: Pip drawn at no less than 75% of its size`, r.pipK >= .75, `scale ${r.pipK}`);
+	// FO-55, the lead's ruling: Pip is drawn smaller only where the stage's words sit over its column, and never under 80%
+	// of its size (.82 in Retro Light at 740; 1 elsewhere)
+	await t.check(`${at}: Pip drawn at no less than 80% of its size`, r.pipK >= .8, `scale ${r.pipK}`);
 	await t.check(`${at}: Pip drawn smaller only under the stage's words`, r.pipK >= 1 || r.colWords > 0, `scale ${r.pipK}, no words over its column`);
 	if (r.pipK < 1) t.log(`${at}: Pip drawn at ${r.pipK} of its size`);
 	return r;
@@ -251,8 +252,8 @@ async function everyScreen(t, mode) {
 
 // FO-55 and FO-50 awake, every look: Pip whole and clear of the stage's own words (Retro's title line, NieR's readouts)
 // at every window size, asleep on Welcome and awake on Name (the pointer arriving), opened fresh, and no resting prop
-// over its head as it sways; where the span is too short for Pip at rest it is drawn smaller, once (.77 in Retro Light
-// at 740, 1 elsewhere), never under 75%. --set looks=retro-light,nier-dark for some.
+// over its head as it sways; where the stage's words cut its span it is drawn smaller, once (.82 in Retro Light at 740,
+// 1 elsewhere), never under 80% (the lead's ruling). --set looks=retro-light,nier-dark for some.
 const ALL_LOOKS = ['basic-light', 'basic-dark', 'friendly-light', 'friendly-dark', 'glass-light', 'glass-dark', 'retro-light', 'retro-dark', 'nier-light', 'nier-dark'];
 const EVERY_SIZE = [[1920, 1080], [1390, 900], [1024, 768], [860, 768], [740, 768], [1280, 500]];
 async function clearOfWords(t, mode) {

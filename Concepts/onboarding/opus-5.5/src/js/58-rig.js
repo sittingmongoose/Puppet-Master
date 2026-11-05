@@ -515,20 +515,33 @@
         return d;
       };
       /* Pip hangs below the stage's own words over its column (Retro's title line, NieR's unit line: the bar crossed
-         Retro Light's SETUP LOG at 740, FO-55). Where they cut the span and what is left cannot hold Pip at rest with
-         its 8-unit margins it is drawn smaller, just enough, at once: one size for the span, never animated (Retro Light
-         at 740). Where no words are over it, a short span narrows the margins as before and Pip keeps its size */
-      const s0 = L0.s, dx0 = into(at[0] + lo * s0, at[0] + hi * s0, v.x0, v.x1), X0 = at[0] + dx0 + lo * s0 - 4, X1 = at[0] + dx0 + hi * s0 + 4;
-      let y0 = v.y0, cut = false;
-      (this.hdr || []).forEach((w) => { if (w.x1 > X0 && w.x0 < X1 && w.y1 > y0) { y0 = w.y1; cut = true; } });
-      const k = cut ? clamp((v.y1 - y0 - 16) / (L0.rope + (h[1] + h[3] - 31.5 - (c[1] - 14.5)) * s0), .5, 1) : 1;
+         Retro Light's SETUP LOG at 740, FO-55). The lead's ruling: Pip is drawn smaller only where those words cut its
+         span, and never under 80% of its size. Under the words it takes the largest size that keeps its 8-unit margins
+         (.82 in Retro Light at 740), at least .8, narrowing the margins only if .8 needs it; at its size elsewhere. If
+         not even .8 fits under the words, it hangs in the nearest column clear of them inside the crop, at its size;
+         only with no such column is it drawn at .8 under them. One size for the span, at once, never animated */
+      const s0 = L0.s, tall0 = L0.rope + (h[1] + h[3] - 31.5 - (c[1] - 14.5)) * s0;
+      const col = (x) => { const d = into(x + lo * s0, x + hi * s0, v.x0, v.x1); return [x + d + lo * s0 - 4, x + d + hi * s0 + 4]; };
+      const over = (x) => { const [X0, X1] = col(x); return (this.hdr || []).filter((w) => w.x1 > X0 && w.x0 < X1 && w.y1 > v.y0); };
+      let ax = at[0], y0 = v.y0, k = 1;
+      const ws = over(ax);
+      if (ws.length) {
+        const yw = Math.max(...ws.map((w) => w.y1));
+        if (v.y1 - yw >= .8 * tall0) { y0 = yw; k = clamp((v.y1 - yw - 16) / tall0, .8, 1); }
+        else {
+          const [X0, X1] = col(ax), right = Math.max(...ws.map((w) => w.x1)) + 4 - X0, left = Math.min(...ws.map((w) => w.x0)) - 4 - X1;
+          const clear = [right, left].filter((d) => X0 + d >= v.x0 && X1 + d <= v.x1 && !over(ax + d).length).sort((p, q) => Math.abs(p) - Math.abs(q));
+          if (clear.length) ax += clear[0];
+          else { y0 = yw; k = .8; }
+        }
+      }
       if (Math.abs(k - (this.pipK || 1)) > .002) this.setPipK(k);
       const s = Lay.s, dy = into(at[1] + (c[1] - 14.5) * s, at[1] + Lay.rope + (h[1] + h[3] - 31.5) * s, y0, v.y1);
       /* (and the bar rocks, while Pip works, only as far as the room above it: its ends rose 2.6 px past Retro Dark's tube
          at 740 on Creating, the span there barely holding Pip at rest) */
       const room = at[1] + dy + (c[1] - 14.5) * s - y0, halfW = Math.max(Math.abs(c[0] - 32), Math.abs(c[0] + c[2] - 32)) * s;
       this.rockMax = Math.min(.12, Math.asin(clamp(room / (halfW || 1), 0, 1)));
-      return [into(at[0] + lo * s, at[0] + hi * s, v.x0, v.x1), dy];
+      return [ax - at[0] + into(ax + lo * s, ax + hi * s, v.x0, v.x1), dy];
     }
     /* Pip drawn at k of its layout's size: its drawing and the rope it hangs on, and the strings' rest lengths */
     setPipK(k) {
