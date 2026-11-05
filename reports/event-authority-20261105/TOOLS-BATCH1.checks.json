@@ -2,7 +2,7 @@
   "tool_batch": 1,
   "branch": "plans/tools-batch1-20261105",
   "base": "451738fc0b869f5958d205e96b513af5290f7e5f",
-  "implementation": "f2a7eb0c99c9959130606b34df0d5353426c6e31",
+  "implementation": "9c2bbc50aa1d17c2112a14e387260028581fdce8",
   "status": "PASS_LOCAL_VERIFICATION",
   "independent_review": "NOT_RUN",
   "T9": {
@@ -20,23 +20,35 @@
     "explicit_empty_override": {
       "status": "vacuous_allowed_by_--allow-empty",
       "exit": 0
+    },
+    "structured_dispositions": "fixed",
+    "review_driver": {
+      "active_with_exemption": 1,
+      "unchanged_held_with_exemption": 1,
+      "unchanged_retired_with_exemption": 1
+    },
+    "structured_driver": {
+      "active_with_exemption": 1,
+      "held_with_exemption": 0,
+      "retired_with_exemption": 0
     }
   },
   "T8": {
-    "guard_tool_head": "dec0a57dce93238ab33452f6b7ca1c759435b587",
+    "guard_tool_head": "07fefa83bddb397a2d41e132db4203a90e1b414d",
     "witness_flat_distribution": "PASS",
     "mount_unavailable": "PASS",
     "scratch_override": "PASS",
     "dependencies": "Python standard library; Git for --base and self-test"
   },
   "regressions": {
-    "caught": 42,
-    "total": 42,
+    "caught": 68,
+    "total": 68,
     "normal": "pass",
     "optimized": "pass",
-    "standalone": "pass"
+    "standalone": "pass",
+    "added_this_round": 26
   },
-  "assertions": 63,
+  "assertions": 113,
   "tests": [
     {
       "id": "nonempty-control",
@@ -214,6 +226,188 @@
       "caught": true
     },
     {
+      "id": "same-token-active-label-is-not-a-disposition",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "same-token-active-disposition-refused",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "missing-disposition-refused",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "held-record-cannot-support-retired-exemption",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "disposition-for-another-token-refused",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "disposition-for-another-atom-refused",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "disposition-for-another-queue-refused",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "disposition-for-another-scope-refused",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "disposition-wider-than-exemption-refused",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "two-entries-for-one-scope-refused",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "unknown-disposition-value-refused",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "disposition-without-schema-refused",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "disposition-without-targets-refused",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "disposition-list-must-be-a-list",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "accepted-active-elsewhere-conflicts",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "accepted-held-in-another-file-conflicts",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "conflict-in-another-queue-item-still-conflicts",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "overlapping-scope-conflicts",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "malformed-accepted-record-elsewhere-refused",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "pending-record-is-not-a-conflict-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "agreeing-accepted-record-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "other-atom-active-is-not-a-conflict-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "other-token-active-is-not-a-conflict-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "active-in-another-owner-is-not-a-conflict-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "retired-in-one-owner-keeps-the-other-owner-required",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "exemption-reports-its-accepted-disposition",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
       "id": "overlapping-exemptions-refused",
       "expected_status": "error",
       "expected_exit": 1,
@@ -339,15 +533,14 @@
       "argv": [
         "/usr/bin/python3",
         "-B",
-        "/home/sittingmongoose/pm-worktrees/tools-batch1/scripts/pm-ledger-compile-witness.py",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/witness-checks/witness/scripts/pm-ledger-compile-witness.py",
         "--self-test",
         "--json"
       ],
-      "cwd": "/home/sittingmongoose/pm-worktrees/tools-batch1",
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/witness-checks/witness",
       "exit": 0,
-      "seconds": 0.41,
-      "available_before": 6988226560,
-      "available_after": 6945103872,
+      "seconds": 0.564,
+      "available_before": 16420188160,
       "stderr": ""
     },
     {
@@ -356,15 +549,55 @@
         "/usr/bin/python3",
         "-B",
         "-O",
-        "/home/sittingmongoose/pm-worktrees/tools-batch1/scripts/pm-ledger-compile-witness.py",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/witness-checks/witness/scripts/pm-ledger-compile-witness.py",
         "--self-test",
         "--json"
       ],
-      "cwd": "/home/sittingmongoose/pm-worktrees/tools-batch1",
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/witness-checks/witness",
       "exit": 0,
-      "seconds": 0.993,
-      "available_before": 6948528128,
-      "available_after": 6857609216,
+      "seconds": 1.222,
+      "available_before": 16451764224,
+      "stderr": ""
+    },
+    {
+      "name": "unit-tests",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "tests.test_pm_ledger_compile_witness"
+      ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/witness-checks/witness",
+      "exit": 0,
+      "seconds": 0.243,
+      "available_before": 16623030272,
+      "stderr": ".......\n----------------------------------------------------------------------\nRan 7 tests in 0.096s\n\nOK\n"
+    },
+    {
+      "name": "B-cycle4-witness-adjacent",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH1/fix3/B-cycle4/witness-adjacent.py"
+      ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/witness-checks/other-project",
+      "exit": 0,
+      "seconds": 0.167,
+      "available_before": 16612134912,
+      "stderr": ""
+    },
+    {
+      "name": "B-cycle4-witness-adjacent-structured",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH1/fix3/B-cycle4/witness-adjacent-structured.py"
+      ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/witness-checks/other-project",
+      "exit": 0,
+      "seconds": 0.209,
+      "available_before": 16615956480,
       "stderr": ""
     },
     {
@@ -372,17 +605,16 @@
       "argv": [
         "/usr/bin/python3",
         "-B",
-        "/home/sittingmongoose/pm-worktrees/tools-batch1/scripts/pm-ledger-compile-witness.py",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/witness-checks/witness/scripts/pm-ledger-compile-witness.py",
         "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
         "--root",
-        "/home/sittingmongoose/pm-worktrees/tools-batch1",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/witness-checks/witness",
         "--json"
       ],
-      "cwd": "/home/sittingmongoose/pm-worktrees/tools-batch1",
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/witness-checks/witness",
       "exit": 2,
-      "seconds": 0.544,
-      "available_before": 6861418496,
-      "available_after": 6931259392,
+      "seconds": 0.387,
+      "available_before": 16596000768,
       "stderr": ""
     },
     {
@@ -390,75 +622,72 @@
       "argv": [
         "/usr/bin/python3",
         "-B",
-        "/home/sittingmongoose/pm-worktrees/tools-batch1/scripts/pm-ledger-compile-witness.py",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/witness-checks/witness/scripts/pm-ledger-compile-witness.py",
         "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
         "--root",
-        "/home/sittingmongoose/pm-worktrees/tools-batch1",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/witness-checks/witness",
         "--allow-empty",
         "--json"
       ],
-      "cwd": "/home/sittingmongoose/pm-worktrees/tools-batch1",
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/witness-checks/witness",
       "exit": 0,
-      "seconds": 0.461,
-      "available_before": 6929960960,
-      "available_after": 6855823360,
+      "seconds": 0.389,
+      "available_before": 16602796032,
       "stderr": ""
     },
     {
-      "name": "grs027-current-base",
+      "name": "standalone-denied-share",
       "argv": [
         "/usr/bin/python3",
         "-B",
-        "/home/sittingmongoose/pm-worktrees/tools-batch1/scripts/pm-ledger-compile-witness.py",
-        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
-        "--root",
-        "/home/sittingmongoose/pm-worktrees/tools-batch1",
-        "--base",
-        "origin/main",
-        "--json"
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH1/fix3/portability-driver.py",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/witness-checks/flat-witness"
       ],
-      "cwd": "/home/sittingmongoose/pm-worktrees/tools-batch1",
-      "exit": 2,
-      "seconds": 1.45,
-      "available_before": 6855065600,
-      "available_after": 7120969728,
-      "stderr": ""
-    },
-    {
-      "name": "standalone-mount-denied",
-      "argv": [
-        "/usr/bin/python3",
-        "-B",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH1/portability-driver.py",
-        "/tmp/witness-distribution-lww1pqx0"
-      ],
-      "cwd": "/tmp/other-project-_yzlf74n",
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/witness-checks/other-project",
       "exit": 0,
-      "seconds": 0.458,
-      "available_before": 7121805312,
-      "available_after": 7028219904,
+      "seconds": 0.565,
+      "available_before": 16604774400,
       "stderr": "{\"portability_exit\": 0, \"denied_paths\": []}\n"
+    },
+    {
+      "name": "standalone-review-mount-denied",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH1/fix3/mount-denied.py",
+        "witness"
+      ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/witness-checks/other-project",
+      "exit": 0,
+      "seconds": 0.531,
+      "available_before": 16629338112,
+      "stderr": ""
     },
     {
       "name": "standalone-scratch",
       "argv": [
         "/usr/bin/python3",
         "-B",
-        "/tmp/witness-distribution-lww1pqx0/pm-ledger-compile-witness.py",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/witness-checks/flat-witness/pm-ledger-compile-witness.py",
         "--self-test",
         "--scratch",
-        "/tmp/witness-distribution-lww1pqx0/scratch",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/witness-checks/scratch-override",
         "--json"
       ],
-      "cwd": "/tmp/other-project-_yzlf74n",
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/d04bdfd1-67a9-4f59-8416-91f7840b475a/scratchpad/witness-checks/other-project",
       "exit": 0,
-      "seconds": 0.479,
-      "available_before": 7030734848,
-      "available_after": 6947102720,
+      "seconds": 0.646,
+      "available_before": 16702124032,
       "stderr": ""
     }
   ],
-  "evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH1",
+  "evidence": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH1/fix3",
   "protected_paths_changed": [],
-  "live_ledger_changes": []
+  "live_ledger_changes": [],
+  "findings": {
+    "C4-T9-1": {
+      "status": "fixed",
+      "commit": "9c2bbc50aa1d17c2112a14e387260028581fdce8"
+    }
+  }
 }

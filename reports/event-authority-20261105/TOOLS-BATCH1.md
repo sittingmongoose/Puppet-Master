@@ -1,6 +1,6 @@
 # Tool batch 1: ledger witness and standalone use
 
-**T9 and the witness part of T8 are fixed in `f2a7eb0c99c9959130606b34df0d5353426c6e31`.** Branch: `plans/tools-batch1-20261105`, from `origin/main` at `451738fc0b869f5958d205e96b513af5290f7e5f`. Local verification passes; independent review is not claimed. The guard-tool portion was finished and pushed first at `dec0a57dce93238ab33452f6b7ca1c759435b587` on `plans/ea-guardtool-20261105`, then its prescribed worktree was removed.
+**T9 and the witness part of T8 are fixed in `f2a7eb0c99c9959130606b34df0d5353426c6e31`, with the exemption finding from recheck cycle 4 fixed in the section at the end.** Branch: `plans/tools-batch1-20261105`, from `origin/main` at `451738fc0b869f5958d205e96b513af5290f7e5f`. Local verification passes; independent review is not claimed. The guard-tool portion was finished and pushed first at `dec0a57dce93238ab33452f6b7ca1c759435b587` on `plans/ea-guardtool-20261105`, then its prescribed worktree was removed.
 
 ## T9 — vacuous witness and held/retired tokens
 
@@ -45,3 +45,57 @@ Evidence directory: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/
 | `standalone-mount-denied.json` | `c87e625b079835db2368759990f5e1ec3d04c27f30aefdd86cdc7e592b8a590b` |
 | `audit-results.json` | `d6c661cb679515a38a4a0fdc716450fe04bb7ca0d9711a610b877b5a2ac41f33` |
 | `input-manifest.json` | `558a30681d5bb856e9515044f91512d020df57096d66e79f51129daa2756c863` |
+
+## Batch 1, recheck cycle 4: findings and responses
+
+**C4-T9-1 is fixed in `9c2bbc50aa1d17c2112a14e387260028581fdce8`; not disputed.** Base: `5acc0a68d1b946de6132806adcf5262df1eedb1d`. This section supersedes the exemption rules and the 42-regression count above. No independent review of this round is claimed.
+
+| Finding | Location, cause and fix | Regression evidence |
+|---|---|---|
+| **C4-T9-1 — fixed** | `scripts/pm-ledger-compile-witness.py`, `token_exemptions`. The cited record was checked for acceptance, atom link and token mention, so an accepted record that kept the same token active could support a `ledger_retired` exemption. The cited accepted record now needs one structured `token_dispositions` entry (schema `pm.ledger_token_disposition.v1`) for the exemption's exact queue item, atom, token and target set. Its `held` or `ledger_retired` value must equal the exemption's. | Without a matching entry, with `active`, with a different value, or with another accepted record giving the same atom and token a different value on an overlapping target, the run is refused with exit 1 and a reason naming the case. |
+
+**Disposition rules.** Conflict detection reads every accepted record in `records/**/*.jsonl`, across queue items, whenever an exemption exists. Non-accepted records do not count. An active disposition for a different owner, atom or token is not a conflict, and that other owner keeps its own requirement. A wider or narrower target set than the exemption's is refused as not exact. A malformed entry on any accepted record is an input error.
+
+**Guard-tool figures above.** The T8 section's guard head and 130-observation count are from the earlier round. The current guard head is `07fefa83bddb397a2d41e132db4203a90e1b414d`, reported in its own `GUARDTOOL.md`.
+
+**Human review stays required.** The README still says the checker verifies structure and agreement, not a reviewer's identity or the authority and meaning of the recorded decision. Anyone who can write the ledger can write an accepted disposition.
+
+**Real ledgers.** No ledger has this new record yet and none was changed. GRS-027's `corr-0010` retires tokens only in prose, and that ledger has no targets or exemptions, so its result is unchanged. A repaired ledger that adds targets must add these entries before an exemption will pass.
+
+### Rerun results
+
+| Check | Result |
+|---|---|
+| **Self-test** | **68/68** in normal and optimized Python, with identical JSON. All 42 earlier regressions remain; their fixture gained the structured entry so the held and retired controls stay valid. 26 are new. |
+| **Unit tests** | `tests/test_pm_ledger_compile_witness.py`: 7/7. |
+| **Review driver `witness-adjacent.py`, path changed only** | Exemption off: exit 2 for all three rows. Exemption on: exit 1 for all three, because its fixture has only a flat `disposition` label and no scope. This includes the reproduced active false pass, which was exit 0. |
+| **Same driver with the structured entry added** | `active` with an exemption: exit 1, "keeps this token active". `held` and `ledger_retired` with an exemption: exit 0, `pass`, 1 token exempted. Without an exemption: exit 2. |
+| **GRS-027, read-only** | `vacuous`, exit 2, 0 targets. `--allow-empty`: exit 0, status names the flag. |
+| **Standalone** | Flat two-file copy from another directory: 68/68 with the share denied by both the review's hook and the earlier one. The generic `--scratch` run also passes and leaves nothing behind. |
+| **Evidence audit** | 113 assertions pass, including each new refusal's reason. |
+
+**A disclosed change to the review driver's held and retired rows:** they exit 1 unchanged because the flat label has no scope, which the fix requires. The structured copy is the control; `witness-adjacent-structured.py` differs only by that entry and its output name.
+
+**Resources and scope.** Commands ran serially on Python 3.14.4/Linux from scratch copies of the commit, with a 1 GiB address-space cap and a 6 GiB available-memory floor. Only the tool, its corpus helper, the standalone README and these report companions change. No owner Markdown, live ledger, registry, Decision Log, Spec Lock, `.evidence` or `.gitignore` edit, no `main` push, no pm-mail and no subagent.
+
+Evidence directory: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH1/fix3/`.
+
+| Evidence under that directory | SHA-256 |
+|---|---|
+| `self-test.json` | `589948c652dac0e229a8cdbc21ed2698cf9b28497aef1e8297978c30d598681a` |
+| `self-test-optimized.json` | `589948c652dac0e229a8cdbc21ed2698cf9b28497aef1e8297978c30d598681a` |
+| `B-cycle4/witness-adjacent.py` | `a772cba073fd8da9e4b7e6dcda62851f1540582e19d906f58f4230f523509d52` |
+| `B-cycle4/witness-adjacent.json` | `eea0d1ac16a62ae253327ad4bc6e2156a619029a838d68e16b04eccfeff288e5` |
+| `B-cycle4/witness-adjacent-structured.py` | `a4de0af3780a81577a7f605ee8f6e43fafe7af68aa700dacd713a02e3d34df55` |
+| `B-cycle4/witness-adjacent-structured.json` | `ac9d2162e259bd1d8b6472da178ac89d9bfe7ffc852c75c2b4532c9446f95170` |
+| `grs027-current.json` | `1570f0ed294a48e4e9bb59ba08f0e23cd46aec2ad802d9ad827151aac7c719be` |
+| `grs027-explicit-empty.json` | `b6faea5d212dc0a421ee62659fa014c5b3eeea6df6486071be5c8c3f826b6636` |
+| `standalone-denied-share.json` | `589948c652dac0e229a8cdbc21ed2698cf9b28497aef1e8297978c30d598681a` |
+| `standalone-review-mount-denied.json` | `589948c652dac0e229a8cdbc21ed2698cf9b28497aef1e8297978c30d598681a` |
+| `standalone-scratch.json` | `589948c652dac0e229a8cdbc21ed2698cf9b28497aef1e8297978c30d598681a` |
+| `commands.json` | `1a9c309528ac3c045ee54d0c0ee9bfd15ef0cb7d9de515d4b1ccc9043ca0949c` |
+| `input-manifest.json` | `c89319be719e3f87cabddf333515f10190f1a1712065797ff190d126a3fb51ad` |
+| `audit-results.json` | `36cac8112de493d239fb2a150dc523d0f29f5b45804625be596746442cd47a38` |
+| `verify-fix3.py` | `f84cb3080860af383a15e536bebad41f009b6de91423afa40c38cd284dd910d7` |
+| `mount-denied.py` | `1ed68f01e252f4611337f8330028932d53cb72e3beba5e152f0627650bafd5fc` |
+| `portability-driver.py` | `e22df2f2eca26cf0ec4078d791151e97fb7978e687a260616799a0a2ca5f8973` |
