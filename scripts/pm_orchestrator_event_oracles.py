@@ -22,6 +22,7 @@ from referencing.exceptions import Unresolvable
 
 from pm_event_index_binding import binding_digest
 from pm_projects_refresh_contracts import semantic_hash, scope_failures
+from pm_event_numbers import JsonNumber, Refusal, storage_uint64
 
 
 SEMANTIC_FIELDS = (
@@ -84,7 +85,7 @@ StrictValidator = validators.extend(Draft202012Validator, {'pattern': exact_patt
 
 
 def number_domain_errors(value):
-    """One supported numeric domain before schema, hashing or retry comparison.
+    """Current producer inputs only, never Storage metadata or typed originals.
 
     RFC8785 finite numbers only; integral values use safe integers, never a
     float64 alias. Fractional floats retain the original typed source domain.
@@ -101,6 +102,14 @@ def number_domain_errors(value):
         except (ValueError, OverflowError):
             return ['number_domain']
     return []
+
+
+def storage_sequence_valid(event):
+    try:
+        storage_uint64(event.get('sequence_id'))
+    except Refusal:
+        return False
+    return True
 
 
 def number_rule_for_record(case=None, *, retained=False):
@@ -168,7 +177,12 @@ def fixture_loads(text):
     def decode(value, path=()):
         if isinstance(value, Number):
             is_current = (len(path) >= 3 and path[0] in current and path[2] in current[path[0]])
-            if is_current and number_token_errors(value.token):
+            storage_sequence = (len(path) == 4 and path[3] == 'sequence_id'
+                and (path[0], path[2]) in (('event_cases', 'event'), ('retry_cases', 'candidate')))
+            if storage_sequence:
+                # Field-owner dispatch; never round-trip Storage uint64 through JCS.
+                storage_uint64(JsonNumber(value.token, not any(c in value.token for c in '.eE')))
+            elif is_current and number_token_errors(value.token):
                 raise ValueError('number_token_canonical:' + value.token)
             return json.loads(value.token)
         if isinstance(value, dict):
@@ -439,7 +453,9 @@ def selected_validators(root, format_checker):
 
 def event_errors(case, schema, identity, retry_allowed, root, formats, *, historical=False):
     event, payload = case['event'], case['logical_payload']
-    numeric_errors = record_number_errors([event, payload, case['producer_context']],
+    numeric_errors = record_number_errors([
+        {k: value for k, value in event.items() if k in SEMANTIC_FIELDS},
+        payload, case['producer_context']],
                                           case, retained=historical)
     if numeric_errors:
         return numeric_errors
@@ -447,7 +463,8 @@ def event_errors(case, schema, identity, retry_allowed, root, formats, *, histor
     if refs:
         return ['unresolved_schema_reference']
     v = selected_validators(root, formats)
-    errors = ['event_schema'] if list(v['event'].iter_errors(event)) else []
+    errors = ['event_schema'] if (list(v['event'].iter_errors(event))
+                                  or not storage_sequence_valid(event)) else []
     if historical and event.get('replay_policy') in ('projector_replay_only', 'dedupe_by_idempotency_key'):
         pass
     elif event.get('replay_policy') == 'projector_replay_only':
@@ -537,7 +554,8 @@ def board_source_errors(case, root, formats):
             if stage['owner_method_id'] != source['interface_id']:
                 errors.append('source_stage_method')
         witness = case.get('accepted_source_witness', {})
-        if (witness.get('ref') != source['accepted_source_ref'] or witness.get('value') != message
+        if (witness.get('ref') != source['accepted_source_ref']
+                or witness.get('value') != message
                 or source['accepted_source_sha256'] != semantic_hash('accepted_source', witness.get('value'))):
             errors.append('accepted_original_source_join')
         if case.get('physical_record_sha256') != hashlib.sha256(packed(wrapper)).hexdigest():
@@ -715,7 +733,7 @@ def retry_schemas():
 
 def retry_shape_valid(event):
     envelope, payloads = retry_schemas()
-    if not envelope.is_valid(event):
+    if not envelope.is_valid(event) or not storage_sequence_valid(event):
         return False
     definition = event['event_type'].replace('.', '_')
     return (definition in payloads and (event['payload_ref'] is not None
@@ -723,7 +741,7 @@ def retry_shape_valid(event):
 
 
 def retry_outcome(original, candidate):
-    if record_number_errors(candidate):
+    if record_number_errors({k: value for k, value in candidate.items() if k in SEMANTIC_FIELDS}):
         return {'status': 'number_domain', 'appended': False, 'receipt': None}
     if not retry_shape_valid(original) or not retry_shape_valid(candidate):
         return {'status': 'retry_value_schema', 'appended': False, 'receipt': None}
@@ -1030,6 +1048,32 @@ def check_oracles(fixtures, schema, owner_module):
         checks += 6
     by_id = {c['case_id']: c for c in cases}
     assert len(by_id) == len(cases)
+    for test in fixtures['storage_sequence_cases']:
+        base = by_id[test['case_id']]
+        bad = copy.deepcopy(base)
+        bad['event']['sequence_id'] = test['value']
+        assert event_errors(bad, schema, owner_module.identity, owner_module.retry_allowed,
+                            root, formats) == test['expected_errors'], test['name']
+        result = retry_outcome(base['event'], bad['event'])
+        assert result['status'] == test['expected_status'] and result['appended'] is False, test['name']
+        assert packed(result['receipt']) == packed(base['event'] if test['valid'] else None)
+        assert semantic_digest(bad['event']) == semantic_digest(base['event'])
+        # Exercise the actual file decoder at both current EventRecord roots.
+        raw = json.dumps({'event_cases': [{'event': bad['event']}],
+                          'retry_cases': [{'candidate': bad['event']}]})
+        try:
+            decoded = fixture_loads(raw)
+        except ValueError:
+            assert not test['valid'], test['name']
+        else:
+            candidate = decoded['retry_cases'][0]['candidate']
+            assert retry_outcome(base['event'], candidate)['status'] == test['expected_status']
+            if test['valid']:
+                assert type(candidate['sequence_id']) is int
+                assert packed(candidate) == packed(bad['event'])
+                assert msgpack.unpackb(packed(candidate), raw=False)['sequence_id'] == test['value']
+        assert not failure_oracle_errors(test)
+        checks += 6
     for test in fixtures['number_cases']:
         base = by_id[test['case_id']]
         token = test['token']
