@@ -10,6 +10,7 @@ export default async function(t){
   }
  });
  const f=await t.app.open();
+ await t.app.look('basic-dark');
  await f.waitForFunction(()=>!!window.O55?.sound?.ctx,null,{timeout:30000});
  await f.evaluate(()=>O55.sound.prepare(O55.sound.ctx.sampleRate,'basic'));
  const starts=await f.evaluate(()=>window.__primeStarts);
