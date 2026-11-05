@@ -30,6 +30,7 @@ const LAYER = '#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)';
 const LOOKS = ['basic', 'friendly', 'retro', 'glass', 'nier'].flatMap((f) => [`${f}-light`, `${f}-dark`]);
 const PHASES = ['welcome', 'tiles', 'begin', 'smb'];
 const STAGE = '#pm-o55-onboarding .o55-stage';
+class RouteDone extends Error {}
 
 async function surface(t, sandbox) {
 	const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
@@ -144,6 +145,9 @@ async function surface(t, sandbox) {
 				await flush();
 			}
 		}
+		/* a narrowed run ends where its last phase ends: the screens past it would be shown without a calibration */
+		const later = (p) => phases.some((x) => PHASES.indexOf(x) > PHASES.indexOf(p));
+		if (!later('welcome')) throw new RouteDone();
 		await primary('welcome');
 		/* tiles: real Light/Dark and tile presses on Pick a look */
 		if (phases.includes('tiles')) {
@@ -162,6 +166,7 @@ async function surface(t, sandbox) {
 				await flush();
 			}
 		}
+		if (!later('tiles')) throw new RouteDone();
 		if ((await screen()) === 'look') await primary('look');
 		if ((await screen()) === 'where') await primary('where');
 		/* begin: each look again, with the cause asserted per look */
@@ -202,6 +207,7 @@ async function surface(t, sandbox) {
 			}
 		}
 		/* smb: each look on the share screen, then its presses and hovers */
+		if (!later('begin')) throw new RouteDone();
 		if (phases.includes('smb')) {
 			if ((await screen()) === 'begin') { await act('pick', 'existing'); await act('sub', 'device'); await primary('begin'); }
 			await t.check('on nas-find', (await screen()) === 'nas-find', await screen());
@@ -231,6 +237,10 @@ async function surface(t, sandbox) {
 				await flush();
 			}
 		}
+		await phase('end');
+		await sleep(600);
+	} catch (e) {
+		if (!(e instanceof RouteDone)) throw e;
 		await phase('end');
 		await sleep(600);
 	} finally {

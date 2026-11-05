@@ -23,8 +23,8 @@
  * 3. Every film frame whose page frame was declared visible (window open, no look cover or product animation on Pip's
  *    ancestors) is judged with the reference of the look its own record names, and no other: head or controller under
  *    threshold is a missing paint. Where the product's own overlays (bubble, tip, Retro's printer, NieR's HUD) or a
- *    clipping ancestor cover part of the head box, the threshold scales with what is left; under half left, the frame
- *    is counted as covered by the product rather than judged.
+ *    clipping ancestor cover part of the head box (overlays: the controller's box too), the threshold scales with what
+ *    is left; under half left, the frame is counted as covered by the product rather than judged.
  * 4. Fail closed: exit 2 when the film or the log cannot be read, no frame carries a tag, a look shown in a visible
  *    frame has no calibration or its reference does not separate painted from hidden, or a visible frame's box lies
  *    outside the decoded area. Exit 1 when any frame misses Pip's paint, when a run of untagged frames hides a page
@@ -205,7 +205,7 @@ function judge() {
 				contextsCoveredOnlyByTheirOwnCalibration: contexts.filter((c) => c.hiddenOver || c.paintedUnder > 0.01 * c.painted).map((c) => `${c.calibration} (${c.hiddenOver}/${c.hidden} hidden over, ${c.paintedUnder}/${c.painted} painted under)`), contexts: contexts.length });
 			const pN = ho.painted, aN = ho.hidden, pMiss = ho.paintedUnder, aHit = ho.hiddenOver;
 			R.D = D; R.thr = m.thr; R.pm = m.pm; R.am = m.am;
-			R.calVis = q(P.map((i) => (i.r[F.clipFrac] / 1000) * (1 - i.r[F.occl] / 1000)), 0.5);
+			R.calVis = q(P.map((i) => (part === 'head' ? (i.r[F.clipFrac] / 1000) * (1 - i.r[F.occl] / 1000) : 1 - (i.r[F.occlCtl] || 0) / 1000)), 0.5);
 			R.calArea = q(P.map((i) => i.r[part === 'head' ? F.hw : F.cw] * i.r[part === 'head' ? F.hh : F.ch]), 0.5);
 			const why = [];
 			if (!D.size) why.push('no colour separates Pip from its background');
@@ -243,7 +243,7 @@ function judge() {
 			if (h.none) { judged = true; miss.push({ part, collapsed: true, why: 'box collapsed with no whole box in the 30 page frames before' }); continue; }
 			if (h.tiny) { bump(unevaluable, `${k} ${part}: box under 6 px`); continue; }
 			/* (a collapsed box's own clip and overlay shares say nothing: it is judged whole where Pip last was) */
-			const vis = part === 'head' && !h.collapsed ? (r[F.clipFrac] / 1000) * (1 - r[F.occl] / 1000) : 1, rel = Math.min(1, vis / Math.max(0.05, R.calVis || 1));
+			const vis = h.collapsed ? 1 : part === 'head' ? (r[F.clipFrac] / 1000) * (1 - r[F.occl] / 1000) : 1 - (r[F.occlCtl] || 0) / 1000, rel = Math.min(1, vis / Math.max(0.05, R.calVis || 1));
 			if (rel < 0.5) { bump(covered, `${part} under half visible (product overlay or clip)`); st.coveredByProduct++; continue; }
 			const thr = rel >= 0.9 ? R.thr : R.am + 0.4 * (R.pm * rel - R.am), s = score(R.D, h);
 			judged = true; line += `${part}=${s.toFixed(4)}/${thr.toFixed(4)} `;

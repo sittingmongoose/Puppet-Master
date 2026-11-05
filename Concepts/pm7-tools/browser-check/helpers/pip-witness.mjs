@@ -19,7 +19,7 @@
 
 export const FIELDS = ['seq', 't', 'look', 'cls', 'why', 'cal', 'calPhase', 'label', 'hx', 'hy', 'hw', 'hh', 'cx', 'cy', 'cw', 'ch',
 	'placed', 'offBy', 'rigAnim', 'headVis', 'ctlVis', 'strVis', 'opHead', 'opCtl', 'opStr', 'leafArea', 'clipFrac', 'sig', 'occl',
-	'blur', 'pipTheme', 'cost', 'asleep', 'screen', 'dim'];
+	'blur', 'pipTheme', 'cost', 'asleep', 'screen', 'dim', 'occlCtl'];
 
 /* Page function (serialised by Playwright: no closure over this module). cfg: { x, y, block, bits, ox, oy } in CSS px
    of this frame's viewport; ox/oy place the frame's viewport in the top window (the sandbox iframe). */
@@ -199,15 +199,18 @@ export function installWitness(cfg) {
 			leaf += area(rect(e));
 		}
 		rec[F.leafArea] = Math.round(leaf * dpr * dpr);
-		/* the product's own overlays over the head box (bubble, tip, Retro's printer, NieR's HUD boxes, the terminal) */
+		/* the product's own overlays over the head and controller boxes (bubble, tip, Retro's printer, NieR's HUD boxes,
+		   the terminal) */
 		P.leaves += pt() - tp; tp = pt();
-		let occ = 0;
+		let occ = 0, occC = 0;
 		const overlays = overlaysOf(S);
 		for (const o of overlays) {
 			if (!o || !o.isConnected || !o.checkVisibility({ opacityProperty: true, visibilityProperty: true })) continue;
-			occ += area(inter(hb, rect(o)));
+			const ob = rect(o);
+			occ += area(inter(hb, ob)); occC += area(inter(cb, ob));
 		}
 		rec[F.occl] = area(hb) > 0 ? Math.round(Math.min(1, occ / area(hb)) * 1000) : 0;
+		rec[F.occlCtl] = area(cb) > 0 ? Math.round(Math.min(1, occC / area(cb)) * 1000) : 0;
 		P.overlays += pt() - tp; P.n++;
 		return rec;
 	};
