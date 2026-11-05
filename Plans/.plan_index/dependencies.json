@@ -3163,6 +3163,13 @@
     "SMPFS-317",
     "SMPFS-318",
     "SMPFS-319",
+    "SMPFS-320",
+    "SMPFS-321",
+    "SMPFS-322",
+    "SMPFS-323",
+    "SMPFS-324",
+    "SMPFS-325",
+    "SMPFS-326",
     "SP-640",
     "SP-642",
     "SP-643",
@@ -75015,6 +75022,41 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SMPFS-320",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-321",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-322",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-323",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-324",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-325",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-326",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SP-001",
       "to": "PDS-003"
     },
@@ -117604,7 +117646,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-05T03:22:22Z",
+  "generated_at_utc": "2026-11-05T06:28:52Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -223398,6 +223440,125 @@
       "unit_type": "contract"
     },
     {
+      "context_scope": "ds15_deck2_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-320",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SMPFS-320 — browser.context_shared deck-2 owner contract",
+        "heading_level": 3,
+        "heading_line": 13901,
+        "line": 13903,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_deck2_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-321",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SMPFS-321 — browser.context_share_revoked deck-2 owner contract",
+        "heading_level": 3,
+        "heading_line": 13953,
+        "line": 13955,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_deck2_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-322",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SMPFS-322 — catalog.update.started deck-2 owner contract",
+        "heading_level": 3,
+        "heading_line": 14005,
+        "line": 14007,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_deck2_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-323",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SMPFS-323 — catalog.update.completed deck-2 owner contract",
+        "heading_level": 3,
+        "heading_line": 14058,
+        "line": 14060,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_deck2_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-324",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SMPFS-324 — catalog.remove.started deck-2 owner contract",
+        "heading_level": 3,
+        "heading_line": 14111,
+        "line": 14113,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_deck2_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-325",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SMPFS-325 — catalog.remove.completed deck-2 owner contract",
+        "heading_level": 3,
+        "heading_line": 14164,
+        "line": 14166,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_deck2_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-326",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SMPFS-326 — tool.custom_headless.skipped deck-2 owner contract",
+        "heading_level": 3,
+        "heading_line": 14217,
+        "line": 14219,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
       "context_scope": "storage_generated_residual_tail",
       "gui_related": true,
       "owner_doc": "Plans/storage-plan.md",
@@ -244807,10 +244968,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18815,
+    "depends_on_edge_count": 18822,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22023,
-    "node_count": 7482,
+    "edge_count": 22030,
+    "node_count": 7489,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0

@@ -4,7 +4,7 @@ Source: `Plans/newtools.md`
 
 Source lines: L9027-L9475
 
-Source SHA256: `09715e8dc71bfc02783573d5ad882a2d8537db931adaa25536185bc4fa47f912`
+Source SHA256: `a548496482152e7f8737f5912e0857ee145b3a9b0a97c142dd067306f1240b25`
 
 ---
 
@@ -153,7 +153,7 @@ owner_hints:
   "unit_type": "contract",
   "status": "superseded",
   "owner_doc": "Plans/newtools.md",
-  "canonical_text": "tool.custom_headless.skipped is STOPPED; DS15 withdraws its unsupported draft. DT owns the first-Doctor-run eligibility/reset/restore question at origin/plans/ea-w2-tools-gates-approvals-20261104:reports/event-authority-20261104/DT.md, Question for Jared. No DS15 producer, eligibility, identity, schema, checkpoint or prepared outcome is bound for this family. N2-066 remains the behavior source; no ruling is inferred. This unit id is retired from drafting and must not be reused.",
+  "canonical_text": "Historical withdrawal of the unsupported tool.custom_headless.skipped draft. DL-436 (deck-2 item 4.f) now resolves first-absent-check eligibility/reset/import/restore; the newly authored DS15 owner contract is Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-326. DT cites DS15 rather than holding a separate row. This old unit id remains retired and is not reused; it grants no admission.",
   "gui_related": false,
   "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
   "depends_on": [
