@@ -217,10 +217,11 @@ def verify(s, operation):
     else:
         m.require(control['writer_cutoff'] is False or (control['writer_cutoff'] is True and operation != 'append'
                   and control['pending_disposition'] == 'drain_original'), 'writer_cutoff')
-        m.require(control['effect_state'] == 'known', 'effect_unknown')
-        m.require(m.exact_equal(control['expected_value_revision'], s['source']['value_revision']), 'source_CAS')
-        m.require(control['latest_predecessor_event_id'] == p['predecessor_event_id'], 'predecessor_CAS')
-        m.require(control['episode_open'] is True, 'episode_already_cleared')
+        if operation != 'retry':
+            m.require(control['effect_state'] == 'known', 'effect_unknown')
+            m.require(m.exact_equal(control['expected_value_revision'], s['source']['value_revision']), 'source_CAS')
+            m.require(control['latest_predecessor_event_id'] == p['predecessor_event_id'], 'predecessor_CAS')
+            m.require(control['episode_open'] is True, 'episode_already_cleared')
         m.require(type(a['writable_projects']) is list and p['project_id'] in a['writable_projects'], 'write_permission')
     if operation == 'compatibility_read':
         original = a['events'].get(event['event_id'])

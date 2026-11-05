@@ -25005,11 +25005,15 @@ canonical_text: 'NEWLY AUTHORED OWNER CONTRACT for wizard.blocked under DL-045 a
   producer_sequence_id, correlation_id, causation_event_id, parent_event_id, idempotency_key, payload_schema_id,
   payload, payload_ref, redaction_profile and migration. It excludes Storage-assigned sequence/observed/persisted
   and receipt metadata. Same identity and semantic digest returns the exact original full value and first receipt,
-  with independent full-original authentication. Both current append and retry refuse projector_replay_only as replay_only_not_appendable.
-  Historical original readers accept either retained dedupe_by_idempotency_key or projector_replay_only originals
-  valid under their original owner recipe. A compatibility view may alter only replay_policy; all other supplied
-  fields must authenticate against the actual retained original before resolving its receipt. No history read reruns
-  planning, modifies run status, repairs a condition, resumes work, grants authority or emits an event.
+  with independent full-original authentication. Receipt-only retry reuses the authenticated original reservation
+  and first receipt after live value_revision, predecessor, episode-open or effect state has advanced; it never
+  reapplies those current effect/CAS gates or re-executes work. Current family admission, writer cutoff/drain, write/read
+  permissions and original custody still apply. Missing original proof remains unavailable even after live advancement.
+  Both current append and retry refuse projector_replay_only as replay_only_not_appendable. Historical original
+  readers accept either retained dedupe_by_idempotency_key or projector_replay_only originals valid under their
+  original owner recipe. A compatibility view may alter only replay_policy; all other supplied fields must authenticate
+  against the actual retained original before resolving its receipt. No history read reruns planning, modifies run
+  status, repairs a condition, resumes work, grants authority or emits an event.
 
 
   The planning component''s immutable observation has kind blockage_recorded or repair_attempt_completed and subject_kind=planning_run.
@@ -25219,11 +25223,15 @@ canonical_text: 'NEWLY AUTHORED OWNER CONTRACT for wizard.unblocked under DL-045
   producer_sequence_id, correlation_id, causation_event_id, parent_event_id, idempotency_key, payload_schema_id,
   payload, payload_ref, redaction_profile and migration. It excludes Storage-assigned sequence/observed/persisted
   and receipt metadata. Same identity and semantic digest returns the exact original full value and first receipt,
-  with independent full-original authentication. Both current append and retry refuse projector_replay_only as replay_only_not_appendable.
-  Historical original readers accept either retained dedupe_by_idempotency_key or projector_replay_only originals
-  valid under their original owner recipe. A compatibility view may alter only replay_policy; all other supplied
-  fields must authenticate against the actual retained original before resolving its receipt. No history read reruns
-  planning, modifies run status, repairs a condition, resumes work, grants authority or emits an event.
+  with independent full-original authentication. Receipt-only retry reuses the authenticated original reservation
+  and first receipt after live value_revision, predecessor, episode-open or effect state has advanced; it never
+  reapplies those current effect/CAS gates or re-executes work. Current family admission, writer cutoff/drain, write/read
+  permissions and original custody still apply. Missing original proof remains unavailable even after live advancement.
+  Both current append and retry refuse projector_replay_only as replay_only_not_appendable. Historical original
+  readers accept either retained dedupe_by_idempotency_key or projector_replay_only originals valid under their
+  original owner recipe. A compatibility view may alter only replay_policy; all other supplied fields must authenticate
+  against the actual retained original before resolving its receipt. No history read reruns planning, modifies run
+  status, repairs a condition, resumes work, grants authority or emits an event.
 
 
   The planning component''s immutable conditions_cleared observation identifies the complete required conditions

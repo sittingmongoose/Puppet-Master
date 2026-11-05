@@ -271,6 +271,12 @@ def cases(row):
     retained['authority']['writable_projects'] = []
     for operation in ('read', 'rebuild'):
         add('history_after_live_change_' + operation, retained, operation)
+    retry_after_advance = copy.deepcopy(positive)
+    retry_after_advance['control'].update(effect_state='unknown', expected_value_revision=999,
+                                        latest_predecessor_event_id='newer', episode_open=False)
+    add('receipt_only_retry_after_live_advance', retry_after_advance, 'retry')
+    add('retry_after_advance_still_needs_original', retry_after_advance, 'retry',
+        lambda s: s['authority']['custody'].pop(s['event']['event_id']), 'original_custody_missing')
     historical = copy.deepcopy(positive)
     historical['event']['replay_policy'] = 'projector_replay_only'; seal(historical)
     add('retained_replay_only_original', historical, 'read')
