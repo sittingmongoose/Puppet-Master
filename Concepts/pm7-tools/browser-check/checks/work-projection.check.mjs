@@ -13,6 +13,13 @@ export const tests={
    const result=await f.evaluate(()=>({phases:window.__projectionPhases,kept:window.__transcript===document.querySelector('#pmRoot .transcript')}));
    await t.check(`${scene}: work projection uses scopes`,result.phases.includes('scope')&&!result.phases.includes('app'),JSON.stringify(result));
    await t.check(`${scene}: transcript scroll host retained`,result.kept);
+   const dock=await f.evaluate(()=>{
+    const W=PM_WORK,tid=PM56_EXT.ctx().state.selectedThread;
+    const items=W.items({thread:tid,kind:['process','agent','scheduled'],view:'thread:'+tid});
+    const rows=[...document.querySelectorAll('#pmRoot .composer [data-action="work-dock-review"]')].map(b=>({id:b.dataset.id,review:b.textContent.trim()==='Review'}));
+    return {needs:items.filter(W.needsYou).length,rows,valid:rows.every(b=>{const it=W.item(b.id);return !!it&&(b.review?W.needsYou(it):W.isLive(it)||(it.kind==='scheduled'&&it.state==='pending'));})};
+   });
+   await t.check(`${scene}: composer work rows match current projection`,dock.valid&&(dock.needs===0?!dock.rows.some(r=>r.review):dock.rows.some(r=>r.review)),JSON.stringify(dock));
   }
  }
 };

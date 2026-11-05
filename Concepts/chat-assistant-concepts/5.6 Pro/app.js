@@ -2737,6 +2737,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     };
     patch('.chat-header',renderChatHeader(activeThread()));
     patch('.chat-float',renderChatFloat(),stage);
+    // composerBelow includes the work dock provider (needs/live/scheduled).
+    // Refresh it in this same commit so dockCheck never repairs stale rows
+    // by requesting a later full conversation render.
+    patch('.composer',renderComposer());
     if(state.activity.open){
       const panel=document.querySelector('#pmRoot .activity-panel');
       if(!panel){renderApp();return false;}
