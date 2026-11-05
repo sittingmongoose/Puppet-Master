@@ -1,6 +1,6 @@
 # Lane DC — review round 3
 
-Branch `plans/ea-collab-prep-20261104`; reviewed head `45321b222d78de8190ae6b70f4034b050abd847b`; tested code/fixture head `b7d7b1d2d0834b99ef3c35498573d665ecd7e4af`. The following report commit changes reports only.
+Branch `plans/ea-collab-prep-20261104`; reviewed head `45321b222d78de8190ae6b70f4034b050abd847b`; tested code/fixture head `b7d7b1d2d0834b99ef3c35498573d665ecd7e4af`. The following report commits change reports only.
 
 C3-B1 fixture repairs are complete. The production guards and legacy removal-group logic are unchanged. The legacy schema-proof fixture builder uses the corrected LF specimen helper. All eighteen family runs and the lane self-test pass sequentially. No full check-11 PASS is claimed: the shared-tool sweep owns proof replacement (SW-P1). Every family remains **9 PASS / 2 PARTIAL / 1 ABSENT**. Membership is ABSENT, retention and positive/negative oracles are PARTIAL, native execution is NOT_RUN.
 
@@ -1438,7 +1438,7 @@ Existing PlanUnits only: **CWR-105..123, CV-460..478, SP-460..478, ATS-230..248*
 
 ## Evidence
 
-Evidence manifest: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DC/fix3/manifest.json` — SHA-256 `bc88c497ed49f3565fb6770aa1459fd3016dd5fb458b07c01ba1f950a0709609`. It pins the retained raw outputs and reproduction harnesses, excluding this manifest and the later completion receipt.
+Evidence manifest: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DC/fix3/manifest.json` — SHA-256 `66f5f9b5acbf0f3c993a43a9209e922e64a5288e6672292ea4d198a3bb9cf9a9`. It pins the retained raw outputs and reproduction harnesses, excluding this manifest and the later completion receipt.
 
 All raw evidence remains outside the repository under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DC/fix3/`. Exact commands, exit codes, resource minima and timestamps are in each `*.run.json`; `verification.json` pins the fixture/checker input hashes. The report/self-grade copies in the parent DC folder match the branch files.
 
