@@ -421,7 +421,8 @@ def audit(author=False):
                     operation='retry', expected='replay_only_not_appendable', _value=value,
                     isolation=dict(guards=['writer_policy:76', 'writer_policy:77:replay_only'],
                                    duplicate_reason='Only the incoming caller policy changes; its two admission guards repeat that predicate.')))
-        for case in [*row['cases'], *generated]:
+        from pm_dcw_event_numeric_cases import cases as numeric_cases
+        for case in [*row['cases'], *generated, *numeric_cases(row)]:
             value = copy.deepcopy(case['_value']) if '_value' in case else scenario(row, case)
             p.disabled.clear(); p.schema_rules.clear(); p.schema_defaults = []
             actual = p.outcome(row, value, case['operation'])
@@ -484,6 +485,17 @@ def audit(author=False):
                     ('source_identity', 'source_phase_identity'),
                     ('reader_effect_forbidden', 'effect_not_authorized'),
                 ]}
+                # These schema/type checks deliberately duplicate the exact
+                # original-value or descriptor guard named in the configuration.
+                # Its older witnesses therefore flip for that SAME invariant.
+                named_numeric_duplicates = {
+                    'round6_original_sequence_': ['original_full_value'],
+                    'round6_custody_sequence_': ['receipt_event_sequence', 'original_receipt_equality'],
+                    'round6_descriptor_': ['event_payload_reference_encoding'],
+                }
+                for prefix, codes in named_numeric_duplicates.items():
+                    if owner['case'].startswith(prefix):
+                        aliases.update(frozenset(('schema', code)) for code in codes)
                 if owner['baseline'] != entry['baseline'] and frozenset((owner['baseline'], entry['baseline'])) not in aliases:
                     unrelated.append(case['case_id'])
             else:

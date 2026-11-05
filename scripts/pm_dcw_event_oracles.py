@@ -87,11 +87,11 @@ def secret_free(value):
 
 
 def digest(value):
-    return hashlib.sha256(json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+    return hashlib.sha256(canonical_json(value, sort_keys=True)).hexdigest()
 
 
 def compact_digest(value):
-    return hashlib.sha256(json.dumps(value, ensure_ascii=False, separators=(',', ':')).encode()).hexdigest()
+    return hashlib.sha256(canonical_json(value)).hexdigest()
 
 
 def canonical_msgpack(value):
@@ -168,7 +168,7 @@ def event_reference(row, event):
     except (TypeError, ValueError) as exc:
         raise Refusal('event_payload_reference_encoding') from exc
     check_schema(row['schema'], ref, 'payload_reference')
-    require(event['payload_ref'] == json.dumps(ref, sort_keys=True, separators=(',', ':')),
+    require(event['payload_ref'] == canonical_json(ref, sort_keys=True).decode('utf-8'),
             'event_payload_reference_encoding')
     return ref
 
@@ -187,8 +187,8 @@ def event_body(row, event, authority=None):
     ref = event_reference(row, event)
     payload = (authority or {}).get('event_payloads', {}).get(ref['blake3'])
     require(payload is not None, 'event_payload_missing')
-    require(payload['readable'], 'event_payload_unavailable')
-    require(payload['durable'] and payload['index_durable'], 'event_payload_not_durable')
+    require(payload['readable'] is True, 'event_payload_unavailable')
+    require(payload['durable'] is True and payload['index_durable'] is True, 'event_payload_not_durable')
     try:
         raw = bytes.fromhex(payload['bytes_hex'])
     except (KeyError, TypeError, ValueError) as exc:
@@ -212,7 +212,7 @@ def envelope(row, event, compatibility=False, authority=None):
     require(event['causation_event_id'] == event['parent_event_id'] == payload['predecessor_event_id'], 'causation')
     require(event['occurred_at_utc'] == payload['ts'], 'original_time')
     require(event['correlation_id'] == payload['revision_id' if row['event_type'].startswith('bundle.') else 'request_id'], 'correlation')
-    require(event['producer_sequence_id'] == payload.get('phase_sequence'), 'producer_sequence')
+    require(exact_equal(event['producer_sequence_id'], payload.get('phase_sequence')), 'producer_sequence')
     require(event['redaction_profile'] == 'secret_refs_only', 'redaction')
     if compatibility:
         require(event['replay_policy'] == 'projector_replay_only', 'writer_policy')
@@ -242,17 +242,17 @@ def original_receipt(event, slot, authority):
             custody['idempotency_key'] == event['idempotency_key'], 'receipt_identity')
     require(custody['scope_partition'] == 'project~' + base64.urlsafe_b64encode(event['project_id'].encode()).decode().rstrip('='), 'receipt_scope')
     require(custody['producer_semantic_digest'] == semantic_digest(event), 'idempotency_conflict')
-    require(authority['events'].get(event['event_id']) == event, 'original_full_value')
-    require(custody['original_event_value_commitment'] == commitment(event), 'original_commitment')
+    require(exact_equal(authority['events'].get(event['event_id']), event), 'original_full_value')
+    require(exact_equal(custody['original_event_value_commitment'], commitment(event)), 'original_commitment')
     receipt = custody['first_append_receipt']
-    require(receipt['event_id'] == event['event_id'] and receipt['sequence_id'] == event['sequence_id'], 'receipt_event_sequence')
+    require(exact_equal(receipt['event_id'], event['event_id']) and exact_equal(receipt['sequence_id'], event['sequence_id']), 'receipt_event_sequence')
     require(receipt['durability_state'] == 'synced' and receipt['durable_end_offset'] > receipt['byte_offset'], 'receipt_durability')
     for key in ('first_append_receipt', 'original_event_value_commitment', 'original_segment_ref'):
-        require(slot[key] == custody[key], 'original_receipt_equality')
+        require(exact_equal(slot[key], custody[key]), 'original_receipt_equality')
     group = authority['durable_groups'].get(receipt['commit_group_id'])
-    require(group is not None and all(group[k] == receipt[k] for k in
+    require(group is not None and all(exact_equal(group[k], receipt[k]) for k in
             ('segment_generation', 'segment_name', 'durable_end_offset', 'manifest_generation')), 'receipt_group')
-    require(group['group_digest'] == custody['group_digest'] and event['event_id'] in group['event_ids'], 'receipt_group')
+    require(group['group_digest'] == custody['group_digest'] and type(group['event_ids']) is list and event['event_id'] in group['event_ids'], 'receipt_group')
     require(group['durability_class'] == receipt['durability_class'] and (receipt['durability_class']!='barrier' or group['sync']=='full_flush'), 'receipt_durability')
 
 
@@ -266,8 +266,8 @@ def bundle_source(row, scenario, legacy_validate, historical=False):
     require(source['trigger'] == 'resubmit', 'source_trigger')
     intent=source['intent']
     require(all(intent[k]==source[k] for k in (*fields,'trigger')), 'intent_identity')
-    require(intent==authority['intents'].get(intent['intent_ref']), 'original_intent')
-    require(authority['documents'].get(intent['source_document_ref'])=={'version':intent['source_document_version'],'sha256':intent['source_document_sha256']}, 'original_document')
+    require(exact_equal(intent,authority['intents'].get(intent['intent_ref'])), 'original_intent')
+    require(exact_equal(authority['documents'].get(intent['source_document_ref']),{'version':intent['source_document_version'],'sha256':intent['source_document_sha256']}), 'original_document')
     require(scenario['source_key'] == ['revision_run.v1', source['bundle_id'], source['revision_id']], 'source_key')
     previous = None
     settled = set()
@@ -282,16 +282,16 @@ def bundle_source(row, scenario, legacy_validate, historical=False):
         except (AssertionError, ValidationError) as exc:
             raise Refusal('phase_order') from exc
         require(all(p[k] == source[k] for k in fields), 'source_phase_identity')
-        require(slot['phase_sequence'] == p['phase_sequence'] and slot['event_type'] == name and slot['predecessor_event_id'] == p['predecessor_event_id'], 'source_phase_identity')
+        require(exact_equal(slot['phase_sequence'], p['phase_sequence']) and slot['event_type'] == name and slot['predecessor_event_id'] == p['predecessor_event_id'], 'source_phase_identity')
         require(slot['source_ref'] == p['source_ref'] == 'revision_run_phase:' + compact_digest([p['bundle_id'], p['revision_id'], p['phase_sequence']]), 'source_ref')
         result = slot['result'];kind = dict(requested='accepted_request', started='start_authorized', completed='completed', interrupted='interrupted')[phase_row['phase']]
         require(result['kind'] == kind and result['intent_ref'] == slot['intent_ref'], 'result_kind')
-        require(result == authority['results'].get(result['result_ref']), 'original_result')
+        require(exact_equal(result, authority['results'].get(result['result_ref'])), 'original_result')
         require(slot['intent_ref']==intent['intent_ref'], 'intent_identity')
         document = authority['documents'].get(result['source_document_ref'])
-        require(document == {'version': result['source_document_version'], 'sha256': result['source_document_sha256']}, 'original_document')
+        require(exact_equal(document, {'version': result['source_document_version'], 'sha256': result['source_document_sha256']}), 'original_document')
         require(result['safe_point_id'] == p['safe_point_id'] and result['occurred_at_utc'] == p['ts'], 'result_join')
-        require(all(ref in authority['outputs'] for ref in result['output_document_refs']) and all(ref in authority['outcomes'] for ref in result['annotation_outcome_refs']), 'result_outputs')
+        require(type(authority['outputs']) is list and type(authority['outcomes']) is list and all(ref in authority['outputs'] for ref in result['output_document_refs']) and all(ref in authority['outcomes'] for ref in result['annotation_outcome_refs']), 'result_outputs')
         if kind == 'completed':
             require(bool(result['output_document_refs']) and bool(result['annotation_outcome_refs']), 'completion_outputs')
         if kind in ('completed', 'interrupted'):
@@ -300,7 +300,7 @@ def bundle_source(row, scenario, legacy_validate, historical=False):
         if slot is not source['phases'][-1]:
             original_receipt(e, slot, authority)
         previous = dict(p, event_id=e['event_id'])
-    matching=[slot for slot in source['phases'] if slot['prepared_event']==event]
+    matching=[slot for slot in source['phases'] if exact_equal(slot['prepared_event'],event)]
     require(bool(matching), 'latest_source_event')
     slot=matching[0]
     if not historical:
@@ -321,14 +321,14 @@ def wizard_source(row, scenario):
     require(source['source_ref'] == p['source_ref'] == row['source_family'] + ':' + event['idempotency_key'].split(':')[-1], 'source_ref')
     for key in ('project_id', 'planning_run_id', 'named_plan_id', 'thread_group_id', 'thread_id'):
         require(p[key] == req[key] == child[key], 'current_child_join')
-    require(req == authority['requests'].get(req['request_ref']), 'original_request')
-    require(child == authority['children'].get(result['child_ref']), 'original_child')
-    require(result == authority['results'].get(result['result_ref']), 'original_result')
+    require(exact_equal(req, authority['requests'].get(req['request_ref'])), 'original_request')
+    require(exact_equal(child, authority['children'].get(result['child_ref'])), 'original_child')
+    require(exact_equal(result, authority['results'].get(result['result_ref'])), 'original_result')
     require(p['result_ref'] == result['result_ref'] and result['request_ref'] == req['request_ref'], 'result_join')
     require(p['permission_snapshot_id'] == req['permission_snapshot_id'] and req['request_id'] == p['request_id'], 'request_identity')
     require(event['actor_ref'] == req['actor_ref'] == authority['original_actor_ref'], 'source_actor')
-    require(req['expected_child_revision'] == result['child_revision'] == child['revision'] and req['expected_child_sha256'] == result['child_sha256'] == child['sha256'], 'child_currentness')
-    require(seed == authority['seeds'].get(seed['seed_ref']), 'original_seed')
+    require(exact_equal(req['expected_child_revision'], result['child_revision']) and exact_equal(result['child_revision'], child['revision']) and req['expected_child_sha256'] == result['child_sha256'] == child['sha256'], 'child_currentness')
+    require(exact_equal(seed, authority['seeds'].get(seed['seed_ref'])), 'original_seed')
     for dst,src in [('seed_ref','seed_ref'),('seed_kind','seed_kind'),('seed_version','version'),('seed_sha256','sha256'),('named_plan_id','named_plan_id'),('project_context_snapshot_ref','project_context_snapshot_ref'),('project_context_snapshot_hash','project_context_snapshot_hash')]:
         require(p[dst] == seed[src], 'seed_join')
     require(result['seed_ref'] == seed['seed_ref'] and result['seed_sha256'] == seed['sha256'] and
@@ -346,7 +346,7 @@ def wizard_source(row, scenario):
         for key in ('project_id','planning_run_id','named_plan_id','thread_group_id','thread_id','request_id','seed_ref','seed_kind','seed_version','seed_sha256','project_context_snapshot_ref','project_context_snapshot_hash'):
             require(opened_payload[key] == p[key], 'opened_join')
         original_receipt(opened, authority['opened_source'], authority)
-    require(source['prepared_event'] == event, 'latest_source_event')
+    require(exact_equal(source['prepared_event'], event), 'latest_source_event')
     return source
 
 
@@ -355,16 +355,16 @@ def index_read(index, reader):
     check_schema('Plans/event_record_index_checkpoint.schema.json', checkpoint, 'checkpoint')
     check_schema('Plans/event_record_index_checkpoint.schema.json', reader['live_token'], 'read_token')
     require(generation['state'] == 'current' and frontier['source_selection'] == index['current_source']['source_selection'], 'index_currentness')
-    require(frontier['coverage']['complete_to_captured_boundary'], 'index_coverage')
+    require(frontier['coverage']['complete_to_captured_boundary'] is True, 'index_coverage')
     rows=index['datasets'][generation['index_dataset_name']]
     require(len(rows) == frontier['index_row_count'] == frontier['coverage']['retained_event_count'], 'index_coverage')
     require(reader['expected_predecessor'] == frontier['predecessor_frontier_sha256'], 'index_CAS')
     require(any(t['transaction_id'] == frontier['redb_transaction_id'] and t['index_row_set_sha256'] == frontier['index_row_set_sha256'] for t in index['committed_transactions']), 'index_atomicity')
     require('redb_snapshot_id' not in reader['durable_token'], 'durable_snapshot_forbidden')
-    require(reader['durable_token'] == {k:v for k,v in reader['live_token'].items() if k != 'redb_snapshot_id'}, 'durable_token')
+    require(exact_equal(reader['durable_token'], {k:v for k,v in reader['live_token'].items() if k != 'redb_snapshot_id'}), 'durable_token')
     require(len(reader['durable_token']) == 9 and len(reader['live_token']) == 10, 'token_shape')
     token=reader['live_token']
-    require(token==load('Plans/event_index_consumer_adoption_fixtures.json')['positive']['both_full_owner_joins']['read_token'], 'index_currentness')
+    require(exact_equal(token,load('Plans/event_index_consumer_adoption_fixtures.json')['positive']['both_full_owner_joins']['read_token']), 'index_currentness')
     require(token['generation_id'] == generation['generation_id'] and token['storage_instance_id'] == checkpoint['storage_instance_id'] and token['source_selection'] == frontier['source_selection'] and token['frontier_revision'] == frontier['publication_revision'] and token['index_dataset_name'] == generation['index_dataset_name'] and token['checkpoint_key'] == index['checkpoint_key'], 'index_currentness')
     require(any(t['transaction_id']==frontier['redb_transaction_id'] and t['frontier_sha256']==token['frontier_sha256'] for t in index['committed_transactions']), 'index_currentness')
 
@@ -379,19 +379,19 @@ def source_storage(row, scenario):
     stored = scenario.get('stored_source', source)
     profile = load('Plans/storage_value_registry.json')['storage_profile']['family_profiles'][row['source_family']]
     require(profile['redb_file'] == 'canonical' and profile['storage_group'] == 'runs_and_goals' and
-            profile['max_value_bytes'] == 16384, 'source_storage_profile')
+            exact_equal(profile['max_value_bytes'], 16384), 'source_storage_profile')
     require(len(canonical_msgpack(stored)) <= profile['max_value_bytes'], 'refuse_oversized_source')
     check_schema(row['source_schema'], stored)
     if 'source_payload_ref' not in stored:
-        require(stored == source, 'source_storage_value')
+        require(exact_equal(stored, source), 'source_storage_value')
         return
-    require(stored['source_key'] == scenario['source_key'] and all(stored[k] == source[k] for k in
+    require(stored['source_key'] == scenario['source_key'] and all(exact_equal(stored[k], source[k]) for k in
             ('schema_id', 'schema_version', 'storage_instance_id', 'recovery_epoch', 'value_revision')), 'source_reference_identity')
     ref = stored['source_payload_ref']
     payload = scenario['authority'].get('payloads', {}).get(ref['blake3'])
     require(payload is not None, 'source_payload_missing')
-    require(payload['readable'], 'source_payload_unavailable')
-    require(payload['durable'] and payload['index_durable'], 'source_payload_not_durable')
+    require(payload['readable'] is True, 'source_payload_unavailable')
+    require(payload['durable'] is True and payload['index_durable'] is True, 'source_payload_not_durable')
     raw = canonical_msgpack(payload['body'])
     require(len(raw) == ref['byte_size'], 'source_payload_size')
     require(blake3(raw).hexdigest() == ref['blake3'], 'source_payload_digest')
@@ -404,21 +404,21 @@ def verify(row, scenario, operation, legacy_validate):
     if operation == 'compatibility_append':
         envelope(row,event, authority=authority)  # Explicit replay_only_not_appendable regression.
     payload = envelope(row,event, compatibility=operation=='compatibility_read', authority=authority)
-    require(row['event_type'] in control['admitted_families'], 'family_not_admitted')
+    require(type(control['admitted_families']) is list and row['event_type'] in control['admitted_families'], 'family_not_admitted')
     require(control['selected_storage_instance_id'] == authority['storage_instance_id'] == scenario['source']['storage_instance_id'], 'storage_instance')
-    require(control['selected_recovery_epoch'] == authority['recovery_epoch'], 'restore_epoch')
+    require(type(control['selected_recovery_epoch']) is int and exact_equal(control['selected_recovery_epoch'], authority['recovery_epoch']), 'restore_epoch')
     if control['selected_recovery_epoch'] != scenario['source']['recovery_epoch']:
         admission=authority.get('restore_admission')
         require(admission is not None and scenario['source']['recovery_epoch'] < control['selected_recovery_epoch'], 'restore_epoch')
         check_schema('Plans/event_append_receipt_contracts.schema.json',admission,'restore_admission')
-        require(admission['recovery_epoch']==control['selected_recovery_epoch'] and admission['storage_instance_id']==authority['storage_instance_id'] and admission['restored_boundary_sha256']==control['restored_boundary_sha256'], 'restore_admission')
+        require(exact_equal(admission['recovery_epoch'],control['selected_recovery_epoch']) and admission['storage_instance_id']==authority['storage_instance_id'] and admission['restored_boundary_sha256']==control['restored_boundary_sha256'], 'restore_admission')
         source_sha=hashlib.sha256(canonical_msgpack(scenario.get('stored_source', scenario['source']))).hexdigest()
         require(authority.get('restored_sources',{}).get(compact_digest(scenario['source_key']))==source_sha, 'restore_source_inventory')
         stored = scenario.get('stored_source', scenario['source'])
         if 'source_payload_ref' in stored:
             ref = stored['source_payload_ref']
-            require(authority.get('restored_payloads', {}).get(ref['blake3']) ==
-                    {k: ref[k] for k in ('byte_size', 'media_type')}, 'restore_payload_inventory')
+            require(exact_equal(authority.get('restored_payloads', {}).get(ref['blake3']),
+                    {k: ref[k] for k in ('byte_size', 'media_type')}), 'restore_payload_inventory')
         ids={slot['prepared_event']['event_id'] for slot in scenario['source']['phases']} if row['event_type'].startswith('bundle.') else {event['event_id']}
         if row['event_type']=='wizard.deferred_payload.loaded':ids.add(payload['predecessor_event_id'])
         for event_id in ids:
@@ -426,21 +426,21 @@ def verify(row, scenario, operation, legacy_validate):
             if original is not None and original['payload_ref'] is not None:
                 original_row = dict(row, schema=next(r['schema'] for r in load('Plans/dcw_event_contract_fixtures.json')['families'] if r['event_type']==original['event_type']))
                 ref = event_reference(original_row, original)
-                require(authority.get('restored_event_payloads', {}).get(ref['blake3']) ==
-                        {k: ref[k] for k in ('byte_size', 'media_type')}, 'restore_event_payload_inventory')
+                require(exact_equal(authority.get('restored_event_payloads', {}).get(ref['blake3']),
+                        {k: ref[k] for k in ('byte_size', 'media_type')}), 'restore_event_payload_inventory')
         require(ids <= {m['event_id'] for m in admission['members']}, 'restore_members')
         for member in admission['members']:
             c=authority['custody'].get(member['event_id'])
             require(c is not None and all(member[k]==c[k] for k in ('event_id','scope_partition','event_type','idempotency_key','producer_semantic_digest')), 'restore_members')
     require(control['restored_boundary_sha256'] == authority['restored_boundary_sha256'], 'restore_boundary')
     if operation in ('append','publish','retry'):
-        require(control['expected_value_revision'] == scenario['source']['value_revision'], 'source_CAS')
-        require(control['effect_state'] != 'unknown', 'effect_unknown')
-    require(payload['project_id'] in authority['readable_projects'], 'permission_or_deleted_source')
-    require(payload['permission_snapshot_id'] in authority['permission_snapshots'], 'permission_or_deleted_source')
+        require(exact_equal(control['expected_value_revision'], scenario['source']['value_revision']), 'source_CAS')
+        require(control['effect_state'] == 'known', 'effect_unknown')
+    require(type(authority['readable_projects']) is list and payload['project_id'] in authority['readable_projects'], 'permission_or_deleted_source')
+    require(type(authority['permission_snapshots']) is list and payload['permission_snapshot_id'] in authority['permission_snapshots'], 'permission_or_deleted_source')
     if operation in ('append','publish','retry'):
-        require(payload['project_id'] in authority['writable_projects'], 'permission_or_deleted_source')
-        require(not control['writer_cutoff'] or (operation != 'append' and control['pending_disposition']=='drain_original'), 'writer_cutoff')
+        require(type(authority['writable_projects']) is list and payload['project_id'] in authority['writable_projects'], 'permission_or_deleted_source')
+        require(control['writer_cutoff'] is False or (control['writer_cutoff'] is True and operation != 'append' and control['pending_disposition']=='drain_original'), 'writer_cutoff')
     if operation == 'retry':
         # A caller retries semantic inputs; Storage-assigned observed/persisted
         # times and sequence are resolved from the original, never compared as
@@ -452,10 +452,10 @@ def verify(row, scenario, operation, legacy_validate):
         # Current retry must resolve original full value independently of semantic dedupe.
         original_receipt(event,scenario['source']['phases'][-1] if row['event_type'].startswith('bundle.') else scenario['source'],authority)
     if operation in ('read','rebuild','compatibility_read'):
-        require(not control['reader_withdrawn'], 'reader_withdrawn')
+        require(control['reader_withdrawn'] is False, 'reader_withdrawn')
         require(control['reader_schema_version'] == payload['schema_version'], 'unsupported_reader')
         if operation=='rebuild':
-            require(control['replacement_reader_admitted'] and control['rebuild_complete'], 'rebuild_not_current')
+            require(control['replacement_reader_admitted'] is True and control['rebuild_complete'] is True, 'rebuild_not_current')
         index=copy.deepcopy(load('Plans/event_index_consumer_adoption_fixtures.json')['positive']['both_full_owner_joins']['generic'])
         for mutation in scenario.get('index_mutations',[]):
             patch(index,mutation)
@@ -469,7 +469,7 @@ def verify(row, scenario, operation, legacy_validate):
         # every supplied value before resolving the receipt-backed original; never
         # turn a forged view into an authentic one by silently replacing it.
         supplied_original = dict(event, replay_policy=original_event['replay_policy'])
-        require(supplied_original == original_event, 'original_full_value')
+        require(exact_equal(supplied_original, original_event), 'original_full_value')
         scenario=copy.deepcopy(scenario);scenario['event']=original_event;event=original_event
     source_storage(row, scenario)
     secret_free(scenario['source'])
@@ -537,7 +537,7 @@ def source_size_fixture(row, scenario, target, referenced, payload_body_mutation
 
 
 def run(legacy_validate):
-    fixtures=load('Plans/dcw_event_contract_fixtures.json');checks=0
+    from pm_dcw_event_numeric_cases import cases as numeric_cases; fixtures=load('Plans/dcw_event_contract_fixtures.json');checks=0
     require({r['event_type'] for r in fixtures['families']}=={'bundle.revision_requested','bundle.revision_started','bundle.revision_completed','bundle.revision_interrupted','wizard.opened','wizard.deferred_payload.loaded'} and len(fixtures['families'])==6,'family_inventory')
     for schema_path in SCHEMAS:
         schema = load(str(schema_path.relative_to(ROOT)))
@@ -547,9 +547,9 @@ def run(legacy_validate):
     for row in fixtures['families']:
         source=next(f for f in registry['families'] if f['family_id']==row['source_family'])
         require(source['status']=='materialized' and source['value_schema_ref']==row['source_schema'] and source['value_schema']==load(row['source_schema']), 'materialized_source')
-        require(source['recovery_disposition']['backup_required'] and source['restore_disposition']['mutation_fence_on_unresolved'] and source['restore_disposition']['mode']=='mandatory_backup', 'original_backup_contract')
-        for case in row['cases']:
-            scenario=copy.deepcopy(row['positive'])
+        require(source['recovery_disposition']['backup_required'] is True and source['restore_disposition']['mutation_fence_on_unresolved'] is True and source['restore_disposition']['mode']=='mandatory_backup', 'original_backup_contract')
+        for case in [*row['cases'], *numeric_cases(row)]:
+            scenario=copy.deepcopy(case.get('_value', row['positive']))
             if 'base_case' in case:
                 base = next(c for c in row['cases'] if c['case_id'] == case['base_case'])
                 for mutation in base.get('mutations', ()):
@@ -612,3 +612,40 @@ def run(legacy_validate):
     assert all(x['execution_status']=='NOT_RUN' for x in fixtures['native_oracles'])
     print(json.dumps({'status':'PASS','full_contract_cases':checks,'native':'NOT_RUN','admission':'ABSENT'}))
     return checks
+
+
+# JSON Schema's mathematical integer includes 1.0. These closed contracts use
+# integer-only JSON: decimal/exponent floats refuse; parsed -0 normalizes to 0.
+# Format validation is mandatory in both the full and local validators.
+FORMAT.checks('pm-uint')(lambda value: value is None or type(value) is int)
+
+
+def canonical_json(value, sort_keys=False):
+    def domain(item):
+        require(type(item) in (type(None), bool, int, str, list, dict), 'integer_json_domain')
+        if type(item) is dict:
+            for key, child in item.items():
+                domain(key); domain(child)
+        elif type(item) is list:
+            for child in item:
+                domain(child)
+    domain(value)
+    return json.dumps(value, ensure_ascii=False, sort_keys=sort_keys, separators=(',', ':'), allow_nan=False).encode('utf-8')
+
+
+def exact_equal(left, right):
+    """Authenticate exact types and bytes, including all nested original fields."""
+    def same_types(a, b):
+        if type(a) is not type(b):
+            return False
+        if type(a) is dict:
+            return a.keys() == b.keys() and all(same_types(a[k], b[k]) for k in a)
+        if type(a) is list:
+            return len(a) == len(b) and all(same_types(a, b) for a, b in zip(a, b))
+        return True
+    if not same_types(left, right):
+        return False
+    try:
+        return canonical_msgpack(left) == canonical_msgpack(right)
+    except Refusal:
+        return False

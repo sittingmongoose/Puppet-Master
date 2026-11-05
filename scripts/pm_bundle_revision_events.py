@@ -12,12 +12,12 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def identity(payload):
     parts = [payload[k] for k in ('event_type', 'project_id', 'thread_id', 'bundle_id', 'revision_id', 'phase_sequence')]
-    digest = hashlib.sha256(json.dumps(parts, ensure_ascii=False, separators=(',', ':')).encode()).hexdigest()
+    from pm_dcw_event_oracles import canonical_json; digest = hashlib.sha256(canonical_json(parts)).hexdigest()
     return 'evt_bundle_revision_' + digest, payload['event_type'] + ':' + digest
 
 
 def validate(row, payload, envelope, previous):
-    Draft202012Validator(json.loads((ROOT / row['schema']).read_text()), format_checker=FormatChecker()).validate(payload)
+    from pm_dcw_event_oracles import FORMAT; Draft202012Validator(json.loads((ROOT / row['schema']).read_text()), format_checker=FORMAT).validate(payload)
     assert payload["ts"].endswith("Z"), "UTC timestamp"
     try:
         datetime.fromisoformat(payload["ts"].replace("Z", "+00:00"))
@@ -40,7 +40,7 @@ def validate(row, payload, envelope, previous):
         assert previous is not None, 'missing_predecessor'
         expected = 'requested' if phase == 'started' else 'started'
         assert previous['event_type'] in (["bundle.revision_requested", "bundle.revision_interrupted"] if phase == 'started' else ["bundle.revision_started"]), 'phase_order'
-        assert payload['phase_sequence'] == previous['phase_sequence'] + 1, 'phase_sequence'
+        assert type(previous['phase_sequence']) is int and payload['phase_sequence'] == previous['phase_sequence'] + 1, 'phase_sequence'
         assert payload['predecessor_event_id'] == previous['event_id'], 'predecessor_identity'
         for field in ('project_id', 'thread_id', 'bundle_id', 'revision_id', 'annotation_ids',
                       'requested_revision_capability', 'effective_revision_capability', 'permission_snapshot_id'):

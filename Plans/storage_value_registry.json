@@ -123923,11 +123923,13 @@
               },
               "recovery_epoch": {
                 "type": "integer",
-                "minimum": 0
+                "minimum": 0,
+                "format": "pm-uint"
               },
               "value_revision": {
                 "type": "integer",
-                "minimum": 0
+                "minimum": 0,
+                "format": "pm-uint"
               },
               "phases": {
                 "type": "array",
@@ -123951,7 +123953,8 @@
                   "properties": {
                     "phase_sequence": {
                       "type": "integer",
-                      "minimum": 0
+                      "minimum": 0,
+                      "format": "pm-uint"
                     },
                     "event_type": {
                       "enum": [
@@ -124288,11 +124291,13 @@
               },
               "recovery_epoch": {
                 "type": "integer",
-                "minimum": 0
+                "minimum": 0,
+                "format": "pm-uint"
               },
               "value_revision": {
                 "type": "integer",
-                "minimum": 0
+                "minimum": 0,
+                "format": "pm-uint"
               },
               "source_key": {
                 "type": "array",
@@ -124332,7 +124337,8 @@
                   },
                   "byte_size": {
                     "type": "integer",
-                    "minimum": 1
+                    "minimum": 1,
+                    "format": "pm-uint"
                   },
                   "media_type": {
                     "const": "application/vnd.puppetmaster.revision-run+msgpack"
@@ -124341,7 +124347,8 @@
               }
             }
           }
-        }
+        },
+        "$comment": "DCW integer-only profile: pm-uint format validation is mandatory; integer domains refuse decimal/exponent floats and wrong types. JSON -0 is normalized to 0 before hashing; leading zeros are invalid JSON. Authenticate original values by exact types and canonical bytes."
       }
     },
     {
@@ -124482,11 +124489,13 @@
               },
               "recovery_epoch": {
                 "type": "integer",
-                "minimum": 0
+                "minimum": 0,
+                "format": "pm-uint"
               },
               "value_revision": {
                 "type": "integer",
-                "minimum": 0
+                "minimum": 0,
+                "format": "pm-uint"
               },
               "source_ref": {
                 "type": "string",
@@ -124558,7 +124567,8 @@
                   },
                   "expected_child_revision": {
                     "type": "integer",
-                    "minimum": 0
+                    "minimum": 0,
+                    "format": "pm-uint"
                   },
                   "expected_child_sha256": {
                     "type": "string",
@@ -124619,7 +124629,8 @@
                   },
                   "revision": {
                     "type": "integer",
-                    "minimum": 0
+                    "minimum": 0,
+                    "format": "pm-uint"
                   },
                   "sha256": {
                     "type": "string",
@@ -124770,7 +124781,8 @@
                   },
                   "child_revision": {
                     "type": "integer",
-                    "minimum": 0
+                    "minimum": 0,
+                    "format": "pm-uint"
                   },
                   "child_sha256": {
                     "type": "string",
@@ -124920,11 +124932,13 @@
               },
               "recovery_epoch": {
                 "type": "integer",
-                "minimum": 0
+                "minimum": 0,
+                "format": "pm-uint"
               },
               "value_revision": {
                 "type": "integer",
-                "minimum": 0
+                "minimum": 0,
+                "format": "pm-uint"
               },
               "source_key": {
                 "type": "array",
@@ -124969,7 +124983,8 @@
                   },
                   "byte_size": {
                     "type": "integer",
-                    "minimum": 1
+                    "minimum": 1,
+                    "format": "pm-uint"
                   },
                   "media_type": {
                     "const": "application/vnd.puppetmaster.wizard-open-evidence+msgpack"
@@ -124978,7 +124993,8 @@
               }
             }
           }
-        }
+        },
+        "$comment": "DCW integer-only profile: pm-uint format validation is mandatory; integer domains refuse decimal/exponent floats and wrong types. JSON -0 is normalized to 0 before hashing; leading zeros are invalid JSON. Authenticate original values by exact types and canonical bytes."
       }
     },
     {
@@ -125119,11 +125135,13 @@
               },
               "recovery_epoch": {
                 "type": "integer",
-                "minimum": 0
+                "minimum": 0,
+                "format": "pm-uint"
               },
               "value_revision": {
                 "type": "integer",
-                "minimum": 0
+                "minimum": 0,
+                "format": "pm-uint"
               },
               "source_ref": {
                 "type": "string",
@@ -125195,7 +125213,8 @@
                   },
                   "expected_child_revision": {
                     "type": "integer",
-                    "minimum": 0
+                    "minimum": 0,
+                    "format": "pm-uint"
                   },
                   "expected_child_sha256": {
                     "type": "string",
@@ -125256,7 +125275,8 @@
                   },
                   "revision": {
                     "type": "integer",
-                    "minimum": 0
+                    "minimum": 0,
+                    "format": "pm-uint"
                   },
                   "sha256": {
                     "type": "string",
@@ -125407,7 +125427,8 @@
                   },
                   "child_revision": {
                     "type": "integer",
-                    "minimum": 0
+                    "minimum": 0,
+                    "format": "pm-uint"
                   },
                   "child_sha256": {
                     "type": "string",
@@ -125557,11 +125578,13 @@
               },
               "recovery_epoch": {
                 "type": "integer",
-                "minimum": 0
+                "minimum": 0,
+                "format": "pm-uint"
               },
               "value_revision": {
                 "type": "integer",
-                "minimum": 0
+                "minimum": 0,
+                "format": "pm-uint"
               },
               "source_key": {
                 "type": "array",
@@ -125606,7 +125629,8 @@
                   },
                   "byte_size": {
                     "type": "integer",
-                    "minimum": 1
+                    "minimum": 1,
+                    "format": "pm-uint"
                   },
                   "media_type": {
                     "const": "application/vnd.puppetmaster.wizard-seed-load-evidence+msgpack"
@@ -125615,7 +125639,8 @@
               }
             }
           }
-        }
+        },
+        "$comment": "DCW integer-only profile: pm-uint format validation is mandatory; integer domains refuse decimal/exponent floats and wrong types. JSON -0 is normalized to 0 before hashing; leading zeros are invalid JSON. Authenticate original values by exact types and canonical bytes."
       }
     }
   ],
