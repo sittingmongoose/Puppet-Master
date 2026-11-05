@@ -18,33 +18,83 @@ const LOOKS = ['glass-dark', 'glass-light'];
 const THRESHOLD = 12;       // a channel change above this is the page reading through, even dimmed; a blur's mottle stays under it
 const MAX_SHARE = 0.002;    // at most 0.2 % of the surface's pixels may change that much (anti-aliased edges, a caret)
 
-// The inset outline is an intrinsic paint of the target's box. Its pixels and the sampled
-// content come from ONE compositor screenshot; a DOM read before/after a screenshot is not a paint witness.
-export const MARKER = [1, 253, 97];
-// A translucent foreground glaze can tint the outline slightly. This tolerance locates
-// test instrumentation only; THRESHOLD/MAX_SHARE for backing pixels are unchanged.
-const isMarker = (data, i) => MARKER.every((v,k) => Math.abs(data[i+k]-v)<=16);
-export async function capturePaint(t, r, measured) {
- const paintPng = await t.page.screenshot({});
- const full = decodePng(paintPng), scale = measured.dpr;
- let left = full.width, top = full.height, right = -1, bottom = -1, count = 0;
- for (let y = 0, i = 0; y < full.height; y++) for (let x = 0; x < full.width; x++, i += 4) {
-  if (!isMarker(full.data,i)) continue;
-  left = Math.min(left, x); top = Math.min(top, y); right = Math.max(right, x); bottom = Math.max(bottom, y); count++;
- }
- const b = JSON.parse(measured.sourceRect);
- const expected = { left: Math.ceil(b.left*scale), top: Math.ceil(b.top*scale), right: Math.floor(b.right*scale)-1, bottom: Math.floor(b.bottom*scale)-1 };
- const bounds = count ? { left, top, right, bottom } : null;
- const valid = !!bounds && Object.keys(expected).every(k => bounds[k] === expected[k]) && count >= (b.width+b.height)*scale/2;
- const width = Math.round(r.width*scale), height = Math.round(r.height*scale), data = Buffer.alloc(width*height*4);
- const x0 = Math.round(r.x*scale), y0 = Math.round(r.y*scale);
- const inFrame = x0>=0 && y0>=0 && x0+width<=full.width && y0+height<=full.height;
- if (inFrame) for (let y=0;y<height;y++) full.data.copy(data,y*width*4,((y0+y)*full.width+x0)*4,((y0+y)*full.width+x0+width)*4);
- const im = {width,height,data};
- const outline = new Uint8Array(width*height);
- for(let i=0,p=0;i<data.length;i+=4,p++) if(isMarker(data,i)) outline[p]=1;
- return {...im,outlineMask:grow(outline,width,height,2),png:encodePng(im),paintPng,capture:{bounds,expected,markerPixels:count,valid:valid&&inFrame}};
+// CSS anchors encode target and foreground geometry in the same compositor PNG as
+// the sampled content. A top-layer border stays visible over product painters; a rail
+// of off-crop points tracks foreground left/top/bottom (and asset right) positions.
+// Numeral widths may change while their line stays still. No later DOM read certifies a paint.
+export const MARKER = [1,253,97];
+const isMarker=(data,i)=>MARKER.every((v,k)=>Math.abs(data[i+k]-v)<=16);
+export async function installCaptureWitness(f,sel,measured,{resize=false}={}) {
+ return f.evaluate(([s,sourceRect,resize])=>{
+  const e=document.querySelector(s), scale=devicePixelRatio,q=(1/scale)+'px';
+  e.__bcStyle=e.getAttribute('style');if(resize)e.style.width='380px';
+  e.__bcCapture={rect:sourceRect,setupRect:JSON.stringify(e.getBoundingClientRect().toJSON()),anchors:[]};
+  e.style.setProperty('anchor-name','--bc-capture-target','important');e.setAttribute('data-bc-in','');
+  const reset='position:fixed!important;inset:auto!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;pointer-events:none!important;opacity:1!important;filter:none!important;transform:none!important;box-sizing:border-box!important;';
+  const layer=document.createElement('div');layer.id='bc-geometry';layer.setAttribute('popover','manual');layer.setAttribute('aria-hidden','true');layer.setAttribute('data-bc-in','');
+  layer.style.cssText=reset+'inset:0!important;width:100vw!important;height:100vh!important;overflow:visible!important;contain:none!important;';
+  const rounded=v=>'round(nearest,'+v+','+q+')';
+  const border=document.createElement('div');border.style.cssText=reset+'left:'+rounded('anchor(--bc-capture-target left,-10000px)')+'!important;top:'+rounded('anchor(--bc-capture-target top,-10000px)')+'!important;width:'+rounded('anchor-size(--bc-capture-target width,0px)')+'!important;height:'+rounded('anchor-size(--bc-capture-target height,0px)')+'!important;border:2px solid rgb(1,253,97)!important;';layer.appendChild(border);
+  const rules=document.createElement('style');rules.id='bc-geometry-rules';document.head.appendChild(rules);e.setAttribute('data-bc-target','');
+  const bounds=e.getBoundingClientRect(), nodes=new Set();
+  for(const n of [e,...e.querySelectorAll('*')]) {
+   if(!n.style)continue;
+   const ownText=[...n.childNodes].some(c=>c.nodeType===3&&c.textContent.trim());
+   if(!ownText&&!n.matches('svg,img,canvas,input,textarea,select'))continue;
+   let node=n;
+   while(node!==e&&node.getClientRects().length>1&&getComputedStyle(node).display.startsWith('inline'))node=node.parentElement;
+   const b=node.getBoundingClientRect(),c=getComputedStyle(node);
+   if(!b.width||!b.height||c.visibility==='hidden'||b.bottom<=Math.max(0,bounds.top)||b.top>=Math.min(innerHeight,bounds.bottom)||b.right<=Math.max(0,bounds.left)||b.left>=Math.min(innerWidth,bounds.right))continue;
+   nodes.add(node);
+  }
+  const points=[];let index=0;
+  for(const node of nodes) {
+   const b=node.getBoundingClientRect(),name=node===e?'--bc-capture-target':'--bc-own-'+index++;
+   if(node!==e){let cur=node,parts=[];while(cur!==e){parts.unshift(':nth-child('+([...cur.parentElement.children].indexOf(cur)+1)+')');cur=cur.parentElement;}const selector='[data-bc-target] > '+parts.join(' > '),prior=getComputedStyle(node).anchorName;rules.sheet.insertRule(selector+'{anchor-name:'+(prior&&prior!=='none'?prior+',':'')+name+'!important}',rules.sheet.cssRules.length);}
+   for(const edge of ['top','bottom',...(node.matches('svg,img,canvas,input,textarea,select')?['right']:[])]) {
+    const id=points.length,gridWidth=Math.max(1,Math.round(innerWidth*scale)-6),x=3+id%gridWidth,y=Math.floor(id/gridWidth);
+    if(y>=Math.ceil(2*scale))throw Error('foreground witness rail exceeds crop padding');
+    const color=[254-Math.floor(id/200),id%200,253], marker=document.createElement('i');
+    const xSide=edge==='right'?'right':'left',ySide=edge==='bottom'?'bottom':'top',dx=(x-Math.round(b[xSide]*scale))/scale,dy=(y-Math.round(b[ySide]*scale))/scale;
+    marker.style.cssText=reset+'left:calc('+rounded('anchor('+name+' '+xSide+',-10000px)')+' + '+dx+'px)!important;top:calc('+rounded('anchor('+name+' '+ySide+',-10000px)')+' + '+dy+'px)!important;width:'+q+'!important;height:'+q+'!important;background:rgb('+color.join(',')+')!important;';
+    layer.appendChild(marker);points.push({id,color,expected:{left:x,top:y,right:x,bottom:y},node:node.tagName+'.'+String(node.getAttribute('class')||''),edge});
+   }
+  }
+  document.body.appendChild(layer);layer.showPopover();return points;
+ },[sel,measured.sourceRect,resize]);
 }
+export async function cleanupCaptureWitness(f,sel) {
+ await f.evaluate(s=>{
+  document.getElementById('bc-geometry')?.remove();document.getElementById('bc-geometry-rules')?.remove();document.querySelector('[data-bc-target]')?.removeAttribute('data-bc-target');document.getElementById('bc-through')?.remove();document.getElementById('bc-own-reference')?.remove();
+  document.querySelectorAll('[data-bc-in]').forEach(n=>n.removeAttribute('data-bc-in'));
+  const e=document.querySelector(s);if(!e||!Object.prototype.hasOwnProperty.call(e,'__bcStyle'))return;
+  for(const a of e.__bcCapture?.anchors||[]) {if(a.value)a.node.style.setProperty('anchor-name',a.value,a.priority);else a.node.style.removeProperty('anchor-name');}
+  if(e.__bcStyle==null)e.removeAttribute('style');else e.setAttribute('style',e.__bcStyle);delete e.__bcStyle;delete e.__bcCapture;
+ },sel);
+}
+export async function capturePaint(t,r,measured) {
+ const paintPng=await t.page.screenshot({}),full=decodePng(paintPng),scale=measured.dpr;
+ const candidates=new Uint8Array(full.width*full.height),stroke=new Uint8Array(candidates.length),points=(measured.points||[]).map(p=>({...p,count:0,bounds:null}));
+ const colors=new Map(points.map((p,i)=>[(p.color[0]<<16)|(p.color[1]<<8)|p.color[2],i]));
+ let left=full.width,top=full.height,right=-1,bottom=-1,count=0;
+ for(let y=0,i=0,p=0;y<full.height;y++)for(let x=0;x<full.width;x++,i+=4,p++) {
+  if(isMarker(full.data,i)){candidates[p]=1;left=Math.min(left,x);top=Math.min(top,y);right=Math.max(right,x);bottom=Math.max(bottom,y);count++;}
+  const pi=colors.get((full.data[i]<<16)|(full.data[i+1]<<8)|full.data[i+2]);
+  if(pi!==undefined){const a=points[pi];a.count++;a.bounds=a.bounds?{left:Math.min(a.bounds.left,x),top:Math.min(a.bounds.top,y),right:Math.max(a.bounds.right,x),bottom:Math.max(a.bounds.bottom,y)}:{left:x,top:y,right:x,bottom:y};stroke[p]=1;}
+ }
+ // Only the border-connected stroke is instrumentation. Matching green content inside it stays evidence.
+ const queue=new Uint32Array(candidates.length);let head=0,tail=0;
+ const add=p=>{if(candidates[p]&&!stroke[p]){stroke[p]=1;queue[tail++]=p;}};
+ if(count){for(let x=left;x<=right;x++){add(top*full.width+x);add(bottom*full.width+x);}for(let y=top;y<=bottom;y++){add(y*full.width+left);add(y*full.width+right);}}
+ while(head<tail){const p=queue[head++],x=p%full.width,y=Math.floor(p/full.width);for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const xx=x+dx,yy=y+dy;if(xx>=0&&xx<full.width&&yy>=0&&yy<full.height)add(yy*full.width+xx);}}
+ const b=JSON.parse(measured.sourceRect),expected={left:Math.round(b.left*scale),top:Math.round(b.top*scale),right:Math.round(b.left*scale)+Math.round(b.width*scale)-1,bottom:Math.round(b.top*scale)+Math.round(b.height*scale)-1};
+ const bounds=count?{left,top,right,bottom}:null,valid=!!bounds&&Object.keys(expected).every(k=>bounds[k]===expected[k])&&tail>=(b.width+b.height)*scale/2;
+ const width=Math.round(r.width*scale),height=Math.round(r.height*scale),data=Buffer.alloc(width*height*4),outline=new Uint8Array(width*height),x0=Math.round(r.x*scale),y0=Math.round(r.y*scale),inFrame=x0>=0&&y0>=0&&x0+width<=full.width&&y0+height<=full.height;
+ if(inFrame)for(let y=0;y<height;y++){full.data.copy(data,y*width*4,((y0+y)*full.width+x0)*4,((y0+y)*full.width+x0+width)*4);outline.set(stroke.subarray((y0+y)*full.width+x0,(y0+y)*full.width+x0+width),y*width);}
+ const own=points.map(p=>({...p,valid:p.count===1&&Object.keys(p.expected).every(k=>p.bounds?.[k]===p.expected[k])})),im={width,height,data};
+ return {...im,outlineMask:grow(outline,width,height,2),png:encodePng(im),paintPng,capture:{bounds,expected,markerPixels:tail,valid:valid&&inFrame,own,ownValid:own.every(p=>p.valid)}};
+}
+export function ownInkStability(images){return {stable:Object.values(images).every(im=>im.capture.ownValid),failed:Object.entries(images).flatMap(([name,im])=>im.capture.own.filter(p=>!p.valid).map(p=>({name,...p}))) };}
 function changed(a, b, mask) {
 	let n = 0, mx = 0;
 	for (let i = 0, p = 0; i < a.data.length; i += 4, p++) {
@@ -58,50 +108,22 @@ function changed(a, b, mask) {
 function grow(m, w, h, k) { const o = new Uint8Array(m.length); for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) { if (!m[y * w + x]) continue; for (let dy = -k; dy <= k; dy++) for (let dx = -k; dx <= k; dx++) { const yy = y + dy, xx = x + dx; if (yy >= 0 && yy < h && xx >= 0 && xx < w) o[yy * w + xx] = 1; } } return o; }
 function motionMask(a, b) { const m = new Uint8Array(a.data.length / 4); for (let i = 0, p = 0; i < a.data.length; i += 4, p++) if (Math.max(Math.abs(a.data[i] - b.data[i]), Math.abs(a.data[i + 1] - b.data[i + 1]), Math.abs(a.data[i + 2] - b.data[i + 2])) > THRESHOLD / 2) m[p] = 1; return m; }
 
-// Compare independent own-ink silhouettes, not their aggregate coverage. A small row
-// must not move inside a large panel just because 95% of its other glyphs still match.
-// Check both original paints against the reference and the outside-only/all-hidden pair.
-// Two pixels allow the existing glyph-edge rasterisation margin; no unmatched ink is accepted.
-export function ownInkStability({a1,a2,reference,b,c}) {
- const images=[a1,a2,reference,b,c], witness=new Uint8Array(a1.width*a1.height);
- for(const im of images) for(let i=0;i<witness.length;i++) if(im.outlineMask[i]) witness[i]=1;
- const masks=[motionMask(a1,reference),motionMask(a2,reference),motionMask(b,c)];
- for(const m of masks) for(let i=0;i<m.length;i++) if(witness[i]) m[i]=0;
- const padded=masks.map(m=>grow(m,a1.width,a1.height,2)), pairs=[];
- for(const [from,to] of [[0,1],[0,2],[1,2]]) {
-  let forward=0,reverse=0;
-  for(let i=0;i<witness.length;i++) { if(masks[from][i]&&!padded[to][i]) forward++;if(masks[to][i]&&!padded[from][i]) reverse++; }
-  pairs.push({from:['a1/reference','a2/reference','b/c'][from],to:['a1/reference','a2/reference','b/c'][to],forward,reverse});
- }
- return {stable:pairs.every(p=>p.forward===0&&p.reverse===0),pairs};
-}
-
 // how much of the page's content reads through the surface sel (null when it isn't on screen)
-export async function readThrough(t, f, sel, { loseOwnInk = false, resizeAfterMeasure = false, moveDuringCaptures = false, moveOwnRow = false, inputDir = null } = {}) {
+export async function readThrough(t, f, sel, { loseOwnInk = false, resizeAfterMeasure = false, moveDuringCaptures = false, moveOnePixel = false, moveOwnRow = false, inputDir = null } = {}) {
 	const measured = await f.evaluate((s) => {
 		const e = document.querySelector(s); if (!e) return null;
-		const b = e.getBoundingClientRect(), x = Math.max(0, b.left), y = Math.max(0, b.top);
-		const w = Math.min(b.right, innerWidth) - x, h = Math.min(b.bottom, innerHeight) - y;
-		return w >= 40 && h >= 40 && getComputedStyle(e).visibility !== 'hidden' ? { rect: { x: Math.round(x) + 2, y: Math.round(y) + 2, width: Math.round(w) - 4, height: Math.round(h) - 4 }, sourceRect: JSON.stringify(b.toJSON()), dpr: devicePixelRatio } : null;
+		const b=e.getBoundingClientRect(),scale=devicePixelRatio,pad=Math.ceil(2*scale),left=Math.max(0,Math.round(b.left*scale)),top=Math.max(0,Math.round(b.top*scale)),right=Math.min(Math.round(innerWidth*scale),Math.round(b.left*scale)+Math.round(b.width*scale)),bottom=Math.min(Math.round(innerHeight*scale),Math.round(b.top*scale)+Math.round(b.height*scale));
+		return right-left>=40*scale&&bottom-top>=40*scale&&getComputedStyle(e).visibility!=='hidden'?{rect:{x:(left+pad)/scale,y:(top+pad)/scale,width:(right-left-2*pad)/scale,height:(bottom-top-2*pad)/scale},sourceRect:JSON.stringify(b.toJSON()),dpr:scale}:null;
 	}, sel);
 	if (!measured) return null;
 	const r = measured.rect;
 	// Capture an independent own-text reference BEFORE removing any outside text.
 	// Mark the subtree by ancestry too: nodes rendered during capture must not lose ink.
 	const hideOwn = '[data-bc-in], [data-bc-in] * { color: transparent !important; -webkit-text-fill-color: transparent !important; text-shadow: none !important; transition: none !important; caret-color: transparent !important; }';
-	await f.evaluate(([s, sourceRect, resize]) => {
-		const e = document.querySelector(s);
-		e.__bcStyle = e.getAttribute('style');
-		if (resize) e.style.width = '380px';
-		// The geometry must be the one that produced the screenshot clip, not a later second read.
-		e.__bcCapture = { rect: sourceRect, setupRect: JSON.stringify(e.getBoundingClientRect().toJSON()) };
-		e.style.setProperty('outline', '2px solid rgb(1, 253, 97)', 'important');
-		e.style.setProperty('outline-offset', '-2px', 'important');
-		e.setAttribute('data-bc-in', '');
-	}, [sel, measured.sourceRect, resizeAfterMeasure]);
+	measured.points=await installCaptureWitness(f,sel,measured,{resize:resizeAfterMeasure});
 	try {
 		await f.waitForTimeout(400);
-		if (moveDuringCaptures) { await f.evaluate(s => { const e=document.querySelector(s);e.__bcCapture.beforeMove=e.style.left;e.style.left='140px'; },sel);await f.waitForTimeout(250); }
+		if (moveDuringCaptures||moveOnePixel) { await f.evaluate(([s,one]) => { const e=document.querySelector(s);e.__bcCapture.beforeMove=e.style.left;e.style.left=one?(parseFloat(getComputedStyle(e).left)+1/devicePixelRatio)+'px':'140px'; },[sel,moveOnePixel]);await f.waitForTimeout(250); }
 		const a1 = await capturePaint(t, r, measured); await f.waitForTimeout(300); const a2 = await capturePaint(t, r, measured);
 		if (t.args.only === 'agents') await t.mark('backing original captured');
 		const mask = motionMask(a1, a2);
@@ -148,7 +170,7 @@ export async function readThrough(t, f, sel, { loseOwnInk = false, resizeAfterMe
 		const own = grow(motionMask(b, c), b.width, b.height, 2);
 		let expected = 0, covered = 0;
 		for (let i = 0; i < own.length; i++) if (expectedOwn[i] && !mask[i]) { expected++; if (own[i]) covered++; }
-		if (moveDuringCaptures) { await f.evaluate(s => { const e=document.querySelector(s);e.style.left=e.__bcCapture.beforeMove; },sel);await f.waitForTimeout(250); }
+		if (moveDuringCaptures||moveOnePixel) { await f.evaluate(s => { const e=document.querySelector(s);e.style.left=e.__bcCapture.beforeMove; },sel);await f.waitForTimeout(250); }
 		const stable = await f.evaluate((s) => {
 			const e = document.querySelector(s), old = e?.__bcCapture;
 			return { sourceRect: old?.rect, setupRect: old?.setupRect, endRect: e ? JSON.stringify(e.getBoundingClientRect().toJSON()) : null };
@@ -167,7 +189,8 @@ export async function readThrough(t, f, sel, { loseOwnInk = false, resizeAfterMe
 		}
 		const faults = { ownInkLoss: loseOwnInk ? expected>0 && retainedInk/expected<.05 : null, ownRowMove: moveOwnRow ? rowInk>50&&rowMatched/rowInk>.995 : null };
 		const ownStability=ownInkStability({a1,a2,reference,b,c});
-		const geometryStable = stable.sourceRect === stable.setupRect && stable.sourceRect === stable.endRect && captures.every(c=>c.valid);
+		const snap=value=>{if(!value)return null;const b=JSON.parse(value);return JSON.stringify([b.x,b.y,b.width,b.height].map(v=>Math.round(v*measured.dpr)));};
+		const geometryStable = snap(stable.sourceRect) === snap(stable.setupRect) && snap(stable.sourceRect) === snap(stable.endRect) && captures.every(c=>c.valid);
 		if (!geometryStable || !ownStability.stable || (expected > 0 && covered / expected < 0.95)) return { invalid: true, reason: `geometry stable=${geometryStable}; own ink stable=${ownStability.stable}; own glyph exclusion ${covered}/${expected}`, rect: r, geometry: stable, captures, ownStability, faults };
 		// Exclude both captures' glyphs, including the few edge pixels that re-rasterised.
 		const referenceOwn = grow(expectedOwn, a2.width, a2.height, 2);
@@ -179,8 +202,23 @@ export async function readThrough(t, f, sel, { loseOwnInk = false, resizeAfterMe
 		return { rect: r, geometry: stable, captures, ownStability, faults, ownExpected: expected, ownCovered: covered, n: m.n, mx: m.mx, share: m.n / Math.max(1, counted), motion: 1 - counted / mask.length };
 	} finally {
 	if(moveOwnRow) await f.evaluate(s=>{const e=document.querySelector(s)?.querySelector('[data-bc-own-row]');if(e&&Object.prototype.hasOwnProperty.call(e,'__bcRowStyle')) {if(e.__bcRowStyle==null)e.removeAttribute('style');else e.setAttribute('style',e.__bcRowStyle);delete e.__bcRowStyle;}},sel);
-	await f.evaluate((s) => { const st = document.getElementById('bc-through'); if (st) st.remove(); document.getElementById('bc-own-reference')?.remove(); document.querySelectorAll('[data-bc-in]').forEach((n) => n.removeAttribute('data-bc-in')); const e = document.querySelector(s); if (e && Object.prototype.hasOwnProperty.call(e, '__bcStyle')) { if (e.__bcStyle == null) e.removeAttribute('style'); else e.setAttribute('style', e.__bcStyle); delete e.__bcStyle; delete e.__bcCapture; } }, sel);
+	await cleanupCaptureWitness(f,sel);
 	}
+}
+
+// Invalid captures are retaken; an accepted over-limit paint is returned immediately.
+export async function measureWithRetries(t,f,sel,{inputDir=null,maxTries=5,readOptions={}}={}) {
+ const attempts=[],invalidByReason={geometry:0,ownGeometry:0,ownExclusion:0,notVisible:0};let last=null;
+ for(let number=1;number<=maxTries;number++) {
+  const dir=inputDir?path.join(inputDir,'attempt-'+String(number).padStart(2,'0')):null;
+  last=await readThrough(t,f,sel,{...readOptions,inputDir:dir});
+  if(dir){await mkdir(dir,{recursive:true});await writeFile(path.join(dir,'sample.json'),JSON.stringify(last,null,2));}
+  const valid=!!last&&!last.invalid;attempts.push({number,valid,reason:last?.reason||(!last?'not visible':undefined),share:valid?last.share:undefined});
+  if(!valid){if(!last)invalidByReason.notVisible++;else {if(last.reason.includes('geometry stable=false'))invalidByReason.geometry++;if(last.ownStability?.stable===false)invalidByReason.ownGeometry++;if(last.reason.includes('own glyph exclusion')&&last.ownStability?.stable!==false&&!last.reason.includes('geometry stable=false'))invalidByReason.ownExclusion++;}}
+  if(valid)return {...last,tries:number,attempts,invalidByReason};
+  if(number<maxTries)await f.waitForTimeout(250);
+ }
+ return {invalid:true,reason:'no valid sample after '+maxTries+' tries; last: '+(last?.reason||'not visible'),tries:maxTries,attempts,invalidByReason};
 }
 
 export default async function (t) {
@@ -196,7 +234,7 @@ export default async function (t) {
 			await f.waitForTimeout(1200); await t.viewport(1920, 1080); await f.waitForTimeout(1200);
 			await t.check(`agents ${look} resize ${rep}: target painted`, await f.evaluate(() => { const e = document.getElementById('panel-agents'), b = e.getBoundingClientRect(); return b.width > 40 && b.height > 40 && getComputedStyle(e).visibility !== 'hidden'; }));
 			const inputDir = t.args.inputs ? path.join(String(t.args.inputs), `${look}-${String(rep).padStart(3, '0')}`) : null;
-			const m = await readThrough(t, f, '#sidePanelSlot', { inputDir }); t.log(JSON.stringify({ look, rep, ...m }));
+			const m = await measureWithRetries(t, f, '#sidePanelSlot', { inputDir }); t.log(JSON.stringify({look,rep,invalid:m?.invalid,reason:m?.reason,tries:m?.tries,share:m?.share,n:m?.n,attempts:m?.attempts}));
 			if (inputDir) await writeFile(path.join(inputDir, 'sample.json'), JSON.stringify({ look, rep, ...m }, null, 2));
 			await t.check(`agents ${look} resize ${rep}: valid sample`, !!m && !m.invalid, m?.reason);
 			if (m && !m.invalid) await t.check(`agents ${look} resize ${rep}: backing`, m.share <= MAX_SHARE, JSON.stringify(m));
@@ -205,7 +243,7 @@ export default async function (t) {
 	}
 	const sample = async (look, name, sel) => {
 		const inputDir=t.args.inputs ? path.join(String(t.args.inputs),`${look}-${String(rows.length).padStart(3,'0')}-${name.replace(/[^a-z0-9-]+/gi,'_')}`) : null;
-		const m=await readThrough(t,f,sel,{inputDir});
+		const m=await measureWithRetries(t,f,sel,{inputDir});
 		if(inputDir&&m) await writeFile(path.join(inputDir,'sample.json'),JSON.stringify({look,name,...m},null,2));
 		return m;
 	};
@@ -213,7 +251,7 @@ export default async function (t) {
 		if (!m) { bad.push(`${look} ${name}: not on screen`); rows.push(`${look} ${name}: not on screen`); return; }
 		if (m.invalid) { bad.push(`${look} ${name}: invalid sample (${m.reason})`); rows.push(bad.at(-1)); return; }
 		const pct = (m.share * 100).toFixed(2);
-		rows.push(`${look} ${name}: ${pct}% of its pixels show the page through it (max change ${m.mx}; its own text and motion left out: ${(m.motion * 100).toFixed(1)}%) ${m.rect.width}x${m.rect.height}`);
+		rows.push(`${look} ${name}: ${pct}% of its pixels show the page through it (max change ${m.mx}; its own text and motion left out: ${(m.motion * 100).toFixed(1)}%; tries ${m.tries}) ${m.rect.width}x${m.rect.height}`);
 		if (m.share > MAX_SHARE) bad.push(`${look} ${name}: ${pct}% reads through`);
 	};
 	const click = async (sel) => {
@@ -310,5 +348,5 @@ export default async function (t) {
 	}
 	await t.viewport(1920, 1080);
 	rows.forEach((r) => t.log(r));
-	await t.check(`no Glass window or floating surface lets the page read through it (${rows.length} surfaces, ${looks.join(', ')}${tierQuery ? ', ' + tierQuery : ''})`, bad.length === 0, bad.slice(0, 12).join('; ') + (bad.length > 12 ? ` (+${bad.length - 12} more)` : ''));
+	await t.check(`Glass backing samples are complete and accepted readings are within limit (${rows.length} surfaces, ${looks.join(', ')}${tierQuery ? ', ' + tierQuery : ''})`, bad.length === 0, bad.slice(0, 12).join('; ') + (bad.length > 12 ? ` (+${bad.length - 12} more)` : ''));
 }
