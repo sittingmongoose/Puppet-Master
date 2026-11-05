@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L27332-L27508
+Source lines: L27192-L27368
 
-Source SHA256: `c3f78470f0dde5a848c8b432436feef1acd3c259fc8c7d5bb3ae279b060f8a6a`
+Source SHA256: `e59e65208760e79cdcd9514386f8e52e6e82dfb577e10a31b921dc0796bd9d0f`
 
 ---
 
@@ -167,7 +167,7 @@ negative_constraints:
   - Do not drop GUI-specific recovery rules that supplement the canonical summary.
   - Do not let stale addenda re-own blocked/recovery semantics after the canonical GUI summary.
 compatibility_only_notes:
-  - Plans/chain-wizard-flexibility.md remains the wizard_status / wizard blocked lifecycle consumer/existing-coverage surface; F3-392 does not create a duplicate chain-wizard owner.
+  - Plans/Planning_Wizard.md#PWIZ-038 owns wizard_status and the wizard blocked lifecycle (DL-330); retired Plans/chain-wizard-flexibility.md is source lineage only, and F3-392 does not create a duplicate wizard-lifecycle owner.
   - Earlier addenda headings are compatibility/source-lineage sections and must not be parsed as peer canonical sections.
   - >-
     Anchor aliases for SR-002 resolve preserved old heading tokens to the current

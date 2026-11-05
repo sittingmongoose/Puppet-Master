@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L2919-L3209
+Source lines: L2919-L3205
 
-Source SHA256: `a5122b4eabb6701bddcbd501a79a3da352352ee3ed403607b33cf94ca74cb0c6`
+Source SHA256: `98e19473f84fec537bc603a54e762a5e42da38c52a8105fd5e3ae3425380a160`
 
 ---
 
@@ -79,7 +79,7 @@ For every `subagent.*` event below, the payload MUST preserve the PM lineage env
 - `parent_thread_id?`
 - requested and effective runtime descriptors when they differ
 
-The same lineage envelope applies to `subagent.spawn_requested` and `subagent.spawn_completed` when a dispatcher distinguishes request lifecycle from child-run creation and terminal completion. These names remain under `subagent.*`; `chat.subagent_*` and `chat.subagent_spawned` are legacy source aliases only.
+No start-request lifecycle shares this envelope: a start that has to wait is already a child in the `queued` state, so no request is recorded apart from the child (DL-088). Subagent events remain under `subagent.*`; `chat.subagent_*` and `chat.subagent_spawned` are legacy source aliases only.
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Run_Modes.md
 
@@ -147,7 +147,9 @@ Coordination consumers use `coordination_agent_projection.v1:{project_id}:{agent
 
 ContractRef: ContractName:Plans/storage-plan.md#Coordination-record-projection-and-mirror-export-families, ContractName:Plans/orchestrator-subagent-integration.md#Canonical-active-agent-coordination-records-and-projections
 
-For every `crew.*` event below, the payload MUST preserve crew and child lineage together:
+Amended 2026-11-04 (DL-087): the six crew lifecycle events `crew.formed`, `crew.member_added`, `crew.member_removed`, `crew.coordination`, `crew.completed` and `crew.disbanded` are retired, their rows are removed from the table below, and CV-271 is retired. A Crew run is recorded only by the history that all collaborative workflows share (`Plans/Collaborative_Workflows.md`), and Crew keeps no second lifecycle history. Until the shared collaborative workflow events are registered (DL-090), a Crew run has no registered record of its own start, finish or cancellation, only its members' child-run histories (DL-084) and the crew board (DL-085). The three crew board events are not part of this retirement (DL-085).
+
+For every `crew.*` board event below, the payload MUST preserve crew and child lineage together:
 - `run_id`
 - `thread_id`
 - `crew_id`
@@ -159,15 +161,9 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/orc
 
 | event_type | payload_fields | description |
 |---|---|---|
-| `crew.formed` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `member_agent_ids[]`, `purpose` | Crew created. |
-| `crew.member_added` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `agent_id`, `role` | Member joined. |
-| `crew.member_removed` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `agent_id`, `reason` | Member left. |
-| `crew.coordination` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `coordination_type`, `details` | Inter-agent coordination. |
 | `crew.board_message_posted` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `message_id`, `from_agent_id`, `to_agent_id?`, `to_agent_type?`, `subject`, `priority` | Attributable crew-board message posted. |
 | `crew.board_message_read` | `run_id`, `thread_id`, `crew_id`, `message_id`, `agent_id`, `read_at_utc` | Crew-board message read receipt. |
 | `crew.board_messages_archived` | `run_id`, `thread_id`, `crew_id`, `archived_before_utc`, `message_ids[]?`, `archive_reason` | Crew-board messages archived by retention policy. |
-| `crew.completed` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `result_summary`, `duration_ms` | Crew finished. |
-| `crew.disbanded` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `reason` | Crew dissolved. |
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
 

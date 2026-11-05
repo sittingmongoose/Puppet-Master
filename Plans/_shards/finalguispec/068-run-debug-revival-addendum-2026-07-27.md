@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L34638-L35762
+Source lines: L34458-L35565
 
-Source SHA256: `c3f78470f0dde5a848c8b432436feef1acd3c259fc8c7d5bb3ae279b060f8a6a`
+Source SHA256: `e59e65208760e79cdcd9514386f8e52e6e82dfb577e10a31b921dc0796bd9d0f`
 
 ---
 
@@ -1072,37 +1072,23 @@ owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
 
-### F3-496 - Run & Debug Demo Concept Integration
+### F3-496 - Retired Prototype Composition
 
 ```yaml
 plan_unit_id: F3-496
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The PMConcept7 reference shows a `panel-run` view implementing
-  F3-485 through F3-488 with fixture data: two sessions (a paused parent
-  "tastebook-api — cargo run" and a running child attach session), a populated
-  locals scope, two watches, a four-frame main thread, and line, conditional,
-  logpoint, and disabled breakpoints plus exception filter rows. The bottom Debug
-  tab in the demo implements F3-490's empty and attached states. The demo session
-  store mirrors F3-483's state machine so demo actions (start, stop, select,
-  reveal) drive both surfaces. Concepts/pm6-build/** remains illustrative
-  source-lineage only per Plans/usage-feature.md.
-  Amended 2026-10-09 (DL-180): there is no bottom zone. The demo's bottom Debug tab is a Debug Console tab in the home
-  panels. The Debug tab is a tab of the Debug Console tool kind (debug_console, F3-635) in whichever panel holds it,
-  placed beside the terminals by F3-634's tool affinity; the default Home layout's tools row is where it usually lands
-  (F3-630).
+  Retired under DL-260. This identifier preserves historical links only and creates no active product
+  requirement or implementation obligation. Live debugger semantics remain with F3-483 through F3-491.
 gui_related: true
-gui_classification_reason: This unit defines the demo-renderable fixture composition of the run/debug rail panel and bottom tab.
+gui_classification_reason: Retires prototype-only UI obligations.
 split_recommended: false
 depends_on: [F3-485, F3-490, DL-180]
 unblocks: []
 acceptance_criteria:
-- "The PMConcept7 demo `panel-run` view renders F3-485..F3-488 with the stated fixture data (two sessions, populated locals, two watches, four-frame main thread, four breakpoint kinds plus exception filters)."
-- "The demo bottom Debug tab renders F3-490's empty and attached states."
-- "Demo actions (start, stop, select, reveal) drive both surfaces through a demo store mirroring F3-483's state machine."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+- No active product work is compiled from this retired identifier.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -1112,24 +1098,21 @@ context_scope: run_debug_revival
 implementation_surfaces:
 - "Plans/FinalGUISpec.md"
 node_compile_hint:
-  mode: run_debug_demo_concept_integration
+  mode: retired_source_lineage_only
   create_worknodes: false
 source_lineage:
 - "user-decision:2026-07-27-run-debug-revival"
 - "Concepts/pm6-build (PMConcept7 demo; source-lineage-only per Plans/usage-feature.md)"
 - "zed-industries/zed crates/debugger_ui (research lineage)"
-preserved_exact_tokens:
-- "panel-run"
-- "tastebook-api — cargo run"
+preserved_exact_tokens: []
 negative_constraints:
 - "Do not treat Concepts/pm6-build/** demo data, HTML, CSS, or class names as spec or implementation input; it stays illustrative source-lineage only per Plans/usage-feature.md."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
-compatibility_only_notes:
-- "Slint portability: demo fixtures map to static model data behind the same Slint model views used by the live surfaces."
+compatibility_only_notes: []
 stale_retired_dispositions:
-- "Amended 2026-10-09 (DL-180): the demo's bottom Debug tab reads as a Debug Console tab (F3-635)."
+- Prototype composition is source lineage only under DL-260.
 owner_boundary_notes:
-- "This unit owns only demo fixture composition; live panel, tab, and state-machine semantics stay owned by F3-483 through F3-491."
+- Live panel, tab and state-machine semantics remain with F3-483 through F3-491.
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```

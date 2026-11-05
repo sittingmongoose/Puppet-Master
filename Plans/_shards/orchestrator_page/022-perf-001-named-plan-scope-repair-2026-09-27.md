@@ -4,7 +4,7 @@ Source: `Plans/Orchestrator_Page.md`
 
 Source lines: L2821-L2981
 
-Source SHA256: `a0841855cac3cb8cc9d51237aa4b492aa657269eb5b68e69f7df35b73fda52a1`
+Source SHA256: `d35d3e1536939f44fa5265f250105d144cf3775dcd6091e9c163e47640f3d325`
 
 ---
 
@@ -139,9 +139,9 @@ acceptance_criteria:
 - No-project Orchestrator navigation gives the conversion/select-Project route; conversion alone starts no run.
 - Historical app and Project run-start inspection remains passive and cannot reactivate terminal work.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows

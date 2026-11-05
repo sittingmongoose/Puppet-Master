@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5574-L27152
+Source lines: L5446-L27012
 
-Source SHA256: `c3f78470f0dde5a848c8b432436feef1acd3c259fc8c7d5bb3ae279b060f8a6a`
+Source SHA256: `e59e65208760e79cdcd9514386f8e52e6e82dfb577e10a31b921dc0796bd9d0f`
 
 ---
 
@@ -4027,7 +4027,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: |-
-  The GUI exposes exactly ten built-in theme choices across five families, Basic Dark, Basic Light, Friendly Dark, Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, NieR Dark and NieR Light, with Basic Dark as the bundled factory fallback when no applicable explicit value exists. An existing explicit saved Project selection survives, and a copied Project receives a detached selection snapshot. The former Friendly Dark default and the earlier three-choice Retro Dark/Retro Light/Basic contract are superseded lineage kept findable; all ten variants remain supported. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls. SSYS-002/059 and F3-670 supply the single effective result for Default → Everywhere → Computer (Device for screen rows) → Project → existing owner/chat/run/tab levels, with Managed constraints and the declared more-careful/Computer-ceiling exceptions. App contexts omit Project. Own values remain sparse; detached copied own values do not follow their source Project. Resolve the atomic look pair before the first visible frame, including No project. Preserve Q22 migration, retired general.visual.nier-mode, the five-family/ten-variant set and all existing look/animation behavior.
+  The GUI exposes five visible family choices (Basic, Friendly, Glass, Retro, NieR) plus one Light/Dark/Auto control (DL-301), yielding ten resolved built-in variants (Basic Dark, Basic Light, Friendly Dark, Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, NieR Dark and NieR Light), with Basic Dark as the bundled factory fallback when no applicable explicit value exists. An existing explicit saved Project selection survives, and a copied Project receives a detached selection snapshot. The former Friendly Dark default and the earlier three-choice Retro Dark/Retro Light/Basic contract are superseded lineage kept findable; all ten variants remain supported. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls. SSYS-002/059 and F3-670 supply the single effective result for Default → Everywhere → Computer (Device for screen rows) → Project → existing owner/chat/run/tab levels, with Managed constraints and the declared more-careful/Computer-ceiling exceptions. App contexts omit Project. Own values remain sparse; detached copied own values do not follow their source Project. Resolve the atomic look pair before the first visible frame, including No project. Preserve Q22 migration, retired general.visual.nier-mode, the five-family/ten-variant set and all existing look/animation behavior.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -4345,8 +4345,8 @@ canonical_text: >-
   The Slint theme global exposes the canonical ThemeMode values for all ten built-in variants (friendly-dark,
   friendly-light, glass-dark, glass-light, retro-dark, retro-light, basic-light, basic-dark) and theme token
   properties for colors, accents, retro effects, paper texture, borders, padding, scrollbar width, line height,
-  and base font size, with the property defaults illustrative per active variant and basic-dark as the untouched
-  first-open/fresh-project factory mode. The former friendly-dark default is superseded lineage. The
+  and base font size, with the property defaults illustrative per active variant and basic-dark as the bundled/pre-claim
+  fallback only. A fresh Project follows Your usual settings through the applicable SSYS-002/059 ladder. The former friendly-dark default is superseded lineage. The
   ThemePresentationMode dimension (light, dark, auto) resolves family + mode to one of the same eight token
   sets; in auto the effective variant tracks the OS appearance (prefers-color-scheme) live and feeds the
   identical per-variant tokens. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes
@@ -4581,8 +4581,8 @@ canonical_text: >-
   removed. The segmented control uses cmd.settings.transaction.preview then cmd.settings.transaction.apply for
   the existing atomic family/mode pair (DL-228); each family pick composes cmd.settings.transaction.preview then
   cmd.settings.transaction.apply for the atomic family/mode pair under SSYS-009. Auto follows OS appearance live
-  for every family including NieR. Settings exposes the same ten variants and existing theme
-  folder/create/import/export actions. Entering NieR uses its one Reboot moment only when the Reboot moment part
+  for every family including NieR. Settings exposes the same five family choices plus one Light/Dark/Auto control (DL-301), resolving to ten
+  variants, and existing theme folder/create/import/export actions. Entering NieR uses its one Reboot moment only when the Reboot moment part
   is installed; otherwise it uses the standard look cover. Leaving NieR and switching Light/Dark within NieR use
   the standard look cover. Reduced Motion keeps the existing calm/instant settle policy. Explicit Play reboot
   moment remains a local rehearsal that changes no setting. Amended Q22, Jared 2026-10-30 (DL-257): the fifth
@@ -10996,11 +10996,7 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Concept lineage from `Concepts/PuppetMasterDashComp.html` narrows wizard binder placement
-  without making that concept file a live owner: the left rail contains `wizard-doc-pill`,
-  central content is `wizard-binder-view`, the top toolbar is `wizard-binder-toolbar`,
-  annotation UI is right-side/drawer/overlay, and chat remains the separate `#chatPanel` /
-  `chatPanel` side panel with `ContextChipStrip` send-to-chat chips.
+  The shared binder review surface keeps document switching and status in the left rail, document content in the centre, and review controls in the top toolbar. Annotation management uses a right-side rail, drawer or content overlay; the left document rail and a separate browser-style annotation modal cannot host it. Assistant Chat remains a separate side panel with its own thread list, composer, queued-intervention strip, footer and context-usage display; ContextChipStrip supplies the composer’s ephemeral send-to-chat chips.
 gui_related: true
 gui_classification_reason: >-
   This unit preserves concept-lineage placement constraints without making the concept file a
@@ -11025,21 +11021,13 @@ node_compile_hint:
   mode: binder_review_placement_and_chat_separation
   create_worknodes: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): Concepts/PuppetMasterDashComp.html used /PuppetMasterDashComp.html, wizard-doc-pill, wizard-binder-view, wizard-binder-toolbar, annotation-review, #chatPanel/chatPanel and queued-intervention markup. F3-199 retains placement and chat separation without those DOM identities."
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0133"
 preserved_exact_tokens:
-- "Concepts/PuppetMasterDashComp.html"
-- "/PuppetMasterDashComp.html"
-- "wizard-doc-pill"
-- "wizard-binder-view"
-- "wizard-binder-toolbar"
-- "annotation-review"
-- "#chatPanel"
-- "chatPanel"
-- "queued-intervention"
 - "send-to-chat"
 - "ContextChipStrip"
 negative_constraints:
-- "Annotation UI must not live in the left document rail or in a browser-style `annotation-review` modal."
+- "Annotation UI must not live in the left document rail or in a separate browser-style annotation modal."
 - "Chat must remain a separate side panel, not embedded inside the binder review surface."
 compatibility_only_notes: []
 stale_retired_dispositions: []
@@ -11987,7 +11975,7 @@ unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "A genuinely fresh Project seeds Basic Dark plus factory layout, existing explicit saved theme/layout survives startup and switching, and a copied Project owns an independent detached destination snapshot."
+- "A fresh Project follows Your usual settings through SSYS-002/059, using Basic Dark only when no applicable look exists, and starts with factory layout unless an explicit saved layout applies. Existing appearance values and layouts survive startup and switching. Copy brings source-owned settings by default, effective values only through Keep them fixed, and detached layout state through its layout owner."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
@@ -15034,7 +15022,7 @@ canonical_text: >-
   warning that no GPU was detected), Slint as the only native UI framework (replacing it needs a new owner
   decision; a GPUI fork was rejected on 2026-10-02), and Puppet Master's Skia renderer extensions (DL-139), no
   React or Tauri product UI with the web GUI a Rust Leptos client (DL-139), IDE shell layout, five theme
-  families (ten built-in themes, untouched first-open/fresh-project factory default Basic Dark; the former
+  families (ten built-in themes, bundled/pre-claim fallback Basic Dark; new Projects follow Your usual settings; the former
   Friendly Dark and prior three-family defaults remain superseded lineage), Settings owned by
   `Plans/Settings_System.md`, the Doctor registry/router/projection owned by `Plans/newtools.md` N2-151, Login
   retained by auth/account owners, and Final GUI limited to their presentation, chrome, theme, layout, and

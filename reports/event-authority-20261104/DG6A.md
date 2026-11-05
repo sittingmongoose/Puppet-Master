@@ -118,7 +118,7 @@ All paths below are under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-202
 
 Branch `plans/ea-w2-gui-concerns-20261104`; input `4b8147737ca4674db837e95bb3cbee548e8be7e0`. This is application of Jared’s deck-2 answers, not a review-fix round. The final report commit is self-inclusive; `r9/consumed-source-hashes.json` pins the verified source bytes.
 
-Jared’s verbatim answer is **“i approve all of it”**. The as-presented deck’s fast-reply rule selects option A on every item. Card 5’s exact options and definitions are copied into each new owner unit and `Plans/card5_event_contracts/manifest.json`; they are the card’s wording, not quotations attributed to Jared. DL-437 (5.a) and DL-438..443 (5.b..5.g) are cited as companion entries being written on `plans/ea-cards2-answers-20261105`; this lane authors no Decision Log entry. The deck SHA-256 is `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`.
+Jared’s verbatim answer is **“i approve all of it”**. The as-presented deck’s fast-reply rule selects option A on every item. Card 5’s exact options and definitions are copied into each new owner unit and `Plans/card5_event_contracts/manifest.json`; they are the card’s wording, not quotations attributed to Jared. DL-437 (5.a) and DL-438..443 (5.b..5.g) are cited as companion entries, since landed in `Plans/Decision_Log.md` on `main` (batch 1); this lane authors no Decision Log entry. The deck SHA-256 is `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`.
 
 All nine holds below are superseded by this section. Older stopped questions/recommendations remain source history only. **No family remains stopped for a new Jared question.** The separate creator proposal remains unapplied and `concern.created` is unchanged.
 

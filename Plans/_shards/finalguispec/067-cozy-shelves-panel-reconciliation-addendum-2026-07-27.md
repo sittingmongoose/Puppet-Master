@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L33932-L34636
+Source lines: L33751-L34456
 
-Source SHA256: `c3f78470f0dde5a848c8b432436feef1acd3c259fc8c7d5bb3ae279b060f8a6a`
+Source SHA256: `e59e65208760e79cdcd9514386f8e52e6e82dfb577e10a31b921dc0796bd9d0f`
 
 ---
 
@@ -415,7 +415,7 @@ canonical_text: >-
   Amended 2026-10-29 (D7; PM7): Its ordering, lifecycle words and stale strip are reused by F3-664’s platform
   panel and Home Agents board. The rail remains deep management; all named product owners are included, no
   Orchestrator-only narrowing. D7, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): the
-  rail and Home board consume DR-078’s PM7_WORK_UI.list/agentGroup/agentSummary instead of a second agent list
+  rail and Home board consume DR-078’s shared owner-backed row/filter/summary renderer instead of a second agent list
   or clock. The rail keeps this deep-view lineage/queue contract and four shelves; the Home frame and filter
   keep their own layout. State words, needs-you identity and row actions are the same projection, with
   spelled-out rail ages and hidden-view teardown/catch-up.
@@ -432,8 +432,8 @@ acceptance_criteria:
 - "The panel renders no file-locks section; only declared touch sets and file-activity claims appear."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- "scripts/pm-plan-migration.py"
+- "scripts/pm-plan-index.py"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
@@ -446,6 +446,7 @@ source_lineage:
 - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves winning concept; source-lineage-only per Plans/usage-feature.md)"
 - "Plans/orchestrator-subagent-integration.md (OSI-175, OSI-190, OSI-425..OSI-432 registry-mirror and tracking canon)"
 - "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
+- "DL-260 source lineage only (no product API or implementation obligation): PM7_WORK_UI.list/agentGroup/agentSummary were concept Work renderer adapters."
 preserved_exact_tokens:
 - "queued"
 - "running"
@@ -622,12 +623,12 @@ unblocks: []
 acceptance_criteria:
 - "No rail-panel popup is ever clipped by a panel scroller, accordion clip wrapper, or transform containing block; the Slint surface for every such popup is PopupWindow."
 - "Opening an expander rotates exactly one chevron (its own header chevron); nested collapsed rows inside an open ancestor keep right-pointing chevrons."
-- "Label shortening decisions are made by measurement against available width via the declared fit ladder; no label truncation decision keys off the min/mid/wide tier attribute."
+- "Label shortening decisions are made by measurement against available width via the declared fit ladder; no label truncation decision keys off the min/mid/wide layout tier."
 - "Panel activation animates once and leaves no persistent animation on the active view; accordion remeasure never runs on continuous drag frames."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- "scripts/pm-plan-migration.py"
+- "scripts/pm-plan-index.py"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
@@ -641,11 +642,11 @@ source_lineage:
 - "Plans/Decision_Log.md#DL-162 (owner decision, 2026-10-09; amends (3) for the left rail)"
 - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)"
 - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (source-lineage-only)"
+- "DL-260/DL-280 source lineage only (no product DOM or exact-token obligation): data-fit recorded the concept's measured label-fit choice; F3-480 and the later F3-620 left-rail amendment own product fitting."
 preserved_exact_tokens:
 - "PopupWindow"
-- "data-fit"
 negative_constraints:
-- "Do not re-clip popups inside panel scrollers; do not decide label truncation from width-tier attributes; do not leave persistent enter animations on active views."
+- "Do not re-clip popups inside panel scrollers; do not decide label truncation from layout tiers; do not leave persistent enter animations on active views."
 compatibility_only_notes:
 - "Slint portability: popup layering via PopupWindow; label variants precomputed and chosen by measured width; enter animation is a one-shot property animation; no arbitrary-content backdrop blur, no SVG filters, precomputed color math."
 stale_retired_dispositions:

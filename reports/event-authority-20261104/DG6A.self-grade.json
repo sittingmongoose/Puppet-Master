@@ -2054,14 +2054,14 @@
       "static_checks_seen": [
         "scripts/pm-card5-event-contracts-check.py --family bundle.annotation_state_changed"
       ],
-      "notes": "Round 9 applies deck-2 Card 5.a A, DL-437 on pending companion branch plans/ea-cards2-answers-20261105. No admission, registry append, Decision Log entry or native availability. Card wording is not attributed verbatim to Jared.",
+      "notes": "Round 9 applies deck-2 Card 5.a A, DL-437 , landed in Plans/Decision_Log.md (batch 1). No admission, registry append, Decision Log entry or native availability. Card wording is not attributed verbatim to Jared.",
       "decision_card": {
         "item": "5.a",
         "decision": "DL-437",
         "status": "ANSWERED_A_APPLIED",
         "jared_verbatim": "i approve all of it",
         "option_a": "Save one note-created event for creation and one note-status-changed event for each later status change. Keep old entries under the general note-change name readable, but stop creating new entries under that name only after owners prove and approve how each old entry maps to creation/status history. Set ambiguous old entries aside for inspection. Preserve existing note statuses and where each note came from. You see one history entry per change.",
-        "decision_log_companion_branch": "plans/ea-cards2-answers-20261105"
+        "decision_log_companion_branch": "Plans/Decision_Log.md (landed, batch 1)"
       }
     },
     {
@@ -2340,14 +2340,14 @@
       "static_checks_seen": [
         "scripts/pm-card5-event-contracts-check.py --family bundle.note_created"
       ],
-      "notes": "Round 9 applies deck-2 Card 5.a A, DL-437 on pending companion branch plans/ea-cards2-answers-20261105. No admission, registry append, Decision Log entry or native availability. Card wording is not attributed verbatim to Jared.",
+      "notes": "Round 9 applies deck-2 Card 5.a A, DL-437 , landed in Plans/Decision_Log.md (batch 1). No admission, registry append, Decision Log entry or native availability. Card wording is not attributed verbatim to Jared.",
       "decision_card": {
         "item": "5.a",
         "decision": "DL-437",
         "status": "ANSWERED_A_APPLIED",
         "jared_verbatim": "i approve all of it",
         "option_a": "Save one note-created event for creation and one note-status-changed event for each later status change. Keep old entries under the general note-change name readable, but stop creating new entries under that name only after owners prove and approve how each old entry maps to creation/status history. Set ambiguous old entries aside for inspection. Preserve existing note statuses and where each note came from. You see one history entry per change.",
-        "decision_log_companion_branch": "plans/ea-cards2-answers-20261105"
+        "decision_log_companion_branch": "Plans/Decision_Log.md (landed, batch 1)"
       }
     },
     {
@@ -2626,14 +2626,14 @@
       "static_checks_seen": [
         "scripts/pm-card5-event-contracts-check.py --family bundle.note_status_changed"
       ],
-      "notes": "Round 9 applies deck-2 Card 5.a A, DL-437 on pending companion branch plans/ea-cards2-answers-20261105. No admission, registry append, Decision Log entry or native availability. Card wording is not attributed verbatim to Jared.",
+      "notes": "Round 9 applies deck-2 Card 5.a A, DL-437 , landed in Plans/Decision_Log.md (batch 1). No admission, registry append, Decision Log entry or native availability. Card wording is not attributed verbatim to Jared.",
       "decision_card": {
         "item": "5.a",
         "decision": "DL-437",
         "status": "ANSWERED_A_APPLIED",
         "jared_verbatim": "i approve all of it",
         "option_a": "Save one note-created event for creation and one note-status-changed event for each later status change. Keep old entries under the general note-change name readable, but stop creating new entries under that name only after owners prove and approve how each old entry maps to creation/status history. Set ambiguous old entries aside for inspection. Preserve existing note statuses and where each note came from. You see one history entry per change.",
-        "decision_log_companion_branch": "plans/ea-cards2-answers-20261105"
+        "decision_log_companion_branch": "Plans/Decision_Log.md (landed, batch 1)"
       }
     },
     {
@@ -2912,14 +2912,14 @@
       "static_checks_seen": [
         "scripts/pm-card5-event-contracts-check.py --family concern.assigned"
       ],
-      "notes": "Round 9 applies deck-2 Card 5.b A, DL-438 on pending companion branch plans/ea-cards2-answers-20261105. No admission, registry append, Decision Log entry or native availability. Card wording is not attributed verbatim to Jared.",
+      "notes": "Round 9 applies deck-2 Card 5.b A, DL-438 , landed in Plans/Decision_Log.md (batch 1). No admission, registry append, Decision Log entry or native availability. Card wording is not attributed verbatim to Jared.",
       "decision_card": {
         "item": "5.b",
         "decision": "DL-438",
         "status": "ANSWERED_A_APPLIED",
         "jared_verbatim": "i approve all of it",
         "option_a": "Only the authorized Puppet Master controller for that area records reassignment; users and workers request it. Within the same area of responsibility, require no added confirmation beyond existing rules. Crossing to another area requires **an authorized human for the outgoing area to approve and the receiving responsible owner (person, agent or component) to explicitly accept** before the change is saved. The outgoing concern owner has no additional veto merely for holding the old assignment. If either required confirmer is unavailable or declines, leave the old assignment in place. Save both confirmations, who gave each and in which role, old/new owners, reason and proof of permission. The controller recording the transfer cannot treat its own recording as either confirmation; if it is the receiving owner, it must separately record acceptance and still obtain the human\u2019s approval. You see who approved and who accepted. If this reassignment also moves the concern to a wider area of responsibility, follow your selected 5.d rule as well, including its promotion recorder and required approvals.",
-        "decision_log_companion_branch": "plans/ea-cards2-answers-20261105"
+        "decision_log_companion_branch": "Plans/Decision_Log.md (landed, batch 1)"
       }
     },
     {
@@ -3650,14 +3650,14 @@
       "static_checks_seen": [
         "scripts/pm-card5-event-contracts-check.py --family concern.evidence_linked"
       ],
-      "notes": "Round 9 applies deck-2 Card 5.c A, DL-439 on pending companion branch plans/ea-cards2-answers-20261105. No admission, registry append, Decision Log entry or native availability. Card wording is not attributed verbatim to Jared.",
+      "notes": "Round 9 applies deck-2 Card 5.c A, DL-439 , landed in Plans/Decision_Log.md (batch 1). No admission, registry append, Decision Log entry or native availability. Card wording is not attributed verbatim to Jared.",
       "decision_card": {
         "item": "5.c",
         "decision": "DL-439",
         "status": "ANSWERED_A_APPLIED",
         "jared_verbatim": "i approve all of it",
         "option_a": "Let authorized users and the authorized Puppet Master controller add evidence through the concern action, after checking source access and the latest saved concern version. Ordinary additions need no extra confirmation. Removing or replacing evidence needs its separate authorized action. Save who linked what.",
-        "decision_log_companion_branch": "plans/ea-cards2-answers-20261105"
+        "decision_log_companion_branch": "Plans/Decision_Log.md (landed, batch 1)"
       }
     },
     {
@@ -3936,14 +3936,14 @@
       "static_checks_seen": [
         "scripts/pm-card5-event-contracts-check.py --family concern.promoted"
       ],
-      "notes": "Round 9 applies deck-2 Card 5.d A, DL-440 on pending companion branch plans/ea-cards2-answers-20261105. No admission, registry append, Decision Log entry or native availability. Card wording is not attributed verbatim to Jared.",
+      "notes": "Round 9 applies deck-2 Card 5.d A, DL-440 , landed in Plans/Decision_Log.md (batch 1). No admission, registry append, Decision Log entry or native availability. Card wording is not attributed verbatim to Jared.",
       "decision_card": {
         "item": "5.d",
         "decision": "DL-440",
         "status": "ANSWERED_A_APPLIED",
         "jared_verbatim": "i approve all of it",
         "option_a": "The authorized Puppet Master controller records the move after required evidence and approval checks. Users request it or answer a required human approval; workers nominate. Ordinary automation stays automatic. Existing critical, security and governance approval rules still require their stated approval. You are asked only at a required human approval step. If this promotion also changes the responsible owner, follow your selected 5.b rule as well, including its reassignment recorder and transfer confirmations.",
-        "decision_log_companion_branch": "plans/ea-cards2-answers-20261105"
+        "decision_log_companion_branch": "Plans/Decision_Log.md (landed, batch 1)"
       }
     },
     {
@@ -4222,14 +4222,14 @@
       "static_checks_seen": [
         "scripts/pm-card5-event-contracts-check.py --family concern.reopened"
       ],
-      "notes": "Round 9 applies deck-2 Card 5.e A, DL-441 on pending companion branch plans/ea-cards2-answers-20261105. No admission, registry append, Decision Log entry or native availability. Card wording is not attributed verbatim to Jared.",
+      "notes": "Round 9 applies deck-2 Card 5.e A, DL-441 , landed in Plans/Decision_Log.md (batch 1). No admission, registry append, Decision Log entry or native availability. Card wording is not attributed verbatim to Jared.",
       "decision_card": {
         "item": "5.e",
         "decision": "DL-441",
         "status": "ANSWERED_A_APPLIED",
         "jared_verbatim": "i approve all of it",
         "option_a": "The currently responsible, authorized concern owner records reopening on that new evidence. Users and workers may request it. Save the reason and prior closure history; ask for extra confirmation only where existing critical/human-approval policy requires it. Valid new evidence can reopen the issue without a routine prompt.",
-        "decision_log_companion_branch": "plans/ea-cards2-answers-20261105"
+        "decision_log_companion_branch": "Plans/Decision_Log.md (landed, batch 1)"
       }
     },
     {
@@ -4508,14 +4508,14 @@
       "static_checks_seen": [
         "scripts/pm-card5-event-contracts-check.py --family concern.resolved"
       ],
-      "notes": "Round 9 applies deck-2 Card 5.f A, DL-442 on pending companion branch plans/ea-cards2-answers-20261105. No admission, registry append, Decision Log entry or native availability. Card wording is not attributed verbatim to Jared.",
+      "notes": "Round 9 applies deck-2 Card 5.f A, DL-442 , landed in Plans/Decision_Log.md (batch 1). No admission, registry append, Decision Log entry or native availability. Card wording is not attributed verbatim to Jared.",
       "decision_card": {
         "item": "5.f",
         "decision": "DL-442",
         "status": "ANSWERED_A_APPLIED",
         "jared_verbatim": "i approve all of it",
         "option_a": "The authorized Puppet Master controller may choose and record seven evidence-backed outcomes: `fixed` (a genuine fix), `superseded` (replaced by a successor concern), `merged` (combined with another concern), `split` (divided into linked concerns), `invalidated` (shown to be invalid), `obsoleted_by_patch` (made obsolete by a patch), and `obsoleted_by_recovery` (made obsolete by recovery). Users and workers may request these outcomes but gain no recording permission. Only an authorized human may choose `accepted_risk` (accepting remaining risk), by an explicit decision that the controller records with the evidence and remaining risk. Every resolution requires current evidence that the underlying issue changed, a reason, and all existing critical/security/human approvals. Supersession, merge and split use guided, audited lineage actions and preserve links and history; they do not prove a fix. Any resulting transfer follows your selected 5.b rule, and any promotion to a wider area follows your selected 5.d rule. Acknowledge/dismiss stays separate and cannot erase a live blocker. You get controller choice and recording for all seven non-risk outcomes, and an explicit human choice for accepted risk.",
-        "decision_log_companion_branch": "plans/ea-cards2-answers-20261105"
+        "decision_log_companion_branch": "Plans/Decision_Log.md (landed, batch 1)"
       }
     },
     {
@@ -4794,14 +4794,14 @@
       "static_checks_seen": [
         "scripts/pm-card5-event-contracts-check.py --family concern.updated"
       ],
-      "notes": "Round 9 applies deck-2 Card 5.g A, DL-443 on pending companion branch plans/ea-cards2-answers-20261105. No admission, registry append, Decision Log entry or native availability. Card wording is not attributed verbatim to Jared.",
+      "notes": "Round 9 applies deck-2 Card 5.g A, DL-443 , landed in Plans/Decision_Log.md (batch 1). No admission, registry append, Decision Log entry or native availability. Card wording is not attributed verbatim to Jared.",
       "decision_card": {
         "item": "5.g",
         "decision": "DL-443",
         "status": "ANSWERED_A_APPLIED",
         "jared_verbatim": "i approve all of it",
         "option_a": "The authorized Puppet Master controller records assessment changes within its permitted area, limited here to changes that neither reassign the responsible owner nor move the concern to a wider area. Users and workers request them. Save current evidence, exact saved version and reason for severity, category or authority changes. An authority assessment identifies the already-authorized role whose decision is needed; it grants no new action permission. A severity, category or authority change that amounts to a transfer follows your selected 5.b rule; one that amounts to promotion follows your selected 5.d rule, even when requested as part of an update. Any linked evidence addition, reopening or resolution follows 5.c, 5.e or 5.f respectively; an assessment update cannot perform those actions instead. Editing the screen\u2019s display copy is insufficient. You see the current assessment, subject to existing human-approval rules.",
-        "decision_log_companion_branch": "plans/ea-cards2-answers-20261105"
+        "decision_log_companion_branch": "Plans/Decision_Log.md (landed, batch 1)"
       }
     },
     {
