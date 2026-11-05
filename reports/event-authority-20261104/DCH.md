@@ -1,3 +1,144 @@
+# DCH — review round 7
+
+Branch: `plans/ea-w2-chat-20261104`. Reviewed head: `c21fa62e507de04c5970fb51aabb9c841182dfed`. Assessed source/fix commit: `6e175c1b8a53caf9f6ef1e505182f2fe3b87a96a`. This report and grade commit follow those source bytes.
+
+All seventeen families are prepared without admission at **10 PASS / 1 PARTIAL retention / 1 ABSENT membership**, after the independent cycle-7 grade of **8 PASS / 3 PARTIAL / 1 ABSENT**. The upgraded cells are compatibility_withdrawal and positive_negative_oracles. Independent re-review is pending; native execution remains NOT_RUN. **Stop stays held for Jared**, with its unchanged question and 0 PASS / 5 PARTIAL / 7 ABSENT grade.
+
+## Review round 7: findings and responses
+
+- **C7-B1 — fixed (`6e175c1b8a53caf9f6ef1e505182f2fe3b87a96a`).** CV-630–646 and SP-610–626 restrict strict-v4 numeric admission to new writes/current identity inputs. `scripts/pm_dch_events.py:110` selects the historical schema/type/domain/format/encoder from independently read actual-Store/source-commitment write provenance. A caller recipe flag is checked against that authority and cannot select or enroll a weaker recipe. The immutable raw-v1, normalized-v2 and strict-v3 snapshots preserve their exact original schemas and source pins. Original raw numeric bytes are verified without later normalization. The 416 retained event fixtures include the review's two numeric regressions in every edition/family, both policies and both transports, plus earlier-valid format records; 51 stored checkpoint/history positives use independent checkpoint provenance. Both terminal families and saved-original retries use the same historical reader. New retry inputs retain strict current validation; replay-only originals cannot authorize current append/retry. Differing earlier semantics conflict without crashing the current RFC8785 encoder. Physical packs compare exact encoded bytes, including raw integer/float distinctions. Forged recipe/source, foreign identity, withdrawal and access controls remain separate. The independent audit runs the unchanged original functions and exact Git schemas beside the current reader: **416 original-valid records accepted by both**, forged-byte controls refused by both.
+- **S1 — fixed (`6e175c1b8a53caf9f6ef1e505182f2fe3b87a96a`).** `scripts/pm_dch_formats.py:9` registers mandatory UTC full-match/calendar validation without optional packages. Both payload editions, all three EventRecord timestamps and both selected/registered populated checkpoint histories reject missing zones, wrong separators/case, invalid Gregorian dates/year zero, month/day/hour/minute/second range errors, empty fractions, second 60, offsets and trailing LF. Valid leap-day, one-digit and long fractions pass. Original strict-v3 format behavior remains usable only through protected retained provenance. Incoming retries cannot copy an old malformed format into current input.
+- **S2 — fixed (`6e175c1b8a53caf9f6ef1e505182f2fe3b87a96a`).** `scripts/pm_dch_formats.py:32` makes both PR-created editions use explicit RFC 3986 HTTPS grammar: percent escapes, authority/reg-name, bracketed IPv6/IPvFuture, port and path/query/fragment. The four review inputs and additional malformed escape, port, bracket, missing-host, scheme and whitespace forms refuse. Valid IPv6, IPvFuture (either V case) and escaped query/fragment forms pass. Earlier-valid PR URL bytes remain historical positives under their original protected recipe. No host allowlist or provider behavior is introduced.
+
+No finding is disputed. No product or retention decision is taken. The first earlier-restoration campaign had one stale three-argument test adapter exception after the retry API gained original provenance; that exception was not a refusal. Its four-argument adapter and the exact case were rerun successfully. The other 56 restorations were already successful; 57 unique runs and 58 attempts are retained. All current payload/checkpoint/EventRecord schemas, both registries, the 4,923 frozen schema witnesses and 7,389 current primitive constraints are byte-identical to the reviewed head. All **19,382** earlier refusal witnesses remain in the final table. The older current-integer history controls now use a distinct independently committed current write observation; they no longer alias the exact bytes of an earlier protected original. Their strict-domain refusals remain.
+
+## Stored-value path inventory
+
+| Path | Rule and verification |
+|---|---|
+| New append / current identity inputs / incoming retry | strict-v4; exact types, safe integer domain, current schemas and mandatory formats; current append policy remains enforced. |
+| `historical_read_valid()` / compatibility lookup | `record_number_rule(witness)`; entire original schema/format/type/byte recipe, exact source SHA-256, original identity and current custody/withdrawal. |
+| `resolve_body()` / `payload_reference()` / `joins()` / `body_bytes()` | Carry the selected original recipe through inline bounds, physical commitments, BLAKE3/size/media-type and source custody; current calls use the strict default. |
+| `retry_outcome(..., original_provenance=...)` saved original | Original recipe and shared historical reader; incoming retry validates under current schema/type/format rules. Storage-assigned metadata stays excluded from semantic comparison. |
+| `checkpoint_joins()` original EventRecord/full-index row | Historical original dispatch before publication joins; retained index sequence keeps its original runtime representation, with exact type agreement against the original event. New checkpoint copies use their exact current integer representation. |
+| `checkpoint_joins()` stored checkpoint/history value | Separate checkpoint write provenance selects its original schema/domain/encoding; current publication/root/frontier joins still apply. |
+| `checkpoint_storage_valid()` pointer/pack/readback | Entire logical checkpoint and every physical inline part measured; original checkpoint commitment and exact pack bytes verified under its own recipe, with current custody. |
+| `test_joins()` retained start | Shared historical dispatch and materialization for original start; new terminal payload/outcome stay strict. Both Stores/transports/policies and later live-state changes remain covered. |
+| Preflight selected/registered/current/retained schema graphs | Every reference resolves eagerly, including unvisited branches of all three original recipe snapshots. |
+
+Protected receipt rows are a synthetic independent Storage adapter, not a new authoritative event or native authentication claim. Production must obtain their mapping from authenticated original write/restore provenance; payload/caller data cannot update it. Earlier provenance is never guessed from numeric shape, mutable state or the requested recipe.
+
+## Family grades before and after
+
+| Family | Before: independent cycle 7 | After: worker | Ordinary assertions |
+|---|---|---|---:|
+| `bundle.selection_forward_blocked` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | 1886 |
+| `bundle.selection_sent_to_chat` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | 1920 |
+| `chat.message` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | 1902 |
+| `chat.thread_archived` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | 2014 |
+| `chat.thread_created` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | 1880 |
+| `chat.thread_deleted` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | 1880 |
+| `chat.thread_worktree_bound` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | 1878 |
+| `chat.thread_worktree_create_failed` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | 1874 |
+| `chat.thread_worktree_merge_failed` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | 1882 |
+| `chat.thread_worktree_merged` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | 1886 |
+| `chat.thread_worktree_pr_created` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | 2080 |
+| `chat.thread_worktree_pr_failed` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | 1878 |
+| `chat.thread_worktree_pre_merge_test_failed` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | 2244 |
+| `chat.thread_worktree_pre_merge_test_passed` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | 2194 |
+| `chat.thread_worktree_pre_merge_test_started` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | 1878 |
+| `chat.thread_worktree_renamed` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | 1876 |
+| `chat.thread_worktree_unbound` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | 1874 |
+
+## Whole-lane guard table
+
+[DCH-guard-removal.md](DCH-guard-removal.md) records **6,138 guard rows**, **27,467 refusal witnesses** and **32,761 direct cases**. [DCH-guard-negative-index.json](DCH-guard-negative-index.json) resolves the flipping IDs and exact rejected complement for every row. All seventeen proof runs are serial, one guard or named duplicate set at a time; every guard is restored. **Zero unproved negatives, empty rows or mutation exceptions.** All 51 missing-generation containment controls still refuse. No early-success bypass is used.
+
+Named duplicate sets include existing schema/semantic and scope dispatch rules, selected/registered copies and failed-exit copies, plus the joined payload.ts/EventRecord UTC grammar. The eight parser-predicate removals execute consistently through the full schema/history/retry corpus, not merely a direct parser sample; the table includes every affected negative. Syntax mutants supply parse context only and continue all calendar/time/IP rules. Schema-keyword rejection certificates are not reused for function changes that can alter format validation. Unreached/unchanged blockers retain deterministic baseline certificates; potentially admitting removals are reevaluated. The separate raw-parser audit also reruns every complement directly.
+
+## All eleven standing checks
+
+| # | How ruled out |
+|---:|---|
+| 1 | Current append/retry and either/both retry inputs refuse projector_replay_only; protected retained compatibility remains readable. |
+| 2 | Exact CV-366 lowercase UTF-8 Server/original-operation application key and incompatible/LF controls remain. |
+| 3 | Exact reversible encoded project~ partition; coherently re-keyed foreign/raw/padded/UTF-8 negatives remain. |
+| 4 | Entire EventRecord/checkpoint/history/pointer bounds and verified SP-337 routes, maximum arrays and 16384/16385 boundaries remain. |
+| 5 | Exact-end identifier guards/LF negatives in both schema copies remain; UTC/HTTPS formats now have mandatory full-match validation. |
+| 6 | Exactly 21 caller-semantic fields; all three Storage metadata slots stay excluded. Saved originals use their original read recipe. |
+| 7 | Actual Store, original event/source bytes, index/root/token/frontier/dataset and publication joins remain independently negated. |
+| 8 | Actual failed exit cannot be zero; passed/timeout/process-error and retained original-start controls remain. |
+| 9 | Current and all retained schema graphs close eagerly; hidden/file/dynamic/cyclic controls remain. |
+| 10 | Raw-v1, normalized-v2 and strict-v3 history, compatibility, references, saved retries, stored checkpoints and retained starts pass under current custody; forged/withdrawn/foreign values refuse. |
+| 11 | Entire final table has independent flips and exact rejected complements, including formatter primitives; no exception or accepting shortcut counts as proof. |
+
+## All Astra classes, including 10a
+
+| Item | Evidence that rules it out |
+|---:|---|
+| 1 | Recomputed identity/key/reference/source commitments and contradictory Store/frontier/publication mutations; raw stored pack numeric-byte forgery refuses. |
+| 2 | Exact independently supplied source commitments verify assigned sequences/timestamps; payload claims cannot replace original Storage facts. |
+| 3 | Original recipe dispatch on every retained path; later live state neither authorizes nor invalidates original history. Source/custody/withdrawal controls remain separate. |
+| 4 | Exact current types and representations; retained raw numeric representations keep exact bytes and original validators, including pack-body comparison. |
+| 5 | Eager closure includes unvisited branches in selected, registered, envelope and all historical snapshots. |
+| 6 | Entire current/history values and pointers measured; schema bounds and existing SP-337 access/readback rules preserved. |
+| 7 | Shared historical verification precedes checkpoint, saved-original retry and terminal-start use; original custody and family/identity joins remain. |
+| 8 | Every mandatory negative has its own flipping guard/named duplicate set; no stale hash or observational copy masks it. |
+| 9 | 204 prepared cells regraded from own current units and fresh serial evidence; membership/RT/native limits remain explicit. |
+| 10 | 1/1.0/1e0, -0/0 and invalid JSON 01, safe-domain endpoints/successors and overflow controls remain for all seventeen. |
+| 10a | Independent prior-reader/source-schema audit, protected provenance, old-valid numeric/format positives, exact old bytes and forged selection negatives across all seventeen. |
+| 11 | String booleans/numbers, null, arrays, nested objects and bool/int aliases refuse at current boundaries; earlier stored representations use only their protected written recipe. |
+| 12 | Mandatory UTC/calendar and HTTPS grammar does not depend on optional FormatChecker entries; every malformed class has raw-schema, relevant retained/current and primitive guard evidence. |
+
+## Verification and scope
+
+Index generation has top-level status pass. Index validation remains fail with 22 baseline failures, all reproduced by the unchanged reviewed-head control (23 failures); it adds none. Storage-profile output exactly matches the prior 41-error baseline. Assistant inspection remains gaps_found with empty errors/Projects-refresh failures; its only differences are hashes of the four edited owners. These are integration baselines, not successful aggregate checks.
+
+| Campaign | Exit / result |
+|---|---|
+| Seventeen complete ordinary family checks | 0 each; **33,026 assertions**, zero failures |
+| Seventeen final whole-corpus guard proofs | 0 each; full table above, zero unproved rows/negatives/exceptions |
+| Independent unchanged prior-reader audit | 0; 416 originals plus forged controls, 105 exact Git schema pins |
+| Current defect restorations | 0 campaign; 36 selected-family complete-checker runs, expected structured refusals |
+| Earlier defect restorations | 0 campaign; 57 selected-family complete-checker runs; all earlier branches including archive, numeric/UUID, checkpoint and both terminal families |
+| Shard generate / check | 0 / 0; only four edited owner sources |
+| Index generate / validate | 0 / 1; parsed generation status and validation baseline are recorded separately |
+| Unchanged reviewed-head index control | 1; exact failure-set comparison in baseline-comparison.json |
+| Storage profile / Assistant | 1 / 1; baseline comparison recorded, no aggregate pass claimed |
+| Scope / grade citations / derived scope / diff whitespace | 0; own units only, current schemas/registries/frozen fixtures and held Stop preserved |
+
+Seventeen per-family searches at the immutable reviewed head document the missing DCH original-recipe binding and reuse SP-236/278/286/337 and CV-339/365/366. DCH-binding-search.json preserves every earlier pin and adds this round's own search scope/negative evidence. Unrelated restore-point raw-v1 bindings are not DCH recipes. New technical refinements remain in each family's own CV/SP text; no consumer/projector/key/event, feature, retention or Stop choice is inferred from a sibling. Later-main premise adjudication remains the cycle-7 review's separate integration evidence; no new current-main audit is claimed.
+
+Initial capacity: 11 GB available RAM and 96 GB root disk free, above 6/50 GB limits. One preliminary checker was stopped at 5 GB available and is not passing evidence; final campaigns monitor the floor continuously and run one family/job at a time. Fifteen ignored currentness files were copied and SHA-256 matched before index generation. No pm-mail, subagents, landing lock, main push, admission, registry append, Decision Log entry, test-file edit, frozen-validator change or reseal. The prescribed sparse detached worktree is removed after all commits are pushed and deliverables copied.
+
+**IDs used:** existing ACD-610–626, CV-630–646, SP-610–626 and ATS-305. New PlanUnit/acceptance IDs: **none**. Report IDs: G0001–G6138, N0001–N27467. Stop stays held for Jared.
+
+## Retained evidence
+
+Directory: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/fix-round7/`. SHA-256 pins below; the full manifest includes helpers, exact commands, exits, memory monitors and per-family proof outputs. Report and self-grade are copied to the parent DCH draft directory.
+
+| Evidence | SHA-256 |
+|---|---|
+| `summary.json` | `8f0aa496b80ec044d13a7f1d8fd2e35fe222a1e74e1b1729d91bc463f4f2e455` |
+| `guard-removal.json` | `ebe0b0b54db70b8602925d32e6704bb8765e55cca22bc331221b95bafd474b06` |
+| `serial-campaign.json` | `6596a5dccaaec234314248cbd6d7fa3128ee0bd3d128eaf6dc3b61847269ed5e` |
+| `independent-history-audit.json` | `7fb81da62e7a71fd404fb93f643e8f92917b2764dd5a9fb009d7b9ed8ede47e9` |
+| `current-regressions.json` | `6dce227b97caf98338710b3060b00fed55008a9177b9ee99f31ab5bc7bd78602` |
+| `serial-regressions.json` | `24df2db082ad04c5dd6699941f3d12ec47b7ad0291f1288346bf7e61a28386bd` |
+| `scope-audit.json` | `1877eab64f26c1b0acbc1bff96fd93946c8dc809c41b4f91c56c21020a0aae82` |
+| `grade-citation-check.json` | `af7218e482f450e605889d2fbcd2000b33fcff4d41a1ba16dc997a094b0353fe` |
+| `currentness-sha256.json` | `d509feb987c108bc388c76e45560986cd3536255c35eb914a76f07977b982e84` |
+| `index-validate.json` | `9105a0c223c4337df6a50033a2102d5ac55994b9edf6d60d21d10b32e39db648` |
+| `base-index-validate.json` | `2b2a161764fce9e490bddb40bfa8f2833e6a921059f450e426f93fecbfd236f3` |
+| `derived-scope.json` | `eaa7cc2f9a990fa742f1097b7580fbcc937f77668794659bc346b0b4de419bdc` |
+| `baseline-comparison.json` | `c15da38cf09fde421bb3f7572875a22de6040f228ed2b7225a091fc73d4c4f1f` |
+| `capacity-events.json` | `f5bc98306d52fb253944d99a9c248dc2c746ee83b168118efa0555608b5d0968` |
+| `SHA256SUMS` | `e7f9d90996ceac1a8ccf4ff889523667ebbfc1823e61f49d36f98ba61fcf6786` |
+
+---
+
+# Prior reports — historical; round 7 above supersedes preparation claims
+
 # DCH — review round 6
 
 Branch: `plans/ea-w2-chat-20261104`. Reviewed head: `a785466dc54f2b8efae7cf9aeb18472d2ce4764e`. Source/fix commit: `22221e04071cb5516fd50a13cec998386a7bb586`. This report commit follows those source bytes.
