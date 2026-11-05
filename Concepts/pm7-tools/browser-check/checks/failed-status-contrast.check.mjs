@@ -60,22 +60,19 @@ async function scrollRange(el){
  return {scroller,range};
 }
 
-// The native ring must paint after focus and scroll restoration. Only the outline is
-// hidden for the middle paint; count stable changed pixels in its band outside the button.
+// Compare the actual focused and unfocused paints: NieR uses corner brackets,
+// other looks use outlines/glows. Restore focus without moving the requested pane.
 async function paintedFocus(row,action){
- const r=await row.boundingBox(),b=await action.boundingBox();
- const saved=await action.getAttribute('style');
- const pad=await action.evaluate(e=>{const s=getComputedStyle(e);return parseFloat(s.outlineWidth)+Math.max(0,parseFloat(s.outlineOffset))+1;});
+ const r=await row.boundingBox(),b=await action.boundingBox(),pad=8;
  const before=decodePng(await row.screenshot());let ground;
- try{await action.evaluate(e=>e.style.setProperty('outline-color','transparent','important'));ground=decodePng(await row.screenshot());}
- finally{await action.evaluate((e,s)=>s===null?e.removeAttribute('style'):e.setAttribute('style',s),saved);}
+ try{await action.evaluate(e=>e.blur());ground=decodePng(await row.screenshot());}
+ finally{await action.evaluate(e=>e.focus({preventScroll:true}));}
  const after=decodePng(await row.screenshot());
  if([ground,after].some(p=>p.width!==before.width||p.height!==before.height))return 0;
  const sx=before.width/r.width,sy=before.height/r.height;let count=0;
  for(let y=0;y<before.height;y++)for(let x=0;x<before.width;x++){
   const px=r.x+x/sx,py=r.y+y/sy;
   if(px<b.x-pad||px>b.x+b.width+pad||py<b.y-pad||py>b.y+b.height+pad)continue;
-  if(px>=b.x&&px<=b.x+b.width&&py>=b.y&&py<=b.y+b.height)continue;
   const i=(y*before.width+x)*4;
   if([0,1,2].every(j=>Math.abs(before.data[i+j]-after.data[i+j])<=8)&&[0,1,2].some(j=>Math.abs(before.data[i+j]-ground.data[i+j])>=24&&Math.abs(after.data[i+j]-ground.data[i+j])>=24))count++;
  }
@@ -130,9 +127,9 @@ export default async function(t){
        const action=row.locator('.o55-row > button:not(.o55-tipq)');
        await t.visible(action, 'focused recovery action remains visible');
        const ring=await paintedFocus(row.locator('.o55-row'),action);
-       t.log('FOCUS '+JSON.stringify({route,code,look,width:w,height:h,scroll:pos,ringPixels:ring}));
-       await t.check(`${route} ${code} ${look} ${w}x${h} restored keyboard focus ring paints`,ring>=8,`${ring} native ring pixels`);
-       await t.check('restored action keeps visible keyboard focus',await action.evaluate(e=>{const s=getComputedStyle(e);return e.matches(':focus-visible')&&parseFloat(s.outlineWidth)>0&&s.outlineStyle!=='none';}));
+       t.log('FOCUS '+JSON.stringify({route,code,look,width:w,height:h,scroll:pos,focusPixels:ring}));
+       await t.check(`${route} ${code} ${look} ${w}x${h} restored keyboard focus indicator paints`,ring>=8,`${ring} native focus pixels`);
+       await t.check('restored action keeps visible keyboard focus',await action.evaluate(e=>{return e.matches(':focus-visible');}));
       }
       const boxes=await row.evaluate(e=>{
        const parts=[...e.querySelector('.o55-row').children];
