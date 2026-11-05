@@ -17,7 +17,7 @@
 // admission (by its function names, independently of the classifier) and the check must FAIL on that owner.
 //
 // A native idle callback is the scheduler's wrapper (PM_BUSY.idle's run), not the owner's work, so a resume is proven
-// by the owner's own callback: each function an owner hands PM_BUSY.idle is wrapped, and its entry is recorded against
+// by the owner's own callback (attributed at admission even outside any native delivery): each function an owner hands PM_BUSY.idle is wrapped, and its entry is recorded against
 // the native job it ran inside. A resumed job whose owner callback never ran fails by owner. (A request made straight to
 // requestIdleCallback, as owners did before PM_BUSY.idle, has the owner's function as its native callback.)
 // --set repeats=N (a positive integer, default 1) is the number of holds per look, and the run must complete exactly
@@ -25,6 +25,7 @@
 
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import { mutations } from '../helpers/idle-drag-negatives.mjs';
 
 const HOLD_MS = 3000;
 
@@ -77,8 +78,10 @@ const RECORDER = (cfg) => {
 	R.ownerOf = ownerOf;
 	const identities = new WeakMap(), pending = new Map(); let seq = 0, handle = 1000000000;
 	const note = (kind, owner, stack, t0, drag, id) => R.fired.push({ kind, owner, stack, at: t0, ms: performance.now() - t0, drag, id });
-	// an owner callback's entry, tied to the native job it runs inside and to the PM_BUSY.idle request that wrapped it
-	const entered = (token) => R.bodies.push({ job: R.job ? R.job.id : 0, owner: R.job ? R.job.owner : null, token, at: performance.now(), drag: inDrag() });
+	// Ownership follows the admission token even through another queue or another owner's native job.
+	// Keep native job identity separately: only the matching original delivery proves resumption.
+	const tokenOwners = new Map();
+	const entered = (token) => R.bodies.push({ job: R.job ? R.job.id : 0, owner: token ? tokenOwners.get(token) : (R.job ? R.job.owner : null), token, at: performance.now(), drag: inDrag() });
 	const ask = j => { j.native = ric.call(window, dl => {
 		pending.delete(j.handle); j.pending = false;
 		const at = performance.now(), drag = inDrag();
@@ -103,6 +106,7 @@ const RECORDER = (cfg) => {
 				if (omitHit && omitHit(new Error().stack || '')) { window.__pmIdleOmit.count++; return { cancel() {} }; }
 				if (typeof fn !== 'function') return real.call(this, fn, ...rest);
 				const token = ++tokens;
+				tokenOwners.set(token, ownerOf(stackOf()));
 				const body = function (...a) { entered(token); return fn.apply(this, a); };
 				const was = R.admitting; R.admitting = token;
 				try { return real.call(this, body, ...rest); } finally { R.admitting = was; }
@@ -233,7 +237,24 @@ export const tests = {
 		if (!(await t.check('repeats is a positive whole number of holds per look', Number.isInteger(repeats) && repeats >= 1, `repeats=${JSON.stringify(t.args.repeats)}`))) return;
 		const selftest = String(t.args.selftest || '');
 		const omit = /^omit-(usage|theme|census|glass)$/.exec(selftest)?.[1] || null;
-		if (selftest) await t.check(`selftest ${selftest} is a known omission`, !!omit, 'omit-usage | omit-theme | omit-census | omit-glass');
+		const mutation = mutations[selftest];
+		if (selftest && !(await t.check(`selftest ${selftest} is known`, !!omit || !!mutation, 'omit-usage | omit-theme | omit-census | omit-glass | ' + Object.keys(mutations).join(' | ')))) return;
+		// Mutate only the private served document, including file:// and opaque sandbox navigations.
+		// The scheduler still parks and resumes its original job; the duplicate calls the same real owner function.
+		let mutatedRoute;
+		if (mutation) {
+			const url = t.cfg.pageUrl;
+			let src = /^https?:/i.test(url) ? await (await fetch(url)).text() : fs.readFileSync(fileURLToPath(new URL(url)), 'utf8');
+			for (const [before, after] of mutation) {
+				if (!(await t.check(`selftest ${selftest}: mutation target occurs once`, src.split(before).length === 2, before))) return;
+				src = src.replace(before, after);
+			}
+			mutatedRoute = async (route) => {
+				if (route.request().url().split('?')[0] === url.split('?')[0]) await route.fulfill({ status: 200, contentType: 'text/html', body: src });
+				else await route.continue();
+			};
+			await t.page.route('**/*', mutatedRoute);
+		}
 		// Glass prewarm is queued only in a Glass look: a run without one leaves that owner unexercised
 		await t.check('a Glass look is in this run (Glass prewarm owner)', looks.some((l) => /^glass-/.test(l)), `looks ${looks.join(',')}`);
 		const map = await regionsOf(t);
@@ -310,5 +331,6 @@ export const tests = {
 		}
 		for (const look of looks) await t.check(`${look}: ${repeats} real held drag${repeats > 1 ? 's' : ''} completed`, holds[look] === repeats, `${holds[look]} of ${repeats}`);
 		await cdp.detach();
+		if (mutatedRoute) await t.page.unroute('**/*', mutatedRoute);
 	}
 };
