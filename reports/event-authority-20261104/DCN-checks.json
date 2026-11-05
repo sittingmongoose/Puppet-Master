@@ -1,92 +1,89 @@
 {
   "schema_id": "pm.event_authority.dcn.check_summary.v1",
-  "source_commit": "2d50d5de0fc61eee3c17ba22a9597231111ef148",
+  "source_commit": "ace2fabbb63f55d833db1383cf3e49b025396fd2",
   "native_execution": "NOT_RUN",
-  "round": 1,
+  "round": 2,
   "status": "PASS",
   "oracle": {
     "status": "PASS",
     "native_execution": "NOT_RUN",
     "admission": "ABSENT",
-    "positives": 189,
-    "negatives": 1616
+    "positives": 269,
+    "negatives": 4970
   },
-  "guard_count": 125,
-  "removal_rows": 136,
-  "independent_probes": 491,
+  "json_parse_refusals": 36,
+  "guard_count": 127,
+  "removal_rows": 152,
+  "unique_removal_sets": 136,
+  "independent_probes": 1498,
   "probe_failures": 0,
+  "type_sweep_probes": 2040,
+  "preserved_review_cases": {
+    "status": "PASS",
+    "reviewed_head": "83b4c94950504b7085aa7c65b2a0712b1c51dcf5",
+    "rows": [
+      {
+        "kind": "positives",
+        "reviewed_cases_unchanged": 186,
+        "added": 80
+      },
+      {
+        "kind": "no_event_cases",
+        "reviewed_cases_unchanged": 3,
+        "added": 0
+      },
+      {
+        "kind": "negative_cases",
+        "reviewed_cases_unchanged": 1616,
+        "added": 3354
+      }
+    ]
+  },
+  "guard_proof": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round2/oracles.json",
+    "sha256": "098c3e101979fc7f5b9106a138ee7cd7fadbe522cf8d715e17a985c9fbf52253"
+  },
+  "all_eleven_standing_checks": "PASS at static prepared depth",
+  "all_eleven_Astra_classes": "probed; see DCN.md round 2",
+  "confirmed_review_findings_preserved": [
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "B5",
+    "S1",
+    "N1"
+  ],
+  "findings_fixed": [
+    "B6",
+    "B7",
+    "item 11 type sweep"
+  ],
   "targeted_checks": [
     {
-      "command": [
-        "python3",
-        "-m",
-        "unittest",
-        "discover",
-        "-s",
-        "tests",
-        "-p",
-        "test_pm_browser_program_semantics.py"
-      ],
+      "command": "Browser Program semantics unittest",
       "exit": 0,
-      "elapsed_seconds": 1.2,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/targeted-0.log",
-      "tail": "..........\n----------------------------------------------------------------------\nRan 10 tests in 0.829s\n\nOK\n"
+      "result": "10 pass"
     },
     {
-      "command": [
-        "python3",
-        "scripts/pm-browser-event-admission.py"
-      ],
+      "command": "Browser event admission checker",
       "exit": 0,
-      "elapsed_seconds": 9.75,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/targeted-1.log",
-      "tail": " admission, runtime, currentness or seal proof.\",\n      \"creation_negative_cases\": 34,\n      \"creation_positive_cases\": 1,\n      \"failures\": [],\n      \"native_proof\": false,\n      \"schema_id\": \"pm.browser_workspace_created_static_report.v1\",\n      \"status\": \"pass\"\n    },\n    {\n      \"admission_claimed\": false,\n      \"checkpoint_positive_cases\": 2,\n      \"claim_boundary\": \"Synthetic owner-view and generic-token joins only; separate mixed-scope generic fixture is not an indexed-reset end-to-end execution.\",\n      \"failures\": [],\n      \"generation_transaction_positive_cases\": 1,\n      \"native_proof\": false,\n      \"reset_negative_cases\": 28,\n      \"reset_positive_cases\": 1,\n      \"schema_id\": \"pm.browser_workspace_reset_static_report.v1\",\n      \"status\": \"pass\"\n    }\n  ],\n  \"status\": \"pass\"\n}\n"
+      "result": "pass"
     },
     {
-      "command": [
-        "python3",
-        "-m",
-        "unittest",
-        "discover",
-        "-s",
-        "tests",
-        "-p",
-        "test_pm_browser_event_admission.py"
-      ],
+      "command": "Browser event admission unittest",
       "exit": 1,
-      "elapsed_seconds": 54.77,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/targeted-2.log",
-      "tail": "----------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/sittingmongoose/pm-worktrees/DCN-fix1/tests/test_pm_browser_event_admission.py\", line 351, in test_validator_accepts_isolated_one_admitted_fifty_two_prepared_subset\n    context, registry = all_prepared_snapshot()\n                        ~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sittingmongoose/pm-worktrees/DCN-fix1/tests/test_pm_browser_event_admission.py\", line 68, in all_prepared_snapshot\n    raise AssertionError(\"Synthetic admission fixture requires the unchanged live upstream40\")\nAssertionError: Synthetic admission fixture requires the unchanged live upstream40\n\n----------------------------------------------------------------------\nRan 38 tests in 54.347s\n\nFAILED (failures=30)\n"
+      "result": "30 unchanged upstream40 failures / 38 tests"
     },
     {
-      "command": [
-        "python3",
-        "scripts/pm_coordination_events.py"
-      ],
+      "command": "Coordination checker",
       "exit": 1,
-      "elapsed_seconds": 3.92,
-      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/targeted-3.log",
-      "tail": "6,\n      \"valid_events\": 1\n    },\n    \"coordination.debug_mirror_exported\": {\n      \"negative_events\": 0,\n      \"negative_payloads\": 3,\n      \"positive_payloads\": 1,\n      \"transition_sequences\": 1,\n      \"valid_events\": 0\n    }\n  },\n  \"positive_payload_cases\": 45,\n  \"positive_projection_cases\": 11,\n  \"prepared_registry_rows\": 7,\n  \"prepared_rows\": [\n    \"coordination.agent_aborted\",\n    \"coordination.agent_crashed\",\n    \"coordination.agent_file_ownership_updated\",\n    \"coordination.agent_operation_updated\",\n    \"coordination.agent_status_updated\",\n    \"coordination.agent_unregistered\",\n    \"coordination.debug_mirror_exported\"\n  ],\n  \"schema_id\": \"pm.coordination_event_static_report.v1\",\n  \"status\": \"fail\",\n  \"transition_sequences\": 24,\n  \"transition_steps\": 91,\n  \"valid_event_cases\": 7\n}\n"
+      "result": "two unchanged census/value_schema failures"
+    },
+    {
+      "command": "shard generate/check and index generate/validate",
+      "exit": 0,
+      "result": "top-level pass"
     }
-  ],
-  "baseline_failures": [
-    "Browser admission unittest: 30 pre-existing upstream40 failures",
-    "Coordination checker: pre-existing payload-definition census and projection value_schema failures"
-  ],
-  "shards-generate.log": {
-    "exit_code": 0,
-    "status": "pass"
-  },
-  "shards-check.log": {
-    "exit_code": 0,
-    "status": "pass"
-  },
-  "index-generate.log": {
-    "exit_code": 0,
-    "status": "pass"
-  },
-  "index-validate.log": {
-    "exit_code": 0,
-    "status": "pass"
-  }
+  ]
 }
