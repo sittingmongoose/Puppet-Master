@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-W3G-PHASE1-SELF-GRADE-20261105",
+  "assessment_id": "EA-W3G-PHASE1-FIX1-SELF-GRADE-20261105",
   "assessment_kind": "self_grade_prepared_without_admission",
   "rubric": {
     "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
@@ -21,9 +21,9 @@
   },
   "assessed_tree": {
     "branch": "plans/ea-w3-plan-research-notebook-20261105",
-    "owner_tree_commit": "18630f4c90203a591802dd3b89bbf682865e3056",
+    "owner_tree_commit": "e3e1d7b2b38274d7d3a4e4f8290b895f0bb4cd47",
     "base_commit": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
-    "note": "Report-only follow-up does not alter these owner bytes; all source-file hashes below identify the graded content."
+    "note": "Phase-1 fix round 1 re-grade; source-file hashes identify the exact assessed owner/plan bytes. Executable oracle and native execution remain NOT_RUN."
   },
   "registry": {
     "path": "Plans/event_family_registry.json",
@@ -256,7 +256,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Criterion-12 plans exist per family, with 637 semantic/shared guard rows and 2309 schema assertion sites in aggregate. Executable oracles and shared guard-isolation proof await the reviewed phase-2 foundation.",
+          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
           "evidence": [
             {
               "path": "Plans/Assistant_Plan_Runtime.md",
@@ -493,7 +493,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Criterion-12 plans exist per family, with 637 semantic/shared guard rows and 2309 schema assertion sites in aggregate. Executable oracles and shared guard-isolation proof await the reviewed phase-2 foundation.",
+          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
           "evidence": [
             {
               "path": "Plans/Assistant_Plan_Runtime.md",
@@ -731,7 +731,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Criterion-12 plans exist per family, with 637 semantic/shared guard rows and 2309 schema assertion sites in aggregate. Executable oracles and shared guard-isolation proof await the reviewed phase-2 foundation.",
+          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
           "evidence": [
             {
               "path": "Plans/Assistant_Plan_Runtime.md",
@@ -968,7 +968,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Criterion-12 plans exist per family, with 637 semantic/shared guard rows and 2309 schema assertion sites in aggregate. Executable oracles and shared guard-isolation proof await the reviewed phase-2 foundation.",
+          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
           "evidence": [
             {
               "path": "Plans/Assistant_Plan_Runtime.md",
@@ -1206,7 +1206,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Criterion-12 plans exist per family, with 637 semantic/shared guard rows and 2309 schema assertion sites in aggregate. Executable oracles and shared guard-isolation proof await the reviewed phase-2 foundation.",
+          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
           "evidence": [
             {
               "path": "Plans/Assistant_Plan_Runtime.md",
@@ -1444,7 +1444,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Criterion-12 plans exist per family, with 637 semantic/shared guard rows and 2309 schema assertion sites in aggregate. Executable oracles and shared guard-isolation proof await the reviewed phase-2 foundation.",
+          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
           "evidence": [
             {
               "path": "Plans/Assistant_Plan_Runtime.md",
@@ -1682,7 +1682,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Criterion-12 plans exist per family, with 637 semantic/shared guard rows and 2309 schema assertion sites in aggregate. Executable oracles and shared guard-isolation proof await the reviewed phase-2 foundation.",
+          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
           "evidence": [
             {
               "path": "Plans/Assistant_Plan_Runtime.md",
@@ -1920,7 +1920,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Criterion-12 plans exist per family, with 637 semantic/shared guard rows and 2309 schema assertion sites in aggregate. Executable oracles and shared guard-isolation proof await the reviewed phase-2 foundation.",
+          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
           "evidence": [
             {
               "path": "Plans/External_Research.md",
@@ -2158,7 +2158,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Criterion-12 plans exist per family, with 637 semantic/shared guard rows and 2309 schema assertion sites in aggregate. Executable oracles and shared guard-isolation proof await the reviewed phase-2 foundation.",
+          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
           "evidence": [
             {
               "path": "Plans/External_Research.md",
@@ -2396,7 +2396,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Criterion-12 plans exist per family, with 637 semantic/shared guard rows and 2309 schema assertion sites in aggregate. Executable oracles and shared guard-isolation proof await the reviewed phase-2 foundation.",
+          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
           "evidence": [
             {
               "path": "Plans/External_Research.md",
@@ -2634,7 +2634,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Criterion-12 plans exist per family, with 637 semantic/shared guard rows and 2309 schema assertion sites in aggregate. Executable oracles and shared guard-isolation proof await the reviewed phase-2 foundation.",
+          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
           "evidence": [
             {
               "path": "Plans/External_Research.md",
@@ -2872,7 +2872,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Criterion-12 plans exist per family, with 637 semantic/shared guard rows and 2309 schema assertion sites in aggregate. Executable oracles and shared guard-isolation proof await the reviewed phase-2 foundation.",
+          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
           "evidence": [
             {
               "path": "Plans/External_Research.md",
@@ -2907,8 +2907,8 @@
         {
           "path": "Plans/Goal_Runtime_System.md",
           "unit": "GRS-1512",
-          "line_start": 338,
-          "line_end": 338,
+          "line_start": 341,
+          "line_end": 341,
           "quote": "No family is admitted by this phase."
         }
       ],
@@ -2928,8 +2928,8 @@
             {
               "path": "Plans/Goal_Runtime_System.md",
               "unit": "GRS-1512",
-              "line_start": 338,
-              "line_end": 338,
+              "line_start": 341,
+              "line_end": 341,
               "quote": "No family is admitted by this phase."
             }
           ],
@@ -2957,19 +2957,19 @@
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact original owning command/emitter, complete native source/result, ordering and first-receipt custody are specified. Native implementation remains unavailable until original owner and admission prerequisites exist.",
+          "finding": "Current Project source, original body/control/receipt joins and custody consistently select StorageBodyControlV2 under main GRS-064/SP-304. Original V1 decoder is confined to authenticated historical installations/admission; application remains a separate selected graph. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Goal_Runtime_System.md",
               "unit": "GRS-1512",
-              "line_start": 330,
-              "line_end": 330,
-              "quote": "**Producer and original source.** GoalRuntime cmd.chat.goal.pause through the existing owner.goal.body.mutation@1.0.0 authority and actual host Stop control. Reuse GRS-048/051/064/086, SP-28"
+              "line_start": 335,
+              "line_end": 335,
+              "quote": "**Exact control edition and fences.** Current Project writes/retries and their complete before/after control joins select Plans/goal_cancel_command_custody.schema.json#/$defs/StorageBodyControlV2"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "CONFLICT",
+          "change": "phase1_review_round1_fix",
+          "change_reason": "B2 selects the main-owned complete Project StorageBodyControlV2 graph consistently, with separate cancellation-pending/receipt fences and authenticated historical V1 decoder selection."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2979,8 +2979,8 @@
             {
               "path": "Plans/Goal_Runtime_System.md",
               "unit": "GRS-1512",
-              "line_start": 334,
-              "line_end": 334,
+              "line_start": 337,
+              "line_end": 337,
               "quote": "**Payload and scope.** CV-1512 selects `Plans/event_authority_w3g/payloads/goal_paused.schema.json` at each named closed selector in `Plans/event_authority_w3g/contracts.json`. Project and a"
             }
           ],
@@ -2996,8 +2996,8 @@
             {
               "path": "Plans/Goal_Runtime_System.md",
               "unit": "GRS-1512",
-              "line_start": 334,
-              "line_end": 334,
+              "line_start": 337,
+              "line_end": 337,
               "quote": "**Payload and scope.** CV-1512 selects `Plans/event_authority_w3g/payloads/goal_paused.schema.json` at each named closed selector in `Plans/event_authority_w3g/contracts.json`. Project and a"
             }
           ],
@@ -3013,8 +3013,8 @@
             {
               "path": "Plans/Goal_Runtime_System.md",
               "unit": "GRS-1512",
-              "line_start": 336,
-              "line_end": 336,
+              "line_start": 339,
+              "line_end": 339,
               "quote": "**Replay, consumer and checkpoints.** SP-1512 adopts SP-286/CV-339 strict stored-v2 first-receipt custody and `storage.first_append_receipt.resolve_full_value.v1`, preserving the original el"
             }
           ],
@@ -3030,8 +3030,8 @@
             {
               "path": "Plans/Goal_Runtime_System.md",
               "unit": "GRS-1512",
-              "line_start": 338,
-              "line_end": 338,
+              "line_start": 341,
+              "line_end": 341,
               "quote": "PENDING_RETENTION_DECISION`. G29 decides continuation_evaluated only; neither it nor the independently indefinite native body receipt assigns retention to this new pause event. No reference "
             }
           ],
@@ -3042,19 +3042,19 @@
         "redaction_custody": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Whole original source/result and first full-value receipt, no-body/ref-only disclosure, coherent backup/restore and read-time restrictions are bound without retaining source content by reference.",
+          "finding": "Current Project source, original body/control/receipt joins and custody consistently select StorageBodyControlV2 under main GRS-064/SP-304. Original V1 decoder is confined to authenticated historical installations/admission; application remains a separate selected graph. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Goal_Runtime_System.md",
               "unit": "GRS-1512",
-              "line_start": 338,
-              "line_end": 338,
-              "quote": "**Custody, retention and withdrawal.** Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache "
+              "line_start": 335,
+              "line_end": 335,
+              "quote": "**Exact control edition and fences.** Current Project writes/retries and their complete before/after control joins select Plans/goal_cancel_command_custody.schema.json#/$defs/StorageBodyControlV2"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "phase1_review_round1_fix",
+          "change_reason": "B2 selects the main-owned complete Project StorageBodyControlV2 graph consistently, with separate cancellation-pending/receipt fences and authenticated historical V1 decoder selection."
         },
         "transitions": {
           "status": "PASS",
@@ -3081,8 +3081,8 @@
             {
               "path": "Plans/Goal_Runtime_System.md",
               "unit": "GRS-1512",
-              "line_start": 336,
-              "line_end": 336,
+              "line_start": 339,
+              "line_end": 339,
               "quote": "reader.goal.paused.history.v1@1.0.0` is the sole newly authored family history reader for Goal Activity history; current controls still reload native Goal/Stop state. It adopts SP-278's `pro"
             }
           ],
@@ -3098,8 +3098,8 @@
             {
               "path": "Plans/Goal_Runtime_System.md",
               "unit": "GRS-1512",
-              "line_start": 338,
-              "line_end": 338,
+              "line_start": 341,
+              "line_end": 341,
               "quote": "Withdrawal first fences this exact producer/schema selector at append admission, drains or preserves original pending operations without undoing committed native effects, and records the cut"
             }
           ],
@@ -3110,13 +3110,13 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Criterion-12 plans exist per family, with 637 semantic/shared guard rows and 2309 schema assertion sites in aggregate. Executable oracles and shared guard-isolation proof await the reviewed phase-2 foundation.",
+          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
           "evidence": [
             {
               "path": "Plans/Goal_Runtime_System.md",
               "unit": "GRS-1512",
-              "line_start": 340,
-              "line_end": 340,
+              "line_start": 343,
+              "line_end": 343,
               "quote": "**Criterion 12.** `ATS-1262` and the `goal.paused` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable fixtures and shared"
             }
           ],
@@ -3145,8 +3145,8 @@
         {
           "path": "Plans/Goal_Runtime_System.md",
           "unit": "GRS-1513",
-          "line_start": 398,
-          "line_end": 398,
+          "line_start": 404,
+          "line_end": 404,
           "quote": "No family is admitted by this phase."
         }
       ],
@@ -3166,8 +3166,8 @@
             {
               "path": "Plans/Goal_Runtime_System.md",
               "unit": "GRS-1513",
-              "line_start": 398,
-              "line_end": 398,
+              "line_start": 404,
+              "line_end": 404,
               "quote": "No family is admitted by this phase."
             }
           ],
@@ -3183,8 +3183,8 @@
             {
               "path": "Plans/Goal_Runtime_System.md",
               "unit": "GRS-1513",
-              "line_start": 347,
-              "line_end": 347,
+              "line_start": 350,
+              "line_end": 350,
               "quote": "plan_unit_id: GRS-1513"
             }
           ],
@@ -3195,19 +3195,19 @@
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact original owning command/emitter, complete native source/result, ordering and first-receipt custody are specified. Native implementation remains unavailable until original owner and admission prerequisites exist.",
+          "finding": "Current Project source, original body/control/receipt joins and custody consistently select StorageBodyControlV2 under main GRS-064/SP-304. Original V1 decoder is confined to authenticated historical installations/admission; application remains a separate selected graph. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Goal_Runtime_System.md",
               "unit": "GRS-1513",
-              "line_start": 390,
-              "line_end": 390,
-              "quote": "**Producer and original source.** GoalRuntime cmd.chat.goal.resume after explicit user authority and existing host continuation revalidation. Reuse GRS-048/050/051/064/086, original body/con"
+              "line_start": 398,
+              "line_end": 398,
+              "quote": "**Exact control edition and fences.** Current Project writes/retries and their complete before/after control joins select Plans/goal_cancel_command_custody.schema.json#/$defs/StorageBodyControlV2"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "CONFLICT",
+          "change": "phase1_review_round1_fix",
+          "change_reason": "B2 selects the main-owned complete Project StorageBodyControlV2 graph consistently, with separate cancellation-pending/receipt fences and authenticated historical V1 decoder selection."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3217,8 +3217,8 @@
             {
               "path": "Plans/Goal_Runtime_System.md",
               "unit": "GRS-1513",
-              "line_start": 394,
-              "line_end": 394,
+              "line_start": 400,
+              "line_end": 400,
               "quote": "**Payload and scope.** CV-1513 selects `Plans/event_authority_w3g/payloads/goal_resumed.schema.json` at each named closed selector in `Plans/event_authority_w3g/contracts.json`. Project and "
             }
           ],
@@ -3234,8 +3234,8 @@
             {
               "path": "Plans/Goal_Runtime_System.md",
               "unit": "GRS-1513",
-              "line_start": 394,
-              "line_end": 394,
+              "line_start": 400,
+              "line_end": 400,
               "quote": "**Payload and scope.** CV-1513 selects `Plans/event_authority_w3g/payloads/goal_resumed.schema.json` at each named closed selector in `Plans/event_authority_w3g/contracts.json`. Project and "
             }
           ],
@@ -3251,8 +3251,8 @@
             {
               "path": "Plans/Goal_Runtime_System.md",
               "unit": "GRS-1513",
-              "line_start": 396,
-              "line_end": 396,
+              "line_start": 402,
+              "line_end": 402,
               "quote": "**Replay, consumer and checkpoints.** SP-1513 adopts SP-286/CV-339 strict stored-v2 first-receipt custody and `storage.first_append_receipt.resolve_full_value.v1`, preserving the original el"
             }
           ],
@@ -3268,8 +3268,8 @@
             {
               "path": "Plans/Goal_Runtime_System.md",
               "unit": "GRS-1513",
-              "line_start": 398,
-              "line_end": 398,
+              "line_start": 404,
+              "line_end": 404,
               "quote": "PENDING_RETENTION_DECISION`. G29 covers the exact continuation check, not this resumed semantic event; preserving native result/Stop policy does not choose an additional event lifetime. No r"
             }
           ],
@@ -3280,19 +3280,19 @@
         "redaction_custody": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Whole original source/result and first full-value receipt, no-body/ref-only disclosure, coherent backup/restore and read-time restrictions are bound without retaining source content by reference.",
+          "finding": "Current Project source, original body/control/receipt joins and custody consistently select StorageBodyControlV2 under main GRS-064/SP-304. Original V1 decoder is confined to authenticated historical installations/admission; application remains a separate selected graph. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Goal_Runtime_System.md",
               "unit": "GRS-1513",
               "line_start": 398,
               "line_end": 398,
-              "quote": "**Custody, retention and withdrawal.** Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache "
+              "quote": "**Exact control edition and fences.** Current Project writes/retries and their complete before/after control joins select Plans/goal_cancel_command_custody.schema.json#/$defs/StorageBodyControlV2"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "phase1_review_round1_fix",
+          "change_reason": "B2 selects the main-owned complete Project StorageBodyControlV2 graph consistently, with separate cancellation-pending/receipt fences and authenticated historical V1 decoder selection."
         },
         "transitions": {
           "status": "PASS",
@@ -3302,8 +3302,8 @@
             {
               "path": "Plans/Goal_Runtime_System.md",
               "unit": "GRS-1513",
-              "line_start": 352,
-              "line_end": 352,
+              "line_start": 355,
+              "line_end": 355,
               "quote": "An original paused or blocked Goal becomes active only on explicit user resume, exact body/currentness"
             }
           ],
@@ -3319,8 +3319,8 @@
             {
               "path": "Plans/Goal_Runtime_System.md",
               "unit": "GRS-1513",
-              "line_start": 396,
-              "line_end": 396,
+              "line_start": 402,
+              "line_end": 402,
               "quote": "reader.goal.resumed.history.v1@1.0.0` is the sole newly authored family history reader for Goal Activity history; current controls still reload native Goal/Stop state. It adopts SP-278's `pr"
             }
           ],
@@ -3336,8 +3336,8 @@
             {
               "path": "Plans/Goal_Runtime_System.md",
               "unit": "GRS-1513",
-              "line_start": 398,
-              "line_end": 398,
+              "line_start": 404,
+              "line_end": 404,
               "quote": "Withdrawal first fences this exact producer/schema selector at append admission, drains or preserves original pending operations without undoing committed native effects, and records the cut"
             }
           ],
@@ -3348,13 +3348,13 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Criterion-12 plans exist per family, with 637 semantic/shared guard rows and 2309 schema assertion sites in aggregate. Executable oracles and shared guard-isolation proof await the reviewed phase-2 foundation.",
+          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
           "evidence": [
             {
               "path": "Plans/Goal_Runtime_System.md",
               "unit": "GRS-1513",
-              "line_start": 400,
-              "line_end": 400,
+              "line_start": 406,
+              "line_end": 406,
               "quote": "**Criterion 12.** `ATS-1262` and the `goal.resumed` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable fixtures and share"
             }
           ],
@@ -3586,7 +3586,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Criterion-12 plans exist per family, with 637 semantic/shared guard rows and 2309 schema assertion sites in aggregate. Executable oracles and shared guard-isolation proof await the reviewed phase-2 foundation.",
+          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
           "evidence": [
             {
               "path": "Plans/Working_Notebook.md",
@@ -3824,7 +3824,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Criterion-12 plans exist per family, with 637 semantic/shared guard rows and 2309 schema assertion sites in aggregate. Executable oracles and shared guard-isolation proof await the reviewed phase-2 foundation.",
+          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
           "evidence": [
             {
               "path": "Plans/Working_Notebook.md",
@@ -4062,7 +4062,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Criterion-12 plans exist per family, with 637 semantic/shared guard rows and 2309 schema assertion sites in aggregate. Executable oracles and shared guard-isolation proof await the reviewed phase-2 foundation.",
+          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
           "evidence": [
             {
               "path": "Plans/Working_Notebook.md",
@@ -4300,7 +4300,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Criterion-12 plans exist per family, with 637 semantic/shared guard rows and 2309 schema assertion sites in aggregate. Executable oracles and shared guard-isolation proof await the reviewed phase-2 foundation.",
+          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
           "evidence": [
             {
               "path": "Plans/Working_Notebook.md",
@@ -4538,7 +4538,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Criterion-12 plans exist per family, with 637 semantic/shared guard rows and 2309 schema assertion sites in aggregate. Executable oracles and shared guard-isolation proof await the reviewed phase-2 foundation.",
+          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
           "evidence": [
             {
               "path": "Plans/Working_Notebook.md",
@@ -4577,10 +4577,22 @@
     "Plans/Automated_Testing_System.md": "36efbcb57a3de6332493b17f4c4173e6d964223829253d2f43efc8ea3e7f6390",
     "Plans/Contracts_V0.md": "acd0494273730a9a82a3edc5752eeccfb929526900bce2bdcd205147f57b5f33",
     "Plans/External_Research.md": "680005d7f7c153a0d18daca5b092b82b946fe664a83f2be91f93047c03cb564e",
-    "Plans/Goal_Runtime_System.md": "6ed6a88a49390154ff43cdf1ac7bc284996076ce283887ad5039e63c8ddf58ce",
+    "Plans/Goal_Runtime_System.md": "c5e60f46b27a3c2f45c4963ed869de4bb7f7893179a1daffc6fc9ea5a86e7009",
     "Plans/Working_Notebook.md": "aecaee78a41cc688ac771614a537a5e080c224628a2c185621ef92cd1e22987c",
-    "Plans/event_authority_w3g/contracts.json": "ee4b4694c57d0fc870c6391f2b6e1a8d94f735c64e5695de3f8c95ca80992090",
-    "Plans/event_authority_w3g/oracle_plan.json": "5b30a99fbd4fdf593083321d7c8603803827a02935e7acbd9af87385f62228f7",
-    "Plans/storage-plan.md": "b566ce0cf9fe0b5a856bfd2e785683947d79afd4562ddc23b280ce09d7c30b31"
+    "Plans/event_authority_w3g/contracts.json": "32f56845330eb631341c4e7a8a1989c166e396568bcdab499ba1054c3958f46e",
+    "Plans/event_authority_w3g/oracle_plan.json": "4a5794af5b9503c3119956a1ccb548d1e322fbf24155dd7e542fdc1665ef4d68",
+    "Plans/storage-plan.md": "b566ce0cf9fe0b5a856bfd2e785683947d79afd4562ddc23b280ce09d7c30b31",
+    "Plans/event_authority_w3g/schema_resources.json": "b5d61b0abbd69c8a1e5332129f7a9ef2b07f468a64cdd83cdbefd8c5bc821222"
+  },
+  "review_round1": {
+    "findings": [
+      "B1",
+      "B2"
+    ],
+    "B1": "planned per-predicate cases repaired; actual proof deferred to phase 2",
+    "B2": "main already owns V2; no DG integration dependency",
+    "retention_pending": 16,
+    "goal_receipt_question_unchanged": true,
+    "new_ids": 0
   }
 }

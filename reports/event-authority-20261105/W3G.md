@@ -1,7 +1,7 @@
 # W3G — phase 1, prepared without admission
 
 **Branch:** `plans/ea-w3-plan-research-notebook-20261105`
-**Owner-code head:** `18630f4c90203a591802dd3b89bbf682865e3056`
+**Owner-code head:** `e3e1d7b2b38274d7d3a4e4f8290b895f0bb4cd47`
 **Base:** `f9c5de6561dff0a53a48e530f2a5c6804a7e941d` (`origin/main` after the required fetch).
 
 **Outcomes:** 19 prepared, 0 merged, 0 excluded, 0 stopped candidate rows. One separate owner investigation remains unresolved. Sixteen prepared rows retain the permitted `PENDING_RETENTION_DECISION` cell. No row is ready for admission; phase 2, the missing retention decisions and required reviews remain.
@@ -70,7 +70,7 @@ The Storage value tables in SP-1500..SP-1518 give actual existing value IDs, exa
 
 ## Criterion-12 oracle plan and check-11 boundary
 
-`Plans/event_authority_w3g/oracle_plan.json` contains 637 semantic/shared guard rows and 2309 explicit schema assertion sites. Each family has its own positives, negative mutation/refusal/effect expectation and isolation instructions. Every negative must originate from that branch's valid original and carry one defect; deterministic copies/commitments are recomputed while independent originals remain valid. A shared keyword/refusal never merges predicates. Each real same-field/same-predicate duplicate site is cut individually and then together using the shared tool. Unresolved implication/overlap is a phase-2 finding, never a manufactured proof.
+`Plans/event_authority_w3g/oracle_plan.json` contains 1629 semantic/shared guard rows and 2309 explicit schema assertion sites. Each family has its own positives, negative mutation/refusal/effect expectation and isolation instructions. Every negative must originate from that branch's valid original and carry one defect; deterministic copies/commitments are recomputed while independent originals remain valid. A shared keyword/refusal never merges predicates. Each real same-field/same-predicate duplicate site is cut individually and then together using the shared tool. Unresolved implication/overlap is a phase-2 finding, never a manufactured proof.
 
 Phase 2 starts after the lead rebases onto the reviewed NUMRULE and GUARDTOOL foundation. It writes executable fixtures with the shared exact number/date-time helper and proves the complete assertion inventory with `scripts/pm_guard_isolation.py`; then Sol and Astra review. These plans are not executable oracles and demonstrate no guard-removal PASS.
 
@@ -149,7 +149,7 @@ One index-generation preflight returned exit 75 below 6 GB available and started
 | `Plans/Assistant_Plan_Runtime.md` | 1029..1432 |
 | `Plans/External_Research.md` | 723..1014 |
 | `Plans/Working_Notebook.md` | 880..1172 |
-| `Plans/Goal_Runtime_System.md` | 282..403 |
+| `Plans/Goal_Runtime_System.md` | 282..409 |
 | `Plans/Contracts_V0.md` | 24469..25851 |
 | `Plans/storage-plan.md` | 29477..31019 |
 | `Plans/Automated_Testing_System.md` | 7237..7468 |
@@ -166,3 +166,91 @@ All seven owner Markdown edits are insertions only. The Goal block is at the end
 - **unchanged-boundaries.json:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3G/unchanged-boundaries.json`; SHA-256 `5c16822eb0659f7fd84d2f4e414b5a442def5aab55d9e60a297eaaf46b17f854`.
 
 The report and self-grade are copied to this same evidence directory. The pushed branch is the integration handoff; the sparse worktree is removed after final push. No main landing is performed.
+
+## Phase-1 review round 1: findings and responses
+
+**Reviewed head:** `fbd1b87ef950472b950e4922dfee5fbf4a641e6a`. **Fix owner/plan commit:** `e3e1d7b2b38274d7d3a4e4f8290b895f0bb4cd47`. The independent phase-1 review found B1 on all nineteen rows and B2 on the two Goal rows. Both findings are accepted and repaired in this round; no finding is disputed. Independent re-review remains required. These are planning-document and test-oracle plan changes, not executable oracle code.
+
+### B1 — all nineteen families
+
+**Where:** `Plans/event_authority_w3g/oracle_plan.json:1066` and every exact family's `guards`, `compound_guard_inventory` and case-execution rule. **Cause:** the original currentness negative did not test lease or mutation permission, and other compound predicates had unenumerated clauses. **Fix:** every family now has independent `write_lease`, `write_lease_scope`, `write_permission`, currentness, owner authority/epoch, complete CAS, original intent, captured Stop epoch and final fence cases. Lease-denial and write-permission-denial cases preserve valid currentness, sources, read permission, other writer authority and commitments. Effective Stop is action-specific: Pause/Cancel retain their owner's permitted control behavior; continuation/recovery cannot erase a stop. Goal cancellation pending and receipt fences are separate from Stop and ordinary pending.
+
+Every expanded clause carries its own positive, one-defect mutation, expected refusal, `expected_new_effects=0`, branch restriction and predicate-only isolation instruction. Compound source/receipt issuance, scope and subject joins, EventRecord/receipt/group identity, metadata, payload forms, coverage/CURRENT authenticity, checkpoint identity/snapshot, original admission/edition, read permission/deletion/restrictions, passive effects, restore dependencies and payload dispatch are split. Domain clauses include frozen Build inputs and native participants, cancellation settlement, completion requirements, immutable revision lineage, destination Wizard intake, research meter/averaging/credit/input/delivery rules, Goal lifecycle/body/history joins and notebook required-set/barrier/failure/admission rules. Optional participants are tested only on their actual owner branch; no missing Project/run/Crew/Goal is fabricated.
+
+Current write/retry checks apply at initial admission and after returning helpers before the actual guarded boundary. An already committed native result remains pending/resolvable through original custody without repetition. Retained history keeps its authenticated original admission/edition despite later lease, write-permission, owner/CAS/Stop/cancellation changes; current disclosure still applies. The full lane now has **1629** planned semantic/shared guards and **2309** payload assertion sites. No phase-2 implementation or guard-removal PASS is claimed.
+
+### B2 — goal.paused and goal.resumed
+
+**Where:** `Plans/event_authority_w3g/contracts.json:518`, `Plans/Goal_Runtime_System.md:335` (GRS-1512), and the corresponding GRS-1513 paragraph. **Cause:** the Project source manifest selected the historical closed V1 control while the Storage rows and current owner selected V2. **Fix:** both current Project selections and complete before/after body/control/receipt joins now use `Plans/goal_cancel_command_custody.schema.json#/$defs/StorageBodyControlV2`. Real-shape positives name the V2 wrapper `pm.storage_value.goal_body_control.v2`, version `2.0.0`, record `pm.goal.body_control.v2`, required fields and independent null cancellation fields. Separate negatives cover current V1 dispatch, nonnull `cancellation_pending`, nonnull `cancellation_receipt_ref`, foreign ordinary pending, control/receipt joins and historical installation provenance. The original V1 decoder is confined to authentic retained original installations/admissions; no default-null upgrade or old-event relabel is allowed. Retained V2 facts survive later live cancellation/Stop.
+
+**Main authority, not an integration-only copy:** at fetched `origin/main` `73f2231a9ec1c93190adafcdde51030f028c8c2d`, `Plans/Goal_Runtime_System.md:6191-6193` (GRS-064) selects BodyControlV2 with independent cancellation pending for every current mutation/read/backup route. `Plans/storage_value_registry.json:63613-63640` selects `goal_body_control` schema `2.0.0` and explicitly includes pause/resume in V2 adoption. The row also confines V1 to its original authenticated installation. The schema-only positive passes the real V2 selector and is rejected by V1. **DG integration dependency: none for this V2 selection.** No DG or DG-OWN unit, shared schema or registry row was changed or copied. Application remains its separately selected GRS-086/CV-366 graph with no Project cast; missing genuine app custody remains unavailable.
+
+### Notes and shared sweep
+
+- **N1 fixed as a phase-1 binding:** `Plans/event_authority_w3g/schema_resources.json:186` now requires offline discovery by actual canonical `$id` and filename retrieval URI, eager traversal of every selected schema/selector branch and recursively reached definition, and fail-closed handling of unresolved/ambiguous resources. The seed map is explicitly not a claimed transitive closure. Resolver implementation remains phase 2.
+- **N2 fixed as a phase-1 binding:** the same companion explicitly resolves inherited `#/families/<family_id>/value_schema` notation by exact unique `family_id` in the registry array. Missing/duplicate IDs refuse; ordinary JSON Pointer lookup or array-position guessing is forbidden. The shared registry is unchanged.
+- **Shared sweep unchanged:** reviewed NUMRULE/date-time/historical-recipe dispatch and GUARDTOOL adoption remain required before phase 2. No lane-local numeric cap, number serializer, timestamp parser or guard-proof machinery was authored.
+
+### Whole-lane isolation inventory and re-grade
+
+The table below is a static plan inventory, not a guard-removal experiment. `p1fix1/guard-inventory.json` records every guard's positive, one-defect negative, refusal and planned predicate-only cut. **Actual negatives flipped: NOT_RUN. Peer negatives staying rejected: NOT_RUN.** Both require phase-2 fixtures and the reviewed shared tool. An enforcement-site or refusal-code overlap never joins distinct predicates; genuine duplicates must be the same input field/predicate, tested site by site and then together.
+
+| Exact family | Guards before → after | Current lease / write permission | C1 / C7 / C12 after |
+|---|---:|---|---|
+| `assistant_plan.build_started` | 33 → 88 | separate positive + one-defect negative each | ABSENT / PASS / PARTIAL |
+| `assistant_plan.cancelled` | 33 → 82 | separate positive + one-defect negative each | ABSENT / PARTIAL / PARTIAL |
+| `assistant_plan.completed` | 33 → 82 | separate positive + one-defect negative each | ABSENT / PASS / PARTIAL |
+| `assistant_plan.created` | 34 → 82 | separate positive + one-defect negative each | ABSENT / PARTIAL / PARTIAL |
+| `assistant_plan.exported` | 33 → 83 | separate positive + one-defect negative each | ABSENT / PARTIAL / PARTIAL |
+| `assistant_plan.version_created` | 34 → 88 | separate positive + one-defect negative each | ABSENT / PARTIAL / PARTIAL |
+| `assistant_plan.wizard_handoff_created` | 34 → 83 | separate positive + one-defect negative each | ABSENT / PARTIAL / PARTIAL |
+| `external_research.budget_denied` | 33 → 87 | separate positive + one-defect negative each | ABSENT / PARTIAL / PARTIAL |
+| `external_research.finding_classified` | 33 → 83 | separate positive + one-defect negative each | ABSENT / PARTIAL / PARTIAL |
+| `external_research.job_terminal` | 33 → 81 | separate positive + one-defect negative each | ABSENT / PARTIAL / PARTIAL |
+| `external_research.packet_delivered` | 33 → 82 | separate positive + one-defect negative each | ABSENT / PARTIAL / PARTIAL |
+| `external_research.topic_started` | 33 → 86 | separate positive + one-defect negative each | ABSENT / PARTIAL / PARTIAL |
+| `goal.paused` | 34 → 100 | separate positive + one-defect negative each | ABSENT / PARTIAL / PARTIAL |
+| `goal.resumed` | 34 → 100 | separate positive + one-defect negative each | ABSENT / PARTIAL / PARTIAL |
+| `notebook.checkpoint_committed` | 34 → 85 | separate positive + one-defect negative each | ABSENT / PARTIAL / PARTIAL |
+| `notebook.checkpoint_failed` | 34 → 83 | separate positive + one-defect negative each | ABSENT / PARTIAL / PARTIAL |
+| `notebook.entry_committed` | 34 → 83 | separate positive + one-defect negative each | ABSENT / PARTIAL / PARTIAL |
+| `notebook.entry_superseded` | 34 → 82 | separate positive + one-defect negative each | ABSENT / PARTIAL / PARTIAL |
+| `notebook.transition_state_changed` | 34 → 89 | separate positive + one-defect negative each | ABSENT / PASS / PARTIAL |
+
+Every family was re-graded against the fixed owner/plan bytes. Author grades remain **ABSENT 19 / PASS 174 / PARTIAL 35**; C12 is PARTIAL for all nineteen and retention is PARTIAL for exactly sixteen. The review's two Goal C3 cells move CONFLICT → PASS and its two Goal C8 cells PARTIAL → PASS in this self-grade because the conflicting selector/custody graph is repaired. PASS remains normative phase-1 text, not admission or runtime evidence. All 228 evidence locations/quotes are re-anchored and source hashes refreshed in `W3G.self-grade.json`.
+
+**Unchanged open questions:** all sixteen pending retention markers, reasons and exact questions are preserved. `goal.receipt.recorded` remains `UNRESOLVED_OWNER_EVIDENCE`, with the same exact owner question and no new contract, alias or exclusion. There are no newly stopped candidate rows and no new Jared choice. No IDs were minted in this fix; original IDs remain APR-1500..1506, ERS-1507..1511, GRS-1512..1513, WN-1514..1518, CV-1500..1518, SP-1500..1518 and ATS-1260..1263.
+
+### Phase-1 fix checks and exit codes
+
+Repository generators and contract suites ran one at a time. A brief static self-grade/question inventory overlapped the research suite once; it was repeated serially after that suite finished. Initial disk was 114 GB free; initial available memory was 10 GB. Every recorded check start passed the 6 GB floor; no memory pause was required. The fifteen ignored currentness files were copied and SHA-256 verified before index generation. Regenerated shards are confined to Goal's edited owner; all six plan-index artifacts were regenerated. The index top-level status is parsed as `pass`, not inferred from a nested result. No governance/admission/landing checks were run.
+
+| Check | Exit | Result and retained output |
+|---|---:|---|
+| `assistant-existing` | 1 | Existing gaps_found; errors=0, 51 Browser candidates pending. No Browser admission changed. `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3G/p1fix1/assistant-existing.log`; SHA-256 `5af2dc9e6c1784e638aca43ea944950ca008d3596deefef0ff1df5e8715e149e` |
+| `grade-question-final` | 0 | All 228 evidence quotes and 10 source hashes match; exact retention and receipt questions unchanged. `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3G/p1fix1/grade-question-final.log`; SHA-256 `78123340e3c7a9222d7115a72dfcdc61ba44f2c3532b63541eed352411face0d` |
+| `index-generate` | 0 | Pass; all six artifacts regenerated. `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3G/p1fix1/index-generate.log`; SHA-256 `01159dacbe8633b5d4ad00ab10eb4041325edde9b388b3682c919c7d7231e1e9` |
+| `index-validate-final` | 0 | Top-level status pass; failures=[]. `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3G/p1fix1/index-validate-final.log`; SHA-256 `9040493a2bd1fc664ac0acd1dabd735f466f9a3d1ccc0319ac1b1f62a7192eb8` |
+| `index-validate` | 0 | Top-level status pass; failures=[]. `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3G/p1fix1/index-validate.log`; SHA-256 `4f6c426cd81078debd217c75b923824ec4a008c5eb621bcd90a3f00eb1c200d1` |
+| `notebook-existing` | 0 | Top-level pass; original suite preserved. `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3G/p1fix1/notebook-existing.log`; SHA-256 `1e3f377760b0b7320ab9bb6a47536ec0c00ba9d0f19438f61aace2694935910d` |
+| `research-existing` | 0 | Top-level pass; findings=0. `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3G/p1fix1/research-existing.log`; SHA-256 `9e315376e2c190e8c42440c89cb858fb30f5a64a4edabaf8f97ecad378404c11` |
+| `review-response-final` | 0 | Final 1629-guard static inventory passes. `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3G/p1fix1/review-response-final.log`; SHA-256 `3c4f50b2e7bc0d709044a489305560c574bdfba9e1aca00ae1db41ca71be25dd` |
+| `review-response` | 0 | Pass; full plan inventory, exact 16 pending retention cells, protected bytes and DG units unchanged. `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3G/p1fix1/review-response.log`; SHA-256 `8a100a6d762d705cbb0a2040adf78edc1973d7f396cec426c73166d9307d33b9` |
+| `schema-probes` | 0 | Pass; 33 selector positives, 633 schema-only negatives; real V2 positive/current manifest selection and historical V1 rejection. No native custody claim. `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3G/p1fix1/schema-probes.log`; SHA-256 `fba214d23def67829eebed6c7eee19354a3187c4d57edeae8c44e124d64bbb1e` |
+| `shards-check` | 0 | Pass; no failures. `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3G/p1fix1/shards-check.log`; SHA-256 `fba1c36054a83d9c3416be7e4daee87e6c4b513f0a6d9855ec799ece79702957` |
+| `shards-generate` | 0 | Pass; only Goal owner shards changed. `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3G/p1fix1/shards-generate.log`; SHA-256 `4580172d0223709a6fb4d9b19629202b9fa567c072acac77a03bdc874e57c543` |
+| `structure-final` | 0 | Pass on the intermediate 1607-guard plan; selected-source closure resolved. `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3G/p1fix1/structure-final.log`; SHA-256 `25ef3049649a12f8736d3af5b429f1daf8db5d1a26801320f50204bed43da91b` |
+| `structure-final2` | 0 | Pass on the final 1629-guard plan; 19 payload schemas and 105 eagerly resolved reachable ref pairs. `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3G/p1fix1/structure-final2.log`; SHA-256 `0b167ca682ab0a2ff0f0c730cde20790122af72ea18ffa958f8ffb62abefa84a` |
+| `structure` | 1 | Initial overbroad probe scanned unrelated definitions outside selected source closure and found inherited unused `body_application_v1`; corrected probe traverses each actual selected source and every recursively reached branch. No owner/schema was patched for this harness issue. `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3G/p1fix1/structure.log`; SHA-256 `25900f2123c7c539130fc2b209a060d3a98282c3e8e438d2b4eff9a9c2620be6` |
+
+The retained check scripts are static planning-data/schema probes and a serial command wrapper, not event oracles. The initial broad structural probe is retained with its nonzero exit for traceability; the selected-source closure rerun passes without changing any canonical source schema. No raw evidence or helper script is committed to the repository. Report, self-grade and oracle plan are copied to the W3G evidence directory; all round-specific outputs are in `p1fix1/`. The fix branch is pushed, then the literal-path sparse worktree is removed.
+
+### Round evidence hashes
+
+| Retained artifact | SHA-256 |
+|---|---|
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3G/p1fix1/currentness-copy.json` | `daf80cdc1395935c791eed463d54ff4d0405f90ce97f39f12e10fbb0a547f8ac` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3G/p1fix1/guard-inventory.json` | `99d7515ebeb172f3c407a002a7b700545dc6568d0bdc0205e687a5a4815164d4` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3G/p1fix1/review-response.json` | `3c4f50b2e7bc0d709044a489305560c574bdfba9e1aca00ae1db41ca71be25dd` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3G/p1fix1/schema-probes.json` | `1a9e61226c4ba51f55466c79f7928cf28aeeeee20f25fffac0c635c93571d32e` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3G/p1fix1/grade-question-check-final.json` | `78123340e3c7a9222d7115a72dfcdc61ba44f2c3532b63541eed352411face0d` |
