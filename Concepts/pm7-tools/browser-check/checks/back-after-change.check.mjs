@@ -506,7 +506,12 @@ const NO_PICK_DONE = (screen) => {
   if (screen === 'c-pair') return !document.querySelector('.o55-pane > .o55-layer:not(.o55-out) input')
     && !!O55.S.sess.drafts.connect.server_trust_confirmed;
   /* With zero or one project, the selected project has no alternative. Create New navigates; it is not a pick. */
-  if (screen === 'c-ready') return document.querySelectorAll('.o55-pane > .o55-layer:not(.o55-out) [data-o55-do="pickProject"]').length < 2;
+  if (screen === 'c-ready') {
+    const S = O55.S, ref = S.sess.drafts.connect.server_ref;
+    const server = S.env.pmServers.concat(S.env.vpnServers || []).find((s) => s.id === ref);
+    /* Missing controls (or an unresolved Server) cannot authorize skipping the picker. */
+    return !!server && Array.isArray(server.projects) && server.projects.length < 2;
+  }
   return !!done && ((screen === 'c-review' && !!O55.S.sess.drafts.connect.server_trust_confirmed)
     || (screen === 's-confirm' && !!O55.S.sess.server.claimed)
     /* A finished sign-in similarly draws only its signed-in account banner, with no editable token. */
@@ -529,6 +534,11 @@ async function pickBackWalk(A, bad, label, judged = null) {
     if (judged) { generic(s, run, label + ' Back#' + i, bad); run.push(s.screen); judge(s, judged.stale || [], label + ' Back#' + i, bad); }
     seq.push(s.screen); if (!s.back) break;
     const before = await A.frame().evaluate(ANSWERS); let did = null;
+    /* Renderer-fault negative: records still contain alternatives, but their controls are absent.
+       The original missing-pick assertion below must reject c-ready in both rich rows. */
+    if (s.screen === 'c-ready' && SELFTEST === 'missingprojects') await A.frame().evaluate(() => {
+      document.querySelectorAll('.o55-pane > .o55-layer:not(.o55-out) [data-o55-do="pickProject"]').forEach((el) => el.remove());
+    });
     if (!NO_PICK.includes(s.screen) && !await A.frame().evaluate(NO_PICK_DONE, s.screen)) {
       const sheetOpen = () => A.waitFor(() => !!document.querySelector('.o55-sheet[data-open="true"]'), null, 4000).catch(() => {});
       if (s.screen === 'name' && await A.has('change')) { await A.click('change'); await sheetOpen(); await A.sleep(400); }
