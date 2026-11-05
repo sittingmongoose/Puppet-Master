@@ -27035,203 +27035,60 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-317, ContractName:Plans/Plan_
 
 ## Terminal workgroup moved — exact passive source read
 
-Amended 2026-10-09 (DL-181): workgroups and sections are retired and `terminal.workgroup_moved` is withdrawn under SMPFS-170's rule (`Plans/Contracts_V0.md#CV-361`): no new producer is admitted, and this passive reader stays only to read 1.0.0 events already written. Its "fifth-section admission" oracle describes the retired cap of four sections. DL-070's principle carries forward into the panels: moving a terminal tab keeps its session, transcript and process and creates nothing (SP-332).
+Amended 2026-11-05 (DL-449, deck 2 item 8.a): this section now defines compatibility interpretation and protection of old data only. It admits no new terminal-history view or disclosure route. DL-449 supersedes this section's former passive inspection binding and companion backlog. DL-181's withdrawal remains in force: the producer never activated and no operation was ever admitted.
 
-This is a **NEW Storage owner binding** under DL-045 for the existing registered
-`terminal.workgroup_moved@1.0.0`, semantic producer/consumer owned by SMPFS-170.
-The documented search in SMPFS-170 found the unchanged CV-323/payload/registry
-contracts and generic SP-278 source reader, but no exact terminal-family reader,
-projector or checkpoint binding. SP-273's Home reader and three physical families
-are explicitly not terminal event custody. No sibling binding is borrowed.
+Any saved `terminal.workgroup_moved` event retains its exact 1.0.0 meaning, original event identity, idempotency identity, array order and bytes. Validate its payload using its own `payload_schema_id`, `https://puppetmaster.local/schemas/event_payloads/terminal_workgroup_moved/1.0.0`, and the unchanged closed `Plans/event_payloads/terminal_workgroup_moved.schema.json`. Its Project, command, correlation, workgroup, source/target section, pane/session membership and creation/identity-preservation facts are historical facts only. Never reinterpret it as a current terminal-tab move, an alias of `workspace.layout_changed`, or proof of an operation's execution. Unsupported or invalid saved data remains unavailable under the existing source-validation fence; it is never repaired by inventing an event or missing original custody.
 
-Define `storage.terminal_workgroup_move.inspect_current.v1@1.0.0`, a private
-passive single-event source reader used only by
-`terminal.workgroup_move_history_read.v1@1.0.0`, for the committed-EventRecord
-resolution that SMPFS-170 names. Its selector identifies the actual
-Storage instance, Project, workgroup, exact event ID, original global sequence and
-complete canonical index key. These join the actual original EventRecord; payload
-has no workspace-tab field and none is inferred from a current Home tab. The reader
-has no pagination, durable cursor, acknowledgement or reconstructed live state.
-The exact family projection/checkpoint disposition is **`none_required`**, because
-this owner assigns only a fresh one-event historical observation with zero durable
-effects. This is an explicit per-family assignment, not absence mistaken for
-closure. SP-278's generic projector/checkpoint remains independently mandatory.
+No producer writes `terminal.workgroup_moved`, including a retry that supplies an old event or idempotency key, recovery of a pre-upgrade pending move, or SP-330's layout conversion. A pending old move is never reminted. Current terminal-tab movement is `workspace.layout_changed` with `change=tab_moved` under CV-361; it keeps its session, transcript and process and creates nothing (SP-332). No retired workgroup, section or move command is restored.
 
-### Complete source and original authority
+No consumer operates on this family. Its dedicated consumer and Storage inspection names, `terminal.workgroup_move_history_read.v1@1.0.0` and `storage.terminal_workgroup_move.inspect_current.v1@1.0.0`, are retired lineage, not available readers. The family projector and checkpoint disposition is `none_required`: there is no family projection, durable cursor, saved read token or reader effect. SP-278's generic EventRecord-index source, projector and checkpoint remain independently mandatory for existing generic Storage access; the nine-field durable token excludes `redb_snapshot_id` (DL-076), and a live read uses its own snapshot fence. This adoption protects existing data and grants no new terminal disclosure permission.
 
-Use actual `reader.storage.event_record_index@1.0.0` and the complete
-`Plans/event_record_index_checkpoint.schema.json#/$defs/read_token`. In one real
-redb snapshot resolve table `checkpoints`, key
-`event_record_index_checkpoint.v1:{storage_instance_id}`, uniquely current
-`current_generation_id`, exact `#/generations/{generation_id}` node and its
-same-database `event_record_index.v2@{generation_id}` dataset. Resolve the selector's
-exact key `event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}`
-through the unchanged canonical Project scope/key codec. No flat table, foreign
-root, sibling checkpoint or optional lookup miss establishes source authority.
+The saved event retains `RP-AUTHORITY-INDEFINITE@1.0.0`. Existing source/index/ref custody, coherent backup/restore, holds, Project access/deletion/maintenance fences and `reject_unhandled_secrets` remain owned by their existing Storage contracts. Retained data grants no access to deleted terminals, transcripts, credentials, session bodies or refs. No new archive, hold, physical family/key, retention clock or original-move/result store is required or created. Removal of an unbuilt companion obligation does not delete any saved data or change its lifetime.
 
-Preserve every complete token member: `storage_instance_id`, `checkpoint_key`,
-`checkpoint_ref`, `generation_id`, `generation_anchor_sha256`, `frontier_revision`,
-`frontier_sha256`, `index_dataset_name`, `source_selection`, `redb_snapshot_id`.
-The entire closed source selection binds genuine synchronized CURRENT/manifest
-bytes, selected generation, recovery epoch, survivor prefix, retained inventory,
-durable watermarks, exclusions and retired inputs under SP-278's actual owner
-codec. Validate complete global retained coverage, including nonmatching events
-and other scopes, and all actual frame/index/value/key joins. A filtered maximum,
-matching generation or caller-supplied token/hash is insufficient. A same-generation
-append changes the frontier and invalidates the old current token. The tenth
-member, `redb_snapshot_id`, is the live fence of this read's own redb snapshot and
-is never stored (DL-076). This binding stores no read token. If a separately
-admitted contract stores this observation or its token, it stores the nine-field
-durable read token that SP-278 defines on 2026-09-24 (`DurableGenericToken`,
-without `redb_snapshot_id`), and every later read joins the snapshot ID of its own
-live read transaction. No stored value supplies, rewrites or manufactures a
-snapshot ID.
+DL-449 explicitly removes the obligation to build the new terminal-history view, saved viewing results, saved original-move/results records and obsolete original-move tests. Neither the `verified_historical` / `unresolved_historical_validation` / `unavailable` viewing-result companion nor the unbuilt original pending/result/custody companion is an implementation prerequisite. The earlier move/reader designs and their original-move, section-cap, rollback, sibling-settlement and lost-acknowledgement test backlog survive only as source lineage in SMPFS-170's prior revisions; they impose no current work. The original meaning, lifetime, write refusals and no-remint checks remain.
 
-The row's publication locator binds the immutable admitted birth anchor; the
-advancing frontier independently binds current selected source. Authenticate
-original anchor admission and reverify the anchored source prefix through current
-retained source, without demanding overwritten birth controls forever. Follow
-SP-278/Case L-2 for actual frame bounds/CRC/schema/payload, source-value bytes,
-identity, scope, sequence and complete coverage/gaps. Compaction/relocation changes
-current physical locators only through that source owner; it does not rewrite
-original event facts or require current coordinates to equal first-append ones.
-Unknown, malformed, unsupported, partial, stale or unauthenticated source refuses
-disclosure; index-only equality never produces a historical fact.
+### Retained compatibility checks
 
-For verified original-move semantics, independently resolve the actual original
-terminal owner admission and immutable ProducerInput, original request/revisions,
-predecessor membership, accepted target and section creation, the empty state of a
-source section the move vacated, with no replacement workgroup, pane or session
-(DL-070), full unchanged pane/session/PTY identity, actual terminal readback and
-any applicable sibling
-settlement, original result/SIR/CV-333 joins, and genuine original append authority.
-SP-286/CV-339 require the real eleven-field first AppendReceipt and original append
-result, actual original full EventRecord commitment and Storage-assignment joins,
-resolved only through explicitly adopted `storage.first_append_receipt.resolve.v2`
-and `storage.first_append_receipt.resolve_full_value.v1`; producer-semantic
-equality, a legacy selector or a semantic reader alone is insufficient. Do not
-acquire disposed controls
-or reconstruct missing original command/result custody from a current terminal,
-Home receipt or self-consistent event. The unchanged event payload has no result
-or revision fields; resolve those obligations only through independently admitted
-original owner custody, never guessed payload extensions. The companion original
-result/custody schema and physical admission remain separate unfinished work under
-SMPFS-170; they are not supplied by this passive reader.
+`Plans/terminal_workgroup_compatibility_fixtures.json` and `scripts/pm_terminal_workgroup_compatibility.py` author static controls for this reduced contract: a saved 1.0.0 payload keeps its original bytes and interpretation; unknown schema/version, malformed or changed retained data and a changed lifetime refuse; fresh/retry/recovery/conversion proposals never emit this event; and a new dedicated view, consumer, projector, checkpoint or companion obligation refuses. These are synthetic contract controls, not a terminal viewing feature, original-move simulation, native execution, admission or a seal. Complete guard isolation remains the shared-tool part-2 check.
 
-### Disclosure, replay and custody boundaries
-
-This private read returns one of three semantic outcomes, not a persisted record
-or newly admitted public result schema. `verified_historical` means complete actual
-current source plus independently verified original move obligations;
-`unresolved_historical_validation` means current source/disclosure is authorized
-but one or more original admission, request/revision, membership/target, result,
-sibling settlement or append-custody obligations remain unproved; `unavailable`
-means current source/access cannot authorize the read. The first two observations
-carry the complete unchanged original EventRecord and the whole live read token of
-this read's own snapshot (never persisted), with explicit original-validation
-status and unresolved obligation names as applicable; unavailable discloses
-neither. Neither observation certifies current
-terminal state or grants action authority. The closed private result companion
-must be defined and installed before runtime disclosure; these outcome names are
-a normative obligation, not an already deployed schema or validator pass.
-
-Current Project/access/deletion/maintenance permission must authorize every original
-value/ref disclosed. Recheck complete current token, actual selected source,
-permissions/tombstones, original resolved values and read output after all
-returning helpers and immediately before disclosure under the owner fence. Denied
-or changed current authority cannot be downgraded to unresolved-with-content.
-Do not silently drop/redact fields and call the result the full original event.
-The existing `reject_unhandled_secrets` rule remains. A retained event never grants
-access to deleted terminals, transcript, credentials, session bodies or refs.
-
-No reader write, checkpoint advance, new event, command/result fabrication,
-notification, PTY operation, terminal state restoration, Home mutation, hold,
-recovery action or effect replay occurs. Retry rereads actual source under a fresh
-valid token and yields only authorized history. Missing old original evidence
-remains explicitly unresolved, not reconstructed. Withdrawal stops the reader;
-unsupported successors never silently adopt its identity. Whole existing payload
-1.0.0 and EventRecord compatibility rules remain unchanged; no aliases, rewrite,
-new family or extension is admitted.
-
-The event retains `RP-AUTHORITY-INDEFINITE@1.0.0`; source/index/ref and original
-result/pending custody retain their separate actual owner lifetimes. No fresh
-indefinite body archive, hold, physical key, table or retention mapping is created.
-An absent unmaterialized result store is an original-depth blocker, not an excuse
-to assign Home custody or delete unresolved obligations. Generic SP-278 source
-admission, source/first-receipt authenticity, original producer execution, actual
-locks/codec/redb/fsync/crashes, migration and complete backup/recovery proof remain
-**NOT_RUN**. Prose and schemas alone grant no DEPTH_PASS, readiness or governance
-seal.
-
-### Paired acceptance obligations
-
-A positive static companion must independently join a real-shaped changed move,
-exact membership and created-section truth, unchanged closed payload, original
-result/append joins and complete current SP-278 source/token. Paired negatives
-must reject a foreign operation/correlation, source owning another workgroup,
-missing/extra/duplicated pane or session identity, changed PTY, wrong creation
-fact, same-section no-op masquerading as move, a cancelled or failed
-(rolled_back=true) operation carrying a moved event, a reseeded vacated source section
-or reported reseed (DL-070), fifth-section admission, false
-rollback after possible append, lost acknowledgement remint, missing required
-Home sibling settlement, first-receipt/full-value substitution, stale same-generation
-frontier, partial global coverage, foreign root/dataset, copied source token,
-denied/deleted disclosure and historical replay attempting any durable effect.
-A currently authorized authentic event with missing original move evidence yields
-unresolved historical validation rather than verified original success; missing
-current source yields unavailable with no event. Reader withdrawal yields no
-new disclosure. These are required paired oracles for the companion task, not
-claims of executed cases or native proof.
-
-### SP-319 - Terminal workgroup moved passive source and checkpoint disposition
+### SP-319 - Terminal workgroup moved compatibility and withdrawal
 
 ```yaml
 plan_unit_id: SP-319
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: The new storage.terminal_workgroup_move.inspect_current.v1 binding performs only an
-  authorized single-event historical read through complete actual SP-278 root, generation, anchor,
-  advancing frontier, source frames and read token. This family has no durable read effect or projector
-  and its family checkpoint disposition is none_required. Original move validation separately requires
-  actual terminal owner and shared append/full-value custody; unavailable original evidence is never rebuilt.
-  The binding stores no read token, and any stored copy of its token is the nine-field durable token
-  without redb_snapshot_id (DL-076). No consumer operates on terminal.workgroup_moved, because its producer
-  never activated and no operation was ever admitted (SMPFS-170's withdrawal rule, applied by DL-181; CV-361);
-  terminal.workgroup_move_history_read.v1@1.0.0 survives only in SMPFS-170's lineage text, and this reader
-  stays only for a 1.0.0 event already recorded, if any.
+canonical_text: >-
+  DL-449 removes the new terminal-history view, viewing-result, saved original-move/results and obsolete move-test obligations from SP-319 and SMPFS-170. Any saved terminal.workgroup_moved keeps its original 1.0.0 meaning, bytes, identities and RP-AUTHORITY-INDEFINITE@1.0.0 lifetime. No producer writes or remints it, including retry, pending recovery and layout conversion. No consumer operates; terminal.workgroup_move_history_read.v1@1.0.0 and storage.terminal_workgroup_move.inspect_current.v1@1.0.0 are retired lineage. The family projector/checkpoint disposition is none_required. Existing generic Storage access retains SP-278 source/index/checkpoint validation, DL-076's nine-field durable token, access/deletion/maintenance, reject_unhandled_secrets and coherent backup/restore fences. This grants no new disclosure route, durable read effect or custody companion. Only retained-data interpretation/protection and withdrawal/no-remint checks remain; complete guard isolation is a part-2 check.
 gui_related: false
-gui_classification_reason: Defines source authority and passive historical validation, not presentation.
-depends_on: [SMPFS-170, CV-323, CV-339, SP-278, SP-286, DL-045, DL-076]
+gui_classification_reason: Defines retained-data interpretation, custody and unconditional withdrawal, with no view implementation.
+depends_on: [SMPFS-180, CV-323, CV-361, SP-278, DL-076, DL-181, DL-449]
 unblocks: []
 acceptance_criteria:
-  - Resolve exact actual same-database generic root/current node/dataset and full original frame/index join.
-  - Preserve immutable birth-anchor versus advancing-frontier semantics and complete global coverage under the whole read token.
-  - Verify original move and append/full-value authority independently of current authorized source inspection.
-  - Use verified, unresolved-original and unavailable outcomes without granting live-state or action authority.
-  - Recheck current access/deletion/source and complete values after helpers before disclosure; no partial original-value substitution.
-  - No durable reader effect or family checkpoint exists; generic SP-278 remains mandatory.
-  - Store no read token; the whole ten-field token exists only for this read's own redb snapshot, and any stored copy is the nine-field durable token without redb_snapshot_id (DL-076).
-  - A verified original move that vacated its source section includes that section's empty state; paired negatives reject a reseeded vacated section or a reported reseed (DL-070).
-  - Paired static oracles and closed original/read-result companions remain required, distinct from native proof.
-validation_surfaces: [Plans/event_payloads/terminal_workgroup_moved.schema.json, Plans/event_record_index_checkpoint.schema.json, Plans/event_family_registry.json, Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-170]
-risk_class: terminal_move_history_source_or_original_authority_escape
+  - Saved 1.0.0 events retain exact payload interpretation, original bytes and identities, and RP-AUTHORITY-INDEFINITE@1.0.0.
+  - New append, retry, pending recovery and layout conversion never write or remint terminal.workgroup_moved.
+  - No dedicated consumer, view, projector, family checkpoint, saved read token or durable reader effect operates.
+  - The new view, viewing-result, saved original-move/results companion and obsolete move-test obligations are explicitly removed in both owners.
+  - Existing generic source/index/checkpoint, access/deletion, secrets, backup and retention protection remains; no data deletion follows.
+  - Reduced compatibility/withdrawal fixtures pass; full shared guard isolation remains a part-2 obligation.
+validation_surfaces: [Plans/event_payloads/terminal_workgroup_moved.schema.json, Plans/terminal_workgroup_compatibility_fixtures.json, scripts/pm_terminal_workgroup_compatibility.py, Plans/event_family_registry.json, Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180]
+risk_class: terminal_retained_data_reinterpretation_or_remint
 reasoning_tier: high
 context_scope: terminal_workgroup_moved_only
 implementation_surfaces: [Plans/storage-plan.md, Plans/Section15_MVP_Promoted_Features_Spec.md]
-node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false, runtime_enabled: false}
-source_lineage: [Plans/Decision_Log.md#DL-039, Plans/Decision_Log.md#DL-045, Plans/Contracts_V0.md#CV-323, Plans/storage-plan.md#SP-278, Plans/Decision_Log.md#DL-070, Plans/Decision_Log.md#DL-076, reports/event-authority-20260911/takeover-20260923.md, reports/event-authority-20260911/step-08-terminal-workgroup-draft-repair-20260924.md]
+node_compile_hint: {mode: compatibility_only, create_worknodes: false, create_nodeseeds: false, runtime_enabled: false}
+source_lineage: [Plans/Decision_Log.md#DL-039, Plans/Decision_Log.md#DL-045, Plans/Decision_Log.md#DL-070, Plans/Decision_Log.md#DL-076, Plans/Decision_Log.md#DL-181, Plans/Decision_Log.md#DL-449, Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-170, reports/event-authority-20261104/ds-fix1-terminal-consumer-regrade.md]
 preserved_exact_tokens: [terminal.workgroup_moved, none_required, RP-AUTHORITY-INDEFINITE]
 stale_retired_dispositions:
-  - Drafted as SP-314 on the unlanded branch plans/terminal-workgroup-depth-20260923 (commit a475070763, rebased from 254505ccf9) and renumbered SP-319 on 2026-09-24,
-    because SP-314 on main is a different accepted unit. SP-314 is not an alias of this unit and never resolves to it.
+  - Drafted as SP-314 on unlanded plans/terminal-workgroup-depth-20260923 and renumbered SP-319; SP-314 is not an alias.
+  - DL-449 retires the dedicated inspection/view and both unbuilt companion obligations; prior designs and obsolete move tests are lineage only.
 negative_constraints:
-  - No registry, payload, retention policy, physical family/key, current terminal state or Home custody change.
-  - No source reconstruction, implied original producer success, native proof, DEPTH_PASS or governance seal.
-  - No stored redb_snapshot_id; no stored value supplies, rewrites or manufactures a snapshot ID (DL-076).
+  - No payload, registry, retention, physical key, current terminal state, Home custody or saved-data deletion change.
+  - No new disclosure, original producer success, native proof, DEPTH_PASS or governance seal.
+  - No stored redb_snapshot_id or fabricated original event/custody.
 ```
 
-ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-170, ContractName:Plans/Contracts_V0.md#CV-323, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Decision_Log.md#DL-070, ContractName:Plans/Decision_Log.md#DL-076
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180, ContractName:Plans/Contracts_V0.md#CV-361, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/Decision_Log.md#DL-076, ContractName:Plans/Decision_Log.md#DL-449
 
 <a id="coordination-event-persistence-binding-dl-045-2026-09-25"></a>
 ## Coordination event persistence binding (DL-045, 2026-09-25)

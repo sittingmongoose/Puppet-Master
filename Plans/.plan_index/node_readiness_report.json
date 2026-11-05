@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18860,
+    "depends_on_edge_count": 18854,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22070,
+    "edge_count": 22064,
     "node_count": 7488,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3210,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-05T15:31:27Z",
+  "generated_at_utc": "2026-11-05T15:40:49Z",
   "gui_related_units": {
-    "count": 3813,
+    "count": 3812,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -34074,23 +34074,12 @@
       },
       {
         "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
-        "plan_unit_id": "SMPFS-170",
-        "source_location": {
-          "heading": "SMPFS-170 - Terminal workgroup moved original operation and historical consumer",
-          "heading_level": 3,
-          "heading_line": 12593,
-          "line": 12595,
-          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
-        }
-      },
-      {
-        "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "plan_unit_id": "SMPFS-180",
         "source_location": {
           "heading": "SMPFS-180 - One Terminal Session Per Tab",
           "heading_level": 3,
-          "heading_line": 12684,
-          "line": 12686,
+          "heading_line": 12492,
+          "line": 12494,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -34100,8 +34089,8 @@
         "source_location": {
           "heading": "SMPFS-181 - Terminal Image Protocols And Their Safety Rules",
           "heading_level": 3,
-          "heading_line": 12836,
-          "line": 12838,
+          "heading_line": 12645,
+          "line": 12647,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -34111,8 +34100,8 @@
         "source_location": {
           "heading": "SMPFS-182 - People And Agents In One Terminal",
           "heading_level": 3,
-          "heading_line": 12997,
-          "line": 12999,
+          "heading_line": 12806,
+          "line": 12808,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -34122,8 +34111,8 @@
         "source_location": {
           "heading": "SMPFS-183 - Command Marks, Links, Find And Accessibility In The Engine",
           "heading_level": 3,
-          "heading_line": 13132,
-          "line": 13134,
+          "heading_line": 12941,
+          "line": 12943,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35255,8 +35244,8 @@
         "source_location": {
           "heading": "SP-330 - The v2 Home Layout Record, Its Transaction And The Migration From v1",
           "heading_level": 3,
-          "heading_line": 27676,
-          "line": 27678,
+          "heading_line": 27533,
+          "line": 27535,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35266,8 +35255,8 @@
         "source_location": {
           "heading": "SP-331 - Terminal Appearance Storage",
           "heading_level": 3,
-          "heading_line": 27841,
-          "line": 27843,
+          "heading_line": 27698,
+          "line": 27700,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35277,8 +35266,8 @@
         "source_location": {
           "heading": "SP-332 - Terminal Records Re-Scoped To One Session Per Tab, And Saved Scrollback",
           "heading_level": 3,
-          "heading_line": 27963,
-          "line": 27965,
+          "heading_line": 27820,
+          "line": 27822,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35288,8 +35277,8 @@
         "source_location": {
           "heading": "SP-333 - Editor Appearance And Wallpaper Settings Levels",
           "heading_level": 3,
-          "heading_line": 28062,
-          "line": 28064,
+          "heading_line": 27919,
+          "line": 27921,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35299,8 +35288,8 @@
         "source_location": {
           "heading": "SP-338 - Render-Ready Chat Pages And The Open-Path Gate",
           "heading_level": 3,
-          "heading_line": 28434,
-          "line": 28436,
+          "heading_line": 28291,
+          "line": 28293,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35310,8 +35299,8 @@
         "source_location": {
           "heading": "SP-339 - No Always-On JSON Copies; Dump, Inspect, Tail And Export",
           "heading_level": 3,
-          "heading_line": 28500,
-          "line": 28502,
+          "heading_line": 28357,
+          "line": 28359,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35321,8 +35310,8 @@
         "source_location": {
           "heading": "SP-340 - redb Value Limits, Two Files, Quick Repair And Scheduled Compaction",
           "heading_level": 3,
-          "heading_line": 28566,
-          "line": 28568,
+          "heading_line": 28423,
+          "line": 28425,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35332,8 +35321,8 @@
         "source_location": {
           "heading": "SP-341 - Parquet Archive, DuckDB On Demand And Kept Usage History",
           "heading_level": 3,
-          "heading_line": 28619,
-          "line": 28621,
+          "heading_line": 28476,
+          "line": 28478,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -45652,8 +45641,6 @@
       "terminal_lifecycle_drift": 1,
       "terminal_lock_persistence_identity_confusion": 1,
       "terminal_move_empty_section_drift": 1,
-      "terminal_move_history_source_or_original_authority_escape": 1,
-      "terminal_move_original_result_or_sibling_event_authority_escape": 1,
       "terminal_noise_state_drift": 1,
       "terminal_observability_drift": 1,
       "terminal_owner_boundary": 1,
@@ -45670,6 +45657,7 @@
       "terminal_restore_outcome_drift": 1,
       "terminal_restore_states": 1,
       "terminal_restore_ui_drift": 1,
+      "terminal_retained_data_reinterpretation_or_remint": 2,
       "terminal_reveal": 1,
       "terminal_reveal_drift": 1,
       "terminal_rollback_boundary_drift": 1,

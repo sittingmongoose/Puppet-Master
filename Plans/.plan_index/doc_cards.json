@@ -17114,10 +17114,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 69,
-        "True": 106
+        "False": 70,
+        "True": 105
       },
-      "heading_count": 282,
+      "heading_count": 278,
       "implementation_surfaces": [
         "Concepts/pm7-tools/home_workspace_source.py",
         "Plans/Automated_Testing_System.md",
@@ -17157,7 +17157,7 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm_browser_program_semantics.py"
       ],
-      "line_count": 13361,
+      "line_count": 13170,
       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
       "plan_unit_count": 175,
       "plan_unit_ids": [
@@ -17448,7 +17448,6 @@
         "terminal_interaction_state_drift",
         "terminal_layer_drift",
         "terminal_lifecycle_drift",
-        "terminal_move_original_result_or_sibling_event_authority_escape",
         "terminal_noise_state_drift",
         "terminal_observability_drift",
         "terminal_parser_replay_drift",
@@ -17460,6 +17459,7 @@
         "terminal_restore_language_drift",
         "terminal_restore_outcome_drift",
         "terminal_restore_ui_drift",
+        "terminal_retained_data_reinterpretation_or_remint",
         "terminal_reveal_drift",
         "terminal_rollback_boundary_drift",
         "terminal_selection_drift",
@@ -17476,7 +17476,7 @@
         "workspace_tab_identity_drift",
         "worktree_owner_boundary_drift"
       ],
-      "sha256": "32d7069dd628e1076d7f1ea3eb26f8578336610cd126e5ce392920ce0a0ffb69",
+      "sha256": "4899cfc4851357d6805dd15708b8b07b50fa8a86498f8391e25d753fb874112d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 171,
@@ -17533,11 +17533,11 @@
         "Plans/browser_workspace_reset_contracts.schema.json",
         "Plans/egolite_retained_requirement_contract_fixtures.json",
         "Plans/egolite_retained_requirement_contracts.schema.json",
-        "Plans/event_family_registry.json",
         "Plans/event_payloads/terminal_workgroup_moved.schema.json",
         "Plans/section15_browser_program_contract_fixtures.json",
         "Plans/section15_browser_program_contracts.schema.json",
         "Plans/storage-plan.md#SP-319",
+        "Plans/terminal_workgroup_compatibility_fixtures.json",
         "Plans/touch_closure.json",
         "Position/bounds queries are O(viewport) and redaction-aware",
         "Prompt markers degrade when tmux passthrough is unverified",
@@ -17593,6 +17593,7 @@
         "scratchpad/pm-integration-20260831/audits/egolite-four-arm-benchmark-current/runner.py",
         "scratchpad/pm-integration-20260831/audits/egolite-four-arm-benchmark-current/self_test.py",
         "scripts/pm_browser_program_semantics.py",
+        "scripts/pm_terminal_workgroup_compatibility.py",
         "scrollback is not model context",
         "tests/test_pm_browser_event_admission.py",
         "tests/test_pm_browser_program_semantics.py",
@@ -18691,7 +18692,7 @@
         "False": 232,
         "True": 110
       },
-      "heading_count": 821,
+      "heading_count": 819,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -18789,7 +18790,7 @@
         "scripts/pm-implementation-readiness.py",
         "scripts/pm_home_layout_v2_slot_receipt.py"
       ],
-      "line_count": 29726,
+      "line_count": 29583,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 342,
       "plan_unit_ids": [
@@ -19250,7 +19251,7 @@
         "storage_root_orphan_and_fallback_divergence",
         "storage_value_schema_registry_drift",
         "teach_memory_persistence_drift",
-        "terminal_move_history_source_or_original_authority_escape",
+        "terminal_retained_data_reinterpretation_or_remint",
         "unregistered_redaction_transform_or_protected_auth_persistence",
         "unsafe_storage_migration_or_false_recovery",
         "update_schedule_restart_storm_or_false_success",
@@ -19258,7 +19259,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "ac37765e0da6a92faa59ca28eb2a51e9a4de8c4f29c939f560e1f2a5ad8441d7",
+      "sha256": "dac860e0d1c7f4078cb30491ba706b72a5816ba29ee78a1a6a44438471d1355b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 338,
@@ -19314,7 +19315,7 @@
         "Plans/Decision_Log.md#DL-049",
         "Plans/Goal_Runtime_System.md#GRS-077",
         "Plans/Goal_Runtime_System.md#GRS-078",
-        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-170",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180",
         "Plans/Shared_Integration_Runtime.md#SIR-052",
         "Plans/assistant_plan_cancel_contracts/methods.json",
         "Plans/assistant_plan_cancel_contracts/physical-families.json",
@@ -19477,6 +19478,7 @@
         "Plans/storage_value_registry.json",
         "Plans/storage_value_registry.json (families dashboard_board_layout and widget_presets)",
         "Plans/storage_value_registry.schema.json",
+        "Plans/terminal_workgroup_compatibility_fixtures.json",
         "Plans/workflow_activation_contracts/methods.json",
         "Plans/workflow_activation_contracts/physical-families.json",
         "Plans/workflow_activation_contracts/retention-field-classification.json",
@@ -19577,6 +19579,7 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm-plan-index.py",
         "scripts/pm-projects-refresh-contracts.py",
+        "scripts/pm_terminal_workgroup_compatibility.py",
         "tests/fixtures/usage_gui/presentation/persistence_migration_matrix.json (static contract fixture only)",
         "tests/test_pm_browser_event_admission.py",
         "tests/test_pm_browser_workspace_created.py",
@@ -21643,7 +21646,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-05T15:31:27Z",
+  "generated_at_utc": "2026-11-05T15:40:48Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -21651,8 +21654,8 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3675,
-      "True": 3813
+      "False": 3676,
+      "True": 3812
     },
     "plan_unit_count": 7488,
     "source_preserving_unit_count": 0,
