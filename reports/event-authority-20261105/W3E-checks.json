@@ -1,0 +1,179 @@
+{
+  "lane": "W3E",
+  "phase": 1,
+  "code_commit": "6e019cb8cde538f2979ada4d306f19183203f824",
+  "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+  "static_check_scope": "Shape/reference/document/index checks plus inherited owner suites; no W3E event oracles or native execution.",
+  "checks": [
+    {
+      "name": "shards-check",
+      "command": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--check",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "elapsed_seconds": 28.0,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3E/shards-check.json",
+      "sha256": "7b0cdb8512f156afb0f331f115de6a7f3df0ae02722093165c5689734e91ce39",
+      "stderr": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3E/shards-check.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result": "PASS"
+    },
+    {
+      "name": "index-validate",
+      "command": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "elapsed_seconds": 60.0,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3E/index-validate.json",
+      "sha256": "a9b344d41e63fb41fa6695d4fd9a38bc44b8447eae0c46cc1b5267651da34713",
+      "stderr": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3E/index-validate.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result": "PASS"
+    },
+    {
+      "name": "storage-profile",
+      "command": [
+        "python3",
+        "scripts/pm-storage-profile-check.py"
+      ],
+      "exit_code": 1,
+      "top_level_status": "fail",
+      "elapsed_seconds": 2.0,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3E/storage-profile.json",
+      "sha256": "84ebcee97271ec096bc73925ddde2f86d62e3e3adf2d6bb7c4ef129f8fb351a8",
+      "stderr": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3E/storage-profile.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result": "PRE_EXISTING_41_PROFILE_GAPS"
+    },
+    {
+      "name": "new-contracts",
+      "command": [
+        "python3",
+        "scripts/pm-new-contracts-verify.py"
+      ],
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "elapsed_seconds": 476.1,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3E/new-contracts.json",
+      "sha256": "9e315376e2c190e8c42440c89cb858fb30f5a64a4edabaf8f97ecad378404c11",
+      "stderr": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3E/new-contracts.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result": "PASS"
+    },
+    {
+      "name": "backup-verify-depth",
+      "command": [
+        "python3",
+        "scripts/pm_backup_verify_depth.py"
+      ],
+      "exit_code": 0,
+      "top_level_status": "non_json_output",
+      "elapsed_seconds": 2.2,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3E/backup-verify-depth.json",
+      "sha256": "52d4529b92168cf714834505e735819b32e1d7536836bb75f093df69e3f01312",
+      "stderr": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3E/backup-verify-depth.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result": "PASS"
+    },
+    {
+      "name": "server-command-gap",
+      "command": [
+        "python3",
+        "scripts/pm-server-command-gap-verify.py"
+      ],
+      "exit_code": 0,
+      "top_level_status": "non_json_output",
+      "elapsed_seconds": 16.0,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3E/server-command-gap.json",
+      "sha256": "d40d3afb979af80314831978c08ac79b7c68d2aae5f01fbd4c26e5519f0ff7a2",
+      "stderr": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3E/server-command-gap.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result": "PASS"
+    },
+    {
+      "name": "phase1-shape-check",
+      "command": [
+        "python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3E/check-phase1.py"
+      ],
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "elapsed_seconds": 8.0,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3E/phase1-shape-check.json",
+      "sha256": "793e0be365aef00f096a551cd407bd3d82d233aaee8c0d859bbcd63405bcdbac",
+      "stderr": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3E/phase1-shape-check.stderr",
+      "stderr_sha256": "75ac37aa50139e17a1454bfff4e6246b0409a1fb50293da58fba64f8481625a5",
+      "result": "PASS"
+    },
+    {
+      "name": "index-generate",
+      "command": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "generate"
+      ],
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "elapsed_seconds": 60.0,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3E/index-generate.json",
+      "sha256": "014ce2ef60c693f794f276054dd120484ddf28cac38706774a7730d2e3ded2b0",
+      "stderr": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3E/index-generate.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result": "PASS"
+    },
+    {
+      "name": "shards-generate",
+      "command": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--generate",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "elapsed_seconds": 6.0,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3E/shards-generate.json",
+      "sha256": "6d5a43031c78f890190340b9ac327dd58fda0786b2879f498e4795d1bb83a071",
+      "stderr": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3E/shards-generate.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result": "PASS"
+    },
+    {
+      "name": "whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "top_level_status": "non_json_output",
+      "elapsed_seconds": 6.0,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3E/whitespace.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3E/whitespace.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result": "PASS"
+    }
+  ],
+  "storage_profile_baseline": {
+    "status": "pass",
+    "base_missing_profile_count": 41,
+    "current_missing_profile_count": 41,
+    "missing_sets_equal": true,
+    "new_w3e_missing_profiles": [],
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d"
+  },
+  "native_execution": "NOT_RUN",
+  "event_oracles": "PLANNED_NOT_EXECUTED",
+  "criterion_12": "PARTIAL"
+}
