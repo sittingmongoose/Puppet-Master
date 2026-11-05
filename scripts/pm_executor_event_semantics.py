@@ -10,7 +10,8 @@ import sys
 from contextvars import ContextVar
 from contextlib import contextmanager
 from functools import lru_cache
-from datetime import datetime, timedelta
+from datetime import datetime
+from fractions import Fraction
 from email.utils import parsedate_to_datetime
 from pathlib import Path
 
@@ -348,11 +349,24 @@ def source_observation(adapter, records):
     return observed
 
 
-def instant(value, *, utc=False):
-    require(valid_timestamp(value) and (not utc or UTC_TIME.fullmatch(value) is not None), 'whole-string source timestamp')
+def instant(value, *, utc=True):
+    # Current owner clocks require T/Z. Authenticated retained records keep the
+    # spelling grammar selected at write time; their text/bytes are never edited.
+    require(valid_timestamp(value) and (not utc or record_rules() == RETAINED_RECIPE
+                                      or UTC_TIME.fullmatch(value) is not None), 'whole-string source timestamp')
     result = datetime.fromisoformat(value.upper())
     validate_source_timezone(result)
-    return result
+    whole = ((result.toordinal() - 1) * 86400 + result.hour * 3600
+             + result.minute * 60 + result.second - int(result.utcoffset().total_seconds()))
+    fraction = re.match(r'\.([0-9]+)', value[19:])
+    digits = fraction[1] if fraction else ''
+    # Chunking avoids Python's decimal-string-to-int limit. Fraction preserves
+    # every admitted digit, independently of datetime's microsecond field.
+    numerator = 0
+    for start in range(0, len(digits), 1000):
+        chunk = digits[start:start + 1000]
+        numerator = numerator * 10 ** len(chunk) + int(chunk)
+    return Fraction(whole) + Fraction(numerator, 10 ** len(digits))
 
 
 def validate_retry(contract, payload, records):
@@ -393,28 +407,29 @@ def validate_retry(contract, payload, records):
     scheduled = instant(retry['scheduled_at_utc'])
     observed = instant(payload['ts'])
     require(received <= failed <= scheduled <= observed, 'original failure/scheduling clocks')
-    delay = timedelta(0)
+    delay = Fraction(0)
     if classification == 'provider_transient':
-        delay = timedelta(seconds=2 ** retry['used'])
+        delay = Fraction(2 ** retry['used'])
     elif classification == 'rate_limited':
         header = failure['retry_after_header']
         if header is None:
-            delay = timedelta(seconds=30)
+            delay = Fraction(30)
         else:
             validate_retry_after_header(header)
             if header.isascii() and header.isdecimal():
-                deadline = received + timedelta(seconds=int(header))
+                deadline = received + int(header)
             else:
                 deadline = parsedate_to_datetime(header)
                 validate_retry_after_timezone(deadline)
-            delay = max(deadline - scheduled, timedelta(0))
+                deadline = instant(deadline.isoformat(), utc=False)
+            delay = max(deadline - scheduled, Fraction(0))
     elif classification == 'auth_expired':
         refresh = failure['refresh']
         validate_auth_refresh(refresh)
         require(failed <= instant(refresh['completed_at_utc'])
                 <= instant(refresh['client_rebuilt_at_utc']) <= scheduled, 'refresh and client rebuild before retry')
     elif classification == 'storage_io' and failure['storage_io_class'] == 'transient_busy':
-        delay = timedelta(milliseconds=250)
+        delay = Fraction(1, 4)
     if classification != 'rate_limited':
         require(failure['retry_after_header'] is None, 'Retry-After belongs to rate_limited')
     if classification != 'auth_expired':
@@ -422,7 +437,7 @@ def validate_retry(contract, payload, records):
     until = instant(retry['backoff_until_utc'])
     require(until == scheduled + delay, 'original classified retry deadline')
     if name in ('run.node_backoff_started', 'run.node_backoff_expired'):
-        require(delay > timedelta(0), 'classified policy has no timed backoff')
+        require(delay > 0, 'classified policy has no timed backoff')
     if name == 'run.node_backoff_expired':
         require(observed >= until, 'early timer')
     elif name == 'run.node_backoff_started':
@@ -434,7 +449,7 @@ def validate_score_domain(ready, selected):
     for score in ready + [item['score_tuple'] for item in selected]:
         require(type(score['manual_priority']) is int and 0 <= score['manual_priority'] <= 100,
                 'scheduler manual_priority integer 0..100')
-        require(valid_timestamp(score['ready_since_utc']), 'whole-string score timestamp')
+        instant(score['ready_since_utc'])
 
 
 def validate_capture(contract, payload, capture, *, historical=False):
@@ -575,17 +590,17 @@ def validate_capture(contract, payload, capture, *, historical=False):
         require(set(ids) == set(selected + excluded), 'candidate partition')
         require(len(selected) == min(len(ready), payload['available_slots']), 'fill available capacity')
         lanes = {'remediation': 3, 'unblocker': 2, 'normal': 1}
-        ordered = sorted(ready, key=lambda x: (-lanes[x['scheduler_lane']], -x['manual_priority'], -x['transitive_unblock_count'], x['ready_since_utc'], x['node_id']))
+        ordered = sorted(ready, key=lambda x: (-lanes[x['scheduler_lane']], -x['manual_priority'], -x['transitive_unblock_count'], instant(x['ready_since_utc']), x['node_id']))
         require(selected == [x['node_id'] for x in ordered[:len(selected)]], 'score ordering')
         by_id = {x['node_id']: x for x in ready}
         for item in payload['selected_nodes']:
             require(same_value(item['score_tuple'], by_id[item['node_id']])
                     and item['lane'] == by_id[item['node_id']]['scheduler_lane'], 'selected score')
         require(type(scheduler['wakes']) is list
-                and all(type(wake) is dict and valid_timestamp(wake['recorded_at_utc'])
+                and all(type(wake) is dict
                         and type(wake['event_id']) is str and bool(wake['event_id'])
                         for wake in scheduler['wakes']), 'scheduler wake identity/clock types')
-        wakes = sorted(scheduler['wakes'], key=lambda x: (x['recorded_at_utc'], x['event_id']))
+        wakes = sorted(scheduler['wakes'], key=lambda x: (instant(x['recorded_at_utc']), x['event_id']))
         require(bool(wakes) and payload['wake_reason'] == wakes[0]['reason'], 'primary wake')
         require(payload.get('coalesced_wake_reasons', []) == [x['reason'] for x in wakes[1:]], 'coalesced wakes')
         require(payload.get('wake_event_refs', []) == [x['event_id'] for x in wakes[1:]], 'wake event joins')

@@ -89,7 +89,7 @@ def validate(contract, payload, context):
         if set(selected + excluded) != set(ready_ids) or len(selected) > payload['available_slots']:
             raise ValueError('capacity/partition')
         ranks = {'remediation': 3, 'unblocker': 2, 'normal': 1}
-        ordered = sorted(ready, key=lambda p: (-ranks[p['scheduler_lane']], -p['manual_priority'], -p['transitive_unblock_count'], p['ready_since_utc'], p['node_id']))
+        ordered = sorted(ready, key=lambda p: (-ranks[p['scheduler_lane']], -p['manual_priority'], -p['transitive_unblock_count'], instant(p['ready_since_utc']), p['node_id']))
         if selected != [p['node_id'] for p in ordered[:len(selected)]]:
             raise ValueError('selection order')
         by_id = {p['node_id']: p for p in ready}

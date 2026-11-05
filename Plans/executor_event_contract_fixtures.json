@@ -66435,6 +66435,1759 @@
           "value": "2026-11-04t12:00:00Z"
         }
       ]
+    },
+    {
+      "event_type": "run.node_backoff_expired",
+      "case": "F19-shape-boundary-early-90ns",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z",
+        "run_id": "run_id-001",
+        "node_id": "node_id-001",
+        "attempt_id": "attempt_id-001",
+        "replan_generation": 1,
+        "failure_class": "provider_transient"
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00.9999999Z",
+        "backoff_until_utc": "2026-11-04T12:00:00.99999999Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": "attempt_id-001",
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "backoff_state": "active",
+          "timer_matches_original": true
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "node_id": "node_id-001",
+          "attempt_id": "attempt_id-001",
+          "replan_generation": 1
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "attempt_id": "attempt_id-001",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "payload": {
+            "schema_version": "1.0.0",
+            "project_id": "project_id-001",
+            "event_sequence": 1,
+            "ts": "2026-11-04T12:00:00Z",
+            "run_id": "run_id-001",
+            "node_id": "node_id-001",
+            "attempt_id": "attempt_id-001",
+            "replan_generation": 1,
+            "failure_class": "provider_transient"
+          },
+          "payload_ref": null,
+          "storage_instance_id": "store-001"
+        },
+        "source_child_success": true,
+        "payload_packs": {},
+        "viewer": "viewer-001"
+      },
+      "expected": "reject",
+      "seed": {
+        "event_type": "run.node_backoff_expired",
+        "case": "positive",
+        "payload": {
+          "schema_version": "1.0.0",
+          "project_id": "project_id-001",
+          "event_sequence": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "run_id": "run_id-001",
+          "node_id": "node_id-001",
+          "attempt_id": "attempt_id-001",
+          "replan_generation": 1,
+          "failure_class": "provider_transient"
+        },
+        "context": {
+          "admitted": true,
+          "current_project_id": "project_id-001",
+          "current_generation": 1,
+          "graph_locked": false,
+          "source_refs_valid": true,
+          "read_authorized": true,
+          "deletion_fenced": false,
+          "receipt_available": true,
+          "writer_withdrawn": false,
+          "predicate_valid": true,
+          "now_utc": "2026-11-04T12:00:00.99999999Z",
+          "backoff_until_utc": "2026-11-04T12:00:00.99999999Z",
+          "packaging_passed": true,
+          "expected_blocked_sequence": null,
+          "expected_attempt_id": "attempt_id-001",
+          "expected_parent_attempt_id": null,
+          "source_facts": {
+            "backoff_state": "active",
+            "timer_matches_original": true
+          },
+          "source_bindings": {
+            "project_id": "project_id-001",
+            "run_id": "run_id-001",
+            "node_id": "node_id-001",
+            "attempt_id": "attempt_id-001",
+            "replan_generation": 1
+          },
+          "envelope": {
+            "project_id": "project_id-001",
+            "run_id": "run_id-001",
+            "attempt_id": "attempt_id-001",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "payload": {
+              "schema_version": "1.0.0",
+              "project_id": "project_id-001",
+              "event_sequence": 1,
+              "ts": "2026-11-04T12:00:00Z",
+              "run_id": "run_id-001",
+              "node_id": "node_id-001",
+              "attempt_id": "attempt_id-001",
+              "replan_generation": 1,
+              "failure_class": "provider_transient"
+            },
+            "payload_ref": null,
+            "storage_instance_id": "store-001"
+          },
+          "source_child_success": true,
+          "payload_packs": {},
+          "viewer": "viewer-001"
+        },
+        "expected": "accept"
+      },
+      "defect_changes": [
+        {
+          "path": "context/now_utc",
+          "value": "2026-11-04T12:00:00.9999999Z"
+        }
+      ]
+    },
+    {
+      "event_type": "run.node_backoff_expired",
+      "case": "F19-shape-boundary-equal",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z",
+        "run_id": "run_id-001",
+        "node_id": "node_id-001",
+        "attempt_id": "attempt_id-001",
+        "replan_generation": 1,
+        "failure_class": "provider_transient"
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00.9999999900Z",
+        "backoff_until_utc": "2026-11-04T12:00:00.99999999Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": "attempt_id-001",
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "backoff_state": "active",
+          "timer_matches_original": true
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "node_id": "node_id-001",
+          "attempt_id": "attempt_id-001",
+          "replan_generation": 1
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "attempt_id": "attempt_id-001",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "payload": {
+            "schema_version": "1.0.0",
+            "project_id": "project_id-001",
+            "event_sequence": 1,
+            "ts": "2026-11-04T12:00:00Z",
+            "run_id": "run_id-001",
+            "node_id": "node_id-001",
+            "attempt_id": "attempt_id-001",
+            "replan_generation": 1,
+            "failure_class": "provider_transient"
+          },
+          "payload_ref": null,
+          "storage_instance_id": "store-001"
+        },
+        "source_child_success": true,
+        "payload_packs": {},
+        "viewer": "viewer-001"
+      },
+      "expected": "accept"
+    },
+    {
+      "event_type": "run.node_backoff_expired",
+      "case": "F19-shape-boundary-late-9ns",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z",
+        "run_id": "run_id-001",
+        "node_id": "node_id-001",
+        "attempt_id": "attempt_id-001",
+        "replan_generation": 1,
+        "failure_class": "provider_transient"
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00.999999999Z",
+        "backoff_until_utc": "2026-11-04T12:00:00.99999999Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": "attempt_id-001",
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "backoff_state": "active",
+          "timer_matches_original": true
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "node_id": "node_id-001",
+          "attempt_id": "attempt_id-001",
+          "replan_generation": 1
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "attempt_id": "attempt_id-001",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "payload": {
+            "schema_version": "1.0.0",
+            "project_id": "project_id-001",
+            "event_sequence": 1,
+            "ts": "2026-11-04T12:00:00Z",
+            "run_id": "run_id-001",
+            "node_id": "node_id-001",
+            "attempt_id": "attempt_id-001",
+            "replan_generation": 1,
+            "failure_class": "provider_transient"
+          },
+          "payload_ref": null,
+          "storage_instance_id": "store-001"
+        },
+        "source_child_success": true,
+        "payload_packs": {},
+        "viewer": "viewer-001"
+      },
+      "expected": "accept"
+    },
+    {
+      "event_type": "scheduler.pass",
+      "case": "F19-shape-scheduler-equal-instants-correct",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z",
+        "run_id": "run_id-001",
+        "thread_id": "thread_id-001",
+        "replan_generation": 1,
+        "scheduler_pass_id": "scheduler_pass_id-001",
+        "wake_reason": "prerequisite_resolved",
+        "available_slots": 1,
+        "ready_nodes": [
+          {
+            "scheduler_lane": "normal",
+            "manual_priority": 1,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00.1Z",
+            "node_id": "node-high"
+          },
+          {
+            "scheduler_lane": "normal",
+            "manual_priority": 1,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00.10Z",
+            "node_id": "node-low"
+          }
+        ],
+        "selected_nodes": [
+          {
+            "node_id": "node-high",
+            "score_tuple": {
+              "scheduler_lane": "normal",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00.1Z",
+              "node_id": "node-high"
+            },
+            "lane": "normal"
+          }
+        ],
+        "non_selected_nodes": [
+          {
+            "node_id": "node-low",
+            "exclusion_reason_code": "capacity",
+            "ready_state": "ready"
+          }
+        ],
+        "wake_event_refs": [
+          "wake-002"
+        ],
+        "coalesced_wake_reasons": [
+          "capacity_available"
+        ]
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00Z",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": null,
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "wake_set_state": "pending",
+          "pass_already_committed": false
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "replan_generation": 1,
+          "scheduler_pass_id": "scheduler_pass_id-001"
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "payload": {
+            "schema_version": "1.0.0",
+            "project_id": "project_id-001",
+            "event_sequence": 1,
+            "ts": "2026-11-04T12:00:00Z",
+            "run_id": "run_id-001",
+            "thread_id": "thread_id-001",
+            "replan_generation": 1,
+            "scheduler_pass_id": "scheduler_pass_id-001",
+            "wake_reason": "prerequisite_resolved",
+            "available_slots": 1,
+            "ready_nodes": [
+              {
+                "scheduler_lane": "normal",
+                "manual_priority": 1,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04T12:00:00.1Z",
+                "node_id": "node-high"
+              },
+              {
+                "scheduler_lane": "normal",
+                "manual_priority": 1,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04T12:00:00.10Z",
+                "node_id": "node-low"
+              }
+            ],
+            "selected_nodes": [
+              {
+                "node_id": "node-high",
+                "score_tuple": {
+                  "scheduler_lane": "normal",
+                  "manual_priority": 1,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00.1Z",
+                  "node_id": "node-high"
+                },
+                "lane": "normal"
+              }
+            ],
+            "non_selected_nodes": [
+              {
+                "node_id": "node-low",
+                "exclusion_reason_code": "capacity",
+                "ready_state": "ready"
+              }
+            ],
+            "wake_event_refs": [
+              "wake-002"
+            ],
+            "coalesced_wake_reasons": [
+              "capacity_available"
+            ]
+          },
+          "payload_ref": null,
+          "storage_instance_id": "store-001"
+        },
+        "source_child_success": true,
+        "payload_packs": {},
+        "viewer": "viewer-001"
+      },
+      "expected": "accept"
+    },
+    {
+      "event_type": "scheduler.pass",
+      "case": "F19-shape-scheduler-equal-instants-wrong-selection",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z",
+        "run_id": "run_id-001",
+        "thread_id": "thread_id-001",
+        "replan_generation": 1,
+        "scheduler_pass_id": "scheduler_pass_id-001",
+        "wake_reason": "prerequisite_resolved",
+        "available_slots": 1,
+        "ready_nodes": [
+          {
+            "scheduler_lane": "normal",
+            "manual_priority": 1,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00.1Z",
+            "node_id": "node-high"
+          },
+          {
+            "scheduler_lane": "normal",
+            "manual_priority": 1,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00.10Z",
+            "node_id": "node-low"
+          }
+        ],
+        "selected_nodes": [
+          {
+            "node_id": "node-low",
+            "score_tuple": {
+              "scheduler_lane": "normal",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00.10Z",
+              "node_id": "node-low"
+            },
+            "lane": "normal"
+          }
+        ],
+        "non_selected_nodes": [
+          {
+            "node_id": "node-high",
+            "exclusion_reason_code": "capacity",
+            "ready_state": "ready"
+          }
+        ],
+        "wake_event_refs": [
+          "wake-002"
+        ],
+        "coalesced_wake_reasons": [
+          "capacity_available"
+        ]
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00Z",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": null,
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "wake_set_state": "pending",
+          "pass_already_committed": false
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "replan_generation": 1,
+          "scheduler_pass_id": "scheduler_pass_id-001"
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "payload": {
+            "schema_version": "1.0.0",
+            "project_id": "project_id-001",
+            "event_sequence": 1,
+            "ts": "2026-11-04T12:00:00Z",
+            "run_id": "run_id-001",
+            "thread_id": "thread_id-001",
+            "replan_generation": 1,
+            "scheduler_pass_id": "scheduler_pass_id-001",
+            "wake_reason": "prerequisite_resolved",
+            "available_slots": 1,
+            "ready_nodes": [
+              {
+                "scheduler_lane": "normal",
+                "manual_priority": 1,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04T12:00:00.1Z",
+                "node_id": "node-high"
+              },
+              {
+                "scheduler_lane": "normal",
+                "manual_priority": 1,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04T12:00:00.10Z",
+                "node_id": "node-low"
+              }
+            ],
+            "selected_nodes": [
+              {
+                "node_id": "node-low",
+                "score_tuple": {
+                  "scheduler_lane": "normal",
+                  "manual_priority": 1,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00.10Z",
+                  "node_id": "node-low"
+                },
+                "lane": "normal"
+              }
+            ],
+            "non_selected_nodes": [
+              {
+                "node_id": "node-high",
+                "exclusion_reason_code": "capacity",
+                "ready_state": "ready"
+              }
+            ],
+            "wake_event_refs": [
+              "wake-002"
+            ],
+            "coalesced_wake_reasons": [
+              "capacity_available"
+            ]
+          },
+          "payload_ref": null,
+          "storage_instance_id": "store-001"
+        },
+        "source_child_success": true,
+        "payload_packs": {},
+        "viewer": "viewer-001"
+      },
+      "expected": "reject",
+      "seed": {
+        "event_type": "scheduler.pass",
+        "case": "positive",
+        "payload": {
+          "schema_version": "1.0.0",
+          "project_id": "project_id-001",
+          "event_sequence": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "replan_generation": 1,
+          "scheduler_pass_id": "scheduler_pass_id-001",
+          "wake_reason": "prerequisite_resolved",
+          "available_slots": 1,
+          "ready_nodes": [
+            {
+              "scheduler_lane": "normal",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00.1Z",
+              "node_id": "node-high"
+            },
+            {
+              "scheduler_lane": "normal",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00.10Z",
+              "node_id": "node-low"
+            }
+          ],
+          "selected_nodes": [
+            {
+              "node_id": "node-high",
+              "score_tuple": {
+                "scheduler_lane": "normal",
+                "manual_priority": 1,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04T12:00:00.1Z",
+                "node_id": "node-high"
+              },
+              "lane": "normal"
+            }
+          ],
+          "non_selected_nodes": [
+            {
+              "node_id": "node-low",
+              "exclusion_reason_code": "capacity",
+              "ready_state": "ready"
+            }
+          ],
+          "wake_event_refs": [
+            "wake-002"
+          ],
+          "coalesced_wake_reasons": [
+            "capacity_available"
+          ]
+        },
+        "context": {
+          "admitted": true,
+          "current_project_id": "project_id-001",
+          "current_generation": 1,
+          "graph_locked": false,
+          "source_refs_valid": true,
+          "read_authorized": true,
+          "deletion_fenced": false,
+          "receipt_available": true,
+          "writer_withdrawn": false,
+          "predicate_valid": true,
+          "now_utc": "2026-11-04T12:00:00Z",
+          "backoff_until_utc": "2026-11-04T12:00:00Z",
+          "packaging_passed": true,
+          "expected_blocked_sequence": null,
+          "expected_attempt_id": null,
+          "expected_parent_attempt_id": null,
+          "source_facts": {
+            "wake_set_state": "pending",
+            "pass_already_committed": false
+          },
+          "source_bindings": {
+            "project_id": "project_id-001",
+            "run_id": "run_id-001",
+            "thread_id": "thread_id-001",
+            "replan_generation": 1,
+            "scheduler_pass_id": "scheduler_pass_id-001"
+          },
+          "envelope": {
+            "project_id": "project_id-001",
+            "run_id": "run_id-001",
+            "thread_id": "thread_id-001",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "payload": {
+              "schema_version": "1.0.0",
+              "project_id": "project_id-001",
+              "event_sequence": 1,
+              "ts": "2026-11-04T12:00:00Z",
+              "run_id": "run_id-001",
+              "thread_id": "thread_id-001",
+              "replan_generation": 1,
+              "scheduler_pass_id": "scheduler_pass_id-001",
+              "wake_reason": "prerequisite_resolved",
+              "available_slots": 1,
+              "ready_nodes": [
+                {
+                  "scheduler_lane": "normal",
+                  "manual_priority": 1,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00.1Z",
+                  "node_id": "node-high"
+                },
+                {
+                  "scheduler_lane": "normal",
+                  "manual_priority": 1,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00.10Z",
+                  "node_id": "node-low"
+                }
+              ],
+              "selected_nodes": [
+                {
+                  "node_id": "node-high",
+                  "score_tuple": {
+                    "scheduler_lane": "normal",
+                    "manual_priority": 1,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00.1Z",
+                    "node_id": "node-high"
+                  },
+                  "lane": "normal"
+                }
+              ],
+              "non_selected_nodes": [
+                {
+                  "node_id": "node-low",
+                  "exclusion_reason_code": "capacity",
+                  "ready_state": "ready"
+                }
+              ],
+              "wake_event_refs": [
+                "wake-002"
+              ],
+              "coalesced_wake_reasons": [
+                "capacity_available"
+              ]
+            },
+            "payload_ref": null,
+            "storage_instance_id": "store-001"
+          },
+          "source_child_success": true,
+          "payload_packs": {},
+          "viewer": "viewer-001"
+        },
+        "expected": "accept"
+      },
+      "defect_changes": [
+        {
+          "path": "payload/selected_nodes/0/node_id",
+          "value": "node-low"
+        },
+        {
+          "path": "payload/selected_nodes/0/score_tuple/ready_since_utc",
+          "value": "2026-11-04T12:00:00.10Z"
+        },
+        {
+          "path": "payload/selected_nodes/0/score_tuple/node_id",
+          "value": "node-low"
+        },
+        {
+          "path": "payload/non_selected_nodes/0/node_id",
+          "value": "node-high"
+        },
+        {
+          "path": "context/envelope/payload/selected_nodes/0/node_id",
+          "value": "node-low"
+        },
+        {
+          "path": "context/envelope/payload/selected_nodes/0/score_tuple/ready_since_utc",
+          "value": "2026-11-04T12:00:00.10Z"
+        },
+        {
+          "path": "context/envelope/payload/selected_nodes/0/score_tuple/node_id",
+          "value": "node-low"
+        },
+        {
+          "path": "context/envelope/payload/non_selected_nodes/0/node_id",
+          "value": "node-high"
+        }
+      ]
+    },
+    {
+      "event_type": "scheduler.pass",
+      "case": "F19-shape-scheduler-older-ready-correct",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z",
+        "run_id": "run_id-001",
+        "thread_id": "thread_id-001",
+        "replan_generation": 1,
+        "scheduler_pass_id": "scheduler_pass_id-001",
+        "wake_reason": "prerequisite_resolved",
+        "available_slots": 1,
+        "ready_nodes": [
+          {
+            "scheduler_lane": "normal",
+            "manual_priority": 1,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00.100000001Z",
+            "node_id": "node-high"
+          },
+          {
+            "scheduler_lane": "normal",
+            "manual_priority": 1,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00.1Z",
+            "node_id": "node-low"
+          }
+        ],
+        "selected_nodes": [
+          {
+            "node_id": "node-low",
+            "score_tuple": {
+              "scheduler_lane": "normal",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00.1Z",
+              "node_id": "node-low"
+            },
+            "lane": "normal"
+          }
+        ],
+        "non_selected_nodes": [
+          {
+            "node_id": "node-high",
+            "exclusion_reason_code": "capacity",
+            "ready_state": "ready"
+          }
+        ],
+        "wake_event_refs": [
+          "wake-002"
+        ],
+        "coalesced_wake_reasons": [
+          "capacity_available"
+        ]
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00Z",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": null,
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "wake_set_state": "pending",
+          "pass_already_committed": false
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "replan_generation": 1,
+          "scheduler_pass_id": "scheduler_pass_id-001"
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "payload": {
+            "schema_version": "1.0.0",
+            "project_id": "project_id-001",
+            "event_sequence": 1,
+            "ts": "2026-11-04T12:00:00Z",
+            "run_id": "run_id-001",
+            "thread_id": "thread_id-001",
+            "replan_generation": 1,
+            "scheduler_pass_id": "scheduler_pass_id-001",
+            "wake_reason": "prerequisite_resolved",
+            "available_slots": 1,
+            "ready_nodes": [
+              {
+                "scheduler_lane": "normal",
+                "manual_priority": 1,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04T12:00:00.100000001Z",
+                "node_id": "node-high"
+              },
+              {
+                "scheduler_lane": "normal",
+                "manual_priority": 1,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04T12:00:00.1Z",
+                "node_id": "node-low"
+              }
+            ],
+            "selected_nodes": [
+              {
+                "node_id": "node-low",
+                "score_tuple": {
+                  "scheduler_lane": "normal",
+                  "manual_priority": 1,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00.1Z",
+                  "node_id": "node-low"
+                },
+                "lane": "normal"
+              }
+            ],
+            "non_selected_nodes": [
+              {
+                "node_id": "node-high",
+                "exclusion_reason_code": "capacity",
+                "ready_state": "ready"
+              }
+            ],
+            "wake_event_refs": [
+              "wake-002"
+            ],
+            "coalesced_wake_reasons": [
+              "capacity_available"
+            ]
+          },
+          "payload_ref": null,
+          "storage_instance_id": "store-001"
+        },
+        "source_child_success": true,
+        "payload_packs": {},
+        "viewer": "viewer-001"
+      },
+      "expected": "accept"
+    },
+    {
+      "event_type": "scheduler.pass",
+      "case": "F19-shape-scheduler-older-ready-wrong-selection",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z",
+        "run_id": "run_id-001",
+        "thread_id": "thread_id-001",
+        "replan_generation": 1,
+        "scheduler_pass_id": "scheduler_pass_id-001",
+        "wake_reason": "prerequisite_resolved",
+        "available_slots": 1,
+        "ready_nodes": [
+          {
+            "scheduler_lane": "normal",
+            "manual_priority": 1,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00.100000001Z",
+            "node_id": "node-high"
+          },
+          {
+            "scheduler_lane": "normal",
+            "manual_priority": 1,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00.1Z",
+            "node_id": "node-low"
+          }
+        ],
+        "selected_nodes": [
+          {
+            "node_id": "node-high",
+            "score_tuple": {
+              "scheduler_lane": "normal",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00.100000001Z",
+              "node_id": "node-high"
+            },
+            "lane": "normal"
+          }
+        ],
+        "non_selected_nodes": [
+          {
+            "node_id": "node-low",
+            "exclusion_reason_code": "capacity",
+            "ready_state": "ready"
+          }
+        ],
+        "wake_event_refs": [
+          "wake-002"
+        ],
+        "coalesced_wake_reasons": [
+          "capacity_available"
+        ]
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00Z",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": null,
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "wake_set_state": "pending",
+          "pass_already_committed": false
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "replan_generation": 1,
+          "scheduler_pass_id": "scheduler_pass_id-001"
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "payload": {
+            "schema_version": "1.0.0",
+            "project_id": "project_id-001",
+            "event_sequence": 1,
+            "ts": "2026-11-04T12:00:00Z",
+            "run_id": "run_id-001",
+            "thread_id": "thread_id-001",
+            "replan_generation": 1,
+            "scheduler_pass_id": "scheduler_pass_id-001",
+            "wake_reason": "prerequisite_resolved",
+            "available_slots": 1,
+            "ready_nodes": [
+              {
+                "scheduler_lane": "normal",
+                "manual_priority": 1,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04T12:00:00.100000001Z",
+                "node_id": "node-high"
+              },
+              {
+                "scheduler_lane": "normal",
+                "manual_priority": 1,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04T12:00:00.1Z",
+                "node_id": "node-low"
+              }
+            ],
+            "selected_nodes": [
+              {
+                "node_id": "node-high",
+                "score_tuple": {
+                  "scheduler_lane": "normal",
+                  "manual_priority": 1,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00.100000001Z",
+                  "node_id": "node-high"
+                },
+                "lane": "normal"
+              }
+            ],
+            "non_selected_nodes": [
+              {
+                "node_id": "node-low",
+                "exclusion_reason_code": "capacity",
+                "ready_state": "ready"
+              }
+            ],
+            "wake_event_refs": [
+              "wake-002"
+            ],
+            "coalesced_wake_reasons": [
+              "capacity_available"
+            ]
+          },
+          "payload_ref": null,
+          "storage_instance_id": "store-001"
+        },
+        "source_child_success": true,
+        "payload_packs": {},
+        "viewer": "viewer-001"
+      },
+      "expected": "reject",
+      "seed": {
+        "event_type": "scheduler.pass",
+        "case": "positive",
+        "payload": {
+          "schema_version": "1.0.0",
+          "project_id": "project_id-001",
+          "event_sequence": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "replan_generation": 1,
+          "scheduler_pass_id": "scheduler_pass_id-001",
+          "wake_reason": "prerequisite_resolved",
+          "available_slots": 1,
+          "ready_nodes": [
+            {
+              "scheduler_lane": "normal",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00.100000001Z",
+              "node_id": "node-high"
+            },
+            {
+              "scheduler_lane": "normal",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00.1Z",
+              "node_id": "node-low"
+            }
+          ],
+          "selected_nodes": [
+            {
+              "node_id": "node-low",
+              "score_tuple": {
+                "scheduler_lane": "normal",
+                "manual_priority": 1,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04T12:00:00.1Z",
+                "node_id": "node-low"
+              },
+              "lane": "normal"
+            }
+          ],
+          "non_selected_nodes": [
+            {
+              "node_id": "node-high",
+              "exclusion_reason_code": "capacity",
+              "ready_state": "ready"
+            }
+          ],
+          "wake_event_refs": [
+            "wake-002"
+          ],
+          "coalesced_wake_reasons": [
+            "capacity_available"
+          ]
+        },
+        "context": {
+          "admitted": true,
+          "current_project_id": "project_id-001",
+          "current_generation": 1,
+          "graph_locked": false,
+          "source_refs_valid": true,
+          "read_authorized": true,
+          "deletion_fenced": false,
+          "receipt_available": true,
+          "writer_withdrawn": false,
+          "predicate_valid": true,
+          "now_utc": "2026-11-04T12:00:00Z",
+          "backoff_until_utc": "2026-11-04T12:00:00Z",
+          "packaging_passed": true,
+          "expected_blocked_sequence": null,
+          "expected_attempt_id": null,
+          "expected_parent_attempt_id": null,
+          "source_facts": {
+            "wake_set_state": "pending",
+            "pass_already_committed": false
+          },
+          "source_bindings": {
+            "project_id": "project_id-001",
+            "run_id": "run_id-001",
+            "thread_id": "thread_id-001",
+            "replan_generation": 1,
+            "scheduler_pass_id": "scheduler_pass_id-001"
+          },
+          "envelope": {
+            "project_id": "project_id-001",
+            "run_id": "run_id-001",
+            "thread_id": "thread_id-001",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "payload": {
+              "schema_version": "1.0.0",
+              "project_id": "project_id-001",
+              "event_sequence": 1,
+              "ts": "2026-11-04T12:00:00Z",
+              "run_id": "run_id-001",
+              "thread_id": "thread_id-001",
+              "replan_generation": 1,
+              "scheduler_pass_id": "scheduler_pass_id-001",
+              "wake_reason": "prerequisite_resolved",
+              "available_slots": 1,
+              "ready_nodes": [
+                {
+                  "scheduler_lane": "normal",
+                  "manual_priority": 1,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00.100000001Z",
+                  "node_id": "node-high"
+                },
+                {
+                  "scheduler_lane": "normal",
+                  "manual_priority": 1,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00.1Z",
+                  "node_id": "node-low"
+                }
+              ],
+              "selected_nodes": [
+                {
+                  "node_id": "node-low",
+                  "score_tuple": {
+                    "scheduler_lane": "normal",
+                    "manual_priority": 1,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00.1Z",
+                    "node_id": "node-low"
+                  },
+                  "lane": "normal"
+                }
+              ],
+              "non_selected_nodes": [
+                {
+                  "node_id": "node-high",
+                  "exclusion_reason_code": "capacity",
+                  "ready_state": "ready"
+                }
+              ],
+              "wake_event_refs": [
+                "wake-002"
+              ],
+              "coalesced_wake_reasons": [
+                "capacity_available"
+              ]
+            },
+            "payload_ref": null,
+            "storage_instance_id": "store-001"
+          },
+          "source_child_success": true,
+          "payload_packs": {},
+          "viewer": "viewer-001"
+        },
+        "expected": "accept"
+      },
+      "defect_changes": [
+        {
+          "path": "payload/selected_nodes/0/node_id",
+          "value": "node-high"
+        },
+        {
+          "path": "payload/selected_nodes/0/score_tuple/ready_since_utc",
+          "value": "2026-11-04T12:00:00.100000001Z"
+        },
+        {
+          "path": "payload/selected_nodes/0/score_tuple/node_id",
+          "value": "node-high"
+        },
+        {
+          "path": "payload/non_selected_nodes/0/node_id",
+          "value": "node-low"
+        },
+        {
+          "path": "context/envelope/payload/selected_nodes/0/node_id",
+          "value": "node-high"
+        },
+        {
+          "path": "context/envelope/payload/selected_nodes/0/score_tuple/ready_since_utc",
+          "value": "2026-11-04T12:00:00.100000001Z"
+        },
+        {
+          "path": "context/envelope/payload/selected_nodes/0/score_tuple/node_id",
+          "value": "node-high"
+        },
+        {
+          "path": "context/envelope/payload/non_selected_nodes/0/node_id",
+          "value": "node-low"
+        }
+      ]
+    },
+    {
+      "event_type": "scheduler.pass",
+      "case": "F19-shape-scheduler-nanosecond-older-correct",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z",
+        "run_id": "run_id-001",
+        "thread_id": "thread_id-001",
+        "replan_generation": 1,
+        "scheduler_pass_id": "scheduler_pass_id-001",
+        "wake_reason": "prerequisite_resolved",
+        "available_slots": 1,
+        "ready_nodes": [
+          {
+            "scheduler_lane": "normal",
+            "manual_priority": 1,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00.100000001Z",
+            "node_id": "node-high"
+          },
+          {
+            "scheduler_lane": "normal",
+            "manual_priority": 1,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00.100000002Z",
+            "node_id": "node-low"
+          }
+        ],
+        "selected_nodes": [
+          {
+            "node_id": "node-high",
+            "score_tuple": {
+              "scheduler_lane": "normal",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00.100000001Z",
+              "node_id": "node-high"
+            },
+            "lane": "normal"
+          }
+        ],
+        "non_selected_nodes": [
+          {
+            "node_id": "node-low",
+            "exclusion_reason_code": "capacity",
+            "ready_state": "ready"
+          }
+        ],
+        "wake_event_refs": [
+          "wake-002"
+        ],
+        "coalesced_wake_reasons": [
+          "capacity_available"
+        ]
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00Z",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": null,
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "wake_set_state": "pending",
+          "pass_already_committed": false
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "replan_generation": 1,
+          "scheduler_pass_id": "scheduler_pass_id-001"
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "payload": {
+            "schema_version": "1.0.0",
+            "project_id": "project_id-001",
+            "event_sequence": 1,
+            "ts": "2026-11-04T12:00:00Z",
+            "run_id": "run_id-001",
+            "thread_id": "thread_id-001",
+            "replan_generation": 1,
+            "scheduler_pass_id": "scheduler_pass_id-001",
+            "wake_reason": "prerequisite_resolved",
+            "available_slots": 1,
+            "ready_nodes": [
+              {
+                "scheduler_lane": "normal",
+                "manual_priority": 1,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04T12:00:00.100000001Z",
+                "node_id": "node-high"
+              },
+              {
+                "scheduler_lane": "normal",
+                "manual_priority": 1,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04T12:00:00.100000002Z",
+                "node_id": "node-low"
+              }
+            ],
+            "selected_nodes": [
+              {
+                "node_id": "node-high",
+                "score_tuple": {
+                  "scheduler_lane": "normal",
+                  "manual_priority": 1,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00.100000001Z",
+                  "node_id": "node-high"
+                },
+                "lane": "normal"
+              }
+            ],
+            "non_selected_nodes": [
+              {
+                "node_id": "node-low",
+                "exclusion_reason_code": "capacity",
+                "ready_state": "ready"
+              }
+            ],
+            "wake_event_refs": [
+              "wake-002"
+            ],
+            "coalesced_wake_reasons": [
+              "capacity_available"
+            ]
+          },
+          "payload_ref": null,
+          "storage_instance_id": "store-001"
+        },
+        "source_child_success": true,
+        "payload_packs": {},
+        "viewer": "viewer-001"
+      },
+      "expected": "accept"
+    },
+    {
+      "event_type": "scheduler.pass",
+      "case": "F19-shape-scheduler-nanosecond-older-wrong-selection",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z",
+        "run_id": "run_id-001",
+        "thread_id": "thread_id-001",
+        "replan_generation": 1,
+        "scheduler_pass_id": "scheduler_pass_id-001",
+        "wake_reason": "prerequisite_resolved",
+        "available_slots": 1,
+        "ready_nodes": [
+          {
+            "scheduler_lane": "normal",
+            "manual_priority": 1,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00.100000001Z",
+            "node_id": "node-high"
+          },
+          {
+            "scheduler_lane": "normal",
+            "manual_priority": 1,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00.100000002Z",
+            "node_id": "node-low"
+          }
+        ],
+        "selected_nodes": [
+          {
+            "node_id": "node-low",
+            "score_tuple": {
+              "scheduler_lane": "normal",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00.100000002Z",
+              "node_id": "node-low"
+            },
+            "lane": "normal"
+          }
+        ],
+        "non_selected_nodes": [
+          {
+            "node_id": "node-high",
+            "exclusion_reason_code": "capacity",
+            "ready_state": "ready"
+          }
+        ],
+        "wake_event_refs": [
+          "wake-002"
+        ],
+        "coalesced_wake_reasons": [
+          "capacity_available"
+        ]
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00Z",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": null,
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "wake_set_state": "pending",
+          "pass_already_committed": false
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "replan_generation": 1,
+          "scheduler_pass_id": "scheduler_pass_id-001"
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "payload": {
+            "schema_version": "1.0.0",
+            "project_id": "project_id-001",
+            "event_sequence": 1,
+            "ts": "2026-11-04T12:00:00Z",
+            "run_id": "run_id-001",
+            "thread_id": "thread_id-001",
+            "replan_generation": 1,
+            "scheduler_pass_id": "scheduler_pass_id-001",
+            "wake_reason": "prerequisite_resolved",
+            "available_slots": 1,
+            "ready_nodes": [
+              {
+                "scheduler_lane": "normal",
+                "manual_priority": 1,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04T12:00:00.100000001Z",
+                "node_id": "node-high"
+              },
+              {
+                "scheduler_lane": "normal",
+                "manual_priority": 1,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04T12:00:00.100000002Z",
+                "node_id": "node-low"
+              }
+            ],
+            "selected_nodes": [
+              {
+                "node_id": "node-low",
+                "score_tuple": {
+                  "scheduler_lane": "normal",
+                  "manual_priority": 1,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00.100000002Z",
+                  "node_id": "node-low"
+                },
+                "lane": "normal"
+              }
+            ],
+            "non_selected_nodes": [
+              {
+                "node_id": "node-high",
+                "exclusion_reason_code": "capacity",
+                "ready_state": "ready"
+              }
+            ],
+            "wake_event_refs": [
+              "wake-002"
+            ],
+            "coalesced_wake_reasons": [
+              "capacity_available"
+            ]
+          },
+          "payload_ref": null,
+          "storage_instance_id": "store-001"
+        },
+        "source_child_success": true,
+        "payload_packs": {},
+        "viewer": "viewer-001"
+      },
+      "expected": "reject",
+      "seed": {
+        "event_type": "scheduler.pass",
+        "case": "positive",
+        "payload": {
+          "schema_version": "1.0.0",
+          "project_id": "project_id-001",
+          "event_sequence": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "replan_generation": 1,
+          "scheduler_pass_id": "scheduler_pass_id-001",
+          "wake_reason": "prerequisite_resolved",
+          "available_slots": 1,
+          "ready_nodes": [
+            {
+              "scheduler_lane": "normal",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00.100000001Z",
+              "node_id": "node-high"
+            },
+            {
+              "scheduler_lane": "normal",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00.100000002Z",
+              "node_id": "node-low"
+            }
+          ],
+          "selected_nodes": [
+            {
+              "node_id": "node-high",
+              "score_tuple": {
+                "scheduler_lane": "normal",
+                "manual_priority": 1,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04T12:00:00.100000001Z",
+                "node_id": "node-high"
+              },
+              "lane": "normal"
+            }
+          ],
+          "non_selected_nodes": [
+            {
+              "node_id": "node-low",
+              "exclusion_reason_code": "capacity",
+              "ready_state": "ready"
+            }
+          ],
+          "wake_event_refs": [
+            "wake-002"
+          ],
+          "coalesced_wake_reasons": [
+            "capacity_available"
+          ]
+        },
+        "context": {
+          "admitted": true,
+          "current_project_id": "project_id-001",
+          "current_generation": 1,
+          "graph_locked": false,
+          "source_refs_valid": true,
+          "read_authorized": true,
+          "deletion_fenced": false,
+          "receipt_available": true,
+          "writer_withdrawn": false,
+          "predicate_valid": true,
+          "now_utc": "2026-11-04T12:00:00Z",
+          "backoff_until_utc": "2026-11-04T12:00:00Z",
+          "packaging_passed": true,
+          "expected_blocked_sequence": null,
+          "expected_attempt_id": null,
+          "expected_parent_attempt_id": null,
+          "source_facts": {
+            "wake_set_state": "pending",
+            "pass_already_committed": false
+          },
+          "source_bindings": {
+            "project_id": "project_id-001",
+            "run_id": "run_id-001",
+            "thread_id": "thread_id-001",
+            "replan_generation": 1,
+            "scheduler_pass_id": "scheduler_pass_id-001"
+          },
+          "envelope": {
+            "project_id": "project_id-001",
+            "run_id": "run_id-001",
+            "thread_id": "thread_id-001",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "payload": {
+              "schema_version": "1.0.0",
+              "project_id": "project_id-001",
+              "event_sequence": 1,
+              "ts": "2026-11-04T12:00:00Z",
+              "run_id": "run_id-001",
+              "thread_id": "thread_id-001",
+              "replan_generation": 1,
+              "scheduler_pass_id": "scheduler_pass_id-001",
+              "wake_reason": "prerequisite_resolved",
+              "available_slots": 1,
+              "ready_nodes": [
+                {
+                  "scheduler_lane": "normal",
+                  "manual_priority": 1,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00.100000001Z",
+                  "node_id": "node-high"
+                },
+                {
+                  "scheduler_lane": "normal",
+                  "manual_priority": 1,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00.100000002Z",
+                  "node_id": "node-low"
+                }
+              ],
+              "selected_nodes": [
+                {
+                  "node_id": "node-high",
+                  "score_tuple": {
+                    "scheduler_lane": "normal",
+                    "manual_priority": 1,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00.100000001Z",
+                    "node_id": "node-high"
+                  },
+                  "lane": "normal"
+                }
+              ],
+              "non_selected_nodes": [
+                {
+                  "node_id": "node-low",
+                  "exclusion_reason_code": "capacity",
+                  "ready_state": "ready"
+                }
+              ],
+              "wake_event_refs": [
+                "wake-002"
+              ],
+              "coalesced_wake_reasons": [
+                "capacity_available"
+              ]
+            },
+            "payload_ref": null,
+            "storage_instance_id": "store-001"
+          },
+          "source_child_success": true,
+          "payload_packs": {},
+          "viewer": "viewer-001"
+        },
+        "expected": "accept"
+      },
+      "defect_changes": [
+        {
+          "path": "payload/selected_nodes/0/node_id",
+          "value": "node-low"
+        },
+        {
+          "path": "payload/selected_nodes/0/score_tuple/ready_since_utc",
+          "value": "2026-11-04T12:00:00.100000002Z"
+        },
+        {
+          "path": "payload/selected_nodes/0/score_tuple/node_id",
+          "value": "node-low"
+        },
+        {
+          "path": "payload/non_selected_nodes/0/node_id",
+          "value": "node-high"
+        },
+        {
+          "path": "context/envelope/payload/selected_nodes/0/node_id",
+          "value": "node-low"
+        },
+        {
+          "path": "context/envelope/payload/selected_nodes/0/score_tuple/ready_since_utc",
+          "value": "2026-11-04T12:00:00.100000002Z"
+        },
+        {
+          "path": "context/envelope/payload/selected_nodes/0/score_tuple/node_id",
+          "value": "node-low"
+        },
+        {
+          "path": "context/envelope/payload/non_selected_nodes/0/node_id",
+          "value": "node-high"
+        }
+      ]
     }
   ]
 }
