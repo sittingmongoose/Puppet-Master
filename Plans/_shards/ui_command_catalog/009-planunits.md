@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L1296-L7119
+Source lines: L1296-L7120
 
-Source SHA256: `796f498459d5b977ca6c58043b719ad61743412a92639ad9b7dcf675f5e5d668`
+Source SHA256: `192335dd5c6230933d86757e0843de41fb8f98a5d1332ceade484ad9947fd8f1`
 
 ---
 
@@ -1777,7 +1777,7 @@ plan_unit_id: UCC-032
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Project management and deferred wizard command IDs cover adding/opening projects, creating local or GitHub-backed projects, and opening deferred chain wizard payloads with the required args, events, and affected surfaces.
+canonical_text: Project management and deferred wizard command IDs cover adding/opening projects, creating local or GitHub-backed projects, and opening deferred Planning Wizard handoff payloads with the required args, events, and affected surfaces.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -1818,7 +1818,8 @@ preserved_exact_tokens:
 negative_constraints: []
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/GitHub_Integration.md#d-project-management-flows-no-chain-wizard-required, ContractName:Plans/chain-wizard-flexibility.md'
-compatibility_only_notes: []
+compatibility_only_notes:
+- '`cmd.project.chain_wizard_open_deferred` and chain wizard deferred payloads are legacy compatibility names only; current surfaces route the deferred handoff to Planning Wizard.'
 stale_retired_dispositions: []
 owner_hints:
 - Plans/UI_Command_Catalog.md
