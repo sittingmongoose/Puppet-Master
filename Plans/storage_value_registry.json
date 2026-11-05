@@ -123086,7 +123086,7 @@
       "compatibility_key_shapes": [],
       "value_schema_id": "pm.goal_run_projection.started.reference.v1",
       "value_schema_ref": "Plans/goal_run_projection_reference_contracts/started.v1.schema.json#/$defs/StorageProjection",
-      "owner_doc": "Plans/storage-plan.md#SP-311",
+      "owner_doc": "Plans/storage-plan.md#SP-1138",
       "producer": [
         "owner.goal_run.started.project_prefix.reference.v1"
       ],
@@ -123118,7 +123118,8 @@
         "ambiguity_policy": "fail_closed",
         "source_refs": [
           "Plans/storage-plan.md#SP-311",
-          "Plans/Goal_Runtime_System.md#GRS-079"
+          "Plans/Goal_Runtime_System.md#GRS-079",
+          "Plans/storage-plan.md#SP-1138"
         ]
       },
       "restore_disposition": {
@@ -123128,7 +123129,8 @@
         "mutation_fence_on_unresolved": false,
         "source_refs": [
           "Plans/Backup_Restore_System.md#BRS-027",
-          "Plans/storage-plan.md#SP-311"
+          "Plans/storage-plan.md#SP-311",
+          "Plans/storage-plan.md#SP-1138"
         ]
       },
       "retention_compaction": "Exact RP-PROJECTION-3GEN@1.0.0: current no TTL, max three incl staged/current/retired, first actual retirement anchor plus 604800 seconds, authentic holds/references, overflow and expiry rebuild. Full derived Event content is source-coupled to actual RP-RUNTIME-365D@1.0.0 and never readable after original expiry/deletion merely because projection/checkpoint survives. Projection hold does not extend source retention; checkpoint loss rebuilds only disposable read state.",
@@ -123156,7 +123158,8 @@
         "source_refs": [
           "Plans/storage-plan.md#SP-311",
           "Plans/Executor_Protocol.md#EP-120",
-          "Plans/Backup_Restore_System.md#BRS-027"
+          "Plans/Backup_Restore_System.md#BRS-027",
+          "Plans/storage-plan.md#SP-1138"
         ],
         "backup_required": false,
         "data_loss_if_unavailable": false,
@@ -123218,7 +123221,7 @@
       "compatibility_key_shapes": [],
       "value_schema_id": "pm.goal_run_started_checkpoint.reference.v1.storage",
       "value_schema_ref": "Plans/goal_run_projection_reference_contracts/started.v1.schema.json#/$defs/StorageCheckpoint",
-      "owner_doc": "Plans/storage-plan.md#SP-311",
+      "owner_doc": "Plans/storage-plan.md#SP-1138",
       "producer": [
         "owner.goal_run.started.project_prefix.reference.v1"
       ],
@@ -123247,7 +123250,8 @@
         "ambiguity_policy": "fail_closed",
         "source_refs": [
           "Plans/storage-plan.md#SP-311",
-          "Plans/Goal_Runtime_System.md#GRS-079"
+          "Plans/Goal_Runtime_System.md#GRS-079",
+          "Plans/storage-plan.md#SP-1138"
         ]
       },
       "restore_disposition": {
@@ -123257,7 +123261,8 @@
         "mutation_fence_on_unresolved": false,
         "source_refs": [
           "Plans/Backup_Restore_System.md#BRS-027",
-          "Plans/storage-plan.md#SP-311"
+          "Plans/storage-plan.md#SP-311",
+          "Plans/storage-plan.md#SP-1138"
         ]
       },
       "retention_compaction": "Exact RP-PROJECTION-3GEN@1.0.0: current no TTL, max three incl staged/current/retired, first actual retirement anchor plus 604800 seconds, authentic holds/references, overflow and expiry rebuild. Full derived Event content is source-coupled to actual RP-RUNTIME-365D@1.0.0 and never readable after original expiry/deletion merely because projection/checkpoint survives. Projection hold does not extend source retention; checkpoint loss rebuilds only disposable read state.",
@@ -123285,7 +123290,8 @@
         "source_refs": [
           "Plans/storage-plan.md#SP-311",
           "Plans/Executor_Protocol.md#EP-120",
-          "Plans/Backup_Restore_System.md#BRS-027"
+          "Plans/Backup_Restore_System.md#BRS-027",
+          "Plans/storage-plan.md#SP-1138"
         ],
         "backup_required": false,
         "data_loss_if_unavailable": false,
@@ -123367,7 +123373,7 @@
       "compatibility_key_shapes": [],
       "value_schema_id": "pm.goal_run_projection.started_cancelled.reference.v1",
       "value_schema_ref": "Plans/goal_run_projection_reference_contracts/cancelled.v1.schema.json#/$defs/StorageProjection",
-      "owner_doc": "Plans/storage-plan.md#SP-312",
+      "owner_doc": "Plans/storage-plan.md#SP-1138",
       "producer": [
         "owner.goal_run.started_cancelled.project_prefix.reference.v1"
       ],
@@ -123400,7 +123406,8 @@
         "ambiguity_policy": "fail_closed",
         "source_refs": [
           "Plans/storage-plan.md#SP-312",
-          "Plans/Goal_Runtime_System.md#GRS-080"
+          "Plans/Goal_Runtime_System.md#GRS-080",
+          "Plans/storage-plan.md#SP-1138"
         ]
       },
       "restore_disposition": {
@@ -123410,7 +123417,8 @@
         "mutation_fence_on_unresolved": false,
         "source_refs": [
           "Plans/Backup_Restore_System.md#BRS-028",
-          "Plans/storage-plan.md#SP-312"
+          "Plans/storage-plan.md#SP-312",
+          "Plans/storage-plan.md#SP-1138"
         ]
       },
       "retention_compaction": "Exact existing RP-PROJECTION-3GEN@1.0.0: current no TTL, maximum three staged/current/retired, original retirement plus 604800 seconds, authentic holds/references, governed rebuild. Complete original started content remains source-coupled to RP-RUNTIME-365D and cancelled to RP-AUTHORITY-INDEFINITE; every required native/Goal/effect/Start original retains its own source policy. Missing original custody/journal/event makes dependent disclosure unavailable; a held projection or indefinite cancelled Event never extends another source lifetime.",
@@ -123479,7 +123487,8 @@
         "source_refs": [
           "Plans/storage-plan.md#SP-312",
           "Plans/Executor_Protocol.md#EP-121",
-          "Plans/Backup_Restore_System.md#BRS-028"
+          "Plans/Backup_Restore_System.md#BRS-028",
+          "Plans/storage-plan.md#SP-1138"
         ],
         "backup_required": false,
         "data_loss_if_unavailable": false,
@@ -123541,7 +123550,7 @@
       "compatibility_key_shapes": [],
       "value_schema_id": "pm.goal_run_started_cancelled_checkpoint.reference.v1.storage",
       "value_schema_ref": "Plans/goal_run_projection_reference_contracts/cancelled.v1.schema.json#/$defs/StorageCheckpoint",
-      "owner_doc": "Plans/storage-plan.md#SP-312",
+      "owner_doc": "Plans/storage-plan.md#SP-1138",
       "producer": [
         "owner.goal_run.started_cancelled.project_prefix.reference.v1"
       ],
@@ -123571,7 +123580,8 @@
         "ambiguity_policy": "fail_closed",
         "source_refs": [
           "Plans/storage-plan.md#SP-312",
-          "Plans/Goal_Runtime_System.md#GRS-080"
+          "Plans/Goal_Runtime_System.md#GRS-080",
+          "Plans/storage-plan.md#SP-1138"
         ]
       },
       "restore_disposition": {
@@ -123581,7 +123591,8 @@
         "mutation_fence_on_unresolved": false,
         "source_refs": [
           "Plans/Backup_Restore_System.md#BRS-028",
-          "Plans/storage-plan.md#SP-312"
+          "Plans/storage-plan.md#SP-312",
+          "Plans/storage-plan.md#SP-1138"
         ]
       },
       "retention_compaction": "Exact existing RP-PROJECTION-3GEN@1.0.0: current no TTL, maximum three staged/current/retired, original retirement plus 604800 seconds, authentic holds/references, governed rebuild. Complete original started content remains source-coupled to RP-RUNTIME-365D and cancelled to RP-AUTHORITY-INDEFINITE; every required native/Goal/effect/Start original retains its own source policy. Missing original custody/journal/event makes dependent disclosure unavailable; a held projection or indefinite cancelled Event never extends another source lifetime.",
@@ -123650,7 +123661,8 @@
         "source_refs": [
           "Plans/storage-plan.md#SP-312",
           "Plans/Executor_Protocol.md#EP-121",
-          "Plans/Backup_Restore_System.md#BRS-028"
+          "Plans/Backup_Restore_System.md#BRS-028",
+          "Plans/storage-plan.md#SP-1138"
         ],
         "backup_required": false,
         "data_loss_if_unavailable": false,

@@ -677,6 +677,11 @@
       "prior_pass_count_pinned_base": 11,
       "whole_root_closure": "BLOCKED_ORIGINAL_PROJECTION_REFERENCE_ROOT_MISSING",
       "full_path_oracles_added": 0,
+      "current_owner_units": [
+        "GRS-1137",
+        "SP-1138",
+        "ATS-1120"
+      ],
       "notes": "No new product decision. The source-edition separation itself is expected; the missing independently selected passive consumer route is the technical blocker. Existing bare-v7 unresolved references have an explicit scoped route in the coordinator package and are not reclassified as missing."
     },
     {
@@ -1328,10 +1333,20 @@
       "prior_pass_count_pinned_base": 11,
       "whole_root_closure": "BLOCKED_ORIGINAL_PROJECTION_REFERENCE_ROOT_MISSING",
       "full_path_oracles_added": 0,
+      "current_owner_units": [
+        "GRS-1136",
+        "SP-1138",
+        "ATS-1120"
+      ],
       "notes": "No new product decision. The source-edition separation itself is expected; the missing independently selected passive consumer route is the technical blocker. Existing bare-v7 unresolved references have an explicit scoped route in the coordinator package and are not reclassified as missing."
     }
   ],
   "static_checks_seen": [
-    "scripts/pm_goal_own_c3_w34_reference_oracles.py: expected technical-stop exit 2; representation evidence only"
+    "New W34 reference oracles: expected technical-stop exit 2; representation only, no complete native path",
+    "DG current/history/stop-block/lifecycle and lineage: pass",
+    "Inherited own-C and source suites: pass; their declared coverage remains bounded/PARTIAL",
+    "Shard generation/check and index generation: pass",
+    "Ordinary index validation: fail with 29 pre-existing or main-ahead failures; no baseline rewrite",
+    "Storage profile validation: fail with same 41 errors as requested base; new profiles are present"
   ]
 }

@@ -31,7 +31,7 @@ The new private/return schemas explicitly replace only derived projection/checkp
 
 DL-045's exact Goal row still includes both families and permits technical bindings for existing behavior after that search. GRS-079/EP-120/SP-311 still select genuine original Start; GRS-080/EP-121/SP-312 still select positive D06 and its distinct causal/effect graph. DL-270/SP-337 still require the projection reference path. These owner premises hold. The projection-representation premise now has a new explicit edition; the missing independently selected native-v7 passive consumer graph is not assumed away. No application `goal_run.stopped`, DL-448, Decision Log, admission, retention/deletion decision, seal or main push is authored.
 
-Before minting, the scan covered **577 fetched origin refs plus local main, 287 distinct owner-document blobs**, with zero definitions for the allocated ids used. Used: **GRS-1136, GRS-1137, SP-1138, ATS-1120**. CV/SIR/EP allocations remain unused. The scan is retained as id-scan.json.
+Before minting, the scan covered **577 scanned refs including local main, 287 distinct owner-document blobs**, with zero definitions for the allocated ids used. Used: **GRS-1136, GRS-1137, SP-1138, ATS-1120**. CV/SIR/EP allocations remain unused. The scan is retained as id-scan.json.
 
 ## Oracles and qualification
 
@@ -59,7 +59,7 @@ Every shared-file hunk relative to requested continuation head (new-side start,c
 - **Plans/Goal_Runtime_System.md**: 9196,96.
 - **Plans/storage-plan.md**: 30833,58.
 - **Plans/Automated_Testing_System.md**: 7650,58.
-- **Plans/storage_value_registry.json**: 123079,646, 125927,28.
+- **Plans/storage_value_registry.json**: 123079,658, 125939,28.
 - **Plans/goal_own_c_contracts/protocol.md**: 63,2, 71,2.
 - **Plans/goal_own_c_contracts/suites.json**: 82,8, 113,8.
 
@@ -76,6 +76,10 @@ Machine copy: `DG-OWN-C3-W34-part2-merge-ranges.json`. Generated shards/indexes 
 | `own-c` | 0 | 3.01 s |
 | `source-oracles` | 0 | 12.23 s |
 | `dg-current` | 0 | 48.7 s |
+| `dg-history` | 0 | 2762.12 s |
+| `dg-stop-block` | 0 | 12.01 s |
+| `dg-lifecycle` | 0 | 12.23 s |
+| `lineage` | 0 | 3.07 s |
 | `final-reference-oracles` | 2 | 14.25 s |
 | `storage-profile` | 1 | 1.07 s |
 | `final-shard-generate` | 0 | 4.13 s |
@@ -84,26 +88,41 @@ Machine copy: `DG-OWN-C3-W34-part2-merge-ranges.json`. Generated shards/indexes 
 | `final-index-validate` | 1 | 27.09 s |
 | `pycompile` | 0 | 1.0 s |
 | `diff-check` | 0 | 2.02 s |
+| `coherence-reference-oracles` | 2 | 25.13 s |
+| `coherence-index-generate` | 0 | 67.09 s |
+| `coherence-index-validate` | 1 | 81.2 s |
+| `coherence-pycompile` | 0 | 0.24 s |
+| `delivery-shard-generate` | 0 | 6.17 s |
+| `delivery-index-generate` | 0 | 57.3 s |
+| `delivery-shard-check` | 0 | 33.78 s |
+| `delivery-index-validate` | 1 | 77.23 s |
+| `delivery-storage-profile` | 1 | 1.07 s |
+| `delivery-diff-check` | 0 | 2.05 s |
 
-The ordinary index baseline is recorded unmodified. Storage-profile validation exits 1 with the same 41 missing-profile errors at the requested base and this branch; all four new families have profiles, and no existing profile or policy is repaired. The attributed base run changes only its registry input, never its predicates. Known legacy-ledger removals and main-ahead DL-302/PLS-025 are not repaired. Final check outputs and the exact input edition accompany this report. Heavy checks run serially with PM_GOAL_AUDIT_WORKERS=1; C3-W12's serial supervisor yields while the history audit is active. Resource pauses are recorded. The source-check pass is serialized by pausing this worker's own history audit and its supervisor, then resuming both; C3-W12 is untouched. The fifteen-file live ignored currentness edition is copied coherently before index generation. No aggregate gates, governance reseal/baseline refresh, native execution, admission or landing is claimed.
+The ordinary index baseline is recorded unmodified. Storage-profile validation exits 1 with the same 41 missing-profile errors at the requested base and this branch; all four new families have profiles, and no existing profile or policy is repaired. The attributed base run changes only its registry input, never its predicates. The first final ordinary index run had the 23 known legacy-ledger/main-ahead DL-302/PLS-025 failures. After another thread refreshed origin/main, the last ordinary run has 29 failures: those same 23 plus DL-330/DL-331/DL-332, DP-064/DP-066 and PWIZ-038, all present only on refreshed main in documents this branch never edited. `main-ahead-attribution.json` verifies every new unit was already absent at the requested base. The wrapper's fixed-count assertion expected 23 and failed after the validator had correctly completed; that assertion is not used to reclassify the actual 29-failure result. An intermediate run also reported a stale generated readiness artifact while registry edits were still in progress; final coherent generation/rerun removes that extra failure. No legacy ledger or Decision Log is repaired. Final check outputs and the exact input edition accompany this report. Heavy checks run serially with PM_GOAL_AUDIT_WORKERS=1; C3-W12's serial supervisor yields while the history audit is active. Resource pauses are recorded. The source-check pass is serialized by pausing this worker's own history audit and its supervisor, then resuming both; C3-W12 is untouched. The fifteen-file live ignored currentness edition is copied coherently before index generation. No aggregate gates, governance reseal/baseline refresh, native execution, admission or landing is claimed.
 
 Retained evidence directory: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W34/part2/`. Exact hashes:
 
 | File | SHA-256 |
 |---|---|
 | `reference-oracles.json` | `7a5eff4f9755dfcc9cdeac52aa3740a2b1f49a434b2664a5c5c95804576e557e` |
-| `source-search.json` | `a10485bbbae3d38d5c03bd9fddc5966b1a125398c3ada4134f24b46a5b74989c` |
-| `main-comparison.json` | `31114c3338c9db3092088ca53c54f37320e16460e4af65a1ae94a406eb263411` |
+| `source-search.json` | `654ce49875abe8d0ee8b679a9b388bfa1113c326f21a1dd6718bb29ad38c865c` |
+| `main-comparison.json` | `3ee91de978596717bf82c483d79435844274d3a8b7c186be1633edfff5b052c6` |
 | `preserved-roots.json` | `44d5006c4a0272e1457efa42ad3487d96f3a5e456cd14ef2e352d35230179ecc` |
 | `id-scan.json` | `ba54dca75101576c6b003d036259df04c07be7c8165c53aae375c4d2a094c60d` |
 | `currentness-copy.json` | `ab791e5e2ed31495e4044be4139a858a1470a3171a210fc609231ddf1030be98` |
 | `citation-check.json` | `1374945a3c550324b9370563b620e2b585c122d0b8ec94786566cc3b39a74111` |
-| `checks.json` | `ec0971dfc1727d77cc3945fca43e265b821072a3c1ba71ad193c15479b1f265e` |
-| `derived-scope.json` | `2cd5203ab5c7c9f067fb13d29a7d58d57ab85c8cdd3a2ac80dca498d83e75c3a` |
-| `schema-probes.json` | `ae04ae2827eefb8513f9c31fdadf626382e22af5295919e5e9582048a955ff3e` |
-| `registry-additive.json` | `bc257eb7880dc854d059f2980b13b16e6200003a45c8d5aa18011072de9796a1` |
+| `checks.json` | `9eb8f7909d5e0e2009419abac8641ca991df7f7248643fa5ac84b060193a204b` |
+| `derived-scope.json` | `b167f66f33474c324ae1b3dbc5cb29c153671d538d8005ec59e076aea0da09ea` |
+| `schema-probes.json` | `3fe1f143431a3a8c52b321a0f09dc3847468fe4a83f905eaaca946be98510b6a` |
+| `registry-additive.json` | `d0c546853920ed54fcd0312965cd760fe7bf3505f796a12eb4d3865d6f415fee` |
 | `storage-profile-comparison.json` | `69729c81567784c98aab5d2a54b1ecaca8e90b733d3932723dfeb883106568d4` |
 | `input-briefs.json` | `02cf1ca56506bdaa9107cf1865ecb18281024395739de745e7bf663c4589e2da` |
-| `currentness-inputs.tar.gz` | `2a29334f0ae97365c4d2855971a3bb5f22ff3f82686c28751d4e18cb46179beb` |
+| `currentness-inputs.tar.gz` | `3824f8a5d012d711d47263bcbad1adfdf228af35994102f61d527b3d0bff709a` |
+| `main-ahead-attribution.json` | `ade8ab0959d23d22a2dd0c62a2f0afb02b9937f07a68bbef303278267b44599b` |
+| `coherence-checks.json` | `5230077d88d2df93e0bb0d28d31f2ca38d9f612e5e8e3a234adccf60071a2fbc` |
+| `delivery-checks.json` | `00788763c62aa720a2a3e6be89eb2022e52d70cac6d72bca81dde14f330b213e` |
+| `inherited-summary.json` | `02826d6d65471074402dde2133074e31718fa7c3b02319a2632d404777663218` |
+| `resource-serialization.json` | `8274815366d4c434d3dcd9535ef93e3cbe3a830ceb390d6f6c10af5676c84476` |
 
 **Stopped question: none.** This handoff names missing technical source-consumer binding, not a new product decision.

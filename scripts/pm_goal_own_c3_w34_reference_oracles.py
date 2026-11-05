@@ -246,6 +246,7 @@ class Representation:
 def select_bank(short):
     selection=json.loads((DIRECTORY/(short+'.physical.json')).read_text())
     resource=json.loads((DIRECTORY/(short+'.resources.json')).read_text())
+    require('setup/new_resource_selection',equal(resource['successor_resource'],selection['new_whole_schema']))
     require('setup/bank_hash',sha((ROOT/resource['original_bank']).read_bytes())==resource['original_bank_sha256'])
     require('setup/schema_hash',sha((ROOT/selection['new_whole_schema']['path']).read_bytes())==selection['new_whole_schema']['sha256'])
     declaration=json.loads((ROOT/resource['original_bank']).read_text())['realms'][resource['realm']]

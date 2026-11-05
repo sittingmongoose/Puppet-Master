@@ -2395,5 +2395,43 @@
       ],
       "qualification": "Raw per-field/schema-keyword observations; inactive union branches are not duplicate guards and must be adjudicated by the shared tool."
     }
+  ],
+  "setup_qualification_negative_probes": [
+    {
+      "probe": "same_parsed_schema_different_whole_bytes",
+      "exit": 1,
+      "required_guard": "setup/schema_hash",
+      "observed": true
+    },
+    {
+      "probe": "unvisited_new_schema_dangling_ref",
+      "exit": 1,
+      "required_guard": "setup/successor_reference_closure",
+      "observed": true
+    },
+    {
+      "probe": "negative_success_sentinel",
+      "exit": 1,
+      "required_exit": 1,
+      "observed": true
+    },
+    {
+      "probe": "mismatched_resource_physical_selection",
+      "exit": 1,
+      "required_guard": "setup/new_resource_selection",
+      "observed": true
+    },
+    {
+      "probe": "mismatched_new_declared_original_bank_hash",
+      "exit": 1,
+      "required_guard": "setup/bank_hash",
+      "observed": true
+    },
+    {
+      "probe": "substituted_codec_read_bytes_no_original_file_edit",
+      "exit": 1,
+      "required_guard": "setup/original_codec_hash",
+      "observed": true
+    }
   ]
 }
