@@ -5760,9 +5760,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 100,
-        "True": 226
+        "True": 227
       },
-      "heading_count": 554,
+      "heading_count": 555,
       "implementation_surfaces": [
         ".claude/CLAUDE.md",
         ".gitignore",
@@ -5889,9 +5889,9 @@
         "scripts/pm_pnc019_currentness.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 28646,
+      "line_count": 28700,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 326,
+      "plan_unit_count": 327,
       "plan_unit_ids": [
         "DL-400",
         "DL-401",
@@ -6218,7 +6218,8 @@
         "DL-331",
         "DL-332",
         "DL-334",
-        "DL-336"
+        "DL-336",
+        "DL-340"
       ],
       "reasoning_tiers": [
         "high",
@@ -6232,6 +6233,7 @@
         "activity_rollback_scope",
         "agent_mark_presentation_drift",
         "appearance_choice_or_compatibility_drift",
+        "appearance_state_drift",
         "approval_anchor_evidence_governance_drift",
         "assistant_hosted_routing_provider_default_drift",
         "automation_manual_stop_precedence",
@@ -6401,15 +6403,15 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "1f90a19f9e56e6ef7c23267c85707f2d69b4c079de107e69bd9e0add3906212d",
+      "sha256": "7216a9afaabcf2473fc9bbcc304ebea04e23cc1ea7f5b8b5362d6e2949288230",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 326
+        "accepted": 327
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "decision": 210,
+        "decision": 211,
         "decision_record": 24,
         "requirement": 91
       },
@@ -6419,6 +6421,7 @@
         "Concepts/onboarding/opus-5.5-pip/tools/sound_levels.mjs",
         "Concepts/onboarding/opus-5.5-pip/tools/sound_texture.mjs",
         "Concepts/onboarding/opus-5.5/tools/scenarios.mjs",
+        "Concepts/pm7-tools/browser-check/checks/theme-header.check.mjs",
         "Decision Log PlanUnit YAML and pre-existing PlanUnit semantic preservation",
         "Decision Log PlanUnit YAML parsing and exact canonical scope comparison to the pinned manifest",
         "Exact approval/card SHA-256 and response preservation",
@@ -8036,7 +8039,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 50370,
+      "line_count": 50375,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 662,
       "plan_unit_ids": [
@@ -8847,7 +8850,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "5e31ae60db6d0b015b0d9deba42d940bae1d8f3edb4e4f588b40eac38c7f4cb8",
+      "sha256": "19d65457685d346882e04bac03e547f7388e6aac7f7b8d204a00b696e96f8b9e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 653,
@@ -21638,7 +21641,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-05T14:25:25Z",
+  "generated_at_utc": "2026-11-05T17:13:30Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -21647,12 +21650,12 @@
     "docs_without_plan_units": 0,
     "gui_related_counts": {
       "False": 3675,
-      "True": 3813
+      "True": 3814
     },
-    "plan_unit_count": 7488,
+    "plan_unit_count": 7489,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 7269,
+      "accepted": 7270,
       "retired": 196,
       "superseded": 23
     },
@@ -21685,7 +21688,7 @@
       "contract": 5,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 233,
+      "decision": 234,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,

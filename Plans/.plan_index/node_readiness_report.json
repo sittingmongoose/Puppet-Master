@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18855,
+    "depends_on_edge_count": 18858,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22065,
-    "node_count": 7488,
+    "edge_count": 22068,
+    "node_count": 7489,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3210,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-05T14:25:26Z",
+  "generated_at_utc": "2026-11-05T17:13:30Z",
   "gui_related_units": {
-    "count": 3813,
+    "count": 3814,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -12426,6 +12426,17 @@
       },
       {
         "owner_doc": "Plans/Decision_Log.md",
+        "plan_unit_id": "DL-340",
+        "source_location": {
+          "heading": "DL-340 - Onboarding Retains Auto Appearance",
+          "heading_level": 3,
+          "heading_line": 28648,
+          "line": 28652,
+          "path": "Plans/Decision_Log.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Decision_Log.md",
         "plan_unit_id": "DL-402",
         "source_location": {
           "heading": "DL-402 - Monthly summary and prune archive memories only",
@@ -19998,8 +20009,8 @@
         "source_location": {
           "heading": "F3-521 - Guided Tour Newbie-First Practice Presentation",
           "heading_level": 3,
-          "heading_line": 36843,
-          "line": 36845,
+          "heading_line": 36848,
+          "line": 36850,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20009,8 +20020,8 @@
         "source_location": {
           "heading": "F3-522 - Operational Doctor K3 Workspace Presentation",
           "heading_level": 3,
-          "heading_line": 37082,
-          "line": 37084,
+          "heading_line": 37087,
+          "line": 37089,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20020,8 +20031,8 @@
         "source_location": {
           "heading": "F3-523 - Global Hover Help Overlay And Accessibility",
           "heading_level": 3,
-          "heading_line": 37134,
-          "line": 37136,
+          "heading_line": 37139,
+          "line": 37141,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20031,8 +20042,8 @@
         "source_location": {
           "heading": "F3-524 - Model-Backed Slint Portability And Evidence Separation",
           "heading_level": 3,
-          "heading_line": 37232,
-          "line": 37234,
+          "heading_line": 37237,
+          "line": 37239,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20042,8 +20053,8 @@
         "source_location": {
           "heading": "F3-525 - K3 Plugins Owner Projection And Theme-Native Action States",
           "heading_level": 3,
-          "heading_line": 37294,
-          "line": 37296,
+          "heading_line": 37299,
+          "line": 37301,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20053,8 +20064,8 @@
         "source_location": {
           "heading": "F3-526 - Operational Doctor Consumer Currentness And Evidence Closure",
           "heading_level": 3,
-          "heading_line": 37369,
-          "line": 37371,
+          "heading_line": 37374,
+          "line": 37376,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20064,8 +20075,8 @@
         "source_location": {
           "heading": "F3-527 - Settled Panel Undock And Redock Event Identity",
           "heading_level": 3,
-          "heading_line": 37429,
-          "line": 37431,
+          "heading_line": 37434,
+          "line": 37436,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20075,8 +20086,8 @@
         "source_location": {
           "heading": "F3-528 - Provider-neutral automation and recovery/connector presentation",
           "heading_level": 3,
-          "heading_line": 37496,
-          "line": 37498,
+          "heading_line": 37501,
+          "line": 37503,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20086,8 +20097,8 @@
         "source_location": {
           "heading": "F3-529 - Source Control, Reviews, Actions And Pipelines, And Related-Surface Semantics",
           "heading_level": 3,
-          "heading_line": 37714,
-          "line": 37716,
+          "heading_line": 37719,
+          "line": 37721,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20097,8 +20108,8 @@
         "source_location": {
           "heading": "F3-530 - Reference-Only Security Controls And Post-Integration DRY Reconciliation",
           "heading_level": 3,
-          "heading_line": 37895,
-          "line": 37897,
+          "heading_line": 37900,
+          "line": 37902,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20108,8 +20119,8 @@
         "source_location": {
           "heading": "F3-531 - Assistant Redesign Mode Menu, Wand, And Header Placement",
           "heading_level": 3,
-          "heading_line": 38065,
-          "line": 38067,
+          "heading_line": 38070,
+          "line": 38072,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20119,8 +20130,8 @@
         "source_location": {
           "heading": "F3-532 - Assistant Composer Tray, Destination Ribbon, And Quota Strip",
           "heading_level": 3,
-          "heading_line": 38118,
-          "line": 38120,
+          "heading_line": 38123,
+          "line": 38125,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20130,8 +20141,8 @@
         "source_location": {
           "heading": "F3-533 - Plan Card, Goal And To-Do Activity Surfaces, And Activity Domains",
           "heading_level": 3,
-          "heading_line": 38167,
-          "line": 38169,
+          "heading_line": 38172,
+          "line": 38174,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20141,8 +20152,8 @@
         "source_location": {
           "heading": "F3-534 - Assistant Redesign Responsive Priority And Visual Prohibitions",
           "heading_level": 3,
-          "heading_line": 38241,
-          "line": 38243,
+          "heading_line": 38246,
+          "line": 38248,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20152,8 +20163,8 @@
         "source_location": {
           "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
           "heading_level": 3,
-          "heading_line": 38649,
-          "line": 38728,
+          "heading_line": 38654,
+          "line": 38733,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20163,8 +20174,8 @@
         "source_location": {
           "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
           "heading_level": 3,
-          "heading_line": 38649,
-          "line": 38798,
+          "heading_line": 38654,
+          "line": 38803,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20174,8 +20185,8 @@
         "source_location": {
           "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
           "heading_level": 3,
-          "heading_line": 38649,
-          "line": 38846,
+          "heading_line": 38654,
+          "line": 38851,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20185,8 +20196,8 @@
         "source_location": {
           "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
           "heading_level": 3,
-          "heading_line": 38649,
-          "line": 38893,
+          "heading_line": 38654,
+          "line": 38898,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20196,8 +20207,8 @@
         "source_location": {
           "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
           "heading_level": 3,
-          "heading_line": 38649,
-          "line": 38941,
+          "heading_line": 38654,
+          "line": 38946,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20207,8 +20218,8 @@
         "source_location": {
           "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
           "heading_level": 3,
-          "heading_line": 38649,
-          "line": 38983,
+          "heading_line": 38654,
+          "line": 38988,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20218,8 +20229,8 @@
         "source_location": {
           "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
           "heading_level": 3,
-          "heading_line": 38649,
-          "line": 39035,
+          "heading_line": 38654,
+          "line": 39040,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20229,8 +20240,8 @@
         "source_location": {
           "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
           "heading_level": 3,
-          "heading_line": 38649,
-          "line": 39079,
+          "heading_line": 38654,
+          "line": 39084,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20240,8 +20251,8 @@
         "source_location": {
           "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
           "heading_level": 3,
-          "heading_line": 38649,
-          "line": 39141,
+          "heading_line": 38654,
+          "line": 39146,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20251,8 +20262,8 @@
         "source_location": {
           "heading": "F3-544 - Terminal Capability Shell Context And Snapshot Disclosure",
           "heading_level": 3,
-          "heading_line": 39204,
-          "line": 39206,
+          "heading_line": 39209,
+          "line": 39211,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20262,8 +20273,8 @@
         "source_location": {
           "heading": "F3-545 - Explicit Remote Terminal Compatibility Setup",
           "heading_level": 3,
-          "heading_line": 39267,
-          "line": 39269,
+          "heading_line": 39272,
+          "line": 39274,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20273,8 +20284,8 @@
         "source_location": {
           "heading": "F3-546 - Tab Local Advisory Command Progress",
           "heading_level": 3,
-          "heading_line": 39320,
-          "line": 39322,
+          "heading_line": 39325,
+          "line": 39327,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20284,8 +20295,8 @@
         "source_location": {
           "heading": "F3-547 - Safe Command Insertion And Retained Output Editor Actions",
           "heading_level": 3,
-          "heading_line": 39373,
-          "line": 39375,
+          "heading_line": 39378,
+          "line": 39380,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20295,8 +20306,8 @@
         "source_location": {
           "heading": "F3-548 - Redacted Environment Provenance And Pending Launch Display",
           "heading_level": 3,
-          "heading_line": 39431,
-          "line": 39433,
+          "heading_line": 39436,
+          "line": 39438,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20306,8 +20317,8 @@
         "source_location": {
           "heading": "F3-549 - Explicit Live Terminal Tab Input Protection",
           "heading_level": 3,
-          "heading_line": 39485,
-          "line": 39487,
+          "heading_line": 39490,
+          "line": 39492,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20317,8 +20328,8 @@
         "source_location": {
           "heading": "F3-550 - Research Decision Card Fields Sequencing And Text Status",
           "heading_level": 3,
-          "heading_line": 39560,
-          "line": 39562,
+          "heading_line": 39565,
+          "line": 39567,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20328,8 +20339,8 @@
         "source_location": {
           "heading": "F3-550 - Research Decision Card Fields Sequencing And Text Status",
           "heading_level": 3,
-          "heading_line": 39560,
-          "line": 39635,
+          "heading_line": 39565,
+          "line": 39640,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20339,8 +20350,8 @@
         "source_location": {
           "heading": "F3-552 — Operation History Navigation And Descriptions",
           "heading_level": 3,
-          "heading_line": 39691,
-          "line": 39693,
+          "heading_line": 39696,
+          "line": 39698,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20350,8 +20361,8 @@
         "source_location": {
           "heading": "F3-553 — Distinct Group Undo Redo And Selected Operation Reversal",
           "heading_level": 3,
-          "heading_line": 39764,
-          "line": 39766,
+          "heading_line": 39769,
+          "line": 39771,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20361,8 +20372,8 @@
         "source_location": {
           "heading": "F3-554 — Managed Rewrite Preview And Earlier State Browsing",
           "heading_level": 3,
-          "heading_line": 39835,
-          "line": 39837,
+          "heading_line": 39840,
+          "line": 39842,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20372,8 +20383,8 @@
         "source_location": {
           "heading": "F3-555 — Guided Change Editing And Structured Partial Selection",
           "heading_level": 3,
-          "heading_line": 39906,
-          "line": 39908,
+          "heading_line": 39911,
+          "line": 39913,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20383,8 +20394,8 @@
         "source_location": {
           "heading": "F3-556 — History Comparison Graph Assistance And Review Correspondence",
           "heading_level": 3,
-          "heading_line": 39985,
-          "line": 39987,
+          "heading_line": 39990,
+          "line": 39992,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20394,8 +20405,8 @@
         "source_location": {
           "heading": "F3-557 — Read Only Browsing Workspace Adoption And Visibility",
           "heading_level": 3,
-          "heading_line": 40065,
-          "line": 40067,
+          "heading_line": 40070,
+          "line": 40072,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20405,8 +20416,8 @@
         "source_location": {
           "heading": "F3-558 — Qualified Conflict Publication Bookmark Resolution And Review Stacks",
           "heading_level": 3,
-          "heading_line": 40132,
-          "line": 40134,
+          "heading_line": 40137,
+          "line": 40139,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20416,8 +20427,8 @@
         "source_location": {
           "heading": "F3-559 — History Maintenance And Sanitized Diagnostic Surfaces",
           "heading_level": 3,
-          "heading_line": 40207,
-          "line": 40209,
+          "heading_line": 40212,
+          "line": 40214,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20427,8 +20438,8 @@
         "source_location": {
           "heading": "F3-560 — Line Ending And Backup Completion Policy Presentation",
           "heading_level": 3,
-          "heading_line": 40274,
-          "line": 40276,
+          "heading_line": 40279,
+          "line": 40281,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20438,8 +20449,8 @@
         "source_location": {
           "heading": "F3-561 — Gate List Source And Enforcement Columns",
           "heading_level": 3,
-          "heading_line": 40346,
-          "line": 40348,
+          "heading_line": 40351,
+          "line": 40353,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20449,8 +20460,8 @@
         "source_location": {
           "heading": "F3-562 - Chat Transcript Turn Stage Presentation And Working Activity Promotion",
           "heading_level": 3,
-          "heading_line": 40390,
-          "line": 40392,
+          "heading_line": 40395,
+          "line": 40397,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20460,8 +20471,8 @@
         "source_location": {
           "heading": "F3-563 - Composer Busy Send Steer Queue Switch Default And Send Now",
           "heading_level": 3,
-          "heading_line": 40454,
-          "line": 40456,
+          "heading_line": 40459,
+          "line": 40461,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20471,8 +20482,8 @@
         "source_location": {
           "heading": "F3-564 - Chat Sound Cues In Notifications And Sounds With A Header Mute",
           "heading_level": 3,
-          "heading_line": 40507,
-          "line": 40509,
+          "heading_line": 40512,
+          "line": 40514,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20482,8 +20493,8 @@
         "source_location": {
           "heading": "F3-565 - Narrow Chat Pane Transcript Resilience",
           "heading_level": 3,
-          "heading_line": 40564,
-          "line": 40566,
+          "heading_line": 40569,
+          "line": 40571,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20493,8 +20504,8 @@
         "source_location": {
           "heading": "F3-566 - Wand Modules Redesign GUI Contract And Sheet Grammar",
           "heading_level": 3,
-          "heading_line": 40619,
-          "line": 40621,
+          "heading_line": 40624,
+          "line": 40626,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20504,8 +20515,8 @@
         "source_location": {
           "heading": "F3-567 - Composer Stack With The Dock And Capability Marks",
           "heading_level": 3,
-          "heading_line": 40787,
-          "line": 40789,
+          "heading_line": 40792,
+          "line": 40794,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20515,8 +20526,8 @@
         "source_location": {
           "heading": "F3-568 - Dialog Keyboard Scope And Escape Precedence",
           "heading_level": 3,
-          "heading_line": 40872,
-          "line": 40874,
+          "heading_line": 40877,
+          "line": 40879,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20526,8 +20537,8 @@
         "source_location": {
           "heading": "F3-569 - Run Card Budgets Width Tiers Receipts And Run Views",
           "heading_level": 3,
-          "heading_line": 40935,
-          "line": 40937,
+          "heading_line": 40940,
+          "line": 40942,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20537,8 +20548,8 @@
         "source_location": {
           "heading": "F3-570 - Reply One-Line Attachments From The Wand Modules",
           "heading_level": 3,
-          "heading_line": 41029,
-          "line": 41031,
+          "heading_line": 41034,
+          "line": 41036,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20548,8 +20559,8 @@
         "source_location": {
           "heading": "F3-571 - Back Seat Driver Advisor Note Placement",
           "heading_level": 3,
-          "heading_line": 41101,
-          "line": 41103,
+          "heading_line": 41106,
+          "line": 41108,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20559,8 +20570,8 @@
         "source_location": {
           "heading": "F3-572 - Dual-Copy Checklist For Expert And ELI5 Authored Copy",
           "heading_level": 3,
-          "heading_line": 41169,
-          "line": 41171,
+          "heading_line": 41174,
+          "line": 41176,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20570,8 +20581,8 @@
         "source_location": {
           "heading": "F3-573 - Schedule Message And Build At Sheets",
           "heading_level": 3,
-          "heading_line": 41230,
-          "line": 41232,
+          "heading_line": 41235,
+          "line": 41237,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20581,8 +20592,8 @@
         "source_location": {
           "heading": "F3-574 - Revert Confirm Sheet And Memory Chat Traces",
           "heading_level": 3,
-          "heading_line": 41296,
-          "line": 41298,
+          "heading_line": 41301,
+          "line": 41303,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20592,8 +20603,8 @@
         "source_location": {
           "heading": "F3-575 - Chat Header Title States",
           "heading_level": 3,
-          "heading_line": 41359,
-          "line": 41361,
+          "heading_line": 41364,
+          "line": 41366,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20603,8 +20614,8 @@
         "source_location": {
           "heading": "F3-576 - Additive Correction v4 Wording For The Wand Module Surfaces",
           "heading_level": 3,
-          "heading_line": 41414,
-          "line": 41416,
+          "heading_line": 41419,
+          "line": 41421,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20614,8 +20625,8 @@
         "source_location": {
           "heading": "F3-577 - Wand Rows For Back Seat Driver And Revert",
           "heading_level": 3,
-          "heading_line": 41473,
-          "line": 41475,
+          "heading_line": 41478,
+          "line": 41480,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20625,8 +20636,8 @@
         "source_location": {
           "heading": "F3-578 - Wand Multi-Agent Sidecar Gains Crew Auto Settings",
           "heading_level": 3,
-          "heading_line": 41523,
-          "line": 41525,
+          "heading_line": 41528,
+          "line": 41530,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20636,8 +20647,8 @@
         "source_location": {
           "heading": "F3-579 - Teach Sheet And Your Rules Document",
           "heading_level": 3,
-          "heading_line": 41602,
-          "line": 41604,
+          "heading_line": 41607,
+          "line": 41609,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20647,8 +20658,8 @@
         "source_location": {
           "heading": "F3-580 - Compact Activity Detail For Collaboration Runs And Back Seat Driver Context",
           "heading_level": 3,
-          "heading_line": 41674,
-          "line": 41676,
+          "heading_line": 41679,
+          "line": 41681,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20658,8 +20669,8 @@
         "source_location": {
           "heading": "F3-581 - ELI5 Sheet Quick Dot Reply Tick And Explain This Reply Simply",
           "heading_level": 3,
-          "heading_line": 41745,
-          "line": 41747,
+          "heading_line": 41750,
+          "line": 41752,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20669,8 +20680,8 @@
         "source_location": {
           "heading": "F3-582 — Skia Renderer Extensions",
           "heading_level": 3,
-          "heading_line": 41826,
-          "line": 41828,
+          "heading_line": 41831,
+          "line": 41833,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20680,8 +20691,8 @@
         "source_location": {
           "heading": "F3-583 — Leptos Web Client",
           "heading_level": 3,
-          "heading_line": 41904,
-          "line": 41906,
+          "heading_line": 41909,
+          "line": 41911,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20691,8 +20702,8 @@
         "source_location": {
           "heading": "F3-584 — Assistant Chat Neon Icon Grammar",
           "heading_level": 3,
-          "heading_line": 41997,
-          "line": 41999,
+          "heading_line": 42002,
+          "line": 42004,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20702,8 +20713,8 @@
         "source_location": {
           "heading": "F3-585 — Status Set And Status At A Glance",
           "heading_level": 3,
-          "heading_line": 42093,
-          "line": 42095,
+          "heading_line": 42098,
+          "line": 42100,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20713,8 +20724,8 @@
         "source_location": {
           "heading": "F3-586 — Working Activity Dark Disc",
           "heading_level": 3,
-          "heading_line": 42163,
-          "line": 42165,
+          "heading_line": 42168,
+          "line": 42170,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20724,8 +20735,8 @@
         "source_location": {
           "heading": "F3-587 — Composer Send And Stop Solid Living Control",
           "heading_level": 3,
-          "heading_line": 42220,
-          "line": 42222,
+          "heading_line": 42225,
+          "line": 42227,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20735,8 +20746,8 @@
         "source_location": {
           "heading": "F3-588 — Wand And Fast Mode Bolt Glyphs",
           "heading_level": 3,
-          "heading_line": 42291,
-          "line": 42293,
+          "heading_line": 42296,
+          "line": 42298,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20746,8 +20757,8 @@
         "source_location": {
           "heading": "F3-589 — Assistant Chat Under NieR Mode And Scene Changes",
           "heading_level": 3,
-          "heading_line": 42365,
-          "line": 42367,
+          "heading_line": 42370,
+          "line": 42372,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20757,8 +20768,8 @@
         "source_location": {
           "heading": "F3-590 — Chat Hover Labels Wait For Intent And Activity Previews Dwell",
           "heading_level": 3,
-          "heading_line": 42448,
-          "line": 42450,
+          "heading_line": 42453,
+          "line": 42455,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20768,8 +20779,8 @@
         "source_location": {
           "heading": "F3-591 — Opening More Keeps The Message Chrome On Its Row",
           "heading_level": 3,
-          "heading_line": 42527,
-          "line": 42529,
+          "heading_line": 42532,
+          "line": 42534,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20779,8 +20790,8 @@
         "source_location": {
           "heading": "F3-592 — Setup Sheet Step Tiles, A Readable In Your Chat Preview, And The Send Time Track",
           "heading_level": 3,
-          "heading_line": 42579,
-          "line": 42581,
+          "heading_line": 42584,
+          "line": 42586,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20790,8 +20801,8 @@
         "source_location": {
           "heading": "F3-593 — Goal, To-Dos And Subagents In Activity Detail",
           "heading_level": 3,
-          "heading_line": 42647,
-          "line": 42649,
+          "heading_line": 42652,
+          "line": 42654,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20801,8 +20812,8 @@
         "source_location": {
           "heading": "F3-594 — Agents Are Puppets",
           "heading_level": 3,
-          "heading_line": 42754,
-          "line": 42756,
+          "heading_line": 42759,
+          "line": 42761,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20812,8 +20823,8 @@
         "source_location": {
           "heading": "F3-595 — Cast Plates In Sheets And Run Views",
           "heading_level": 3,
-          "heading_line": 42869,
-          "line": 42871,
+          "heading_line": 42874,
+          "line": 42876,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20823,8 +20834,8 @@
         "source_location": {
           "heading": "F3-596 — The Ask Card's Look",
           "heading_level": 3,
-          "heading_line": 42992,
-          "line": 42994,
+          "heading_line": 42997,
+          "line": 42999,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20834,8 +20845,8 @@
         "source_location": {
           "heading": "F3-597 — The Assistant Chat Under The Retro Themes",
           "heading_level": 3,
-          "heading_line": 43056,
-          "line": 43058,
+          "heading_line": 43061,
+          "line": 43063,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20845,8 +20856,8 @@
         "source_location": {
           "heading": "F3-598 — NieR Mode In Product Onboarding And The Guided Tour",
           "heading_level": 3,
-          "heading_line": 43145,
-          "line": 43147,
+          "heading_line": 43150,
+          "line": 43152,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20856,8 +20867,8 @@
         "source_location": {
           "heading": "F3-599 — Onboarding And Guided Tour Sound Cues In Notifications And Sounds",
           "heading_level": 3,
-          "heading_line": 43278,
-          "line": 43280,
+          "heading_line": 43283,
+          "line": 43285,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20867,8 +20878,8 @@
         "source_location": {
           "heading": "F3-600 — The Hero Moments In The Five Theme Families (Q22)",
           "heading_level": 3,
-          "heading_line": 43872,
-          "line": 43874,
+          "heading_line": 43877,
+          "line": 43879,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20878,8 +20889,8 @@
         "source_location": {
           "heading": "F3-601 — A Cast Plate Keeps A Drawing At Every Team Size",
           "heading_level": 3,
-          "heading_line": 43451,
-          "line": 43453,
+          "heading_line": 43456,
+          "line": 43458,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20889,8 +20900,8 @@
         "source_location": {
           "heading": "F3-602 — A Run Card's Track Wraps Down And Shows Every Chat Room Round",
           "heading_level": 3,
-          "heading_line": 43528,
-          "line": 43530,
+          "heading_line": 43533,
+          "line": 43535,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20900,8 +20911,8 @@
         "source_location": {
           "heading": "F3-606 — The Transcript Plan Card's Status Zone And One Action Row",
           "heading_level": 3,
-          "heading_line": 43589,
-          "line": 43591,
+          "heading_line": 43594,
+          "line": 43596,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20911,8 +20922,8 @@
         "source_location": {
           "heading": "F3-607 — The Plan Card's Schedule Line Layout",
           "heading_level": 3,
-          "heading_line": 43663,
-          "line": 43665,
+          "heading_line": 43668,
+          "line": 43670,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20922,8 +20933,8 @@
         "source_location": {
           "heading": "F3-609 — The Ask Card Fits Long Answers",
           "heading_level": 3,
-          "heading_line": 43380,
-          "line": 43382,
+          "heading_line": 43385,
+          "line": 43387,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20933,8 +20944,8 @@
         "source_location": {
           "heading": "F3-612 — The Assistant Chat Paints The Stored Look From Its First Frame",
           "heading_level": 3,
-          "heading_line": 44000,
-          "line": 44002,
+          "heading_line": 44005,
+          "line": 44007,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20944,8 +20955,8 @@
         "source_location": {
           "heading": "F3-616 — Activity Detail Tabs, Collaboration Domain Tones And The Round's Last Polish",
           "heading_level": 3,
-          "heading_line": 43731,
-          "line": 43733,
+          "heading_line": 43736,
+          "line": 43738,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20955,8 +20966,8 @@
         "source_location": {
           "heading": "F3-617 — Technical Details Remains Only On A Setup Sheet's Advanced Page",
           "heading_level": 3,
-          "heading_line": 43796,
-          "line": 43798,
+          "heading_line": 43801,
+          "line": 43803,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20966,8 +20977,8 @@
         "source_location": {
           "heading": "F3-618 — The Left Rail's Geometry, Shelves And Type",
           "heading_level": 3,
-          "heading_line": 44060,
-          "line": 44062,
+          "heading_line": 44065,
+          "line": 44067,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20977,8 +20988,8 @@
         "source_location": {
           "heading": "F3-619 — Rail Statuses Are A Glyph And A Word, Counts Are Plain Numbers",
           "heading_level": 3,
-          "heading_line": 44141,
-          "line": 44143,
+          "heading_line": 44146,
+          "line": 44148,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20988,8 +20999,8 @@
         "source_location": {
           "heading": "F3-620 — Rail Text Fits By Layout, Never By Abbreviation",
           "heading_level": 3,
-          "heading_line": 44215,
-          "line": 44217,
+          "heading_line": 44220,
+          "line": 44222,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -20999,8 +21010,8 @@
         "source_location": {
           "heading": "F3-621 — Rail Dropdowns Use The Chat Picker, And Rail Motion Follows The Theme Family",
           "heading_level": 3,
-          "heading_line": 44294,
-          "line": 44296,
+          "heading_line": 44299,
+          "line": 44301,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21010,8 +21021,8 @@
         "source_location": {
           "heading": "F3-622 — The Worktree Owner Dropdown And The Folding Publish Card",
           "heading_level": 3,
-          "heading_line": 44413,
-          "line": 44415,
+          "heading_line": 44418,
+          "line": 44420,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21021,8 +21032,8 @@
         "source_location": {
           "heading": "F3-623 — The Jujutsu Tab Strip, The Engine Switch And The Panel Frame",
           "heading_level": 3,
-          "heading_line": 44535,
-          "line": 44537,
+          "heading_line": 44540,
+          "line": 44542,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21032,8 +21043,8 @@
         "source_location": {
           "heading": "F3-624 — The Five Jujutsu Views",
           "heading_level": 3,
-          "heading_line": 44622,
-          "line": 44624,
+          "heading_line": 44627,
+          "line": 44629,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21043,8 +21054,8 @@
         "source_location": {
           "heading": "F3-625 — The Activity Bar's More Tray In The Polish Design",
           "heading_level": 3,
-          "heading_line": 44466,
-          "line": 44468,
+          "heading_line": 44471,
+          "line": 44473,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21054,8 +21065,8 @@
         "source_location": {
           "heading": "F3-628 — The Redesigned Usage Page's Presentation",
           "heading_level": 3,
-          "heading_line": 44721,
-          "line": 44723,
+          "heading_line": 44726,
+          "line": 44728,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21065,8 +21076,8 @@
         "source_location": {
           "heading": "F3-630 — The Universal Panel Model And Its Layout",
           "heading_level": 3,
-          "heading_line": 45103,
-          "line": 45105,
+          "heading_line": 45108,
+          "line": 45110,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21076,8 +21087,8 @@
         "source_location": {
           "heading": "F3-631 — One Tab Strip For Every Panel",
           "heading_level": 3,
-          "heading_line": 45250,
-          "line": 45252,
+          "heading_line": 45255,
+          "line": 45257,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21087,8 +21098,8 @@
         "source_location": {
           "heading": "F3-632 — The \"+\" Menu And The Empty Panel",
           "heading_level": 3,
-          "heading_line": 45429,
-          "line": 45431,
+          "heading_line": 45434,
+          "line": 45436,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21098,8 +21109,8 @@
         "source_location": {
           "heading": "F3-633 — The \"+N\" List Of Hidden Tabs",
           "heading_level": 3,
-          "heading_line": 45623,
-          "line": 45625,
+          "heading_line": 45628,
+          "line": 45630,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21109,8 +21120,8 @@
         "source_location": {
           "heading": "F3-634 — Opening Things In Panels",
           "heading_level": 3,
-          "heading_line": 45704,
-          "line": 45706,
+          "heading_line": 45709,
+          "line": 45711,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21120,8 +21131,8 @@
         "source_location": {
           "heading": "F3-635 — Tab Kinds, The Host Contract And The Keys",
           "heading_level": 3,
-          "heading_line": 45826,
-          "line": 45828,
+          "heading_line": 45831,
+          "line": 45833,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21131,8 +21142,8 @@
         "source_location": {
           "heading": "F3-636 — Narrow Windows: The Centre-Width Ladder",
           "heading_level": 3,
-          "heading_line": 46202,
-          "line": 46204,
+          "heading_line": 46207,
+          "line": 46209,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21142,8 +21153,8 @@
         "source_location": {
           "heading": "F3-637 — The Chat Column",
           "heading_level": 3,
-          "heading_line": 46304,
-          "line": 46306,
+          "heading_line": 46309,
+          "line": 46311,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21153,8 +21164,8 @@
         "source_location": {
           "heading": "F3-638 — The Dashboard Tab",
           "heading_level": 3,
-          "heading_line": 46505,
-          "line": 46507,
+          "heading_line": 46510,
+          "line": 46512,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21164,8 +21175,8 @@
         "source_location": {
           "heading": "F3-639 — The Code Editor Tab",
           "heading_level": 3,
-          "heading_line": 46629,
-          "line": 46631,
+          "heading_line": 46634,
+          "line": 46636,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21175,8 +21186,8 @@
         "source_location": {
           "heading": "F3-640 — The Terminal Tab's Chrome",
           "heading_level": 3,
-          "heading_line": 47132,
-          "line": 47134,
+          "heading_line": 47137,
+          "line": 47139,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21186,8 +21197,8 @@
         "source_location": {
           "heading": "F3-641 — What The Terminal Helps You Do",
           "heading_level": 3,
-          "heading_line": 47339,
-          "line": 47341,
+          "heading_line": 47344,
+          "line": 47346,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21197,8 +21208,8 @@
         "source_location": {
           "heading": "F3-642 — The Terminal's Appearance",
           "heading_level": 3,
-          "heading_line": 47475,
-          "line": 47477,
+          "heading_line": 47480,
+          "line": 47482,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21208,8 +21219,8 @@
         "source_location": {
           "heading": "F3-643 — Terminal Effects",
           "heading_level": 3,
-          "heading_line": 47639,
-          "line": 47641,
+          "heading_line": 47644,
+          "line": 47646,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21219,8 +21230,8 @@
         "source_location": {
           "heading": "F3-644 — The Editor's And The Terminal's Faces",
           "heading_level": 3,
-          "heading_line": 47857,
-          "line": 47859,
+          "heading_line": 47862,
+          "line": 47864,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21230,8 +21241,8 @@
         "source_location": {
           "heading": "F3-645 — Images In The Terminal",
           "heading_level": 3,
-          "heading_line": 48004,
-          "line": 48006,
+          "heading_line": 48009,
+          "line": 48011,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21241,8 +21252,8 @@
         "source_location": {
           "heading": "F3-646 — Agents And People In One Terminal",
           "heading_level": 3,
-          "heading_line": 48094,
-          "line": 48096,
+          "heading_line": 48099,
+          "line": 48101,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21252,8 +21263,8 @@
         "source_location": {
           "heading": "F3-647 — Panels And Tabs In Every Look",
           "heading_level": 3,
-          "heading_line": 46801,
-          "line": 46803,
+          "heading_line": 46806,
+          "line": 46808,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21263,8 +21274,8 @@
         "source_location": {
           "heading": "F3-648 — No Side Stripes, No Emoji, No Pills: Presentation",
           "heading_level": 3,
-          "heading_line": 46973,
-          "line": 46975,
+          "heading_line": 46978,
+          "line": 46980,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21274,8 +21285,8 @@
         "source_location": {
           "heading": "F3-650 - The Editor And Terminal Customize Screens",
           "heading_level": 3,
-          "heading_line": 48206,
-          "line": 48208,
+          "heading_line": 48211,
+          "line": 48213,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21285,8 +21296,8 @@
         "source_location": {
           "heading": "F3-651 - Editor Appearance, Token Colors, Caret And Indentation",
           "heading_level": 3,
-          "heading_line": 48303,
-          "line": 48305,
+          "heading_line": 48308,
+          "line": 48310,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21296,8 +21307,8 @@
         "source_location": {
           "heading": "F3-652 - Liquid Glass Material And Motion",
           "heading_level": 3,
-          "heading_line": 48371,
-          "line": 48373,
+          "heading_line": 48376,
+          "line": 48378,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21307,8 +21318,8 @@
         "source_location": {
           "heading": "F3-653 - One Wallpaper Gallery For Every Look",
           "heading_level": 3,
-          "heading_line": 48580,
-          "line": 48582,
+          "heading_line": 48585,
+          "line": 48587,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21318,8 +21329,8 @@
         "source_location": {
           "heading": "F3-654 - Settled Text Contrast",
           "heading_level": 3,
-          "heading_line": 48673,
-          "line": 48675,
+          "heading_line": 48678,
+          "line": 48680,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21329,8 +21340,8 @@
         "source_location": {
           "heading": "F3-655 - Planning Wizard And Orchestrator Match The Look",
           "heading_level": 3,
-          "heading_line": 48757,
-          "line": 48759,
+          "heading_line": 48762,
+          "line": 48764,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21340,8 +21351,8 @@
         "source_location": {
           "heading": "F3-656 - Onboarding Art And Glass Controls",
           "heading_level": 3,
-          "heading_line": 48841,
-          "line": 48843,
+          "heading_line": 48846,
+          "line": 48848,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21351,8 +21362,8 @@
         "source_location": {
           "heading": "F3-657 - Resize Feedback On Every Divider",
           "heading_level": 3,
-          "heading_line": 48910,
-          "line": 48912,
+          "heading_line": 48915,
+          "line": 48917,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21362,8 +21373,8 @@
         "source_location": {
           "heading": "F3-658 - Shared Glyph Vocabulary And Presentation",
           "heading_level": 3,
-          "heading_line": 48971,
-          "line": 48973,
+          "heading_line": 48976,
+          "line": 48978,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21373,8 +21384,8 @@
         "source_location": {
           "heading": "F3-659 - The 5.6 Pro Chat In The Home Column",
           "heading_level": 3,
-          "heading_line": 49096,
-          "line": 49098,
+          "heading_line": 49101,
+          "line": 49103,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21384,8 +21395,8 @@
         "source_location": {
           "heading": "F3-660 - Pip Brand And Shared Drawing Kit",
           "heading_level": 3,
-          "heading_line": 49166,
-          "line": 49168,
+          "heading_line": 49171,
+          "line": 49173,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21395,8 +21406,8 @@
         "source_location": {
           "heading": "F3-661 - Project Box A And Same Frame Selection",
           "heading_level": 3,
-          "heading_line": 49294,
-          "line": 49296,
+          "heading_line": 49299,
+          "line": 49301,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21406,8 +21417,8 @@
         "source_location": {
           "heading": "F3-662 - One System Loading Indicator",
           "heading_level": 3,
-          "heading_line": 49357,
-          "line": 49359,
+          "heading_line": 49362,
+          "line": 49364,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21417,8 +21428,8 @@
         "source_location": {
           "heading": "F3-663 - Full Onboarding With Pip",
           "heading_level": 3,
-          "heading_line": 49419,
-          "line": 49421,
+          "heading_line": 49424,
+          "line": 49426,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21428,8 +21439,8 @@
         "source_location": {
           "heading": "F3-664 - Agents Processes And Resources Panel",
           "heading_level": 3,
-          "heading_line": 49613,
-          "line": 49615,
+          "heading_line": 49618,
+          "line": 49620,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21439,8 +21450,8 @@
         "source_location": {
           "heading": "F3-665 - Quit While Work Runs",
           "heading_level": 3,
-          "heading_line": 49677,
-          "line": 49679,
+          "heading_line": 49682,
+          "line": 49684,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21450,8 +21461,8 @@
         "source_location": {
           "heading": "F3-666 - The Record Inspector",
           "heading_level": 3,
-          "heading_line": 49736,
-          "line": 49738,
+          "heading_line": 49741,
+          "line": 49743,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21461,8 +21472,8 @@
         "source_location": {
           "heading": "F3-667 - Chat Opens From Render Pages And Loads Older",
           "heading_level": 3,
-          "heading_line": 49793,
-          "line": 49795,
+          "heading_line": 49798,
+          "line": 49800,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21472,8 +21483,8 @@
         "source_location": {
           "heading": "F3-668 - Split Projects Library And Project Details",
           "heading_level": 3,
-          "heading_line": 49849,
-          "line": 49851,
+          "heading_line": 49854,
+          "line": 49856,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21483,8 +21494,8 @@
         "source_location": {
           "heading": "F3-669 - One New Project Guided Surface",
           "heading_level": 3,
-          "heading_line": 49911,
-          "line": 49913,
+          "heading_line": 49916,
+          "line": 49918,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21494,8 +21505,8 @@
         "source_location": {
           "heading": "F3-670 - Settings Levels Rows Details And Managers",
           "heading_level": 3,
-          "heading_line": 49993,
-          "line": 49995,
+          "heading_line": 49998,
+          "line": 50000,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21505,8 +21516,8 @@
         "source_location": {
           "heading": "F3-671 - No Project Chat Coverage Conversion And Undo",
           "heading_level": 3,
-          "heading_line": 50076,
-          "line": 50078,
+          "heading_line": 50081,
+          "line": 50083,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21516,8 +21527,8 @@
         "source_location": {
           "heading": "F3-672 - Application Goal Crew Activity And Shared Work",
           "heading_level": 3,
-          "heading_line": 50172,
-          "line": 50174,
+          "heading_line": 50177,
+          "line": 50179,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21527,8 +21538,8 @@
         "source_location": {
           "heading": "F3-673 - Build Grant Review Targets Stop And Undo",
           "heading_level": 3,
-          "heading_line": 50239,
-          "line": 50241,
+          "heading_line": 50244,
+          "line": 50246,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21538,8 +21549,8 @@
         "source_location": {
           "heading": "F3-674 - App Plan Deep Plan Scheduled Tasks And Pause",
           "heading_level": 3,
-          "heading_line": 50303,
-          "line": 50305,
+          "heading_line": 50308,
+          "line": 50310,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -41967,10 +41978,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 7488,
+  "plan_unit_count": 7489,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2807,
+      "high": 2808,
       "low": 9,
       "medium": 32,
       "standard": 4640
@@ -42101,6 +42112,7 @@
       "app_update_retry_storm_or_false_successful_check": 1,
       "appearance_choice_or_compatibility_drift": 1,
       "appearance_setting_without_effect_or_theme_override_leak": 1,
+      "appearance_state_drift": 1,
       "append_observability_retention_boundary_drift": 1,
       "application_rules_storage": 1,
       "application_update_unverified_activation_or_false_success": 1,
@@ -46117,7 +46129,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 7269,
+      "accepted": 7270,
       "retired": 196,
       "superseded": 23
     },
@@ -46150,7 +46162,7 @@
       "contract": 5,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 233,
+      "decision": 234,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,
@@ -46354,134 +46366,12 @@
         "source_path": "scripts/pm_pnc019_currentness.py"
       },
       {
-        "actual": null,
-        "error": "pnc019_source_hash_stale",
-        "expected": "aa8aaa943e27ffc9be79cc62049dbc4bc36ccd2b3955891b8ecfa9b1b5f6230d",
+        "error": "pnc019_source_hash_path_missing",
         "source_path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json"
       },
       {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/00-plans-index.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Contracts_V0.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/DRY_Rules.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Decision_Log.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Decision_Policy.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Executor_Protocol.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/FinalGUISpec.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Goal_Runtime_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Media_Generation_and_Capabilities.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Plan_Document_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Planning_Ledger_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Planning_Wizard.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Progression_Gates.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Run_Modes.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Settings_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/UI_Command_Catalog.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Wiring_Matrix.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/chain-wizard-flexibility.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/interview-subagent-integration.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/current.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/ledgers/v2/pldg-20260630-001-feature-intake/state/current.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/ledgers/v2/pldg-20260630-001-feature-intake/state/handoff.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/orchestrator-subagent-integration.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/pm7_canon.fixtures.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/settings_inventory.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/settings_inventory.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/sharding_config.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/storage-plan.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/storage_value_registry.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/usage-feature.md"
+        "detail": "[Errno 2] No such file or directory: 'Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json'",
+        "error": "event_authority_currentness_audit_unavailable"
       },
       {
         "bulk_registration_allowed": false,

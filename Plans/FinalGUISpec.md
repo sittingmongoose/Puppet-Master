@@ -36392,8 +36392,13 @@ acceptance_criteria:
 - The connect-existing choice is composed as a first-class peer in simple_path, not a tacked-on admonition box; entering
   it lands on the route chooser, never on a premature Review summary or a redundant Use nearby devices/Find one I already
   use pre-step.
-- The bounded ten-theme choice appears at welcome before Project/infrastructure choices. It offers five ordered families,
-  including NieR Light/Dark with Adjust NieR opening the same editor (F3-598); no independent checkbox remains (Q22).
+- The bounded look choice appears at welcome before Project/infrastructure choices. It offers five ordered families
+  (Basic, Friendly, Retro, Glass and NieR) plus one Light/Dark/Auto control, the same single scheme control as SSYS-010
+  (DL-301, DL-340). Auto follows the system appearance live, including changes while onboarding is open. A prior Auto
+  choice from Settings or the header is retained unless the person chooses Light or Dark; the draft and look-choice
+  payload retain theme_mode auto, and Back restores that selected mode rather than its resolved Light/Dark appearance.
+  The five families still resolve to ten rendered looks. Adjust NieR opens the same editor (F3-598); no independent
+  checkbox remains (Q22).
 - The ten-theme choice (Q22), the header Look menu and the NieR Mode editor panel each emit `ui.onboarding.choose_look`
   (intents choose_look, toggle_look_menu and toggle_look_editor; preview_nier is retired by Q22) with no owner route,
   no `cmd.theme.*` and no Settings transaction during preview. An accepted look commits once through the Settings owner
@@ -36401,7 +36406,7 @@ acceptance_criteria:
   a Later/app choice at the accepted application/Device boundary, and pre-claim preview only ephemerally. Later changes
   use the same Settings binding when the window finishes or closes (DL-153).
 - 'Beyond welcome, the onboarding header keeps a persistent Look menu (`Change the look`: five families including NieR
-  plus Light/Dark and the retained Adjust NieR button (Q22)) and sound control reachable by keyboard on every stage;
+  plus the same single Light/Dark/Auto control and the retained Adjust NieR button (Q22, DL-340)) and sound control reachable by keyboard on every stage;
   Look changes preview presentation without dispatching owner work and persist only through the Settings owner (`general.visual.theme`,
   `general.visual.theme-mode`, and for NieR the retained `general.visual.nier-parts` and `general.visual.nier-background`
   (Q22)) at the explicitly accepted admissible Everywhere/Device/Project level (SSYS-002/059, DL-286); a Project write
