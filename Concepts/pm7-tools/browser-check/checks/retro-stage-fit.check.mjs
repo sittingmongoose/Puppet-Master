@@ -445,7 +445,7 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 	const was = { tilt: false, swing: false, hop: false, cheer: false, kick: false };
 	let rnd = null, restoreN = 0, prevV = null;
 	const t0 = performance.now();
-	let tPrev = t0, previousPose = null;
+	let lastPoseChange = t0, previousPose = null;
 	// Only the head and hand's drawn SVG geometry; no stage/background or prop motion.
 	const pose = (s) => [s.gHead, s.gCtl].flatMap((e) => {
 		geometry(e, 'Pip pose');
@@ -481,7 +481,9 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 		for (const k of Object.keys(now)) { if (now[k] && !was[k]) out.kinds[k === 'kick' ? 'propKick' : k]++; was[k] = now[k]; }
 		try {
 			const v = pose(s2);
-			if (previousPose && v.some((x,i) => Math.abs(x-previousPose[i]) > .0001)) { out.moving++; out.movingMs += dtF; }
+			if (previousPose && v.some((x,i) => Math.abs(x-previousPose[i]) > .0001)) {
+				out.moving++; out.movingMs += Math.min(50, tNow-lastPoseChange); lastPoseChange=tNow;
+			}
 			previousPose = v;
 		} catch(e) { out.geometryError = e.message; break; }
 		// No comparison is eligible during the props' entrance fade. Coverage below must still become positive.
