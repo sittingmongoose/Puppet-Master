@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "DS15-fix7",
+  "assessment_id": "DS15-fix8",
   "assessment_kind": "worker_self_grade_prepared_without_admission",
   "rubric": {
     "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
@@ -19,7 +19,7 @@
       "positive_negative_oracles"
     ]
   },
-  "assessed_tree": "08b1aead800c894c29dc308c902b4753eca45e66",
+  "assessed_tree": "915ba234e375e130a7a2b448762fd2814272a682",
   "native_execution": "NOT_RUN",
   "prepared_family_count": 16,
   "prepared_complete_family_count": 0,
@@ -53,11 +53,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "owner_doc": {
           "status": "PASS",
@@ -73,11 +73,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "producer": {
           "status": "PASS",
@@ -100,11 +100,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -127,11 +127,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "scope_identity": {
           "status": "PASS",
@@ -147,11 +147,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -174,11 +174,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "retention": {
           "status": "PARTIAL",
@@ -194,11 +194,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -221,11 +221,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "transitions": {
           "status": "PASS",
@@ -241,11 +241,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -268,11 +268,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -295,16 +295,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every guard has a singleton or named-duplicate witness, but residual end-to-end constructions remain unexposed; oracle completeness remains PARTIAL.",
+          "finding": "Cycle-8 independent review accepted the existing residual constructions; the serial family rerun passes. S-FMT1/S-N1/S-N2 and shared proof-tool adoption remain explicit sweep items under the assigned scope.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -322,22 +322,22 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         }
       },
       "remaining_gaps": [
         "Event Authority admission remains absent.",
         "RT must resolve event and checkpoint retention.",
-        "C12 residual end-to-end constructions remain explicit."
+        "S-FMT1, S-N1, S-N2 and shared guard-tool adoption remain sweep items."
       ],
       "grade_counts": {
         "ABSENT": 1,
-        "PASS": 9,
-        "PARTIAL": 2
+        "PASS": 10,
+        "PARTIAL": 1
       },
       "native_execution": "NOT_RUN"
     },
@@ -887,11 +887,11 @@
             }
           ],
           "prior": {
-            "source": "DS15 round 6 self-grade",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "owner_doc": {
           "status": "PASS",
@@ -907,11 +907,11 @@
             }
           ],
           "prior": {
-            "source": "DS15 round 6 self-grade",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "producer": {
           "status": "PASS",
@@ -934,11 +934,11 @@
             }
           ],
           "prior": {
-            "source": "DS15 round 6 self-grade",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -961,11 +961,11 @@
             }
           ],
           "prior": {
-            "source": "DS15 round 6 self-grade",
-            "status": "ABSENT"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "scope_identity": {
           "status": "PASS",
@@ -981,11 +981,11 @@
             }
           ],
           "prior": {
-            "source": "DS15 round 6 self-grade",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1008,11 +1008,11 @@
             }
           ],
           "prior": {
-            "source": "DS15 round 6 self-grade",
-            "status": "ABSENT"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1028,11 +1028,11 @@
             }
           ],
           "prior": {
-            "source": "DS15 round 6 self-grade",
-            "status": "ABSENT"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PARTIAL"
           },
-          "change": "new",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1055,11 +1055,11 @@
             }
           ],
           "prior": {
-            "source": "DS15 round 6 self-grade",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "transitions": {
           "status": "PASS",
@@ -1075,11 +1075,11 @@
             }
           ],
           "prior": {
-            "source": "DS15 round 6 self-grade",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1102,11 +1102,11 @@
             }
           ],
           "prior": {
-            "source": "DS15 round 6 self-grade",
-            "status": "ABSENT"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1129,16 +1129,16 @@
             }
           ],
           "prior": {
-            "source": "DS15 round 6 self-grade",
-            "status": "ABSENT"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every guard has a singleton or named-duplicate witness, but residual end-to-end constructions remain unexposed; oracle completeness remains PARTIAL.",
+          "finding": "All three repaired family-specific witnesses reject normally and flip with only G066, G067 or G189 removed; all family oracles pass. S-FMT1/S-N1/S-N2 and shared proof-tool adoption remain explicit sweep items under the assigned scope.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -1153,25 +1153,46 @@
               "line_start": 13870,
               "line_end": 13870,
               "quote": "Round 7 type/source refinement: original_context retains the complete writer transition schema; retained read/checkpoint/rebuild require only current scope and exact-boolean owner "
+            },
+            {
+              "path": "Plans/ds15_event_contract_fixtures.json",
+              "unit": "isolated-receipt-original-event_id",
+              "line_start": 241703,
+              "line_end": 241703,
+              "quote": "\"id\": \"isolated-receipt-original-event_id\","
+            },
+            {
+              "path": "Plans/ds15_event_contract_fixtures.json",
+              "unit": "isolated-receipt-original-sequence_id",
+              "line_start": 241717,
+              "line_end": 241717,
+              "quote": "\"id\": \"isolated-receipt-original-sequence_id\","
+            },
+            {
+              "path": "Plans/ds15_event_contract_fixtures.json",
+              "unit": "isolated-checkpoint-owner-scope",
+              "line_start": 240776,
+              "line_end": 240776,
+              "quote": "\"id\": \"isolated-checkpoint-owner-scope\","
             }
           ],
           "prior": {
-            "source": "DS15 round 6 self-grade",
-            "status": "ABSENT"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PARTIAL"
           },
-          "change": "new",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "upgraded",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         }
       },
       "remaining_gaps": [
         "Event Authority admission remains absent.",
         "RT must resolve event and checkpoint retention.",
-        "C12 residual end-to-end constructions remain explicit."
+        "S-FMT1, S-N1, S-N2 and shared guard-tool adoption remain sweep items."
       ],
       "grade_counts": {
         "ABSENT": 1,
-        "PASS": 9,
-        "PARTIAL": 2
+        "PASS": 10,
+        "PARTIAL": 1
       },
       "native_execution": "NOT_RUN"
     },
@@ -1201,11 +1222,11 @@
             }
           ],
           "prior": {
-            "source": "DS15 round 6 self-grade",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1221,11 +1242,11 @@
             }
           ],
           "prior": {
-            "source": "DS15 round 6 self-grade",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "producer": {
           "status": "PASS",
@@ -1248,11 +1269,11 @@
             }
           ],
           "prior": {
-            "source": "DS15 round 6 self-grade",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1275,11 +1296,11 @@
             }
           ],
           "prior": {
-            "source": "DS15 round 6 self-grade",
-            "status": "ABSENT"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1295,11 +1316,11 @@
             }
           ],
           "prior": {
-            "source": "DS15 round 6 self-grade",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1322,11 +1343,11 @@
             }
           ],
           "prior": {
-            "source": "DS15 round 6 self-grade",
-            "status": "ABSENT"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1342,11 +1363,11 @@
             }
           ],
           "prior": {
-            "source": "DS15 round 6 self-grade",
-            "status": "ABSENT"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PARTIAL"
           },
-          "change": "new",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1369,11 +1390,11 @@
             }
           ],
           "prior": {
-            "source": "DS15 round 6 self-grade",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "transitions": {
           "status": "PASS",
@@ -1389,11 +1410,11 @@
             }
           ],
           "prior": {
-            "source": "DS15 round 6 self-grade",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1416,11 +1437,11 @@
             }
           ],
           "prior": {
-            "source": "DS15 round 6 self-grade",
-            "status": "ABSENT"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1443,16 +1464,16 @@
             }
           ],
           "prior": {
-            "source": "DS15 round 6 self-grade",
-            "status": "ABSENT"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every guard has a singleton or named-duplicate witness, but residual end-to-end constructions remain unexposed; oracle completeness remains PARTIAL.",
+          "finding": "All three repaired family-specific witnesses reject normally and flip with only G066, G067 or G189 removed; all family oracles pass. S-FMT1/S-N1/S-N2 and shared proof-tool adoption remain explicit sweep items under the assigned scope.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -1467,25 +1488,46 @@
               "line_start": 13822,
               "line_end": 13822,
               "quote": "Round 7 type/source refinement: original_context retains the complete writer transition schema; retained read/checkpoint/rebuild require only current scope and exact-boolean owner "
+            },
+            {
+              "path": "Plans/ds15_event_contract_fixtures.json",
+              "unit": "isolated-receipt-original-event_id",
+              "line_start": 220534,
+              "line_end": 220534,
+              "quote": "\"id\": \"isolated-receipt-original-event_id\","
+            },
+            {
+              "path": "Plans/ds15_event_contract_fixtures.json",
+              "unit": "isolated-receipt-original-sequence_id",
+              "line_start": 220548,
+              "line_end": 220548,
+              "quote": "\"id\": \"isolated-receipt-original-sequence_id\","
+            },
+            {
+              "path": "Plans/ds15_event_contract_fixtures.json",
+              "unit": "isolated-checkpoint-owner-scope",
+              "line_start": 219607,
+              "line_end": 219607,
+              "quote": "\"id\": \"isolated-checkpoint-owner-scope\","
             }
           ],
           "prior": {
-            "source": "DS15 round 6 self-grade",
-            "status": "ABSENT"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PARTIAL"
           },
-          "change": "new",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "upgraded",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         }
       },
       "remaining_gaps": [
         "Event Authority admission remains absent.",
         "RT must resolve event and checkpoint retention.",
-        "C12 residual end-to-end constructions remain explicit."
+        "S-FMT1, S-N1, S-N2 and shared guard-tool adoption remain sweep items."
       ],
       "grade_counts": {
         "ABSENT": 1,
-        "PASS": 9,
-        "PARTIAL": 2
+        "PASS": 10,
+        "PARTIAL": 1
       },
       "native_execution": "NOT_RUN"
     },
@@ -2555,11 +2597,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2575,11 +2617,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "producer": {
           "status": "PASS",
@@ -2602,11 +2644,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2629,11 +2671,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2649,11 +2691,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2676,11 +2718,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2696,11 +2738,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2723,11 +2765,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "transitions": {
           "status": "PASS",
@@ -2743,11 +2785,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2770,11 +2812,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2797,16 +2839,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every guard has a singleton or named-duplicate witness, but residual end-to-end constructions remain unexposed; oracle completeness remains PARTIAL.",
+          "finding": "Cycle-8 independent review accepted the existing residual constructions; the serial family rerun passes. S-FMT1/S-N1/S-N2 and shared proof-tool adoption remain explicit sweep items under the assigned scope.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -2824,22 +2866,22 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         }
       },
       "remaining_gaps": [
         "Event Authority admission remains absent.",
         "RT must resolve event and checkpoint retention.",
-        "C12 residual end-to-end constructions remain explicit."
+        "S-FMT1, S-N1, S-N2 and shared guard-tool adoption remain sweep items."
       ],
       "grade_counts": {
         "ABSENT": 1,
-        "PASS": 9,
-        "PARTIAL": 2
+        "PASS": 10,
+        "PARTIAL": 1
       },
       "native_execution": "NOT_RUN"
     },
@@ -2869,11 +2911,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2889,11 +2931,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "producer": {
           "status": "PASS",
@@ -2916,11 +2958,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2943,11 +2985,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2963,11 +3005,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2990,11 +3032,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3010,11 +3052,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3037,11 +3079,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "transitions": {
           "status": "PASS",
@@ -3057,11 +3099,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3084,11 +3126,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3111,16 +3153,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every guard has a singleton or named-duplicate witness, but residual end-to-end constructions remain unexposed; oracle completeness remains PARTIAL.",
+          "finding": "Cycle-8 independent review accepted the existing residual constructions; the serial family rerun passes. S-FMT1/S-N1/S-N2 and shared proof-tool adoption remain explicit sweep items under the assigned scope.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -3138,22 +3180,22 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         }
       },
       "remaining_gaps": [
         "Event Authority admission remains absent.",
         "RT must resolve event and checkpoint retention.",
-        "C12 residual end-to-end constructions remain explicit."
+        "S-FMT1, S-N1, S-N2 and shared guard-tool adoption remain sweep items."
       ],
       "grade_counts": {
         "ABSENT": 1,
-        "PASS": 9,
-        "PARTIAL": 2
+        "PASS": 10,
+        "PARTIAL": 1
       },
       "native_execution": "NOT_RUN"
     },
@@ -3183,11 +3225,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3203,11 +3245,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "producer": {
           "status": "PASS",
@@ -3230,11 +3272,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3257,11 +3299,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3277,11 +3319,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3304,11 +3346,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3324,11 +3366,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3351,11 +3393,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "transitions": {
           "status": "PASS",
@@ -3371,11 +3413,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3398,11 +3440,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3425,16 +3467,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every guard has a singleton or named-duplicate witness, but residual end-to-end constructions remain unexposed; oracle completeness remains PARTIAL.",
+          "finding": "Cycle-8 independent review accepted the existing residual constructions; the serial family rerun passes. S-FMT1/S-N1/S-N2 and shared proof-tool adoption remain explicit sweep items under the assigned scope.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -3452,22 +3494,22 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         }
       },
       "remaining_gaps": [
         "Event Authority admission remains absent.",
         "RT must resolve event and checkpoint retention.",
-        "C12 residual end-to-end constructions remain explicit."
+        "S-FMT1, S-N1, S-N2 and shared guard-tool adoption remain sweep items."
       ],
       "grade_counts": {
         "ABSENT": 1,
-        "PASS": 9,
-        "PARTIAL": 2
+        "PASS": 10,
+        "PARTIAL": 1
       },
       "native_execution": "NOT_RUN"
     },
@@ -3497,11 +3539,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3517,11 +3559,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "producer": {
           "status": "PASS",
@@ -3544,11 +3586,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3571,11 +3613,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3591,11 +3633,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3618,11 +3660,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3638,11 +3680,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3665,11 +3707,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "transitions": {
           "status": "PASS",
@@ -3685,11 +3727,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3712,11 +3754,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3739,16 +3781,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every guard has a singleton or named-duplicate witness, but residual end-to-end constructions remain unexposed; oracle completeness remains PARTIAL.",
+          "finding": "Cycle-8 independent review accepted the existing residual constructions; the serial family rerun passes. S-FMT1/S-N1/S-N2 and shared proof-tool adoption remain explicit sweep items under the assigned scope.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -3766,22 +3808,22 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         }
       },
       "remaining_gaps": [
         "Event Authority admission remains absent.",
         "RT must resolve event and checkpoint retention.",
-        "C12 residual end-to-end constructions remain explicit."
+        "S-FMT1, S-N1, S-N2 and shared guard-tool adoption remain sweep items."
       ],
       "grade_counts": {
         "ABSENT": 1,
-        "PASS": 9,
-        "PARTIAL": 2
+        "PASS": 10,
+        "PARTIAL": 1
       },
       "native_execution": "NOT_RUN"
     },
@@ -3811,11 +3853,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3831,11 +3873,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "producer": {
           "status": "PASS",
@@ -3858,11 +3900,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3885,11 +3927,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3905,11 +3947,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3932,11 +3974,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3952,11 +3994,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3979,11 +4021,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "transitions": {
           "status": "PASS",
@@ -3999,11 +4041,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -4026,11 +4068,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4053,16 +4095,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every guard has a singleton or named-duplicate witness, but residual end-to-end constructions remain unexposed; oracle completeness remains PARTIAL.",
+          "finding": "Cycle-8 independent review accepted the existing residual constructions; the serial family rerun passes. S-FMT1/S-N1/S-N2 and shared proof-tool adoption remain explicit sweep items under the assigned scope.",
           "evidence": [
             {
               "path": "Plans/newtools.md",
@@ -4080,22 +4122,22 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         }
       },
       "remaining_gaps": [
         "Event Authority admission remains absent.",
         "RT must resolve event and checkpoint retention.",
-        "C12 residual end-to-end constructions remain explicit."
+        "S-FMT1, S-N1, S-N2 and shared guard-tool adoption remain sweep items."
       ],
       "grade_counts": {
         "ABSENT": 1,
-        "PASS": 9,
-        "PARTIAL": 2
+        "PASS": 10,
+        "PARTIAL": 1
       },
       "native_execution": "NOT_RUN"
     },
@@ -4125,11 +4167,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "owner_doc": {
           "status": "PASS",
@@ -4145,11 +4187,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "producer": {
           "status": "PASS",
@@ -4172,11 +4214,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -4199,11 +4241,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "scope_identity": {
           "status": "PASS",
@@ -4219,11 +4261,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -4246,11 +4288,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "retention": {
           "status": "PARTIAL",
@@ -4266,11 +4308,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -4293,11 +4335,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "transitions": {
           "status": "PASS",
@@ -4313,11 +4355,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -4340,11 +4382,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4367,16 +4409,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every guard has a singleton or named-duplicate witness, but residual end-to-end constructions remain unexposed; oracle completeness remains PARTIAL.",
+          "finding": "Cycle-8 independent review accepted the existing residual constructions; the serial family rerun passes. S-FMT1/S-N1/S-N2 and shared proof-tool adoption remain explicit sweep items under the assigned scope.",
           "evidence": [
             {
               "path": "Plans/newtools.md",
@@ -4394,22 +4436,22 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         }
       },
       "remaining_gaps": [
         "Event Authority admission remains absent.",
         "RT must resolve event and checkpoint retention.",
-        "C12 residual end-to-end constructions remain explicit."
+        "S-FMT1, S-N1, S-N2 and shared guard-tool adoption remain sweep items."
       ],
       "grade_counts": {
         "ABSENT": 1,
-        "PASS": 9,
-        "PARTIAL": 2
+        "PASS": 10,
+        "PARTIAL": 1
       },
       "native_execution": "NOT_RUN"
     },
@@ -4439,11 +4481,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "owner_doc": {
           "status": "PASS",
@@ -4459,11 +4501,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "producer": {
           "status": "PASS",
@@ -4486,11 +4528,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -4513,11 +4555,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "scope_identity": {
           "status": "PASS",
@@ -4533,11 +4575,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -4560,11 +4602,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "retention": {
           "status": "PARTIAL",
@@ -4580,11 +4622,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -4607,11 +4649,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "transitions": {
           "status": "PASS",
@@ -4627,11 +4669,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -4654,11 +4696,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4681,16 +4723,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every guard has a singleton or named-duplicate witness, but residual end-to-end constructions remain unexposed; oracle completeness remains PARTIAL.",
+          "finding": "Cycle-8 independent review accepted the existing residual constructions; the serial family rerun passes. S-FMT1/S-N1/S-N2 and shared proof-tool adoption remain explicit sweep items under the assigned scope.",
           "evidence": [
             {
               "path": "Plans/newtools.md",
@@ -4708,22 +4750,22 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         }
       },
       "remaining_gaps": [
         "Event Authority admission remains absent.",
         "RT must resolve event and checkpoint retention.",
-        "C12 residual end-to-end constructions remain explicit."
+        "S-FMT1, S-N1, S-N2 and shared guard-tool adoption remain sweep items."
       ],
       "grade_counts": {
         "ABSENT": 1,
-        "PASS": 9,
-        "PARTIAL": 2
+        "PASS": 10,
+        "PARTIAL": 1
       },
       "native_execution": "NOT_RUN"
     },
@@ -4753,11 +4795,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "owner_doc": {
           "status": "PASS",
@@ -4773,11 +4815,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "producer": {
           "status": "PASS",
@@ -4800,11 +4842,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -4827,11 +4869,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "scope_identity": {
           "status": "PASS",
@@ -4847,11 +4889,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -4874,11 +4916,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "retention": {
           "status": "PARTIAL",
@@ -4894,11 +4936,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -4921,11 +4963,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "transitions": {
           "status": "PASS",
@@ -4941,11 +4983,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -4968,11 +5010,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4995,16 +5037,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every guard has a singleton or named-duplicate witness, but residual end-to-end constructions remain unexposed; oracle completeness remains PARTIAL.",
+          "finding": "Cycle-8 independent review accepted the existing residual constructions; the serial family rerun passes. S-FMT1/S-N1/S-N2 and shared proof-tool adoption remain explicit sweep items under the assigned scope.",
           "evidence": [
             {
               "path": "Plans/newtools.md",
@@ -5022,22 +5064,22 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         }
       },
       "remaining_gaps": [
         "Event Authority admission remains absent.",
         "RT must resolve event and checkpoint retention.",
-        "C12 residual end-to-end constructions remain explicit."
+        "S-FMT1, S-N1, S-N2 and shared guard-tool adoption remain sweep items."
       ],
       "grade_counts": {
         "ABSENT": 1,
-        "PASS": 9,
-        "PARTIAL": 2
+        "PASS": 10,
+        "PARTIAL": 1
       },
       "native_execution": "NOT_RUN"
     },
@@ -5067,11 +5109,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "owner_doc": {
           "status": "PASS",
@@ -5087,11 +5129,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "producer": {
           "status": "PASS",
@@ -5114,11 +5156,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -5141,11 +5183,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "scope_identity": {
           "status": "PASS",
@@ -5161,11 +5203,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -5188,11 +5230,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "retention": {
           "status": "PARTIAL",
@@ -5208,11 +5250,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -5235,11 +5277,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "transitions": {
           "status": "PASS",
@@ -5255,11 +5297,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -5282,11 +5324,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -5309,16 +5351,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every guard has a singleton or named-duplicate witness, but residual end-to-end constructions remain unexposed; oracle completeness remains PARTIAL.",
+          "finding": "Cycle-8 independent review accepted the existing residual constructions; the serial family rerun passes. S-FMT1/S-N1/S-N2 and shared proof-tool adoption remain explicit sweep items under the assigned scope.",
           "evidence": [
             {
               "path": "Plans/newtools.md",
@@ -5336,22 +5378,22 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         }
       },
       "remaining_gaps": [
         "Event Authority admission remains absent.",
         "RT must resolve event and checkpoint retention.",
-        "C12 residual end-to-end constructions remain explicit."
+        "S-FMT1, S-N1, S-N2 and shared guard-tool adoption remain sweep items."
       ],
       "grade_counts": {
         "ABSENT": 1,
-        "PASS": 9,
-        "PARTIAL": 2
+        "PASS": 10,
+        "PARTIAL": 1
       },
       "native_execution": "NOT_RUN"
     },
@@ -5381,11 +5423,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "owner_doc": {
           "status": "PASS",
@@ -5401,11 +5443,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "producer": {
           "status": "PASS",
@@ -5428,11 +5470,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -5455,11 +5497,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "scope_identity": {
           "status": "PASS",
@@ -5475,11 +5517,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -5502,11 +5544,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "retention": {
           "status": "PARTIAL",
@@ -5522,11 +5564,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -5549,11 +5591,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "transitions": {
           "status": "PASS",
@@ -5569,11 +5611,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -5596,11 +5638,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -5623,16 +5665,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every guard has a singleton or named-duplicate witness, but residual end-to-end constructions remain unexposed; oracle completeness remains PARTIAL.",
+          "finding": "Cycle-8 independent review accepted the existing residual constructions; the serial family rerun passes. S-FMT1/S-N1/S-N2 and shared proof-tool adoption remain explicit sweep items under the assigned scope.",
           "evidence": [
             {
               "path": "Plans/newtools.md",
@@ -5650,22 +5692,22 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         }
       },
       "remaining_gaps": [
         "Event Authority admission remains absent.",
         "RT must resolve event and checkpoint retention.",
-        "C12 residual end-to-end constructions remain explicit."
+        "S-FMT1, S-N1, S-N2 and shared guard-tool adoption remain sweep items."
       ],
       "grade_counts": {
         "ABSENT": 1,
-        "PASS": 9,
-        "PARTIAL": 2
+        "PASS": 10,
+        "PARTIAL": 1
       },
       "native_execution": "NOT_RUN"
     },
@@ -5695,11 +5737,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "owner_doc": {
           "status": "PASS",
@@ -5715,11 +5757,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "producer": {
           "status": "PASS",
@@ -5742,11 +5784,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -5769,11 +5811,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "scope_identity": {
           "status": "PASS",
@@ -5789,11 +5831,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -5816,11 +5858,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "retention": {
           "status": "PARTIAL",
@@ -5836,11 +5878,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -5863,11 +5905,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "transitions": {
           "status": "PASS",
@@ -5883,11 +5925,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -5910,11 +5952,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -5937,16 +5979,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every guard has a singleton or named-duplicate witness, but residual end-to-end constructions remain unexposed; oracle completeness remains PARTIAL.",
+          "finding": "Cycle-8 independent review accepted the existing residual constructions; the serial family rerun passes. S-FMT1/S-N1/S-N2 and shared proof-tool adoption remain explicit sweep items under the assigned scope.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -5964,22 +6006,22 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         }
       },
       "remaining_gaps": [
         "Event Authority admission remains absent.",
         "RT must resolve event and checkpoint retention.",
-        "C12 residual end-to-end constructions remain explicit."
+        "S-FMT1, S-N1, S-N2 and shared guard-tool adoption remain sweep items."
       ],
       "grade_counts": {
         "ABSENT": 1,
-        "PASS": 9,
-        "PARTIAL": 2
+        "PASS": 10,
+        "PARTIAL": 1
       },
       "native_execution": "NOT_RUN"
     },
@@ -6009,11 +6051,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "owner_doc": {
           "status": "PASS",
@@ -6029,11 +6071,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "producer": {
           "status": "PASS",
@@ -6056,11 +6098,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -6083,11 +6125,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "scope_identity": {
           "status": "PASS",
@@ -6103,11 +6145,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -6130,11 +6172,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "retention": {
           "status": "PARTIAL",
@@ -6150,11 +6192,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -6177,11 +6219,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "transitions": {
           "status": "PASS",
@@ -6197,11 +6239,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -6224,11 +6266,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -6251,16 +6293,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every guard has a singleton or named-duplicate witness, but residual end-to-end constructions remain unexposed; oracle completeness remains PARTIAL.",
+          "finding": "Cycle-8 independent review accepted the existing residual constructions; the serial family rerun passes. S-FMT1/S-N1/S-N2 and shared proof-tool adoption remain explicit sweep items under the assigned scope.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -6278,22 +6320,22 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         }
       },
       "remaining_gaps": [
         "Event Authority admission remains absent.",
         "RT must resolve event and checkpoint retention.",
-        "C12 residual end-to-end constructions remain explicit."
+        "S-FMT1, S-N1, S-N2 and shared guard-tool adoption remain sweep items."
       ],
       "grade_counts": {
         "ABSENT": 1,
-        "PASS": 9,
-        "PARTIAL": 2
+        "PASS": 10,
+        "PARTIAL": 1
       },
       "native_execution": "NOT_RUN"
     },
@@ -6323,11 +6365,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "owner_doc": {
           "status": "PASS",
@@ -6343,11 +6385,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "producer": {
           "status": "PASS",
@@ -6370,11 +6412,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -6397,11 +6439,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "scope_identity": {
           "status": "PASS",
@@ -6417,11 +6459,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -6444,11 +6486,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "retention": {
           "status": "PARTIAL",
@@ -6464,11 +6506,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -6491,11 +6533,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "transitions": {
           "status": "PASS",
@@ -6511,11 +6553,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-cycle8.md independent regrade",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -6538,11 +6580,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -6565,16 +6607,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change": "carried",
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every guard has a singleton or named-duplicate witness, but residual end-to-end constructions remain unexposed; oracle completeness remains PARTIAL.",
+          "finding": "Cycle-8 independent review accepted the existing residual constructions; the serial family rerun passes. S-FMT1/S-N1/S-N2 and shared proof-tool adoption remain explicit sweep items under the assigned scope.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -6592,22 +6634,22 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-cycle8.md independent regrade",
+            "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 7 validates retained history, complete original custody/Storage joins, source hashes and exact authority types; install contracts use existing subsystem outcomes."
+          "change_reason": "Round 8 repairs only the six F4 install witnesses; the older fourteen retain the independent cycle-8 grades. Membership and retention remain open; explicit sweep exceptions qualify C12."
         }
       },
       "remaining_gaps": [
         "Event Authority admission remains absent.",
         "RT must resolve event and checkpoint retention.",
-        "C12 residual end-to-end constructions remain explicit."
+        "S-FMT1, S-N1, S-N2 and shared guard-tool adoption remain sweep items."
       ],
       "grade_counts": {
         "ABSENT": 1,
-        "PASS": 9,
-        "PARTIAL": 2
+        "PASS": 10,
+        "PARTIAL": 1
       },
       "native_execution": "NOT_RUN"
     },
@@ -6882,7 +6924,49 @@
     "tool_custom_headless_skipped": "First-Doctor eligibility/reset/import/restore stays held with DT."
   },
   "evidence_quote_checks": {
-    "status": "pass",
-    "count": 388
-  }
+    "count": 394,
+    "all_match": true
+  },
+  "applicable_round_oracle_status": "PASS",
+  "guard_proof_qualification": "Legacy enumerated inventory; the shared guard-isolation tool adoption remains a sweep item. Native execution NOT_RUN. S-FMT1/S-N1/S-N2 remain open under the assigned round scope.",
+  "sweep_items": [
+    {
+      "id": "S-FMT1",
+      "status": "OPEN_SWEEP",
+      "location": [
+        "scripts/pm-ds15-event-contracts.py:17,169",
+        "Plans/event_record.schema.json:212",
+        "Plans/event_append_receipt_contracts.schema.json:67"
+      ],
+      "response": "Shared sweep must fail closed when required format capabilities are absent, enforce owner date-time grammar at all boundaries, and preserve authenticated original read-time rules."
+    },
+    {
+      "id": "S-N1",
+      "status": "OPEN_SWEEP",
+      "location": [
+        "scripts/pm-ds15-event-contracts.py:20-59,166",
+        "Plans/ds15_integer_domain.schema.json"
+      ],
+      "response": "Adopt shared CV-1100/SP-1100 owner domain and codec qualification. No new lane-local cap or serializer; no narrowing Storage uint64 to 2^53, physical float normalization or signed-zero erasure."
+    },
+    {
+      "id": "S-N2",
+      "status": "OPEN_SWEEP",
+      "location": [
+        "scripts/pm-ds15-event-contracts.py:integer_boundary decorators and parse_numeric_json",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md:SMPFS-318/319 history clauses"
+      ],
+      "response": "Adopt SP-1101 authenticated write-time number recipe with retained-history positives and forged/downgraded-selector negatives."
+    },
+    {
+      "id": "shared_guard_tool_adoption",
+      "status": "OPEN_SWEEP",
+      "location": [
+        "scripts/pm-ds15-guard-audit.py",
+        "Plans/ds15_guard_inventory.json",
+        "Plans/ds15_guard_proof_fixtures.json"
+      ],
+      "response": "Adopt scripts/pm_guard_isolation.py from the shared-tool lane. Existing inventory/compound or named-set limitations are not redesigned locally or credited as stronger duplicate proof."
+    }
+  ]
 }

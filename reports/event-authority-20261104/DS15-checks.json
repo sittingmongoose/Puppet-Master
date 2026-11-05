@@ -1,6 +1,326 @@
 {
-  "implementation_head": "08b1aead800c894c29dc308c902b4753eca45e66",
+  "implementation_head": "915ba234e375e130a7a2b448762fd2814272a682",
   "checks": [
+    {
+      "name": "witnesses",
+      "command": [
+        "python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/witnesses.py"
+      ],
+      "exit": 0,
+      "start_available_gib": 12,
+      "lowest_available_gib": 12,
+      "seconds": 10.03,
+      "pauses": [],
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/witnesses.log",
+      "sha256": "51d1e575be7a6487fc95f506433e1ab92e5187b186d7bfa25ded0f9e154d6aae"
+    },
+    {
+      "name": "install-first-catalog.install.started",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/family.py",
+        "catalog.install.started"
+      ],
+      "exit": 0,
+      "start_available_gib": 15,
+      "lowest_available_gib": 15,
+      "seconds": 12.03,
+      "pauses": [],
+      "family": "catalog.install.started",
+      "phase": "install-first",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/install-first-catalog.install.started.log",
+      "sha256": "2aacf8268b256d15513e0e45829c12f9616f4150c88d7930780da5116cd6e275"
+    },
+    {
+      "name": "install-first-catalog.install.completed",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/family.py",
+        "catalog.install.completed"
+      ],
+      "exit": 0,
+      "start_available_gib": 15,
+      "lowest_available_gib": 14,
+      "seconds": 12.03,
+      "pauses": [],
+      "family": "catalog.install.completed",
+      "phase": "install-first",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/install-first-catalog.install.completed.log",
+      "sha256": "2aacf8268b256d15513e0e45829c12f9616f4150c88d7930780da5116cd6e275"
+    },
+    {
+      "name": "all16-doctor.custom_headless.checked",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/family.py",
+        "doctor.custom_headless.checked"
+      ],
+      "exit": 0,
+      "start_available_gib": 15,
+      "lowest_available_gib": 15,
+      "seconds": 8.02,
+      "pauses": [],
+      "family": "doctor.custom_headless.checked",
+      "phase": "all16",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/all16-doctor.custom_headless.checked.log",
+      "sha256": "e9cf5a04e840dbdbe082293dccab7480e0557859a39ac182b79724c0217fbea2"
+    },
+    {
+      "name": "all16-live.session.started",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/family.py",
+        "live.session.started"
+      ],
+      "exit": 0,
+      "start_available_gib": 17,
+      "lowest_available_gib": 16,
+      "seconds": 10.02,
+      "pauses": [],
+      "family": "live.session.started",
+      "phase": "all16",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/all16-live.session.started.log",
+      "sha256": "f58700ae87a5bf7dadbbfbd89ffeea8aa606681c547d87e9adc054ca66d9561c"
+    },
+    {
+      "name": "all16-live.step.updated",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/family.py",
+        "live.step.updated"
+      ],
+      "exit": 0,
+      "start_available_gib": 17,
+      "lowest_available_gib": 17,
+      "seconds": 10.02,
+      "pauses": [],
+      "family": "live.step.updated",
+      "phase": "all16",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/all16-live.step.updated.log",
+      "sha256": "993e8da4326bcf3781a4ba420b8671e5be2e4c4d9d9f9ef11db99e6f9c49586f"
+    },
+    {
+      "name": "all16-live.artifact.created",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/family.py",
+        "live.artifact.created"
+      ],
+      "exit": 0,
+      "start_available_gib": 17,
+      "lowest_available_gib": 17,
+      "seconds": 10.02,
+      "pauses": [],
+      "family": "live.artifact.created",
+      "phase": "all16",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/all16-live.artifact.created.log",
+      "sha256": "31f0c4b8e26bf619ded9f1f7bac47c71c67642970d4a1d41d7e877d062b2d0c1"
+    },
+    {
+      "name": "all16-live.session.completed",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/family.py",
+        "live.session.completed"
+      ],
+      "exit": 0,
+      "start_available_gib": 17,
+      "lowest_available_gib": 17,
+      "seconds": 10.03,
+      "pauses": [],
+      "family": "live.session.completed",
+      "phase": "all16",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/all16-live.session.completed.log",
+      "sha256": "c3e0e26f76283191768b75268efce8b277c9acfe60b9b4a7a78a7a0763d17512"
+    },
+    {
+      "name": "all16-live.session.degraded",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/family.py",
+        "live.session.degraded"
+      ],
+      "exit": 0,
+      "start_available_gib": 17,
+      "lowest_available_gib": 16,
+      "seconds": 12.03,
+      "pauses": [],
+      "family": "live.session.degraded",
+      "phase": "all16",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/all16-live.session.degraded.log",
+      "sha256": "4ee3e6a0408edd237463dd19f0a626f1ca78e5dc656eca73115eec9427ec89fd"
+    },
+    {
+      "name": "all16-browser.context_captured",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/family.py",
+        "browser.context_captured"
+      ],
+      "exit": 0,
+      "start_available_gib": 16,
+      "lowest_available_gib": 15,
+      "seconds": 22.06,
+      "pauses": [],
+      "family": "browser.context_captured",
+      "phase": "all16",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/all16-browser.context_captured.log",
+      "sha256": "fe00e8420aff2b42d8be2924589e37bd5f7359794b4bc6f32012737b48946f0f"
+    },
+    {
+      "name": "all16-dev.session.started",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/family.py",
+        "dev.session.started"
+      ],
+      "exit": 0,
+      "start_available_gib": 15,
+      "lowest_available_gib": 15,
+      "seconds": 12.03,
+      "pauses": [],
+      "family": "dev.session.started",
+      "phase": "all16",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/all16-dev.session.started.log",
+      "sha256": "db7b8197217a158d70dd1a44da1ac30856529f4e975627566d78d5baeb76d60a"
+    },
+    {
+      "name": "all16-dev.session.stopping",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/family.py",
+        "dev.session.stopping"
+      ],
+      "exit": 0,
+      "start_available_gib": 16,
+      "lowest_available_gib": 15,
+      "seconds": 12.04,
+      "pauses": [],
+      "family": "dev.session.stopping",
+      "phase": "all16",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/all16-dev.session.stopping.log",
+      "sha256": "79456213edb77f9b699ed83690b15b1748ff81e8d7a504cca63bd06e6a39d0e7"
+    },
+    {
+      "name": "all16-dev.session.stopped",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/family.py",
+        "dev.session.stopped"
+      ],
+      "exit": 0,
+      "start_available_gib": 16,
+      "lowest_available_gib": 15,
+      "seconds": 12.03,
+      "pauses": [],
+      "family": "dev.session.stopped",
+      "phase": "all16",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/all16-dev.session.stopped.log",
+      "sha256": "e0525d21b55619d6087e8d8e1e150bdefac217a605c446139da4234015ecd93d"
+    },
+    {
+      "name": "all16-dev.session.restarting",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/family.py",
+        "dev.session.restarting"
+      ],
+      "exit": 0,
+      "start_available_gib": 16,
+      "lowest_available_gib": 15,
+      "seconds": 12.15,
+      "pauses": [],
+      "family": "dev.session.restarting",
+      "phase": "all16",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/all16-dev.session.restarting.log",
+      "sha256": "79456213edb77f9b699ed83690b15b1748ff81e8d7a504cca63bd06e6a39d0e7"
+    },
+    {
+      "name": "all16-preview.session.started",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/family.py",
+        "preview.session.started"
+      ],
+      "exit": 0,
+      "start_available_gib": 16,
+      "lowest_available_gib": 15,
+      "seconds": 12.03,
+      "pauses": [],
+      "family": "preview.session.started",
+      "phase": "all16",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/all16-preview.session.started.log",
+      "sha256": "b1571630aa35ab5cfd5ad9f30d1c130eb08eaa19fe34e14e692428aa21c30dab"
+    },
+    {
+      "name": "all16-preview.session.refreshed",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/family.py",
+        "preview.session.refreshed"
+      ],
+      "exit": 0,
+      "start_available_gib": 16,
+      "lowest_available_gib": 15,
+      "seconds": 12.03,
+      "pauses": [],
+      "family": "preview.session.refreshed",
+      "phase": "all16",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/all16-preview.session.refreshed.log",
+      "sha256": "495652b1056fb5febe1603690ff7e1c395d39d5bc72c381530c00809c032370e"
+    },
+    {
+      "name": "all16-preview.session.stopped",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/family.py",
+        "preview.session.stopped"
+      ],
+      "exit": 0,
+      "start_available_gib": 16,
+      "lowest_available_gib": 16,
+      "seconds": 12.03,
+      "pauses": [],
+      "family": "preview.session.stopped",
+      "phase": "all16",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/all16-preview.session.stopped.log",
+      "sha256": "b9176925a89ac4419627b8d64d95a17f05ddf9578967d254fae2129e438e3fe3"
+    },
+    {
+      "name": "all16-catalog.install.started",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/family.py",
+        "catalog.install.started"
+      ],
+      "exit": 0,
+      "start_available_gib": 17,
+      "lowest_available_gib": 16,
+      "seconds": 12.03,
+      "pauses": [],
+      "family": "catalog.install.started",
+      "phase": "all16",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/all16-catalog.install.started.log",
+      "sha256": "2aacf8268b256d15513e0e45829c12f9616f4150c88d7930780da5116cd6e275"
+    },
+    {
+      "name": "all16-catalog.install.completed",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/family.py",
+        "catalog.install.completed"
+      ],
+      "exit": 0,
+      "start_available_gib": 16,
+      "lowest_available_gib": 15,
+      "seconds": 14.03,
+      "pauses": [],
+      "family": "catalog.install.completed",
+      "phase": "all16",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/all16-catalog.install.completed.log",
+      "sha256": "2aacf8268b256d15513e0e45829c12f9616f4150c88d7930780da5116cd6e275"
+    },
     {
       "name": "shard-generate",
       "command": [
@@ -11,9 +331,11 @@
         "Plans/sharding_config.json"
       ],
       "exit": 0,
-      "summary": "pass",
-      "seconds": 4.8,
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/shard-generate.log",
+      "start_available_gib": 17,
+      "lowest_available_gib": 17,
+      "seconds": 4.01,
+      "pauses": [],
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/shard-generate.log",
       "sha256": "b27aa12c62c94fa9639a8859c01c0149c7ec53fd417f55d9fd1f25b1b865962d"
     },
     {
@@ -24,10 +346,12 @@
         "generate"
       ],
       "exit": 0,
-      "summary": "pass",
-      "seconds": 55.8,
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/index-generate.log",
-      "sha256": "f1c5c23acd4ee62a7d9a7155c811a95740f63a25693103e79fa17144bfbaa317"
+      "start_available_gib": 16,
+      "lowest_available_gib": 16,
+      "seconds": 56.12,
+      "pauses": [],
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/index-generate.log",
+      "sha256": "6a72f338fcd0ef1b184236fea9ee89ebe117704ef8118cb90613c9325f1a918c"
     },
     {
       "name": "shard-check",
@@ -39,9 +363,11 @@
         "Plans/sharding_config.json"
       ],
       "exit": 0,
-      "summary": "pass",
-      "seconds": 27.55,
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/shard-check.log",
+      "start_available_gib": 18,
+      "lowest_available_gib": 16,
+      "seconds": 22.05,
+      "pauses": [],
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/shard-check.log",
       "sha256": "e2bde33cc5b3f2295337f30f30ddf167b0bc27d808c273dbc7a90fa064046a88"
     },
     {
@@ -52,89 +378,15 @@
         "validate"
       ],
       "exit": 1,
-      "summary": "top-level fail; all 22 failures inherited, no lane failure",
-      "seconds": 51.25,
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/index-validate.log",
-      "sha256": "f535c3246a4371b6f79ef37ce3622c943ab43a522926fd5b3a8f00d57bbf01b1"
+      "start_available_gib": 17,
+      "lowest_available_gib": 15,
+      "seconds": 52.12,
+      "pauses": [],
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/index-validate.log",
+      "sha256": "e4e30414e4be655825225440e89683fddff4aa07d696d17464c4163099f868c4"
     },
     {
-      "name": "ds15-final",
-      "command": [
-        "python3",
-        "scripts/pm-ds15-event-contracts.py"
-      ],
-      "exit": 0,
-      "summary": "pass",
-      "seconds": 131.32,
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/ds15-final.log",
-      "sha256": "1b14960187574d1e53448832faf1c122d2ac3ad047ff245c9d5960f909ba2924"
-    },
-    {
-      "name": "storage-profile",
-      "command": [
-        "python3",
-        "scripts/pm-storage-profile-check.py"
-      ],
-      "exit": 1,
-      "summary": "FAIL: 41 unchanged non-DS15 profile omissions.",
-      "seconds": 0.7,
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/storage-profile.log",
-      "sha256": "61b57de32ef976006a497d80df135d0ecd3a6841e3efb447572a6c3e3543c8e2"
-    },
-    {
-      "name": "case-l",
-      "command": [
-        "python3",
-        "scripts/pm-implementation-readiness.py",
-        "validate-case-l"
-      ],
-      "exit": 0,
-      "summary": "pass",
-      "seconds": 1.24,
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/case-l.log",
-      "sha256": "7aa3feb7d182c5186eb65f9e90df566d1146202e7413da226e98754528af2c23"
-    },
-    {
-      "name": "storage-recovery",
-      "command": [
-        "python3",
-        "scripts/pm-storage-recovery-contracts.py",
-        "--self-test"
-      ],
-      "exit": 0,
-      "summary": "pass",
-      "seconds": 1.6,
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/storage-recovery.log",
-      "sha256": "e56e543c18588569abd7a299f25004750f6954e919c5571c6a669b38668eca1a"
-    },
-    {
-      "name": "shared-runtime",
-      "command": [
-        "python3",
-        "scripts/pm-shared-runtime-contracts.py",
-        "--self-test"
-      ],
-      "exit": 0,
-      "summary": "pass",
-      "seconds": 0.87,
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/shared-runtime.log",
-      "sha256": "6064a1454776e6f9cdec906eeb1453f1652e74f79bee69ee1719fec58d184027"
-    },
-    {
-      "name": "materializer",
-      "command": [
-        "python3",
-        "scripts/pm-shared-runtime-storage-materialize.py",
-        "check"
-      ],
-      "exit": 1,
-      "summary": "FAIL: dev_session_record retention is PENDING_RETENTION_DECISION; RT decision remains held.",
-      "seconds": 15.02,
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/materializer.log",
-      "sha256": "566f46828e4c97400b90847db370afc8c9b596adfec9f8d0576ec1a2bdfe39c2"
-    },
-    {
-      "name": "runtime-tests",
+      "name": "targeted-census",
       "command": [
         "python3",
         "-m",
@@ -143,13 +395,469 @@
         "-s",
         "tests",
         "-p",
-        "test_shared_runtime_storage_contracts.py"
+        "test_shared_runtime_storage_contracts.py",
+        "-k",
+        "test_live_registry_satisfies_readiness_census_and_value_contracts"
       ],
       "exit": 1,
-      "summary": "17/20 pass. Residuals: operational-awareness schema mismatch; 18 PENDING retention assignments (16 prior + 2 install); materializer refuses pending retention. No census mismatch remains.",
-      "seconds": 149.32,
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/runtime-tests.log",
-      "sha256": "9206520023aa812b856d111e2e5bf947f792a095ad22d42bb9ac3fc9cd650896"
+      "start_available_gib": 16,
+      "lowest_available_gib": 16,
+      "seconds": 2.01,
+      "pauses": [],
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/targeted-census.log",
+      "sha256": "9aa1957781e6973efe0b0e4ff3c6da64485544453d324739d2d154d777b29356"
+    },
+    {
+      "name": "audit-doctor.custom_headless.checked",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-family.py",
+        "doctor.custom_headless.checked"
+      ],
+      "exit": 1,
+      "start_available_gib": 16,
+      "lowest_available_gib": 11,
+      "seconds": 150.79,
+      "pauses": [],
+      "family": "doctor.custom_headless.checked",
+      "result": {
+        "status": "partial",
+        "mutants": 236,
+        "negatives": 940,
+        "positive_regressions": 0,
+        "seconds": 142.0
+      },
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-doctor.custom_headless.checked.log",
+      "sha256": "07136f5a35c59a22491e5112f20dabc0c5ca43dcfeb667da9fa6b9c55177f68a"
+    },
+    {
+      "name": "audit-live.session.started",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-family.py",
+        "live.session.started"
+      ],
+      "exit": 1,
+      "start_available_gib": 12,
+      "lowest_available_gib": 12,
+      "seconds": 142.26,
+      "pauses": [],
+      "family": "live.session.started",
+      "result": {
+        "status": "partial",
+        "mutants": 236,
+        "negatives": 895,
+        "positive_regressions": 0,
+        "seconds": 134.9
+      },
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-live.session.started.log",
+      "sha256": "7a4761e8aa89890ab47b84cd16fb20c8ccb9ad68303d0291e314ec22d32f39b2"
+    },
+    {
+      "name": "audit-live.step.updated",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-family.py",
+        "live.step.updated"
+      ],
+      "exit": 1,
+      "start_available_gib": 19,
+      "lowest_available_gib": 18,
+      "seconds": 166.26,
+      "pauses": [],
+      "family": "live.step.updated",
+      "result": {
+        "status": "partial",
+        "mutants": 236,
+        "negatives": 915,
+        "positive_regressions": 0,
+        "seconds": 159.5
+      },
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-live.step.updated.log",
+      "sha256": "b7b69a79e0e95c1974d10f46a15276701817971c82b22073e7354e7a0d7adc10"
+    },
+    {
+      "name": "audit-live.artifact.created",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-family.py",
+        "live.artifact.created"
+      ],
+      "exit": 1,
+      "start_available_gib": 20,
+      "lowest_available_gib": 20,
+      "seconds": 122.39,
+      "pauses": [],
+      "family": "live.artifact.created",
+      "result": {
+        "status": "partial",
+        "mutants": 236,
+        "negatives": 891,
+        "positive_regressions": 0,
+        "seconds": 116.7
+      },
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-live.artifact.created.log",
+      "sha256": "755a5ce4f7f925faeee2471ff273ea3daffd3bb891e5d72721011d4c5918be47"
+    },
+    {
+      "name": "audit-live.session.completed",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-family.py",
+        "live.session.completed"
+      ],
+      "exit": 1,
+      "start_available_gib": 20,
+      "lowest_available_gib": 14,
+      "seconds": 144.44,
+      "pauses": [],
+      "family": "live.session.completed",
+      "result": {
+        "status": "partial",
+        "mutants": 236,
+        "negatives": 890,
+        "positive_regressions": 0,
+        "seconds": 135.1
+      },
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-live.session.completed.log",
+      "sha256": "616e582a2e5904c024cd5f6cab387ac678fe765dfec5a7340da96752bb268fe5"
+    },
+    {
+      "name": "audit-live.session.degraded",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-family.py",
+        "live.session.degraded"
+      ],
+      "exit": 1,
+      "start_available_gib": 16,
+      "lowest_available_gib": 7,
+      "seconds": 152.36,
+      "pauses": [],
+      "family": "live.session.degraded",
+      "result": {
+        "status": "partial",
+        "mutants": 236,
+        "negatives": 925,
+        "positive_regressions": 0,
+        "seconds": 142.7
+      },
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-live.session.degraded.log",
+      "sha256": "0ea519b5dccdada3404c694ff93f2964ab781cac9110c63367f1c40ebb5bab7a"
+    },
+    {
+      "name": "audit-browser.context_captured",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-family.py",
+        "browser.context_captured"
+      ],
+      "exit": 1,
+      "start_available_gib": 13,
+      "lowest_available_gib": 9,
+      "seconds": 298.57,
+      "pauses": [],
+      "family": "browser.context_captured",
+      "result": {
+        "status": "partial",
+        "mutants": 236,
+        "negatives": 1031,
+        "positive_regressions": 0,
+        "seconds": 280.2
+      },
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-browser.context_captured.log",
+      "sha256": "3d1d89180c94b98aec7ffb067a9fcb7bd79211d61fc8dd10d23c6d6ef4f93331"
+    },
+    {
+      "name": "audit-dev.session.started",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-family.py",
+        "dev.session.started"
+      ],
+      "exit": 1,
+      "start_available_gib": 11,
+      "lowest_available_gib": 6,
+      "seconds": 180.58,
+      "pauses": [],
+      "family": "dev.session.started",
+      "result": {
+        "status": "partial",
+        "mutants": 236,
+        "negatives": 974,
+        "positive_regressions": 0,
+        "seconds": 172.0
+      },
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-dev.session.started.log",
+      "sha256": "e4231c140ec8dc916b8e81db9fa6a271f771aa3f25f306e35e5dc764ea3d211d"
+    },
+    {
+      "name": "audit-dev.session.stopping",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-family.py",
+        "dev.session.stopping"
+      ],
+      "exit": 1,
+      "start_available_gib": 15,
+      "lowest_available_gib": 7,
+      "seconds": 178.5,
+      "pauses": [],
+      "family": "dev.session.stopping",
+      "result": {
+        "status": "partial",
+        "mutants": 236,
+        "negatives": 955,
+        "positive_regressions": 0,
+        "seconds": 167.6
+      },
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-dev.session.stopping.log",
+      "sha256": "723e54f093f111aa4b76936959758c58fb3a512d31feb3f22739b0b776675970"
+    },
+    {
+      "name": "audit-dev.session.stopped",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-family.py",
+        "dev.session.stopped"
+      ],
+      "exit": 1,
+      "start_available_gib": 9,
+      "lowest_available_gib": 8,
+      "seconds": 176.46,
+      "pauses": [],
+      "family": "dev.session.stopped",
+      "result": {
+        "status": "partial",
+        "mutants": 236,
+        "negatives": 956,
+        "positive_regressions": 0,
+        "seconds": 165.4
+      },
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-dev.session.stopped.log",
+      "sha256": "239626078d753da24d06560e2816eaa8e56bb75829a83131bf95770389a74b76"
+    },
+    {
+      "name": "audit-dev.session.restarting",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-family.py",
+        "dev.session.restarting"
+      ],
+      "exit": 1,
+      "start_available_gib": 10,
+      "lowest_available_gib": 6,
+      "seconds": 308.95,
+      "pauses": [],
+      "family": "dev.session.restarting",
+      "result": {
+        "status": "partial",
+        "mutants": 236,
+        "negatives": 955,
+        "positive_regressions": 0,
+        "seconds": 299.9
+      },
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-dev.session.restarting.log",
+      "sha256": "e33bb07f8b9658ddc3c125e5cb956a4cc93b511716bf64b81612de726be45636"
+    },
+    {
+      "name": "audit-preview.session.started",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-family.py",
+        "preview.session.started"
+      ],
+      "exit": 1,
+      "start_available_gib": 10,
+      "lowest_available_gib": 7,
+      "seconds": 183.74,
+      "pauses": [],
+      "family": "preview.session.started",
+      "result": {
+        "status": "partial",
+        "mutants": 236,
+        "negatives": 966,
+        "positive_regressions": 0,
+        "seconds": 174.4
+      },
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-preview.session.started.log",
+      "sha256": "ce430d024de9e593eb9727d2a81d92adb65269a03a144699cc727811477865da"
+    },
+    {
+      "name": "audit-preview.session.refreshed",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-family.py",
+        "preview.session.refreshed"
+      ],
+      "exit": 1,
+      "start_available_gib": 10,
+      "lowest_available_gib": 7,
+      "seconds": 190.04,
+      "pauses": [],
+      "family": "preview.session.refreshed",
+      "result": {
+        "status": "partial",
+        "mutants": 236,
+        "negatives": 962,
+        "positive_regressions": 0,
+        "seconds": 179.8
+      },
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-preview.session.refreshed.log",
+      "sha256": "6c32059cdedf74672cfd4085da4e76dd8c073a6ed21a32fed8cb3140ca3c5075"
+    },
+    {
+      "name": "audit-preview.session.stopped",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-family.py",
+        "preview.session.stopped"
+      ],
+      "exit": 1,
+      "start_available_gib": 9,
+      "lowest_available_gib": 8,
+      "seconds": 183.12,
+      "pauses": [],
+      "family": "preview.session.stopped",
+      "result": {
+        "status": "partial",
+        "mutants": 236,
+        "negatives": 961,
+        "positive_regressions": 0,
+        "seconds": 173.0
+      },
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-preview.session.stopped.log",
+      "sha256": "8ebfa4607e0d99c7dcbb11caa0acf54c711f66a9f3c1b2555dbd28030f9982d4"
+    },
+    {
+      "name": "audit-catalog.install.started",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-family.py",
+        "catalog.install.started"
+      ],
+      "exit": 1,
+      "start_available_gib": 11,
+      "lowest_available_gib": 9,
+      "seconds": 168.32,
+      "pauses": [],
+      "family": "catalog.install.started",
+      "result": {
+        "status": "partial",
+        "mutants": 236,
+        "negatives": 889,
+        "positive_regressions": 0,
+        "seconds": 158.6
+      },
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-catalog.install.started.log",
+      "sha256": "eda68a540dba40bfd53fae42781b9ad81f2615d853f082ee6f11a7952d3caa5a"
+    },
+    {
+      "name": "audit-catalog.install.completed",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-family.py",
+        "catalog.install.completed"
+      ],
+      "exit": 1,
+      "start_available_gib": 12,
+      "lowest_available_gib": 8,
+      "seconds": 184.83,
+      "pauses": [],
+      "family": "catalog.install.completed",
+      "result": {
+        "status": "partial",
+        "mutants": 236,
+        "negatives": 889,
+        "positive_regressions": 0,
+        "seconds": 175.3
+      },
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-catalog.install.completed.log",
+      "sha256": "899cccd60a039fad5aeb538375ca4ca50c14bf2d2510c7e5bf39a106902ad858"
+    },
+    {
+      "name": "audit-dev.session.stopping-attempt1",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-family.py",
+        "dev.session.stopping"
+      ],
+      "exit": 1,
+      "start_available_gib": 8,
+      "lowest_available_gib": 5,
+      "seconds": 282.79,
+      "pauses": [
+        {
+          "paused": true,
+          "available_gib": 5,
+          "utc": "2026-11-05T05:19:23.928251+00:00"
+        },
+        {
+          "paused": true,
+          "available_gib": 5,
+          "utc": "2026-11-05T05:21:56.685113+00:00"
+        }
+      ],
+      "completed": false,
+      "reason": "Auditor low-memory stop; no proof export. Retry changes operational pause policy only.",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/audit-dev.session.stopping-attempt1.log",
+      "sha256": "51a44d109d4434c8ea831618fddbd61d4af5d3b701a48bc6d09a4ae23bedf63e"
+    },
+    {
+      "name": "merge-audits",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/merge-audits.py"
+      ],
+      "exit": 0,
+      "start_available_gib": 11,
+      "lowest_available_gib": 9,
+      "seconds": 20.04,
+      "pauses": [],
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/merge-audits.log",
+      "sha256": "633be478827def9e7eed9b33e96d789a4fb4872c0ad824f0539f5edc70fac52a"
+    },
+    {
+      "name": "census-export",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/census-export.py"
+      ],
+      "exit": 1,
+      "start_available_gib": 11,
+      "lowest_available_gib": 11,
+      "seconds": 2.01,
+      "pauses": [],
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/census-export.log",
+      "sha256": "79b09a4556c64209d76ce19b78388b925930f46d76fb8d3f2fa544f9f2f67ad8"
+    },
+    {
+      "name": "scope",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/scope.py"
+      ],
+      "exit": 0,
+      "start_available_gib": 10,
+      "lowest_available_gib": 10,
+      "seconds": 2.01,
+      "pauses": [],
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/scope.log",
+      "sha256": "d4ec4633c719b2adfa6617f66e1698ba7ce57aa08a5e93eb18230e6fa16ec6f5"
+    },
+    {
+      "name": "grade",
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/grade.py"
+      ],
+      "exit": 0,
+      "start_available_gib": 11,
+      "lowest_available_gib": 10,
+      "seconds": 4.01,
+      "pauses": [],
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/grade.log",
+      "sha256": "3c602a93d6cb34eb1879e9ead8fda395c5c44168ab8f020cf77f7698ca34878d"
     },
     {
       "name": "diff-check",
@@ -159,46 +867,181 @@
         "--check"
       ],
       "exit": 0,
-      "summary": "pass",
-      "seconds": 3.2,
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/diff-check.log",
+      "start_available_gib": 9,
+      "lowest_available_gib": 9,
+      "seconds": 2.01,
+      "pauses": [],
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix8/diff-check.log",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-    },
-    {
-      "name": "independent-review-regressions",
-      "command": [
-        "python3",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/run-independent.py"
-      ],
-      "exit": 0,
-      "summary": "2234 controls in six sequential suites; zero failures.",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/independent-results.json",
-      "sha256": "63f883a6b4817462e3d962c1e64d336508f6decdfe5149d72854b742e0f7f394"
     }
   ],
-  "independent_controls": 2234,
-  "independent_failures": 0,
-  "native_execution": "NOT_RUN",
-  "whole_guard_table": {
+  "index": {
+    "base": "024adc567a2cf4f1c6da898c3951b9110df3b59e",
+    "changed_cases": [
+      {
+        "family": "catalog.install.started",
+        "case": "isolated-checkpoint-owner-scope"
+      },
+      {
+        "family": "catalog.install.started",
+        "case": "isolated-receipt-original-event_id"
+      },
+      {
+        "family": "catalog.install.started",
+        "case": "isolated-receipt-original-sequence_id"
+      },
+      {
+        "family": "catalog.install.completed",
+        "case": "isolated-checkpoint-owner-scope"
+      },
+      {
+        "family": "catalog.install.completed",
+        "case": "isolated-receipt-original-event_id"
+      },
+      {
+        "family": "catalog.install.completed",
+        "case": "isolated-receipt-original-sequence_id"
+      }
+    ],
+    "index_status": "fail",
+    "index_failure_count": 22,
+    "index_error_counts": {
+      "plan_unit_removal_ledger_invalid": 21,
+      "plan_unit_removed_without_ledger_decision": 1
+    },
+    "index_failure_source_paths": [
+      {
+        "path": "Plans/Decision_Log.md",
+        "unchanged_from_base": true
+      },
+      {
+        "path": "Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system/records/decisions.jsonl",
+        "unchanged_from_base": true
+      },
+      {
+        "path": "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl",
+        "unchanged_from_base": true
+      },
+      {
+        "path": "Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit/records/decisions.jsonl",
+        "unchanged_from_base": true
+      },
+      {
+        "path": "Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup/records/decisions.jsonl",
+        "unchanged_from_base": true
+      },
+      {
+        "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/records/decisions.jsonl",
+        "unchanged_from_base": true
+      },
+      {
+        "path": "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/records/decisions.jsonl",
+        "unchanged_from_base": true
+      },
+      {
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/decisions.jsonl",
+        "unchanged_from_base": true
+      },
+      {
+        "path": "Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff/records/decisions.jsonl",
+        "unchanged_from_base": true
+      },
+      {
+        "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/records/decisions.jsonl",
+        "unchanged_from_base": true
+      },
+      {
+        "path": "Plans/ledgers/v2/pldg-20260622-001-fff/records/decisions.jsonl",
+        "unchanged_from_base": true
+      },
+      {
+        "path": "Plans/ledgers/v2/pldg-20260624-001-provider-updates/records/decisions.jsonl",
+        "unchanged_from_base": true
+      },
+      {
+        "path": "Plans/ledgers/v2/pldg-20260626-001-feature-name/records/decisions.jsonl",
+        "unchanged_from_base": true
+      },
+      {
+        "path": "Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/decisions.jsonl",
+        "unchanged_from_base": true
+      },
+      {
+        "path": "Plans/ledgers/v2/pldg-20260629-001-feature-name/records/decisions.jsonl",
+        "unchanged_from_base": true
+      },
+      {
+        "path": "Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/decisions.jsonl",
+        "unchanged_from_base": true
+      },
+      {
+        "path": "Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl",
+        "unchanged_from_base": true
+      },
+      {
+        "path": "Plans/ledgers/v2/pldg-20260801-001-feature-intake/records/decisions.jsonl",
+        "unchanged_from_base": true
+      },
+      {
+        "path": "Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/decisions.jsonl",
+        "unchanged_from_base": true
+      },
+      {
+        "path": "Plans/ledgers/v2/pldg-20260908-002-terminal-workflow-findings/records/decisions.jsonl",
+        "unchanged_from_base": true
+      },
+      {
+        "path": "Plans/ledgers/v2/pldg-20260909-001-research-decision-review/records/decisions.jsonl",
+        "unchanged_from_base": true
+      },
+      {
+        "path": "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/decisions.jsonl",
+        "unchanged_from_base": true
+      }
+    ],
+    "regeneration": [
+      {
+        "path": "Plans/.plan_index/coverage_report.json",
+        "stable_content_identical": true
+      },
+      {
+        "path": "Plans/.plan_index/dependencies.json",
+        "stable_content_identical": true
+      },
+      {
+        "path": "Plans/.plan_index/doc_cards.json",
+        "stable_content_identical": true
+      },
+      {
+        "path": "Plans/.plan_index/node_readiness_report.json",
+        "stable_content_identical": false
+      }
+    ],
+    "readiness_difference_response": "Shared currentness edition advanced since pinned branch; retain generated evidence and restore unrelated readiness output. No readiness/governance artifact is committed."
+  },
+  "census": {
+    "error_count": 18,
+    "by_error": {
+      "storage_value_registry_retention_policy_ref_unknown": 18
+    },
+    "exact_census_mismatches": [],
+    "all_pending_retention": true
+  },
+  "guard_audit": {
+    "status": "partial",
     "guards": 236,
-    "negatives_per_guard": 14259,
-    "named_duplicate_sets": 41,
-    "witnesses": 191,
+    "negative_cases": 14259,
+    "legacy_named_sets": 41,
+    "legacy_named_witnesses": 191,
+    "matrix_rows": 277,
+    "matrix_pairs": 3949743,
     "positive_regressions": 0,
-    "unproved_guards": 0,
-    "status": "PARTIAL",
-    "unexposed_after_duplicate_sets": 5576
+    "guards_without_legacy_single_or_named_proof": [],
+    "failed_legacy_named_proofs": [],
+    "unexposed_singleton": 9222,
+    "unexposed_after_legacy_named_sets": 5570,
+    "changed_cases": 6,
+    "qualification": "Existing audit is rerun, not redesigned. Predicate inventory/duplicate certification moves to the shared tool in the sweep. Literal PARTIAL is not promoted to PASS."
   },
-  "guard_model_lineage": {
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/guard-model-lineage.json",
-    "sha256": "b13cb52e665c7f7f36defa0472e315de0ca9bf642c51ed6c1fa4afd37be5012a"
-  },
-  "scope": {
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/scope-and-earlier-fixes.json",
-    "sha256": "cffa625000286d538f0d7b7a820ab8ce51b7e84fa2150151371ec339b2a67887"
-  },
-  "codec_lineage": {
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/codec-lineage.json",
-    "sha256": "8d8902365b8313628416625f1ab35af15b86a669146c92df8d699409e94251d4"
-  }
+  "native_execution": "NOT_RUN"
 }
