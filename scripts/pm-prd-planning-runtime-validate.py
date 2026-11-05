@@ -148,9 +148,9 @@ def validate_command_contracts(contract: dict[str, Any]) -> list[dict[str, Any]]
     commands = contract["ui_command_contracts"]
     command_ids = {command.get("command_id") for command in commands}
     required = {
-        "cmd.planning_wizard.rename_topic",
-        "cmd.planning_wizard.reorder_topic",
-        "cmd.planning_wizard.mark_impacted",
+        "cmd.planning_wizard.topic.rename",
+        "cmd.planning_wizard.topic.reorder",
+        "cmd.planning_wizard.topic.mark_impacted",
         "cmd.planning_wizard.approve_and_build",
         "cmd.plan_compile.open_build",
     }
@@ -179,7 +179,7 @@ def validate_command_contracts(contract: dict[str, Any]) -> list[dict[str, Any]]
         for field in sorted(required_idempotency_fields):
             if field not in idempotency_fields:
                 failures.append({"path": rel(CONTRACT_PATH), "error": "approve_and_build_missing_idempotency_field", "field": field})
-    annotate = next((command for command in commands if command.get("command_id") == "cmd.prd_builder.annotate_source"), None)
+    annotate = next((command for command in commands if command.get("command_id") == "cmd.prd_builder.annotation.upsert"), None)
     if annotate:
         payload_fields = set(annotate.get("payload_contract", []))
         result_fields = set(annotate.get("result_contract", []))

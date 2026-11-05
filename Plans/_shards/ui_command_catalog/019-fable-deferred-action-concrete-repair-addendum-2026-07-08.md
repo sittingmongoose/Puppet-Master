@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8786-L10186
+Source lines: L8788-L10328
 
-Source SHA256: `86ed1901070fb341ea2d4bed7d884b4207e77e828bde1c6466056b6c35cb221f`
+Source SHA256: `e852be3ec466cc2d357de1901153bd33a907875d4d6dfd3a3217c8e7649e4342`
 
 ---
 
@@ -1067,6 +1067,142 @@ command_payload_definition_map:
       field: canonical_text
       quote: cmd.panel_tab.close ends the tab's session after the terminal kind's close check
     note: Owned by UCC-200.
+  - token: cmd.plan_compile.retry_stage
+    disposition: compatibility_alias
+    targets:
+    - cmd.plan_compile.retry
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.plan_compile.retry", "alias_command_ids": ["cmd.plan_compile.retry_stage"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
+  - token: cmd.planning_wizard.accept_amendment
+    disposition: compatibility_alias
+    targets:
+    - cmd.planning_wizard.amendment.accept
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.planning_wizard.amendment.accept", "alias_command_ids": ["cmd.planning_wizard.accept_amendment"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
+  - token: cmd.planning_wizard.add_topic
+    disposition: compatibility_alias
+    targets:
+    - cmd.planning_wizard.topic.add
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.planning_wizard.topic.add", "alias_command_ids": ["cmd.planning_wizard.add_topic"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
+  - token: cmd.planning_wizard.defer_topic
+    disposition: compatibility_alias
+    targets:
+    - cmd.planning_wizard.topic.defer
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.planning_wizard.topic.defer", "alias_command_ids": ["cmd.planning_wizard.defer_topic"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
+  - token: cmd.planning_wizard.mark_impacted
+    disposition: compatibility_alias
+    targets:
+    - cmd.planning_wizard.topic.mark_impacted
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.planning_wizard.topic.mark_impacted", "alias_command_ids": ["cmd.planning_wizard.mark_impacted"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
+  - token: cmd.planning_wizard.merge_topic
+    disposition: compatibility_alias
+    targets:
+    - cmd.planning_wizard.topic.merge
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.planning_wizard.topic.merge", "alias_command_ids": ["cmd.planning_wizard.merge_topic"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
+  - token: cmd.planning_wizard.rename_topic
+    disposition: compatibility_alias
+    targets:
+    - cmd.planning_wizard.topic.rename
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.planning_wizard.topic.rename", "alias_command_ids": ["cmd.planning_wizard.rename_topic"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
+  - token: cmd.planning_wizard.reopen_topic
+    disposition: compatibility_alias
+    targets:
+    - cmd.planning_wizard.topic.reopen
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.planning_wizard.topic.reopen", "alias_command_ids": ["cmd.planning_wizard.reopen_topic"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
+  - token: cmd.planning_wizard.reorder_topic
+    disposition: compatibility_alias
+    targets:
+    - cmd.planning_wizard.topic.reorder
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.planning_wizard.topic.reorder", "alias_command_ids": ["cmd.planning_wizard.reorder_topic"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
+  - token: cmd.planning_wizard.split_topic
+    disposition: compatibility_alias
+    targets:
+    - cmd.planning_wizard.topic.split
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.planning_wizard.topic.split", "alias_command_ids": ["cmd.planning_wizard.split_topic"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
+  - token: cmd.planning_wizard.start_from_prd
+    disposition: compatibility_alias
+    targets:
+    - cmd.planning_wizard.start
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.planning_wizard.start", "alias_command_ids": ["cmd.planning_wizard.start_from_prd"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
+  - token: cmd.prd_builder.annotate_source
+    disposition: compatibility_alias
+    targets:
+    - cmd.prd_builder.annotation.upsert
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.prd_builder.annotation.upsert", "alias_command_ids": ["cmd.prd_builder.annotate_source"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
+  - token: cmd.prd_builder.answer_question
+    disposition: compatibility_alias
+    targets:
+    - cmd.prd_builder.answer.upsert
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.prd_builder.answer.upsert", "alias_command_ids": ["cmd.prd_builder.answer_question"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
+  - token: cmd.prd_builder.approve_for_planning
+    disposition: compatibility_alias
+    targets:
+    - cmd.prd_builder.approve_for_planning_wizard
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.prd_builder.approve_for_planning_wizard", "alias_command_ids": ["cmd.prd_builder.approve_for_planning"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
+  - token: cmd.prd_builder.import_sources
+    disposition: compatibility_alias
+    targets:
+    - cmd.prd_builder.source.import
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.prd_builder.source.import", "alias_command_ids": ["cmd.prd_builder.import_sources"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
+  - token: cmd.prd_builder.reopen_pack
+    disposition: compatibility_alias
+    targets:
+    - cmd.prd_builder.pack.reopen
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.prd_builder.pack.reopen", "alias_command_ids": ["cmd.prd_builder.reopen_pack"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
+  - token: cmd.prd_builder.resolve_conflict
+    disposition: compatibility_alias
+    targets:
+    - cmd.prd_builder.conflict.resolve
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.prd_builder.conflict.resolve", "alias_command_ids": ["cmd.prd_builder.resolve_conflict"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
   - token: cmd.runtime.*
     disposition: family_alias
     evidence:
@@ -1167,6 +1303,10 @@ command_payload_definition_map:
     - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
   - owner_state: actor_not_authorized
     maps_to: unauthorized
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: annotation_terminal
+    maps_to: blocked_state_required
     sources:
     - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
   - owner_state: assignment_missing

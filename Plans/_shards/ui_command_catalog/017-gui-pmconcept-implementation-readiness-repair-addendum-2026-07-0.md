@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8518-L8583
+Source lines: L8518-L8585
 
-Source SHA256: `86ed1901070fb341ea2d4bed7d884b4207e77e828bde1c6466056b6c35cb221f`
+Source SHA256: `e852be3ec466cc2d357de1901153bd33a907875d4d6dfd3a3217c8e7649e4342`
 
 ---
 
@@ -48,6 +48,8 @@ The command family required by UCC-098 is concrete. Production GUI controls may 
 | `cmd.plan_compile.open_build` | Open Build | PlanCompileRun id, build/run identity, target artifact or route; disabled until `BuildStarted` or resulting build identity exists | Opens resulting build or build artifact route |
 
 Lineage pointer (DL-333): for each command here that UCC-230 routes, the Required payload and guard summary column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
+
+Amended 2026-11-05 (DL-333): these 28 catalog ids are canonical. `Plans/prd_planning_runtime_contracts.json` `ui_command_contracts` is keyed by them, records each id it used before in `alias_command_ids` (UCC-230 lists those as compatibility aliases, excluded from production wiring), and adds `cmd.planning_wizard.topic.open` and `cmd.prd_builder.annotation.resolve` from the rows above; `cmd.plan_compile.open_build` takes the PlanCompileRun id these rows name, not a goal run id.
 
 ### Testing capability and visible-session command rows
 
