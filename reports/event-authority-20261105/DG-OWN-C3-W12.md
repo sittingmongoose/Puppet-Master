@@ -1,107 +1,129 @@
-# C3-W12 — stopped at original-input closure
+# C3-W12 part 2 — successor repairs; required closure UNFINISHED
 
-Branch `plans/ea-goal-own-c3-w12-20261105`, from exactly `e1188eae0c5fa5cf0a8548d9dba76f6f0de8c437` (`origin/plans/ea-goal-own-c-20261105`). **Neither `goal.updated` nor `goal.cancelled` is COMPLETE.** This delivery contains an executable failing prerequisite reproducer and unchanged twelve-criterion grades. It adds no partial family witnesses or preparation claim.
+Branch `plans/ea-goal-own-c3-w12-20261105`, continued from exactly `7335692a3c0629a681e5f5e0de351dfe581dc7af`. **The requested task is not complete.** Both part-1 prerequisite failures have explicit, tested successors. Neither whole W1 nor whole W2 has been executed. No blocker that the lead's successor rule cannot fix has been established. This is an unfinished implementation delivery, not an authorized technical-blocker stop or a COMPLETE result.
 
-## Exact technical blockers
+## Closure and twelve-criterion re-grade
 
-| Family | Where | Why closure stops | Required technical input |
-|---|---|---|---|
-| `goal.updated` / W1 and O4 | The original packet selected by `Plans/goal_own_c_contracts/source-witness-inputs.json:5`, `canonical-copy-v2/goal_source.py:26` | Its actual `GoalSource` constructor refuses **every** approved-agent update with `agent approval provider unavailable in this finite original Direct Save profile`. The new provider resolves successfully, and the complete agent request, normalized identity, producer metadata and coherent SourceAudit validate before that call. A valid Direct Save source succeeds as the control. There is no accepted original agent source to join to the original command/body issuer. | A successor executable original-source/command composition that actually admits the O4 resolution and participates in the sole original body owner's issuance/transaction. It must be separately selected without altering this frozen packet or relabelling its Direct Save births. |
-| `goal.cancelled` / W2 and O5 | `Plans/goal_cancel_schema_resources.json:80` and `Plans/goal_workflow_cancel_current_inspection_schema_resources.v2.json:86`; their pinned `Plans/shared_runtime_command_contracts.schema.json:3539` and five other sites | The exact command resource at SHA-256 `b1c83ae5b645cbe501baf9cfd8924eb99777f8d5f7cb245b087f2e127874a73e` contains six unresolved reference sites to `https://puppetmaster.local/Plans/shared_integration_runtime.schema.json`. Neither isolated original bank declares that retrieval URI. The unmodified `OriginalBank` eagerly refuses both banks with `roots/unresolved_reference`, before any complete cancellation or native migration tuple can qualify. | An explicit original-owner whole-resource binding for the missing URI and its exact original edition, or a separately selected successor source/resource composition. The original banks and their hashes cannot be edited/restamped by C3-W12. |
-
-**Why more authored prose cannot supply these originals:** U1–U7 already describe the approval bridge, but a resolution-shaped value does not enter the selected source's actual private birth/enrollment custody. That original implementation accepts only Direct Save and additionally checks direct acceptance at `goal_source.py:38`; `goal_command.py:30` requires the exact original source/command classes. Changing its private maps, substituting a class, monkeypatching the constructor or reclassifying the source as direct would change the original or supply substitute authority. This is an executable original-source composition prerequisite, not a missing approval-policy decision or a demand for production native execution.
-
-For cancellation, the current `Plans/shared_integration_runtime.schema.json` does contain the named definitions, at whole-document SHA-256 `5293dd1e8d403a6e8da103bcd93e2811ddaec67aaa277541c26ede13064d3008`. Its availability does **not** establish that it was selected by either original bank. Auto-registering it would add an undeclared original retrieval binding. Copying a fragment, using another realm, weakening eager lookup or selecting a current document merely because its definitions fit would not qualify the required original bank. No claim is made that a separately authored successor composition is impossible; it is the missing technical input to this pinned-original execution.
-
-These are source-input blockers, not a claim that authored synthetic oracles require production native execution. Native execution remains **NOT_RUN**. No question is stopped for Jared; no product, retention, deletion, application Stop, registry or admission choice was made.
-
-## Reproducer and exact observations
-
-New file: `scripts/pm_goal_own_c3_w12_oracles.py:1`. It is deliberately a **closure preflight**, despite the allocated filename. Its normal exit is **2**, top-level `BLOCKED_ORIGINAL_INPUTS`; a setup/problem unrelated to the reproduced blockers is separately labelled `PREFLIGHT_ERROR`, also nonzero. Neither status is a passing family suite.
-
-Run with the same Python dependencies as the inherited DG-OWN-C suites:
-
-```sh
-python3 scripts/pm_goal_own_c3_w12_oracles.py --output /absolute/evidence/closure-preflight.json
-```
-
-The preflight:
-
-- **Pins originals.** Verifies all fourteen existing source-witness inputs and all **778** members of the original packet. Packet manifest SHA-256 is `afa83115a8d39ad8dc6cb911ae8c9cc6985ac705eb792d8ed962dce31159e839`; actual `goal_source.py` SHA-256 is `0ce949ad7a5c1bcff54ca926ef6b0b3c424e40c413efd6f9da4875fffaf972ce`.
-- **Checks the agent seam.** Runs a complete valid Direct Save source control, the existing TEST_ONLY approval provider, schema validation of the complete coherent agent inputs, and the actual original constructor. It records the exact refusal. It constructs no body or append owner and changes no original file, issuer map or class.
-- **Checks whole resources.** Qualifies the update producer and consumer banks, with **23** and **24** registered resources respectively. Independently enumerates every reference, including unused definitions, while separately running the ordinary unmodified qualifier.
-- **Preserves isolation.** Loads cancellation producer and private-inspection banks separately. The producer has **22** registered resources and six unresolved sites. The inspection realm has **49** registered resources and twelve traversals of the same six sites because it declares the command document under two retrieval URIs. These are six distinct reference sites per whole command document, not eighteen distinct missing definitions.
-
-The six command-schema sites are at lines **3539, 3584, 3639, 3644, 3795, 3858**. Their targets are `WorkflowCommandContextV1`, `WorkflowScopeV2` and `OwnerEvidenceRefV1` under the missing retrieval URI. Full JSON pointers and whole bank hashes are in `closure-preflight.json`.
-
-**New complete-path oracle counts:** 0 positives / 0 negatives. **New product guards and guard-negative mappings:** none. This diagnostic does not introduce a guard-proof engine or claim check-11 isolation. The passing existing component suites retain their prior PARTIAL meaning.
-
-## Search, premises and scope
-
-Read the C3 packet, DG-OWN packet, shared draft brief, fix-round standing rules and number-domain paragraph, the complete DG-OWN-C branch/share report, Sol cycle 3, and the twelve-criterion rubric. The two local Claude memory paths were absent on Nas1; their exact VM copies were read over SSH. No worker or thread was started.
-
-The five code inputs missing at their Nas1 paths were recovered byte-for-byte from the VM's existing `canonical-copy-v2`, preserving all committed source pins. The shared original capture files were already present and matched. This repaired setup; **missing local files are not the reported blockers**. The packet's README and source report expressly exclude agent acceptance; its actual constructor independently reproduces that limitation.
-
-For `goal.updated`, inspected GRS-068, SP-299/421, U1–U7/W1, the exact producer/consumer banks, the new provider roots/methods, the pinned original source and command classes, and the original source/capture manifest. For `goal.cancelled`, inspected M1–M9/W2, the producer/inspection banks, exact method maps and private inspection realm, the selected command document and the potential SIR resource. The negative searches over the cancellation/Workflow/Plan cancellation maps find no explicit missing-URI binding. No sibling's authority was inferred.
-
-Fetched-main comparison confirms the five original schema/bank files used for these failures have no byte changes relative to this base. Fetched `origin/main` is `404418005d933ab4bfe7f4bc1050a48fa9502c75`; `inputs.json` pins the fetched ref.
-
-DL-045 permits technical bindings for these existing families; it does not convert a copied value into original issuance. GRS-068 still requires actual agent instruction and approval, and direct Save still needs no extra confirmation. SP-305/M2–M4 still require complete actual old source/Stop/association/pending truth and prohibit absent-as-empty. The Stop/retention/approval premises were preserved. No change was made to any original bank, source, schema, method, currentness source, governance artifact, Decision Log, registry, admission or canonical owner text.
-
-## Twelve-criterion re-grade
-
-Order: membership/version, owner, producer, closed payload, scope/identity, replay, retention, custody/redaction, transitions, consumers/checkpoints, compatibility/withdrawal, oracles. `P=PASS`, `p=PARTIAL`.
-
-| Family | Before | After | Vector | Whole-root closure |
+| Family | Before | After | Whole-root result | Remaining implementation |
 |---|---:|---:|---|---|
-| `goal.updated` | 10/12 | 10/12 | `P P p P P P P P P P P p` | **BLOCKED:** no admitted agent source in selected original issuer |
-| `goal.cancelled` | 10/12 | 10/12 | `P P P P P P P P P P p p` | **BLOCKED:** incomplete original resource banks |
+| `goal.updated` / W1 / O4 | 10/12 | 10/12 | **NOT_COMPLETE** | The selected successor executes five finite issuer scenarios. The complete empty/unchanged, metadata-gap, state/Plan conflict, crash/unknown/recovery, current physical representation and independent lower/passive/outer disclosure corpus is still missing. |
+| `goal.cancelled` / W2 / O5 | 10/12 | 10/12 | **NOT_COMPLETE** | Five selected schema realms qualify, but no complete no-association, bound-Plan or Workflow cancellation path has been executed by this delivery. M1–M9's full six-owner source-image mapping and atomic Stop/binding/writer-domain installation, recovery and withdrawal witnesses remain unimplemented, as do complete D05/D06, late-assignment and private-inspection tuples. |
 
-`DG-OWN-C3-W12-self-grade.json` carries the two exact rows, with **89** current path/line/quote/file-hash citations reverified. No cell is upgraded for a green component adapter or lowered for native NOT_RUN. Original broader gaps remain open; these two prerequisite failures suffice to stop the requested whole-root closure.
+Criterion order is membership/version, owner, producer, closed payload, scope/identity, replay, retention, custody/redaction, transitions, consumers/checkpoints, compatibility/withdrawal, oracles. `P=PASS`, `p=PARTIAL`:
 
-## Units, IDs and merge hunks
+- **goal.updated:** `P P p P P P P P P P P p`.
+- **goal.cancelled:** `P P P P P P P P P P p p`.
 
-- **Units added/amended:** none. ATS-1116/1117 and all O4/O5 units are unchanged.
-- **IDs used:** none; no minting or ID-allocation claim.
-- **Shared-file hunks:** none. `Plans/goal_own_c_contracts/suites.json`, `protocol.md`, every owner document and all existing scripts are unchanged. The added script and C3-W12 reports are independent merge paths.
-- **Stopped question:** none. Technical input failures are recorded above.
+The self-grade rechecks 91 exact current citations, including 89 cell citations and two disposition citations. Open cells remain PARTIAL. Native execution is NOT_RUN; that is not the reason closure remains open. Shared S1/S2/O12/check-11 proof work remains separate. No question is stopped for Jared.
 
-## Checks and retained evidence
+## Newly authored source/command successor
 
-All invoked commands ran serially with `PM_GOAL_AUDIT_WORKERS=1`. Resource checks found 504 GB available disk and 10 GB available RAM before worktree creation; sampled available RAM remained at least 9 GB. On Nas1, a task-local Python 3.14 environment supplied the missing `msgpack`, `blake3` and `rfc8785` packages; the repository's dependency files were unchanged. The live fifteen-file ignored currentness edition was copied coherently and verified with `sha256sum` before index generation.
+`Plans/goal_own_c_contracts/w12-successor-v2/approved-agent-source.v2.json` explicitly selects the whole executable package at `/home/sittingmongoose/PM-Experiments/c3-w12-p2-20261105/approved-agent-source.v2.3`, manifest SHA-256 `e22c3bee94c37a6853c61d1b18a0a2eb631174160ddbe38644ad2ada6dc53273`. It pins 781 members and repository support roots. `scripts/pm_goal_own_c3_w12_successor.py` reproducibly authors those sources before imports or births. The 778-member `canonical-copy-v2` predecessor and its manifest `afa83115a8d39ad8dc6cb911ae8c9cc6985ac705eb792d8ed962dce31159e839` remain byte-exact history.
 
-| Command / check | Exit | Result |
+`ApprovalBridgeV2` has independently issued TEST_ONLY chat messages, accepted proposal dispatches and protected person decisions. It joins complete scope/target/replacement, source and instruction messages, actor, approval, request commitment, permission, epoch and actual decision/expiry times. Transport-shaped values cannot authenticate an original. The bridge participates in the actual successor GoalSource and the same edition's sole ModelStore body issuer, physical owner, shared append owner and SIR transaction. Direct Save requires no provider or extra confirmation. The actual body owner's final predicate rechecks live approval after its returning helper; after the genuine body receipt exists, immutable factual recovery no longer needs a live approval.
+
+Source authoring adds no runtime monkeypatch, class substitution or private-map repair. The successor retains the predecessor's finite physical profile; it is not a claim that every current SP-337/SP-340 representation or multi-operation W1 path is implemented.
+
+Five finite issuer scenarios passed:
+
+| Scenario | Disposition | Assertions |
+|---|---|---:|
+| Direct Save, U0 through immutable terminal replay | positive | 20 |
+| Actual approved-agent source, U0 through immutable terminal replay | positive | 20 |
+| Approval expiry after genuine body commit; original Event/terminal/replay finish | positive | 20 |
+| Revocation in the actual sole-body before-commit helper | negative; no body/Event effect | 13 |
+| Expiry in the actual sole-body before-commit helper | negative; no body/Event effect | 13 |
+
+The two negatives preserve the full reserved body/history/control and every earlier genuine receipt/frame. The three positives resolve the original body receipt, full-value commitment, first append receipt and immutable SIR terminal. Counts are **3 finite positive scenarios / 2 finite negative scenarios**, not complete W1 coverage.
+
+## Newly authored cancellation selections
+
+History search examined fetched origin refs. Commit `102a7e99e80aa159f98e685a6730b2245056a49b` contains both command resource `b1c83ae5b645cbe501baf9cfd8924eb99777f8d5f7cb245b087f2e127874a73e` and whole SIR resource `5293dd1e8d403a6e8da103bcd93e2811ddaec67aaa277541c26ede13064d3008`, including matching WorkflowCommandContextV1, WorkflowScopeV2 and OwnerEvidenceRefV1 definitions. The successor explicitly binds that whole edition at `https://puppetmaster.local/Plans/shared_integration_runtime.schema.json`. A retained whole-byte copy supplies a stable location after the live main resource advanced. No fragment, schema/instance URI rewrite, global merge, ambient fallback or original-bank restamp occurs.
+
+`cancel-methods.v2.json` explicitly selects banks, hashes and realms for all 66 inherited method rows. Qualification is eager, isolated and includes unused definitions:
+
+| Selection | Resources | Runtime retrieval repair |
 |---|---:|---|
-| C3-W12 original-input preflight, final run | **2** | `BLOCKED_ORIGINAL_INPUTS`; both exact blockers reproduce; no setup error |
+| `cancel-producer-resources.v2.json` | 23 | explicit whole 5293 edition |
+| Original `assistant_plan_cancel_schema_resources.json` | 24 | unnecessary; its command edition is the earlier closed `7c460c1e…38d7b` |
+| `cancel-workflow-resources.v2.json`, Goal realm | 49 | explicit whole 5293 edition |
+| Same file, native realm | 124 | explicit whole 5293 edition |
+| `cancel-inspection-resources.v3.json`, private inspection realm | 50 | explicit whole 5293 edition |
+
+Qualification exposed another historical native WorkNode reference gap. Its successor adds eleven location-scoped imports, each selected by original source whole hash, JSON pointer, literal reference and resolved original URI. The two affected file aliases produce 22 traversals. The original whole handoff target remains SHA-256 `1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d`; nested resolution stays in the isolated retained realm. Other aliases retain their original lookup. The retained declarations independently reuse whole schema bytes, not coordinator or sibling authority. `whole-resource-locations.v2.json` similarly locates exact original bytes where mutable paths had drifted.
+
+These are resource-routing repairs. No cancellation source, Stop, Plan/scheduler effect, D05/D06 receipt, migration or private-inspection success is inferred from them. The original part-1 preflight still returns exit 2 against its unchanged historical selection, as expected; successor selection does not rewrite history.
+
+## Oracles and guards
+
+`scripts/pm_goal_own_c3_w12_successor_oracles.py` passes **106 component assertions: 32 successful assertions / 74 expected refusals**. The 32 include bank qualification and 22 comparisons showing that the affected original reference sites resolve to the same retained validation errors. Those comparisons use invalid `None` values and are not positive native WorkNode records. No complete W2 operation was run.
+
+`part2/guard-negative-inventory.json` lists all 57 named refusal guards observed in those cases and the two actual sole-body probes. It is input for the shared tool; no local removal engine or check-11 isolation result is claimed. `A2/content_access`, `selection/imports_hash` and `selection/retained_bank_hash` lack dedicated negatives in this delivery. `A2/source_owner` and `A2/live_resolution` are additional internal consistency checks without independent negative witnesses. Source/manifest/member/support pin checks are setup qualification, not product cases. This incomplete guard coverage is another reason the full oracle cell is not upgraded.
+
+The first component run failed because a routing-negative setup changed the selected target URI as well as the intended reference spelling. The corrected case preserves the target and changes the literal spelling only. Both the failed attempt and final passing recheck remain in `checks.json`; the failed attempt is not a passing run. Earlier exploratory packet attempts also exposed a report-only missing manifest key after successful assertions; only the selected v2.3 captures below are asserted as final evidence.
+
+## Units, IDs and shared-file hunks
+
+- **Units added:** none. **IDs minted/used from the allocation:** none.
+- **ATS amended:** `Plans/Automated_Testing_System.md:7481` ATS-1116 and `:7539` ATS-1117 only. Each adds two validation surfaces and changes its footer to name explicit successors while preserving all full-suite obligations.
+- **Shared protocol:** `Plans/goal_own_c_contracts/protocol.md:49` and `:51` add W1 successor/approval paragraphs; `:61`, `:63`, `:65`, `:67` add W2 resource selection, original Plan reuse, scoped import and isolation/limitations paragraphs. U1–U7, M1–M9, W3–W5 and all existing obligations are unchanged.
+- **Shared suites:** `Plans/goal_own_c_contracts/suites.json`, first two family rows only: successor path, qualification command and explicit `NOT_COMPLETE`. Other family rows are unchanged.
+- **New independent paths:** four `pm_goal_own_c3_w12_*` source/helper/oracle scripts and `Plans/goal_own_c_contracts/w12-successor-v2/**`. The original preflight and existing common/DG scripts are unchanged.
+- **Derived files:** only ATS shard bodies/metadata and plan-index rows owned by ATS changed. Regenerate these at integration rather than hand-merge. PlanUnit count remains 7481; acceptance-unit count remains 30125. Exact scope audit is retained.
+
+No event registry, admission, Decision Log, retention/deletion policy, Spec Lock, governance evidence or readiness seal was edited. No pm-mail, subagent or main push was used.
+
+## Checks and resource scheduling
+
+Generators and checkers used `PM_GOAL_AUDIT_WORKERS=1`. The task scheduler paused own work when a sibling heavy checker ran or available RAM fell below 6 GB; a brief initial overlap was detected and paused. Subsequent recorded chain commands ran one at a time. Sampled available RAM during that chain was at least 8 GB. The existing sibling venv was used read-only; no dependency or account settings changed.
+
+| Check | Exit | Result |
+|---|---:|---|
+| Successor components, final recheck | 0 | 106 assertions; 32 success / 74 refusals |
+| Five finite selected-source scenarios | 0 each | 3 positive / 2 negative; 86 assertions |
+| Unchanged original-input preflight | 2 | expected historical blockers reproduce |
 | DG current writer | 0 | 931 cases / 861 negatives |
 | DG stop/block | 0 | 478 cases / 427 negatives |
-| DG lifecycle successors | 0 | 514 cases / 487 negatives |
-| DG-OWN-C first-part oracles | 0 | 355 cases / 46 positives / 309 negatives |
-| DG-OWN-C original source oracles | 0 | 293 cases / 112 positives / 181 negatives; component meaning unchanged |
-| Original Goal lineage self-test | 0 | pass |
-| Shard generate | 0 | zero changed shard bytes |
-| Index generate | 0 | top-level pass; both JSONL indexes byte-identical; four JSON generation timestamps only |
+| DG lifecycle | 0 | 514 cases / 487 negatives |
+| DG-OWN-C existing oracles | 0 | 355 cases / 46 positives / 309 negatives |
+| DG-OWN-C existing source oracles | 0 | 293 cases / 112 positives / 181 negatives |
+| Goal lineage self-test | 0 | pass |
+| Shard generate / plan-index generate | 0 / 0 | expected ATS-only derived scope |
 | Shard check | 0 | pass |
-| Index validate | **1** | top-level **fail**, exactly the same 23 failure records as DG-OWN-C Part 2; **0 new failures** |
-| Current citation/file-hash audit | 0 | 89 cell citations match; both scores remain 10/12 |
-| `git diff --check` | 0 | pass |
+| Plan-index validate | 1 | 29 failures; attribution below |
+| Current citation/hash audit | 0 | 91 exact citations, both scores 10/12 |
 
-The index failures are the same 21 legacy-ledger errors plus `DL-302` and `PLS-025` present on fetched main and absent from the pinned base. No ledger or Decision Log was rewritten. The four generated clock-only changes were restored after the scope comparison; no owner doc changed, and there is no derived owner delta to merge. Readiness remains `blocked_runtime_certification_incomplete`.
+The index's 29 failures comprise the previous 23 records plus six units from advancing main: DL-330, DL-331, DL-332, DP-064, DP-066, PWIZ-038. Their three owner documents are byte-identical to branch HEAD, and the six units are absent there but present at fetched `origin/main` `e115946ba1681af9111acb5eb469099321ef0657`. None is a branch removal; no ledger or Decision Log was rewritten. `index-baseline-attribution.json` records this comparison. No new branch-caused index failure was identified. This is not an aggregate governance, admission, landing or reseal result. The historical-reader removal suite is NOT_RUN here; another worker's result is not claimed as ours.
 
-The original historical-reader removal audit is **NOT_RUN** for this prerequisite stop: none of its code, fixtures or owner contracts changed. Its prior result is not asserted as fresh evidence. No complete W1/W2, migration-enrollment, browser, native, aggregate governance, reseal, admission or landing success is claimed.
+## Retained evidence
 
-Evidence directory: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W12/`. Exact retained artifacts:
+All raw captures and check outputs live outside the repository. Paths below are relative to `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W12/` unless absolute. Full remaining outputs are covered by `part2/SHA256SUMS`.
 
 | Artifact | SHA-256 |
 |---|---|
-| `closure-preflight.json` | `afaea27a794f4d1ed2c02a9e01e9fc3b40b33c526a99bddaae94aba9e0d81901` |
-| `checks.json` | `62c728072bb178c13f27e5d2c0101b3ca5bf86bb6846aa4abb06e8e61322e64f` |
-| `inputs.json` | `b982a6cc4316a96fe356043d8157f73cfdee2a31ba5970b2bd97d6805ee49a8e` |
-| `derived-scope.json` | `d9562fef3b5b6cd8511d3c49ca215f9cc222854897bd3865c4bdfb709d5b8b71` |
-| `currentness-copy.json` | `eaa91ddf784ccf60e7f54e56dee4dd763db8c2bdb076fd563349fddcea4e4fd9` |
-| `index-validate.log` | `f7bbeb67e95025150611c56d433001a3f5dd455e0f43abf92a36670a33e4f2d3` |
-| `current-guards.json` | `c6f3bf866bfa0b03a59b59110246e766a4262c68e276c08a3c399cf4de34c3f6` |
-| `own-c.json` | `e65caaa8e76ee1e85b556d6685b5548a45197c01b01d640318ff48c21075aba6` |
-| `source.json` | `112478ab319904486665ed703772b8438423149818f851cf6f4bccdb9877258a` |
+| `history-search-p2.json` | `3491654fa9cbd0282816912f79d8024e5aa16195dc1d4d408c0a970e21cf9e18` |
+| `part2/successor-oracles-final.json` | `737fd01e9f618ebd0f48ad79d9b8a7099a233de1a5b0a6fb5cf648321d282578` |
+| `part2/checks.json` | `1c3cdf810cabf805af8192cc98cf5e78758c500930babf298070d60da2dfb903` |
+| `part2/guard-negative-inventory.json` | `f3ed8c5a3d43851f6af46c4f2f0dc2618a0c9b28765960ff0e4dd1ab9c8d1cff` |
+| `part2/derived-scope.json` | `2185a3d1271a396861ae3b0294997d50ae33836cec7091189a76808a5fdcf548` |
+| `part2/shard-scope.json` | `e85f2888f245004958029bec9950e299b3209c9c2d5fb72f8fec951759b47a1a` |
+| `part2/index-validate.log` | `bf1ba229de401246f2bf9cf923e4eb9d8de4cd05737b9fa0429e8c66b945af60` |
+| `part2/index-baseline-attribution.json` | `681f61daf19f93794ea6deb2ad4b055be9bbf721ceeac3dbf11e923b952db3e3` |
+| `part2/currentness-copy.json` | `b72623c6887c9cb3b53eb0da0baf1e1b8c0b5d46fe116d4f25746361bbe73b8b` |
+| `part2/protected-inputs.json` | `18edd5c3d76f65333bedd4c8b885cef6b9de23417a692ffa7a934c70e247caaf` |
+| `part2/source-search.json` | `aa5959d49087f50f1a86ffc0670716ffa8d80d4039103816ba46106cea796276` |
+| `part2/resource-location-search.json` | `000b571c6198e45dab0b31af05ce52fb3cd5a79d99ccbbd4f5bd504329aa6fca` |
+| `/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12-p2-20261105/final-agent-v23/manifest.json` | `fa1bbcb886fa26270380088e31daf4f6bca49afd12daef811983ad756fa32b0e` |
+| `/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12-p2-20261105/final-direct-v23/manifest.json` | `d4514c8bd32de8c824da82f258b0f8b654be242b646f9c7c95eba75843d4f6a1` |
+| `/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12-p2-20261105/agent-revoked-before-body/manifest.json` | `5167c7496c6120be10ece9fd1bf52daceaf2b25dc3ef4d4ec446b63e930ff72e` |
+| `/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12-p2-20261105/agent-expired-before-body/manifest.json` | `7c57e5b1d0dd4934dc4e6d4d452321dc5a954728fbbc6640b110336beaae54a5` |
+| `/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12-p2-20261105/agent-expired-after-body/manifest.json` | `fa1bbcb886fa26270380088e31daf4f6bca49afd12daef811983ad756fa32b0e` |
 
-The branch report, self-grade and compact check list are copied to that directory. `SHA256SUMS` covers the remaining retained check outputs. The worktree is removed after the branch push; the exact recovered original input package remains at its committed selector path for reproducibility. No pm-mail, subagent or main push was used.
+The selected source and coherent ignored currentness input edition are also retained as external archives:
+
+| Artifact | SHA-256 |
+|---|---|
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W12/part2/approved-agent-source.v2.3.tar.gz` | `170ceb9cb02985db1ea2e6e4270da1d816ccbe8dab97d518a17fc1b5285cdf7d` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W12/part2/currentness-input-edition.tar.gz` | `84823c8fdb7b8b18a6524496e748cd16ba69af901155457b2e29599cd5d97076` |
+
+The selected v2.3 package is retained at its explicit selector path. Unused authored attempts, unused captures and task scratch are removed. The branch is pushed and the task worktree removed; a separate external delivery receipt records the pushed head. **The lane completion requirement remains unmet: there is no COMPLETE result and no qualifying unfixable blocker.**

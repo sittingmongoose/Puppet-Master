@@ -1,151 +1,95 @@
-[
-  {
-    "name": "current",
-    "command": [
-      "/home/sittingmongoose/PM-Experiments/c3-w12-20261105/venv/bin/python",
-      "scripts/pm_goal_current_writer_oracles.py",
-      "--guard-table",
-      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W12/current-guards.json"
-    ],
-    "exit_code": 0,
-    "seconds": 29.473
+{
+  "status": "UNFINISHED_REQUIRED_W1_W2_CLOSURE_NOT_MET",
+  "continuation_base": "7335692a3c0629a681e5f5e0de351dfe581dc7af",
+  "whole_root_closure": {
+    "goal.updated": "NOT_COMPLETE",
+    "goal.cancelled": "NOT_COMPLETE"
   },
-  {
-    "name": "stop-block",
-    "command": [
-      "/home/sittingmongoose/PM-Experiments/c3-w12-20261105/venv/bin/python",
-      "scripts/pm_goal_run_stop_block_oracles.py",
-      "--guard-table",
-      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W12/stop-block-guards.json"
-    ],
-    "exit_code": 0,
-    "seconds": 26.591
+  "qualifying_unfixable_blocker": null,
+  "oracle_counts": {
+    "component_success": 32,
+    "component_expected_refusal": 74,
+    "finite_source_positive_scenarios": 3,
+    "finite_source_negative_scenarios": 2,
+    "complete_W2_operations": 0
   },
-  {
-    "name": "lifecycle",
-    "command": [
-      "/home/sittingmongoose/PM-Experiments/c3-w12-20261105/venv/bin/python",
-      "scripts/pm_goal_lifecycle_successor_oracles.py",
-      "--guard-table",
-      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W12/lifecycle-guards.json"
-    ],
-    "exit_code": 0,
-    "seconds": 10.993
-  },
-  {
-    "name": "own-c",
-    "command": [
-      "/home/sittingmongoose/PM-Experiments/c3-w12-20261105/venv/bin/python",
-      "scripts/pm_goal_own_c_oracles.py",
-      "--output",
-      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W12/own-c.json"
-    ],
-    "exit_code": 0,
-    "seconds": 0.632
-  },
-  {
-    "name": "source",
-    "command": [
-      "/home/sittingmongoose/PM-Experiments/c3-w12-20261105/venv/bin/python",
-      "scripts/pm_goal_own_c_source_oracles.py",
-      "--output",
-      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W12/source.json"
-    ],
-    "exit_code": 0,
-    "seconds": 6.292
-  },
-  {
-    "name": "lineage",
-    "command": [
-      "/home/sittingmongoose/PM-Experiments/c3-w12-20261105/venv/bin/python",
-      "scripts/pm-goal-runtime-lineage.py",
-      "--self-test"
-    ],
-    "exit_code": 0,
-    "seconds": 1.052
-  },
-  {
-    "name": "preflight",
-    "command": [
-      "/home/sittingmongoose/PM-Experiments/c3-w12-20261105/venv/bin/python",
-      "scripts/pm_goal_own_c3_w12_oracles.py",
-      "--output",
-      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W12/closure-preflight.json"
-    ],
-    "exit_code": 2,
-    "seconds": 6.605
-  },
-  {
-    "name": "diff-check",
-    "command": [
-      "git",
-      "diff",
-      "--check"
-    ],
-    "exit_code": 0,
-    "seconds": 0.227
-  },
-  {
-    "name": "shard-generate",
-    "command": [
-      "/home/sittingmongoose/PM-Experiments/c3-w12-20261105/venv/bin/python",
-      "scripts/pm-shard-plans.py",
-      "--generate",
-      "--config",
-      "Plans/sharding_config.json"
-    ],
-    "exit_code": 0,
-    "seconds": 6.618
-  },
-  {
-    "name": "index-generate",
-    "command": [
-      "/home/sittingmongoose/PM-Experiments/c3-w12-20261105/venv/bin/python",
-      "scripts/pm-plan-index.py",
-      "generate"
-    ],
-    "exit_code": 0,
-    "seconds": 106.117
-  },
-  {
-    "name": "shard-check",
-    "command": [
-      "/home/sittingmongoose/PM-Experiments/c3-w12-20261105/venv/bin/python",
-      "scripts/pm-shard-plans.py",
-      "--check",
-      "--config",
-      "Plans/sharding_config.json"
-    ],
-    "exit_code": 0,
-    "seconds": 79.261
-  },
-  {
-    "name": "index-validate",
-    "command": [
-      "/home/sittingmongoose/PM-Experiments/c3-w12-20261105/venv/bin/python",
-      "scripts/pm-plan-index.py",
-      "validate"
-    ],
-    "exit_code": 1,
-    "seconds": 135.287
-  },
-  {
-    "name": "preflight-final",
-    "exit_code": 2,
-    "status": "BLOCKED_ORIGINAL_INPUTS",
-    "note": "Distinct agent command identity, coherent full source/request and SP-421 metadata; expected original source refusal still reproduces."
-  },
-  {
-    "name": "index-baseline-comparison",
-    "exit_code": 0,
-    "failures": 23,
-    "new_failures": 0,
-    "result": "All failure records equal the Part 2 index-validate.log records."
-  },
-  {
-    "name": "history-audit",
-    "exit_code": null,
-    "status": "NOT_RUN",
-    "reason": "Original-input stop; no historical reader code, fixtures or owner contracts changed. Prior results are not reasserted."
-  }
-]
+  "raw_checks": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W12/part2/checks.json",
+  "raw_checks_sha256": "1c3cdf810cabf805af8192cc98cf5e78758c500930babf298070d60da2dfb903",
+  "checks": [
+    {
+      "name": "successor-oracles",
+      "exit_code": 1
+    },
+    {
+      "name": "final-agent",
+      "exit_code": 0
+    },
+    {
+      "name": "final-direct",
+      "exit_code": 0
+    },
+    {
+      "name": "agent-revoked-before-body",
+      "exit_code": 0
+    },
+    {
+      "name": "agent-expired-before-body",
+      "exit_code": 0
+    },
+    {
+      "name": "agent-expired-after-body",
+      "exit_code": 0
+    },
+    {
+      "name": "original-preflight",
+      "exit_code": 2
+    },
+    {
+      "name": "dg-current",
+      "exit_code": 0
+    },
+    {
+      "name": "dg-stop-block",
+      "exit_code": 0
+    },
+    {
+      "name": "dg-lifecycle",
+      "exit_code": 0
+    },
+    {
+      "name": "own-c",
+      "exit_code": 0
+    },
+    {
+      "name": "source",
+      "exit_code": 0
+    },
+    {
+      "name": "lineage",
+      "exit_code": 0
+    },
+    {
+      "name": "shard-generate",
+      "exit_code": 0
+    },
+    {
+      "name": "index-generate",
+      "exit_code": 0
+    },
+    {
+      "name": "shard-check",
+      "exit_code": 0
+    },
+    {
+      "name": "index-validate",
+      "exit_code": 1
+    },
+    {
+      "name": "successor-oracles-final-recheck",
+      "exit_code": 0
+    }
+  ],
+  "native_execution": "NOT_RUN",
+  "ids_minted": [],
+  "stopped_question": null
+}

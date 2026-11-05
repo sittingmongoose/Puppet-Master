@@ -26,7 +26,10 @@
       "part2_whole_tuple_coverage": "PARTIAL_NOT_CLOSED",
       "part2_component_witnesses": [
         "scripts/pm_goal_own_c_source_oracles.py: complete retained Direct Save capture schema/custody; proposal/resolution storage and provider joins; original Goal snapshot semantics"
-      ]
+      ],
+      "c3_w12_part2_successor_selection": "Plans/goal_own_c_contracts/w12-successor-v2/approved-agent-source.v2.json",
+      "c3_w12_part2_qualification": "python3 scripts/pm_goal_own_c3_w12_successor_oracles.py",
+      "c3_w12_part2_whole_root_closure": "NOT_COMPLETE"
     },
     {
       "event_type": "goal.cancelled",
@@ -55,7 +58,10 @@
       "part2_whole_tuple_coverage": "PARTIAL_NOT_CLOSED",
       "part2_component_witnesses": [
         "scripts/pm_goal_own_c_source_oracles.py: original Goal outer image/receipt; ordered manifest and compact output transaction; no native binding/Stop installation"
-      ]
+      ],
+      "c3_w12_part2_successor_selection": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-methods.v2.json",
+      "c3_w12_part2_qualification": "python3 scripts/pm_goal_own_c3_w12_successor_oracles.py",
+      "c3_w12_part2_whole_root_closure": "NOT_COMPLETE"
     },
     {
       "event_type": "goal_run.started",

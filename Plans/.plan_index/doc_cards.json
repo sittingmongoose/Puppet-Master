@@ -1999,7 +1999,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 7649,
+      "line_count": 7653,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 84,
       "plan_unit_ids": [
@@ -2162,7 +2162,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "7c14844fffac3bd898d90226fd3a94a58a193d22808ccf45a5f15d1beceb784d",
+      "sha256": "cdd74888c5be7c90500f5a8ad2cedb1b1c77e86f3b9f14f486eaa3eb7ce77ee3",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 83,
@@ -2226,6 +2226,8 @@
         "Plans/goal_lifecycle_successor_fixtures.json",
         "Plans/goal_own_c_contracts/protocol.md",
         "Plans/goal_own_c_contracts/source-witness-inputs.json",
+        "Plans/goal_own_c_contracts/w12-successor-v2/approved-agent-source.v2.json",
+        "Plans/goal_own_c_contracts/w12-successor-v2/cancel-methods.v2.json",
         "Plans/goal_receipt_version_routes.json",
         "Plans/goal_run_certified_consumer_contracts/protocol.md",
         "Plans/goal_run_stop_block_oracle_fixtures.json",
@@ -2332,6 +2334,7 @@
         "python3 scripts/pm_goal_current_writer_oracles.py",
         "python3 scripts/pm_goal_history_reader_fixtures.py",
         "python3 scripts/pm_goal_lifecycle_successor_oracles.py",
+        "python3 scripts/pm_goal_own_c3_w12_successor_oracles.py",
         "python3 scripts/pm_goal_own_c_source_oracles.py",
         "python3 scripts/pm_goal_run_stop_block_oracles.py",
         "reports/event-authority-20260911/step-08-current-child-scope-validation.md",
@@ -21723,7 +21726,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-05T07:44:14Z",
+  "generated_at_utc": "2026-11-05T11:02:18Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
