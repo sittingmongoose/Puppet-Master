@@ -1188,15 +1188,16 @@ def check_oracles(fixtures, schema, owner_module):
         assert not failure_oracle_errors(test)
         checks += 2
     for test in fixtures['project_source_cases']:
-        bad = copy.deepcopy(fixtures['board_storage_cases'][test['board_index']])
+        assert test['boundary'] == 'project_original_input_adapter'
+        # A standalone adapter input has no append payload or other observers.
+        bad = {'source': copy.deepcopy(fixtures['board_storage_cases'][test['board_index']]['source'])}
         target = bad
         for key in test['path'][:-1]:
             target = target[key]
         target[test['path'][-1]] = copy.deepcopy(test['value'])
         assert project_original_input_errors(bad, formats) == [test['expected_error']], test['name']
-        assert owner_module.board_join_errors(bad) == [test['expected_error']], test['name']
         assert not failure_oracle_errors(test)
-        checks += 3
+        checks += 2
     for test in fixtures['project_source_join_cases']:
         bad = copy.deepcopy(fixtures['board_storage_cases'][test['board_index']])
         bad['source']['original_input'][test['field']] = test['value']
