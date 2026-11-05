@@ -539,8 +539,9 @@ def source_owner_evidence(row, document, root=ROOT, cache=None):
         from pm_event_datetime_value_probe import wildcard_probe, reviewed_role
         evidence, citations = wildcard_probe(row, document, root, cache)
         role, _ = reviewed_role(row, evidence, citations, root, cache)
-        classification = ("wildcard_non_timestamp" if evidence["all_refused"] else
-                          "wildcard_non_timestamp_role" if role is not None else
+        classification = (role.get("classification", "wildcard_non_timestamp_role") if role is not None else
+                          "wildcard_review_required" if not evidence["singleton_probes_complete"] else
+                          "wildcard_non_timestamp" if evidence["all_refused"] else
                           "other_owner_observation")
     # Shared ref targets can occur in both fields; keep deterministic evidence.
     return classification, list({(c["path"], c["pointer"]): c for c in citations}.values())

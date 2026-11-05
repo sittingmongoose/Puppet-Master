@@ -294,6 +294,7 @@ def regression_checks(root):
     else:
         checks["datetime_custom_resolver_refused"] = False
     checks.update(wildcard_battery_checks(root, inventory))
+    checks.update(wildcard_context_checks(root, inventory))
     return checks
 
 
@@ -305,10 +306,11 @@ def wildcard_battery_checks(root, inventory):
     maps = [r for r in inventory["nodes"] if r["classification"] in (
         "wildcard_non_timestamp", "wildcard_non_timestamp_role")]
     checks["datetime_battery_21_name_maps"] = (len(maps) == 21 and
-        sum(r["classification"] == "wildcard_non_timestamp" for r in maps) == 12 and
-        sum(r["classification"] == "wildcard_non_timestamp_role" for r in maps) == 9 and
-        all(r["value_evidence"]["all_refused"] ==
-            (r["classification"] == "wildcard_non_timestamp") for r in maps))
+        sum(r["classification"] == "wildcard_non_timestamp" for r in maps) == 7 and
+        sum(r["classification"] == "wildcard_non_timestamp_role" for r in maps) == 14 and
+        all(r["value_evidence"]["all_refused"] and r["value_evidence"]["singleton_probes_complete"]
+            if r["classification"] == "wildcard_non_timestamp" else
+            r["value_evidence"]["reviewed_role"] is not None for r in maps))
     original = next(r for r in maps if r["path"] == "Plans/section15_browser_program_contracts.schema.json"
                     and r["pointer"].endswith("/result_schema_dependencies"))
     canonical = r"^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]{1,9})?Z$"
@@ -385,4 +387,125 @@ def wildcard_battery_checks(root, inventory):
         errors = inv.validate_inventory(changed, scratch)
         checks["datetime_battery_foreign_role_evidence_refused"] = any(
             e["error"] == "wildcard_role_evidence_changed" for e in errors)
+    return checks
+
+
+def wildcard_context_checks(root, inventory):
+    """B5/B6: coherent source projection cannot certify incomplete probes or keys."""
+    import pm_event_datetime_inventory as inv
+    from pm_event_datetime_value_probe import BATTERY, ROLES, wildcard_probe
+    from pm_event_datetime import _closed_datetime_graph, format_checker
+    from referencing import Registry, Resource
+    checks = {}
+    original = next(r for r in inventory["nodes"] if r["path"] ==
+        "Plans/section15_browser_program_contracts.schema.json" and
+        r["pointer"].endswith("/result_schema_dependencies"))
+    stamp = {"type": "string", "pattern":
+        r"^[0-9][0-9][0-9][0-9]-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]{1,9})?(?:Z)$"}
+    with tempfile.TemporaryDirectory(prefix="pm-datetime-context-") as temp:
+        scratch = Path(temp)
+        for path in (inv.INVENTORY_SCHEMA, BATTERY, ROLES):
+            file = scratch / path
+            file.parent.mkdir(parents=True, exist_ok=True)
+            file.write_bytes((root / path).read_bytes())
+        source = scratch / original["path"]
+        source.parent.mkdir(parents=True, exist_ok=True)
+
+        def project(node, definitions=None):
+            document = inv._source_document(root, original, {})
+            inv.at(document, original["pointer"]).clear()
+            inv.at(document, original["pointer"]).update(copy.deepcopy(node))
+            document["$defs"].update(copy.deepcopy(definitions or {}))
+            source.write_text(json.dumps(document))
+            value = inv.source_inventory_projection({**inventory, "nodes": [copy.deepcopy(original)]}, scratch)
+            return document, value
+
+        basic = {"type": "object", "propertyNames": {"type": "string"}}
+        required = {**basic, "required": ["kind"], "properties": {"kind": {"const": "timestamp"}},
+                    "additionalProperties": stamp}
+        conditional = {**basic, "properties": {"kind": {}}, "if": {"required": ["kind"]},
+                       "then": {"properties": {"kind": {}}, "additionalProperties": stamp},
+                       "else": {"additionalProperties": {"type": "integer"}}}
+        for name, node in (("required_sibling_timestamp", required),
+                           ("conditional_sibling_timestamp", conditional)):
+            document, projected = project(node)
+            row = projected["nodes"][0]
+            errors = inv.validate_inventory(projected, scratch)
+            checks["datetime_" + name] = (row["classification"] == "wildcard_review_required" and
+                not row["value_evidence"]["singleton_probes_complete"] and
+                any(e["error"] == "wildcard_role_review_required" for e in errors))
+            bank = Registry().with_resource(document["$id"], Resource.from_contents(document))
+            selector = {"$schema": document["$schema"], "$ref": document["$id"] + "#" + row["pointer"]}
+            cls, bank = _closed_datetime_graph(selector, bank)
+            validator = cls(selector, registry=bank, format_checker=format_checker())
+            checks["datetime_" + name + "_witness"] = (
+                not validator.is_valid({"observed_at_utc": "2026-01-01T00:00:00Z"}) and
+                validator.is_valid({"kind": "timestamp", "observed_at_utc": "2026-01-01T00:00:00Z"}) and
+                not validator.is_valid({"kind": "timestamp", "observed_at_utc": "resource-id"}))
+            checks["datetime_" + name + "_context_probe"] = any(
+                r.get("context") == {"kind": "timestamp"} and r["accepted"] > 0
+                for r in row["value_evidence"]["results"])
+            bad = copy.deepcopy(projected)
+            bad["nodes"][0]["classification"] = "wildcard_non_timestamp"
+            checks["datetime_" + name + "_pin"] = (
+                inv.derived_inventory_pin(bad, scratch) != inv.hashlib.sha256(json.dumps(bad).encode()).hexdigest())
+            pointer = original["pointer"] + ("/additionalProperties" if name.startswith("required_")
+                                            else "/then/additionalProperties")
+            record = {"node": list(inv.node_key(original)),
+                "value_schema_sha256": row["value_evidence"]["value_schema_sha256"],
+                "role": "timestamp", "classification": "other_owner_observation",
+                "reason": "Explicit timestamp review of the exact sibling-selected value constraint.",
+                "citation": {"path": original["path"], "pointer": pointer, "value": stamp},
+                "sibling_contexts": [{"kind": "timestamp"}]}
+            (scratch / ROLES).write_text(json.dumps([record]))
+            reviewed = inv.source_inventory_projection({**inventory, "nodes": [copy.deepcopy(original)]}, scratch)
+            checks["datetime_" + name + "_reviewed_positive"] = not inv.validate_inventory(reviewed, scratch)
+            checks["datetime_" + name + "_reviewer_context"] = any(
+                d["keyword"] == "reviewed_sibling_context"
+                for d in reviewed["nodes"][0]["value_evidence"]["sibling_dependencies"])
+            (scratch / ROLES).write_bytes((root / ROLES).read_bytes())
+        # A schema that refuses every sample still requires review if a
+        # sibling-sensitive keyword is present, including behind a reference.
+        for keyword, extra in (("required", {"required": ["kind"]}),
+                ("dependentRequired", {"dependentRequired": {"kind": ["other"]}}),
+                ("dependentSchemas", {"dependentSchemas": {"kind": {}}}),
+                ("minProperties", {"minProperties": 2}),
+                ("unevaluatedProperties", {"unevaluatedProperties": False}),
+                ("combinator", {"anyOf": [{"required": ["kind"]}, {"required": ["other"]}]}),
+                ("reference", {"$ref": "#/$defs/context_map"})):
+            _, projected = project({**basic, "additionalProperties": {"type": "integer"}, **extra},
+                {"context_map": {"required": ["kind"]}})
+            checks["datetime_incomplete_probe_" + keyword] = (
+                projected["nodes"][0]["classification"] == "wildcard_review_required" and
+                any(e["error"] == "wildcard_role_review_required" for e in inv.validate_inventory(projected, scratch)))
+        # The exact same definition is valid evidence only when reached as a
+        # value constraint, not as a key, sibling, nested value or unused $def.
+        safe = {"type": "string", "minLength": 1}
+        for route in ("key", "sibling", "nested", "unused", "one_field_only",
+                      "value_ref", "value_allOf", "value_anyOf"):
+            node = {**basic, "additionalProperties": copy.deepcopy(stamp)}
+            ref = {"$ref": "#/$defs/SafeRef"}
+            if route == "key":
+                node["propertyNames"] = ref
+            elif route == "sibling":
+                node["properties"] = {"kind": ref}
+            elif route == "nested":
+                node["additionalProperties"]["properties"] = {"nested": ref}
+            elif route == "one_field_only":
+                node["patternProperties"] = {"^observed_at_utc$": ref}
+            elif route == "value_ref":
+                node["additionalProperties"] = ref
+            elif route in ("value_allOf", "value_anyOf"):
+                node["additionalProperties"] = {route.removeprefix("value_"): [ref]}
+            document, projected = project(node, {"SafeRef": safe})
+            evidence, _ = wildcard_probe(original, document, scratch, {})
+            record = {"node": list(inv.node_key(original)), "value_schema_sha256": evidence["value_schema_sha256"],
+                      "role": "SafeRef", "reason": "Reviewed reference string value.",
+                      "citation": {"path": original["path"], "pointer": "/$defs/SafeRef", "value": safe}}
+            (scratch / ROLES).write_text(json.dumps([record]))
+            projected = inv.source_inventory_projection({**inventory, "nodes": [copy.deepcopy(original)]}, scratch)
+            errors = inv.validate_inventory(projected, scratch)
+            checks["datetime_value_role_path_" + route] = (not errors if route.startswith("value_") else
+                any(e["error"] == "wildcard_role_evidence_changed" for e in errors))
+            (scratch / ROLES).write_bytes((root / ROLES).read_bytes())
     return checks
