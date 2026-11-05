@@ -993,6 +993,14 @@ def recapture_history(case):
     event = case['event']; read = case['read']; row = read['row']
     node = read['checkpoint']['generations'][read['checkpoint']['current_generation_id']]
     frontier = node['frontier']
+    # DO-P1F04: the frontier's four copies of the event's bytes, before the frontier is digested below.
+    coverage = frontier['coverage']
+    assert len(coverage['segments']) == 1, 'one-event model: one segment'
+    data = packed(event)
+    coverage['last_frame']['frame_end_offset'] = len(data)
+    segment = coverage['segments'][0]
+    segment['scanned_through_offset'] = segment['source_durable_end_offset'] = len(data)
+    segment['source_durable_bytes_sha256'] = hashlib.sha256(data).hexdigest()
     case['producer_semantic_digest'] = semantic_digest(event)
     row.update(event_id=event['event_id'], idempotency_key=event['idempotency_key'],
                producer_semantic_digest=semantic_digest(event))
